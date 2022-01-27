@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "OWP.Command": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
