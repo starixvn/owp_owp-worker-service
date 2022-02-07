@@ -1,19 +1,20 @@
 FROM registry.nexdev.net:5050/docker/dotnet/core/sdk:6.0 AS builder
-WORKDIR /src
 # Install the tools
 RUN dotnet tool install --tool-path /tools dotnet-trace
 RUN dotnet tool install --tool-path /tools dotnet-dump
 RUN dotnet tool install --tool-path /tools dotnet-counters
 
-COPY ./src/OWP.SyncLeagueSettings/. ./src/OWP.SyncLeagueSettings
-COPY ./src/OWP.SumReportData/. ./src/OWP.SumReportData
-COPY ./src/OWP.OtherSport/. ./src/OWP.OtherSport
-COPY ./src/OWP.MatchReadyNotification/. ./src/OWP.MatchReadyNotification
-COPY ./src/OWP.LinkLeagueAndTeam/. ./src/OWP.LinkLeagueAndTeam
-COPY ./src/OWP.InfositeIdSync/. ./src/OWP.InfositeIdSync
-COPY ./src/OWP.Infosite/. ./src/OWP.Infosite
+WORKDIR /src
+
 COPY ./src/OWP.Core/. ./src/OWP.Core
-COPY ./OWP.WorkerService/OWP.WorkerService.csproj .OWP.WorkerService/OWP.WorkerService.csproj
+COPY ./src/OWP.InforsiteIdSync/. ./src/OWP.InforsiteIdSync
+COPY ./src/OWP.Infosite/. ./src/OWP.Infosite
+COPY ./src/OWP.LinkLeagueAndTeam/. ./src/OWP.LinkLeagueAndTeam
+COPY ./src/OWP.MatchReadyNotification/. ./src/OWP.MatchReadyNotification
+COPY ./src/OWP.OtherSport/. ./src/OWP.OtherSport
+COPY ./src/OWP.SumReportData/. ./src/OWP.SumReportData
+COPY ./src/OWP.SyncLeagueSettings/. ./src/OWP.SyncLeagueSettings
+COPY ./OWP.WorkerService/OWP.WorkerService.csproj ./OWP.WorkerService/OWP.WorkerService.csproj
 
 WORKDIR /src/OWP.WorkerService
 RUN dotnet nuget add source http://nuget.nexdev.net/api/v2
