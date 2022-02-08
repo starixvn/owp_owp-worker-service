@@ -6,6 +6,7 @@ using Quartz;
 
 namespace OWP.WorkerService.Jobs;
 
+[DisallowConcurrentExecution]
 public class SyncInfositeIdJob : IJob
 {
     private readonly SyncInfositeIdService synInfositeIdService;
