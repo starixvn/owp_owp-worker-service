@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using OWP.PrematchReport;
 
 namespace OWP.PrematchReport
 {
