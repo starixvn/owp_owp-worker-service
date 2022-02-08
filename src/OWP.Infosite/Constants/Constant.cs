@@ -1,10 +1,8 @@
-﻿using System.Collections.Immutable;
-
-namespace OWP.Infosite.Constants;
+﻿namespace OWP.Infosite.Constants;
 
 public static class Constant
 {
-    public static readonly ImmutableDictionary<int, string> StreamNameSrc1InfoSite = new Dictionary<int, string>
+    public static readonly IDictionary<int, string> StreamNameSrc1InfoSite = new Dictionary<int, string>
     {
         {0, string.Empty },
         {4, "Spanish"},
@@ -17,13 +15,13 @@ public static class Constant
         {17, "LSports"},
         {18, "Weverdat"},
         {19, "CloundRock"}
-    }.ToImmutableDictionary();
+    };
 
-    public static readonly ImmutableDictionary<int, string> StreamNameSrc2InfoSite = new Dictionary<int, string>
+    public static readonly IDictionary<int, string> StreamNameSrc2InfoSite = new Dictionary<int, string>
     {
         {0, string.Empty },
         {11, "Glive"},
-    }.ToImmutableDictionary();
+    };
 
     public const string DateTimeFormat = "yyyy-MM-dd";
 
