@@ -48,7 +48,7 @@ public class InfositeIdMappingRepositoryImp : InfositeIdMappingRepository
 
     public async Task<List<InfositeMatch>> QueryInfositeMatch()
     {
-        var criteria = new QueryUnmappingOWPMatchCriteria
+        var criteria = new QueryInfositeMatchCriteria
         {
             FromDate = dateTimeService.Today
         };
