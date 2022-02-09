@@ -1,24 +1,27 @@
 namespace OWP.PrematchReport.Services.League
 {
     using Constants;
+    using System;
+    using System.Threading.Tasks;
+
     public interface LeagueService
     {
         Task BuildLeagueReport(DateTime eventDate);
     }
 
-    public class LeagueServiceImpl : LeagueService
+    public class LeagueServiceImp : LeagueService
     {
-        private readonly Repository repository;
+        private readonly OULeagueService ouLeagueService;
 
-        public LeagueServiceImpl(Repository repository)
+
+        public LeagueServiceImp(OULeagueService ouLeagueService)
         {
-            this.repository = repository;
+            this.ouLeagueService = ouLeagueService;
         }
         public async Task BuildLeagueReport(DateTime eventDate)
         {
-            var allLeague = await repository.GetLeagueByDate(eventDate);
-            var ouLeague = allLeague.Where(league => league.Bettype == Constant.OUID);
-            var hdpLeague = allLeague.Where(league => league.Bettype == Constant.HDPID);
+            await ouLeagueService.BuildOULeagueReport(eventDate);
+            // TODO
         }
     }
 }

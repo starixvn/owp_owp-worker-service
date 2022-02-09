@@ -1,11 +1,20 @@
 using Fanex.Data.Repository;
 using OWP.PrematchReport.Models;
 using OWP.PrematchReport.Criteria;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace OWP.PrematchReport;
+
 public interface Repository
 {
-    Task<IList<League>> GetLeagueByDate(DateTime eventDate);
+    Task<IList<League>> GetLeagueByDateAndBettype(DateTime eventDate, int bettype);
+
+    Task<int> BuildReportId(BuildReportIdCriteria criteria);
+
+    Task InsertLeague(InsertLeagueDataReportCriteria criteria);
 }
 public class RepositoryImp : Repository
 {
@@ -16,14 +25,24 @@ public class RepositoryImp : Repository
         this.repository = repository;
     }
 
-    public async Task<IList<League>> GetLeagueByDate(DateTime eventDate)
+    public async Task<IList<League>> GetLeagueByDateAndBettype(DateTime eventDate, int bettype)
     {
         var command = new GetLeagueCriteria()
         {
-            EventDate = eventDate
+            EventDate = eventDate,
+            Bettype = bettype
         };
         var leagueInfo = await repository.FetchAsync<League>(command);
 
         return leagueInfo.ToList();
     }
+
+    public async Task<int> BuildReportId(BuildReportIdCriteria criteria)
+    {
+        var reportIds = await repository.FetchAsync<int>(criteria);
+        return reportIds.First();
+    }
+
+    public async Task InsertLeague(InsertLeagueDataReportCriteria criteria)
+        => await repository.ExecuteAsync(criteria);
 }

@@ -6,7 +6,9 @@ namespace OWP.PrematchReport.Criteria
     {
         public DateTime EventDate { get; set; }
 
-        public override string GetSettingKey() => "OWP_PrematchReport_GetLeagueByDate";
+        public int Bettype { get; set; }
+
+        public override string GetSettingKey() => "OWP_PrematchReport_GetLeagueByDateAndBettype";
 
         public override bool IsValid() => true;
     }

@@ -73,7 +73,11 @@
 		<Setting Key="OWP_OtherSport_UpdateLinkedMatches" SpName="OWP_OtherSport_UpdateLinkedMatches" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 		<Setting Key="OWP_OtherSport_GetAdminSiteMatchesFromDate" SpName ="OWP_OtherSport_GetAdminSiteMatchesFromDate" DbName="DBACC.bodb02.bodbAdminNet" />
 	</Function>
-  <Function Name="PrematchReport">
-    <Setting Key="OWP_PrematchReport_GetLeagueByDate" SpName ="OWP_PrematchReport_GetLeagueByDate" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
-  </Function
+	<Function Name="PrematchReport">
+		<Setting Key="OWP_PrematchReport_GetLeagueByDateAndBettype" SpName ="OWP_PrematchReport_GetLeagueByDateAndBettype" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+		<Setting Key="OWP_PrematchReport_BuildReportId" SpName ="OWP_PrematchReport_BuildReportId" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+		<Setting Key="OWP_PrematchReport_InsertLeague" SpName ="OWP_PrematchReport_InsertLeague" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+		<Setting Key="OWP_PrematchReport_InsertMatch" SpName ="OWP_PrematchReport_InsertMatch" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+		<Setting Key="OWP_PrematchReport_InsertTotal" SpName ="OWP_PrematchReport_InsertTotal" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+	</Function>
 </Functions>
