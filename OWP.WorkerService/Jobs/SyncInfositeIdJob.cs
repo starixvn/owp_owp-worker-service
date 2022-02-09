@@ -49,7 +49,9 @@ public class SyncInfositeIdJob : IJob
         var nowGmt8 = DateTime.Now.AddHours(12);
         var toTime = nowGmt8.Date.AddHours(36);
 
+        Console.WriteLine($"Executing SyncInfositeIdJob at {DateTime.Now}");
         await synInfositeIdService.Sync();
+        Console.WriteLine($"Finished SyncInfositeIdJob at {DateTime.Now}");
 
         //
         var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");

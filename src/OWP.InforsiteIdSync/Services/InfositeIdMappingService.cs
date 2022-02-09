@@ -1,5 +1,6 @@
 ﻿using OWP.Core.Extensions;
 using OWP.InfositeIdSync.Models;
+using Newtonsoft.Json;
 
 namespace OWP.InfositeIdSync.Services;
 
@@ -12,8 +13,11 @@ public class InfositeIdMappingServiceImp : InfositeIdMappingService
 {
     public List<MatchMappingWithInfosite> Map(List<OWPMatch> owpMatches, List<InfositeMatch> infositeMatches)
     {
+        Console.WriteLine("owpMatches: " + JsonConvert.SerializeObject(owpMatches));
+        Console.WriteLine("infositeMatches: " + JsonConvert.SerializeObject(infositeMatches));
         var leagueDict = infositeMatches.GroupBy(i => i.LeagueName.ToLower())
             .ToDictionary(i => i.Key, i => i.ToList());
+        Console.WriteLine("leagueDict: " + JsonConvert.SerializeObject(infositeMatches));
 
         var emptyMatchList = new List<InfositeMatch>();
 
