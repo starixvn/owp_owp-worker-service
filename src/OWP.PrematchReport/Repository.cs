@@ -10,39 +10,31 @@ namespace OWP.PrematchReport;
 
 public interface Repository
 {
-    Task<IList<League>> GetLeagueByDateAndBettype(DateTime eventDate, int bettype);
+  Task<IList<LeagueInfo>> GetLeagueByDateAndBettype(DateTime eventDate, int bettype);
 
-    Task<int> BuildReportId(BuildReportIdCriteria criteria);
-
-    Task InsertLeague(InsertLeagueDataReportCriteria criteria);
+  Task InsertLeague(InsertLeagueDataReportCriteria criteria);
 }
 public class RepositoryImp : Repository
 {
-    private readonly IDynamicRepository repository;
+  private readonly IDynamicRepository repository;
 
-    public RepositoryImp(IDynamicRepository repository)
+  public RepositoryImp(IDynamicRepository repository)
+  {
+    this.repository = repository;
+  }
+
+  public async Task<IList<LeagueInfo>> GetLeagueByDateAndBettype(DateTime eventDate, int bettype)
+  {
+    var command = new GetLeagueCriteria()
     {
-        this.repository = repository;
-    }
+      EventDate = eventDate,
+      Bettype = bettype
+    };
+    var leagueInfo = await repository.FetchAsync<LeagueInfo>(command);
 
-    public async Task<IList<League>> GetLeagueByDateAndBettype(DateTime eventDate, int bettype)
-    {
-        var command = new GetLeagueCriteria()
-        {
-            EventDate = eventDate,
-            Bettype = bettype
-        };
-        var leagueInfo = await repository.FetchAsync<League>(command);
+    return leagueInfo.ToList();
+  }
 
-        return leagueInfo.ToList();
-    }
-
-    public async Task<int> BuildReportId(BuildReportIdCriteria criteria)
-    {
-        var reportIds = await repository.FetchAsync<int>(criteria);
-        return reportIds.First();
-    }
-
-    public async Task InsertLeague(InsertLeagueDataReportCriteria criteria)
-        => await repository.ExecuteAsync(criteria);
+  public async Task InsertLeague(InsertLeagueDataReportCriteria criteria)
+      => await repository.ExecuteAsync(criteria);
 }

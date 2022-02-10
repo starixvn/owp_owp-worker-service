@@ -1,25 +1,15 @@
 ﻿using OWP.Core.Attributes;
-using System;
-using System.Xml.Serialization;
 
 namespace OWP.PrematchReport.Models
 {
-    [Serializable]
-    [XmlName("Row")]
-    public record DataReport
-    {
-        public int ReportId { get; set; }
+  [Serializable]
+  [XmlName("Row")]
+  public record DataReport : DataReportBase
+  {
+    public int GroupId { get; init; }
 
-        [XmlIgnore]
-        public int UserId { get; set; }
+    public int Amount { get; init; }
 
-        [XmlIgnore]
-        public DateTime EventDate { get; set; }
-
-        public int GroupId { get; set; }
-
-        public int Amount { get; set; }
-
-        public int BetType { get; set; }
-    }
+    public int BetType { get; init; }
+  }
 }

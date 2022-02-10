@@ -1,43 +1,31 @@
-using System;
-using System.Threading.Tasks;
-
 namespace OWP.PrematchReport.Services.League
 {
-    public interface OULeagueService
+  public interface OULeagueService
+  {
+    Task BuildSingleOULeagueReport(DateTime eventDate);
+  }
+
+  public class OULeagueServiceImp : OULeagueService
+  {
+    private readonly DataReportService dataReportService;
+
+    private readonly Repository repository;
+
+    public OULeagueServiceImp(
+        DataReportService dataReportService,
+        Repository repository,
+        DbWriterService dbWriterService)
     {
-        Task BuildOULeagueReport(DateTime eventDate);
+      this.dataReportService = dataReportService;
+      this.repository = repository;
+
     }
 
-    public class OULeagueServiceImp : OULeagueService
+    public async Task BuildSingleOULeagueReport(DateTime eventDate)
     {
-        private readonly DataReportBuilderService dataReportBuilder;
-
-        private readonly ReportIdBuilder reportIdBuilder;
-
-        private readonly Repository repository;
-
-        private readonly DbWriterService dbWriterService;
-
-        public OULeagueServiceImp(
-            DataReportBuilderService dataReportBuilder,
-            ReportIdBuilder reportIdBuilder,
-            Repository repository,
-            DbWriterService dbWriterService)
-        {
-            this.dataReportBuilder = dataReportBuilder;
-            this.reportIdBuilder = reportIdBuilder;
-            this.repository = repository;
-            this.dbWriterService = dbWriterService;
-        }
-
-        public async Task BuildOULeagueReport(DateTime eventDate)
-        {
-            var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constants.Constant.OUID);
-            
-            var dataReport = dataReportBuilder.Build(leagues, Constants.Constant.OUID);
-            await reportIdBuilder.BuildReportId(dataReport);
-
-            await dbWriterService.InsertLeague(dataReport).ConfigureAwait(false);
-        }
+      var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constants.Constant.OUID);
+      var dataReport = dataReportService.BuildSingleLeagueGroupReport(leagues, Constants.Constant.OUID);
+      await dataReportService.InsertLeagueReport(dataReport);
     }
+  }
 }
