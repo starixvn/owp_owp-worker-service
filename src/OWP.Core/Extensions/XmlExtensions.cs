@@ -53,10 +53,12 @@ public static class XmlExtensions
 
     private static IEnumerable<Expression> GetExpressions(PropertyInfo p, Expression obj, Expression lambda)
     {
+        Console.WriteLine(p.Name);
         var prop = Expression.Property(obj, p);
 
         if (IsValidPropertyInfo(p)
-            || (p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>) && p.PropertyType.GetGenericArguments()[0].IsPrimitive))
+            || p.PropertyType.IsGenericType
+                && p.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
         {
             var name = GetPropertyName(p);
             return new[] { Expression.Invoke(lambda, Expression.Constant(name), Expression.Convert(prop, typeof(object))) };

@@ -13,10 +13,13 @@ using OWP.Command.Settings;
 using OWP.Infosite;
 using OWP.InfositeIdSync;
 using OWP.LinkLeagueAndTeam;
+using OWP.LinkLeagueAndTeam.Services;
 using OWP.MatchReadyNotification;
 using OWP.OtherSport;
 using OWP.SumReportData;
+using OWP.SumReportData.OvertimeReport.Services;
 using OWP.SyncLeagueSettings;
+using OWP.SyncLeagueSettings.Services;
 
 #region Configuration
 
@@ -73,5 +76,10 @@ services.AddSumReportDataServices();
 services.AddSyncLeagueSettingsServices();
 services.AddOtherSportServices();
 
-//var apiService = services.BuildServiceProvider().GetService<ApiService>();
-//await apiService?.GetInvalidEventKeysByDateAsync(DateTime.Now);
+var apiService = services.BuildServiceProvider().GetService<LeagueSettingsService>();
+apiService.InsertNewLeagueSettings(DateTime.Now);
+// for (var date = DateTime.Today; date <= DateTime.Today; date = date.AddDays(1))
+//         {
+//             await apiService.SumOvertimeReport(date.AddDays(-1)).ConfigureAwait(false);
+//         }
+// await apiService?.Execute();
