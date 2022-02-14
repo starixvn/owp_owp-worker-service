@@ -10,6 +10,8 @@ namespace OWP.PrematchReport.Services
     public interface DbWriterService
     {
         Task InsertLeague(IList<DataReport> dataReports);
+
+        Task InsertMatch(IList<DataReport> dataReports);
     }
 
     public class DbWriterServiceImp : DbWriterService
@@ -28,6 +30,15 @@ namespace OWP.PrematchReport.Services
                 XML = dataReports.ToXml().ToString(SaveOptions.DisableFormatting)
             };
             await repository.InsertLeague(criteria);
+        }
+
+        public async Task InsertMatch(IList<DataReport> dataReports)
+        {
+            var criteria = new InsertMatchDataReportCriteria
+            {
+                XML = dataReports.ToXml().ToString(SaveOptions.DisableFormatting)
+            };
+            await repository.InsertMatch(criteria);
         }
     }
 }
