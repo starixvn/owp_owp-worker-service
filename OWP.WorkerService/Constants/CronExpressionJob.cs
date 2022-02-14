@@ -12,7 +12,8 @@ public static class CronExpressionJob
 
     public const string SyncDataNotificationSetting = "0 59 12 1/1 * ? *";
 
-    public const string SumReportData = "0 5/59 0/12 ? * * *";
+    //public const string SumReportData = "0 5/59 0/12 ? * * *";
+    public const string SumReportData = "0 0/1 * 1/1 * ? *";
 
     public const string MatchReadyNotification = "0 0/1 * 1/1 * ? *";
 
