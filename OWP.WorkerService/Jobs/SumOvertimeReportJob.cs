@@ -35,8 +35,6 @@ public class SumOvertimeReportJob : IJob
 
     private async Task ExecuteJob()
     {
-        Console.WriteLine($"Job {this.GetType()}");
-
         var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
         if (underMaintenanceTime.IsUnderMaintenanceTime)
         {

@@ -35,7 +35,6 @@ public class SumTraderReportJob : IJob
 
     private async Task ExecuteJob()
     {
-        Console.WriteLine($"get in TraderReport");
         var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
         if (underMaintenanceTime.IsUnderMaintenanceTime)
         {
@@ -43,13 +42,11 @@ public class SumTraderReportJob : IJob
         }
 
         var lastDate = await cacheManipulator.GetLastDateOfSumData(Constant.TraderLastDateCacheKey);
-        Console.WriteLine($"lastDate TraderReport: {lastDate}");
 
         Console.WriteLine($"Job {this.GetType()} is starting at {DateTime.Now} for {lastDate}-{DateTime.Today}");
 
         for (var date = lastDate; date <= DateTime.Today; date = date.AddDays(1))
         {
-            Console.WriteLine($"EXE TraderReport at: {date}");
             await handler.Handle(date).ConfigureAwait(false);
         }
 

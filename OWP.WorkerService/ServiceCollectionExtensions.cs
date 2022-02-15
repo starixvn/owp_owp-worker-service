@@ -104,14 +104,19 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddJobsServices(this IServiceCollection services)
     {
-        services.AddTransient<SyncInfositeIdJob>();
         services.AddTransient<SyncFutureInfoSiteMatchJob>();
-        services.AddTransient<SyncTodayInfoSiteMatchJob>();
+        services.AddTransient<SyncEventDeletedJob>();
         services.AddTransient<SyncDataNotificationSettingJob>();
+        services.AddTransient<MatchReadyNotificationJob>();
+        services.AddTransient<SumTraderReportJob>();
+        services.AddTransient<SumLAReportJob>();
+        services.AddTransient<SyncInfositeIdJob>();
         services.AddTransient<SyncPreMatchLeagueJob>();
+        services.AddTransient<Sync180DayInfositeMatchJob>();
+        services.AddTransient<SyncLeagueSettingsJob>();
         services.AddTransient<LinkLeagueAndTeamJob>();
         services.AddTransient<SumOvertimeReportJob>();
-        services.AddTransient<SyncLeagueSettingsJob>();
+        services.AddTransient<SyncTodayInfoSiteMatchJob>();
         services.AddTransient<SyncOtherSportAdminSiteMatchJob>();
 
         return services;
