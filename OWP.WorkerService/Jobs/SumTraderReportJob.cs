@@ -42,11 +42,13 @@ public class SumTraderReportJob : IJob
         }
 
         var lastDate = await cacheManipulator.GetLastDateOfSumData(Constant.TraderLastDateCacheKey);
+        Console.WriteLine($"lastDate TraderReport: {lastDate}");
 
         await LogService.InfoAsync($"Job {this.GetType()} is starting at {DateTime.Now} for {lastDate}-{DateTime.Today}");
 
         for (var date = lastDate; date <= DateTime.Today; date = date.AddDays(1))
         {
+            Console.WriteLine($"EXE TraderReport at: {date}");
             await handler.Handle(date).ConfigureAwait(false);
         }
 

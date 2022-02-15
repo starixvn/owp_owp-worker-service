@@ -4,7 +4,7 @@ using OWP.InfositeIdSync.Models;
 
 namespace OWP.InfositeIdSync.Helpers;
 
-public class InfoSiteHelper
+public static class InfoSiteHelper
 {
     public static List<MatchMappingWithInfosite> Map(List<OWPMatch> owpMatches, List<InfositeMatch> infositeMatches)
     {
