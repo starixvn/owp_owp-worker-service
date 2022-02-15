@@ -9,7 +9,6 @@ public static class DependenceInjection
     public static IServiceCollection AddInfositeIdSyncServices(this IServiceCollection services)
     {
         services.AddTransient<InfositeIdMappingRepository, InfositeIdMappingRepositoryImp>();
-        services.AddTransient<InfositeIdMappingService, InfositeIdMappingServiceImp>();
         services.AddTransient<LogServiceWrapper, LogServiceWrapperImp>();
         services.AddTransient<SyncIsLiveService, SyncIsLiveServiceImp>();
         services.AddTransient<SyncInfositeIdService, SynInfositeIdServiceImp>();

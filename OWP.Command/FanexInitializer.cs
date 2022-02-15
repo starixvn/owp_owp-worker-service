@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace OWP.Command;
 
-internal class FanexInitializer
+internal static class FanexInitializer
 {
     public static void Start(IConfiguration configuration)
     {

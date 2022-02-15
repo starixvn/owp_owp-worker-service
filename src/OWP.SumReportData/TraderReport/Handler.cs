@@ -22,6 +22,7 @@ public class HandlerImp : Handler
 
     public async Task Handle(DateTime eventDate)
     {
+        Console.WriteLine("{0} {1}","Sum TraderReport at: ", eventDate);
         var robotByByUsers = await robotService.SumRobotFields(eventDate);
         var eSoccerByUsers = await eSoccerService.SumESoccerFields(eventDate);
 

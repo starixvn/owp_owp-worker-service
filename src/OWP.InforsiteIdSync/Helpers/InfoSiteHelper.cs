@@ -1,18 +1,12 @@
-﻿using OWP.Core.Extensions;
+﻿using System.Globalization;
+using OWP.Core.Extensions;
 using OWP.InfositeIdSync.Models;
-using Newtonsoft.Json;
-using System.Globalization;
 
-namespace OWP.InfositeIdSync.Services;
+namespace OWP.InfositeIdSync.Helpers;
 
-public interface InfositeIdMappingService
+public class InfoSiteHelper
 {
-    List<MatchMappingWithInfosite> Map(List<OWPMatch> owpMatches, List<InfositeMatch> infositeMatches);
-}
-
-public class InfositeIdMappingServiceImp : InfositeIdMappingService
-{
-    public List<MatchMappingWithInfosite> Map(List<OWPMatch> owpMatches, List<InfositeMatch> infositeMatches)
+    public static List<MatchMappingWithInfosite> Map(List<OWPMatch> owpMatches, List<InfositeMatch> infositeMatches)
     {
         var leagueDict = infositeMatches.GroupBy(i => i.LeagueName.ToLower(CultureInfo.InvariantCulture))
             .ToDictionary(i => i.Key, i => i.ToList());
@@ -25,7 +19,7 @@ public class InfositeIdMappingServiceImp : InfositeIdMappingService
             .ToList();
     }
 
-    public List<MatchMappingWithInfosite> Map(OWPMatch owpMatch, List<InfositeMatch> infositeMatches)
+    public static List<MatchMappingWithInfosite> Map(OWPMatch owpMatch, List<InfositeMatch> infositeMatches)
     {
         var matchesWithSameLeagueHomeAndAway = IsSabaMatch(owpMatch)
             ? MapMatchWithSameLeagueHomeAndAwayKOTime(owpMatch, infositeMatches)
