@@ -77,7 +77,8 @@ services.AddSyncLeagueSettingsServices();
 services.AddOtherSportServices();
 
 var apiService = services.BuildServiceProvider().GetService<LeagueSettingsService>();
-await apiService.InsertNewLeagueSettings(DateTime.Now.AddDays(-1));
+Console.WriteLine(DateTime.Now.AddDays(6));
+await apiService.InsertNewLeagueSettings(DateTime.Now.AddDays(6));
 // for (var date = DateTime.Today; date <= DateTime.Today; date = date.AddDays(1))
 //         {
 //             await apiService.SumOvertimeReport(date.AddDays(-1)).ConfigureAwait(false);

@@ -59,7 +59,7 @@ public class LeagueSettingsServiceImp : LeagueSettingsService
     public async Task InsertNewLeagueSettings(DateTime date)
     {
         var matchesAndSettings = await repository.GetMatchesAndSettings(date);
-        var matches = matchesAndSettings.Item1.Where(x => x.OWPMatchId == 777984);
+        var matches = matchesAndSettings.Item1;
 
         foreach (var match in matches)
         {

@@ -22,11 +22,10 @@ public class LinkLeagueAndMatchUnitTests
     public void BuildEndTime_StartTime_ReturnEndTime_Successfully()
     {
         // Arrange
-        var linkLeagueAndMatch = new LinkLeagueAndTeamServiceImp(cache, repository);
         var now = DateTime.Now;
 
         // Act
-        var actual = linkLeagueAndMatch.BuildEndTime(now);
+        var actual = LinkLeagueAndTeamServiceImp.BuildEndTime(now);
 
         // Assert
         Assert.Equal(now.AddDays(7), actual);
