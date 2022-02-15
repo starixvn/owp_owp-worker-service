@@ -27,13 +27,12 @@ public class InfositeIdMappingServiceUnitTests
     public void MapMatchWithSameLeagueKickoffTimeAndSwapTeam_SameKOHomeEqualAway()
     {
         // Arrange
-        var service = new InfositeIdMappingServiceImp();
         var unmappingOWPMatch = GetUnmappingOWPMatch()[1];
         var infositeMatch = GetInfositeMatch();
         var expected = new MatchMappingWithInfosite(2, 2000, 0, new DateTime(2020, 08, 27, 22, 00, 00));
 
         // Act
-        var actual = service.MapMatchWithSameLeagueKickoffTimeAndSwapTeam(unmappingOWPMatch, infositeMatch);
+        var actual = InfositeIdMappingServiceImp.MapMatchWithSameLeagueKickoffTimeAndSwapTeam(unmappingOWPMatch, infositeMatch);
 
         // Assert
         Assert.Single(actual);

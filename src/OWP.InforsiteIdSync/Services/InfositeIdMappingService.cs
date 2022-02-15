@@ -62,7 +62,7 @@ public class InfositeIdMappingServiceImp : InfositeIdMappingService
         .Select(m => new MatchMappingWithInfosite(owpMatch.OWPMatchId, m.InfoSiteMatchId, m.AdminSiteMatchId, owpMatch.EventDateTime))
         .ToList();
 
-    public List<MatchMappingWithInfosite> MapMatchWithSameLeagueKickoffTimeAndSwapTeam(OWPMatch owpMatch, List<InfositeMatch> infositeMatches)
+    public static List<MatchMappingWithInfosite> MapMatchWithSameLeagueKickoffTimeAndSwapTeam(OWPMatch owpMatch, List<InfositeMatch> infositeMatches)
         => infositeMatches.Where(m => IsSameLeagueKickoffTimeAndSwapTeam(owpMatch, m))
            .Select(m => new MatchMappingWithInfosite(owpMatch.OWPMatchId, m.InfoSiteMatchId, m.AdminSiteMatchId, owpMatch.EventDateTime))
            .ToList();
