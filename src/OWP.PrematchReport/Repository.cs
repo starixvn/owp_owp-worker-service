@@ -1,10 +1,6 @@
 using Fanex.Data.Repository;
 using OWP.PrematchReport.Models;
 using OWP.PrematchReport.Criteria;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
-using System;
 
 namespace OWP.PrematchReport;
 
