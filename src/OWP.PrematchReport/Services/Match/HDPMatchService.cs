@@ -1,7 +1,7 @@
-﻿using OWP.PrematchReport.Constants;
-
-namespace OWP.PrematchReport.Services.Match
+﻿namespace OWP.PrematchReport.Services.Match
 {
+    using OWP.PrematchReport.Constants;
+
   public interface HDPMatchService
   {
     Task BuildSingleHDPMatchReport(DateTime eventDate, TimeSpan? startNightShift);
@@ -11,19 +11,19 @@ namespace OWP.PrematchReport.Services.Match
   {
     private readonly Repository repository;
 
-    private readonly DataMatchReportService dataReportMatchService;
+        private readonly DataMatchReportService dataMatchReportService;
 
-    public HDPMatchServiceImp(Repository repository, DataMatchReportService dataReportMatchService)
+        public HDPMatchServiceImp(Repository repository, DataMatchReportService dataMatchReportService)
     {
       this.repository = repository;
-      this.dataReportMatchService = dataReportMatchService;
+            this.dataMatchReportService = dataMatchReportService;
     }
 
     public async Task BuildSingleHDPMatchReport(DateTime eventDate, TimeSpan? startNightShift)
     {
       var leagueDetails = await repository.GetLeagueDetailByDate(eventDate, Constant.HDPID);
-      var data = await dataReportMatchService.BuildMatchReport(eventDate, startNightShift, leagueDetails, Constant.HDPID);
-      await dataReportMatchService.InsertMatchReport(data);
+            var data = await dataMatchReportService.BuildMatchReport(eventDate, startNightShift, leagueDetails, Constant.HDPID);
+            await dataMatchReportService.InsertMatchReport(data);
     }
   }
 }

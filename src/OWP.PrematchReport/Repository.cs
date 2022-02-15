@@ -60,7 +60,7 @@ public class RepositoryImp : Repository
   {
     var command = new GetTotalMatchCriteria()
     {
-      LeagueIds = String.Join(",", PreMatchleagueIds),
+      PreMatchLeagueIds = string.Join(",", PreMatchleagueIds),
       FromDateTime = fromDate,
       ToDateTime = toDate,
       FromDateTimeNightShift = fromDateNightShift

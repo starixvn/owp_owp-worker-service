@@ -14,7 +14,7 @@ namespace OWP.PrematchReport
             services.AddTransient<DataMatchReportService, DataMatchReportServiceImp>();
             services.AddTransient<LeagueService, LeagueServiceImp>();
             services.AddTransient<OULeagueService, OULeagueServiceImp>();
-            services.AddTransient<HDPLeagueService, HDPLeagueService>();
+            services.AddTransient<HDPLeagueService, HDPLeagueServiceImp>();
             services.AddTransient<MatchService, MatchServiceImp>();
             services.AddTransient<OUMatchService, OUMatchServiceImp>();
             services.AddTransient<HDPMatchService, HDPMatchServiceImp>();

@@ -17,14 +17,13 @@
     public DataMatchReportServiceImp(Repository repository, DbWriterService dbWriterService)
     {
       this.repository = repository;
-      this.repository = repository;
       this.dbWriterService = dbWriterService;
     }
 
     public async Task<IList<DataReport>> BuildMatchReport(DateTime eventDate, TimeSpan? startNightShift, IList<LeagueDetailInfo> leagueDetailInfos, int bettype)
     {
-      var preMatchIds = leagueDetailInfos.Select(i => i.PrematchLeagueId).ToList();
-      var totalDataMatches = await GetTotalMatch(preMatchIds, eventDate, startNightShift);
+            var preMatchLeagueIds = leagueDetailInfos.Select(i => i.PreMatchLeagueId).ToList();
+            var totalDataMatches = await GetToTalMatch(preMatchLeagueIds, eventDate, startNightShift);
       var leagueInfoDict = leagueDetailInfos.GroupBy(x => new { x.UserId, x.EventDate, x.GroupId })
           .ToDictionary(x => x.Key, x => x.ToList());
       var dataReport = new List<DataReport>();
@@ -50,10 +49,13 @@
           .ToDictionary(x => x.Key, x => x.ToList());
       foreach (var item in leagueInfoByleaugeId.Keys)
       {
-        var totalMatch = totalDataMatches.FirstOrDefault(x => x.leaugeId == item);
-        totalAssignment += leagueInfoByleaugeId[item].Any(x => x.IsDay)
-            ? totalMatch.TotalMatchDayShift * leagueInfoByleaugeId[item].Where(x => x.IsDay).ToList().Count
-            : totalMatch.TotalMatchNightShift * leagueInfoByleaugeId[item].Where(x => !x.IsDay).ToList().Count;
+                var totalMatch = totalDataMatches.Where(x => x.OWPLeagueId == item);
+                if (totalMatch != null)
+                {
+                    totalAssignment += leagueInfoByleaugeId[item].Any(x => x.IsDay)
+                     ? totalMatch.Where(x => x.IsMatchDay).First().Total
+                     : totalMatch.Where(x => !x.IsMatchDay).First().Total;
+                }
       }
 
       return totalAssignment;
@@ -79,6 +81,6 @@
     }
 
     public async Task InsertMatchReport(IList<DataReport> dataReports)
-    => await dbWriterService.InsertMatch(dataReports).ConfigureAwait(false);
+         => await dbWriterService.InsertMatch(dataReports).ConfigureAwait(false);
   }
 }

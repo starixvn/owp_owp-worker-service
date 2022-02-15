@@ -13,7 +13,7 @@ namespace OWP.PrematchReport.Models
 
     public class LeagueDetailInfo : LeagueInfo
     {
-        public int PrematchLeagueId { get; set; }
+        public int PreMatchLeagueId { get; set; }
 
         public bool IsDay { get; set; }
     }

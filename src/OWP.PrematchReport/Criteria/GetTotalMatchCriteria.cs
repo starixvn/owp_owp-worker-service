@@ -4,7 +4,7 @@
 
     public class GetTotalMatchCriteria : CriteriaBase
     {
-        public string LeagueIds { get; set; }
+        public string PreMatchLeagueIds { get; set; }
 
         public DateTime FromDateTime { get; set; }
 
@@ -13,7 +13,7 @@
         public DateTime FromDateTimeNightShift { get; set; }
 
         public override string GetSettingKey()
-         => "OWP_PreMatchReport_GetToTalMatch";
+         => "OWP_PreMatchReport_GetTotalMatchByLeagueIdsAndTimeRange";
 
         public override bool IsValid()
          => true;

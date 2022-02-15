@@ -24,9 +24,9 @@
 
     public async Task BuildMatchReportAsync(DateTime eventDate)
     {
-      var startNightShift = await repository.QueryExistedStartTime(eventDate);
-      await hdpMatchService.BuildSingleHDPMatchReport(eventDate, startNightShift);
-      await OuMatchService.BuildSingleOUMatchReport(eventDate, startNightShift);
+            var startNightShift = await repository.QueryExistedStartTime(eventDate.Date);
+            await hdpMatchService.BuildSingleHDPMatchReport(eventDate.Date, startNightShift);
+            await OuMatchService.BuildSingleOUMatchReport(eventDate.Date, startNightShift);
     }
   }
 }

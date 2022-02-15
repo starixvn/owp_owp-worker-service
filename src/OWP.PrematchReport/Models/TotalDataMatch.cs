@@ -8,10 +8,10 @@ namespace OWP.PrematchReport.Models
 {
     public class TotalDataMatch
     {
-        public int leaugeId { get; set; }
+        public int OWPLeagueId { get; set; }
 
-        public int TotalMatchNightShift { get; set; }
+        public int Total { get; set; }
 
-        public int TotalMatchDayShift { get; set; }
+        public bool IsMatchDay { get; set; }
     }
 }
