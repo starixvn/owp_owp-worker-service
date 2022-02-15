@@ -19,7 +19,7 @@ public static class MatchHelper
 
     public static int CalculateSABAPESMatchDuration(Assignment assignment)
     {
-        var method = pesOperations.LookupByKey<string, Func<Assignment, int>>(assignment.OWPLeagueName, null);
+        var method = pesOperations.LookupByKey<Func<Assignment, int>>(assignment.OWPLeagueName, null);
         return method != null ? method(assignment) : 0;
     }
 

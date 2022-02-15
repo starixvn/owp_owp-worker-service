@@ -299,7 +299,10 @@ public class CalculationServiceImp : CalculationService
     }
 
     private static bool IsKOTimeDifferentWithin5Mins(Assignment assignmentA, Assignment assignmentB)
-        => Math.Abs(assignmentA.EventDateTime.Subtract(assignmentB.EventDateTime).TotalMinutes) <= 5;
+    {
+        const int differenceInMinute = 5;
+        return Math.Abs(assignmentA.EventDateTime.Subtract(assignmentB.EventDateTime).TotalMinutes) <= differenceInMinute;
+    }
 
     private bool IsContainsMultipleMatchesProviders(string provider)
     {

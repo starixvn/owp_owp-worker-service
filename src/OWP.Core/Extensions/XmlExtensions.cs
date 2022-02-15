@@ -53,7 +53,6 @@ public static class XmlExtensions
 
     private static IEnumerable<Expression> GetExpressions(PropertyInfo p, Expression obj, Expression lambda)
     {
-        Console.WriteLine(p.Name);
         var prop = Expression.Property(obj, p);
 
         if (IsValidPropertyInfo(p)

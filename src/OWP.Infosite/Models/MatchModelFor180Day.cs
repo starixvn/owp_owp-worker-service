@@ -21,7 +21,9 @@ public class MatchModelFor180Day
 
     public bool IsNeutral { get; set; }
 
-    public DateTime UpdatedTime { get; set; } = new DateTime(2000, 1, 1);
+    public DateTime UpdatedTime { get; set; } = new DateTime(Year, 1, 1);
+
+    private const int Year = 2000;
 
     public MatchModelFor180Day(MatchModelQuery180Day infositeMatch)
     {

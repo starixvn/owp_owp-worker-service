@@ -69,7 +69,7 @@ public class OWPScheduler : IHostedService
         await Scheduler.Start(cancellationToken);
     }
 
-    private ITrigger CreateTrigger(JobInfo jobInfo)
+    private static ITrigger CreateTrigger(JobInfo jobInfo)
         => TriggerBuilder
             .Create()
             .WithIdentity($"trigger{jobInfo.Type.Name}", $"group{jobInfo.Type.Name}")
@@ -77,7 +77,7 @@ public class OWPScheduler : IHostedService
             .WithCronSchedule(jobInfo.CronExpression)
             .Build();
 
-    private IJobDetail CreateJob(JobInfo jobInfo)
+    private static IJobDetail CreateJob(JobInfo jobInfo)
         => JobBuilder
             .Create(jobInfo.Type)
             .WithIdentity($"sync{jobInfo.Type.Name}", $"group{jobInfo.Type.Name}")

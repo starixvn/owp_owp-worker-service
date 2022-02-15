@@ -11,7 +11,7 @@ public static class DictionaryExtensions
         return dictionary.ContainsKey(key) ? dictionary[key] : defaultValue;
     }
 
-    public static TValue LookupByKey<TKey, TValue>(this Dictionary<string, TValue> dict, string key, TValue defaultValue)
+    public static TValue LookupByKey<TValue>(this Dictionary<string, TValue> dict, string key, TValue defaultValue)
     {
         var matchedKey = dict.Keys.FirstOrDefault(x => key.IndexOf(x, StringComparison.InvariantCultureIgnoreCase) >= 0);
 

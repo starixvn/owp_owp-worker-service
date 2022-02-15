@@ -110,7 +110,7 @@ public class CommonMatch : CommonSubMatch
 
     #region other configs
 
-    public int league_type { get; set; }
+    public int? league_type { get; set; }
 
     // refer to mbc league_id
     public int home_main_league_id { get; set; }

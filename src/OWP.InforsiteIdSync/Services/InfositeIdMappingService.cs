@@ -1,6 +1,7 @@
 ﻿using OWP.Core.Extensions;
 using OWP.InfositeIdSync.Models;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace OWP.InfositeIdSync.Services;
 
@@ -13,13 +14,13 @@ public class InfositeIdMappingServiceImp : InfositeIdMappingService
 {
     public List<MatchMappingWithInfosite> Map(List<OWPMatch> owpMatches, List<InfositeMatch> infositeMatches)
     {
-        var leagueDict = infositeMatches.GroupBy(i => i.LeagueName.ToLower())
+        var leagueDict = infositeMatches.GroupBy(i => i.LeagueName.ToLower(CultureInfo.InvariantCulture))
             .ToDictionary(i => i.Key, i => i.ToList());
 
         var emptyMatchList = new List<InfositeMatch>();
 
         return owpMatches
-            .Select(m => Map(m, leagueDict.GetValue(m.League.ToLower(), emptyMatchList)))
+            .Select(m => Map(m, leagueDict.GetValue(m.League.ToLower(CultureInfo.InvariantCulture), emptyMatchList)))
             .SelectMany(m => m)
             .ToList();
     }
@@ -44,7 +45,7 @@ public class InfositeIdMappingServiceImp : InfositeIdMappingService
         return new List<MatchMappingWithInfosite>();
     }
 
-    public List<MatchMappingWithInfosite> MapMatchWithSameLeagueHomeAndAway(OWPMatch owpMatch, List<InfositeMatch> infositeMatches)
+    public static List<MatchMappingWithInfosite> MapMatchWithSameLeagueHomeAndAway(OWPMatch owpMatch, List<InfositeMatch> infositeMatches)
         => infositeMatches.Where(m =>
             string.Compare(m.LeagueName, owpMatch.League, StringComparison.OrdinalIgnoreCase) == 0 &&
             string.Compare(m.HomeName, owpMatch.Home, StringComparison.OrdinalIgnoreCase) == 0 &&
@@ -66,7 +67,7 @@ public class InfositeIdMappingServiceImp : InfositeIdMappingService
            .Select(m => new MatchMappingWithInfosite(owpMatch.OWPMatchId, m.InfoSiteMatchId, m.AdminSiteMatchId, owpMatch.EventDateTime))
            .ToList();
 
-    public bool IsSameLeagueKickoffTimeAndSwapTeam(OWPMatch owpMatch, InfositeMatch infositeMatch)
+    public static bool IsSameLeagueKickoffTimeAndSwapTeam(OWPMatch owpMatch, InfositeMatch infositeMatch)
         => string.Compare(owpMatch.League, infositeMatch.LeagueName, StringComparison.OrdinalIgnoreCase) == 0
             && owpMatch.EventDateTime.ToShortTimeString() == infositeMatch.EventDateTime.ToShortTimeString()
             && string.Compare(owpMatch.Home, infositeMatch.AwayName, StringComparison.OrdinalIgnoreCase) == 0

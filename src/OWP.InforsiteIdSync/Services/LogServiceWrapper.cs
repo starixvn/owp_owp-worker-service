@@ -76,9 +76,9 @@ public class LogServiceWrapperImp : LogServiceWrapper
             deletedMatches = deletedMatches.ToArray(),
             liveMatches = liveMatches.ToArray(),
             nonLiveMatches = nonLiveMatches.ToArray(),
-            synchronizedLiveMatchResult = synchronizedLiveMatchResult,
-            synchronizedNonLiveMatchResult = synchronizedNonLiveMatchResult,
-            duplicatedMatches = duplicatedMatches
+            synchronizedLiveMatchResult,
+            synchronizedNonLiveMatchResult,
+            duplicatedMatches
         };
 
         var json = JsonConvert.SerializeObject(logObject);

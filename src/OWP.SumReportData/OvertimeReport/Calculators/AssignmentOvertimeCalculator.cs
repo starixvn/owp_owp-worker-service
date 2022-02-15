@@ -88,7 +88,7 @@ public static class AssignmentOvertimeCalculator
         if (MatchHelper.IsSabaMatch(assignment.OWPLeagueName) &&
             BetType.FullTimeBetTypes.Contains(assignment.Bettype))
         {
-            var method = sabaOperations.LookupByKey<string, Func<Assignment, int>>(assignment.OWPLeagueName, null);
+            var method = sabaOperations.LookupByKey<Func<Assignment, int>>(assignment.OWPLeagueName, null);
             var duration = method != null ? method(assignment) : 0;
 
             return assignment.EventDateTime.AddMinutes(duration);

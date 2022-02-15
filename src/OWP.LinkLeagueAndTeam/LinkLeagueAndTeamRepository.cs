@@ -22,7 +22,7 @@ public class LinkLeagueAndTeamRepositoryImp : LinkLeagueAndTeamRepository
 
     public async Task<IList<TeamInfo>> GetTeamInfoInTimeRange(DateTime @from, DateTime to)
     {
-        var command = new GetTeamInfoInTimeRangeCriteria()
+        var command = new GetTeamInfoInTimeRangeCriteria
         {
             FromDate = from,
             ToDate = to
@@ -34,7 +34,7 @@ public class LinkLeagueAndTeamRepositoryImp : LinkLeagueAndTeamRepository
 
     public async Task InsertOrUpdateTeamInfo(TeamInfo teamInfo)
     {
-        var command = new InsertOrUpdateCriteria()
+        var command = new InsertOrUpdateCriteria
         {
             LeagueId = teamInfo.LeagueId,
             TeamId = teamInfo.TeamId
