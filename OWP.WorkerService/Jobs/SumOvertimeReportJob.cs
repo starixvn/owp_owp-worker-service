@@ -35,6 +35,8 @@ public class SumOvertimeReportJob : IJob
 
     private async Task ExecuteJob()
     {
+        Console.WriteLine($"Job {this.GetType()}");
+
         var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
         if (underMaintenanceTime.IsUnderMaintenanceTime)
         {
@@ -43,7 +45,7 @@ public class SumOvertimeReportJob : IJob
 
         var lastDate = await cacheManipulator.GetLastDateOfSumData(Constant.OvertimeLastDateCacheKey);
 
-        await LogService.InfoAsync($"Job {this.GetType()} is starting at {DateTime.Now} for {lastDate}-{DateTime.Today}");
+        Console.WriteLine($"Job {this.GetType()} is starting at {DateTime.Now} for {lastDate}-{DateTime.Today}");
 
         for (var date = lastDate; date <= DateTime.Today; date = date.AddDays(1))
         {
@@ -52,6 +54,6 @@ public class SumOvertimeReportJob : IJob
 
         await cacheManipulator.SaveLastDateOfSumData(Constant.OvertimeLastDateCacheKey, DateTime.Today);
 
-        await LogService.InfoAsync($"Job {this.GetType()} finished at {DateTime.Now}");
+        Console.WriteLine($"Job {this.GetType()} finished at {DateTime.Now}");
     }
 }
