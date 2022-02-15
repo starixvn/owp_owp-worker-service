@@ -1,32 +1,32 @@
 ﻿namespace OWP.PrematchReport.Services.Match
 {
-    using System;
-    using System.Threading.Tasks;
-    using OWP.PrematchReport.Models;
+  using System;
+  using System.Threading.Tasks;
+  using OWP.PrematchReport.Models;
 
-    public interface MatchService
+  public interface MatchService
+  {
+    Task BuildMatchReportAsync(DateTime eventDate);
+  }
+
+  public class MatchServiceImp : MatchService
+  {
+    private readonly Repository repository;
+    private readonly HDPMatchService hdpMatchService;
+    private readonly OUMatchService OuMatchService;
+
+    public MatchServiceImp(Repository repository, HDPMatchService hdpMatchService, OUMatchService OuMatchService)
     {
-        Task BuildMatchReportAsync(DateTime eventDate);
+      this.repository = repository;
+      this.OuMatchService = OuMatchService;
+      this.hdpMatchService = hdpMatchService;
     }
 
-    public class MatchServiceImp : MatchService
+    public async Task BuildMatchReportAsync(DateTime eventDate)
     {
-        private readonly Repository repository;
-        private readonly HDPMatchService hdpMatchService;
-        private readonly OUMatchService OuMatchService;
-
-        public MatchServiceImp(Repository repository, HDPMatchService hdpMatchService, OUMatchService OuMatchService)
-        {
-            this.repository = repository;
-            this.OuMatchService = OuMatchService;
-            this.hdpMatchService = hdpMatchService;
-        }
-
-        public async Task BuildMatchReportAsync(DateTime eventDate)
-        {
-            var startNightShift = await repository.QueryExistedStartTime(eventDate);
-            await hdpMatchService.BuildSingleHDPMatchReport(eventDate, startNightShift);
-            await OuMatchService.BuildSingleOUMatchReport(eventDate, startNightShift);
-        }
+      var startNightShift = await repository.QueryExistedStartTime(eventDate);
+      await hdpMatchService.BuildSingleHDPMatchReport(eventDate, startNightShift);
+      await OuMatchService.BuildSingleOUMatchReport(eventDate, startNightShift);
     }
+  }
 }

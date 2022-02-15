@@ -10,80 +10,80 @@ namespace OWP.PrematchReport;
 
 public interface Repository
 {
-    Task<IList<LeagueInfo>> GetLeagueByDateAndBettype(DateTime eventDate, int bettype);
+  Task<IList<LeagueInfo>> GetLeagueByDateAndBettype(DateTime eventDate, int bettype);
 
-    Task<IList<LeagueDetailInfo>> GetLeagueDetailByDate(DateTime eventDate, int bettype);
+  Task<IList<LeagueDetailInfo>> GetLeagueDetailByDate(DateTime eventDate, int bettype);
 
-    Task InsertLeague(InsertLeagueDataReportCriteria criteria);
+  Task InsertLeague(InsertLeagueDataReportCriteria criteria);
 
-    Task InsertMatch(InsertMatchDataReportCriteria criteria);
+  Task InsertMatch(InsertMatchDataReportCriteria criteria);
 
-    Task<IList<TotalDataMatch>> GetTotalMatchByLeaugeIds(IList<int> PreMatchleagueIds, DateTime fromDate, DateTime toDate, DateTime frommDateNightShift);
+  Task<IList<TotalDataMatch>> GetTotalMatchByLeagueIds(IList<int> PreMatchleagueIds, DateTime fromDate, DateTime toDate, DateTime frommDateNightShift);
 
-    Task<TimeSpan?> QueryExistedStartTime(DateTime EventDate);
+  Task<TimeSpan?> QueryExistedStartTime(DateTime EventDate);
 }
 
 public class RepositoryImp : Repository
 {
-    private readonly IDynamicRepository repository;
+  private readonly IDynamicRepository repository;
 
-    public RepositoryImp(IDynamicRepository repository)
+  public RepositoryImp(IDynamicRepository repository)
+  {
+    this.repository = repository;
+  }
+
+  public async Task<IList<LeagueInfo>> GetLeagueByDateAndBettype(DateTime eventDate, int bettype)
+  {
+    var command = new GetLeagueCriteria()
     {
-        this.repository = repository;
-    }
+      EventDate = eventDate,
+      Bettype = bettype
+    };
+    var leagueInfo = await repository.FetchAsync<LeagueInfo>(command);
 
-    public async Task<IList<LeagueInfo>> GetLeagueByDateAndBettype(DateTime eventDate, int bettype)
+    return leagueInfo.ToList();
+  }
+
+  public async Task<IList<LeagueDetailInfo>> GetLeagueDetailByDate(DateTime eventDate, int bettype)
+  {
+    var command = new GetLeagueDetailCriteria()
     {
-        var command = new GetLeagueCriteria()
-        {
-            EventDate = eventDate,
-            Bettype = bettype
-        };
-        var leagueInfo = await repository.FetchAsync<LeagueInfo>(command);
+      EventDate = eventDate,
+      Bettype = bettype
+    };
+    var leagueInfo = await repository.FetchAsync<LeagueDetailInfo>(command);
 
-        return leagueInfo.ToList();
-    }
+    return leagueInfo.ToList();
+  }
 
-    public async Task<IList<LeagueDetailInfo>> GetLeagueDetailByDate(DateTime eventDate, int bettype)
+  public async Task<IList<TotalDataMatch>> GetTotalMatchByLeagueIds(IList<int> PreMatchleagueIds, DateTime fromDate, DateTime toDate, DateTime fromDateNightShift)
+  {
+    var command = new GetTotalMatchCriteria()
     {
-        var command = new GetLeagueDetailCriteria()
-        {
-            EventDate = eventDate,
-            Bettype = bettype
-        };
-        var leagueInfo = await repository.FetchAsync<LeagueDetailInfo>(command);
+      LeagueIds = String.Join(",", PreMatchleagueIds),
+      FromDateTime = fromDate,
+      ToDateTime = toDate,
+      FromDateTimeNightShift = fromDateNightShift
+    };
+    var totals = await repository.FetchAsync<TotalDataMatch>(command);
 
-        return leagueInfo.ToList();
-    }
+    return totals.ToList();
+  }
 
-    public async Task<IList<TotalDataMatch>> GetTotalMatchByLeaugeIds(IList<int> PreMatchleagueIds, DateTime fromDate, DateTime toDate, DateTime fromDateNightShift)
+  public async Task<TimeSpan?> QueryExistedStartTime(DateTime EventDate)
+  {
+    var criteria = new GetStartTimeCriteria
     {
-        var command = new GetTotalMatchCriteria()
-        {
-            LeagueIds = String.Join(",", PreMatchleagueIds),
-            FromDateTime = fromDate,
-            ToDateTime = toDate,
-            FromDateTimeNightShift = fromDateNightShift
-        };
-        var totals = await repository.FetchAsync<TotalDataMatch>(command);
+      EventDate = EventDate
+    };
+    var result = await repository.FetchAsync<TimeSpan>(criteria);
 
-        return totals.ToList();
-    }
+    return result.Any() ? new TimeSpan?(result.FirstOrDefault()) : null;
+  }
 
-    public async Task<TimeSpan?> QueryExistedStartTime(DateTime EventDate)
-    {
-        var criteria = new GetStartTimeCriteria
-        {
-            EventDate = EventDate
-        };
-        var result = await repository.FetchAsync<TimeSpan>(criteria);
+  public async Task InsertLeague(InsertLeagueDataReportCriteria criteria)
+    => await repository.ExecuteAsync(criteria);
 
-        return result.Any() ? new TimeSpan?(result.FirstOrDefault()) : null;
-    }
-
-    public async Task InsertLeague(InsertLeagueDataReportCriteria criteria)
-      => await repository.ExecuteAsync(criteria);
-
-    public async Task InsertMatch(InsertMatchDataReportCriteria criteria)
-      => await repository.ExecuteAsync(criteria);
+  public async Task InsertMatch(InsertMatchDataReportCriteria criteria)
+    => await repository.ExecuteAsync(criteria);
 }
