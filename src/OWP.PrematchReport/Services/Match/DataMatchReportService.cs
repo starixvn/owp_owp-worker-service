@@ -43,7 +43,7 @@
             return dataReport;
         }
 
-        private int GetTotalAssignment(IList<LeagueDetailInfo> leagueDetailInfos, IList<TotalDataMatch> totalDataMatches)
+        private static int GetTotalAssignment(IList<LeagueDetailInfo> leagueDetailInfos, IList<TotalDataMatch> totalDataMatches)
         {
             var totalAssignment = 0;
             var leagueInfoByleaugeId = leagueDetailInfos.GroupBy(x => x.OWPLeagueId)
@@ -54,8 +54,8 @@
                 if (totalMatch != null)
                 {
                     totalAssignment += leagueInfoByleaugeId[item].Any(x => x.IsDay)
-                     ? totalMatch.Where(x => x.IsMatchDay).First().Total
-                     : totalMatch.Where(x => !x.IsMatchDay).First().Total;
+                     ? totalMatch.First(x => x.IsMatchDay).Total
+                     : totalMatch.First(x => !x.IsMatchDay).Total;
                 }
             }
 
