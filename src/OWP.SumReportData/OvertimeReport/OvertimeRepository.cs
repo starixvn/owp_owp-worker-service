@@ -1,5 +1,5 @@
 ﻿using Fanex.Data.Repository;
-using OWP.Core.Extensions;
+using Olympus.Xml;
 using OWP.SumReportData.OvertimeReport.Criteria;
 using OWP.SumReportData.OvertimeReport.Models;
 
@@ -34,9 +34,11 @@ public class OvertimeRepositoryImp : OvertimeRepository
         });
 
     public async Task SaveData(DateTime date, IEnumerable<OvertimeData> data)
-        => await _repository.ExecuteAsync(new SaveOvertimeReportCriteria
+    {
+        await _repository.ExecuteAsync(new SaveOvertimeReportCriteria
         {
             EventDate = date,
-            Data = data.ToXml().ToString()
+            Data = XmlConverter.Serialize(data)
         });
+    }
 }

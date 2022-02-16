@@ -1,9 +1,8 @@
 ﻿using Fanex.Data.Repository;
 using Newtonsoft.Json;
-using OWP.Core.Extensions;
+using Olympus.Xml;
 using OWP.SyncLeagueSettings.Criteria;
 using OWP.SyncLeagueSettings.Models;
-using System.Xml.Linq;
 
 namespace OWP.SyncLeagueSettings;
 
@@ -46,7 +45,7 @@ public class LeagueSettingsRepositoryImp : LeagueSettingsRepository
     {
         var criteria = new InsertNewLeagueSettingsCriteria
         {
-            LeagueSettings = leaguesSettings.ToXml().ToString(SaveOptions.DisableFormatting)
+            LeagueSettings = XmlConverter.Serialize(leaguesSettings)
         };
 
         return await dynamicRepository.FetchAsync<InsertLeagueSettingsResponse>(criteria);

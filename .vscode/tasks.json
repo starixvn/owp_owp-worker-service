@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/OWP.WorkerService/OWP.WorkerService.csproj",
+                "${workspaceFolder}/OWP.Command/OWP.Command.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

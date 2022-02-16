@@ -1,5 +1,5 @@
 ﻿using Fanex.Data.Repository;
-using OWP.Core.Extensions;
+using Olympus.Xml;
 using OWP.SumReportData.LAReport.Criteria;
 using OWP.SumReportData.LAReport.Models;
 
@@ -28,7 +28,7 @@ public class LARepositoryImp : LARepository
         var command = new SumLAReportCommand
         {
             EventDate = eventDate,
-            Xml = laReportModels.ToXml().ToString()
+            Xml = XmlConverter.Serialize(laReportModels)
         };
 
         await repository.ExecuteAsync(command);

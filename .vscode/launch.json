@@ -9,9 +9,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/OWP.WorkerService/bin/Debug/net6.0/OWP.WorkerService.dll",
+            "program": "${workspaceFolder}/OWP.Command/bin/Debug/net6.0/OWP.Command.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/OWP.WorkerService",
+            "cwd": "${workspaceFolder}/OWP.Command",
             "console": "internalConsole",
             "stopAtEntry": false
         },

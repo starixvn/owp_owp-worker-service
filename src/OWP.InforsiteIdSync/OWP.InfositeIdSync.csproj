@@ -15,6 +15,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Olympus.OWP.Constants" Version="1.0.0.3" />
     <PackageReference Include="Olympus.InfoSiteClient" Version="2.1.0.4" />   
+    <PackageReference Include="Olympus.Xml.AspNetCore" Version="1.0.0" />   
   </ItemGroup>
 
   <ItemGroup>

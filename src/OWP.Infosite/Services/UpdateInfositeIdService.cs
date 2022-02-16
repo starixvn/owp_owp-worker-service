@@ -1,5 +1,5 @@
 ﻿using Fanex.Data.Repository;
-using OWP.Core.Extensions;
+using Olympus.Xml;
 using OWP.Infosite.Criteria;
 using OWP.Infosite.Models;
 
@@ -47,7 +47,7 @@ public class UpdateInfositeIdServiceImp : UpdateInfositeIdService
     {
         var criteria = new UpdateInfositeIdCommand
         {
-            MatchRelationEvents = events.ToXml().ToString()
+            MatchRelationEvents = XmlConverter.Serialize(events)
         };
 
         await repository.ExecuteAsync(criteria);

@@ -1,8 +1,8 @@
-﻿using Fanex.Data.Repository;
-using OWP.Core.Extensions;
+﻿using System.Globalization;
+using Fanex.Data.Repository;
+using Olympus.Xml;
 using OWP.MatchReadyNotification.Criteria;
 using OWP.MatchReadyNotification.Models;
-using System.Globalization;
 
 namespace OWP.MatchReadyNotification;
 
@@ -83,7 +83,7 @@ public class MatchReadyRepositoryImp : MatchReadyRepository
     {
         var criteria = new InsertMessageCriteria
         {
-            Messages = messages.ToXml().ToString(0),
+            Messages = XmlConverter.Serialize(messages),
             CreatedByUserId = 0,
             SessionId = sessionId
         };
