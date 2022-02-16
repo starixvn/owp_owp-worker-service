@@ -19,16 +19,16 @@ namespace OWP.PrematchReport.UnitTests.Services.Match
         }
 
         [Fact]
-        public async Task BuildMatchReport_Always_ReturnDataRePorts()
+        public async Task BuildMatchReport_Always_ReturnDataReport()
         {
             //Arrange
             var matchservice = new DataMatchReportServiceImp(repository, dbWriterService);
-
-            //Act
-            repository.GetTotalMatchByLeaugeIds(Arg.Compat.Any<IList<int>>(), Arg.Compat.Any<DateTime>(), Arg.Compat.Any<DateTime>(), Arg.Compat.Any<DateTime>())
+            repository.GetTotalMatchByLeagueIds(Arg.Compat.Any<IList<int>>(), Arg.Compat.Any<DateTime>(), Arg.Compat.Any<DateTime>(), Arg.Compat.Any<DateTime>())
                 .Returns(MockTotalDataMatch());
             var leagueDetailInfos = MockLeagueDetailInfo();
-            var actual = await matchservice.BuildMatchReport(DateTime.Now, null, leagueDetailInfos, 1);
+
+            //Act
+            var actual = await matchservice.BuildMatchReport(leagueDetailInfos, DateTime.Now, null, 1);
 
             //Assert
             var expected = MockExpected();
@@ -51,10 +51,10 @@ namespace OWP.PrematchReport.UnitTests.Services.Match
                 {
                     EventDate = new DateTime(2020, 10, 2),
                     GroupId = 0,
-                    IsDay = true,
+                    IsDay = false,
                     OWPLeagueId = 1,
                     PreMatchLeagueId = 1,
-                    UserId = 12,
+                    UserId = 8,
                 },
                 new()
                 {
@@ -73,6 +73,15 @@ namespace OWP.PrematchReport.UnitTests.Services.Match
                     OWPLeagueId = 2,
                     PreMatchLeagueId = 1,
                     UserId = 8,
+                },
+                new()
+                {
+                    EventDate = new DateTime(2020, 10, 2),
+                    GroupId = 0,
+                    IsDay = true,
+                    OWPLeagueId = 1,
+                    PreMatchLeagueId = 1,
+                    UserId = 12,
                 },
                 new()
                 {
@@ -99,34 +108,64 @@ namespace OWP.PrematchReport.UnitTests.Services.Match
              {
                  new()
                  {
-                     leaugeId = 1,
-                     TotalMatchDayShift = 1,
-                     TotalMatchNightShift = 2,
+                     OWPLeagueId = 1,
+                     IsMatchDay = true,
+                     Total = 1
                  },
                  new()
                  {
-                     leaugeId = 10,
-                     TotalMatchDayShift = 8,
-                     TotalMatchNightShift = 9,
+                     OWPLeagueId = 1,
+                     IsMatchDay = false,
+                     Total = 2
                  },
                  new()
                  {
-                     leaugeId = 2,
-                     TotalMatchDayShift = 1,
-                     TotalMatchNightShift = 2,
+                     OWPLeagueId = 10,
+                     Total = 8,
+                     IsMatchDay = true,
                  },
                  new()
                  {
-                     leaugeId = 3,
-                     TotalMatchDayShift = 1,
-                     TotalMatchNightShift = 2,
+                     OWPLeagueId = 10,
+                     Total = 9,
+                     IsMatchDay = false,
                  },
                  new()
                  {
-                     leaugeId = 4,
-                     TotalMatchDayShift = 2,
-                     TotalMatchNightShift = 3,
+                     OWPLeagueId = 2,
+                     Total = 1,
+                     IsMatchDay = true,
                  },
+                 new()
+                 {
+                     OWPLeagueId = 2,
+                     Total = 5,
+                     IsMatchDay = false,
+                 },
+                 new()
+                 {
+                     OWPLeagueId = 3,
+                     IsMatchDay = true,
+                     Total = 2,
+                 },
+                 new()
+                 {
+                     OWPLeagueId = 3,
+                     IsMatchDay = false,
+                     Total = 6,
+                 },
+                 new()
+                 {
+                     OWPLeagueId = 4,
+                     IsMatchDay = true,
+                     Total = 3,
+                 },
+                 new()
+                 {
+                     OWPLeagueId = 4,
+                     IsMatchDay = false,
+                     Total = 30,
+                 }
              };
 
         public List<DataReport> MockExpected()
@@ -142,24 +181,24 @@ namespace OWP.PrematchReport.UnitTests.Services.Match
              },
              new()
              {
-                 UserId = 8,
+                 UserId = 12,
                  Amount = 1,
                  BetType = 1,
                  EventDate = new DateTime(2020, 10, 2),
-                 GroupId = 1,
+                 GroupId = 0,
              },
              new()
              {
                  UserId = 8,
-                 Amount = 3,
+                 Amount = 2,
                  BetType = 1,
-                 GroupId = 2,
+                 GroupId = 1,
                  EventDate = new DateTime(2020, 10, 2)
              },
              new()
              {
-                 UserId = 12,
-                 Amount = 1,
+                 UserId = 8,
+                 Amount = 30,
                  BetType = 1,
                  GroupId = 2,
                  EventDate = new DateTime(2020, 10, 2)

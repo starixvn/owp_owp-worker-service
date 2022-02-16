@@ -24,8 +24,6 @@ namespace OWP.PrematchReport.Services.League
         {
             await ouLeagueService.BuildSingleOULeagueReport(eventDate);
             await hdpLeagueService.BuildSingleHDPLeagueReport(eventDate);
-
-            // TODO
         }
     }
 }

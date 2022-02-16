@@ -4,7 +4,7 @@
 
     public interface DataMatchReportService
     {
-        Task<IList<DataReport>> BuildMatchReport(DateTime eventDate, TimeSpan? startNightShift, IList<LeagueDetailInfo> leagueDetailInfos, int bettype);
+        Task<IList<DataReport>> BuildMatchReport(IList<LeagueDetailInfo> leagueDetailInfos, DateTime eventDate, TimeSpan? startNightShift, int bettype);
 
         Task InsertMatchReport(IList<DataReport> dataReports);
     }
@@ -20,7 +20,7 @@
             this.dbWriterService = dbWriterService;
         }
 
-        public async Task<IList<DataReport>> BuildMatchReport(DateTime eventDate, TimeSpan? startNightShift, IList<LeagueDetailInfo> leagueDetailInfos, int bettype)
+        public async Task<IList<DataReport>> BuildMatchReport(IList<LeagueDetailInfo> leagueDetailInfos, DateTime eventDate, TimeSpan? startNightShift, int bettype)
         {
             var preMatchLeagueIds = leagueDetailInfos.Select(i => i.PreMatchLeagueId).ToList();
             var totalDataMatches = await GetTotalMatch(preMatchLeagueIds, eventDate, startNightShift);
@@ -39,6 +39,7 @@
                     BetType = bettype
                 });
             }
+
             return dataReport;
         }
 
@@ -64,7 +65,8 @@
         private async Task<IList<TotalDataMatch>> GetTotalMatch(IList<int> preMatchIds, DateTime eventDate, TimeSpan? startNightShift)
         {
             var fromDate = eventDate.AddHours(12);
-            var fromDateNightShift = startNightShift.HasValue ? CalculateQueryDateTime(startNightShift, eventDate) : fromDate;
+            var fromDateNightShift = startNightShift.HasValue ?
+                CalculateQueryDateTime(startNightShift, eventDate) : fromDate;
             var toDate = eventDate.AddDays(1).AddHours(11).AddMinutes(59).AddSeconds(59);
 
             return await repository.GetTotalMatchByLeagueIds(preMatchIds, fromDate, toDate, fromDateNightShift);

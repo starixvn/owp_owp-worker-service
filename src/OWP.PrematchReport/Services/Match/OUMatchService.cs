@@ -22,7 +22,7 @@
         public async Task BuildSingleOUMatchReport(DateTime eventDate, TimeSpan? startNightShift)
         {
             var leagueDetails = await repository.GetLeagueDetailByDate(eventDate, Constant.OUID);
-            var data = await dataMatchReportService.BuildMatchReport(eventDate, startNightShift, leagueDetails, Constant.OUID);
+            var data = await dataMatchReportService.BuildMatchReport(leagueDetails, eventDate, startNightShift, Constant.OUID);
             await dataMatchReportService.InsertMatchReport(data);
         }
     }
