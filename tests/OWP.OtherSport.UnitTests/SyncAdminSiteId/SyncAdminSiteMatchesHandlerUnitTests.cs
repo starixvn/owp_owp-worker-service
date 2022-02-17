@@ -1,6 +1,6 @@
 ﻿using Fanex.Data.Repository;
 using NSubstitute;
-using OWP.Core.Extensions;
+using Olympus.Xml;
 using OWP.OtherSport.SyncAdminSiteId.Criteria;
 using OWP.OtherSport.SyncAdminSiteId.Handlers;
 using OWP.OtherSport.SyncAdminSiteId.Models;
@@ -24,10 +24,10 @@ public class SyncAdminSiteMatchesHandlerUnitTests
 
         await dynamicRepository.Received()
             .ExecuteAsync(Arg.Is<UpdateUnlinkedMatchesCriteria>(u
-                => u.UnlinkedMatches == GetUnlinkedMatches().ToXml().ToString()));
+                => u.UnlinkedMatches == XmlConverter.Serialize(GetUnlinkedMatches())));
         await dynamicRepository.Received()
             .ExecuteAsync(Arg.Is<UpdateLinkedMatchesCriteria>(u
-                => u.LinkedMatches == GetLinkedMatches().ToXml().ToString()));
+                => u.LinkedMatches == XmlConverter.Serialize(GetLinkedMatches())));
     }
 
     public SyncAdminSiteMatchesHandlerImp Init()
