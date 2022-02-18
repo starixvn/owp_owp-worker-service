@@ -76,11 +76,5 @@ services.AddSumReportDataServices();
 services.AddSyncLeagueSettingsServices();
 services.AddOtherSportServices();
 
-var apiService = services.BuildServiceProvider().GetService<OWP.SumReportData.OvertimeReport.Services.ReportCalculationService>();
-// Console.WriteLine(DateTime.Now.AddDays(6));
-// await apiService.InsertNewLeagueSettings(DateTime.Now.AddDays(6));
-for (var date = DateTime.Today.AddDays(-2); date < DateTime.Today; date = date.AddDays(1))
-        {
-            await apiService.SumOvertimeReport(date).ConfigureAwait(false);
-        }
-// await apiService?.Execute();
+var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.SyncPreMatchLeagueService>();
+await apiService.Sync().ConfigureAwait(false);
