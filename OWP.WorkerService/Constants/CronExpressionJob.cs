@@ -12,8 +12,7 @@ public static class CronExpressionJob
 
     public const string SyncDataNotificationSetting = "0 59 12 1/1 * ? *";
 
-    //public const string SumReportData = "0 5/59 0/12 ? * * *";
-    public const string SumReportData = "0 0/2 * 1/1 * ? *";
+    public const string SumReportData = "0 5/59 0/12 ? * * *";
 
     public const string MatchReadyNotification = "0 0/1 * 1/1 * ? *";
 
@@ -25,8 +24,7 @@ public static class CronExpressionJob
 
     public const string LinkLeagueAndMatch = "0 0 2 ? * MON *"; //2AM every Monday GMT-4
 
-    // public const string SumOvertimeReport = "0 0 2 ? * * *"; //2AM everyday GMT-4
-    public const string SumOvertimeReport = "0 0/2 * 1/1 * ? *";
+    public const string SumOvertimeReport = "0 0 2 ? * * *"; //2AM everyday GMT-4
 
     public const string SyncOtherSportAdminSiteJob = "0 0/2 * 1/1 * ? *";
 }
