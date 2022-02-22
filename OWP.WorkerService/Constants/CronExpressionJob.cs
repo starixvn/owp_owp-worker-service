@@ -1,5 +1,6 @@
 namespace OWP.WorkerService.Constants;
 
+#pragma warning disable S125 // Sections of code should not be commented out
 public static class CronExpressionJob
 {
     public const string SyncTodayInfoSiteMatch = "0 0/1 * 1/1 * ? *";
@@ -30,3 +31,4 @@ public static class CronExpressionJob
 
     public const string PrematchReport = "0 0 2 ? * MON *"; //2AM every Monday GMT-4;
 }
+#pragma warning restore S125

@@ -1,6 +1,6 @@
-﻿using OWP.Infosite.Constants;
+﻿using System.Collections.Immutable;
+using OWP.Infosite.Constants;
 using OWP.Infosite.Models;
-
 namespace OWP.Infosite.Builder;
 
 public static class WatchBetBuilder
@@ -33,7 +33,7 @@ public static class WatchBetBuilder
             ? $"{wb}/{stream}"
             : stream;
 
-    public static string BuildStream(int? src, string id, IDictionary<int, string> options)
+    public static string BuildStream(int? src, string id, IImmutableDictionary<int, string> options)
     {
         var stream = GetStreamName(src, options);
         var streamId = string.IsNullOrEmpty(id) || id.Trim() == "0" ? string.Empty : id.Trim();
@@ -42,7 +42,7 @@ public static class WatchBetBuilder
         return string.Join("-", streamArray);
     }
 
-    public static string GetStreamName(int? src, IDictionary<int, string> options)
+    public static string GetStreamName(int? src, IImmutableDictionary<int, string> options)
     {
         if (!src.HasValue)
         {
