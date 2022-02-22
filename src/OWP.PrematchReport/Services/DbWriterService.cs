@@ -1,10 +1,7 @@
-﻿using OWP.Core.Extensions;
-using OWP.PrematchReport.Criteria;
+﻿using OWP.PrematchReport.Criteria;
 using OWP.PrematchReport.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Xml.Linq;
-
+using Olympus.Xml;
 namespace OWP.PrematchReport.Services
 {
     public interface DbWriterService
@@ -27,7 +24,7 @@ namespace OWP.PrematchReport.Services
         {
             var criteria = new InsertLeagueDataReportCriteria
             {
-                XML = dataReports.ToXml().ToString(SaveOptions.DisableFormatting)
+                XML = XmlConverter.Serialize(dataReports)
             };
             await repository.InsertLeague(criteria);
         }
@@ -36,7 +33,7 @@ namespace OWP.PrematchReport.Services
         {
             var criteria = new InsertMatchDataReportCriteria
             {
-                XML = dataReports.ToXml().ToString(SaveOptions.DisableFormatting)
+                XML = XmlConverter.Serialize(dataReports)
             };
             await repository.InsertMatch(criteria);
         }

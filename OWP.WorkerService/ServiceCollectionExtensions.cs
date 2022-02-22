@@ -120,7 +120,8 @@ public static class ServiceCollectionExtensions
         services.AddTransient<SumOvertimeReportJob>();
         services.AddTransient<SyncTodayInfoSiteMatchJob>();
         services.AddTransient<SyncOtherSportAdminSiteMatchJob>();
-
+        services.AddTransient<SumPrematchReportJob>();
+        
         return services;
     }
 }
