@@ -2,7 +2,7 @@
 using OWP.SyncLeagueSettings.Constants;
 using OWP.SyncLeagueSettings.Helpers;
 using OWP.SyncLeagueSettings.Models;
-
+using System.Linq;
 namespace OWP.SyncLeagueSettings.Services;
 
 public interface LeagueSettingsService
@@ -59,14 +59,15 @@ public class LeagueSettingsServiceImp : LeagueSettingsService
     public async Task InsertNewLeagueSettings(DateTime date)
     {
         var matchesAndSettings = await repository.GetMatchesAndSettings(date);
+        var matches = matchesAndSettings.Item1;
 
-        foreach (var match in matchesAndSettings.Item1)
+        foreach (var match in matches)
         {
             match.MatchSettings = matchesAndSettings.Item2.Where(x => x.OWPMatchId == match.OWPMatchId).ToList();
         }
 
         var tvConditions = await repository.GetAllTvConditions();
-        var leagueSettings = CreateNewLeaguesSettings(date, matchesAndSettings.Item1, tvConditions);
+        var leagueSettings = CreateNewLeaguesSettings(date, matches, tvConditions);
 
         var insertLeagueSettingsResponses = await repository.InsertNewLeaguesSettings(leagueSettings);
 

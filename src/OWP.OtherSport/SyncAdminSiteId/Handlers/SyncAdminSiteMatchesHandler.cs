@@ -1,5 +1,5 @@
 ﻿using Fanex.Data.Repository;
-using OWP.Core.Extensions;
+using Olympus.Xml;
 using OWP.OtherSport.SyncAdminSiteId.Criteria;
 using OWP.OtherSport.SyncAdminSiteId.Helpers;
 using OWP.OtherSport.SyncAdminSiteId.Models;
@@ -46,7 +46,7 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
         {
             var criteria = new UpdateUnlinkedMatchesCriteria
             {
-                UnlinkedMatches = matches.ToXml().ToString()
+                UnlinkedMatches = XmlConverter.Serialize(matches)
             };
             await dynamicRepository.ExecuteAsync(criteria);
         }
@@ -58,7 +58,7 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
         {
             var criteria = new UpdateLinkedMatchesCriteria
             {
-                LinkedMatches = matches.ToXml().ToString()
+                LinkedMatches = XmlConverter.Serialize(matches)
             };
             await dynamicRepository.ExecuteAsync(criteria);
         }

@@ -2,7 +2,7 @@
 
 namespace OWP.OtherSport.SyncAdminSiteId.Helpers;
 
-public class MatchHelper
+public static class MatchHelper
 {
     public static IEnumerable<LinkedMatch> GetNewLinkedMatches(IEnumerable<Match> owpMatches, IEnumerable<Match> adminSiteMatches)
     {

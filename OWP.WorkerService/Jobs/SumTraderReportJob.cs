@@ -43,7 +43,7 @@ public class SumTraderReportJob : IJob
 
         var lastDate = await cacheManipulator.GetLastDateOfSumData(Constant.TraderLastDateCacheKey);
 
-        await LogService.InfoAsync($"Job {this.GetType()} is starting at {DateTime.Now} for {lastDate}-{DateTime.Today}");
+        Console.WriteLine($"Job {this.GetType()} is starting at {DateTime.Now} for {lastDate}-{DateTime.Today}");
 
         for (var date = lastDate; date <= DateTime.Today; date = date.AddDays(1))
         {
@@ -52,6 +52,6 @@ public class SumTraderReportJob : IJob
 
         await cacheManipulator.SaveLastDateOfSumData(Constant.TraderLastDateCacheKey, DateTime.Today.AddDays(-1));
 
-        await LogService.InfoAsync($"Job {this.GetType()} finished at {DateTime.Now}");
+        Console.WriteLine($"Job {this.GetType()} finished at {DateTime.Now}");
     }
 }

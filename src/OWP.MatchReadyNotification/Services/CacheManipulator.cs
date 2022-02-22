@@ -22,13 +22,13 @@ public class CacheManipulatorImp : CacheManipulator
     public async Task SaveLastTimeNotification(string lastTimeNotification)
     {
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(Constant.CacheExpiredInDays));
-        var cacheKey = $"{Constant.KeyLastTimeNotification}";
+        const string cacheKey = $"{Constant.KeyLastTimeNotification}";
         await cache.SetAsync(cacheKey, lastTimeNotification, cachePolicy);
     }
 
     public async Task<string> GetLastTimeNotReadyNotification()
     {
-        var cacheKey = $"{Constant.KeyLastTimeNotification}";
+        const string cacheKey = $"{Constant.KeyLastTimeNotification}";
         var cacheResult = await cache.TryGetAsync<string>(cacheKey);
 
         return cacheResult.Item2 ?? string.Empty;

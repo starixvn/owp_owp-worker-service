@@ -37,8 +37,8 @@ public class OWPScheduler : IHostedService
         await AddJobToSchedulerAsync(new JobInfo(typeof(SyncEventDeletedJob), CronExpressionJob.SyncEventDeleted));
         await AddJobToSchedulerAsync(new JobInfo(typeof(SyncDataNotificationSettingJob), CronExpressionJob.SyncDataNotificationSetting));
         await AddJobToSchedulerAsync(new JobInfo(typeof(MatchReadyNotificationJob), CronExpressionJob.MatchReadyNotification));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SumTraderReportJob), CronExpressionJob.SumReportData));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SumLAReportJob), CronExpressionJob.SumReportData));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SumTraderReportJob), CronExpressionJob.SumOvertimeReport));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SumLAReportJob), CronExpressionJob.SumOvertimeReport));
         await AddJobToSchedulerAsync(new JobInfo(typeof(SyncInfositeIdJob), CronExpressionJob.SyncInfositeId));
         await AddJobToSchedulerAsync(new JobInfo(typeof(SyncPreMatchLeagueJob), CronExpressionJob.SyncPreMatchLeague));
         await AddJobToSchedulerAsync(new JobInfo(typeof(Sync180DayInfositeMatchJob), CronExpressionJob.Sync180DayInfoSiteMatch));
@@ -69,7 +69,7 @@ public class OWPScheduler : IHostedService
         await Scheduler.Start(cancellationToken);
     }
 
-    private ITrigger CreateTrigger(JobInfo jobInfo)
+    private static ITrigger CreateTrigger(JobInfo jobInfo)
         => TriggerBuilder
             .Create()
             .WithIdentity($"trigger{jobInfo.Type.Name}", $"group{jobInfo.Type.Name}")
@@ -77,7 +77,7 @@ public class OWPScheduler : IHostedService
             .WithCronSchedule(jobInfo.CronExpression)
             .Build();
 
-    private IJobDetail CreateJob(JobInfo jobInfo)
+    private static IJobDetail CreateJob(JobInfo jobInfo)
         => JobBuilder
             .Create(jobInfo.Type)
             .WithIdentity($"sync{jobInfo.Type.Name}", $"group{jobInfo.Type.Name}")

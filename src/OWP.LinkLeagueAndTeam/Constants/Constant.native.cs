@@ -1,6 +1,6 @@
 ﻿namespace OWP.LinkLeagueAndTeam.Constants;
 
-public class Constant
+public static class Constant
 {
     public const string KeyLinkLeagueTeam = "OWP_LINK_LEAGUE_TEAM";
 

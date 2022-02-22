@@ -23,7 +23,9 @@ public class FutureSyncServiceImp : SyncServiceImp, FutureSyncService
     public async Task Sync()
     {
         var dateFrom = dateTimeService.Today.AddDays(1);
-        for (var i = 0; i < 10; i++)
+        const int syncDays = 10;
+        
+        for (var i = 0; i < syncDays; i++)
         {
             await Sync(dateFrom.AddDays(i));
             await updateInfositeIdService.UpdateInfositeId(dateFrom.AddDays(i));

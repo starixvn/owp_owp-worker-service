@@ -31,7 +31,7 @@ public class LinkLeagueAndTeamServiceImp : LinkLeagueAndTeamService
         var startTime = await cache.GetStartTimeFromCache();
         var endTime = BuildEndTime(startTime);
 
-        return new TimeRange()
+        return new TimeRange
         {
             StartTime = startTime,
             EndTime = endTime,
@@ -92,13 +92,16 @@ public class LinkLeagueAndTeamServiceImp : LinkLeagueAndTeamService
         }
     }
 
-    public DateTime BuildFinishRunTime()
+    public static DateTime BuildFinishRunTime()
     {
         var finishRunTimeGmt8 = DateTime.Now.AddHours(12);
 
         return new DateTime(finishRunTimeGmt8.Year, finishRunTimeGmt8.Month, finishRunTimeGmt8.Day, 0, 0, 0);
     }
 
-    public DateTime BuildEndTime(DateTime startTime)
-        => startTime.AddDays(7);
+    public static DateTime BuildEndTime(DateTime startTime)
+    {
+        const int dateRange = 7;
+        return startTime.AddDays(dateRange);
+    }
 }

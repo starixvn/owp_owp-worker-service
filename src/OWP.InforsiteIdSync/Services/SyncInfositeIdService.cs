@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using OWP.InfositeIdSync.Helpers;
 using OWP.Infosite.Services;
 using OWP.Infosite.Settings;
 using System.Globalization;
@@ -17,21 +18,18 @@ public class SynInfositeIdServiceImp : SyncInfositeIdService
     private readonly DateTimeService dateTimeService;
     private readonly CacheManipulator cacheManipulator;
     private readonly HttpHandler httpHandler;
-    private readonly InfositeIdMappingService mappingService;
-
     public SynInfositeIdServiceImp(
         IOptions<InfoSiteSettings> infoSiteSettings,
         InfositeIdMappingRepository repository,
         DateTimeService dateTimeService,
         CacheManipulator cacheManipulator,
-        HttpHandler httpHandler, InfositeIdMappingService mappingService)
+        HttpHandler httpHandler)
     {
         this.infoSiteSettings = infoSiteSettings.Value;
         this.repository = repository;
         this.dateTimeService = dateTimeService;
         this.cacheManipulator = cacheManipulator;
         this.httpHandler = httpHandler;
-        this.mappingService = mappingService;
     }
 
     public async Task Sync()
@@ -41,7 +39,7 @@ public class SynInfositeIdServiceImp : SyncInfositeIdService
 
         var owpMatches = await repository.QueryUnmappingOWPMatch();
         var infositeMatches = await repository.QueryInfositeMatch();
-        var mappingMatches = mappingService.Map(owpMatches, infositeMatches);
+        var mappingMatches = InfoSiteHelper.Map(owpMatches, infositeMatches);
 
         await repository.UpdateInfositeIdForMainMatches(mappingMatches);
 

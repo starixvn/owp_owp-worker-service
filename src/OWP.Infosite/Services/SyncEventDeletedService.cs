@@ -70,13 +70,14 @@ public class SyncEventDeletedServiceImp : SyncEventDeletedService
 
         await Task.WhenAll(tasks);
 
+#pragma warning disable S4462 // Replace this use of 'Task.Result' with 'await', disabled by Tyler
         var ids = tasks.Select(t => t.Result)
             .SelectMany(i => i)
             .OrderBy(i => i);
 
         return string.Join(",", ids);
     }
-
+#pragma warning restore S4462 // Replace this use of 'Task.Result' with 'await'
     private async Task<IEnumerable<string>> GetDeletedMatchIds(DateTime date)
     {
         var allMatches = await apiService.GetInvalidEventKeysByDateAsync(date);

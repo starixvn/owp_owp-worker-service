@@ -11,12 +11,16 @@ using ONEbook.UM.Transport;
 using OWP.Command;
 using OWP.Command.Settings;
 using OWP.Infosite;
+using OWP.Infosite.Services;
 using OWP.InfositeIdSync;
 using OWP.LinkLeagueAndTeam;
+using OWP.LinkLeagueAndTeam.Services;
 using OWP.MatchReadyNotification;
 using OWP.OtherSport;
 using OWP.SumReportData;
+using OWP.SumReportData.OvertimeReport.Services;
 using OWP.SyncLeagueSettings;
+using OWP.SyncLeagueSettings.Services;
 
 #region Configuration
 
@@ -61,7 +65,6 @@ services.AddSingleton<IPHelper, IPHelperImpl>();
 services.AddSingleton<IMaintenanceService, MaintenanceService>();
 services.AddSingleton<IUMCacheService, UMCacheService>();
 services.AddSingleton<IUMRestClient, UMRestClient>();
-// services.AddSingleton<IHttpContextHelper, HttpContextHelper>();
 
 #endregion AddOneBookUM
 
@@ -73,5 +76,5 @@ services.AddSumReportDataServices();
 services.AddSyncLeagueSettingsServices();
 services.AddOtherSportServices();
 
-//var apiService = services.BuildServiceProvider().GetService<ApiService>();
-//await apiService?.GetInvalidEventKeysByDateAsync(DateTime.Now);
+var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.SyncPreMatchLeagueService>();
+await apiService.Sync().ConfigureAwait(false);

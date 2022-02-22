@@ -1,9 +1,8 @@
 ﻿using Fanex.Data.Repository;
-using OWP.Core.Extensions;
 using OWP.Infosite.Services;
 using OWP.InfositeIdSync.Criteria;
 using OWP.InfositeIdSync.Models;
-
+using Olympus.Xml;
 namespace OWP.InfositeIdSync.Services;
 
 public interface InfositeIdMappingRepository
@@ -48,7 +47,7 @@ public class InfositeIdMappingRepositoryImp : InfositeIdMappingRepository
 
     public async Task<List<InfositeMatch>> QueryInfositeMatch()
     {
-        var criteria = new QueryUnmappingOWPMatchCriteria
+        var criteria = new QueryInfositeMatchCriteria
         {
             FromDate = dateTimeService.Today
         };
@@ -73,7 +72,7 @@ public class InfositeIdMappingRepositoryImp : InfositeIdMappingRepository
             await logService.Log("UpdateInfositeIdForMainMatches", matches);
         }
 
-        var xml = matches.ToXml().ToString();
+        var xml = XmlConverter.Serialize(matches);
         var command = new UpdateInfositeIdCommand
         {
             Xml = xml

@@ -1,23 +1,22 @@
 using OWP.InfositeIdSync.Models;
-using OWP.InfositeIdSync.Services;
+using OWP.InfositeIdSync.Helpers;
 using Xunit;
 using Xunit.Asserts.Compare;
 
 namespace OWP.InfositeIdSync.UnitTests;
 
-public class InfositeIdMappingServiceUnitTests
+public class InfoSiteHelperUnitTests
 {
     [Fact]
     public void MapMatchWithSameLeagueHomeAndAway()
     {
         // Arrange
-        var service = new InfositeIdMappingServiceImp();
         var unmappingOWPMatch = GetUnmappingOWPMatch()[0];
         var infositeMatch = GetInfositeMatch();
         var expected = new MatchMappingWithInfosite(1, 123456, 0, new DateTime(2020, 08, 28));
 
         // Act
-        var actual = service.MapMatchWithSameLeagueHomeAndAway(unmappingOWPMatch, infositeMatch);
+        var actual = InfoSiteHelper.MapMatchWithSameLeagueHomeAndAway(unmappingOWPMatch, infositeMatch);
 
         // Assert
         Assert.Single(actual);
@@ -28,13 +27,12 @@ public class InfositeIdMappingServiceUnitTests
     public void MapMatchWithSameLeagueKickoffTimeAndSwapTeam_SameKOHomeEqualAway()
     {
         // Arrange
-        var service = new InfositeIdMappingServiceImp();
         var unmappingOWPMatch = GetUnmappingOWPMatch()[1];
         var infositeMatch = GetInfositeMatch();
         var expected = new MatchMappingWithInfosite(2, 2000, 0, new DateTime(2020, 08, 27, 22, 00, 00));
 
         // Act
-        var actual = service.MapMatchWithSameLeagueKickoffTimeAndSwapTeam(unmappingOWPMatch, infositeMatch);
+        var actual = InfoSiteHelper.MapMatchWithSameLeagueKickoffTimeAndSwapTeam(unmappingOWPMatch, infositeMatch);
 
         // Assert
         Assert.Single(actual);
@@ -45,13 +43,12 @@ public class InfositeIdMappingServiceUnitTests
     public void MapMatchWithSameLeagueHomeAndAway_SameKOHomeEqualAwayAndAwayEqualHome()
     {
         // Arrange
-        var service = new InfositeIdMappingServiceImp();
         var unmappingOWPMatch = GetUnmappingOWPMatch()[2];
         var infositeMatch = GetInfositeMatch();
         var expected = new MatchMappingWithInfosite(3, 5000, 0, new DateTime(2020, 08, 27, 23, 20, 00));
 
         // Act
-        var actual = service.MapMatchWithSameLeagueHomeAndAway(unmappingOWPMatch, infositeMatch);
+        var actual = InfoSiteHelper.MapMatchWithSameLeagueHomeAndAway(unmappingOWPMatch, infositeMatch);
 
         // Assert
         Assert.Single(actual);
@@ -62,12 +59,11 @@ public class InfositeIdMappingServiceUnitTests
     public void MapMatchWithSameLeagueKickoffTimeAndSwapTeam_SameLeagueNotSameKO_ReturnEmpty()
     {
         // Arrange
-        var service = new InfositeIdMappingServiceImp();
         var unmappingOWPMatch = GetUnmappingOWPMatch()[3];
         var infositeMatch = GetInfositeMatch();
 
         // Act
-        var actual = service.MapMatchWithSameLeagueHomeAndAway(unmappingOWPMatch, infositeMatch);
+        var actual = InfoSiteHelper.MapMatchWithSameLeagueHomeAndAway(unmappingOWPMatch, infositeMatch);
 
         // Assert
         Assert.Empty(actual);
@@ -77,7 +73,6 @@ public class InfositeIdMappingServiceUnitTests
     public void Map_CountIsOne_SingleMatch()
     {
         // Arrange
-        var service = new InfositeIdMappingServiceImp();
         var unmappingOWPMatch = new OWPMatch
         {
             League = "SABA league",
@@ -101,7 +96,7 @@ public class InfositeIdMappingServiceUnitTests
         var expected = new MatchMappingWithInfosite(123, 999, 100, new DateTime(2020, 08, 27, 22, 00, 00));
 
         // Act
-        var actual = service.Map(unmappingOWPMatch, infositeMatch);
+        var actual = InfoSiteHelper.Map(unmappingOWPMatch, infositeMatch);
 
         // Assert
         Assert.Single(actual);
@@ -135,7 +130,7 @@ public class InfositeIdMappingServiceUnitTests
         var expected = new MatchMappingWithInfosite(123, 999, 100, new DateTime(2020, 08, 27, 22, 00, 00));
 
         // Act
-        var actual = InfositeIdMappingServiceImp.MapMatchWithSameLeagueHomeAndAwayKOTime(unmappingOWPMatch, infositeMatch);
+        var actual = InfoSiteHelper.MapMatchWithSameLeagueHomeAndAwayKOTime(unmappingOWPMatch, infositeMatch);
 
         // Assert
         Assert.Single(actual);
@@ -146,7 +141,6 @@ public class InfositeIdMappingServiceUnitTests
     public void MapMatchWithSameLeagueHomeAndAway_LowerEqualUppercase_ReturnEmpty()
     {
         // Arrange
-        var service = new InfositeIdMappingServiceImp();
         var unmappingOWPMatch = new OWPMatch
         {
             OWPMatchId = 1,
@@ -159,7 +153,7 @@ public class InfositeIdMappingServiceUnitTests
         var expected = new MatchMappingWithInfosite(1, 123456, 0, new DateTime(2020, 08, 28));
 
         // Act
-        var actual = service.MapMatchWithSameLeagueHomeAndAway(unmappingOWPMatch, infositeMatch);
+        var actual = InfoSiteHelper.MapMatchWithSameLeagueHomeAndAway(unmappingOWPMatch, infositeMatch);
 
         // Assert
         Assert.Single(actual);
@@ -170,12 +164,11 @@ public class InfositeIdMappingServiceUnitTests
     public void Map_NotFoundMatches_ReturnEmpty()
     {
         // Arrange
-        var service = new InfositeIdMappingServiceImp();
         var unmappingOWPMatch = GetNotFoundOWPMatch();
         var infositeMatch = GetInfositeMatch();
 
         // Act
-        var actual = service.Map(unmappingOWPMatch, infositeMatch);
+        var actual = InfoSiteHelper.Map(unmappingOWPMatch, infositeMatch);
 
         // Assert
         Assert.Empty(actual);
@@ -185,7 +178,6 @@ public class InfositeIdMappingServiceUnitTests
     public void Map_MapMatchWithSameLeagueHomeAndAway_ReturnMapInfositeId()
     {
         // Arrange
-        var service = new InfositeIdMappingServiceImp();
         var unmappingOWPMatch = GetMatchWithSameLeagueHomeAndAway();
         var infositeMatch = GetInfositeMatch();
         var expected = new List<MatchMappingWithInfosite>
@@ -194,7 +186,7 @@ public class InfositeIdMappingServiceUnitTests
             };
 
         // Act
-        var actual = service.Map(unmappingOWPMatch, infositeMatch);
+        var actual = InfoSiteHelper.Map(unmappingOWPMatch, infositeMatch);
 
         // Assert
         Assert.Single(actual);
@@ -205,7 +197,6 @@ public class InfositeIdMappingServiceUnitTests
     public void Map_MatchesWithSameLeagueKickoffTimeAndSwapTeam_ReturnMapInfositeId()
     {
         // Arrange
-        var service = new InfositeIdMappingServiceImp();
         var unmappingOWPMatch = GetMatchWithSameLeagueKickoffTimeAndSwapTeam();
         var infositeMatch = GetInfositeMatch();
 
@@ -215,7 +206,7 @@ public class InfositeIdMappingServiceUnitTests
             };
 
         // Act
-        var actual = service.Map(unmappingOWPMatch, infositeMatch);
+        var actual = InfoSiteHelper.Map(unmappingOWPMatch, infositeMatch);
 
         // Assert
         Assert.Single(actual);
@@ -226,7 +217,6 @@ public class InfositeIdMappingServiceUnitTests
     public void Map_Always_ReturnMapInfositeId()
     {
         // Arrange
-        var service = new InfositeIdMappingServiceImp();
         var unmappingOWPMatch = GetUnmappingOWPMatch();
         var infositeMatch = GetInfositeMatch();
         var expected = new List<MatchMappingWithInfosite>
@@ -237,7 +227,7 @@ public class InfositeIdMappingServiceUnitTests
             };
 
         // Act
-        var actual = service.Map(unmappingOWPMatch, infositeMatch);
+        var actual = InfoSiteHelper.Map(unmappingOWPMatch, infositeMatch);
 
         // Assert
         Assert.Equal(3, actual.Count);
@@ -248,7 +238,6 @@ public class InfositeIdMappingServiceUnitTests
     public void Map_IsSaba_SameKOTimeLeagueHomeAway_SuccessfulMapInfositeID()
     {
         // Arrange
-        var service = new InfositeIdMappingServiceImp();
         var unmappingOWPMatch = new OWPMatch
         {
             League = "M88 SABA league",
@@ -272,7 +261,7 @@ public class InfositeIdMappingServiceUnitTests
         var expected = new MatchMappingWithInfosite(123, 999, 100, new DateTime(2020, 08, 27, 22, 00, 00));
 
         // Act
-        var actual = service.Map(unmappingOWPMatch, infositeMatch);
+        var actual = InfoSiteHelper.Map(unmappingOWPMatch, infositeMatch);
 
         // Assert
         Assert.Single(actual);

@@ -1,5 +1,5 @@
 ﻿using Fanex.Data.Repository;
-using OWP.Core.Extensions;
+using Olympus.Xml;
 using OWP.Infosite.Criteria;
 using OWP.Infosite.Models;
 
@@ -37,7 +37,7 @@ public class SyncServiceImp
 
     private async Task SaveEvents(List<Event> events)
     {
-        var xml = events.ToXml().ToString();
+        var xml = XmlConverter.Serialize(events);
         var criteria = new PushInfoSiteMatchCommand
         {
             Xml = xml

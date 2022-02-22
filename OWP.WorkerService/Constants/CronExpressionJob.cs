@@ -25,5 +25,6 @@ public static class CronExpressionJob
     public const string LinkLeagueAndMatch = "0 0 2 ? * MON *"; //2AM every Monday GMT-4
 
     public const string SumOvertimeReport = "0 0 2 ? * * *"; //2AM everyday GMT-4
+
     public const string SyncOtherSportAdminSiteJob = "0 0/2 * 1/1 * ? *";
 }

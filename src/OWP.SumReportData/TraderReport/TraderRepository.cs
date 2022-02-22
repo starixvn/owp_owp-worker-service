@@ -1,5 +1,5 @@
 ﻿using Fanex.Data.Repository;
-using OWP.Core.Extensions;
+using Olympus.Xml;
 using OWP.SumReportData.TraderReport.Criteria;
 using OWP.SumReportData.TraderReport.Models;
 
@@ -44,7 +44,7 @@ public class TraderRepositoryImp : TraderRepository
         var command = new UpdateRobotFieldsCommand
         {
             EventDate = eventDate,
-            Xml = robotByByUsers.ToXml().ToString()
+            Xml = XmlConverter.Serialize(robotByByUsers)
         };
 
         await repository.ExecuteAsync(command);
@@ -87,7 +87,7 @@ public class TraderRepositoryImp : TraderRepository
         var command = new UpdateESoccerFieldsCommand
         {
             EventDate = eventDate,
-            ESoccerFieldsXml = eSoccerByUsers.ToXml().ToString()
+            ESoccerFieldsXml = XmlConverter.Serialize(eSoccerByUsers)
         };
 
         await repository.ExecuteAsync(command);

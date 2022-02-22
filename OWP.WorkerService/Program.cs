@@ -12,6 +12,8 @@ builder.Services.AddJobsServices();
 builder.Services.AddHostedService<OWPScheduler>();
 
 var app = builder.Build();
-app.MapGet("/*", () => "OWP Worker Services");
-
+app.Run(async context =>
+{
+    await context.Response.WriteAsync("OWP Worker Services");
+});
 await app.RunAsync("http://0.0.0.0:5000");
