@@ -1,0 +1,81 @@
+﻿using NSubstitute;
+using OWP.PrematchReport.Models;
+using OWP.PrematchReport.Services;
+using OWP.PrematchReport.Services.League;
+using Xunit;
+using Xunit.Asserts.Compare;
+
+namespace OWP.PrematchReport.UnitTests.Services.League
+{
+    public class DataReportServiceUnitTests
+    {
+        private DbWriterService dbWriterService;
+
+        public DataReportServiceUnitTests()
+        {
+            dbWriterService = Substitute.For<DbWriterService>();
+        }
+
+        [Fact]
+        public void BuildLeagueReport_Always_ReturnDataReport()
+        {
+            //Arrange
+            var service = new DataReportBuilderServiceImp(dbWriterService);
+            var leagueInfos = MockLeagueInfo();
+
+            //Act
+            var actual = service.BuildSingleLeagueGroupReport(leagueInfos, Constants.Constant.HDPID);
+
+            //Assert
+            var expected = MockExpected();
+            DeepAssert.Equal(expected, actual);
+        }
+
+        public List<LeagueInfo> MockLeagueInfo()
+          => new()
+          {
+              new()
+              {
+                  EventDate = new DateTime(2020, 10, 2),
+                  GroupId = 0,
+                  OWPLeagueId = 1,
+                  UserId = 8,
+              },
+              new()
+              {
+                  EventDate = new DateTime(2020, 10, 2),
+                  GroupId = 0,
+                  OWPLeagueId = 1,
+                  UserId = 12,
+              },
+              new()
+              {
+                  EventDate = new DateTime(2020, 10, 2),
+                  GroupId = 0,
+                  OWPLeagueId = 10,
+                  UserId = 8,
+              }
+          };
+
+        public List<DataReport> MockExpected()
+          => new()
+          {
+              new()
+              {
+                  UserId = 8,
+                  Amount = 2,
+                  BetType = 1,
+                  EventDate = new DateTime(2020, 10, 2),
+                  GroupId = 0,
+              },
+              new()
+              {
+                  UserId = 12,
+                  Amount = 1,
+                  BetType = 1,
+                  EventDate = new DateTime(2020, 10, 2),
+                  GroupId = 0,
+              },
+          };
+    }
+}

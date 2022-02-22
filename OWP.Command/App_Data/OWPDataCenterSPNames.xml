@@ -73,4 +73,12 @@
 		<Setting Key="OWP_OtherSport_UpdateLinkedMatches" SpName="OWP_OtherSport_UpdateLinkedMatches" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 		<Setting Key="OWP_OtherSport_GetAdminSiteMatchesFromDate" SpName ="OWP_OtherSport_GetAdminSiteMatchesFromDate" DbName="DBACC.bodb02.bodbAdminNet" />
 	</Function>
+	<Function Name="PrematchReport">
+		<Setting Key="OWP_PrematchReport_GetLeagueByDateAndBettype" SpName ="OWP_PrematchReport_GetLeagueByDateAndBettype" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+		<Setting Key="OWP_PrematchReport_InsertLeague" SpName ="OWP_PrematchReport_InsertLeague" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+		<Setting Key="OWP_PrematchReport_InsertMatch" SpName ="OWP_PrematchReport_InsertMatch" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+		<Setting Key="OWP_PrematchReport_GetLeagueDetailByDateAndBettype" SpName ="OWP_PrematchReport_GetLeagueDetailByDateAndBettype" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+		<Setting Key="OWP_PreMatchAssignment_GetStartTimeForNightShift" SpName ="OWP_PreMatchAssignment_GetStartTimeForNightShift" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+		<Setting Key="OWP_PreMatchReport_GetTotalMatchByLeagueIdsAndTimeRange" SpName ="OWP_PreMatchReport_GetTotalMatchByLeagueIdsAndTimeRange" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+	</Function>
 </Functions>

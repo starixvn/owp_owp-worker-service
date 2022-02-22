@@ -4,7 +4,7 @@ namespace OWP.Infosite.Constants;
 
 public static class Constant
 {
-    public static readonly ImmutableDictionary<int, string> StreamNameSrc1InfoSite = new Dictionary<int, string>
+    public static readonly IImmutableDictionary<int, string> StreamNameSrc1InfoSite = new Dictionary<int, string>
     {
         {0, string.Empty },
         {4, "Spanish"},
@@ -19,7 +19,7 @@ public static class Constant
         {19, "CloundRock"}
     }.ToImmutableDictionary();
 
-    public static readonly ImmutableDictionary<int, string> StreamNameSrc2InfoSite = new Dictionary<int, string>
+    public static readonly IImmutableDictionary<int, string> StreamNameSrc2InfoSite = new Dictionary<int, string>
     {
         {0, string.Empty },
         {11, "Glive"},

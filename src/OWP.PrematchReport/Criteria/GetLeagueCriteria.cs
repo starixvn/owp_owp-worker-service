@@ -1,0 +1,15 @@
+using Fanex.Data.Repository;
+
+namespace OWP.PrematchReport.Criteria
+{
+    public class GetLeagueCriteria : CriteriaBase
+    {
+        public DateTime EventDate { get; set; }
+
+        public int Bettype { get; set; }
+
+        public override string GetSettingKey() => "OWP_PrematchReport_GetLeagueByDateAndBettype";
+
+        public override bool IsValid() => true;
+    }
+}
