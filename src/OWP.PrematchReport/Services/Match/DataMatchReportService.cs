@@ -46,16 +46,16 @@
         private static int GetTotalAssignment(IList<LeagueDetailInfo> leagueDetailInfos, IList<TotalDataMatch> totalDataMatches)
         {
             var totalAssignment = 0;
-            var leagueInfoByleaugeId = leagueDetailInfos.GroupBy(x => x.OWPLeagueId)
+            var leagueInfoByLeagueId = leagueDetailInfos.GroupBy(x => x.OWPLeagueId)
                 .ToDictionary(x => x.Key, x => x.ToList());
-            foreach (var item in leagueInfoByleaugeId.Keys)
+            foreach (var item in leagueInfoByLeagueId.Keys)
             {
                 var totalMatch = totalDataMatches.Where(x => x.OWPLeagueId == item);
-                if (totalMatch != null)
+                if (totalMatch.Any())
                 {
-                    totalAssignment += leagueInfoByleaugeId[item].Any(x => x.IsDay)
-                     ? totalMatch.First(x => x.IsMatchDay).Total
-                     : totalMatch.First(x => !x.IsMatchDay).Total;
+                    totalAssignment += leagueInfoByLeagueId[item].Any(x => x.IsDay)
+                     ? totalMatch.FirstOrDefault(x => x.IsMatchDay, new TotalDataMatch()).Total
+                     : totalMatch.FirstOrDefault(x => !x.IsMatchDay, new TotalDataMatch()).Total;
                 }
             }
 
