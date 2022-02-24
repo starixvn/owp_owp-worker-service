@@ -14,15 +14,19 @@ public class SyncInfositeIdJob : IJob
     private readonly SyncIsLiveService syncIsLiveService;
     private readonly IMaintenanceService maintenanceService;
 
+    private readonly IConfiguration configuration;
+
     public SyncInfositeIdJob(SyncInfositeIdService synInfositeIdService,
         IMaintenanceService maintenanceService,
         TodaySyncService todaySyncService,
-        SyncIsLiveService syncIsLiveService)
+        SyncIsLiveService syncIsLiveService,
+        IConfiguration configuration)
     {
         this.synInfositeIdService = synInfositeIdService;
         this.maintenanceService = maintenanceService;
         this.todaySyncService = todaySyncService;
         this.syncIsLiveService = syncIsLiveService;
+        this.configuration = configuration;
     }
 
     public async Task Execute(IJobExecutionContext context)
@@ -52,9 +56,9 @@ public class SyncInfositeIdJob : IJob
 
         await synInfositeIdService.Sync();
 
-        //
-        var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-        if (env == "PROD")
+        var env = configuration.GetSection("Environment").Value;
+
+        if (string.Equals(env, "PROD"))
         {
             await syncIsLiveService.Sync(fromTime, toTime).ConfigureAwait(false);
             await todaySyncService.Sync().ConfigureAwait(false);
