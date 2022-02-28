@@ -30,8 +30,8 @@ namespace OWP.PrematchReport.Services
     public async Task CalculateDataReport()
     {
       var startTime = await cache.GetStartTimeFromCache();
-      var startTimeLatest = await CalculateDataReport(startTime, DateTime.Now);
-      await cache.SaveStartTime(startTimeLatest).ConfigureAwait(false);
+      var latestStartTime = await CalculateDataReport(startTime, DateTime.Today);
+      await cache.SaveStartTime(latestStartTime).ConfigureAwait(false);
     }
 
     public async Task<DateTime> CalculateDataReport(DateTime startTime, DateTime finishRunTime)

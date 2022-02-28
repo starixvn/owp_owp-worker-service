@@ -29,6 +29,6 @@ public static class CronExpressionJob
 
     public const string SyncOtherSportAdminSiteJob = "0 0/2 * 1/1 * ? *";
 
-    public const string PrematchReport = "0 0 2 ? * MON *"; //2AM every Monday GMT-4;
+    public const string PrematchReport = "0 0 2 ? * * *"; //2AM everyday GMT-4;
 }
 #pragma warning restore S125
