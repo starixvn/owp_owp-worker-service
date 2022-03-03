@@ -1,5 +1,5 @@
 include:
-  - project: "ci/repos-ci/olympus_owp_worker_service"
+  - project: "ci/repos-ci/olympus_nap_owp_worker_service"
     ref: master
     file: "gitlab-ci.yml"
     
