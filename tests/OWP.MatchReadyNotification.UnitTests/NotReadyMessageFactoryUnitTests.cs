@@ -25,23 +25,8 @@ public class NotReadyMessageFactoryUnitTests
     {
         var snapshot = DataInput();
         var leadersByUserId = GetLeadersOfSession();
-        var allSessionLST = new List<Assignee>
-            {
-                new Assignee
-                {
-                    AssigneeId = 123,
-                    AssigneeName = "Kevin Durrant"
-                },
-
-                 new Assignee
-                {
-                    AssigneeId = 234,
-                    AssigneeName = "Kyrie Irving"
-                }
-            };
 
         queryRepository.GetLeaderSupervisorSectionHeadOfSession(Arg.Compat.Any<string>()).Returns(leadersByUserId);
-        queryRepository.GetAllSessionLST().Returns(allSessionLST);
         var expected = MessagesExpected();
 
         var actual = await messageFactory.Create(snapshot);
@@ -171,8 +156,8 @@ public class NotReadyMessageFactoryUnitTests
             IsWatcher = true,
             MessageType = 0,
             MessageContent = "Esther, Rylie are NOT READY for match #20000 - PremierLeague - LiverPool -vs- Arsenal - K.O Time 12:00 AM",
-            ReceivedUserIds = "11,12,123,234,22,23",
-            ReceivedUserNames = "Steve Kerr,James,Kevin Durrant,Kyrie Irving,Jordan,Klay Thompson"
+            ReceivedUserIds = "11,12,22,23",
+            ReceivedUserNames = "Steve Kerr,James,Jordan,Klay Thompson"
         };
 
         var messageModel2 = new MessageModel
@@ -181,8 +166,8 @@ public class NotReadyMessageFactoryUnitTests
             IsWatcher = true,
             MessageType = 0,
             MessageContent = "Curry are NOT READY for match #1234 - PremierLeague-Coners - LiverPool-Coners -vs- Arsenal-Coners - K.O Time 12:00 AM",
-            ReceivedUserIds = "33,123,234",
-            ReceivedUserNames = "Giannis,Kevin Durrant,Kyrie Irving"
+            ReceivedUserIds = "33",
+            ReceivedUserNames = "Giannis"
         };
 
         var messages = new List<MessageModel> { messageModel, messageModel2 };

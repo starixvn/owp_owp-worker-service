@@ -49,11 +49,9 @@ public class ReceivedUserServicesImp : ReceivedUserServices
     public async Task<Dictionary<int, List<Assignee>>> GetAllReceivedUsers(List<Assignee> assignees)
     {
         var leadersByUserId = await GetManagersOfMatch(assignees);
-        var sessionLST = await GetSessionLST();
 
         foreach (var key in leadersByUserId.Keys.ToList())
         {
-            leadersByUserId[key].AddRange(sessionLST);
             leadersByUserId[key] = leadersByUserId[key].Distinct(new Assignee()).ToList();
         }
 
@@ -64,13 +62,6 @@ public class ReceivedUserServicesImp : ReceivedUserServices
     {
         var assigneeIdsInString = string.Join(",", assignees.Select(x => x.AssigneeId));
         return await matchReadyRepository.GetLeaderSupervisorSectionHeadOfSession(assigneeIdsInString);
-    }
-
-    private async Task<List<Assignee>> GetSessionLST()
-    {
-        var sessionLST = await matchReadyRepository.GetAllSessionLST();
-
-        return sessionLST.Distinct(new Assignee()).ToList();
     }
 
     public List<Assignee> GetReceivedUsersOfMatch(List<Assignee> assignees, Dictionary<int, List<Assignee>> allReceivedUsers)
