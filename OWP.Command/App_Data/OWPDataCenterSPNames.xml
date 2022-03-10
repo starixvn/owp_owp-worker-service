@@ -35,6 +35,7 @@
 		<Setting Key="OWP_CopyDataToOldTable" SpName="OWP_CopyDataToOldTable" DbName="DBOWP.bodb_OWP.bodbOWPNet" TimeOut="600"></Setting>
 		<Setting Key="OWP_DeleteOldData" SpName="OWP_DeleteOldData" DbName="DBOWP.bodb_OWP.bodbOWPNet" TimeOut="600"></Setting>
 		<Setting Key="OWP_DeleteOldData_Message" SpName="OWP_DeleteOldData_Message" DbName="DBOWP.bodb_OWP.bodbOWPNet" TimeOut="600"></Setting>
+		<Setting Key="OWP_DeleteOldMessage" SpName="OWP_DeleteOldMessage" DbName="DBOWP.bodb_OWP.bodbOWPNet" TimeOut="600"></Setting>
 	</Function>
 	<Function Name="InfositeIdSync">
 		<Setting Key="OWP_API_QueryInfositeMatch"  SpName="OWP_API_QueryInfositeMatch" DbName="DBOWP.bodb_OWP.bodbOWPNet" />

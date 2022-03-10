@@ -22,6 +22,7 @@ using OWP.SumReportData.OvertimeReport.Services;
 using OWP.SyncLeagueSettings;
 using OWP.SyncLeagueSettings.Services;
 using OWP.PrematchReport;
+using OWP.ArchiveData;
 
 #region Configuration
 
@@ -77,6 +78,7 @@ services.AddSumReportDataServices();
 services.AddSyncLeagueSettingsServices();
 services.AddOtherSportServices();
 services.AddPrematchReportServices();
+services.AddArchiveDataServices();
 
 var apiService = services.BuildServiceProvider().GetService<OWP.PrematchReport.Services.PrematchReportService>();
 await apiService.CalculateDataReport().ConfigureAwait(false);
