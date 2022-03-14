@@ -123,7 +123,8 @@ public static class ServiceCollectionExtensions
         services.AddTransient<SyncTodayInfoSiteMatchJob>();
         services.AddTransient<SyncOtherSportAdminSiteMatchJob>();
         services.AddTransient<SumPrematchReportJob>();
-        
+        services.AddTransient<ArchiveDataServiceJob>();
+
         return services;
     }
 }
