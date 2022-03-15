@@ -15,7 +15,6 @@
 		<Setting Key="OWP_API_SyncNotificationSettingWatcher"  SpName="OWP_API_SyncNotificationSettingWatcher" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 		<Setting Key="OWP_GetAllMatchesByXMins"  SpName="OWP_GetAllMatchesByXMins" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 		<Setting Key="OWP_GetAllAssignmentsByXMins"  SpName="OWP_GetAllAssignmentsByXMins" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
-		<Setting Key="OWP_GetAllSessionLST"  SpName="OWP_GetAllSessionLST" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 		<Setting Key="OWP_GetLeaderSupervisorSectionHeadOfSession"  SpName="OWP_GetLeaderSupervisorSectionHeadOfSession" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 		<Setting Key="OWP_SyncNotification_MessageInsert"  SpName="OWP_SyncNotification_MessageInsert" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 	</Function>

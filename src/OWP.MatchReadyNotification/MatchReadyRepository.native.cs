@@ -12,8 +12,6 @@ public interface MatchReadyRepository
 
     Task<Dictionary<int, List<Assignee>>> GetLeaderSupervisorSectionHeadOfSession(string userIds);
 
-    Task<List<Assignee>> GetAllSessionLST();
-
     Task InsertMessage(List<MessageModel> messages, string sessionId);
 }
 
@@ -70,13 +68,6 @@ public class MatchReadyRepositoryImp : MatchReadyRepository
                       })
                       .Distinct(new Assignee())
                       .ToList());
-    }
-
-    public async Task<List<Assignee>> GetAllSessionLST()
-    {
-        var criteria = new GetAllSessionLSTCriteria();
-
-        return (await repository.FetchAsync<Assignee>(criteria)).ToList();
     }
 
     public async Task InsertMessage(List<MessageModel> messages, string sessionId)
