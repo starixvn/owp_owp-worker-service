@@ -56,7 +56,7 @@
     <ProjectReference Include="..\src\OWP.SumReportData\OWP.SumReportData.csproj" />
     <ProjectReference Include="..\src\OWP.SyncLeagueSettings\OWP.SyncLeagueSettings.csproj" />
     <ProjectReference Include="..\src\OWP.PrematchReport\OWP.PrematchReport.csproj" />
-  
+    <ProjectReference Include="..\src\OWP.ArchiveData\OWP.ArchiveData.csproj" />
   </ItemGroup>
 
   <ItemGroup>

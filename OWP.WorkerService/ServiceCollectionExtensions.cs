@@ -19,6 +19,7 @@ using OWP.SyncLeagueSettings;
 using OWP.WorkerService.Jobs;
 using OWP.WorkerService.Settings;
 using OWP.PrematchReport;
+using OWP.ArchiveData;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
@@ -100,6 +101,7 @@ public static class ServiceCollectionExtensions
         services.AddSumReportDataServices();
         services.AddSyncLeagueSettingsServices();
         services.AddOtherSportServices();
+        services.AddArchiveDataServices();
 
         return services;
     }
@@ -121,7 +123,8 @@ public static class ServiceCollectionExtensions
         services.AddTransient<SyncTodayInfoSiteMatchJob>();
         services.AddTransient<SyncOtherSportAdminSiteMatchJob>();
         services.AddTransient<SumPrematchReportJob>();
-        
+        services.AddTransient<ArchiveDataServiceJob>();
+
         return services;
     }
 }
