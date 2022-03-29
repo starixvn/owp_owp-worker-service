@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using OWP.Core.Extensions;
+using OWP.Core.RabbitMq;
+using OWP.Core.RabbitMq.Models;
 using OWP.Infosite.Constants;
 using OWP.Infosite.Models;
 using OWP.Infosite.Settings;
@@ -12,11 +14,11 @@ public interface ApiService
 {
     Task<List<CommonMatchModel>> QueryAsync(ParamsQueryModel param);
 
-    Task TriggerNetCoreMatchInfoNotification(string sessionId, DateTime fromDate, DateTime toDate);
+    void TriggerNetCoreMatchInfoNotification(string sessionId, DateTime fromDate, DateTime toDate);
 
     Task<List<MatchRelation>> QueryMatchesRelation(ParamsQueryModel param);
 
-    Task TriggerNetCoreNewLeagueNotification(string sessionId, DateTime fromDate);
+    void TriggerNetCoreNewLeagueNotification(string sessionId, DateTime fromDate);
 
     Task<List<string>> GetInvalidEventKeysByDateAsync(DateTime date);
 
@@ -29,11 +31,17 @@ public class ApiServiceImp : ApiService
     private readonly HttpHandler httpHandler;
     private readonly ILogger logger;
 
-    public ApiServiceImp(HttpHandler httpHandler, ILogger logger, IOptions<InfoSiteSettings> infoSiteSettings)
+    private readonly RabbitMqClient rabbitMqClient;
+
+    public ApiServiceImp(HttpHandler httpHandler, 
+        ILogger logger, 
+        IOptions<InfoSiteSettings> infoSiteSettings,
+        RabbitMqClient rabbitMqClient)
     {
         this.httpHandler = httpHandler;
         this.logger = logger;
         this.infoSiteSettings = infoSiteSettings.Value;
+        this.rabbitMqClient = rabbitMqClient;
     }
 
     public async Task<List<CommonMatchModel>> QueryAsync(ParamsQueryModel param)
@@ -97,18 +105,32 @@ public class ApiServiceImp : ApiService
         }
     }
 
-    public async Task TriggerNetCoreMatchInfoNotification(string sessionId, DateTime fromDate, DateTime toDate)
+#pragma warning disable S1481 // Remove the unused local variable 'request', disabled by Tyler
+    public void TriggerNetCoreMatchInfoNotification(string sessionId, DateTime fromDate, DateTime toDate)
     {
-        var requestLink = $"{infoSiteSettings.OWPNetCoreUri}/PreMatchNotification/notify-match-info?sessionId={sessionId}&fromDate={fromDate}&toDate={toDate}";
-        await httpHandler.GetAsync(requestLink);
+        var request = new InfoSiteMatchInfoNotifyRequest
+        {
+            SessionId = sessionId,
+            FromDate = fromDate,
+            ToDate = toDate
+        };
+        #if !DEBUG
+        rabbitMqClient.Publish(request);
+        #endif
     }
 
-    public async Task TriggerNetCoreNewLeagueNotification(string sessionId, DateTime fromDate)
+    public void TriggerNetCoreNewLeagueNotification(string sessionId, DateTime fromDate)
     {
-        var requestLink = $"{infoSiteSettings.OWPNetCoreUri}/PreMatchNotification/notify-new-league?sessionId={sessionId}&fromDate={fromDate}";
-
-        await httpHandler.GetAsync(requestLink);
+        var request = new PrematchNewLeagueNotifyRequest
+        {
+            SessionId = sessionId,
+            FromDate = fromDate
+        };
+        #if !DEBUG
+        rabbitMqClient.Publish(request);
+        #endif
     }
+#pragma warning restore S1481
 
     public async Task<List<string>> GetInvalidEventKeysByDateAsync(DateTime date)
     {

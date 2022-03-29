@@ -3,6 +3,8 @@ using OWP.InfositeIdSync.Helpers;
 using OWP.Infosite.Services;
 using OWP.Infosite.Settings;
 using System.Globalization;
+using OWP.Core.RabbitMq;
+using OWP.Core.RabbitMq.Models;
 
 namespace OWP.InfositeIdSync.Services;
 
@@ -18,18 +20,23 @@ public class SynInfositeIdServiceImp : SyncInfositeIdService
     private readonly DateTimeService dateTimeService;
     private readonly CacheManipulator cacheManipulator;
     private readonly HttpHandler httpHandler;
+
+    private readonly RabbitMqClient rabbitMqClient;
+
     public SynInfositeIdServiceImp(
         IOptions<InfoSiteSettings> infoSiteSettings,
         InfositeIdMappingRepository repository,
         DateTimeService dateTimeService,
         CacheManipulator cacheManipulator,
-        HttpHandler httpHandler)
+        HttpHandler httpHandler,
+        RabbitMqClient rabbitMqClient)
     {
         this.infoSiteSettings = infoSiteSettings.Value;
         this.repository = repository;
         this.dateTimeService = dateTimeService;
         this.cacheManipulator = cacheManipulator;
         this.httpHandler = httpHandler;
+        this.rabbitMqClient = rabbitMqClient;
     }
 
     public async Task Sync()
@@ -43,8 +50,9 @@ public class SynInfositeIdServiceImp : SyncInfositeIdService
 
         await repository.UpdateInfositeIdForMainMatches(mappingMatches);
 
-        //Trigger net core
-        await TriggerNetCoreLinkedMatchNotification(sessionId);
+        #if !DEBUG
+        TriggerNetCoreLinkedMatchNotification(sessionId);
+        #endif
     }
 
     public async Task SaveOldSnapshot(string sessionId)
@@ -53,9 +61,14 @@ public class SynInfositeIdServiceImp : SyncInfositeIdService
         await cacheManipulator.SaveOldAssignmentSnapshot(sessionId, oldSnapshot);
     }
 
-    public async Task TriggerNetCoreLinkedMatchNotification(string sessionId)
+    public void TriggerNetCoreLinkedMatchNotification(string sessionId)
     {
-        var requestLink = $"{infoSiteSettings.OWPNetCoreUri}/PreMatchNotification/notify-linked-lga-match?sessionId={sessionId}&eventDate={dateTimeService.Today}";
-        await httpHandler.GetAsync(requestLink);
+        var notifyRequest = new LinkedMatchNotifyRequest
+        {
+            EventDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified),
+            SessionId = sessionId
+        };
+
+        rabbitMqClient.Publish(notifyRequest);
     }
 }

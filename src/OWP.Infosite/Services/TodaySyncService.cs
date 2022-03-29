@@ -35,7 +35,7 @@ public class TodaySyncServiceImp : SyncServiceImp, TodaySyncService
 
     public async Task Sync()
     {
-        var today = dateTimeService.Today;
+        var today = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
 
         var sessionId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
         var infoSiteMatches = await GetOldInfoSiteMatches(today);
@@ -46,7 +46,7 @@ public class TodaySyncServiceImp : SyncServiceImp, TodaySyncService
         await updateInfositeIdService.UpdateInfositeId(today);
         await updateInfositeIdService.UpdateInfositeId(today.AddDays(1));
 
-        await apiService.TriggerNetCoreMatchInfoNotification(sessionId, today, today.AddDays(1));
+        apiService.TriggerNetCoreMatchInfoNotification(sessionId, today, today.AddDays(1));
     }
 
     private async Task<IEnumerable<InfoSiteMatch>> GetOldInfoSiteMatches(DateTime fromDate)

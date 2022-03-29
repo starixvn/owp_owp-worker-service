@@ -44,7 +44,10 @@ public class SyncPreMatchLeagueServiceImp : SyncPreMatchLeagueService
         };
         await dynamicRepository.ExecuteAsync(criteria);
 
-        await apiService.TriggerNetCoreNewLeagueNotification(sessionId, dateTimeService.Today);
+        apiService.TriggerNetCoreNewLeagueNotification(
+            sessionId,
+            DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified)
+        );
     }
 
     private async Task<IEnumerable<PreMatchLeague>> GetOldPreMatchLeagues(DateTime fromDate)

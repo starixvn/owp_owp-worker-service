@@ -7,6 +7,7 @@ using OWP.Infosite.Settings;
 using System.Net;
 using Xunit;
 using Xunit.Asserts.Compare;
+using OWP.Core.RabbitMq;
 
 namespace OWP.Infosite.UnitTests;
 
@@ -17,6 +18,8 @@ public class ApiServiceUnitTests
     private readonly HttpHandler httpHandler;
 
     private readonly ILogger logger;
+
+    private readonly RabbitMqClient rabbitMqClient;
 
     private const int expectedNumberOfMatchsAllDays = 1;
 
@@ -31,6 +34,7 @@ public class ApiServiceUnitTests
         appSettings = Options.Create(new InfoSiteSettings());
         httpHandler = Substitute.For<HttpHandler>();
         logger = Substitute.For<ILogger>();
+        rabbitMqClient = Substitute.For<RabbitMqClient>();
     }
 
     [Fact]
@@ -46,7 +50,7 @@ public class ApiServiceUnitTests
         var httpResponseMessage = new HttpResponseMessage { StatusCode = HttpStatusCode.InternalServerError };
         httpHandler.GetAsync(Arg.Compat.Any<string>()).Returns(httpResponseMessage);
 
-        var apiService = new ApiServiceImp(httpHandler, logger, appSettings);
+        var apiService = new ApiServiceImp(httpHandler, logger, appSettings, rabbitMqClient);
 
         // Act
         var actualResult = await apiService.QueryAsync(param);
@@ -72,7 +76,7 @@ public class ApiServiceUnitTests
         var httpResponseMessage = new HttpResponseMessage { Content = httpContent, StatusCode = HttpStatusCode.OK };
         httpHandler.GetAsync(Arg.Compat.Any<string>()).Returns(httpResponseMessage);
 
-        var apiService = new ApiServiceImp(httpHandler, logger, appSettings);
+        var apiService = new ApiServiceImp(httpHandler, logger, appSettings, rabbitMqClient);
         // Act
         var actualResult = await apiService.QueryAsync(param);
 
@@ -92,7 +96,7 @@ public class ApiServiceUnitTests
         var httpResponseMessage = new HttpResponseMessage { Content = httpContent, StatusCode = HttpStatusCode.OK };
         httpHandler.GetAsync(Arg.Compat.Any<string>()).Returns(httpResponseMessage);
 
-        var apiService = new ApiServiceImp(httpHandler, logger, appSettings);
+        var apiService = new ApiServiceImp(httpHandler, logger, appSettings, rabbitMqClient);
         // Act
         var actualResult = await apiService.GetInvalidEventKeysByDateAsync(fromDate);
 
@@ -110,7 +114,7 @@ public class ApiServiceUnitTests
         var httpResponseMessage = new HttpResponseMessage { StatusCode = HttpStatusCode.InternalServerError };
         httpHandler.GetAsync(Arg.Compat.Any<string>()).Returns(httpResponseMessage);
 
-        var apiService = new ApiServiceImp(httpHandler, logger, appSettings);
+        var apiService = new ApiServiceImp(httpHandler, logger, appSettings, rabbitMqClient);
 
         // Assert
         var actualResult = await apiService.GetInvalidEventKeysByDateAsync(fromDate);
@@ -125,7 +129,7 @@ public class ApiServiceUnitTests
         var httpResponseMessage = new HttpResponseMessage { StatusCode = HttpStatusCode.InternalServerError };
         httpHandler.GetAsync(Arg.Compat.Any<string>()).Returns(httpResponseMessage);
 
-        var apiService = new ApiServiceImp(httpHandler, logger, appSettings);
+        var apiService = new ApiServiceImp(httpHandler, logger, appSettings, rabbitMqClient);
         // Act
 
         // Assert
@@ -144,7 +148,7 @@ public class ApiServiceUnitTests
         var httpResponseMessage = new HttpResponseMessage { Content = httpContent, StatusCode = HttpStatusCode.OK };
         httpHandler.GetAsync(Arg.Compat.Any<string>()).Returns(httpResponseMessage);
 
-        var apiService = new ApiServiceImp(httpHandler, logger, appSettings);
+        var apiService = new ApiServiceImp(httpHandler, logger, appSettings, rabbitMqClient);
         // Act
         var actualResult = await apiService.QueryInfoSiteMatchFor180Day();
 
@@ -168,7 +172,7 @@ public class ApiServiceUnitTests
         var httpResponseMessage = new HttpResponseMessage { Content = httpContent, StatusCode = HttpStatusCode.OK };
         httpHandler.GetAsync(Arg.Compat.Any<string>()).Returns(httpResponseMessage);
 
-        var apiService = new ApiServiceImp(httpHandler, logger, appSettings);
+        var apiService = new ApiServiceImp(httpHandler, logger, appSettings, rabbitMqClient);
         // Act
         var actualResult = await apiService.QueryMatchesRelation(param);
 
@@ -189,7 +193,7 @@ public class ApiServiceUnitTests
         var httpResponseMessage = new HttpResponseMessage { StatusCode = HttpStatusCode.InternalServerError };
         httpHandler.GetAsync(Arg.Compat.Any<string>()).Returns(httpResponseMessage);
 
-        var apiService = new ApiServiceImp(httpHandler, logger, appSettings);
+        var apiService = new ApiServiceImp(httpHandler, logger, appSettings, rabbitMqClient);
         // Act
         var actualResult = await apiService.QueryMatchesRelation(param);
 
