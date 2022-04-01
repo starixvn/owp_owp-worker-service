@@ -52,7 +52,7 @@ public static class InfoSiteHelper
             string.Compare(m.LeagueName, owpMatch.League, StringComparison.OrdinalIgnoreCase) == 0 &&
             string.Compare(m.HomeName, owpMatch.Home, StringComparison.OrdinalIgnoreCase) == 0 &&
             string.Compare(m.AwayName, owpMatch.Away, StringComparison.OrdinalIgnoreCase) == 0 &&
-            m.EventDateTime.TimeOfDay == owpMatch.EventDateTime.TimeOfDay)
+            m.EventDateTime == owpMatch.EventDateTime)
         .Select(m => new MatchMappingWithInfosite(owpMatch.OWPMatchId, m.InfoSiteMatchId, m.AdminSiteMatchId, owpMatch.EventDateTime))
         .ToList();
 
