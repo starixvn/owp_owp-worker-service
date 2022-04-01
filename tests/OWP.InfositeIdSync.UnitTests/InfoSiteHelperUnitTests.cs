@@ -122,7 +122,7 @@ public class InfoSiteHelperUnitTests
                     LeagueName = "SABA league",
                     HomeName = "home",
                     AwayName = "away",
-                    EventDateTime = new DateTime(2020, 08, 29, 22, 00, 00),
+                    EventDateTime = new DateTime(2020, 08, 27, 22, 00, 00),
                     InfoSiteMatchId = 999,
                     AdminSiteMatchId = 100
                 }
