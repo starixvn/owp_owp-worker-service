@@ -8,7 +8,7 @@ public static class Consts
 }
 
 
-public enum BetType
+public enum MinorBetType
 {
     Corners = -3,
     NextCorners = -4,

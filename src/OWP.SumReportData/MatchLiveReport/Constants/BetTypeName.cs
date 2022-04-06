@@ -105,4 +105,7 @@ public enum BetTypeName
 
     [Display(Name = "SABA CLUB FRIENDLY Virtual FIFA 21 - 16 Mins Play")]
     SabaClubFriendlyVirtualFifa2116MinsPlay,
+    
+    Other,
+    
 }

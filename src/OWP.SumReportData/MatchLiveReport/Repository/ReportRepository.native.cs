@@ -1,4 +1,5 @@
 using Fanex.Data.Repository;
+using Olympus.Xml;
 using OWP.SumReportData.MatchLiveReport.Criteria;
 using OWP.SumReportData.MatchLiveReport.Models;
 
@@ -20,10 +21,8 @@ public class ReportRepositoryImp : ReportRepository
         this.dynamicRepository = dynamicRepository;
     }
 
-    public Task InsertData(IEnumerable<ReportModel> reportData)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task InsertData(IEnumerable<ReportModel> reportData)
+        => await dynamicRepository.ExecuteAsync(new InsertReportDataCriteria { ReportData = XmlConverter.Serialize(reportData) });
 
     public async Task<IEnumerable<OWPMatch>> QueryMatchesByDate(DateTime eventDate)
         => await dynamicRepository.FetchAsync<OWPMatch>(new QueryMatchesByDateCriteria { EventDate = eventDate });
