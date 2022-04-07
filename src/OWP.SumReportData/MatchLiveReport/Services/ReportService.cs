@@ -26,10 +26,13 @@ public class ReportServiceImp : ReportService
     public async Task Calculate(DateTime eventDate)
     {
         var matches = await reportRepository.QueryMatchesByDate(eventDate);
-        
+
         var result = Calculate(eventDate, matches);
 
-        await reportRepository.InsertData(result);
+        if (result.Any())
+        {
+            await reportRepository.InsertData(result);
+        }
     }
 
     public IEnumerable<ReportModel> Calculate(DateTime eventDate, IEnumerable<OWPMatch> matches)
