@@ -31,7 +31,7 @@ public class ReportServiceImp : ReportService
 
         if (result.Any())
         {
-            await reportRepository.InsertData(result);
+            await reportRepository.InsertData(result, eventDate);
         }
     }
 

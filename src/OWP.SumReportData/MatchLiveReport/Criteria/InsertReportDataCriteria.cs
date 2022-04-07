@@ -4,7 +4,9 @@ namespace OWP.SumReportData.MatchLiveReport.Criteria;
 
 public class InsertReportDataCriteria : NonQueryCommand
 {
-    public string ReportData { get; set; }
+    public string Data { get; set; }
+
+    public DateTime EventDate { get; set; }
 
     public override string GetSettingKey() => "OWP_MatchLiveReport_InsertReportData";
 

@@ -2009,17 +2009,20 @@ SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\MatchLiveReport\Criteria
 FN:6,System.String OWP.SumReportData.MatchLiveReport.Criteria.InsertReportDataCriteria::get_ReportData()
 FNDA:0,System.String OWP.SumReportData.MatchLiveReport.Criteria.InsertReportDataCriteria::get_ReportData()
 DA:7,0
-FN:8,System.String OWP.SumReportData.MatchLiveReport.Criteria.InsertReportDataCriteria::GetSettingKey()
-FNDA:0,System.String OWP.SumReportData.MatchLiveReport.Criteria.InsertReportDataCriteria::GetSettingKey()
+FN:8,System.String OWP.SumReportData.MatchLiveReport.Criteria.InsertReportDataCriteria::get_EventDate()
+FNDA:0,System.String OWP.SumReportData.MatchLiveReport.Criteria.InsertReportDataCriteria::get_EventDate()
 DA:9,0
-FN:10,System.Boolean OWP.SumReportData.MatchLiveReport.Criteria.InsertReportDataCriteria::IsValid()
-FNDA:0,System.Boolean OWP.SumReportData.MatchLiveReport.Criteria.InsertReportDataCriteria::IsValid()
+FN:10,System.String OWP.SumReportData.MatchLiveReport.Criteria.InsertReportDataCriteria::GetSettingKey()
+FNDA:0,System.String OWP.SumReportData.MatchLiveReport.Criteria.InsertReportDataCriteria::GetSettingKey()
 DA:11,0
-LF:3
+FN:12,System.Boolean OWP.SumReportData.MatchLiveReport.Criteria.InsertReportDataCriteria::IsValid()
+FNDA:0,System.Boolean OWP.SumReportData.MatchLiveReport.Criteria.InsertReportDataCriteria::IsValid()
+DA:13,0
+LF:4
 LH:0
 BRF:0
 BRH:0
-FNF:3
+FNF:4
 FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\MatchLiveReport\Criteria\QueryMatchesByDateCriteria.cs

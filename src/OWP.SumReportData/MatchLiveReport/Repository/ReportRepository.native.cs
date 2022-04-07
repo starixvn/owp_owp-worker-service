@@ -7,7 +7,7 @@ namespace OWP.SumReportData.MatchLiveReport.Repository;
 
 public interface ReportRepository
 {
-    Task InsertData(IEnumerable<ReportModel> reportData);
+    Task InsertData(IEnumerable<ReportModel> reportData, DateTime eventDate);
 
     Task<IEnumerable<OWPMatch>> QueryMatchesByDate(DateTime eventDate);
 }
@@ -21,8 +21,8 @@ public class ReportRepositoryImp : ReportRepository
         this.dynamicRepository = dynamicRepository;
     }
 
-    public async Task InsertData(IEnumerable<ReportModel> reportData)
-        => await dynamicRepository.ExecuteAsync(new InsertReportDataCriteria { ReportData = XmlConverter.Serialize(reportData) });
+    public async Task InsertData(IEnumerable<ReportModel> reportData, DateTime eventDate)
+        => await dynamicRepository.ExecuteAsync(new InsertReportDataCriteria { Data = XmlConverter.Serialize(reportData), EventDate = eventDate });
 
     public async Task<IEnumerable<OWPMatch>> QueryMatchesByDate(DateTime eventDate)
         => await dynamicRepository.FetchAsync<OWPMatch>(new QueryMatchesByDateCriteria { EventDate = eventDate });
