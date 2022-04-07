@@ -7,7 +7,7 @@ public enum BetTypeName
     [Display(Name = "Main")]
     Main,
 
-    [Display(Name = "Corner")]
+    [Display(Name = "Corners")]
     Corners,
 
     [Display(Name = "Next corners")]
