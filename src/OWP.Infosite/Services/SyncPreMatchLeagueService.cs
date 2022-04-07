@@ -33,9 +33,9 @@ public class SyncPreMatchLeagueServiceImp : SyncPreMatchLeagueService
 
     public async Task Sync()
     {
-        var sessionId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
-        var preMatchLeagues = await GetOldPreMatchLeagues(dateTimeService.Today);
-        await SaveOldPreMatchLeaguesSnapshot(sessionId, preMatchLeagues);
+        // var sessionId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
+        // var preMatchLeagues = await GetOldPreMatchLeagues(dateTimeService.Today);
+        // await SaveOldPreMatchLeaguesSnapshot(sessionId, preMatchLeagues);
 
         var criteria = new SyncInfoSiteMatchToPreMatchLeagueCriteria
         {
@@ -44,10 +44,10 @@ public class SyncPreMatchLeagueServiceImp : SyncPreMatchLeagueService
         };
         await dynamicRepository.ExecuteAsync(criteria);
 
-        apiService.TriggerNetCoreNewLeagueNotification(
-            sessionId,
-            DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified)
-        );
+        // apiService.TriggerNetCoreNewLeagueNotification(
+        //     sessionId,
+        //     DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified)
+        // );
     }
 
     private async Task<IEnumerable<PreMatchLeague>> GetOldPreMatchLeagues(DateTime fromDate)
