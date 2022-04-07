@@ -81,4 +81,8 @@
 		<Setting Key="OWP_PreMatchAssignment_GetStartTimeForNightShift" SpName ="OWP_PreMatchAssignment_GetStartTimeForNightShift" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 		<Setting Key="OWP_PreMatchReport_GetTotalMatchByLeagueIdsAndTimeRange" SpName ="OWP_PreMatchReport_GetTotalMatchByLeagueIdsAndTimeRange" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 	</Function>
+	<Function Name="MatchLiveReport">
+		<Setting Key="OWP_MatchLiveReport_InsertReportData" SpName ="OWP_MatchLiveReport_InsertReportData" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+		<Setting Key="OWP_MatchLiveReport_QueryMatchesByDate" SpName ="OWP_MatchLiveReport_QueryMatchesByDate" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+	</Function>
 </Functions>
