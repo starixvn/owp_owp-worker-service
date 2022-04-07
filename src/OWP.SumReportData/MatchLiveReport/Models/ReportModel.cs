@@ -1,6 +1,7 @@
 namespace OWP.SumReportData.MatchLiveReport.Models;
 
-public class ReportModel {
+public class ReportModel
+{
     public DateTime EventDate { get; set; }
 
     public string LeagueCategory { get; set; }

@@ -58,7 +58,7 @@ public static class MatchHelper
                     BetType = type.GetAttribute<DisplayAttribute>().Name,
                     EventDate = eventDate,
                     IsSaba = isSaba,
-                    MatchCount = categorizedMatches.Count(),
+                    MatchCount = categorizedMatches.Count,
                     LeagueCategory = category
                 };
             }
@@ -96,7 +96,8 @@ public static class MatchHelper
         {
             return BetTypeName.Fantasy;
         }
-        else if (owpLeagueName.Contains("WHICH TEAM TO KICK OFF", StringComparison.InvariantCultureIgnoreCase))
+        
+        if (owpLeagueName.Contains("WHICH TEAM TO KICK OFF", StringComparison.InvariantCultureIgnoreCase))
         {
             return BetTypeName.WhichTeamToKickOff;
         }
@@ -133,7 +134,8 @@ public static class MatchHelper
         {
             return BetTypeName.SabaClubFriendlyVirtualPes2115MinsPlay;
         }
-        else if (owpLeagueName.Contains("20 Mins ", StringComparison.InvariantCultureIgnoreCase))
+        
+        if (owpLeagueName.Contains("20 Mins ", StringComparison.InvariantCultureIgnoreCase))
         {
             return BetTypeName.SabaInternationalFriendlyVirtualPes2120MinsPlay;
         }
@@ -148,7 +150,8 @@ public static class MatchHelper
         {
             return BetTypeName.M88SabaSpanishLeagueVirtualFifa21Season1016MinsPlay;
         }
-        else if (owpLeagueName.Contains("16 Mins ", StringComparison.InvariantCultureIgnoreCase))
+        
+        if (owpLeagueName.Contains("16 Mins ", StringComparison.InvariantCultureIgnoreCase))
         {
             return BetTypeName.SabaClubFriendlyVirtualFifa2116MinsPlay;
         }
