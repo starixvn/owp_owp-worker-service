@@ -32,7 +32,7 @@ public static class CronExpressionJob
 
     public const string PrematchReport = "0 0 2 ? * * *"; //2AM everyday GMT-4;
 
-    public const string MatchLiveReport = "0 0 2 ? * * *"; //2AM everyday GMT-4;
+    public const string MatchLiveReport = "0 0/2 * 1/1 * ? *"; //2AM everyday GMT-4;
 
     public const string ArchiveData = "0 0 4 ? * * *"; //4AM everyday GMT-4;
 }

@@ -127,6 +127,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<SyncOtherSportAdminSiteMatchJob>();
         services.AddTransient<SumPrematchReportJob>();
         services.AddTransient<ArchiveDataServiceJob>();
+        services.AddTransient<SumMatchLiveReportJob>();
 
         return services;
     }

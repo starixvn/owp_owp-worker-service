@@ -30,6 +30,9 @@ public static class DependenceInjection
 
         services.AddTransient<CacheManipulator, CacheManipulatorImp>();
 
+        services.AddTransient<MatchLiveReport.Repository.ReportRepository, MatchLiveReport.Repository.ReportRepositoryImp>();
+        services.AddTransient<MatchLiveReport.Services.ReportService, MatchLiveReport.Services.ReportServiceImp>();
+
         return services;
     }
 }
