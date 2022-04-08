@@ -1,11 +1,14 @@
+using System.Collections.Immutable;
+using System.Collections.Generic;
 namespace OWP.SumReportData.LAReport.Constants;
 
 public static class MajorLeague
 {
-    public const string ENGLAND = "*ENGLISH PREMIER LEAGUE";
-    public const string GERMANY = "*GERMANY-BUNDESLIGA I";
-    public const string ITALY = "*ITALY SERIE A";
-    public const string SPAIN = "*SPAIN PRIMERA LALIGA";
-    public const string UEFA = "*UEFA CHAMPIONS LEAGUE";
-
+    public static readonly ImmutableList<string> majorLeagueList = new List<string>{
+        "*ENGLISH PREMIER LEAGUE",
+        "*GERMANY-BUNDESLIGA I",
+        "*ITALY SERIE A",
+        "*SPAIN PRIMERA LALIGA",
+        "*UEFA CHAMPIONS LEAGUE"
+    }.ToImmutableList();
 }

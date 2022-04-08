@@ -1,4 +1,5 @@
-﻿using OWP.Core.Extensions;
+﻿using System.Linq;
+using OWP.Core.Extensions;
 using OWP.SumReportData.LAReport.Constants;
 using OWP.SumReportData.LAReport.Enum;
 using OWP.SumReportData.LAReport.Models;
@@ -94,7 +95,5 @@ public class FiveMajorLeagueRule : MainMatchRule
     }
 
     private static bool isMajorLeague(string leagueName)
-        => leagueName == MajorLeague.ENGLAND 
-        || leagueName == MajorLeague.GERMANY || leagueName == MajorLeague.ITALY 
-        || leagueName == MajorLeague.SPAIN || leagueName == MajorLeague.UEFA;
+        => MajorLeague.majorLeagueList.Any( x => x == leagueName);
 }
