@@ -54,7 +54,7 @@ public class ReportServiceImp : ReportService
             MatchCount =
             x.BetType.Equals(BetTypeName.SingleTeamOU.GetAttribute<DisplayAttribute>().Name, StringComparison.InvariantCultureIgnoreCase) ||
             x.BetType.Equals(BetTypeName.PenaltyShootOut.GetAttribute<DisplayAttribute>().Name, StringComparison.InvariantCultureIgnoreCase) ?
-            x.MatchCount / 2 :
+            (int) Math.Ceiling(x.MatchCount / 2m ):
             x.MatchCount
         });
 

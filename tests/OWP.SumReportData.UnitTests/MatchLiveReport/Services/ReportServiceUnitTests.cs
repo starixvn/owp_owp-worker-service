@@ -20,7 +20,7 @@ public class ReportServiceUnitTests
 
         await service.Calculate(DateTime.Today);
 
-        await reportRepository.DidNotReceive().InsertData(new List<ReportModel>());
+        await reportRepository.DidNotReceive().InsertData(Arg.Any<IEnumerable<ReportModel>>(), Arg.Any<DateTime>());
     }
 
     [Fact]
@@ -42,7 +42,7 @@ public class ReportServiceUnitTests
 
         await service.Calculate(DateTime.Today);
 
-        await reportRepository.Received().InsertData(Arg.Any<IEnumerable<ReportModel>>());
+        await reportRepository.Received().InsertData(Arg.Any<IEnumerable<ReportModel>>(), Arg.Any<DateTime>());
     }
 
     [Fact]
@@ -100,9 +100,6 @@ public class ReportServiceUnitTests
                 LeagueCategory = "Others 4"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.HomeSingleTeamOU,
-                LeagueCategory = "Others 4"
-            },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.AwaySingleTeamOU,
                 LeagueCategory = "Others 4"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.FirstPenaltyToScore,
@@ -227,7 +224,7 @@ public class ReportServiceUnitTests
             },
             new ReportModel {
                 EventDate = eventDate,
-                BetType = "Corner",
+                BetType = "Corners",
                 IsSaba = false,
                 LeagueCategory = "MJ",
                 MatchCount = 1

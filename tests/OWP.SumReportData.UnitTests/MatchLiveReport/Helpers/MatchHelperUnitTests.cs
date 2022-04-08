@@ -490,7 +490,7 @@ public class MatchHelperUnitTests
             },
             new ReportModel {
                 EventDate = eventDate,
-                BetType = "Corner",
+                BetType = "Corners",
                 IsSaba = false,
                 LeagueCategory = "MJ",
                 MatchCount = 1
