@@ -104,4 +104,4 @@ services.AddSingleton(serviceProvider => new ConnectionFactory
 services.AddSingleton<RabbitMqClient, RabbitMqClientImp>();
 
 var apiService = services.BuildServiceProvider().GetService<OWP.SumReportData.MatchLiveReport.Services.ReportService>();
-await apiService.Calculate(new DateTime(2022, 04, 06)).ConfigureAwait(false);
+await apiService.Calculate(new DateTime(2022, 04, 07)).ConfigureAwait(false);

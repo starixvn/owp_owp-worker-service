@@ -1801,8 +1801,8 @@ FN:11,System.String OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_Leagu
 FNDA:215,System.String OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_LeagueCategory()
 DA:12,215
 FN:13,System.Boolean OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_IsSaba()
-FNDA:246,System.Boolean OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_IsSaba()
-DA:14,246
+FNDA:406,System.Boolean OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_IsSaba()
+DA:14,406
 FN:15,OWP.SumReportData.MatchLiveReport.Constants.BetTypeName OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_BetTypeName()
 FNDA:389,OWP.SumReportData.MatchLiveReport.Constants.BetTypeName OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_BetTypeName()
 DA:16,389
@@ -1852,6 +1852,8 @@ BRDA:72,108,1,64
 BRDA:75,87,0,1
 BRDA:75,87,1,63
 BRDA:72,108,0,4
+BRDA:70,14,0,160
+BRDA:70,14,1,23
 FN:81,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch> OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::CategorizeMainMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
 FNDA:4,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch> OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::CategorizeMainMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
 DA:82,4
@@ -2000,8 +2002,8 @@ BRDA:52,639,0,57
 BRDA:47,689,0,8
 LF:109
 LH:109
-BRF:32
-BRH:32
+BRF:34
+BRH:34
 FNF:10
 FNH:10
 end_of_record

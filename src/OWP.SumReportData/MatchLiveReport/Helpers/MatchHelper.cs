@@ -67,7 +67,7 @@ public static class MatchHelper
 
     public static IEnumerable<OWPMatch> CategorizeMinorMatches(IEnumerable<OWPMatch> matches)
     {
-        var minorMatches = matches.Where(x => x.MinorBettypeId.HasValue);
+        var minorMatches = matches.Where(x => x.MinorBettypeId.HasValue && !x.IsSaba);
 
         foreach (var match in minorMatches)
         {
