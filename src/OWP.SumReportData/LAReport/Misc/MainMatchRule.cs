@@ -81,3 +81,20 @@ public class ESoccerRule : MainMatchRule
     private static bool isESoccer(string leagueName)
         => leagueName.IsContainsIgnoreCase("SABA ");
 }
+public class FiveMajorLeagueRule : MainMatchRule
+{
+    public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
+    {
+        if (isMajorLeague(assignment.OWPLeagueName))
+        {
+            return ReportType.MAJOR_LEAGUE;
+        }
+
+        return base.Execute(assignment, userAssignments);
+    }
+
+    private static bool isMajorLeague(string leagueName)
+        => leagueName == MajorLeague.ENGLAND 
+        || leagueName == MajorLeague.GERMANY || leagueName == MajorLeague.ITALY 
+        || leagueName == MajorLeague.SPAIN || leagueName == MajorLeague.UEFA;
+}

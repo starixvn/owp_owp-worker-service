@@ -14,6 +14,7 @@ public class MainMatchRuleFactoryImp : MainMatchRuleFactory
     {
         RuleType.FANTASY => new IsFantasyRule(),
         RuleType.ESOCCER => new ESoccerRule(),
+        RuleType.FIVE_MAJOR_LEAGUE => new FiveMajorLeagueRule(),
         _ => new FTCornerRule()
     };
 }

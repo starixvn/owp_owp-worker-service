@@ -48,6 +48,8 @@ public class LAReportModel
 
     public int Others { get; set; }
 
+    public int FiveMajorLeague { get; set; }
+
     public int SumTotal()
         => LinkLowerThan3 +
         LinkX3 +
@@ -68,5 +70,6 @@ public class LAReportModel
         ESoccer15Mins +
         ESoccer16Mins +
         ESoccer20Mins +
-        Others;
+        Others +
+        FiveMajorLeague;
 }

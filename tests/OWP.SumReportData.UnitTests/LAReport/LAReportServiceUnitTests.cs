@@ -43,6 +43,7 @@ public class LAReportServiceUnitTests
         mainMatchRuleFactory.Create(RuleType.FT_CORNER).Returns(new FTCornerRule());
         mainMatchRuleFactory.Create(RuleType.FANTASY).Returns(new IsFantasyRule());
         mainMatchRuleFactory.Create(RuleType.ESOCCER).Returns(new ESoccerRule());
+        mainMatchRuleFactory.Create(RuleType.FIVE_MAJOR_LEAGUE).Returns(new FiveMajorLeagueRule());
 
         var multipleAndSingleMatchesFactory = Substitute.For<MultipleAndSingleMatchesFactory>();
         multipleAndSingleMatchesFactory.Create(RuleType.MULTIPLE).Returns(new MultipleMatchesRule());
@@ -551,6 +552,17 @@ public class LAReportServiceUnitTests
                     OWPMatchId = 425004,
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 4, 15, 0, 0)
+                },
+                //5ML
+                new Assignment
+                {
+                    AssignmentId = 131,
+                    UserId = 15477090,
+                    OWPLeagueName = "*ENGLISH PREMIER LEAGUE",
+                    MinorBettypeId = null,
+                    OWPMatchId = 425008,
+                    ParentMatchId = null,
+                    EventDateTime = new DateTime(2022, 4, 9, 15, 0, 0)
                 }
             };
     }
@@ -591,7 +603,8 @@ public class LAReportServiceUnitTests
                     TV = 1,
                     Reporter = 2,
                     Others = 2,
-                    TotalMatches = 29
+                    FiveMajorLeague = 1,
+                    TotalMatches = 30
                 }
             };
     }
