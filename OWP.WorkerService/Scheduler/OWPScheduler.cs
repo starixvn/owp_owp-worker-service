@@ -48,8 +48,8 @@ public class OWPScheduler : IHostedService
         await AddJobToSchedulerAsync(new JobInfo(typeof(SyncTodayInfoSiteMatchJob), CronExpressionJob.SyncTodayInfoSiteMatch));
         await AddJobToSchedulerAsync(new JobInfo(typeof(SyncOtherSportAdminSiteMatchJob), CronExpressionJob.SyncOtherSportAdminSiteJob));
         await AddJobToSchedulerAsync(new JobInfo(typeof(SumPrematchReportJob), CronExpressionJob.PrematchReport));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(DeleteOldMessageJob), CronExpressionJob.DeleteOldMessage));
         await AddJobToSchedulerAsync(new JobInfo(typeof(SumMatchLiveReportJob), CronExpressionJob.MatchLiveReport));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(DeleteOldMessageJob), CronExpressionJob.DeleteOldMessage));
         await AddJobToSchedulerAsync(new JobInfo(typeof(ArchiveDataServiceJob), CronExpressionJob.ArchiveData));
     }
 
