@@ -9,23 +9,23 @@ using ONEbook.UM.Configurations;
 using ONEbook.UM.Helpers;
 using ONEbook.UM.Services;
 using ONEbook.UM.Transport;
+using OWP.ArchiveData;
+using OWP.Core.RabbitMq;
+using OWP.Core.RabbitMq.Settings;
 using OWP.Infosite;
 using OWP.InfositeIdSync;
 using OWP.LinkLeagueAndTeam;
 using OWP.MatchReadyNotification;
 using OWP.OtherSport;
+using OWP.PrematchReport;
 using OWP.SumReportData;
 using OWP.SyncLeagueSettings;
 using OWP.WorkerService.Jobs;
 using OWP.WorkerService.Settings;
-using OWP.PrematchReport;
-using OWP.ArchiveData;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
-using OWP.Core.RabbitMq;
 using RabbitMQ.Client;
-using OWP.Core.RabbitMq.Settings;
 
 namespace OWP.WorkerService;
 
@@ -126,8 +126,9 @@ public static class ServiceCollectionExtensions
         services.AddTransient<SyncTodayInfoSiteMatchJob>();
         services.AddTransient<SyncOtherSportAdminSiteMatchJob>();
         services.AddTransient<SumPrematchReportJob>();
-        services.AddTransient<ArchiveDataServiceJob>();
+        services.AddTransient<DeleteOldMessageJob>();
         services.AddTransient<SumMatchLiveReportJob>();
+        services.AddTransient<ArchiveDataJob>();
 
         return services;
     }
