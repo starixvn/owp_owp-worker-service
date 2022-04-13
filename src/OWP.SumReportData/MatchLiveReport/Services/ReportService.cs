@@ -11,7 +11,7 @@ public interface ReportService
 {
     Task Calculate(DateTime eventDate);
 
-    IEnumerable<ReportModel> Calculate(DateTime eventDate, IEnumerable<OWPMatch> matches);
+    IEnumerable<ReportModel> Calculate(DateTime eventDate, IEnumerable<OWPMatch> matches, IEnumerable<OWPMatch> mainMatches);
 }
 
 public class ReportServiceImp : ReportService
@@ -25,9 +25,9 @@ public class ReportServiceImp : ReportService
 
     public async Task Calculate(DateTime eventDate)
     {
-        var matches = await reportRepository.QueryMatchesByDate(eventDate);
+        var (totalMatches, mainMatches) = await reportRepository.QueryMatchesByDate(eventDate);
 
-        var result = Calculate(eventDate, matches);
+        var result = Calculate(eventDate, totalMatches, mainMatches);
 
         if (result.Any())
         {
@@ -35,9 +35,9 @@ public class ReportServiceImp : ReportService
         }
     }
 
-    public IEnumerable<ReportModel> Calculate(DateTime eventDate, IEnumerable<OWPMatch> matches)
+    public IEnumerable<ReportModel> Calculate(DateTime eventDate, IEnumerable<OWPMatch> matches, IEnumerable<OWPMatch> queriedMainMatches)
     {
-        var minorMatches = MatchHelper.CategorizeMinorMatches(matches);
+        var minorMatches = MatchHelper.CategorizeMinorMatches(matches, queriedMainMatches);
         var mainMatches = MatchHelper.CategorizeMainMatches(matches);
         var sabaMatches = MatchHelper.CategorizeSabaMatches(matches);
 

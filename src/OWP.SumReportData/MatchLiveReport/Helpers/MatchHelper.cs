@@ -65,7 +65,7 @@ public static class MatchHelper
         }
     }
 
-    public static IEnumerable<OWPMatch> CategorizeMinorMatches(IEnumerable<OWPMatch> matches)
+    public static IEnumerable<OWPMatch> CategorizeMinorMatches(IEnumerable<OWPMatch> matches, IEnumerable<OWPMatch> mainMatches)
     {
         var minorMatches = matches.Where(x => x.MinorBettypeId.HasValue && !x.IsSaba);
 
@@ -73,10 +73,14 @@ public static class MatchHelper
         {
             var isBetTypeExisted = BetTypeMap.TryGetValue((MinorBetType)match.MinorBettypeId.Value, out var streamName);
             match.BetTypeName = isBetTypeExisted ? streamName : BetTypeName.Other;
+            match.LeagueCategory = GetMainLeagueCategory(match, mainMatches);
         }
 
         return minorMatches.Where(x => x.BetTypeName != BetTypeName.Other);
     }
+
+    public static string GetMainLeagueCategory(OWPMatch minorMatch, IEnumerable<OWPMatch> mainMatches)
+        => mainMatches.FirstOrDefault(x => x.OWPMatchId == minorMatch.ParentMatchId)?.LeagueCategory;
 
     public static IEnumerable<OWPMatch> CategorizeMainMatches(IEnumerable<OWPMatch> matches)
     {

@@ -1,5 +1,4 @@
 using OWP.SumReportData.MatchLiveReport.Constants;
-using OWP.SumReportData.MatchLiveReport.Helpers;
 using OWP.SumReportData.MatchLiveReport.Models;
 using OWP.SumReportData.MatchLiveReport.Services;
 using NSubstitute;
@@ -15,7 +14,7 @@ public class ReportServiceUnitTests
     public async Task Calculate_WithEmptyReport_ShouldNotInsertData()
     {
         var reportRepository = Substitute.For<ReportRepository>();
-        reportRepository.QueryMatchesByDate(Arg.Any<DateTime>()).Returns(new List<OWPMatch>());
+        reportRepository.QueryMatchesByDate(Arg.Any<DateTime>()).Returns((new List<OWPMatch>(), new List<OWPMatch>()));
         var service = new ReportServiceImp(reportRepository);
 
         await service.Calculate(DateTime.Today);
@@ -30,14 +29,26 @@ public class ReportServiceUnitTests
         var matches = new List<OWPMatch> {
             new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Specific15Mins,
-                LeagueCategory = "MJ"
+                LeagueCategory = "MJ",
+                ParentMatchId = 1
             },
             new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Specific10Mins,
-                LeagueCategory = "MJ"
+                LeagueCategory = "MJ",
+                ParentMatchId = 1
             }
         };
-        reportRepository.QueryMatchesByDate(Arg.Any<DateTime>()).Returns(matches);
+        var mainMatches = new List<OWPMatch> {
+            new OWPMatch{
+                LeagueCategory = "MJ",
+                OWPMatchId = 1
+            },
+            new OWPMatch{
+                LeagueCategory = "MJ",
+                OWPMatchId = 2
+            }
+        };
+        reportRepository.QueryMatchesByDate(Arg.Any<DateTime>()).Returns((matches, mainMatches));
         var service = new ReportServiceImp(reportRepository);
 
         await service.Calculate(DateTime.Today);
@@ -49,139 +60,216 @@ public class ReportServiceUnitTests
     public void Calculate_WithMatches_ShouldReturnReportModel()
     {
         var reportRepository = Substitute.For<ReportRepository>();
-        reportRepository.QueryMatchesByDate(Arg.Any<DateTime>()).Returns(new List<OWPMatch>());
+        reportRepository.QueryMatchesByDate(Arg.Any<DateTime>()).Returns((new List<OWPMatch>(), new List<OWPMatch>()));
         var service = new ReportServiceImp(reportRepository);
         var eventDate = DateTime.Today;
+
+        var mainMatches = new List<OWPMatch>
+        {
+            new OWPMatch{
+                OWPMatchId = 1,
+                LeagueCategory = "MJ"
+            },
+            new OWPMatch{
+                OWPMatchId = 2,
+                LeagueCategory = "M1"
+            },
+            new OWPMatch{
+                OWPMatchId = 3,
+                LeagueCategory = "Others 1"
+            },
+            new OWPMatch{
+                OWPMatchId = 4,
+                LeagueCategory = "Others 2"
+            },
+            new OWPMatch{
+                OWPMatchId = 5,
+                LeagueCategory = "Others 3"
+            },
+            new OWPMatch{
+                OWPMatchId = 6,
+                LeagueCategory = "Others 4"
+            },
+            new OWPMatch{
+                OWPMatchId = 7,
+                LeagueCategory = "Others 5"
+            },
+            new OWPMatch{
+                OWPMatchId = 8,
+                LeagueCategory = "Others 6"
+            },
+            new OWPMatch{
+                OWPMatchId = 9,
+                LeagueCategory = "Unknown"
+            }
+        };
 
         var matches = new List<OWPMatch>
         {
             new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Specific15Mins,
+                ParentMatchId = 1,
                 LeagueCategory = "MJ"
             },
             new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Specific10Mins,
+                ParentMatchId = 1,
                 LeagueCategory = "MJ"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Corners,
+                ParentMatchId = 1,
                 LeagueCategory = "MJ"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.NextCorners,
+                ParentMatchId = 1,
                 LeagueCategory = "MJ"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Specific15MinsNumberOfCorners,
+                ParentMatchId = 2,
                 LeagueCategory = "M1"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Bookings,
+                ParentMatchId = 2,
                 LeagueCategory = "M1"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.NextBookings,
+                ParentMatchId = 2,
                 LeagueCategory = "M1"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Specific15MinsTotalBookings,
+                ParentMatchId = 2,
                 LeagueCategory = "M1"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.WhichTeamToTakeTheFirstPenalty,
+                ParentMatchId = 3,
                 LeagueCategory = "Others 1"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Winner,
+                ParentMatchId = 4,
                 LeagueCategory = "Others 2"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.LastCorners,
+                ParentMatchId = 4,
                 LeagueCategory = "Others 2"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.LastBookings,
+                ParentMatchId = 5,
                 LeagueCategory = "Others 3"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.HomeSingleTeamOU,
+                ParentMatchId = 6,
                 LeagueCategory = "Others 4"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.AwaySingleTeamOU,
+                ParentMatchId = 6,
                 LeagueCategory = "Others 4"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.HomeSingleTeamOU,
+                ParentMatchId = 6,
                 LeagueCategory = "Others 4"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.FirstPenaltyToScore,
+                ParentMatchId = 8,
                 LeagueCategory = "Others 6"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.FirstPenaltyAwarded,
+                ParentMatchId = 8,
                 LeagueCategory = "Others 6"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.NextGoalKick,
+                ParentMatchId = 8,
                 LeagueCategory = "Others 6"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.LastGoalKick,
+                ParentMatchId = 8,
                 LeagueCategory = "Others 6"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.GoalKick,
+                ParentMatchId = 8,
                 LeagueCategory = "Others 6"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Offside,
+                ParentMatchId = 8,
                 LeagueCategory = "Others 6"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.LastThrowIn,
+                ParentMatchId = 8,
                 LeagueCategory = "Others 6"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.ThrowIn,
+                ParentMatchId = 8,
                 LeagueCategory = "Others 6"
             }
             ,new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.LastFreeKick,
+                ParentMatchId = 8,
                 LeagueCategory = "Others 6"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.FreeKick,
+                ParentMatchId = 9,
                 LeagueCategory = "Unknown"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.SpecialGoal,
+                ParentMatchId = 9,
                 LeagueCategory = "Unknown"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.AwayPenaltyShootOut,
+                ParentMatchId = 8,
                 LeagueCategory = "Others 6"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.AwayPenaltyShootOut,
+                ParentMatchId = 8,
                 LeagueCategory = "Others 6"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.HomePenaltyShootOut,
+                ParentMatchId = 8,
                 LeagueCategory = "Others 6"
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.HomePenaltyShootOut,
+                ParentMatchId = 8,
                 LeagueCategory = "Others 6"
             },
             new OWPMatch{
                 IsSaba = true,
                 OWPLeagueName = "SABA ABC FIFA - 16 Mins ",
+                ParentMatchId = 8,
                 LeagueCategory = "Others 6"
             },
             new OWPMatch{
                 IsSaba = true,
                 OWPLeagueName = "SABA ABC FIFA - 6 mins ",
+                ParentMatchId = 7,
                 LeagueCategory = "Others 5"
             },
             new OWPMatch{
                 IsSaba = true,
                 OWPLeagueName = "M88 SABA ABC FIFA - 16 mins ",
+                ParentMatchId = 6,
                 LeagueCategory = "Others 4"
             },
             new OWPMatch{
                 IsSaba = true,
                 OWPLeagueName = "SABA ABC PES - 15 Mins ",
+                ParentMatchId = 5,
                 LeagueCategory = "Others 3"
             }
             ,
             new OWPMatch{
                 IsSaba = false,
                 OWPLeagueName = "abc fantasy ",
+                ParentMatchId = 1,
                 LeagueCategory = "MJ"
             },
             new OWPMatch{
                 IsSaba = false,
                 OWPLeagueName = "AUSTRIA REGIONAL LEAGUE MITTE",
+                ParentMatchId = 1,
                 LeagueCategory = "MJ"
             },
             new OWPMatch{
                 IsSaba = false,
                 OWPLeagueName = "AUSTRIA REGIONAL WHICH TEAM TO KICK OFF",
+                ParentMatchId = 1,
                 LeagueCategory = "MJ"
             },
         };
@@ -435,6 +523,6 @@ public class ReportServiceUnitTests
             }
         };
 
-        DeepAssert.Equal(expected, service.Calculate(eventDate, matches).ToList());
+        DeepAssert.Equal(expected, service.Calculate(eventDate, matches, mainMatches).ToList());
     }
 }

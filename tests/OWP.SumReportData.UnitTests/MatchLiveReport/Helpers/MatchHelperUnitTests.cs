@@ -163,73 +163,121 @@ public class MatchHelperUnitTests
     [Fact]
     public void CategorizeMinorMatches_WithMinorMatches_ShouldReturnCategorizedMatches()
     {
+        var mainMatches = new List<OWPMatch>
+        {
+            new OWPMatch{   
+                OWPMatchId = 1,
+                LeagueCategory = "MJ"
+            },
+            new OWPMatch{
+                OWPMatchId = 2,
+                LeagueCategory = "M1"
+            },
+            new OWPMatch{
+                OWPMatchId = 3,
+                LeagueCategory = "M4"
+            },
+        };
+
         var matches = new List<OWPMatch>{
             new OWPMatch{
-                MinorBettypeId = 1000
+                MinorBettypeId = 1000,
+                ParentMatchId = 1
             },
             new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.Specific15Mins
+                MinorBettypeId = (int)MinorBetType.Specific15Mins,
+                ParentMatchId = 1
             },
             new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.Specific10Mins
+                MinorBettypeId = (int)MinorBetType.Specific10Mins,
+                ParentMatchId = 1
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.Corners
+                MinorBettypeId = (int)MinorBetType.Corners,
+                ParentMatchId = 1
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.NextCorners
+                MinorBettypeId = (int)MinorBetType.NextCorners,
+                ParentMatchId = 1
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.Specific15MinsNumberOfCorners
+                MinorBettypeId = (int)MinorBetType.Specific15MinsNumberOfCorners,
+                ParentMatchId = 1
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.Bookings
+                MinorBettypeId = (int)MinorBetType.Bookings,
+                ParentMatchId = 1
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.NextBookings
+                MinorBettypeId = (int)MinorBetType.NextBookings,
+                ParentMatchId = 1
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.Specific15MinsTotalBookings
+                MinorBettypeId = (int)MinorBetType.Specific15MinsTotalBookings,
+                ParentMatchId = 1
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.WhichTeamToTakeTheFirstPenalty
+                MinorBettypeId = (int)MinorBetType.WhichTeamToTakeTheFirstPenalty,
+                ParentMatchId = 1
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.Winner
+                MinorBettypeId = (int)MinorBetType.Winner,
+                ParentMatchId = 2
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.LastCorners
+                MinorBettypeId = (int)MinorBetType.LastCorners,
+                ParentMatchId = 2
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.LastBookings
+                MinorBettypeId = (int)MinorBetType.LastBookings,
+                ParentMatchId = 2
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.HomeSingleTeamOU
+                MinorBettypeId = (int)MinorBetType.HomeSingleTeamOU,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.AwaySingleTeamOU
+                MinorBettypeId = (int)MinorBetType.AwaySingleTeamOU,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.HomeSingleTeamOU
+                MinorBettypeId = (int)MinorBetType.HomeSingleTeamOU,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.AwaySingleTeamOU
+                MinorBettypeId = (int)MinorBetType.AwaySingleTeamOU,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.FirstPenaltyToScore
+                MinorBettypeId = (int)MinorBetType.FirstPenaltyToScore,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.FirstPenaltyAwarded
+                MinorBettypeId = (int)MinorBetType.FirstPenaltyAwarded,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.NextGoalKick
+                MinorBettypeId = (int)MinorBetType.NextGoalKick,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.LastGoalKick
+                MinorBettypeId = (int)MinorBetType.LastGoalKick,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.GoalKick
+                MinorBettypeId = (int)MinorBetType.GoalKick,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.Offside
+                MinorBettypeId = (int)MinorBetType.Offside,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.LastThrowIn
+                MinorBettypeId = (int)MinorBetType.LastThrowIn,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.ThrowIn
+                MinorBettypeId = (int)MinorBetType.ThrowIn,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.LastFreeKick
+                MinorBettypeId = (int)MinorBetType.LastFreeKick,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.FreeKick
+                MinorBettypeId = (int)MinorBetType.FreeKick,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.SpecialGoal
+                MinorBettypeId = (int)MinorBetType.SpecialGoal,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.AwayPenaltyShootOut
+                MinorBettypeId = (int)MinorBetType.AwayPenaltyShootOut,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.AwayPenaltyShootOut
+                MinorBettypeId = (int)MinorBetType.AwayPenaltyShootOut,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.HomePenaltyShootOut
+                MinorBettypeId = (int)MinorBetType.HomePenaltyShootOut,
+                ParentMatchId = 3
             },new OWPMatch{
-                MinorBettypeId = (int)MinorBetType.HomePenaltyShootOut
+                MinorBettypeId = (int)MinorBetType.HomePenaltyShootOut,
+                ParentMatchId = 3
             }
             ,new OWPMatch{
                 MinorBettypeId = null
@@ -239,102 +287,164 @@ public class MatchHelperUnitTests
         var expected = new List<OWPMatch>{
             new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Specific15Mins,
-                BetTypeName = BetTypeName.Specific15Mins
+                BetTypeName = BetTypeName.Specific15Mins,
+                LeagueCategory = "MJ",
+                ParentMatchId = 1
             },
             new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Specific10Mins,
-                BetTypeName = BetTypeName.Specific10Mins
+                BetTypeName = BetTypeName.Specific10Mins,
+                LeagueCategory = "MJ",
+                ParentMatchId = 1
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Corners,
-                BetTypeName = BetTypeName.Corners
+                BetTypeName = BetTypeName.Corners,
+                LeagueCategory = "MJ",
+                ParentMatchId = 1
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.NextCorners,
-                BetTypeName = BetTypeName.NextCorners
+                BetTypeName = BetTypeName.NextCorners,
+                LeagueCategory = "MJ",
+                ParentMatchId = 1
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Specific15MinsNumberOfCorners,
-                BetTypeName = BetTypeName.Specific15MinsNumberOfCorners
+                BetTypeName = BetTypeName.Specific15MinsNumberOfCorners,
+                LeagueCategory = "MJ",
+                ParentMatchId = 1
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Bookings,
-                BetTypeName = BetTypeName.Bookings
+                BetTypeName = BetTypeName.Bookings,
+                LeagueCategory = "MJ",
+                ParentMatchId = 1
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.NextBookings,
-                BetTypeName = BetTypeName.NextBookings
+                BetTypeName = BetTypeName.NextBookings,
+                LeagueCategory = "MJ",
+                ParentMatchId = 1
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Specific15MinsTotalBookings,
-                BetTypeName = BetTypeName.Specific15MinsTotalBookings
+                BetTypeName = BetTypeName.Specific15MinsTotalBookings,
+                LeagueCategory = "MJ",
+                ParentMatchId = 1
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.WhichTeamToTakeTheFirstPenalty,
-                BetTypeName = BetTypeName.WhichTeamToTakeTheFirstPenalty
+                BetTypeName = BetTypeName.WhichTeamToTakeTheFirstPenalty,
+                LeagueCategory = "MJ",
+                ParentMatchId = 1
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Winner,
-                BetTypeName = BetTypeName.Winner
+                BetTypeName = BetTypeName.Winner,
+                LeagueCategory = "M1",
+                ParentMatchId = 2
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.LastCorners,
-                BetTypeName = BetTypeName.LastCorners
+                BetTypeName = BetTypeName.LastCorners,
+                LeagueCategory = "M1",
+                ParentMatchId = 2
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.LastBookings,
-                BetTypeName = BetTypeName.LastBookings
+                BetTypeName = BetTypeName.LastBookings,
+                LeagueCategory = "M1",
+                ParentMatchId = 2
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.HomeSingleTeamOU,
-                BetTypeName = BetTypeName.SingleTeamOU
+                BetTypeName = BetTypeName.SingleTeamOU,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.AwaySingleTeamOU,
-                BetTypeName = BetTypeName.SingleTeamOU
+                BetTypeName = BetTypeName.SingleTeamOU,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.HomeSingleTeamOU,
-                BetTypeName = BetTypeName.SingleTeamOU
+                BetTypeName = BetTypeName.SingleTeamOU,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.AwaySingleTeamOU,
-                BetTypeName = BetTypeName.SingleTeamOU
+                BetTypeName = BetTypeName.SingleTeamOU,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.FirstPenaltyToScore,
-                BetTypeName = BetTypeName.FirstPenaltyToScore
+                BetTypeName = BetTypeName.FirstPenaltyToScore,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.FirstPenaltyAwarded,
-                BetTypeName = BetTypeName.FirstPenaltyAwarded
+                BetTypeName = BetTypeName.FirstPenaltyAwarded,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.NextGoalKick,
-                BetTypeName = BetTypeName.NextGoalKick
+                BetTypeName = BetTypeName.NextGoalKick,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.LastGoalKick,
-                BetTypeName = BetTypeName.LastGoalKick
+                BetTypeName = BetTypeName.LastGoalKick,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.GoalKick,
-                BetTypeName = BetTypeName.GoalKick
+                BetTypeName = BetTypeName.GoalKick,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.Offside,
-                BetTypeName = BetTypeName.Offside
+                BetTypeName = BetTypeName.Offside,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.LastThrowIn,
-                BetTypeName = BetTypeName.LastThrowIn
+                BetTypeName = BetTypeName.LastThrowIn,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.ThrowIn,
-                BetTypeName = BetTypeName.ThrowIn
+                BetTypeName = BetTypeName.ThrowIn,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.LastFreeKick,
-                BetTypeName = BetTypeName.LastFreeKick
+                BetTypeName = BetTypeName.LastFreeKick,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.FreeKick,
-                BetTypeName = BetTypeName.FreeKick
+                BetTypeName = BetTypeName.FreeKick,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.SpecialGoal,
-                BetTypeName = BetTypeName.SpecialGoal
+                BetTypeName = BetTypeName.SpecialGoal,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.AwayPenaltyShootOut,
-                BetTypeName = BetTypeName.PenaltyShootOut
+                BetTypeName = BetTypeName.PenaltyShootOut,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.AwayPenaltyShootOut,
-                BetTypeName = BetTypeName.PenaltyShootOut
+                BetTypeName = BetTypeName.PenaltyShootOut,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.HomePenaltyShootOut,
-                BetTypeName = BetTypeName.PenaltyShootOut
+                BetTypeName = BetTypeName.PenaltyShootOut,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             },new OWPMatch{
                 MinorBettypeId = (int)MinorBetType.HomePenaltyShootOut,
-                BetTypeName = BetTypeName.PenaltyShootOut
+                BetTypeName = BetTypeName.PenaltyShootOut,
+                LeagueCategory = "M4",
+                ParentMatchId = 3
             }
         };
 
-        DeepAssert.Equal(expected, MatchHelper.CategorizeMinorMatches(matches).ToList());
+        DeepAssert.Equal(expected, MatchHelper.CategorizeMinorMatches(matches, mainMatches).ToList());
     }
 
     [Fact]

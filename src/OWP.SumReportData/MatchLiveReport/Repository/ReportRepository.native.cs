@@ -9,7 +9,7 @@ public interface ReportRepository
 {
     Task InsertData(IEnumerable<ReportModel> reportData, DateTime eventDate);
 
-    Task<IEnumerable<OWPMatch>> QueryMatchesByDate(DateTime eventDate);
+    Task<(IEnumerable<OWPMatch>, IEnumerable<OWPMatch>)> QueryMatchesByDate(DateTime eventDate);
 }
 
 public class ReportRepositoryImp : ReportRepository
@@ -24,7 +24,7 @@ public class ReportRepositoryImp : ReportRepository
     public async Task InsertData(IEnumerable<ReportModel> reportData, DateTime eventDate)
         => await dynamicRepository.ExecuteAsync(new InsertReportDataCriteria { Data = XmlConverter.Serialize(reportData), EventDate = eventDate });
 
-    public async Task<IEnumerable<OWPMatch>> QueryMatchesByDate(DateTime eventDate)
-        => await dynamicRepository.FetchAsync<OWPMatch>(new QueryMatchesByDateCriteria { EventDate = eventDate });
+    public async Task<(IEnumerable<OWPMatch>, IEnumerable<OWPMatch>)> QueryMatchesByDate(DateTime eventDate)
+        => await dynamicRepository.FetchMultipleAsync<OWPMatch, OWPMatch>(new QueryMatchesByDateCriteria { EventDate = eventDate });
 }
 

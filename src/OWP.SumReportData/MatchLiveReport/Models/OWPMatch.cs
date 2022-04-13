@@ -7,6 +7,8 @@ public class OWPMatch {
 
     public int? MinorBettypeId { get; set; }
 
+    public int? ParentMatchId { get; set; }
+
     public string OWPLeagueName { get; set; }
 
     public string LeagueCategory { get; set; }
