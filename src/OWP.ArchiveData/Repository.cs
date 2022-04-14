@@ -25,7 +25,7 @@ public class RepositoryImp : Repository
     {
         var criteria = new CopyDataToOldTableCriteria
         {
-            Date = date,
+            Date = date
         };
 
         await repository.ExecuteAsync(criteria);
