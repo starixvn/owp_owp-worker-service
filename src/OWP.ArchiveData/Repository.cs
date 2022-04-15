@@ -10,6 +10,8 @@ public interface Repository
     Task CopyDataToOldTable(DateTime date);
 
     Task DeleteOldData(DateTime date);
+
+    Task DeleteOldNotify(DateTime date);
 }
 
 public class RepositoryImp : Repository
@@ -35,7 +37,7 @@ public class RepositoryImp : Repository
     {
         if (date >= DateTime.Today.AddDays(-35))
         {
-            throw new Exception($"Cannot delete not too old data at {date}");
+            throw new ArgumentOutOfRangeException($"Cannot delete not too old data at {date}");
         }
 
         var criteria = new DeleteOldDataCriteria { Date = date };
@@ -45,6 +47,17 @@ public class RepositoryImp : Repository
     public async Task DeleteOldMessage(DateTime date)
     {
         var criteria = new DeleteOldMessageCriteria { Date = date };
+        await repository.ExecuteAsync(criteria);
+    }
+
+    public async Task DeleteOldNotify(DateTime date)
+    {
+        if (date >= DateTime.Today.AddDays(-35))
+        {
+            throw new ArgumentOutOfRangeException($"Cannot delete not too old data at {date}");
+        }
+
+        var criteria = new DeleteOldNotifyCriteria { Date = date };
         await repository.ExecuteAsync(criteria);
     }
 }

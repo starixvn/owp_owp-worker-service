@@ -7,6 +7,8 @@ namespace OWP.ArchiveData.Services
         Task CopyDataToOldTable(DateTime date);
 
         Task DeleteOldData(DateTime date);
+
+        Task DeleteOldNotify(DateTime date);
     }
 
     public class ArchiveDataServiceImp : ArchiveDataService
@@ -33,6 +35,12 @@ namespace OWP.ArchiveData.Services
         public async Task DeleteOldMessage(DateTime date)
         {
             await repository.DeleteOldMessage(date);
+        }
+
+        public async Task DeleteOldNotify(DateTime date)
+        {
+            var deletingDate = date.AddDays(-40);
+            await repository.DeleteOldNotify(deletingDate);
         }
     }
 }
