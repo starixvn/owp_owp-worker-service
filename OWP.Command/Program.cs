@@ -48,7 +48,7 @@ var services = new ServiceCollection();
 FanexInitializer.Start(configuration);
 services.AddScoped<IDynamicRepository, DynamicRepository>();
 services.AddTransient<ILogger, Logger>();
-
+services.AddSingleton<IConfiguration>(configuration);
 #endregion AddFanexData
 
 #region AddRedis
@@ -101,10 +101,7 @@ services.AddSingleton(serviceProvider => new ConnectionFactory
     DispatchConsumersAsync = true
 });
 
-services.AddSingleton<RabbitMqClient, RabbitMqClientImp>();
+services.AddSingleton<RabbitMqClient>(new RabbitMqClientImp(configuration).Initialize());
 
-var apiService = services.BuildServiceProvider().GetService<OWP.SumReportData.MatchLiveReport.Services.ReportService>();
-var max = new DateTime(2022, 01, 26);
-for (var date = new DateTime(2021, 08, 30); date <= max; date = date.AddDays(1)){
-    await apiService.Calculate(date).ConfigureAwait(false);
-}
+var apiService = services.BuildServiceProvider().GetService<OWP.InfositeIdSync.Services.SyncInfositeIdService>();
+await apiService.Sync().ConfigureAwait(false);
