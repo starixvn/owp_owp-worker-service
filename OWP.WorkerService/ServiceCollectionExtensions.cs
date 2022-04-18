@@ -134,25 +134,7 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection InitializeRabbitMq(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<RabbitMqSettings>(configuration.GetSection(nameof(RabbitMqSettings)));
-
-        var hosting = configuration.GetSection("RabbitMqSettings:Hosting").Value;
-        var virtualHosting = configuration.GetSection("RabbitMqSettings:VirtualHost").Value;
-        var username = configuration.GetSection("RabbitMqSettings:UserName").Value;
-        var password = configuration.GetSection("RabbitMqSettings:Password").Value;
-        var port = int.Parse(configuration.GetSection("RabbitMqSettings:Port").Value);
-
-        services.AddSingleton(serviceProvider => new ConnectionFactory
-        {
-            UserName = username,
-            Password = password,
-            HostName = hosting,
-            Port = port,
-            VirtualHost = virtualHosting,
-            DispatchConsumersAsync = true
-        });
-
-        services.AddSingleton<RabbitMqClient, RabbitMqClientImp>();
+        services.AddSingleton<RabbitMqClient>(new RabbitMqClientImp(configuration).Initialize());
         return services;
     }
 }
