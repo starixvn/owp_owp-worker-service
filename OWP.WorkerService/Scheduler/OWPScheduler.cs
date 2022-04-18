@@ -50,7 +50,7 @@ public class OWPScheduler : IHostedService
         await AddJobToSchedulerAsync(new JobInfo(typeof(SumPrematchReportJob), CronExpressionJob.PrematchReport));
         await AddJobToSchedulerAsync(new JobInfo(typeof(SumMatchLiveReportJob), CronExpressionJob.MatchLiveReport));
         await AddJobToSchedulerAsync(new JobInfo(typeof(DeleteOldMessageJob), CronExpressionJob.DeleteOldMessage));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(ArchiveDataServiceJob), CronExpressionJob.ArchiveData));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(ArchiveDataJob), CronExpressionJob.ArchiveData));
     }
 
     private async Task CreateScheduler()
