@@ -50,6 +50,8 @@ public class LAReportModel
 
     public int FiveMajorLeague { get; set; }
 
+    public int FTCorner5ML { get; set; }
+
     public int SumTotal()
         => LinkLowerThan3 +
         LinkX3 +
@@ -71,5 +73,6 @@ public class LAReportModel
         ESoccer16Mins +
         ESoccer20Mins +
         Others +
-        FiveMajorLeague;
+        FiveMajorLeague +
+        FTCorner5ML;
 }
