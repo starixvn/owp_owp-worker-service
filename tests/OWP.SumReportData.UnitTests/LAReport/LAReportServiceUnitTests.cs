@@ -37,13 +37,13 @@ public class LAReportServiceUnitTests
         var specialProductFactory = Substitute.For<SpecialProductFactory>();
         specialProductFactory.Create(RuleType.NOT_CORNER).Returns(new NotCornerRule());
         specialProductFactory.Create(RuleType.CORNER).Returns(new IsCornerRule());
-        specialProductFactory.Create(RuleType.CORNER).Returns(new IsCornerRule());
 
         var mainMatchRuleFactory = Substitute.For<MainMatchRuleFactory>();
         mainMatchRuleFactory.Create(RuleType.FT_CORNER).Returns(new FTCornerRule());
         mainMatchRuleFactory.Create(RuleType.FANTASY).Returns(new IsFantasyRule());
         mainMatchRuleFactory.Create(RuleType.ESOCCER).Returns(new ESoccerRule());
         mainMatchRuleFactory.Create(RuleType.FIVE_MAJOR_LEAGUE).Returns(new FiveMajorLeagueRule());
+        mainMatchRuleFactory.Create(RuleType.FT_CORNER_FIVE_MAJOR_LEAGUE).Returns(new FTCorner5MLRule());
 
         var multipleAndSingleMatchesFactory = Substitute.For<MultipleAndSingleMatchesFactory>();
         multipleAndSingleMatchesFactory.Create(RuleType.MULTIPLE).Returns(new MultipleMatchesRule());
@@ -560,8 +560,29 @@ public class LAReportServiceUnitTests
                     UserId = 15477090,
                     OWPLeagueName = "*ENGLISH PREMIER LEAGUE",
                     MinorBettypeId = null,
-                    OWPMatchId = 425008,
+                    OWPMatchId = 546764,
                     ParentMatchId = null,
+                    EventDateTime = new DateTime(2022, 4, 9, 15, 0, 0)
+                },
+                //FT_Corner_5ML
+                new Assignment
+                {
+                    AssignmentId = 131,
+                    UserId = 15477090,
+                    OWPLeagueName = "*ENGLISH PREMIER LEAGUE",
+                    MinorBettypeId = null,
+                    OWPMatchId = 425998,
+                    ParentMatchId = null,
+                    EventDateTime = new DateTime(2022, 4, 9, 15, 0, 0)
+                },
+                new Assignment
+                {
+                    AssignmentId = 131,
+                    UserId = 15477090,
+                    OWPLeagueName = "*ENGLISH PREMIER LEAGUE - CORNERS",
+                    MinorBettypeId = -4,
+                    OWPMatchId = 427128,
+                    ParentMatchId = 425998,
                     EventDateTime = new DateTime(2022, 4, 9, 15, 0, 0)
                 }
             };
@@ -604,7 +625,8 @@ public class LAReportServiceUnitTests
                     Reporter = 2,
                     Others = 2,
                     FiveMajorLeague = 1,
-                    TotalMatches = 30
+                    FTCorner5ML = 1,
+                    TotalMatches = 31
                 }
             };
     }
