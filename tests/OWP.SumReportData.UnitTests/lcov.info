@@ -216,50 +216,50 @@ FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.Core\Extensions\DictionaryExtensions.cs
 FN:5,TValue OWP.Core.Extensions.DictionaryExtensions::GetValue(System.Collections.Generic.Dictionary`2<TKey,TValue>,TKey,TValue)
-FNDA:9,TValue OWP.Core.Extensions.DictionaryExtensions::GetValue(System.Collections.Generic.Dictionary`2<TKey,TValue>,TKey,TValue)
-DA:6,9
-DA:7,9
+FNDA:0,TValue OWP.Core.Extensions.DictionaryExtensions::GetValue(System.Collections.Generic.Dictionary`2<TKey,TValue>,TKey,TValue)
+DA:6,0
+DA:7,0
 DA:8,0
 DA:9,0
-DA:11,9
-DA:12,9
+DA:11,0
+DA:12,0
 BRDA:7,7,0,0
-BRDA:7,7,1,9
-BRDA:11,28,0,2
-BRDA:11,28,1,7
+BRDA:7,7,1,0
+BRDA:11,28,0,0
+BRDA:11,28,1,0
 FN:14,TValue OWP.Core.Extensions.DictionaryExtensions::LookupByKey(System.Collections.Generic.Dictionary`2<System.String,TValue>,System.String,TValue)
-FNDA:17,TValue OWP.Core.Extensions.DictionaryExtensions::LookupByKey(System.Collections.Generic.Dictionary`2<System.String,TValue>,System.String,TValue)
-DA:15,17
-DA:16,46
-DA:18,17
+FNDA:0,TValue OWP.Core.Extensions.DictionaryExtensions::LookupByKey(System.Collections.Generic.Dictionary`2<System.String,TValue>,System.String,TValue)
+DA:15,0
+DA:16,0
+DA:18,0
 DA:19,0
 DA:20,0
-DA:23,17
-DA:24,17
+DA:23,0
+DA:24,0
 BRDA:18,46,0,0
-BRDA:18,46,1,17
+BRDA:18,46,1,0
 LF:13
-LH:9
+LH:0
 BRF:6
-BRH:4
+BRH:0
 FNF:2
-FNH:2
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.Core\Extensions\EnumExtension.cs
 FN:8,TAttribute OWP.Core.Extensions.EnumExtension::GetAttribute(System.Enum)
-FNDA:109,TAttribute OWP.Core.Extensions.EnumExtension::GetAttribute(System.Enum)
-DA:9,109
-DA:10,109
-DA:11,109
-DA:12,109
-DA:13,109
-DA:14,109
+FNDA:0,TAttribute OWP.Core.Extensions.EnumExtension::GetAttribute(System.Enum)
+DA:9,0
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,0
+DA:14,0
 LF:6
-LH:6
+LH:0
 BRF:0
 BRH:0
 FNF:1
-FNH:1
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.Core\Extensions\JsonExtensions.cs
 FN:6,System.Boolean OWP.Core.Extensions.TrimmingConverter::get_CanRead()
@@ -291,10 +291,10 @@ FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.Core\Extensions\StringExtension.cs
 FN:5,System.Boolean OWP.Core.Extensions.StringExtension::IsContainsIgnoreCase(System.String,System.String)
-FNDA:156,System.Boolean OWP.Core.Extensions.StringExtension::IsContainsIgnoreCase(System.String,System.String)
-DA:6,156
-DA:7,156
-DA:8,156
+FNDA:0,System.Boolean OWP.Core.Extensions.StringExtension::IsContainsIgnoreCase(System.String,System.String)
+DA:6,0
+DA:7,0
+DA:8,0
 FN:10,System.String OWP.Core.Extensions.StringExtension::ConvertNullToEmpty(System.String)
 FNDA:0,System.String OWP.Core.Extensions.StringExtension::ConvertNullToEmpty(System.String)
 DA:11,0
@@ -312,11 +312,11 @@ DA:20,0
 BRDA:19,2,0,0
 BRDA:19,2,1,0
 LF:11
-LH:3
+LH:0
 BRF:4
 BRH:0
 FNF:3
-FNH:1
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.Core\Attributes\XmlNameAttribute.native.cs
 FN:7,System.String OWP.Core.Attributes.XmlNameAttribute::get_Name()
@@ -468,503 +468,503 @@ FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\TraderReport\Services\ESoccerService.cs
 FN:56,System.Int32 OWP.SumReportData.TraderReport.Services.ESoccerServiceImp::CountESoccer(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.TraderReport.Models.Assignment>)
-FNDA:21,System.Int32 OWP.SumReportData.TraderReport.Services.ESoccerServiceImp::CountESoccer(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.TraderReport.Models.Assignment>)
-DA:57,21
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Services.ESoccerServiceImp::CountESoccer(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.TraderReport.Models.Assignment>)
+DA:57,0
 FN:59,OWP.SumReportData.TraderReport.Enum.ReportType OWP.SumReportData.TraderReport.Services.ESoccerServiceImp::MapReportType(OWP.SumReportData.TraderReport.Models.Assignment)
-FNDA:12,OWP.SumReportData.TraderReport.Enum.ReportType OWP.SumReportData.TraderReport.Services.ESoccerServiceImp::MapReportType(OWP.SumReportData.TraderReport.Models.Assignment)
-DA:60,12
-DA:61,12
-DA:62,2
-DA:63,2
-DA:66,10
-DA:67,2
-DA:68,2
-DA:71,8
-DA:72,3
-DA:73,3
-DA:76,5
-DA:77,1
-DA:78,1
-DA:81,4
-DA:82,3
-DA:83,3
-DA:86,1
-DA:87,12
-BRDA:61,19,0,2
-BRDA:61,19,1,10
-BRDA:66,44,0,2
-BRDA:66,44,1,8
-BRDA:71,69,0,3
-BRDA:71,69,1,5
-BRDA:76,96,0,1
-BRDA:76,96,1,4
-BRDA:81,123,0,3
-BRDA:81,123,1,1
+FNDA:0,OWP.SumReportData.TraderReport.Enum.ReportType OWP.SumReportData.TraderReport.Services.ESoccerServiceImp::MapReportType(OWP.SumReportData.TraderReport.Models.Assignment)
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:66,0
+DA:67,0
+DA:68,0
+DA:71,0
+DA:72,0
+DA:73,0
+DA:76,0
+DA:77,0
+DA:78,0
+DA:81,0
+DA:82,0
+DA:83,0
+DA:86,0
+DA:87,0
+BRDA:61,19,0,0
+BRDA:61,19,1,0
+BRDA:66,44,0,0
+BRDA:66,44,1,0
+BRDA:71,69,0,0
+BRDA:71,69,1,0
+BRDA:76,96,0,0
+BRDA:76,96,1,0
+BRDA:81,123,0,0
+BRDA:81,123,1,0
 FN:15,System.Void OWP.SumReportData.TraderReport.Services.ESoccerServiceImp::.ctor(OWP.SumReportData.TraderReport.TraderRepository)
-FNDA:1,System.Void OWP.SumReportData.TraderReport.Services.ESoccerServiceImp::.ctor(OWP.SumReportData.TraderReport.TraderRepository)
-DA:16,1
-DA:17,1
-DA:18,1
-DA:19,1
+FNDA:0,System.Void OWP.SumReportData.TraderReport.Services.ESoccerServiceImp::.ctor(OWP.SumReportData.TraderReport.TraderRepository)
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
 FN:23,System.Void OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerFields>b__2_0(OWP.SumReportData.TraderReport.Models.Assignment)
-FNDA:13,System.Void OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerFields>b__2_0(OWP.SumReportData.TraderReport.Models.Assignment)
-DA:24,13
+FNDA:0,System.Void OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerFields>b__2_0(OWP.SumReportData.TraderReport.Models.Assignment)
+DA:24,0
 FN:26,System.Int32 OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerFields>b__2_1(OWP.SumReportData.TraderReport.Models.Assignment)
-FNDA:12,System.Int32 OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerFields>b__2_1(OWP.SumReportData.TraderReport.Models.Assignment)
-DA:27,12
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerFields>b__2_1(OWP.SumReportData.TraderReport.Models.Assignment)
+DA:27,0
 FN:27,System.Int32 OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerFields>b__2_2(System.Linq.IGrouping`2<System.Int32,OWP.SumReportData.TraderReport.Models.Assignment>)
-FNDA:5,System.Int32 OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerFields>b__2_2(System.Linq.IGrouping`2<System.Int32,OWP.SumReportData.TraderReport.Models.Assignment>)
-DA:28,5
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerFields>b__2_2(System.Linq.IGrouping`2<System.Int32,OWP.SumReportData.TraderReport.Models.Assignment>)
+DA:28,0
 FN:37,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerByUser>b__3_0(OWP.SumReportData.TraderReport.Models.Assignment)
-FNDA:14,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerByUser>b__3_0(OWP.SumReportData.TraderReport.Models.Assignment)
-DA:38,14
+FNDA:0,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerByUser>b__3_0(OWP.SumReportData.TraderReport.Models.Assignment)
+DA:38,0
 FN:38,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerByUser>b__3_1(OWP.SumReportData.TraderReport.Models.Assignment)
-FNDA:14,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerByUser>b__3_1(OWP.SumReportData.TraderReport.Models.Assignment)
-DA:39,14
+FNDA:0,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerByUser>b__3_1(OWP.SumReportData.TraderReport.Models.Assignment)
+DA:39,0
 FN:39,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerByUser>b__3_2(OWP.SumReportData.TraderReport.Models.Assignment)
-FNDA:14,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerByUser>b__3_2(OWP.SumReportData.TraderReport.Models.Assignment)
-DA:40,14
+FNDA:0,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerByUser>b__3_2(OWP.SumReportData.TraderReport.Models.Assignment)
+DA:40,0
 FN:40,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerByUser>b__3_3(OWP.SumReportData.TraderReport.Models.Assignment)
-FNDA:14,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerByUser>b__3_3(OWP.SumReportData.TraderReport.Models.Assignment)
-DA:41,14
+FNDA:0,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerByUser>b__3_3(OWP.SumReportData.TraderReport.Models.Assignment)
+DA:41,0
 FN:41,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerByUser>b__3_4(OWP.SumReportData.TraderReport.Models.Assignment)
-FNDA:14,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerByUser>b__3_4(OWP.SumReportData.TraderReport.Models.Assignment)
-DA:42,14
+FNDA:0,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<>c::<SumESoccerByUser>b__3_4(OWP.SumReportData.TraderReport.Models.Assignment)
+DA:42,0
 FN:33,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<SumESoccerByUser>d__3::MoveNext()
-FNDA:1,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<SumESoccerByUser>d__3::MoveNext()
-DA:34,1
-DA:35,7
-DA:36,2
-DA:37,2
-DA:44,2
-DA:45,2
-DA:46,2
-DA:47,2
-DA:48,2
-DA:49,2
-DA:50,2
-DA:51,2
-DA:52,2
-DA:53,2
-DA:54,1
-BRDA:35,544,1,2
-BRDA:35,544,0,1
+FNDA:0,System.Boolean OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<SumESoccerByUser>d__3::MoveNext()
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:54,0
+BRDA:35,544,1,0
+BRDA:35,544,0,0
 FN:21,System.Void OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<SumESoccerFields>d__2::MoveNext()
-FNDA:1,System.Void OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<SumESoccerFields>d__2::MoveNext()
-DA:22,1
-DA:23,1
-DA:26,1
-DA:30,1
-DA:31,1
+FNDA:0,System.Void OWP.SumReportData.TraderReport.Services.ESoccerServiceImp/<SumESoccerFields>d__2::MoveNext()
+DA:22,0
+DA:23,0
+DA:26,0
+DA:30,0
+DA:31,0
 LF:51
-LH:51
+LH:0
 BRF:12
-BRH:12
+BRH:0
 FNF:13
-FNH:13
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\TraderReport\Services\RobotService.cs
 FN:16,System.Void OWP.SumReportData.TraderReport.Services.RobotServiceImp::.ctor(OWP.SumReportData.TraderReport.TraderRepository,OWP.SumReportData.TraderReport.Services.RobotX3Service,OWP.SumReportData.TraderReport.Services.RobotX5Service)
-FNDA:1,System.Void OWP.SumReportData.TraderReport.Services.RobotServiceImp::.ctor(OWP.SumReportData.TraderReport.TraderRepository,OWP.SumReportData.TraderReport.Services.RobotX3Service,OWP.SumReportData.TraderReport.Services.RobotX5Service)
-DA:17,1
-DA:18,1
-DA:19,1
-DA:20,1
-DA:21,1
-DA:22,1
-DA:23,1
+FNDA:0,System.Void OWP.SumReportData.TraderReport.Services.RobotServiceImp::.ctor(OWP.SumReportData.TraderReport.TraderRepository,OWP.SumReportData.TraderReport.Services.RobotX3Service,OWP.SumReportData.TraderReport.Services.RobotX5Service)
+DA:17,0
+DA:18,0
+DA:19,0
+DA:20,0
+DA:21,0
+DA:22,0
+DA:23,0
 FN:39,System.Int32 OWP.SumReportData.TraderReport.Services.RobotServiceImp/<>c::<GetX3Fields>b__5_0(OWP.SumReportData.TraderReport.Models.RobotX3ByUser)
-FNDA:7,System.Int32 OWP.SumReportData.TraderReport.Services.RobotServiceImp/<>c::<GetX3Fields>b__5_0(OWP.SumReportData.TraderReport.Models.RobotX3ByUser)
-DA:40,7
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Services.RobotServiceImp/<>c::<GetX3Fields>b__5_0(OWP.SumReportData.TraderReport.Models.RobotX3ByUser)
+DA:40,0
 FN:47,System.Int32 OWP.SumReportData.TraderReport.Services.RobotServiceImp/<>c::<GetX5Fields>b__6_0(OWP.SumReportData.TraderReport.Models.RobotX5ByUser)
-FNDA:7,System.Int32 OWP.SumReportData.TraderReport.Services.RobotServiceImp/<>c::<GetX5Fields>b__6_0(OWP.SumReportData.TraderReport.Models.RobotX5ByUser)
-DA:48,7
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Services.RobotServiceImp/<>c::<GetX5Fields>b__6_0(OWP.SumReportData.TraderReport.Models.RobotX5ByUser)
+DA:48,0
 FN:52,System.Boolean OWP.SumReportData.TraderReport.Services.RobotServiceImp/<Aggregate>d__7::MoveNext()
-FNDA:1,System.Boolean OWP.SumReportData.TraderReport.Services.RobotServiceImp/<Aggregate>d__7::MoveNext()
-DA:53,1
-DA:54,1
-DA:56,1
-DA:57,1
-DA:59,11
-DA:60,4
-DA:61,4
-DA:62,4
-DA:64,4
-DA:65,4
-DA:66,4
-DA:67,4
-DA:68,4
-DA:69,4
-DA:70,4
-DA:71,4
-DA:72,4
-DA:73,1
-BRDA:59,343,1,4
-BRDA:59,343,0,1
+FNDA:0,System.Boolean OWP.SumReportData.TraderReport.Services.RobotServiceImp/<Aggregate>d__7::MoveNext()
+DA:53,0
+DA:54,0
+DA:56,0
+DA:57,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:64,0
+DA:65,0
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:72,0
+DA:73,0
+BRDA:59,343,1,0
+BRDA:59,343,0,0
 FN:35,System.Void OWP.SumReportData.TraderReport.Services.RobotServiceImp/<GetX3Fields>d__5::MoveNext()
-FNDA:1,System.Void OWP.SumReportData.TraderReport.Services.RobotServiceImp/<GetX3Fields>d__5::MoveNext()
-DA:36,1
-DA:37,1
-DA:38,1
-DA:41,1
+FNDA:0,System.Void OWP.SumReportData.TraderReport.Services.RobotServiceImp/<GetX3Fields>d__5::MoveNext()
+DA:36,0
+DA:37,0
+DA:38,0
+DA:41,0
 FN:43,System.Void OWP.SumReportData.TraderReport.Services.RobotServiceImp/<GetX5Fields>d__6::MoveNext()
-FNDA:1,System.Void OWP.SumReportData.TraderReport.Services.RobotServiceImp/<GetX5Fields>d__6::MoveNext()
-DA:44,1
-DA:45,1
-DA:46,1
-DA:49,1
+FNDA:0,System.Void OWP.SumReportData.TraderReport.Services.RobotServiceImp/<GetX5Fields>d__6::MoveNext()
+DA:44,0
+DA:45,0
+DA:46,0
+DA:49,0
 FN:25,System.Void OWP.SumReportData.TraderReport.Services.RobotServiceImp/<SumRobotFields>d__4::MoveNext()
-FNDA:1,System.Void OWP.SumReportData.TraderReport.Services.RobotServiceImp/<SumRobotFields>d__4::MoveNext()
-DA:26,1
-DA:27,1
-DA:28,1
-DA:30,1
-DA:32,1
-DA:33,1
+FNDA:0,System.Void OWP.SumReportData.TraderReport.Services.RobotServiceImp/<SumRobotFields>d__4::MoveNext()
+DA:26,0
+DA:27,0
+DA:28,0
+DA:30,0
+DA:32,0
+DA:33,0
 LF:41
-LH:41
+LH:0
 BRF:2
-BRH:2
+BRH:0
 FNF:7
-FNH:7
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\TraderReport\Services\RobotX3Service.cs
 FN:22,System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX3ByUser> OWP.SumReportData.TraderReport.Services.RobotX3ServiceImp::Aggregate(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX3RawModel>)
-FNDA:1,System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX3ByUser> OWP.SumReportData.TraderReport.Services.RobotX3ServiceImp::Aggregate(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX3RawModel>)
-DA:23,1
-DA:24,1
-DA:25,7
-DA:26,2
-DA:27,2
-DA:28,2
-DA:29,2
-DA:30,2
-DA:31,1
-DA:33,3
-DA:34,1
-DA:35,1
+FNDA:0,System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX3ByUser> OWP.SumReportData.TraderReport.Services.RobotX3ServiceImp::Aggregate(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX3RawModel>)
+DA:23,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:33,0
+DA:34,0
+DA:35,0
 FN:37,OWP.SumReportData.TraderReport.Models.RobotX3ByUser OWP.SumReportData.TraderReport.Services.RobotX3ServiceImp::Transform(System.Int32,System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX3RawModel>)
-FNDA:2,OWP.SumReportData.TraderReport.Models.RobotX3ByUser OWP.SumReportData.TraderReport.Services.RobotX3ServiceImp::Transform(System.Int32,System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX3RawModel>)
-DA:38,2
-DA:39,2
-DA:40,9
-DA:41,6
-DA:42,2
-DA:44,2
-DA:45,2
-DA:46,2
-DA:47,6
-DA:48,6
-DA:49,6
-DA:50,2
-DA:51,2
+FNDA:0,OWP.SumReportData.TraderReport.Models.RobotX3ByUser OWP.SumReportData.TraderReport.Services.RobotX3ServiceImp::Transform(System.Int32,System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX3RawModel>)
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
 FN:53,System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX3RawGroupModel> OWP.SumReportData.TraderReport.Services.RobotX3ServiceImp::GroupConecutiveMatch(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX3RawModel>)
-FNDA:4,System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX3RawGroupModel> OWP.SumReportData.TraderReport.Services.RobotX3ServiceImp::GroupConecutiveMatch(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX3RawModel>)
-DA:54,4
-DA:55,4
-DA:56,14
-DA:57,14
-DA:58,14
-DA:59,14
-DA:60,14
-DA:61,14
-DA:62,14
-DA:63,14
-DA:64,4
-DA:66,4
-DA:68,28
-DA:69,10
-DA:70,10
-DA:71,10
-DA:72,10
-DA:73,10
-DA:75,4
-DA:76,4
-BRDA:68,179,1,10
-BRDA:71,138,0,8
-BRDA:71,138,1,2
-BRDA:68,179,0,4
+FNDA:0,System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX3RawGroupModel> OWP.SumReportData.TraderReport.Services.RobotX3ServiceImp::GroupConecutiveMatch(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX3RawModel>)
+DA:54,0
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:66,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:72,0
+DA:73,0
+DA:75,0
+DA:76,0
+BRDA:68,179,1,0
+BRDA:71,138,0,0
+BRDA:71,138,1,0
+BRDA:68,179,0,0
 LF:45
-LH:45
+LH:0
 BRF:4
-BRH:4
+BRH:0
 FNF:3
-FNH:3
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\TraderReport\Services\RobotX5Service.cs
 FN:34,System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5ByUser> OWP.SumReportData.TraderReport.Services.RobotX5ServiceImp::Aggregate(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5RawModel>)
-FNDA:1,System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5ByUser> OWP.SumReportData.TraderReport.Services.RobotX5ServiceImp::Aggregate(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5RawModel>)
-DA:35,1
-DA:36,1
-DA:37,13
-DA:38,5
-DA:40,3
-DA:41,3
-DA:42,3
-DA:43,3
-DA:44,3
-DA:45,1
-DA:46,1
+FNDA:0,System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5ByUser> OWP.SumReportData.TraderReport.Services.RobotX5ServiceImp::Aggregate(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5RawModel>)
+DA:35,0
+DA:36,0
+DA:37,0
+DA:38,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
 FN:48,System.Int32 OWP.SumReportData.TraderReport.Services.RobotX5ServiceImp::GetX5OfUser(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5RawModel>)
-FNDA:2,System.Int32 OWP.SumReportData.TraderReport.Services.RobotX5ServiceImp::GetX5OfUser(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5RawModel>)
-DA:49,2
-DA:50,2
-DA:51,2
-DA:52,13
-DA:53,6
-DA:55,2
-DA:56,2
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Services.RobotX5ServiceImp::GetX5OfUser(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5RawModel>)
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:55,0
+DA:56,0
 FN:58,System.Boolean OWP.SumReportData.TraderReport.Services.RobotX5ServiceImp::IsX5(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel>)
-FNDA:4,System.Boolean OWP.SumReportData.TraderReport.Services.RobotX5ServiceImp::IsX5(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel>)
-DA:59,4
-DA:60,17
-DA:61,22
-DA:62,4
-DA:63,4
+FNDA:0,System.Boolean OWP.SumReportData.TraderReport.Services.RobotX5ServiceImp::IsX5(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel>)
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
 FN:65,System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel> OWP.SumReportData.TraderReport.Services.RobotX5ServiceImp::GroupByShiftAndMatchGroup(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5RawModel>)
-FNDA:3,System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel> OWP.SumReportData.TraderReport.Services.RobotX5ServiceImp::GroupByShiftAndMatchGroup(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5RawModel>)
-DA:66,3
-DA:67,3
-DA:68,18
-DA:69,18
-DA:70,18
-DA:71,18
-DA:72,18
-DA:73,18
-DA:74,18
-DA:75,18
-DA:76,18
-DA:77,18
-DA:78,3
-DA:80,3
-DA:81,3
-DA:83,36
-DA:84,15
-DA:85,15
-DA:86,15
-DA:87,15
-DA:89,15
-DA:90,15
-DA:91,15
-DA:93,3
-DA:94,3
-BRDA:83,198,1,15
-BRDA:86,123,0,8
-BRDA:86,123,1,7
-BRDA:87,143,0,3
-BRDA:87,143,1,12
-BRDA:83,198,0,3
+FNDA:0,System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel> OWP.SumReportData.TraderReport.Services.RobotX5ServiceImp::GroupByShiftAndMatchGroup(System.Collections.Generic.List`1<OWP.SumReportData.TraderReport.Models.RobotX5RawModel>)
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:72,0
+DA:73,0
+DA:74,0
+DA:75,0
+DA:76,0
+DA:77,0
+DA:78,0
+DA:80,0
+DA:81,0
+DA:83,0
+DA:84,0
+DA:85,0
+DA:86,0
+DA:87,0
+DA:89,0
+DA:90,0
+DA:91,0
+DA:93,0
+DA:94,0
+BRDA:83,198,1,0
+BRDA:86,123,0,0
+BRDA:86,123,1,0
+BRDA:87,143,0,0
+BRDA:87,143,1,0
+BRDA:83,198,0,0
 FN:96,System.Int32 OWP.SumReportData.TraderReport.Services.RobotX5ServiceImp::GetMinuteOfMatch(System.Boolean,System.Boolean)
-FNDA:22,System.Int32 OWP.SumReportData.TraderReport.Services.RobotX5ServiceImp::GetMinuteOfMatch(System.Boolean,System.Boolean)
-DA:97,22
-DA:98,22
-DA:99,22
-DA:101,22
-DA:102,22
-BRDA:98,2,0,20
-BRDA:98,2,1,2
-BRDA:99,12,0,20
-BRDA:99,12,1,2
-BRDA:101,22,0,10
-BRDA:101,22,1,12
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Services.RobotX5ServiceImp::GetMinuteOfMatch(System.Boolean,System.Boolean)
+DA:97,0
+DA:98,0
+DA:99,0
+DA:101,0
+DA:102,0
+BRDA:98,2,0,0
+BRDA:98,2,1,0
+BRDA:99,12,0,0
+BRDA:99,12,1,0
+BRDA:101,22,0,0
+BRDA:101,22,1,0
 LF:53
-LH:53
+LH:0
 BRF:12
-BRH:12
+BRH:0
 FNF:5
-FNH:5
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\TraderReport\Models\Assignment.cs
 FN:6,System.Int32 OWP.SumReportData.TraderReport.Models.Assignment::get_UserId()
-FNDA:24,System.Int32 OWP.SumReportData.TraderReport.Models.Assignment::get_UserId()
-DA:7,24
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.Assignment::get_UserId()
+DA:7,0
 FN:8,System.String OWP.SumReportData.TraderReport.Models.Assignment::get_OWPLeagueName()
-FNDA:51,System.String OWP.SumReportData.TraderReport.Models.Assignment::get_OWPLeagueName()
-DA:9,51
+FNDA:0,System.String OWP.SumReportData.TraderReport.Models.Assignment::get_OWPLeagueName()
+DA:9,0
 FN:10,System.Int32 OWP.SumReportData.TraderReport.Models.Assignment::get_OWPMatchId()
-FNDA:23,System.Int32 OWP.SumReportData.TraderReport.Models.Assignment::get_OWPMatchId()
-DA:11,23
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.Assignment::get_OWPMatchId()
+DA:11,0
 FN:12,System.DateTime OWP.SumReportData.TraderReport.Models.Assignment::get_EventDateTime()
 FNDA:0,System.DateTime OWP.SumReportData.TraderReport.Models.Assignment::get_EventDateTime()
 DA:13,0
 FN:14,OWP.SumReportData.TraderReport.Enum.ReportType OWP.SumReportData.TraderReport.Models.Assignment::get_ReportType()
-FNDA:72,OWP.SumReportData.TraderReport.Enum.ReportType OWP.SumReportData.TraderReport.Models.Assignment::get_ReportType()
-DA:15,72
+FNDA:0,OWP.SumReportData.TraderReport.Enum.ReportType OWP.SumReportData.TraderReport.Models.Assignment::get_ReportType()
+DA:15,0
 LF:5
-LH:4
+LH:0
 BRF:0
 BRH:0
 FNF:5
-FNH:4
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\TraderReport\Models\ESoccerByUser.cs
 FN:4,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_UserId()
-FNDA:8,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_UserId()
-DA:5,8
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_UserId()
+DA:5,0
 FN:6,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_ESoccer5Mins()
-FNDA:8,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_ESoccer5Mins()
-DA:7,8
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_ESoccer5Mins()
+DA:7,0
 FN:8,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_ESoccer6Mins()
-FNDA:8,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_ESoccer6Mins()
-DA:9,8
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_ESoccer6Mins()
+DA:9,0
 FN:10,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_ESoccer15Mins()
-FNDA:8,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_ESoccer15Mins()
-DA:11,8
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_ESoccer15Mins()
+DA:11,0
 FN:12,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_ESoccer16Mins()
-FNDA:8,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_ESoccer16Mins()
-DA:13,8
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_ESoccer16Mins()
+DA:13,0
 FN:14,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_ESoccer20Mins()
-FNDA:8,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_ESoccer20Mins()
-DA:15,8
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.ESoccerByUser::get_ESoccer20Mins()
+DA:15,0
 LF:6
-LH:6
+LH:0
 BRF:0
 BRH:0
 FNF:6
-FNH:6
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\TraderReport\Models\RobotByByUser.cs
 FN:4,System.Int32 OWP.SumReportData.TraderReport.Models.RobotByByUser::get_UserId()
-FNDA:16,System.Int32 OWP.SumReportData.TraderReport.Models.RobotByByUser::get_UserId()
-DA:5,16
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotByByUser::get_UserId()
+DA:5,0
 FN:6,System.Int32 OWP.SumReportData.TraderReport.Models.RobotByByUser::get_X2()
-FNDA:16,System.Int32 OWP.SumReportData.TraderReport.Models.RobotByByUser::get_X2()
-DA:7,16
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotByByUser::get_X2()
+DA:7,0
 FN:8,System.Int32 OWP.SumReportData.TraderReport.Models.RobotByByUser::get_X3()
-FNDA:16,System.Int32 OWP.SumReportData.TraderReport.Models.RobotByByUser::get_X3()
-DA:9,16
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotByByUser::get_X3()
+DA:9,0
 FN:10,System.Int32 OWP.SumReportData.TraderReport.Models.RobotByByUser::get_X3Plus()
-FNDA:16,System.Int32 OWP.SumReportData.TraderReport.Models.RobotByByUser::get_X3Plus()
-DA:11,16
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotByByUser::get_X3Plus()
+DA:11,0
 FN:12,System.Int32 OWP.SumReportData.TraderReport.Models.RobotByByUser::get_X5()
-FNDA:16,System.Int32 OWP.SumReportData.TraderReport.Models.RobotByByUser::get_X5()
-DA:13,16
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotByByUser::get_X5()
+DA:13,0
 LF:5
-LH:5
+LH:0
 BRF:0
 BRH:0
 FNF:5
-FNH:5
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\TraderReport\Models\RobotX3ByUser.cs
 FN:4,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3ByUser::get_UserId()
-FNDA:10,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3ByUser::get_UserId()
-DA:5,10
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3ByUser::get_UserId()
+DA:5,0
 FN:6,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3ByUser::get_X2()
-FNDA:15,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3ByUser::get_X2()
-DA:7,15
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3ByUser::get_X2()
+DA:7,0
 FN:8,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3ByUser::get_X3()
-FNDA:15,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3ByUser::get_X3()
-DA:9,15
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3ByUser::get_X3()
+DA:9,0
 FN:10,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3ByUser::get_X3Plus()
-FNDA:15,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3ByUser::get_X3Plus()
-DA:11,15
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3ByUser::get_X3Plus()
+DA:11,0
 LF:4
-LH:4
+LH:0
 BRF:0
 BRH:0
 FNF:4
-FNH:4
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\TraderReport\Models\RobotX3RawGroupModel.cs
 FN:4,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3RawGroupModel::get_UserId()
-FNDA:21,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3RawGroupModel::get_UserId()
-DA:5,21
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3RawGroupModel::get_UserId()
+DA:5,0
 FN:6,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3RawGroupModel::get_OWPMatchId()
-FNDA:21,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3RawGroupModel::get_OWPMatchId()
-DA:7,21
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3RawGroupModel::get_OWPMatchId()
+DA:7,0
 FN:8,System.DateTime OWP.SumReportData.TraderReport.Models.RobotX3RawGroupModel::get_EventDateTime()
-FNDA:55,System.DateTime OWP.SumReportData.TraderReport.Models.RobotX3RawGroupModel::get_EventDateTime()
-DA:9,55
+FNDA:0,System.DateTime OWP.SumReportData.TraderReport.Models.RobotX3RawGroupModel::get_EventDateTime()
+DA:9,0
 FN:10,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3RawGroupModel::get_MatchGroup()
-FNDA:52,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3RawGroupModel::get_MatchGroup()
-DA:11,52
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3RawGroupModel::get_MatchGroup()
+DA:11,0
 LF:4
-LH:4
+LH:0
 BRF:0
 BRH:0
 FNF:4
-FNH:4
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\TraderReport\Models\RobotX3RawModel.cs
 FN:4,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3RawModel::get_UserId()
-FNDA:35,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3RawModel::get_UserId()
-DA:5,35
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3RawModel::get_UserId()
+DA:5,0
 FN:6,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3RawModel::get_OWPMatchId()
-FNDA:28,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3RawModel::get_OWPMatchId()
-DA:7,28
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX3RawModel::get_OWPMatchId()
+DA:7,0
 FN:8,System.DateTime OWP.SumReportData.TraderReport.Models.RobotX3RawModel::get_EventDateTime()
-FNDA:28,System.DateTime OWP.SumReportData.TraderReport.Models.RobotX3RawModel::get_EventDateTime()
-DA:9,28
+FNDA:0,System.DateTime OWP.SumReportData.TraderReport.Models.RobotX3RawModel::get_EventDateTime()
+DA:9,0
 LF:3
-LH:3
+LH:0
 BRF:0
 BRH:0
 FNF:3
-FNH:3
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\TraderReport\Models\RobotX5ByUser.cs
 FN:4,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5ByUser::get_UserId()
-FNDA:10,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5ByUser::get_UserId()
-DA:5,10
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5ByUser::get_UserId()
+DA:5,0
 FN:6,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5ByUser::get_X5()
-FNDA:15,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5ByUser::get_X5()
-DA:7,15
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5ByUser::get_X5()
+DA:7,0
 LF:2
-LH:2
+LH:0
 BRF:0
 BRH:0
 FNF:2
-FNH:2
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\TraderReport\Models\RobotX5RawGroupModel.cs
 FN:4,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_UserId()
-FNDA:23,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_UserId()
-DA:5,23
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_UserId()
+DA:5,0
 FN:6,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_OWPMatchId()
-FNDA:23,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_OWPMatchId()
-DA:7,23
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_OWPMatchId()
+DA:7,0
 FN:8,System.DateTime OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_EventDateTime()
-FNDA:71,System.DateTime OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_EventDateTime()
-DA:9,71
+FNDA:0,System.DateTime OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_EventDateTime()
+DA:9,0
 FN:10,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_MatchGroup()
-FNDA:61,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_MatchGroup()
-DA:11,61
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_MatchGroup()
+DA:11,0
 FN:12,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_Minutes()
-FNDA:36,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_Minutes()
-DA:13,36
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_Minutes()
+DA:13,0
 FN:14,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_Shift()
-FNDA:61,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_Shift()
-DA:15,61
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawGroupModel::get_Shift()
+DA:15,0
 LF:6
-LH:6
+LH:0
 BRF:0
 BRH:0
 FNF:6
-FNH:6
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\TraderReport\Models\RobotX5RawModel.cs
 FN:4,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawModel::get_UserId()
-FNDA:49,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawModel::get_UserId()
-DA:5,49
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawModel::get_UserId()
+DA:5,0
 FN:6,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawModel::get_OWPMatchId()
-FNDA:36,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawModel::get_OWPMatchId()
-DA:7,36
+FNDA:0,System.Int32 OWP.SumReportData.TraderReport.Models.RobotX5RawModel::get_OWPMatchId()
+DA:7,0
 FN:8,System.DateTime OWP.SumReportData.TraderReport.Models.RobotX5RawModel::get_EventDateTime()
-FNDA:36,System.DateTime OWP.SumReportData.TraderReport.Models.RobotX5RawModel::get_EventDateTime()
-DA:9,36
+FNDA:0,System.DateTime OWP.SumReportData.TraderReport.Models.RobotX5RawModel::get_EventDateTime()
+DA:9,0
 FN:10,System.Boolean OWP.SumReportData.TraderReport.Models.RobotX5RawModel::get_IsFullTime()
-FNDA:36,System.Boolean OWP.SumReportData.TraderReport.Models.RobotX5RawModel::get_IsFullTime()
-DA:11,36
+FNDA:0,System.Boolean OWP.SumReportData.TraderReport.Models.RobotX5RawModel::get_IsFullTime()
+DA:11,0
 FN:12,System.Boolean OWP.SumReportData.TraderReport.Models.RobotX5RawModel::get_Is35MinuteMatch()
-FNDA:18,System.Boolean OWP.SumReportData.TraderReport.Models.RobotX5RawModel::get_Is35MinuteMatch()
-DA:13,18
+FNDA:0,System.Boolean OWP.SumReportData.TraderReport.Models.RobotX5RawModel::get_Is35MinuteMatch()
+DA:13,0
 LF:5
-LH:5
+LH:0
 BRF:0
 BRH:0
 FNF:5
-FNH:5
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\TraderReport\Criteria\GetAssignmentX3ByDateCriteria.cs
 FN:6,System.DateTime OWP.SumReportData.TraderReport.Criteria.GetAssignmentX3ByDateCriteria::get_FromDate()
@@ -1264,35 +1264,35 @@ FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\OvertimeReport\Models\Assignment.cs
 FN:4,System.Int32 OWP.SumReportData.OvertimeReport.Models.Assignment::get_UserId()
-FNDA:20,System.Int32 OWP.SumReportData.OvertimeReport.Models.Assignment::get_UserId()
-DA:5,20
+FNDA:0,System.Int32 OWP.SumReportData.OvertimeReport.Models.Assignment::get_UserId()
+DA:5,0
 FN:6,System.Int32 OWP.SumReportData.OvertimeReport.Models.Assignment::get_OWPMatchId()
-FNDA:20,System.Int32 OWP.SumReportData.OvertimeReport.Models.Assignment::get_OWPMatchId()
-DA:7,20
+FNDA:0,System.Int32 OWP.SumReportData.OvertimeReport.Models.Assignment::get_OWPMatchId()
+DA:7,0
 FN:8,System.Nullable`1<System.Int32> OWP.SumReportData.OvertimeReport.Models.Assignment::get_ParentMatchId()
-FNDA:30,System.Nullable`1<System.Int32> OWP.SumReportData.OvertimeReport.Models.Assignment::get_ParentMatchId()
-DA:9,30
+FNDA:0,System.Nullable`1<System.Int32> OWP.SumReportData.OvertimeReport.Models.Assignment::get_ParentMatchId()
+DA:9,0
 FN:10,System.Nullable`1<System.Int32> OWP.SumReportData.OvertimeReport.Models.Assignment::get_MinorBettypeId()
-FNDA:56,System.Nullable`1<System.Int32> OWP.SumReportData.OvertimeReport.Models.Assignment::get_MinorBettypeId()
-DA:11,56
+FNDA:0,System.Nullable`1<System.Int32> OWP.SumReportData.OvertimeReport.Models.Assignment::get_MinorBettypeId()
+DA:11,0
 FN:12,System.DateTime OWP.SumReportData.OvertimeReport.Models.Assignment::get_EventDateTime()
-FNDA:166,System.DateTime OWP.SumReportData.OvertimeReport.Models.Assignment::get_EventDateTime()
-DA:13,166
+FNDA:0,System.DateTime OWP.SumReportData.OvertimeReport.Models.Assignment::get_EventDateTime()
+DA:13,0
 FN:14,System.Int32 OWP.SumReportData.OvertimeReport.Models.Assignment::get_Bettype()
-FNDA:72,System.Int32 OWP.SumReportData.OvertimeReport.Models.Assignment::get_Bettype()
-DA:15,72
+FNDA:0,System.Int32 OWP.SumReportData.OvertimeReport.Models.Assignment::get_Bettype()
+DA:15,0
 FN:16,System.String OWP.SumReportData.OvertimeReport.Models.Assignment::get_Remark()
-FNDA:88,System.String OWP.SumReportData.OvertimeReport.Models.Assignment::get_Remark()
-DA:17,88
+FNDA:0,System.String OWP.SumReportData.OvertimeReport.Models.Assignment::get_Remark()
+DA:17,0
 FN:18,System.String OWP.SumReportData.OvertimeReport.Models.Assignment::get_OWPLeagueName()
-FNDA:67,System.String OWP.SumReportData.OvertimeReport.Models.Assignment::get_OWPLeagueName()
-DA:19,67
+FNDA:0,System.String OWP.SumReportData.OvertimeReport.Models.Assignment::get_OWPLeagueName()
+DA:19,0
 LF:8
-LH:8
+LH:0
 BRF:0
 BRH:0
 FNF:8
-FNH:8
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\OvertimeReport\Models\EmployeeWorkingShift.cs
 FN:4,System.Int32 OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift::get_EmployeeId()
@@ -1302,37 +1302,37 @@ FN:6,System.DateTime OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShif
 FNDA:0,System.DateTime OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift::get_ShiftDate()
 DA:7,0
 FN:8,System.DateTime OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift::get_ShiftStartTime()
-FNDA:24,System.DateTime OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift::get_ShiftStartTime()
-DA:9,24
+FNDA:0,System.DateTime OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift::get_ShiftStartTime()
+DA:9,0
 FN:10,System.DateTime OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift::get_ShiftEndTime()
-FNDA:31,System.DateTime OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift::get_ShiftEndTime()
-DA:11,31
+FNDA:0,System.DateTime OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift::get_ShiftEndTime()
+DA:11,0
 FN:12,System.Nullable`1<System.Int32> OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift::get_RefShiftId()
 FNDA:0,System.Nullable`1<System.Int32> OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift::get_RefShiftId()
 DA:13,0
 LF:5
-LH:2
+LH:0
 BRF:0
 BRH:0
 FNF:5
-FNH:2
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\OvertimeReport\Models\MainMatch.cs
 FN:4,System.Int32 OWP.SumReportData.OvertimeReport.Models.MainMatch::get_OWPMatchId()
-FNDA:9,System.Int32 OWP.SumReportData.OvertimeReport.Models.MainMatch::get_OWPMatchId()
-DA:5,9
+FNDA:0,System.Int32 OWP.SumReportData.OvertimeReport.Models.MainMatch::get_OWPMatchId()
+DA:5,0
 FN:6,System.String OWP.SumReportData.OvertimeReport.Models.MainMatch::get_Remark()
-FNDA:9,System.String OWP.SumReportData.OvertimeReport.Models.MainMatch::get_Remark()
-DA:7,9
+FNDA:0,System.String OWP.SumReportData.OvertimeReport.Models.MainMatch::get_Remark()
+DA:7,0
 FN:8,System.DateTime OWP.SumReportData.OvertimeReport.Models.MainMatch::get_EventDateTime()
-FNDA:6,System.DateTime OWP.SumReportData.OvertimeReport.Models.MainMatch::get_EventDateTime()
-DA:9,6
+FNDA:0,System.DateTime OWP.SumReportData.OvertimeReport.Models.MainMatch::get_EventDateTime()
+DA:9,0
 LF:3
-LH:3
+LH:0
 BRF:0
 BRH:0
 FNF:3
-FNH:3
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\OvertimeReport\Models\OvertimeData.cs
 FN:4,System.Int32 OWP.SumReportData.OvertimeReport.Models.OvertimeData::get_UserId()
@@ -1356,125 +1356,125 @@ FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\OvertimeReport\Helpers\MatchHelper.cs
 FN:17,System.Boolean OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::IsSabaMatch(System.String)
-FNDA:20,System.Boolean OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::IsSabaMatch(System.String)
-DA:18,20
+FNDA:0,System.Boolean OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::IsSabaMatch(System.String)
+DA:18,0
 FN:20,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateSABAPESMatchDuration(OWP.SumReportData.OvertimeReport.Models.Assignment)
-FNDA:9,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateSABAPESMatchDuration(OWP.SumReportData.OvertimeReport.Models.Assignment)
-DA:21,9
-DA:22,9
-DA:23,9
-DA:24,9
+FNDA:0,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateSABAPESMatchDuration(OWP.SumReportData.OvertimeReport.Models.Assignment)
+DA:21,0
+DA:22,0
+DA:23,0
+DA:24,0
 BRDA:23,20,0,0
-BRDA:23,20,1,9
+BRDA:23,20,1,0
 FN:26,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateSABAPES5MinsMatchDuration(OWP.SumReportData.OvertimeReport.Models.Assignment)
-FNDA:7,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateSABAPES5MinsMatchDuration(OWP.SumReportData.OvertimeReport.Models.Assignment)
-DA:27,7
+FNDA:0,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateSABAPES5MinsMatchDuration(OWP.SumReportData.OvertimeReport.Models.Assignment)
+DA:27,0
 FN:29,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateSABAPES15And20MinsMatchDuration(OWP.SumReportData.OvertimeReport.Models.Assignment)
-FNDA:6,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateSABAPES15And20MinsMatchDuration(OWP.SumReportData.OvertimeReport.Models.Assignment)
-DA:30,6
-BRDA:30,11,0,4
-BRDA:30,24,0,2
-BRDA:30,11,1,4
-BRDA:30,24,1,4
+FNDA:0,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateSABAPES15And20MinsMatchDuration(OWP.SumReportData.OvertimeReport.Models.Assignment)
+DA:30,0
+BRDA:30,11,0,0
+BRDA:30,24,0,0
+BRDA:30,11,1,0
+BRDA:30,24,1,0
 FN:32,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateSABAFIFAMatchDuration(OWP.SumReportData.OvertimeReport.Models.Assignment)
-FNDA:7,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateSABAFIFAMatchDuration(OWP.SumReportData.OvertimeReport.Models.Assignment)
-DA:33,7
-BRDA:33,11,0,6
-BRDA:33,24,0,3
-BRDA:33,11,1,4
-BRDA:33,24,1,4
+FNDA:0,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateSABAFIFAMatchDuration(OWP.SumReportData.OvertimeReport.Models.Assignment)
+DA:33,0
+BRDA:33,11,0,0
+BRDA:33,24,0,0
+BRDA:33,11,1,0
+BRDA:33,24,1,0
 FN:35,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateNormalMatchDuration(OWP.SumReportData.OvertimeReport.Models.Assignment)
-FNDA:21,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateNormalMatchDuration(OWP.SumReportData.OvertimeReport.Models.Assignment)
-DA:36,21
-DA:37,21
-DA:38,7
-DA:39,7
-DA:42,14
-DA:43,14
-DA:44,14
-DA:45,13
-DA:46,13
-DA:49,1
-DA:50,21
-BRDA:37,19,0,7
-BRDA:37,19,1,14
-BRDA:42,41,0,4
-BRDA:42,67,0,2
-BRDA:42,41,1,12
-BRDA:42,67,1,12
-BRDA:42,98,0,13
-BRDA:42,98,1,1
+FNDA:0,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateNormalMatchDuration(OWP.SumReportData.OvertimeReport.Models.Assignment)
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:49,0
+DA:50,0
+BRDA:37,19,0,0
+BRDA:37,19,1,0
+BRDA:42,41,0,0
+BRDA:42,67,0,0
+BRDA:42,41,1,0
+BRDA:42,67,1,0
+BRDA:42,98,0,0
+BRDA:42,98,1,0
 FN:52,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateNormalMatchDuration(System.String)
-FNDA:13,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateNormalMatchDuration(System.String)
-DA:53,13
-DA:54,13
-DA:55,8
-DA:56,8
-DA:59,5
-DA:60,13
-BRDA:54,7,0,8
-BRDA:54,7,1,5
-BRDA:54,20,0,8
-BRDA:54,20,1,5
-BRDA:59,37,0,3
-BRDA:59,37,1,2
+FNDA:0,System.Int32 OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::CalculateNormalMatchDuration(System.String)
+DA:53,0
+DA:54,0
+DA:55,0
+DA:56,0
+DA:59,0
+DA:60,0
+BRDA:54,7,0,0
+BRDA:54,7,1,0
+BRDA:54,20,0,0
+BRDA:54,20,1,0
+BRDA:59,37,0,0
+BRDA:59,37,1,0
 FN:62,System.Boolean OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::IsHavingETPK(System.String)
-FNDA:30,System.Boolean OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::IsHavingETPK(System.String)
-DA:63,30
-DA:64,30
-BRDA:63,13,0,15
-BRDA:63,13,1,15
+FNDA:0,System.Boolean OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::IsHavingETPK(System.String)
+DA:63,0
+DA:64,0
+BRDA:63,13,0,0
+BRDA:63,13,1,0
 FN:66,System.Boolean OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::IsHavingPKOnly(System.String)
-FNDA:15,System.Boolean OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::IsHavingPKOnly(System.String)
-DA:67,15
-DA:68,15
-BRDA:67,13,0,14
-BRDA:67,13,1,1
+FNDA:0,System.Boolean OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::IsHavingPKOnly(System.String)
+DA:67,0
+DA:68,0
+BRDA:67,13,0,0
+BRDA:67,13,1,0
 FN:70,System.Boolean OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::IsHavingETOnly(System.String)
-FNDA:8,System.Boolean OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::IsHavingETOnly(System.String)
-DA:71,8
-DA:72,8
-BRDA:71,13,0,3
-BRDA:71,13,1,5
+FNDA:0,System.Boolean OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::IsHavingETOnly(System.String)
+DA:71,0
+DA:72,0
+BRDA:71,13,0,0
+BRDA:71,13,1,0
 FN:8,System.Void OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::.cctor()
-FNDA:1,System.Void OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::.cctor()
-DA:9,1
-DA:10,1
-DA:11,1
-DA:12,1
-DA:13,1
-DA:14,1
-DA:15,1
+FNDA:0,System.Void OWP.SumReportData.OvertimeReport.Helpers.MatchHelper::.cctor()
+DA:9,0
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,0
+DA:14,0
+DA:15,0
 LF:38
-LH:38
+LH:0
 BRF:30
-BRH:29
+BRH:0
 FNF:11
-FNH:11
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\OvertimeReport\Helpers\WorkingShiftHelper.cs
 FN:5,System.Decimal OWP.SumReportData.OvertimeReport.Helpers.WorkingShiftHelper::RoundUpOvertime(System.Decimal)
-FNDA:5,System.Decimal OWP.SumReportData.OvertimeReport.Helpers.WorkingShiftHelper::RoundUpOvertime(System.Decimal)
-DA:6,5
-DA:7,5
-DA:8,5
-DA:10,5
-DA:11,5
-DA:12,2
-DA:13,1
-DA:14,2
-DA:15,5
-DA:16,5
-BRDA:10,29,0,3
-BRDA:10,29,1,2
-BRDA:10,34,1,1
-BRDA:10,34,0,2
+FNDA:0,System.Decimal OWP.SumReportData.OvertimeReport.Helpers.WorkingShiftHelper::RoundUpOvertime(System.Decimal)
+DA:6,0
+DA:7,0
+DA:8,0
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,0
+DA:14,0
+DA:15,0
+DA:16,0
+BRDA:10,29,0,0
+BRDA:10,29,1,0
+BRDA:10,34,1,0
+BRDA:10,34,0,0
 LF:10
-LH:10
+LH:0
 BRF:4
-BRH:4
+BRH:0
 FNF:1
-FNH:1
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\OvertimeReport\Criteria\GetEmployeeWorkingShiftCriteria.cs
 FN:6,System.DateTime OWP.SumReportData.OvertimeReport.Criteria.GetEmployeeWorkingShiftCriteria::get_EventDate()
@@ -1535,35 +1535,35 @@ FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\OvertimeReport\Constants\BetType.cs
 FN:6,System.Void OWP.SumReportData.OvertimeReport.Constants.BetType::.cctor()
-FNDA:1,System.Void OWP.SumReportData.OvertimeReport.Constants.BetType::.cctor()
-DA:7,1
-DA:8,1
-DA:9,1
-DA:10,1
-DA:11,1
-DA:12,1
-DA:13,1
-DA:14,1
-DA:15,1
-DA:16,1
-DA:17,1
-DA:19,1
-DA:20,1
-DA:21,1
-DA:22,1
-DA:23,1
-DA:24,1
-DA:26,1
-DA:27,1
-DA:28,1
-DA:29,1
-DA:30,1
-DA:32,1
-DA:33,1
-DA:34,1
-DA:35,1
-DA:36,1
-DA:37,1
+FNDA:0,System.Void OWP.SumReportData.OvertimeReport.Constants.BetType::.cctor()
+DA:7,0
+DA:8,0
+DA:9,0
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,0
+DA:14,0
+DA:15,0
+DA:16,0
+DA:17,0
+DA:19,0
+DA:20,0
+DA:21,0
+DA:22,0
+DA:23,0
+DA:24,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
 FN:51,System.Boolean OWP.SumReportData.OvertimeReport.Constants.BetType/FullTimeBetType::Equals(OWP.SumReportData.OvertimeReport.Constants.BetType/FullTimeBetType)
 FNDA:0,System.Boolean OWP.SumReportData.OvertimeReport.Constants.BetType/FullTimeBetType::Equals(OWP.SumReportData.OvertimeReport.Constants.BetType/FullTimeBetType)
 DA:52,0
@@ -1581,215 +1581,215 @@ FNDA:0,System.Boolean OWP.SumReportData.OvertimeReport.Constants.BetType/CornerM
 DA:98,0
 DA:99,0
 LF:36
-LH:28
+LH:0
 BRF:0
 BRH:0
 FNF:5
-FNH:1
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\OvertimeReport\Calculators\AssignmentOvertimeCalculator.cs
 FN:20,System.Decimal OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::CalculateOvertimeData(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.Assignment>,OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.MainMatch>)
-FNDA:1,System.Decimal OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::CalculateOvertimeData(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.Assignment>,OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.MainMatch>)
-DA:21,1
-DA:22,1
-DA:24,1
+FNDA:0,System.Decimal OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::CalculateOvertimeData(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.Assignment>,OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.MainMatch>)
+DA:21,0
+DA:22,0
+DA:24,0
 DA:25,0
 DA:26,0
-DA:29,1
-DA:30,1
+DA:29,0
+DA:30,0
 BRDA:24,24,0,0
-BRDA:24,24,1,1
+BRDA:24,24,1,0
 FN:35,System.DateTime OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::GetLatestMatchEndTime(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.Assignment>,OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.MainMatch>)
-FNDA:5,System.DateTime OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::GetLatestMatchEndTime(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.Assignment>,OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.MainMatch>)
-DA:36,5
-DA:37,5
-DA:38,5
-DA:40,5
-DA:41,1
-DA:42,1
-DA:45,4
-DA:47,24
-DA:48,6
-DA:49,6
-DA:50,6
-DA:51,6
-DA:52,6
-DA:53,4
-DA:54,8
-DA:56,4
-DA:57,4
-DA:58,4
-DA:59,4
-DA:60,4
-DA:61,4
-DA:62,4
-DA:64,6
-DA:65,6
-DA:67,4
-DA:68,5
-BRDA:40,31,0,1
-BRDA:40,31,1,4
-BRDA:47,309,1,6
-BRDA:49,109,0,4
-BRDA:49,142,0,4
+FNDA:0,System.DateTime OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::GetLatestMatchEndTime(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.Assignment>,OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.MainMatch>)
+DA:36,0
+DA:37,0
+DA:38,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:45,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:54,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:64,0
+DA:65,0
+DA:67,0
+DA:68,0
+BRDA:40,31,0,0
+BRDA:40,31,1,0
+BRDA:47,309,1,0
+BRDA:49,109,0,0
+BRDA:49,142,0,0
 BRDA:49,142,1,0
-BRDA:49,109,1,2
-BRDA:49,185,0,4
-BRDA:56,218,0,4
-BRDA:56,218,1,4
-BRDA:49,185,1,6
-BRDA:47,309,0,4
+BRDA:49,109,1,0
+BRDA:49,185,0,0
+BRDA:56,218,0,0
+BRDA:56,218,1,0
+BRDA:49,185,1,0
+BRDA:47,309,0,0
 FN:70,System.ValueTuple`2<System.String,System.DateTime> OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::GetMainMatchInfo(OWP.SumReportData.OvertimeReport.Models.MainMatch,OWP.SumReportData.OvertimeReport.Models.Assignment)
-FNDA:4,System.ValueTuple`2<System.String,System.DateTime> OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::GetMainMatchInfo(OWP.SumReportData.OvertimeReport.Models.MainMatch,OWP.SumReportData.OvertimeReport.Models.Assignment)
-DA:71,4
-DA:72,4
-DA:73,4
-DA:74,3
-DA:75,3
-DA:78,1
+FNDA:0,System.ValueTuple`2<System.String,System.DateTime> OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::GetMainMatchInfo(OWP.SumReportData.OvertimeReport.Models.MainMatch,OWP.SumReportData.OvertimeReport.Models.Assignment)
+DA:71,0
+DA:72,0
+DA:73,0
+DA:74,0
+DA:75,0
+DA:78,0
 DA:79,0
 DA:80,0
-DA:83,1
-DA:84,4
-BRDA:72,25,0,4
+DA:83,0
+DA:84,0
+BRDA:72,25,0,0
 BRDA:72,25,1,0
-BRDA:72,43,0,3
-BRDA:72,43,1,1
+BRDA:72,43,0,0
+BRDA:72,43,1,0
 BRDA:78,91,0,0
-BRDA:78,91,1,1
+BRDA:78,91,1,0
 FN:86,System.DateTime OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::CalculateMatchEndTime(OWP.SumReportData.OvertimeReport.Models.Assignment)
-FNDA:20,System.DateTime OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::CalculateMatchEndTime(OWP.SumReportData.OvertimeReport.Models.Assignment)
-DA:87,20
-DA:88,20
-DA:89,20
-DA:90,8
-DA:91,8
-DA:92,8
-DA:94,8
-DA:97,12
-DA:98,20
-BRDA:88,12,0,8
-BRDA:88,12,1,12
-BRDA:88,35,0,8
+FNDA:0,System.DateTime OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::CalculateMatchEndTime(OWP.SumReportData.OvertimeReport.Models.Assignment)
+DA:87,0
+DA:88,0
+DA:89,0
+DA:90,0
+DA:91,0
+DA:92,0
+DA:94,0
+DA:97,0
+DA:98,0
+BRDA:88,12,0,0
+BRDA:88,12,1,0
+BRDA:88,35,0,0
 BRDA:92,57,0,0
-BRDA:92,57,1,8
-BRDA:88,35,1,12
+BRDA:92,57,1,0
+BRDA:88,35,1,0
 FN:103,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.Assignment> OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::GetLatestAssignmentsInShift(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.Assignment>,System.DateTime,System.DateTime)
-FNDA:7,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.Assignment> OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::GetLatestAssignmentsInShift(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.Assignment>,System.DateTime,System.DateTime)
-DA:104,7
-DA:105,7
-DA:106,32
-DA:108,7
-DA:109,5
-DA:110,19
-DA:112,27
-DA:115,2
-DA:116,7
-BRDA:108,48,0,5
-BRDA:108,48,1,2
-BRDA:106,17,0,22
-BRDA:106,17,1,3
+FNDA:0,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.Assignment> OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::GetLatestAssignmentsInShift(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.OvertimeReport.Models.Assignment>,System.DateTime,System.DateTime)
+DA:104,0
+DA:105,0
+DA:106,0
+DA:108,0
+DA:109,0
+DA:110,0
+DA:112,0
+DA:115,0
+DA:116,0
+BRDA:108,48,0,0
+BRDA:108,48,1,0
+BRDA:106,17,0,0
+BRDA:106,17,1,0
 FN:9,System.Void OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::.cctor()
-FNDA:1,System.Void OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::.cctor()
-DA:10,1
-DA:11,1
-DA:12,1
-DA:13,1
-DA:14,1
-DA:15,1
+FNDA:0,System.Void OWP.SumReportData.OvertimeReport.Calculators.AssignmentOvertimeCalculator::.cctor()
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,0
+DA:14,0
+DA:15,0
 LF:67
-LH:63
+LH:0
 BRF:30
-BRH:25
+BRH:0
 FNF:6
-FNH:6
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\OvertimeReport\Calculators\ShiftOvertimeCalculator.cs
 FN:13,System.Decimal OWP.SumReportData.OvertimeReport.Calculators.ShiftOvertimeCalculator::CalculateTimeShiftOvertimeData(OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift)
-FNDA:3,System.Decimal OWP.SumReportData.OvertimeReport.Calculators.ShiftOvertimeCalculator::CalculateTimeShiftOvertimeData(OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift)
-DA:14,3
-DA:15,3
-DA:17,3
-DA:18,1
-DA:19,1
-DA:22,2
-DA:23,3
-BRDA:17,34,0,1
-BRDA:17,34,1,2
+FNDA:0,System.Decimal OWP.SumReportData.OvertimeReport.Calculators.ShiftOvertimeCalculator::CalculateTimeShiftOvertimeData(OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift)
+DA:14,0
+DA:15,0
+DA:17,0
+DA:18,0
+DA:19,0
+DA:22,0
+DA:23,0
+BRDA:17,34,0,0
+BRDA:17,34,1,0
 FN:25,System.Decimal OWP.SumReportData.OvertimeReport.Calculators.ShiftOvertimeCalculator::CalculateOffShiftOvertimeData(OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift)
-FNDA:4,System.Decimal OWP.SumReportData.OvertimeReport.Calculators.ShiftOvertimeCalculator::CalculateOffShiftOvertimeData(OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift)
-DA:26,4
+FNDA:0,System.Decimal OWP.SumReportData.OvertimeReport.Calculators.ShiftOvertimeCalculator::CalculateOffShiftOvertimeData(OWP.SumReportData.OvertimeReport.Models.EmployeeWorkingShift)
+DA:26,0
 FN:28,System.Decimal OWP.SumReportData.OvertimeReport.Calculators.ShiftOvertimeCalculator::GetActualWorkingShift(System.DateTime,System.DateTime)
-FNDA:7,System.Decimal OWP.SumReportData.OvertimeReport.Calculators.ShiftOvertimeCalculator::GetActualWorkingShift(System.DateTime,System.DateTime)
-DA:29,7
-DA:30,7
-DA:32,7
-DA:33,7
-BRDA:32,54,0,4
-BRDA:32,54,1,3
+FNDA:0,System.Decimal OWP.SumReportData.OvertimeReport.Calculators.ShiftOvertimeCalculator::GetActualWorkingShift(System.DateTime,System.DateTime)
+DA:29,0
+DA:30,0
+DA:32,0
+DA:33,0
+BRDA:32,54,0,0
+BRDA:32,54,1,0
 FN:8,System.Void OWP.SumReportData.OvertimeReport.Calculators.ShiftOvertimeCalculator::.cctor()
 FNDA:0,System.Void OWP.SumReportData.OvertimeReport.Calculators.ShiftOvertimeCalculator::.cctor()
 DA:9,0
 DA:11,0
 LF:14
-LH:12
+LH:0
 BRF:4
-BRH:4
+BRH:0
 FNF:4
-FNH:3
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\MatchLiveReport\Services\ReportService.cs
 FN:38,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.ReportModel> OWP.SumReportData.MatchLiveReport.Services.ReportServiceImp::Calculate(System.DateTime,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
-FNDA:3,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.ReportModel> OWP.SumReportData.MatchLiveReport.Services.ReportServiceImp::Calculate(System.DateTime,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
-DA:39,3
-DA:40,3
-DA:41,3
-DA:42,3
-DA:44,3
-DA:45,3
-DA:46,3
-DA:48,29
-DA:49,29
-DA:50,29
-DA:51,29
-DA:52,29
-DA:53,29
-DA:54,29
-DA:55,29
-DA:56,29
-DA:57,29
-DA:58,29
-DA:59,29
-DA:61,3
-DA:62,3
-BRDA:48,87,0,25
-BRDA:48,118,0,24
-BRDA:48,87,1,2
-BRDA:48,118,1,2
+FNDA:0,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.ReportModel> OWP.SumReportData.MatchLiveReport.Services.ReportServiceImp::Calculate(System.DateTime,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:54,0
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:61,0
+DA:62,0
+BRDA:48,87,0,0
+BRDA:48,118,0,0
+BRDA:48,87,1,0
+BRDA:48,118,1,0
 FN:20,System.Void OWP.SumReportData.MatchLiveReport.Services.ReportServiceImp::.ctor(OWP.SumReportData.MatchLiveReport.Repository.ReportRepository)
-FNDA:3,System.Void OWP.SumReportData.MatchLiveReport.Services.ReportServiceImp::.ctor(OWP.SumReportData.MatchLiveReport.Repository.ReportRepository)
-DA:21,3
-DA:22,3
-DA:23,3
-DA:24,3
+FNDA:0,System.Void OWP.SumReportData.MatchLiveReport.Services.ReportServiceImp::.ctor(OWP.SumReportData.MatchLiveReport.Repository.ReportRepository)
+DA:21,0
+DA:22,0
+DA:23,0
+DA:24,0
 FN:26,System.Void OWP.SumReportData.MatchLiveReport.Services.ReportServiceImp/<Calculate>d__2::MoveNext()
-FNDA:2,System.Void OWP.SumReportData.MatchLiveReport.Services.ReportServiceImp/<Calculate>d__2::MoveNext()
-DA:27,2
-DA:28,2
-DA:30,2
-DA:32,2
-DA:33,1
-DA:34,1
-DA:35,1
-DA:36,2
-BRDA:32,261,0,1
-BRDA:32,261,1,2
+FNDA:0,System.Void OWP.SumReportData.MatchLiveReport.Services.ReportServiceImp/<Calculate>d__2::MoveNext()
+DA:27,0
+DA:28,0
+DA:30,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+BRDA:32,261,0,0
+BRDA:32,261,1,0
 LF:33
-LH:33
+LH:0
 BRF:6
-BRH:6
+BRH:0
 FNF:3
-FNH:3
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\MatchLiveReport\Repository\ReportRepository.native.cs
 FN:18,System.Void OWP.SumReportData.MatchLiveReport.Repository.ReportRepositoryImp::.ctor(Fanex.Data.Repository.IDynamicRepository)
@@ -1813,232 +1813,232 @@ FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\MatchLiveReport\Models\OWPMatch.cs
 FN:5,System.Int32 OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_OWPMatchId()
-FNDA:333,System.Int32 OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_OWPMatchId()
-DA:6,333
+FNDA:0,System.Int32 OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_OWPMatchId()
+DA:6,0
 FN:7,System.Nullable`1<System.Int32> OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_MinorBettypeId()
-FNDA:786,System.Nullable`1<System.Int32> OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_MinorBettypeId()
-DA:8,786
+FNDA:0,System.Nullable`1<System.Int32> OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_MinorBettypeId()
+DA:8,0
 FN:9,System.Nullable`1<System.Int32> OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_ParentMatchId()
-FNDA:421,System.Nullable`1<System.Int32> OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_ParentMatchId()
-DA:10,421
+FNDA:0,System.Nullable`1<System.Int32> OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_ParentMatchId()
+DA:10,0
 FN:11,System.String OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_OWPLeagueName()
-FNDA:148,System.String OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_OWPLeagueName()
-DA:12,148
+FNDA:0,System.String OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_OWPLeagueName()
+DA:12,0
 FN:13,System.String OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_LeagueCategory()
-FNDA:388,System.String OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_LeagueCategory()
-DA:14,388
+FNDA:0,System.String OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_LeagueCategory()
+DA:14,0
 FN:15,System.Boolean OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_IsSaba()
-FNDA:406,System.Boolean OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_IsSaba()
-DA:16,406
+FNDA:0,System.Boolean OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_IsSaba()
+DA:16,0
 FN:17,OWP.SumReportData.MatchLiveReport.Constants.BetTypeName OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_BetTypeName()
-FNDA:389,OWP.SumReportData.MatchLiveReport.Constants.BetTypeName OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_BetTypeName()
-DA:18,389
+FNDA:0,OWP.SumReportData.MatchLiveReport.Constants.BetTypeName OWP.SumReportData.MatchLiveReport.Models.OWPMatch::get_BetTypeName()
+DA:18,0
 LF:7
-LH:7
+LH:0
 BRF:0
 BRH:0
 FNF:7
-FNH:7
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\MatchLiveReport\Models\ReportModel.cs
 FN:4,System.DateTime OWP.SumReportData.MatchLiveReport.Models.ReportModel::get_EventDate()
-FNDA:281,System.DateTime OWP.SumReportData.MatchLiveReport.Models.ReportModel::get_EventDate()
-DA:5,281
+FNDA:0,System.DateTime OWP.SumReportData.MatchLiveReport.Models.ReportModel::get_EventDate()
+DA:5,0
 FN:6,System.String OWP.SumReportData.MatchLiveReport.Models.ReportModel::get_LeagueCategory()
-FNDA:281,System.String OWP.SumReportData.MatchLiveReport.Models.ReportModel::get_LeagueCategory()
-DA:7,281
+FNDA:0,System.String OWP.SumReportData.MatchLiveReport.Models.ReportModel::get_LeagueCategory()
+DA:7,0
 FN:8,System.String OWP.SumReportData.MatchLiveReport.Models.ReportModel::get_BetType()
-FNDA:332,System.String OWP.SumReportData.MatchLiveReport.Models.ReportModel::get_BetType()
-DA:9,332
+FNDA:0,System.String OWP.SumReportData.MatchLiveReport.Models.ReportModel::get_BetType()
+DA:9,0
 FN:10,System.Boolean OWP.SumReportData.MatchLiveReport.Models.ReportModel::get_IsSaba()
-FNDA:281,System.Boolean OWP.SumReportData.MatchLiveReport.Models.ReportModel::get_IsSaba()
-DA:11,281
+FNDA:0,System.Boolean OWP.SumReportData.MatchLiveReport.Models.ReportModel::get_IsSaba()
+DA:11,0
 FN:12,System.Int32 OWP.SumReportData.MatchLiveReport.Models.ReportModel::get_MatchCount()
-FNDA:281,System.Int32 OWP.SumReportData.MatchLiveReport.Models.ReportModel::get_MatchCount()
-DA:13,281
+FNDA:0,System.Int32 OWP.SumReportData.MatchLiveReport.Models.ReportModel::get_MatchCount()
+DA:13,0
 LF:5
-LH:5
+LH:0
 BRF:0
 BRH:0
 FNF:5
-FNH:5
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\MatchLiveReport\Helpers\MatchHelper.cs
 FN:68,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch> OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::CategorizeMinorMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
-FNDA:4,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch> OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::CategorizeMinorMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
-DA:69,4
-DA:70,187
-DA:72,140
-DA:73,64
-DA:74,64
-DA:75,64
-DA:76,64
-DA:77,64
-DA:79,100
-DA:80,4
-BRDA:72,122,1,64
-BRDA:75,87,0,1
-BRDA:75,87,1,63
-BRDA:72,122,0,4
-BRDA:70,14,0,160
-BRDA:70,14,1,23
+FNDA:0,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch> OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::CategorizeMinorMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
+DA:69,0
+DA:70,0
+DA:72,0
+DA:73,0
+DA:74,0
+DA:75,0
+DA:76,0
+DA:77,0
+DA:79,0
+DA:80,0
+BRDA:72,122,1,0
+BRDA:75,87,0,0
+BRDA:75,87,1,0
+BRDA:72,122,0,0
+BRDA:70,14,0,0
+BRDA:70,14,1,0
 FN:82,System.String OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::GetMainLeagueCategory(OWP.SumReportData.MatchLiveReport.Models.OWPMatch,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
-FNDA:307,System.String OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::GetMainLeagueCategory(OWP.SumReportData.MatchLiveReport.Models.OWPMatch,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
-DA:83,307
+FNDA:0,System.String OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::GetMainLeagueCategory(OWP.SumReportData.MatchLiveReport.Models.OWPMatch,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
+DA:83,0
 BRDA:83,37,0,0
-BRDA:83,37,1,64
+BRDA:83,37,1,0
 FN:85,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch> OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::CategorizeMainMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
-FNDA:4,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch> OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::CategorizeMainMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
-DA:86,4
-DA:87,131
-DA:89,24
-DA:90,6
-DA:91,6
-DA:92,6
-DA:94,4
-DA:95,4
-BRDA:89,82,1,6
-BRDA:89,82,0,4
-BRDA:87,14,0,29
-BRDA:87,14,1,98
+FNDA:0,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch> OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::CategorizeMainMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
+DA:86,0
+DA:87,0
+DA:89,0
+DA:90,0
+DA:91,0
+DA:92,0
+DA:94,0
+DA:95,0
+BRDA:89,82,1,0
+BRDA:89,82,0,0
+BRDA:87,14,0,0
+BRDA:87,14,1,0
 FN:97,OWP.SumReportData.MatchLiveReport.Constants.BetTypeName OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::GetMainCategory(System.String)
-FNDA:9,OWP.SumReportData.MatchLiveReport.Constants.BetTypeName OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::GetMainCategory(System.String)
-DA:98,9
-DA:99,9
-DA:100,3
-DA:101,3
-DA:104,6
-DA:105,3
-DA:106,3
-DA:109,3
-DA:110,9
-BRDA:99,15,0,3
-BRDA:99,15,1,6
-BRDA:104,37,0,3
-BRDA:104,37,1,3
+FNDA:0,OWP.SumReportData.MatchLiveReport.Constants.BetTypeName OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::GetMainCategory(System.String)
+DA:98,0
+DA:99,0
+DA:100,0
+DA:101,0
+DA:104,0
+DA:105,0
+DA:106,0
+DA:109,0
+DA:110,0
+BRDA:99,15,0,0
+BRDA:99,15,1,0
+BRDA:104,37,0,0
+BRDA:104,37,1,0
 FN:112,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch> OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::CategorizeSabaMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
-FNDA:4,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch> OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::CategorizeSabaMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
-DA:113,4
-DA:114,211
-DA:115,21
-DA:116,20
-DA:118,24
-DA:119,6
-DA:120,6
-DA:121,6
-DA:123,16
-DA:124,2
-DA:125,2
-DA:126,2
-DA:128,4
-DA:129,4
-BRDA:118,161,1,6
-BRDA:118,161,0,4
-BRDA:123,225,1,2
-BRDA:123,225,0,4
-BRDA:114,14,0,49
-BRDA:114,14,1,158
+FNDA:0,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch> OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::CategorizeSabaMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.MatchLiveReport.Models.OWPMatch>)
+DA:113,0
+DA:114,0
+DA:115,0
+DA:116,0
+DA:118,0
+DA:119,0
+DA:120,0
+DA:121,0
+DA:123,0
+DA:124,0
+DA:125,0
+DA:126,0
+DA:128,0
+DA:129,0
+BRDA:118,161,1,0
+BRDA:118,161,0,0
+BRDA:123,225,1,0
+BRDA:123,225,0,0
+BRDA:114,14,0,0
+BRDA:114,14,1,0
 FN:130,System.Boolean OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::IsPes(System.String)
-FNDA:19,System.Boolean OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::IsPes(System.String)
-DA:131,19
+FNDA:0,System.Boolean OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::IsPes(System.String)
+DA:131,0
 FN:132,System.Boolean OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::IsFifa(System.String)
-FNDA:20,System.Boolean OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::IsFifa(System.String)
-DA:133,20
+FNDA:0,System.Boolean OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::IsFifa(System.String)
+DA:133,0
 FN:135,OWP.SumReportData.MatchLiveReport.Constants.BetTypeName OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::GetPesBetType(System.String)
-FNDA:5,OWP.SumReportData.MatchLiveReport.Constants.BetTypeName OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::GetPesBetType(System.String)
-DA:136,5
-DA:137,5
-DA:138,3
-DA:139,3
-DA:142,2
-DA:143,1
-DA:144,1
-DA:147,1
-DA:148,5
-BRDA:137,15,0,3
-BRDA:137,15,1,2
-BRDA:142,37,0,1
-BRDA:142,37,1,1
+FNDA:0,OWP.SumReportData.MatchLiveReport.Constants.BetTypeName OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::GetPesBetType(System.String)
+DA:136,0
+DA:137,0
+DA:138,0
+DA:139,0
+DA:142,0
+DA:143,0
+DA:144,0
+DA:147,0
+DA:148,0
+BRDA:137,15,0,0
+BRDA:137,15,1,0
+BRDA:142,37,0,0
+BRDA:142,37,1,0
 FN:150,OWP.SumReportData.MatchLiveReport.Constants.BetTypeName OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::GetFifaBetType(System.String)
-FNDA:9,OWP.SumReportData.MatchLiveReport.Constants.BetTypeName OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::GetFifaBetType(System.String)
-DA:151,9
-DA:152,9
-DA:153,9
-DA:154,3
-DA:155,3
-DA:158,6
-DA:159,3
-DA:160,3
-DA:163,3
-DA:164,9
-BRDA:152,13,0,3
-BRDA:152,13,1,6
-BRDA:152,32,0,3
-BRDA:152,32,1,6
-BRDA:158,54,0,3
-BRDA:158,54,1,3
+FNDA:0,OWP.SumReportData.MatchLiveReport.Constants.BetTypeName OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::GetFifaBetType(System.String)
+DA:151,0
+DA:152,0
+DA:153,0
+DA:154,0
+DA:155,0
+DA:158,0
+DA:159,0
+DA:160,0
+DA:163,0
+DA:164,0
+BRDA:152,13,0,0
+BRDA:152,13,1,0
+BRDA:152,32,0,0
+BRDA:152,32,1,0
+BRDA:158,54,0,0
+BRDA:158,54,1,0
 FN:10,System.Void OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::.cctor()
-FNDA:1,System.Void OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::.cctor()
-DA:11,1
-DA:12,1
-DA:13,1
-DA:14,1
-DA:15,1
-DA:16,1
-DA:17,1
-DA:18,1
-DA:19,1
-DA:20,1
-DA:21,1
-DA:22,1
-DA:23,1
-DA:24,1
-DA:25,1
-DA:26,1
-DA:27,1
-DA:28,1
-DA:29,1
-DA:30,1
-DA:31,1
-DA:32,1
-DA:33,1
-DA:34,1
-DA:35,1
-DA:36,1
-DA:37,1
-DA:38,1
-DA:39,1
-DA:40,1
+FNDA:0,System.Void OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper::.cctor()
+DA:11,0
+DA:12,0
+DA:13,0
+DA:14,0
+DA:15,0
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
+DA:20,0
+DA:21,0
+DA:22,0
+DA:23,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,0
+DA:40,0
 FN:42,System.Boolean OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper/<SumMatches>d__1::MoveNext()
-FNDA:9,System.Boolean OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper/<SumMatches>d__1::MoveNext()
-DA:43,9
-DA:47,142
-DA:48,58
-DA:49,58
-DA:52,289
-DA:53,58
-DA:54,58
-DA:56,58
-DA:57,58
-DA:58,58
-DA:59,58
-DA:60,58
-DA:61,58
-DA:62,58
-DA:63,58
-DA:64,57
-DA:65,57
-DA:66,8
-BRDA:47,689,1,58
-BRDA:52,639,1,58
-BRDA:52,639,0,57
-BRDA:47,689,0,8
+FNDA:0,System.Boolean OWP.SumReportData.MatchLiveReport.Helpers.MatchHelper/<SumMatches>d__1::MoveNext()
+DA:43,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:52,0
+DA:53,0
+DA:54,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:66,0
+BRDA:47,689,1,0
+BRDA:52,639,1,0
+BRDA:52,639,0,0
+BRDA:47,689,0,0
 LF:111
-LH:111
+LH:0
 BRF:36
-BRH:35
+BRH:0
 FNF:11
-FNH:11
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\MatchLiveReport\Criteria\InsertReportDataCriteria.cs
 FN:6,System.String OWP.SumReportData.MatchLiveReport.Criteria.InsertReportDataCriteria::get_Data()
@@ -2143,419 +2143,411 @@ FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\LAReport\Services\CalculationService.cs
 FN:65,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment> OWP.SumReportData.LAReport.Services.CalculationServiceImp::CategorizeAssignments(System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-FNDA:1,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment> OWP.SumReportData.LAReport.Services.CalculationServiceImp::CategorizeAssignments(System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-DA:66,1
-DA:67,1
-DA:69,1
-DA:70,1
-DA:71,1
-DA:73,1
-DA:74,1
-DA:75,1
-DA:76,1
-DA:78,1
-DA:79,1
-DA:80,1
-DA:82,93
-DA:83,45
-DA:84,45
-DA:85,45
-DA:86,45
-DA:87,45
-DA:89,45
-DA:90,45
-DA:92,1
-DA:93,1
-BRDA:82,213,1,45
-BRDA:85,168,0,33
-BRDA:85,168,1,12
-BRDA:82,213,0,1
-FN:95,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::SumUpAssignments(System.Int32,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-FNDA:1,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::SumUpAssignments(System.Int32,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-DA:96,1
-DA:97,1
-DA:98,1
-DA:99,1
-DA:100,1
-DA:102,1
-DA:103,1
-FN:105,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::SumUpSpecialAndMixedAndESoccer(System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>,OWP.SumReportData.LAReport.Models.LAReportModel)
-FNDA:1,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::SumUpSpecialAndMixedAndESoccer(System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>,OWP.SumReportData.LAReport.Models.LAReportModel)
-DA:106,1
-DA:107,1
-DA:110,46
-DA:111,6
-DA:112,46
-DA:113,6
-DA:114,46
-DA:115,46
-DA:116,4
-DA:117,46
-DA:120,46
-DA:121,4
-DA:124,46
-DA:125,46
-DA:126,46
-DA:127,46
-DA:128,46
-DA:131,46
-DA:133,1
-DA:134,1
-DA:135,1
-DA:136,1
-DA:137,1
-DA:138,1
-DA:139,1
-DA:140,1
-DA:141,1
-DA:142,1
-DA:143,1
-DA:144,1
-DA:146,1
-DA:147,1
-BRDA:120,7,0,3
-BRDA:120,7,1,42
-FN:149,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::SumUpMultipleAndSingle(System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>,OWP.SumReportData.LAReport.Models.LAReportModel)
-FNDA:1,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::SumUpMultipleAndSingle(System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>,OWP.SumReportData.LAReport.Models.LAReportModel)
-DA:150,1
-DA:151,1
-DA:154,91
-DA:156,1
-DA:157,1
-DA:158,272
-DA:159,1
-DA:160,1
-DA:161,17
-DA:162,6
-DA:163,1
-DA:164,7
-DA:165,7
-DA:166,7
-DA:167,7
-DA:169,1
-DA:170,1
-DA:171,1
-DA:172,1
-DA:173,1
-DA:174,1
-DA:175,1
-DA:176,1
-DA:177,1
-DA:179,1
-DA:180,1
-BRDA:165,7,0,2
-BRDA:165,7,1,4
-BRDA:166,7,0,1
-BRDA:166,7,1,5
-FN:183,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::CountMultipleMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment>,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment>)
-FNDA:1,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::CountMultipleMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment>,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment>)
-DA:184,1
-DA:185,17
-DA:186,6
-DA:187,1
-DA:188,132
-DA:189,46
-DA:190,17
-DA:192,1
-DA:194,1
-DA:196,1
-DA:198,9
-DA:199,3
-DA:200,3
-DA:202,3
-DA:203,2
-DA:204,2
-DA:205,2
-DA:207,1
-DA:208,1
-DA:209,1
-DA:210,3
-DA:212,1
-DA:213,1
-DA:215,1
-DA:216,1
-DA:217,1
-DA:218,1
-DA:219,1
-DA:220,1
-DA:221,1
-DA:222,1
-DA:223,1
-DA:224,1
-BRDA:198,316,1,3
-BRDA:202,284,0,2
-BRDA:202,284,1,1
-BRDA:198,316,0,1
-FN:226,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::CountSingleAndOthers(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment>)
-FNDA:1,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::CountSingleAndOthers(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment>)
-DA:227,1
-DA:228,1
-DA:230,1
-DA:231,1
-DA:232,1
-DA:233,1
-DA:234,1
-DA:236,19
-DA:237,8
-DA:238,8
-DA:240,8
-DA:243,1
-DA:244,1
-DA:247,2
-DA:248,2
-DA:251,1
-DA:252,1
-DA:255,2
-DA:256,2
-DA:259,2
-DA:260,2
-DA:262,8
-DA:264,1
-DA:265,1
-DA:266,1
-DA:267,1
-DA:268,1
-DA:269,1
-DA:270,1
-DA:271,1
-DA:272,1
-BRDA:236,135,1,8
-BRDA:240,70,1,1
-BRDA:240,70,2,2
-BRDA:240,70,3,1
-BRDA:240,70,4,2
-BRDA:240,70,0,2
-BRDA:236,135,0,1
-FN:274,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment> OWP.SumReportData.LAReport.Services.CalculationServiceImp::GroupMultipleMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment>)
-FNDA:1,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment> OWP.SumReportData.LAReport.Services.CalculationServiceImp::GroupMultipleMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment>)
-DA:275,1
-DA:276,1
-DA:277,1
-DA:279,1
-DA:280,23
-DA:281,16
-DA:282,16
-DA:283,4
-DA:284,9
-DA:286,11
-DA:287,4
-DA:288,4
-DA:289,4
-DA:291,32
-DA:292,12
-DA:293,12
-DA:295,12
-DA:296,12
-DA:297,12
-DA:299,4
-DA:301,4
-DA:302,4
-DA:304,1
-DA:305,1
-BRDA:286,391,1,4
-BRDA:291,362,1,12
-BRDA:295,303,0,2
-BRDA:295,303,1,10
-BRDA:291,362,0,4
-BRDA:286,391,0,1
-FN:307,System.Boolean OWP.SumReportData.LAReport.Services.CalculationServiceImp::IsKOTimeDifferentWithin5Mins(OWP.SumReportData.LAReport.Models.Assignment,OWP.SumReportData.LAReport.Models.Assignment)
-FNDA:12,System.Boolean OWP.SumReportData.LAReport.Services.CalculationServiceImp::IsKOTimeDifferentWithin5Mins(OWP.SumReportData.LAReport.Models.Assignment,OWP.SumReportData.LAReport.Models.Assignment)
-DA:308,12
-DA:310,12
-DA:311,12
-FN:313,System.Boolean OWP.SumReportData.LAReport.Services.CalculationServiceImp::IsContainsMultipleMatchesProviders(System.String)
-FNDA:23,System.Boolean OWP.SumReportData.LAReport.Services.CalculationServiceImp::IsContainsMultipleMatchesProviders(System.String)
-DA:314,23
-DA:315,23
-DA:316,44
-DA:317,23
-BRDA:315,7,0,21
-BRDA:315,7,1,2
+FNDA:0,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment> OWP.SumReportData.LAReport.Services.CalculationServiceImp::CategorizeAssignments(System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
+DA:66,0
+DA:67,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:73,0
+DA:74,0
+DA:75,0
+DA:77,0
+DA:78,0
+DA:80,0
+DA:81,0
+DA:82,0
+DA:83,0
+DA:84,0
+DA:85,0
+DA:87,0
+DA:88,0
+DA:90,0
+DA:91,0
+BRDA:80,189,1,0
+BRDA:83,144,0,0
+BRDA:83,144,1,0
+BRDA:80,189,0,0
+FN:93,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::SumUpAssignments(System.Int32,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
+FNDA:0,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::SumUpAssignments(System.Int32,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
+DA:94,0
+DA:95,0
+DA:96,0
+DA:97,0
+DA:98,0
+DA:100,0
+DA:101,0
+FN:103,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::SumUpSpecialAndMixedAndESoccer(System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>,OWP.SumReportData.LAReport.Models.LAReportModel)
+FNDA:0,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::SumUpSpecialAndMixedAndESoccer(System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>,OWP.SumReportData.LAReport.Models.LAReportModel)
+DA:104,0
+DA:105,0
+DA:108,0
+DA:109,0
+DA:110,0
+DA:111,0
+DA:112,0
+DA:113,0
+DA:114,0
+DA:115,0
+DA:118,0
+DA:119,0
+DA:122,0
+DA:123,0
+DA:124,0
+DA:125,0
+DA:126,0
+DA:128,0
+DA:129,0
+DA:130,0
+DA:131,0
+DA:132,0
+DA:133,0
+DA:134,0
+DA:135,0
+DA:136,0
+DA:137,0
+DA:138,0
+DA:140,0
+DA:141,0
+BRDA:118,7,0,0
+BRDA:118,7,1,0
+FN:143,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::SumUpMultipleAndSingle(System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>,OWP.SumReportData.LAReport.Models.LAReportModel)
+FNDA:0,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::SumUpMultipleAndSingle(System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>,OWP.SumReportData.LAReport.Models.LAReportModel)
+DA:144,0
+DA:145,0
+DA:148,0
+DA:150,0
+DA:151,0
+DA:152,0
+DA:153,0
+DA:154,0
+DA:155,0
+DA:156,0
+DA:157,0
+DA:158,0
+DA:159,0
+DA:160,0
+DA:161,0
+DA:163,0
+DA:164,0
+DA:165,0
+DA:166,0
+DA:167,0
+DA:168,0
+DA:169,0
+DA:170,0
+DA:171,0
+DA:173,0
+DA:174,0
+BRDA:159,7,0,0
+BRDA:159,7,1,0
+BRDA:160,7,0,0
+BRDA:160,7,1,0
+FN:177,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::CountMultipleMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment>,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment>)
+FNDA:0,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::CountMultipleMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment>,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment>)
+DA:178,0
+DA:179,0
+DA:180,0
+DA:181,0
+DA:182,0
+DA:183,0
+DA:184,0
+DA:186,0
+DA:188,0
+DA:190,0
+DA:192,0
+DA:193,0
+DA:194,0
+DA:196,0
+DA:197,0
+DA:198,0
+DA:199,0
+DA:201,0
+DA:202,0
+DA:203,0
+DA:204,0
+DA:206,0
+DA:207,0
+DA:209,0
+DA:210,0
+DA:211,0
+DA:212,0
+DA:213,0
+DA:214,0
+DA:215,0
+DA:216,0
+DA:217,0
+DA:218,0
+BRDA:192,316,1,0
+BRDA:196,284,0,0
+BRDA:196,284,1,0
+BRDA:192,316,0,0
+FN:220,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::CountSingleAndOthers(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment>)
+FNDA:0,OWP.SumReportData.LAReport.Models.LAReportModel OWP.SumReportData.LAReport.Services.CalculationServiceImp::CountSingleAndOthers(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment>)
+DA:221,0
+DA:222,0
+DA:224,0
+DA:225,0
+DA:226,0
+DA:227,0
+DA:228,0
+DA:230,0
+DA:231,0
+DA:232,0
+DA:234,0
+DA:237,0
+DA:238,0
+DA:241,0
+DA:242,0
+DA:245,0
+DA:246,0
+DA:249,0
+DA:250,0
+DA:253,0
+DA:254,0
+DA:256,0
+DA:258,0
+DA:259,0
+DA:260,0
+DA:261,0
+DA:262,0
+DA:263,0
+DA:264,0
+DA:265,0
+DA:266,0
+BRDA:230,135,1,0
+BRDA:234,70,1,0
+BRDA:234,70,2,0
+BRDA:234,70,3,0
+BRDA:234,70,4,0
+BRDA:234,70,0,0
+BRDA:230,135,0,0
+FN:268,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment> OWP.SumReportData.LAReport.Services.CalculationServiceImp::GroupMultipleMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment>)
+FNDA:0,System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment> OWP.SumReportData.LAReport.Services.CalculationServiceImp::GroupMultipleMatches(System.Collections.Generic.IEnumerable`1<OWP.SumReportData.LAReport.Models.Assignment>)
+DA:269,0
+DA:270,0
+DA:271,0
+DA:273,0
+DA:274,0
+DA:275,0
+DA:276,0
+DA:277,0
+DA:278,0
+DA:280,0
+DA:281,0
+DA:282,0
+DA:283,0
+DA:285,0
+DA:286,0
+DA:287,0
+DA:289,0
+DA:290,0
+DA:291,0
+DA:293,0
+DA:295,0
+DA:296,0
+DA:298,0
+DA:299,0
+BRDA:280,391,1,0
+BRDA:285,362,1,0
+BRDA:289,303,0,0
+BRDA:289,303,1,0
+BRDA:285,362,0,0
+BRDA:280,391,0,0
+FN:301,System.Boolean OWP.SumReportData.LAReport.Services.CalculationServiceImp::IsKOTimeDifferentWithin5Mins(OWP.SumReportData.LAReport.Models.Assignment,OWP.SumReportData.LAReport.Models.Assignment)
+FNDA:0,System.Boolean OWP.SumReportData.LAReport.Services.CalculationServiceImp::IsKOTimeDifferentWithin5Mins(OWP.SumReportData.LAReport.Models.Assignment,OWP.SumReportData.LAReport.Models.Assignment)
+DA:302,0
+DA:304,0
+DA:305,0
+FN:307,System.Boolean OWP.SumReportData.LAReport.Services.CalculationServiceImp::IsContainsMultipleMatchesProviders(System.String)
+FNDA:0,System.Boolean OWP.SumReportData.LAReport.Services.CalculationServiceImp::IsContainsMultipleMatchesProviders(System.String)
+DA:308,0
+DA:309,0
+DA:310,0
+DA:311,0
+BRDA:309,7,0,0
+BRDA:309,7,1,0
 FN:19,System.Void OWP.SumReportData.LAReport.Services.CalculationServiceImp::.ctor(OWP.SumReportData.LAReport.LARepository,OWP.SumReportData.LAReport.Factory.SpecialProductFactory,OWP.SumReportData.LAReport.Factory.MainMatchRuleFactory,OWP.SumReportData.LAReport.Factory.MultipleAndSingleMatchesFactory)
-FNDA:1,System.Void OWP.SumReportData.LAReport.Services.CalculationServiceImp::.ctor(OWP.SumReportData.LAReport.LARepository,OWP.SumReportData.LAReport.Factory.SpecialProductFactory,OWP.SumReportData.LAReport.Factory.MainMatchRuleFactory,OWP.SumReportData.LAReport.Factory.MultipleAndSingleMatchesFactory)
-DA:20,1
-DA:21,1
-DA:23,1
-DA:24,1
-DA:25,1
-DA:26,1
-DA:27,1
-DA:28,1
-DA:29,1
-DA:30,1
+FNDA:0,System.Void OWP.SumReportData.LAReport.Services.CalculationServiceImp::.ctor(OWP.SumReportData.LAReport.LARepository,OWP.SumReportData.LAReport.Factory.SpecialProductFactory,OWP.SumReportData.LAReport.Factory.MainMatchRuleFactory,OWP.SumReportData.LAReport.Factory.MultipleAndSingleMatchesFactory)
+DA:20,0
+DA:21,0
+DA:23,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
 FN:32,System.Void OWP.SumReportData.LAReport.Services.CalculationServiceImp/<Calculate>d__6::MoveNext()
-FNDA:1,System.Void OWP.SumReportData.LAReport.Services.CalculationServiceImp/<Calculate>d__6::MoveNext()
-DA:33,1
-DA:34,1
-DA:35,1
-DA:37,1
-DA:38,1
+FNDA:0,System.Void OWP.SumReportData.LAReport.Services.CalculationServiceImp/<Calculate>d__6::MoveNext()
+DA:33,0
+DA:34,0
+DA:35,0
+DA:37,0
+DA:38,0
 FN:41,System.Boolean OWP.SumReportData.LAReport.Services.CalculationServiceImp/<Calculate>d__7::MoveNext()
-FNDA:1,System.Boolean OWP.SumReportData.LAReport.Services.CalculationServiceImp/<Calculate>d__7::MoveNext()
-DA:42,1
-DA:44,5
-DA:45,1
-DA:46,1
-DA:47,1
-DA:48,1
-DA:50,1
-DA:51,1
-DA:52,1
-BRDA:44,291,1,1
-BRDA:44,291,0,1
+FNDA:0,System.Boolean OWP.SumReportData.LAReport.Services.CalculationServiceImp/<Calculate>d__7::MoveNext()
+DA:42,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:50,0
+DA:51,0
+DA:52,0
+BRDA:44,291,1,0
+BRDA:44,291,0,0
 FN:54,System.Void OWP.SumReportData.LAReport.Services.CalculationServiceImp/<GetAssignmentDict>d__8::MoveNext()
-FNDA:1,System.Void OWP.SumReportData.LAReport.Services.CalculationServiceImp/<GetAssignmentDict>d__8::MoveNext()
-DA:55,1
-DA:56,1
-DA:62,1
-DA:63,1
-LF:210
-LH:210
+FNDA:0,System.Void OWP.SumReportData.LAReport.Services.CalculationServiceImp/<GetAssignmentDict>d__8::MoveNext()
+DA:55,0
+DA:56,0
+DA:62,0
+DA:63,0
+LF:206
+LH:0
 BRF:31
-BRH:31
+BRH:0
 FNF:13
-FNH:13
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\LAReport\Models\Assignment.cs
 FN:6,System.Int32 OWP.SumReportData.LAReport.Models.Assignment::get_AssignmentId()
-FNDA:316,System.Int32 OWP.SumReportData.LAReport.Models.Assignment::get_AssignmentId()
-DA:7,316
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.Assignment::get_AssignmentId()
+DA:7,0
 FN:8,System.Int32 OWP.SumReportData.LAReport.Models.Assignment::get_UserId()
-FNDA:246,System.Int32 OWP.SumReportData.LAReport.Models.Assignment::get_UserId()
-DA:9,246
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.Assignment::get_UserId()
+DA:9,0
 FN:10,System.String OWP.SumReportData.LAReport.Models.Assignment::get_ProviderName()
-FNDA:285,System.String OWP.SumReportData.LAReport.Models.Assignment::get_ProviderName()
-DA:11,285
+FNDA:0,System.String OWP.SumReportData.LAReport.Models.Assignment::get_ProviderName()
+DA:11,0
 FN:12,System.String OWP.SumReportData.LAReport.Models.Assignment::get_OWPLeagueName()
-FNDA:342,System.String OWP.SumReportData.LAReport.Models.Assignment::get_OWPLeagueName()
-DA:13,342
+FNDA:0,System.String OWP.SumReportData.LAReport.Models.Assignment::get_OWPLeagueName()
+DA:13,0
 FN:14,System.Nullable`1<System.Int32> OWP.SumReportData.LAReport.Models.Assignment::get_MinorBettypeId()
-FNDA:2221,System.Nullable`1<System.Int32> OWP.SumReportData.LAReport.Models.Assignment::get_MinorBettypeId()
-DA:15,2221
+FNDA:0,System.Nullable`1<System.Int32> OWP.SumReportData.LAReport.Models.Assignment::get_MinorBettypeId()
+DA:15,0
 FN:16,System.Int32 OWP.SumReportData.LAReport.Models.Assignment::get_OWPMatchId()
-FNDA:568,System.Int32 OWP.SumReportData.LAReport.Models.Assignment::get_OWPMatchId()
-DA:17,568
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.Assignment::get_OWPMatchId()
+DA:17,0
 FN:18,System.Nullable`1<System.Int32> OWP.SumReportData.LAReport.Models.Assignment::get_ParentMatchId()
-FNDA:653,System.Nullable`1<System.Int32> OWP.SumReportData.LAReport.Models.Assignment::get_ParentMatchId()
-DA:19,653
+FNDA:0,System.Nullable`1<System.Int32> OWP.SumReportData.LAReport.Models.Assignment::get_ParentMatchId()
+DA:19,0
 FN:20,System.DateTime OWP.SumReportData.LAReport.Models.Assignment::get_EventDateTime()
-FNDA:257,System.DateTime OWP.SumReportData.LAReport.Models.Assignment::get_EventDateTime()
-DA:21,257
+FNDA:0,System.DateTime OWP.SumReportData.LAReport.Models.Assignment::get_EventDateTime()
+DA:21,0
 FN:22,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Models.Assignment::get_ReportType()
-FNDA:675,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Models.Assignment::get_ReportType()
-DA:23,675
+FNDA:0,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Models.Assignment::get_ReportType()
+DA:23,0
 FN:24,System.Int32 OWP.SumReportData.LAReport.Models.Assignment::get_LinkGroup()
-FNDA:64,System.Int32 OWP.SumReportData.LAReport.Models.Assignment::get_LinkGroup()
-DA:25,64
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.Assignment::get_LinkGroup()
+DA:25,0
 LF:10
-LH:10
+LH:0
 BRF:0
 BRH:0
 FNF:10
-FNH:10
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\LAReport\Models\LAReportModel.cs
 FN:4,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_UserId()
-FNDA:4,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_UserId()
-DA:5,4
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_UserId()
+DA:5,0
 FN:6,System.String OWP.SumReportData.LAReport.Models.LAReportModel::get_Username()
-FNDA:4,System.String OWP.SumReportData.LAReport.Models.LAReportModel::get_Username()
-DA:7,4
+FNDA:0,System.String OWP.SumReportData.LAReport.Models.LAReportModel::get_Username()
+DA:7,0
 FN:8,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_TotalMatches()
-FNDA:4,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_TotalMatches()
-DA:9,4
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_TotalMatches()
+DA:9,0
 FN:10,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_LinkLowerThan3()
-FNDA:7,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_LinkLowerThan3()
-DA:11,7
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_LinkLowerThan3()
+DA:11,0
 FN:12,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_LinkX3()
-FNDA:5,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_LinkX3()
-DA:13,5
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_LinkX3()
+DA:13,0
 FN:14,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_LinkX6()
-FNDA:5,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_LinkX6()
-DA:15,5
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_LinkX6()
+DA:15,0
 FN:16,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_LinkX9Plus()
-FNDA:5,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_LinkX9Plus()
-DA:17,5
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_LinkX9Plus()
+DA:17,0
 FN:18,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ProviderTv()
-FNDA:9,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ProviderTv()
-DA:19,9
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ProviderTv()
+DA:19,0
 FN:20,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_Provider()
-FNDA:9,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_Provider()
-DA:21,9
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_Provider()
+DA:21,0
 FN:22,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_TV()
-FNDA:9,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_TV()
-DA:23,9
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_TV()
+DA:23,0
 FN:24,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_Reporter()
-FNDA:9,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_Reporter()
-DA:25,9
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_Reporter()
+DA:25,0
 FN:26,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_CornerPlus()
-FNDA:5,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_CornerPlus()
-DA:27,5
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_CornerPlus()
+DA:27,0
 FN:28,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_TBookingPlus()
-FNDA:5,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_TBookingPlus()
-DA:29,5
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_TBookingPlus()
+DA:29,0
 FN:30,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_Fantasy()
-FNDA:5,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_Fantasy()
-DA:31,5
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_Fantasy()
+DA:31,0
 FN:32,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_GoalKick()
-FNDA:5,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_GoalKick()
-DA:33,5
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_GoalKick()
+DA:33,0
 FN:34,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_OtherProducts()
-FNDA:5,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_OtherProducts()
-DA:35,5
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_OtherProducts()
+DA:35,0
 FN:36,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_FTCorner()
-FNDA:5,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_FTCorner()
-DA:37,5
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_FTCorner()
+DA:37,0
 FN:38,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ESoccer5Mins()
-FNDA:5,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ESoccer5Mins()
-DA:39,5
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ESoccer5Mins()
+DA:39,0
 FN:40,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ESoccer6Mins()
-FNDA:5,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ESoccer6Mins()
-DA:41,5
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ESoccer6Mins()
+DA:41,0
 FN:42,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ESoccer15Mins()
-FNDA:5,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ESoccer15Mins()
-DA:43,5
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ESoccer15Mins()
+DA:43,0
 FN:44,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ESoccer16Mins()
-FNDA:5,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ESoccer16Mins()
-DA:45,5
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ESoccer16Mins()
+DA:45,0
 FN:46,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ESoccer20Mins()
-FNDA:5,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ESoccer20Mins()
-DA:47,5
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_ESoccer20Mins()
+DA:47,0
 FN:48,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_Others()
-FNDA:9,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_Others()
-DA:49,9
-FN:50,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_FiveMajorLeague()
-FNDA:5,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_FiveMajorLeague()
-DA:51,5
-FN:53,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::SumTotal()
-FNDA:1,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::SumTotal()
-DA:54,1
-DA:55,1
-DA:56,1
-DA:57,1
-DA:58,1
-DA:59,1
-DA:60,1
-DA:61,1
-DA:62,1
-DA:63,1
-DA:64,1
-DA:65,1
-DA:66,1
-DA:67,1
-DA:68,1
-DA:69,1
-DA:70,1
-DA:71,1
-DA:72,1
-DA:73,1
-DA:74,1
-LF:45
-LH:45
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::get_Others()
+DA:49,0
+FN:51,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::SumTotal()
+FNDA:0,System.Int32 OWP.SumReportData.LAReport.Models.LAReportModel::SumTotal()
+DA:52,0
+DA:53,0
+DA:54,0
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+LF:43
+LH:0
 BRF:0
 BRH:0
-FNF:25
-FNH:25
+FNF:24
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\LAReport\Models\UserSection.cs
 FN:4,System.Int32 OWP.SumReportData.LAReport.Models.UserSection::get_UserId()
@@ -2572,272 +2564,259 @@ FNF:2
 FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\LAReport\Misc\MainMatchRule.cs
-FN:12,System.Void OWP.SumReportData.LAReport.Misc.MainMatchRule::SetSuccessor(OWP.SumReportData.LAReport.Misc.MainMatchRule)
-FNDA:19,System.Void OWP.SumReportData.LAReport.Misc.MainMatchRule::SetSuccessor(OWP.SumReportData.LAReport.Misc.MainMatchRule)
-DA:13,19
-FN:15,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.MainMatchRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-FNDA:123,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.MainMatchRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-DA:16,123
-DA:17,123
-DA:18,123
-BRDA:17,8,0,24
-BRDA:17,8,1,99
-FN:25,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.FTCornerRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-FNDA:41,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.FTCornerRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-DA:26,41
-DA:27,41
-DA:28,41
-BRDA:27,9,0,39
-BRDA:27,9,1,2
-FN:30,System.Boolean OWP.SumReportData.LAReport.Misc.FTCornerRule::isContainCorner(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-FNDA:41,System.Boolean OWP.SumReportData.LAReport.Misc.FTCornerRule::isContainCorner(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-DA:31,41
-DA:32,1554
-DA:33,41
-BRDA:32,14,0,400
-BRDA:32,46,0,169
-BRDA:32,14,1,1344
-BRDA:32,46,1,1344
-FN:22,System.Void OWP.SumReportData.LAReport.Misc.FTCornerRule::.ctor()
-FNDA:9,System.Void OWP.SumReportData.LAReport.Misc.FTCornerRule::.ctor()
-DA:23,9
-FN:38,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.IsFantasyRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-FNDA:39,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.IsFantasyRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-DA:39,39
-DA:40,39
-DA:41,39
-BRDA:40,12,0,36
-BRDA:40,12,1,3
-FN:43,System.Boolean OWP.SumReportData.LAReport.Misc.IsFantasyRule::IsFantasy(System.String)
-FNDA:39,System.Boolean OWP.SumReportData.LAReport.Misc.IsFantasyRule::IsFantasy(System.String)
-DA:44,39
-FN:49,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.ESoccerRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-FNDA:36,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.ESoccerRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-DA:50,36
-DA:51,36
-DA:52,13
-DA:53,13
-DA:54,2
-DA:55,2
-DA:58,11
-DA:59,3
-DA:60,3
-DA:63,8
-DA:64,2
-DA:65,2
-DA:68,6
-DA:69,2
-DA:70,2
-DA:73,4
-DA:74,2
-DA:75,2
-DA:77,2
-DA:79,25
-DA:80,36
-BRDA:51,14,0,13
-BRDA:53,38,0,2
-BRDA:53,38,1,11
-BRDA:58,63,0,3
-BRDA:58,63,1,8
-BRDA:63,91,0,2
-BRDA:63,91,1,6
-BRDA:68,118,0,2
-BRDA:68,118,1,4
-BRDA:73,146,0,2
-BRDA:73,146,1,2
-BRDA:51,14,1,25
-FN:82,System.Boolean OWP.SumReportData.LAReport.Misc.ESoccerRule::isESoccer(System.String)
-FNDA:36,System.Boolean OWP.SumReportData.LAReport.Misc.ESoccerRule::isESoccer(System.String)
-DA:83,36
-FN:87,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.FiveMajorLeagueRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-FNDA:24,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.FiveMajorLeagueRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-DA:88,24
-DA:89,24
-DA:90,1
-DA:91,1
-DA:94,23
-DA:95,24
-BRDA:89,14,0,1
-BRDA:89,14,1,23
-FN:97,System.Boolean OWP.SumReportData.LAReport.Misc.FiveMajorLeagueRule::isMajorLeague(System.String)
-FNDA:140,System.Boolean OWP.SumReportData.LAReport.Misc.FiveMajorLeagueRule::isMajorLeague(System.String)
-DA:98,140
-LF:44
-LH:44
-BRF:24
-BRH:24
-FNF:11
-FNH:11
+FN:11,System.Void OWP.SumReportData.LAReport.Misc.MainMatchRule::SetSuccessor(OWP.SumReportData.LAReport.Misc.MainMatchRule)
+FNDA:0,System.Void OWP.SumReportData.LAReport.Misc.MainMatchRule::SetSuccessor(OWP.SumReportData.LAReport.Misc.MainMatchRule)
+DA:12,0
+FN:14,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.MainMatchRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
+FNDA:0,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.MainMatchRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
+DA:15,0
+DA:16,0
+DA:17,0
+BRDA:16,8,0,0
+BRDA:16,8,1,0
+FN:24,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.FTCornerRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
+FNDA:0,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.FTCornerRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
+DA:25,0
+DA:26,0
+DA:27,0
+BRDA:26,9,0,0
+BRDA:26,9,1,0
+FN:29,System.Boolean OWP.SumReportData.LAReport.Misc.FTCornerRule::isContainCorner(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
+FNDA:0,System.Boolean OWP.SumReportData.LAReport.Misc.FTCornerRule::isContainCorner(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
+DA:30,0
+DA:31,0
+DA:32,0
+BRDA:31,14,0,0
+BRDA:31,46,0,0
+BRDA:31,14,1,0
+BRDA:31,46,1,0
+FN:21,System.Void OWP.SumReportData.LAReport.Misc.FTCornerRule::.ctor()
+FNDA:0,System.Void OWP.SumReportData.LAReport.Misc.FTCornerRule::.ctor()
+DA:22,0
+FN:37,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.IsFantasyRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
+FNDA:0,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.IsFantasyRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
+DA:38,0
+DA:39,0
+DA:40,0
+BRDA:39,12,0,0
+BRDA:39,12,1,0
+FN:42,System.Boolean OWP.SumReportData.LAReport.Misc.IsFantasyRule::IsFantasy(System.String)
+FNDA:0,System.Boolean OWP.SumReportData.LAReport.Misc.IsFantasyRule::IsFantasy(System.String)
+DA:43,0
+FN:48,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.ESoccerRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
+FNDA:0,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.ESoccerRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:54,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:72,0
+DA:73,0
+DA:74,0
+DA:76,0
+DA:78,0
+DA:79,0
+BRDA:50,14,0,0
+BRDA:52,38,0,0
+BRDA:52,38,1,0
+BRDA:57,63,0,0
+BRDA:57,63,1,0
+BRDA:62,91,0,0
+BRDA:62,91,1,0
+BRDA:67,118,0,0
+BRDA:67,118,1,0
+BRDA:72,146,0,0
+BRDA:72,146,1,0
+BRDA:50,14,1,0
+FN:81,System.Boolean OWP.SumReportData.LAReport.Misc.ESoccerRule::isESoccer(System.String)
+FNDA:0,System.Boolean OWP.SumReportData.LAReport.Misc.ESoccerRule::isESoccer(System.String)
+DA:82,0
+LF:37
+LH:0
+BRF:22
+BRH:0
+FNF:9
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\LAReport\Misc\MultipleAndSingleMatchesRule.cs
 FN:7,OWP.SumReportData.LAReport.Misc.MultipleAndSingleMatchesRule OWP.SumReportData.LAReport.Misc.MultipleAndSingleMatchesRule::get_NextRule()
-FNDA:18,OWP.SumReportData.LAReport.Misc.MultipleAndSingleMatchesRule OWP.SumReportData.LAReport.Misc.MultipleAndSingleMatchesRule::get_NextRule()
-DA:8,18
+FNDA:0,OWP.SumReportData.LAReport.Misc.MultipleAndSingleMatchesRule OWP.SumReportData.LAReport.Misc.MultipleAndSingleMatchesRule::get_NextRule()
+DA:8,0
 FN:10,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.MultipleAndSingleMatchesRule::Execute(OWP.SumReportData.LAReport.Models.Assignment)
-FNDA:11,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.MultipleAndSingleMatchesRule::Execute(OWP.SumReportData.LAReport.Models.Assignment)
-DA:11,11
-DA:12,11
-DA:13,11
-BRDA:12,8,0,5
-BRDA:12,8,1,6
+FNDA:0,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.MultipleAndSingleMatchesRule::Execute(OWP.SumReportData.LAReport.Models.Assignment)
+DA:11,0
+DA:12,0
+DA:13,0
+BRDA:12,8,0,0
+BRDA:12,8,1,0
 FN:24,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.MultipleMatchesRule::Execute(OWP.SumReportData.LAReport.Models.Assignment)
-FNDA:10,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.MultipleMatchesRule::Execute(OWP.SumReportData.LAReport.Models.Assignment)
-DA:25,10
-DA:26,10
-DA:27,1
-DA:28,1
-DA:31,9
-DA:33,18
-DA:34,10
-DA:35,13
-DA:36,3
-DA:37,3
-DA:40,6
-DA:41,10
-BRDA:26,14,0,1
-BRDA:26,14,1,9
-BRDA:33,60,0,6
-BRDA:33,80,0,3
-BRDA:33,60,1,6
-BRDA:33,80,1,6
-BRDA:33,127,0,3
-BRDA:33,127,1,6
+FNDA:0,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.MultipleMatchesRule::Execute(OWP.SumReportData.LAReport.Models.Assignment)
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:31,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:40,0
+DA:41,0
+BRDA:26,14,0,0
+BRDA:26,14,1,0
+BRDA:33,60,0,0
+BRDA:33,80,0,0
+BRDA:33,60,1,0
+BRDA:33,80,1,0
+BRDA:33,127,0,0
+BRDA:33,127,1,0
 FN:43,System.Boolean OWP.SumReportData.LAReport.Misc.MultipleMatchesRule::IsContainsSubfield(System.String,System.String)
-FNDA:4,System.Boolean OWP.SumReportData.LAReport.Misc.MultipleMatchesRule::IsContainsSubfield(System.String,System.String)
-DA:44,4
+FNDA:0,System.Boolean OWP.SumReportData.LAReport.Misc.MultipleMatchesRule::IsContainsSubfield(System.String,System.String)
+DA:44,0
 FN:17,System.Void OWP.SumReportData.LAReport.Misc.MultipleMatchesRule::.ctor()
-FNDA:8,System.Void OWP.SumReportData.LAReport.Misc.MultipleMatchesRule::.ctor()
-DA:18,8
-DA:20,8
+FNDA:0,System.Void OWP.SumReportData.LAReport.Misc.MultipleMatchesRule::.ctor()
+DA:18,0
+DA:20,0
 FN:65,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.SingleMatchesRule::Execute(OWP.SumReportData.LAReport.Models.Assignment)
-FNDA:14,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.SingleMatchesRule::Execute(OWP.SumReportData.LAReport.Models.Assignment)
-DA:66,14
-DA:67,14
-DA:68,3
-DA:69,3
-DA:72,11
-DA:74,23
-DA:75,6
-DA:76,13
-DA:77,2
-DA:78,2
-DA:81,9
-DA:82,8
-DA:83,8
-DA:84,3
-DA:85,3
-DA:88,5
-DA:89,5
-DA:90,2
-DA:91,2
-DA:94,3
-DA:95,3
-DA:96,3
+FNDA:0,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.SingleMatchesRule::Execute(OWP.SumReportData.LAReport.Models.Assignment)
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:72,0
+DA:74,0
+DA:75,0
+DA:76,0
+DA:77,0
+DA:78,0
+DA:81,0
+DA:82,0
+DA:83,0
+DA:84,0
+DA:85,0
+DA:88,0
+DA:89,0
+DA:90,0
+DA:91,0
+DA:94,0
+DA:95,0
+DA:96,0
 DA:98,0
-DA:100,1
-DA:101,14
-BRDA:67,14,0,3
-BRDA:67,14,1,11
-BRDA:74,63,0,4
-BRDA:74,83,0,2
-BRDA:74,83,1,2
-BRDA:74,63,1,7
-BRDA:74,130,0,2
-BRDA:74,130,1,9
-BRDA:81,151,0,8
-BRDA:83,188,0,3
-BRDA:83,188,1,5
-BRDA:88,223,0,3
-BRDA:88,223,1,2
-BRDA:88,253,0,2
-BRDA:88,253,1,3
-BRDA:94,286,0,3
+DA:100,0
+DA:101,0
+BRDA:67,14,0,0
+BRDA:67,14,1,0
+BRDA:74,63,0,0
+BRDA:74,83,0,0
+BRDA:74,83,1,0
+BRDA:74,63,1,0
+BRDA:74,130,0,0
+BRDA:74,130,1,0
+BRDA:81,151,0,0
+BRDA:83,188,0,0
+BRDA:83,188,1,0
+BRDA:88,223,0,0
+BRDA:88,223,1,0
+BRDA:88,253,0,0
+BRDA:88,253,1,0
+BRDA:94,286,0,0
 BRDA:94,286,1,0
-BRDA:81,151,1,1
+BRDA:81,151,1,0
 FN:103,System.Boolean OWP.SumReportData.LAReport.Misc.SingleMatchesRule::IsContainsSubfield(System.String,System.String)
-FNDA:8,System.Boolean OWP.SumReportData.LAReport.Misc.SingleMatchesRule::IsContainsSubfield(System.String,System.String)
-DA:104,8
+FNDA:0,System.Boolean OWP.SumReportData.LAReport.Misc.SingleMatchesRule::IsContainsSubfield(System.String,System.String)
+DA:104,0
 FN:52,System.Void OWP.SumReportData.LAReport.Misc.SingleMatchesRule::.ctor()
-FNDA:8,System.Void OWP.SumReportData.LAReport.Misc.SingleMatchesRule::.ctor()
-DA:53,8
-DA:55,8
-DA:57,8
-DA:58,8
-DA:59,8
-DA:60,8
-DA:61,8
-DA:63,8
+FNDA:0,System.Void OWP.SumReportData.LAReport.Misc.SingleMatchesRule::.ctor()
+DA:53,0
+DA:55,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:63,0
 LF:53
-LH:52
+LH:0
 BRF:28
-BRH:27
+BRH:0
 FNF:8
-FNH:8
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\LAReport\Misc\SpecialProductRule.cs
 FN:10,System.Void OWP.SumReportData.LAReport.Misc.SpecialProductRule::SetSuccessor(OWP.SumReportData.LAReport.Misc.SpecialProductRule)
-FNDA:6,System.Void OWP.SumReportData.LAReport.Misc.SpecialProductRule::SetSuccessor(OWP.SumReportData.LAReport.Misc.SpecialProductRule)
-DA:11,6
+FNDA:0,System.Void OWP.SumReportData.LAReport.Misc.SpecialProductRule::SetSuccessor(OWP.SumReportData.LAReport.Misc.SpecialProductRule)
+DA:11,0
 FN:13,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.SpecialProductRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-FNDA:9,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.SpecialProductRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-DA:14,9
-DA:15,9
-DA:16,9
-BRDA:15,8,0,1
-BRDA:15,8,1,8
+FNDA:0,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.SpecialProductRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
+DA:14,0
+DA:15,0
+DA:16,0
+BRDA:15,8,0,0
+BRDA:15,8,1,0
 FN:25,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.NotCornerRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-FNDA:17,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.NotCornerRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-DA:26,17
-DA:27,17
-DA:28,9
-DA:29,9
-DA:30,4
-DA:31,4
-DA:34,5
-DA:35,3
-DA:36,3
-DA:39,2
-DA:42,8
-DA:43,17
-BRDA:27,15,0,16
-BRDA:27,15,1,1
-BRDA:27,50,0,9
-BRDA:29,86,0,4
-BRDA:29,86,1,5
-BRDA:34,128,0,3
-BRDA:34,128,1,2
-BRDA:27,50,1,8
+FNDA:0,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.NotCornerRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:39,0
+DA:42,0
+DA:43,0
+BRDA:27,15,0,0
+BRDA:27,15,1,0
+BRDA:27,50,0,0
+BRDA:29,86,0,0
+BRDA:29,86,1,0
+BRDA:34,128,0,0
+BRDA:34,128,1,0
+BRDA:27,50,1,0
 FN:20,System.Void OWP.SumReportData.LAReport.Misc.NotCornerRule::.ctor()
-FNDA:6,System.Void OWP.SumReportData.LAReport.Misc.NotCornerRule::.ctor()
-DA:21,6
-DA:22,6
-DA:23,6
+FNDA:0,System.Void OWP.SumReportData.LAReport.Misc.NotCornerRule::.ctor()
+DA:21,0
+DA:22,0
+DA:23,0
 FN:50,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.IsCornerRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-FNDA:8,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.IsCornerRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
-DA:51,8
-DA:52,8
-DA:53,7
-DA:54,170
-DA:56,7
-DA:59,1
-DA:60,8
-BRDA:52,33,0,7
-BRDA:52,33,1,1
-BRDA:52,76,0,7
-BRDA:56,104,0,4
-BRDA:56,104,1,3
-BRDA:52,76,1,1
-BRDA:54,14,0,107
-BRDA:54,14,1,56
+FNDA:0,OWP.SumReportData.LAReport.Enum.ReportType OWP.SumReportData.LAReport.Misc.IsCornerRule::Execute(OWP.SumReportData.LAReport.Models.Assignment,System.Collections.Generic.IList`1<OWP.SumReportData.LAReport.Models.Assignment>)
+DA:51,0
+DA:52,0
+DA:53,0
+DA:54,0
+DA:56,0
+DA:59,0
+DA:60,0
+BRDA:52,33,0,0
+BRDA:52,33,1,0
+BRDA:52,76,0,0
+BRDA:56,104,0,0
+BRDA:56,104,1,0
+BRDA:52,76,1,0
+BRDA:54,14,0,0
+BRDA:54,14,1,0
 FN:47,System.Void OWP.SumReportData.LAReport.Misc.IsCornerRule::.ctor()
-FNDA:7,System.Void OWP.SumReportData.LAReport.Misc.IsCornerRule::.ctor()
-DA:48,7
+FNDA:0,System.Void OWP.SumReportData.LAReport.Misc.IsCornerRule::.ctor()
+DA:48,0
 LF:27
-LH:27
+LH:0
 BRF:18
-BRH:18
+BRH:0
 FNF:6
-FNH:6
+FNH:0
 end_of_record
 SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\LAReport\Factory\RuleFactory.cs
 FN:12,OWP.SumReportData.LAReport.Misc.MainMatchRule OWP.SumReportData.LAReport.Factory.MainMatchRuleFactoryImp::Create(OWP.SumReportData.LAReport.Enum.RuleType)
@@ -2848,36 +2827,33 @@ DA:15,0
 DA:16,0
 DA:17,0
 DA:18,0
-DA:19,0
 BRDA:13,6,0,0
-BRDA:13,12,0,0
 BRDA:13,6,1,0
 BRDA:13,12,1,0
-BRDA:13,18,1,0
-BRDA:13,18,0,0
-FN:29,OWP.SumReportData.LAReport.Misc.SpecialProductRule OWP.SumReportData.LAReport.Factory.SpecialProductFactoryImp::Create(OWP.SumReportData.LAReport.Enum.RuleType)
+BRDA:13,12,0,0
+FN:28,OWP.SumReportData.LAReport.Misc.SpecialProductRule OWP.SumReportData.LAReport.Factory.SpecialProductFactoryImp::Create(OWP.SumReportData.LAReport.Enum.RuleType)
 FNDA:0,OWP.SumReportData.LAReport.Misc.SpecialProductRule OWP.SumReportData.LAReport.Factory.SpecialProductFactoryImp::Create(OWP.SumReportData.LAReport.Enum.RuleType)
+DA:29,0
 DA:30,0
 DA:31,0
 DA:32,0
-DA:33,0
+DA:35,0
 DA:36,0
-DA:37,0
-BRDA:31,7,0,0
-BRDA:31,7,1,0
-FN:47,OWP.SumReportData.LAReport.Misc.MultipleAndSingleMatchesRule OWP.SumReportData.LAReport.Factory.MultipleAndSingleMatchesFactoryImp::Create(OWP.SumReportData.LAReport.Enum.RuleType)
+BRDA:30,7,0,0
+BRDA:30,7,1,0
+FN:46,OWP.SumReportData.LAReport.Misc.MultipleAndSingleMatchesRule OWP.SumReportData.LAReport.Factory.MultipleAndSingleMatchesFactoryImp::Create(OWP.SumReportData.LAReport.Enum.RuleType)
 FNDA:0,OWP.SumReportData.LAReport.Misc.MultipleAndSingleMatchesRule OWP.SumReportData.LAReport.Factory.MultipleAndSingleMatchesFactoryImp::Create(OWP.SumReportData.LAReport.Enum.RuleType)
+DA:47,0
 DA:48,0
 DA:49,0
 DA:50,0
-DA:51,0
+DA:53,0
 DA:54,0
-DA:55,0
-BRDA:49,7,0,0
-BRDA:49,7,1,0
-LF:19
+BRDA:48,7,0,0
+BRDA:48,7,1,0
+LF:18
 LH:0
-BRF:10
+BRF:8
 BRH:0
 FNF:3
 FNH:0
@@ -2935,21 +2911,4 @@ BRF:0
 BRH:0
 FNF:4
 FNH:0
-end_of_record
-SF:d:\Projects\owp-worker-service\src\OWP.SumReportData\LAReport\Constants\MajorLeague.cs
-FN:6,System.Void OWP.SumReportData.LAReport.Constants.MajorLeague::.cctor()
-FNDA:1,System.Void OWP.SumReportData.LAReport.Constants.MajorLeague::.cctor()
-DA:7,1
-DA:8,1
-DA:9,1
-DA:10,1
-DA:11,1
-DA:12,1
-DA:13,1
-LF:7
-LH:7
-BRF:0
-BRH:0
-FNF:1
-FNH:1
 end_of_record
