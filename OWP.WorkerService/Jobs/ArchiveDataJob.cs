@@ -37,7 +37,7 @@ public class ArchiveDataJob : IJob
             return;
         }
 
-        await LogService.InfoAsync($"Job {this.GetType()} finised at {DateTime.Now}");
+        await LogService.InfoAsync($"Job {this.GetType()} is starting at {DateTime.Now}");
         await archiveDataService.CopyDataToOldTable(DateTime.Today).ConfigureAwait(false);
         await archiveDataService.DeleteOldData(DateTime.Today).ConfigureAwait(false);
         await archiveDataService.DeleteOldNotify(DateTime.Today).ConfigureAwait(false);
