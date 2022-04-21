@@ -16,6 +16,8 @@ public class Match : IEquatable<Match>
 
     public DateTime EventDate { get; set; }
 
+    public bool OfferLive { get; set; }
+
     public bool Equals(Match other)
         => EventDate == other.EventDate &&
            Sport.Trim().Equals(other.Sport.Trim(), StringComparison.OrdinalIgnoreCase) &&

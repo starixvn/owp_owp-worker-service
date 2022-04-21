@@ -1,8 +1,10 @@
-﻿namespace OWP.Infosite.Services;
+﻿namespace OWP.Core.Services;
 
 public interface HttpHandler
 {
     Task<HttpResponseMessage> GetAsync(string requestLink);
+
+    Task<HttpResponseMessage> PostAsync(string requestLink, HttpContent content);
 }
 
 public class HttpHandlerImp : HttpHandler, IDisposable
@@ -16,6 +18,9 @@ public class HttpHandlerImp : HttpHandler, IDisposable
 
     public async Task<HttpResponseMessage> GetAsync(string requestLink)
         => await client.GetAsync(new Uri(requestLink));
+
+    public async Task<HttpResponseMessage> PostAsync(string requestLink, HttpContent content)
+        => await client.PostAsync(new Uri(requestLink), content);
 
     public void Dispose()
     {

@@ -4,6 +4,7 @@ using Olympus.Xml;
 using OWP.OtherSport.SyncAdminSiteId.Criteria;
 using OWP.OtherSport.SyncAdminSiteId.Handlers;
 using OWP.OtherSport.SyncAdminSiteId.Models;
+using OWP.OtherSport.SyncLive;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,13 +14,24 @@ namespace OWP.OtherSport.UnitTests.SyncAdminSiteId;
 
 public class SyncAdminSiteMatchesHandlerUnitTests
 {
-    private IDynamicRepository dynamicRepository;
+    private readonly IDynamicRepository dynamicRepository;
+    private readonly SyncLiveToAdminSiteHandler syncLiveService;
+    private readonly SyncAdminSiteMatchesHandlerImp service;
+
+    public SyncAdminSiteMatchesHandlerUnitTests()
+    {
+        dynamicRepository = Substitute.For<IDynamicRepository>();
+        syncLiveService = Substitute.For<SyncLiveToAdminSiteHandler>();
+
+        dynamicRepository.FetchAsync<Match>(Arg.Any<GetMatchesFromOWPCriteria>()).Returns(GetOWPMatches());
+        dynamicRepository.FetchAsync<Match>(Arg.Any<GetMatchesFromAdminSiteCriteria>()).Returns(GetAdminSiteMatches());
+
+        service = new SyncAdminSiteMatchesHandlerImp(dynamicRepository, syncLiveService);
+    }
 
     [Fact]
     public async Task Handle_WithValidEventDate_UpdateMatches()
     {
-        var service = Init();
-
         await service.Handle(new DateTime());
 
         await dynamicRepository.Received()
@@ -28,15 +40,6 @@ public class SyncAdminSiteMatchesHandlerUnitTests
         await dynamicRepository.Received()
             .ExecuteAsync(Arg.Is<UpdateLinkedMatchesCriteria>(u
                 => u.LinkedMatches == XmlConverter.Serialize(GetLinkedMatches())));
-    }
-
-    public SyncAdminSiteMatchesHandlerImp Init()
-    {
-        dynamicRepository = Substitute.For<IDynamicRepository>();
-        dynamicRepository.FetchAsync<Match>(Arg.Any<GetMatchesFromOWPCriteria>()).Returns(GetOWPMatches());
-        dynamicRepository.FetchAsync<Match>(Arg.Any<GetMatchesFromAdminSiteCriteria>()).Returns(GetAdminSiteMatches());
-
-        return new SyncAdminSiteMatchesHandlerImp(dynamicRepository);
     }
 
     private IEnumerable<LinkedMatch> GetUnlinkedMatches()

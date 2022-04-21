@@ -79,6 +79,7 @@ services.AddSingleton<IUMRestClient, UMRestClient>();
 #endregion AddOneBookUM
 
 services.AddInfositeServices(configuration);
+services.AddOWPCoreServices();
 services.AddInfositeIdSyncServices();
 services.AddLinkLeagueAndTeamServices();
 services.AddMatchReadyNotificationServices();
@@ -110,5 +111,5 @@ var multiplexer = ConnectionMultiplexer.Connect(redisSetting.ConnectionString);
 services.AddSingleton<IConnectionMultiplexer>(multiplexer);
 services.AddSingleton<PubSubEvent, PubSubEventImp>();
 
-var apiService = services.BuildServiceProvider().GetService<OWP.InfositeIdSync.Services.SyncInfositeIdService>();
-await apiService.Sync().ConfigureAwait(false);
+var apiService = services.BuildServiceProvider().GetService<OWP.OtherSport.SyncAdminSiteId.Handlers.SyncAdminSiteMatchesHandler>();
+await apiService.Handle(new DateTime(2022, 04, 19)).ConfigureAwait(false);
