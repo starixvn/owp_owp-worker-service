@@ -98,8 +98,64 @@ public class MainMatchRuleUnitTests
                     OWPMatchId = 425388,
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 26, 15, 0, 0)
+                },
+                new Assignment
+                {
+                    AssignmentId = 131,
+                    UserId = 15477090,
+                    OWPLeagueName = "*ENGLISH PREMIER LEAGUE",
+                    MinorBettypeId = null,
+                    OWPMatchId = 425998,
+                    ParentMatchId = null,
+                    EventDateTime = new DateTime(2022, 4, 9, 15, 0, 0)
+                },
+                new Assignment
+                {
+                    AssignmentId = 131,
+                    UserId = 15477090,
+                    OWPLeagueName = "*ENGLISH PREMIER LEAGUE - CORNERS",
+                    MinorBettypeId = -4,
+                    OWPMatchId = 427128,
+                    ParentMatchId = 425998,
+                    EventDateTime = new DateTime(2022, 4, 9, 15, 0, 0)
                 }
             };
+
+    [Fact]
+    public void Execute_MainMatchRule_ShouldReturn5ML()
+    {
+        // Arrange
+        var firstRule = new FiveMajorLeagueRule(); 
+        var secondRule = new IsFantasyRule();
+        var thirdRule = new FTCornerRule();
+        firstRule.SetSuccessor(secondRule);
+        secondRule.SetSuccessor(thirdRule);
+        var assignment = assignments.FirstOrDefault(x => x.OWPMatchId == 425998);
+
+        // Act
+        var actual = firstRule.Execute(assignment, assignments);
+
+        // Assert
+        Assert.Equal(ReportType.MAJOR_LEAGUE, actual);
+    }
+
+    [Fact]
+    public void Execute_MainMatchRule_ShouldReturnFTCorner5ML()
+    {
+        // Arrange
+        var firstRule = new FTCorner5MLRule(); 
+        var secondRule = new IsFantasyRule();
+        var thirdRule = new FTCornerRule();
+        firstRule.SetSuccessor(secondRule);
+        secondRule.SetSuccessor(thirdRule);
+        var assignment = assignments.FirstOrDefault(x => x.OWPMatchId == 425998);
+
+        // Act
+        var actual = firstRule.Execute(assignment, assignments);
+
+        // Assert
+        Assert.Equal(ReportType.FT_CORNER_5ML, actual);
+    }
 
     [Fact]
     public void Execute_MainMatchRule_ShouldReturnOTHERS()

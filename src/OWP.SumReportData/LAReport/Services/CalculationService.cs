@@ -70,19 +70,23 @@ public class CalculationServiceImp : CalculationService
         var cornerRule = specialProductFactory.Create(RuleType.CORNER);
         notCornerRule.SetSuccessor(cornerRule);
 
+        var ftCorner5MLRule = mainMatchRuleFactory.Create(RuleType.FT_CORNER_FIVE_MAJOR_LEAGUE);
         var ftCornerRule = mainMatchRuleFactory.Create(RuleType.FT_CORNER);
         var fantasyRule = mainMatchRuleFactory.Create(RuleType.FANTASY);
         var eSoccerRule = mainMatchRuleFactory.Create(RuleType.ESOCCER);
+        var fiveMajorLeagueRule = mainMatchRuleFactory.Create(RuleType.FIVE_MAJOR_LEAGUE);
 
+        ftCorner5MLRule.SetSuccessor(ftCornerRule);
         ftCornerRule.SetSuccessor(fantasyRule);
         fantasyRule.SetSuccessor(eSoccerRule);
+        eSoccerRule.SetSuccessor(fiveMajorLeagueRule);
 
         foreach (var assignment in assignments)
         {
             var report = assignment;
             assignment.ReportType = assignment.MinorBettypeId.HasValue
                 ? notCornerRule.Execute(assignment, assignments)
-                : ftCornerRule.Execute(assignment, assignments);
+                : ftCorner5MLRule.Execute(assignment, assignments);
 
             result.Add(report);
         }
@@ -117,6 +121,8 @@ public class CalculationServiceImp : CalculationService
         //MIXED PRODUCTS
         var ftCornerProduct = assignments.Where(x => x.ReportType == ReportType.FT_CORNER && x.ParentMatchId.HasValue)
             .GroupBy(x => x.ParentMatchId).Select(y => y.Key);
+        var ftCorner5MLProduct = assignments.Where(x => x.ReportType == ReportType.FT_CORNER_5ML && x.ParentMatchId.HasValue)
+            .GroupBy(x => x.ParentMatchId).Select(y => y.Key);
 
         //ESOCCER
         var esoccer5Mins = assignments.Where(x => x.ReportType == ReportType.ESOCCER_5MINS);
@@ -124,6 +130,9 @@ public class CalculationServiceImp : CalculationService
         var esoccer15Mins = assignments.Where(x => x.ReportType == ReportType.ESOCCER_15MINS);
         var esoccer16Mins = assignments.Where(x => x.ReportType == ReportType.ESOCCER_16MINS);
         var esoccer20Mins = assignments.Where(x => x.ReportType == ReportType.ESOCCER_20MINS);
+
+        //5ML
+        var fiveML = assignments.Where(x => x.ReportType == ReportType.MAJOR_LEAGUE);
 
         sumUpResult.TBookingPlus = tbookingProducts.Count();
         sumUpResult.CornerPlus = cornerProducts.Count();
@@ -136,6 +145,8 @@ public class CalculationServiceImp : CalculationService
         sumUpResult.ESoccer16Mins = esoccer16Mins.Count();
         sumUpResult.ESoccer20Mins = esoccer20Mins.Count();
         sumUpResult.FTCorner = ftCornerProduct.Count();
+        sumUpResult.FiveMajorLeague = fiveML.Count();
+        sumUpResult.FTCorner5ML = ftCorner5MLProduct.Count();
 
         return sumUpResult;
     }

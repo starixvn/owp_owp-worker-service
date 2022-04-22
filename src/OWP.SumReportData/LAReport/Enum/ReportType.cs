@@ -22,5 +22,7 @@ public enum ReportType
     REPORTER = 17,
     MULTIPLE_MATCHES = 18,
     ESOCCER_6MINS = 19,
-    ESOCCER_16MINS = 20
+    ESOCCER_16MINS = 20,
+    MAJOR_LEAGUE = 21,
+    FT_CORNER_5ML = 22
 }

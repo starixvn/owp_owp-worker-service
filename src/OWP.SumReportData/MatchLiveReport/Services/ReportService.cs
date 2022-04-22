@@ -11,7 +11,7 @@ public interface ReportService
 {
     Task Calculate(DateTime eventDate);
 
-    IEnumerable<ReportModel> Calculate(DateTime eventDate, IEnumerable<OWPMatch> matches, IEnumerable<OWPMatch> mainMatches);
+    IEnumerable<ReportModel> Calculate(DateTime eventDate, IEnumerable<OWPMatch> matches, IEnumerable<OWPMatch> queriedMainMatches);
 }
 
 public class ReportServiceImp : ReportService

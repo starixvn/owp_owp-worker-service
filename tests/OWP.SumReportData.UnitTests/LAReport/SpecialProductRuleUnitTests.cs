@@ -78,9 +78,43 @@ public class SpecialProductRuleUnitTests
                     OWPMatchId = 425388,
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 26, 15, 0, 0)
+                },
+                new Assignment
+                {
+                    AssignmentId = 131,
+                    UserId = 15477090,
+                    OWPLeagueName = "*ENGLISH PREMIER LEAGUE",
+                    MinorBettypeId = null,
+                    OWPMatchId = 425998,
+                    ParentMatchId = null,
+                    EventDateTime = new DateTime(2022, 4, 9, 15, 0, 0)
+                },
+                new Assignment
+                {
+                    AssignmentId = 131,
+                    UserId = 15477090,
+                    OWPLeagueName = "*ENGLISH PREMIER LEAGUE - CORNERS",
+                    MinorBettypeId = -4,
+                    OWPMatchId = 427128,
+                    ParentMatchId = 425998,
+                    EventDateTime = new DateTime(2022, 4, 9, 15, 0, 0)
                 }
             };
+    [Fact]
+    public void Excute_CornerRule_ShouldReturnFT_CORNER_5ML()
+    {
+        // Arrange
+        var firstRule = new NotCornerRule();
+        var secondRule = new IsCornerRule();
+        firstRule.SetSuccessor(secondRule);
+        var assignment = assignments.FirstOrDefault(x => x.OWPMatchId == 427128);
 
+        // Act
+        var actual = firstRule.Execute(assignment, assignments);
+
+        // Assert
+        Assert.Equal(ReportType.FT_CORNER_5ML, actual);
+    }
     [Fact]
     public void Excute_NotCornerRule_ShouldReturnTOTAL_BOOKING_PLUS()
     {

@@ -46,16 +46,22 @@ public class NotCornerRule : SpecialProductRule
 public class IsCornerRule : SpecialProductRule
 {
     private readonly int[] cornerBettypeArray = { BettypeConst.NextCorner, BettypeConst.NoOfCorner, BettypeConst.NoOfCorner15Mins };
-
+    private static bool isMajorCornerLeague(string leagueName)
+        => MajorLeague.majorLeagueCornerList.Any(x => x == leagueName);
     public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
     {
         if (assignment.MinorBettypeId.HasValue && Array.IndexOf(cornerBettypeArray, assignment.MinorBettypeId.Value) >= 0)
         {
             var mainMatches = userAssignments.Where(x => !x.ParentMatchId.HasValue && x.OWPMatchId == assignment.ParentMatchId);
 
-            return mainMatches.Any() ? ReportType.FT_CORNER : ReportType.CORNER_PLUS;
-        }
+            if(isMajorCornerLeague(assignment.OWPLeagueName))
+            {
+                return mainMatches.Any() ? ReportType.FT_CORNER_5ML : ReportType.CORNER_PLUS;
+            }
 
+            return mainMatches.Any() ? ReportType.FT_CORNER : ReportType.CORNER_PLUS;
+            
+        }
         return base.Execute(assignment, userAssignments);
     }
 }

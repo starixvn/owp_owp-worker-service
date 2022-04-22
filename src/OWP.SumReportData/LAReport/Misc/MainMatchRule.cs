@@ -1,4 +1,5 @@
-﻿using OWP.Core.Extensions;
+﻿using System.Linq;
+using OWP.Core.Extensions;
 using OWP.SumReportData.LAReport.Constants;
 using OWP.SumReportData.LAReport.Enum;
 using OWP.SumReportData.LAReport.Models;
@@ -23,12 +24,40 @@ public class FTCornerRule : MainMatchRule
 
     public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
     {
-        return isContainCorner(assignment, userAssignments) ? ReportType.FT_CORNER : base.Execute(assignment, userAssignments);
+        return isContainCorner(assignment, userAssignments)
+            ? ReportType.FT_CORNER
+            : base.Execute(assignment, userAssignments);
     }
 
     private bool isContainCorner(Assignment assignment, IList<Assignment> assignments)
     {
-        return assignments.Any(x => x.MinorBettypeId.HasValue && cornerBettypeArray.Contains(x.MinorBettypeId.Value) && x.ParentMatchId == assignment.OWPMatchId);
+        return assignments.Any(x =>
+            x.MinorBettypeId.HasValue && cornerBettypeArray.Contains(x.MinorBettypeId.Value) &&
+            x.ParentMatchId == assignment.OWPMatchId);
+    }
+}
+
+public class FTCorner5MLRule : MainMatchRule
+{
+    private readonly int[] cornerBettypeArray = { BettypeConst.NextCorner, BettypeConst.NoOfCorner, BettypeConst.NoOfCorner15Mins };
+
+    public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
+    {
+        return isContainCorner5ML(assignment, userAssignments)
+            ? ReportType.FT_CORNER_5ML
+            : base.Execute(assignment, userAssignments);
+    }
+
+    private static bool isMajorCornerLeague(string leagueName)
+    {
+        return MajorLeague.majorLeagueCornerList.Any(x => x == leagueName);
+    }
+
+    private bool isContainCorner5ML(Assignment assignment, IList<Assignment> assignments)
+    {
+        return assignments.Any(x =>
+            x.MinorBettypeId.HasValue && cornerBettypeArray.Contains(x.MinorBettypeId.Value) &&
+            x.ParentMatchId == assignment.OWPMatchId && isMajorCornerLeague(x.OWPLeagueName));
     }
 }
 
@@ -80,4 +109,17 @@ public class ESoccerRule : MainMatchRule
 
     private static bool isESoccer(string leagueName)
         => leagueName.IsContainsIgnoreCase("SABA ");
+}
+
+public class FiveMajorLeagueRule : MainMatchRule
+{
+    public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
+    {
+        return isMajorLeague(assignment.OWPLeagueName) 
+            ? ReportType.MAJOR_LEAGUE 
+            : base.Execute(assignment, userAssignments);
+    }
+
+    private static bool isMajorLeague(string leagueName)
+        => MajorLeague.majorLeagueList.Any(x => x == leagueName);
 }
