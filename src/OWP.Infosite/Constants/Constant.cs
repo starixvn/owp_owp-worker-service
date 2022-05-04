@@ -16,7 +16,8 @@ public static class Constant
         {15, "Betgenius"},
         {17, "LSports"},
         {18, "Weverdat"},
-        {19, "CloundRock"}
+        {19, "CloundRock"},
+        {20, "LiveStreamer"}
     }.ToImmutableDictionary();
 
     public static readonly IImmutableDictionary<int, string> StreamNameSrc2InfoSite = new Dictionary<int, string>
