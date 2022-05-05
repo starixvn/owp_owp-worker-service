@@ -1,5 +1,6 @@
 ﻿using Fanex.Caching;
 using Fanex.Data.Repository;
+using Fanex.Logging;
 using Newtonsoft.Json;
 using OWP.Infosite.Constants;
 using OWP.Infosite.Criteria;
@@ -10,64 +11,74 @@ namespace OWP.Infosite.Services;
 
 public interface SyncPreMatchLeagueService
 {
-    Task Sync();
+  Task Sync();
 }
 
 public class SyncPreMatchLeagueServiceImp : SyncPreMatchLeagueService
 {
-    private readonly DateTimeService dateTimeService;
+  private readonly DateTimeService dateTimeService;
 
-    private readonly IDynamicRepository dynamicRepository;
+  private readonly IDynamicRepository dynamicRepository;
 
-    private readonly ICache cacheService;
+  private readonly ICache cacheService;
 
-    private readonly ApiService apiService;
+  private readonly ApiService apiService;
 
-    public SyncPreMatchLeagueServiceImp(DateTimeService dateTimeService, IDynamicRepository dynamicRepository, ICache cacheService, ApiService apiService)
+  private readonly ILogger logger;
+
+  public SyncPreMatchLeagueServiceImp(
+    DateTimeService dateTimeService,
+    IDynamicRepository dynamicRepository,
+    ICache cacheService,
+     ApiService apiService,
+     ILogger logger)
+  {
+    this.dateTimeService = dateTimeService;
+    this.dynamicRepository = dynamicRepository;
+    this.cacheService = cacheService;
+    this.apiService = apiService;
+    this.logger = logger;
+  }
+
+  public async Task Sync()
+  {
+    var sessionId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
+    var preMatchLeagues = await GetOldPreMatchLeagues(dateTimeService.Today);
+    await SaveOldPreMatchLeaguesSnapshot(sessionId, preMatchLeagues);
+
+    var criteria = new SyncInfoSiteMatchToPreMatchLeagueCriteria
     {
-        this.dateTimeService = dateTimeService;
-        this.dynamicRepository = dynamicRepository;
-        this.cacheService = cacheService;
-        this.apiService = apiService;
-    }
+      FromDate = dateTimeService.Today,
+      ToDate = dateTimeService.Today.AddYears(10)
+    };
+    await dynamicRepository.ExecuteAsync(criteria);
 
-    public async Task Sync()
+    apiService.TriggerNetCoreNewLeagueNotification(
+         sessionId,
+         DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified)
+     );
+  }
+
+  private async Task<IEnumerable<PreMatchLeague>> GetOldPreMatchLeagues(DateTime fromDate)
+  {
+    var criteria = new GetPreMatchLeaguesCriteria
     {
-        // var sessionId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
-        // var preMatchLeagues = await GetOldPreMatchLeagues(dateTimeService.Today);
-        // await SaveOldPreMatchLeaguesSnapshot(sessionId, preMatchLeagues);
+      FromDate = fromDate
+    };
 
-        var criteria = new SyncInfoSiteMatchToPreMatchLeagueCriteria
-        {
-            FromDate = dateTimeService.Today,
-            ToDate = dateTimeService.Today.AddYears(10)
-        };
-        await dynamicRepository.ExecuteAsync(criteria);
+    return await dynamicRepository.FetchAsync<PreMatchLeague>(criteria);
+  }
 
-        // apiService.TriggerNetCoreNewLeagueNotification(
-        //     sessionId,
-        //     DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified)
-        // );
-    }
-
-    private async Task<IEnumerable<PreMatchLeague>> GetOldPreMatchLeagues(DateTime fromDate)
-    {
-        var criteria = new GetPreMatchLeaguesCriteria
-        {
-            FromDate = fromDate
-        };
-
-        return await dynamicRepository.FetchAsync<PreMatchLeague>(criteria);
-    }
-
-    private async Task SaveOldPreMatchLeaguesSnapshot(string sessionId, IEnumerable<PreMatchLeague> preMatchLeagues)
-    {
-        var expiredDate = DateTime.Today.AddDays(Constant.CacheExpiredInDays);
-        var absoluteTimeSpan = expiredDate - DateTime.Now;
-        var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(absoluteTimeSpan);
-        var cacheKey = $"{Constant.OldPreMatchLeaguesSnapshotKey}-{sessionId}";
-
-        var leaguesJson = JsonConvert.SerializeObject(preMatchLeagues);
-        await cacheService.SetAsync(cacheKey, leaguesJson, cachePolicy);
-    }
+  private async Task SaveOldPreMatchLeaguesSnapshot(string sessionId, IEnumerable<PreMatchLeague> preMatchLeagues)
+  {
+    var expiredDate = DateTime.Today.AddDays(Constant.CacheExpiredInDays);
+    var absoluteTimeSpan = expiredDate - DateTime.Now;
+    var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(absoluteTimeSpan);
+    var cacheKey = $"{Constant.OldPreMatchLeaguesSnapshotKey}-{sessionId}";
+    logger.Info("Notify sync prematch league => START");
+    var leaguesJson = JsonConvert.SerializeObject(preMatchLeagues);
+    var logContent = $"Content OldPreMatchLeagues: {leaguesJson}, log at: {dateTimeService.Now}, cacheKey: {cacheKey}";
+    logger.Info(logContent);
+    await cacheService.SetAsync(cacheKey, leaguesJson, cachePolicy);
+  }
 }
