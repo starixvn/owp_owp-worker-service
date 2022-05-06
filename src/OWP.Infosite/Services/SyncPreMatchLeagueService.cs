@@ -54,9 +54,9 @@ public class SyncPreMatchLeagueServiceImp : SyncPreMatchLeagueService
     await dynamicRepository.ExecuteAsync(criteria);
 
     //apiService.TriggerNetCoreNewLeagueNotification(
-    //     sessionId,
-    //      DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified)
-    //  );
+    //       sessionId,
+    //        DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified)
+    //   );
   }
 
   private async Task<IEnumerable<PreMatchLeague>> GetOldPreMatchLeagues(DateTime fromDate)
@@ -75,10 +75,7 @@ public class SyncPreMatchLeagueServiceImp : SyncPreMatchLeagueService
     var absoluteTimeSpan = expiredDate - DateTime.Now;
     var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(absoluteTimeSpan);
     var cacheKey = $"{Constant.OldPreMatchLeaguesSnapshotKey}-{sessionId}";
-    logger.Info("Notify sync prematch league => START");
     var leaguesJson = JsonConvert.SerializeObject(preMatchLeagues);
-    var logContent = $"Content OldPreMatchLeagues: {leaguesJson}, log at: {dateTimeService.Now}, cacheKey: {cacheKey}";
-    logger.Info(logContent);
     await cacheService.SetAsync(cacheKey, leaguesJson, cachePolicy);
   }
 }
