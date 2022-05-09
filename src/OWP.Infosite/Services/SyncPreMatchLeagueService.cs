@@ -43,8 +43,8 @@ public class SyncPreMatchLeagueServiceImp : SyncPreMatchLeagueService
   public async Task Sync()
   {
     var sessionId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
-    var preMatchLeagues = await GetOldPreMatchLeagues(dateTimeService.Today);
-    await SaveOldPreMatchLeaguesSnapshot(sessionId, preMatchLeagues);
+    //var preMatchLeagues = await GetOldPreMatchLeagues(dateTimeService.Today);
+    //await SaveOldPreMatchLeaguesSnapshot(sessionId, preMatchLeagues);
 
     var criteria = new SyncInfoSiteMatchToPreMatchLeagueCriteria
     {
