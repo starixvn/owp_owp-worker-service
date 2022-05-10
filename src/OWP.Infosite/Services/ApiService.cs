@@ -120,7 +120,7 @@ public class ApiServiceImp : ApiService
       ToDate = toDate
     };
 #if !DEBUG
-        rabbitMqClient.Publish(request);
+        //rabbitMqClient.Publish(request);
 #endif
   }
 
