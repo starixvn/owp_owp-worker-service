@@ -54,7 +54,7 @@ public class RabbitMqClientImp : RabbitMqClient, IDisposable
         channel = connection.CreateModel();
         channel.ExchangeDeclare(
             exchange: exchange,
-            type: ExchangeType.Fanout,
+            type: "direct",
             durable: true,
             autoDelete: false);
 #endif
@@ -72,9 +72,9 @@ public class RabbitMqClientImp : RabbitMqClient, IDisposable
 
     channel.BasicPublish(
         exchange: exchange,
-        routingKey: "",
+        routingKey: message.RoutingKey,
         body: body,
-        basicProperties: null);
+        basicProperties: properties);
   }
 
   public void Dispose()
