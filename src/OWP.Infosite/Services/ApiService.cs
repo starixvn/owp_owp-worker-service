@@ -1,4 +1,5 @@
-﻿using Fanex.Logging;
+﻿using Fanex.Caching;
+using Fanex.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using OWP.Core.Extensions;
@@ -33,15 +34,19 @@ public class ApiServiceImp : ApiService
 
   private readonly RabbitMqClient rabbitMqClient;
 
+  private readonly ICache cacheService;
+
   public ApiServiceImp(HttpHandler httpHandler,
       ILogger logger,
       IOptions<InfoSiteSettings> infoSiteSettings,
-      RabbitMqClient rabbitMqClient)
+      RabbitMqClient rabbitMqClient,
+      ICache cacheService)
   {
     this.httpHandler = httpHandler;
     this.logger = logger;
     this.infoSiteSettings = infoSiteSettings.Value;
     this.rabbitMqClient = rabbitMqClient;
+    this.cacheService = cacheService;
   }
 
   public async Task<List<CommonMatchModel>> QueryAsync(ParamsQueryModel param)
@@ -122,6 +127,8 @@ public class ApiServiceImp : ApiService
   public void TriggerNetCoreNewLeagueNotification(string sessionId, DateTime fromDate)
   {
     logger.Info($"Public new add prematch with sessionId {sessionId}");
+    var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(30));
+    cacheService.Set($"Public new add prematch with sessionId {sessionId}", sessionId, cachePolicy);
     var request = new PrematchNewLeagueNotifyRequest
     {
       SessionId = sessionId,
