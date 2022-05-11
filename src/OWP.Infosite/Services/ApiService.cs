@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using OWP.Core.Extensions;
 using OWP.Core.RabbitMq;
 using OWP.Core.RabbitMq.Models;
+using OWP.Core.RedisPubSub;
 using OWP.Infosite.Constants;
 using OWP.Infosite.Models;
 using OWP.Infosite.Settings;
@@ -36,17 +37,21 @@ public class ApiServiceImp : ApiService
 
   private readonly ICache cacheService;
 
+  private readonly PubSubEvent pubSubEvent;
+
   public ApiServiceImp(HttpHandler httpHandler,
       ILogger logger,
       IOptions<InfoSiteSettings> infoSiteSettings,
       RabbitMqClient rabbitMqClient,
-      ICache cacheService)
+      ICache cacheService,
+       PubSubEvent pubSubEvent)
   {
     this.httpHandler = httpHandler;
     this.logger = logger;
     this.infoSiteSettings = infoSiteSettings.Value;
     this.rabbitMqClient = rabbitMqClient;
     this.cacheService = cacheService;
+    this.pubSubEvent = pubSubEvent;
   }
 
   public async Task<List<CommonMatchModel>> QueryAsync(ParamsQueryModel param)
@@ -135,7 +140,8 @@ public class ApiServiceImp : ApiService
       FromDate = fromDate
     };
 #if !DEBUG
-        rabbitMqClient.Publish(request);
+        //rabbitMqClient.Publish(request);
+        pubSubEvent.Publish(sessionId);
 #endif
   }
 #pragma warning restore S1481
