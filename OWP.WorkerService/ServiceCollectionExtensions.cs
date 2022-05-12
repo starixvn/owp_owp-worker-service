@@ -143,11 +143,10 @@ public static class ServiceCollectionExtensions
 
   public static IServiceCollection AddRedisPubSub(this IServiceCollection services, IConfiguration configuration)
   {
-    var redisConfig = "ha.nexdev.net:16379,password=foo1@bared,defaultDatabase=11";
-    var multiplexer = ConnectionMultiplexer.Connect(redisConfig);
+    var redisSetting = configuration.GetSection(nameof(RedisSettings)).Get<RedisSettings>();
+    var multiplexer = ConnectionMultiplexer.Connect(redisSetting.ConnectionString);
     services.AddSingleton<IConnectionMultiplexer>(multiplexer);
     services.AddSingleton<PubSubEvent, PubSubEventImp>();
-
     return services;
   }
 }

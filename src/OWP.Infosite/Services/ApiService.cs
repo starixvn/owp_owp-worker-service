@@ -30,7 +30,9 @@ public interface ApiService
 public class ApiServiceImp : ApiService
 {
   private readonly InfoSiteSettings infoSiteSettings;
+
   private readonly HttpHandler httpHandler;
+
   private readonly ILogger logger;
 
   private readonly RabbitMqClient rabbitMqClient;
@@ -125,22 +127,19 @@ public class ApiServiceImp : ApiService
       ToDate = toDate
     };
 #if !DEBUG
-        //rabbitMqClient.Publish(request);
+        rabbitMqClient.Publish(request);
 #endif
   }
 
   public void TriggerNetCoreNewLeagueNotification(string sessionId, DateTime fromDate)
   {
-    logger.Info($"Public new add prematch with sessionId {sessionId}");
     var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(30));
-    cacheService.Set($"Public new add prematch with sessionId {sessionId}", sessionId, cachePolicy);
     var request = new PrematchNewLeagueNotifyRequest
     {
       SessionId = sessionId,
       FromDate = fromDate
     };
 #if !DEBUG
-        rabbitMqClient.Publish(request);
         pubSubEvent.Publish(request);
 #endif
   }

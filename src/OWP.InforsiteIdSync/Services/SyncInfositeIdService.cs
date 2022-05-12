@@ -69,6 +69,6 @@ public class SynInfositeIdServiceImp : SyncInfositeIdService
       SessionId = sessionId
     };
 
-    //rabbitMqClient.Publish(notifyRequest);
+    rabbitMqClient.Publish(notifyRequest);
   }
 }
