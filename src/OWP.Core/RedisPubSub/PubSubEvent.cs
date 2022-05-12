@@ -1,12 +1,14 @@
 using Fanex.Caching;
 using Fanex.Logging;
+using Newtonsoft.Json;
+using OWP.Core.RabbitMq.Models;
 using StackExchange.Redis;
 
 namespace OWP.Core.RedisPubSub;
 
 public interface PubSubEvent
 {
-  void Publish(string sessionId);
+  void Publish(PrematchNewLeagueNotifyRequest request);
 }
 public class PubSubEventImp : PubSubEvent
 {
@@ -23,11 +25,13 @@ public class PubSubEventImp : PubSubEvent
     this.subscriber = redis.GetSubscriber();
   }
 
-  public void Publish(string sessionId)
+  public void Publish(PrematchNewLeagueNotifyRequest request)
   {
     var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromDays(1));
-    var numberClient = subscriber.Publish("messages", sessionId);
+    var mesage = JsonConvert.SerializeObject(request);
+    var numberClient = subscriber.Publish("messages", mesage);
+    cache.Set($"Redis public-{request.SessionId}-{DateTime.Now}", mesage, cachePolicy);
+    logger.Info($"Redis public-{request.SessionId}-{DateTime.Now}-{mesage}");
     logger.Info($"Redis public Connect numberClient: {numberClient}");
-    cache.Set($"Redis public-{sessionId}", sessionId, cachePolicy);
   }
 }

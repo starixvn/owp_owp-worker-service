@@ -140,8 +140,8 @@ public class ApiServiceImp : ApiService
       FromDate = fromDate
     };
 #if !DEBUG
-        //rabbitMqClient.Publish(request);
-        pubSubEvent.Publish(sessionId);
+        rabbitMqClient.Publish(request);
+        pubSubEvent.Publish(request);
 #endif
   }
 #pragma warning restore S1481
