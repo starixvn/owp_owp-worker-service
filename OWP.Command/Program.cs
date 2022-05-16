@@ -26,6 +26,8 @@ using OWP.ArchiveData;
 using OWP.Core.RabbitMq;
 using RabbitMQ.Client;
 using OWP.Core.RabbitMq.Settings;
+using OWP.Core.RedisPubSub;
+using StackExchange.Redis;
 
 #region Configuration
 
@@ -102,6 +104,11 @@ services.AddSingleton(serviceProvider => new ConnectionFactory
 });
 
 services.AddSingleton<RabbitMqClient>(new RabbitMqClientImp(configuration).Initialize());
+
+var redisConfig = "ha.nexdev.net:16379,password=foo1@bared,defaultDatabase=11";
+    var multiplexer = ConnectionMultiplexer.Connect(redisConfig);
+    services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+    services.AddSingleton<PubSubEvent, PubSubEventImp>();
 
 var apiService = services.BuildServiceProvider().GetService<OWP.InfositeIdSync.Services.SyncInfositeIdService>();
 await apiService.Sync().ConfigureAwait(false);

@@ -10,65 +10,65 @@ namespace OWP.InfositeIdSync.Services;
 
 public interface SyncInfositeIdService
 {
-    Task Sync();
+  Task Sync();
 }
 
 public class SynInfositeIdServiceImp : SyncInfositeIdService
 {
-    private readonly InfoSiteSettings infoSiteSettings;
-    private readonly InfositeIdMappingRepository repository;
-    private readonly DateTimeService dateTimeService;
-    private readonly CacheManipulator cacheManipulator;
-    private readonly HttpHandler httpHandler;
+  private readonly InfoSiteSettings infoSiteSettings;
+  private readonly InfositeIdMappingRepository repository;
+  private readonly DateTimeService dateTimeService;
+  private readonly CacheManipulator cacheManipulator;
+  private readonly HttpHandler httpHandler;
 
-    private readonly RabbitMqClient rabbitMqClient;
+  private readonly RabbitMqClient rabbitMqClient;
 
-    public SynInfositeIdServiceImp(
-        IOptions<InfoSiteSettings> infoSiteSettings,
-        InfositeIdMappingRepository repository,
-        DateTimeService dateTimeService,
-        CacheManipulator cacheManipulator,
-        HttpHandler httpHandler,
-        RabbitMqClient rabbitMqClient)
-    {
-        this.infoSiteSettings = infoSiteSettings.Value;
-        this.repository = repository;
-        this.dateTimeService = dateTimeService;
-        this.cacheManipulator = cacheManipulator;
-        this.httpHandler = httpHandler;
-        this.rabbitMqClient = rabbitMqClient;
-    }
+  public SynInfositeIdServiceImp(
+      IOptions<InfoSiteSettings> infoSiteSettings,
+      InfositeIdMappingRepository repository,
+      DateTimeService dateTimeService,
+      CacheManipulator cacheManipulator,
+      HttpHandler httpHandler,
+      RabbitMqClient rabbitMqClient)
+  {
+    this.infoSiteSettings = infoSiteSettings.Value;
+    this.repository = repository;
+    this.dateTimeService = dateTimeService;
+    this.cacheManipulator = cacheManipulator;
+    this.httpHandler = httpHandler;
+    this.rabbitMqClient = rabbitMqClient;
+  }
 
-    public async Task Sync()
-    {
-        var sessionId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
-        await SaveOldSnapshot(sessionId);
+  public async Task Sync()
+  {
+    var sessionId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
+    await SaveOldSnapshot(sessionId);
 
-        var owpMatches = await repository.QueryUnmappingOWPMatch();
-        var infositeMatches = await repository.QueryInfositeMatch();
-        var mappingMatches = InfoSiteHelper.Map(owpMatches, infositeMatches);
+    var owpMatches = await repository.QueryUnmappingOWPMatch();
+    var infositeMatches = await repository.QueryInfositeMatch();
+    var mappingMatches = InfoSiteHelper.Map(owpMatches, infositeMatches);
 
-        await repository.UpdateInfositeIdForMainMatches(mappingMatches);
+    await repository.UpdateInfositeIdForMainMatches(mappingMatches);
 
-        #if !DEBUG
+#if !DEBUG
         TriggerNetCoreLinkedMatchNotification(sessionId);
-        #endif
-    }
+#endif
+  }
 
-    public async Task SaveOldSnapshot(string sessionId)
+  public async Task SaveOldSnapshot(string sessionId)
+  {
+    var oldSnapshot = await repository.QueryMatchesByDate(dateTimeService.Today);
+    await cacheManipulator.SaveOldAssignmentSnapshot(sessionId, oldSnapshot);
+  }
+
+  public void TriggerNetCoreLinkedMatchNotification(string sessionId)
+  {
+    var notifyRequest = new LinkedMatchNotifyRequest
     {
-        var oldSnapshot = await repository.QueryMatchesByDate(dateTimeService.Today);
-        await cacheManipulator.SaveOldAssignmentSnapshot(sessionId, oldSnapshot);
-    }
+      EventDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified),
+      SessionId = sessionId
+    };
 
-    public void TriggerNetCoreLinkedMatchNotification(string sessionId)
-    {
-        var notifyRequest = new LinkedMatchNotifyRequest
-        {
-            EventDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified),
-            SessionId = sessionId
-        };
-
-        rabbitMqClient.Publish(notifyRequest);
-    }
+    rabbitMqClient.Publish(notifyRequest);
+  }
 }
