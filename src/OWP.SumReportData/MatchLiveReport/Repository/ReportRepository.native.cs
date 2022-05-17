@@ -10,6 +10,8 @@ public interface ReportRepository
     Task InsertData(IEnumerable<ReportModel> reportData, DateTime eventDate);
 
     Task<(IEnumerable<OWPMatch>, IEnumerable<OWPMatch>)> QueryMatchesByDate(DateTime eventDate);
+
+    Task<IEnumerable<int>> GetSaba5minOWPMatchId(IList<int> Ids);
 }
 
 public class ReportRepositoryImp : ReportRepository
@@ -26,5 +28,15 @@ public class ReportRepositoryImp : ReportRepository
 
     public async Task<(IEnumerable<OWPMatch>, IEnumerable<OWPMatch>)> QueryMatchesByDate(DateTime eventDate)
         => await dynamicRepository.FetchMultipleAsync<OWPMatch, OWPMatch>(new QueryMatchesByDateCriteria { EventDate = eventDate });
+    
+    public async Task<IEnumerable<int>> GetSaba5minOWPMatchId(IList<int> Ids)
+    {
+        var criteria = new GetSabaFiveMinMatchIdCriteria
+        {
+            Id = String.Join(',', Ids)
+        };
+
+        return await dynamicRepository.FetchAsync<int>(criteria);
+    }
 }
 

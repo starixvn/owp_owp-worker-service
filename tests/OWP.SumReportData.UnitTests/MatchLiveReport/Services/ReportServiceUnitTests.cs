@@ -5,6 +5,7 @@ using NSubstitute;
 using Xunit;
 using Xunit.Asserts.Compare;
 using OWP.SumReportData.MatchLiveReport.Repository;
+using OWP.SumReportData.MatchLiveReport.Helpers;
 
 namespace OWP.SumReportData.UnitTests.MatchLiveReport.Helpers;
 
@@ -274,6 +275,10 @@ public class ReportServiceUnitTests
             },
         };
 
+        var minorMatchesCategorized = MatchHelper.CategorizeMinorMatches(matches, mainMatches);
+        var mainMatchesCategorized = MatchHelper.CategorizeMainMatches(matches);
+        var sabaMatchesCategorized = MatchHelper.CategorizeSabaMatches(matches);
+
         var expected = new List<ReportModel> {
             new ReportModel {
                 EventDate = eventDate,
@@ -523,6 +528,6 @@ public class ReportServiceUnitTests
             }
         };
 
-        DeepAssert.Equal(expected, service.Calculate(eventDate, matches, mainMatches).ToList());
+        DeepAssert.Equal(expected, service.Calculate(eventDate, minorMatchesCategorized, mainMatchesCategorized, sabaMatchesCategorized).ToList());
     }
 }
