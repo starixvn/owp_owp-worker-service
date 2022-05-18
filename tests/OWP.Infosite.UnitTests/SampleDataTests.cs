@@ -16,8 +16,8 @@ public static class SampleDataTests
             home_name = "Test Home",
             away_name = "Test Away",
             ibc_league_id = 1,
-            ibc_home_id = 1,
-            ibc_away_id = 1
+            ibc_home_id = null,
+            ibc_away_id = null
         }
     };
 

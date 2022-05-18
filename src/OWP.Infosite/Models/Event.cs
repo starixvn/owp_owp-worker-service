@@ -158,7 +158,7 @@ public class Event
             && ExtInfo.sport_id == SoccerSportId;
 
     private bool IsConfirmMatch()
-        => InfositeMatch.ibc_league_id != null
-            && InfositeMatch.ibc_home_id != null
-            && InfositeMatch.ibc_away_id != null;
+        => !(InfositeMatch.ibc_league_id == null
+            && InfositeMatch.ibc_home_id == null
+            && InfositeMatch.ibc_away_id == null);
 }
