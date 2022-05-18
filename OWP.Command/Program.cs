@@ -105,7 +105,7 @@ services.AddSingleton(serviceProvider => new ConnectionFactory
 
 services.AddSingleton<RabbitMqClient>(new RabbitMqClientImp(configuration).Initialize());
 
-var redisConfig = "ha.nexdev.net:16379,password=foo1@bared,defaultDatabase=11";
+const string redisConfig = "ha.nexdev.net:16379,password=foo1@bared,defaultDatabase=11";
     var multiplexer = ConnectionMultiplexer.Connect(redisConfig);
     services.AddSingleton<IConnectionMultiplexer>(multiplexer);
     services.AddSingleton<PubSubEvent, PubSubEventImp>();
