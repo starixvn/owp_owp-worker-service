@@ -149,8 +149,16 @@ public class Event
             : string.Empty;
 
     private bool IsValidMatch()
+        => IsValidExtInfoMatch() && IsConfirmMatch();
+
+    private bool IsValidExtInfoMatch()
         => InfositeMatch.ext_info != null
-                && InfositeMatch.ext_info.rd_checked.HasValue
-                && InfositeMatch.ext_info.rd_checked.Value
-                && ExtInfo.sport_id == SoccerSportId;
+            && InfositeMatch.ext_info.rd_checked.HasValue
+            && InfositeMatch.ext_info.rd_checked.Value
+            && ExtInfo.sport_id == SoccerSportId;
+
+    private bool IsConfirmMatch()
+        => !(InfositeMatch.ibc_league_id == null
+            && InfositeMatch.ibc_home_id == null
+            && InfositeMatch.ibc_away_id == null);
 }

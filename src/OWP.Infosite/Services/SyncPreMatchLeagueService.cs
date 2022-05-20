@@ -67,7 +67,6 @@ public class SyncPreMatchLeagueServiceImp : SyncPreMatchLeagueService
 
   private async Task SaveOldPreMatchLeaguesSnapshot(string sessionId, IEnumerable<PreMatchLeague> preMatchLeagues)
   {
-    var expiredDate = DateTime.Today.AddDays(Constant.CacheExpiredInDays);
     var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(30));
     var cacheKey = $"{Constant.OldPreMatchLeaguesSnapshotKey}-{sessionId}";
     var leaguesJson = JsonConvert.SerializeObject(preMatchLeagues);

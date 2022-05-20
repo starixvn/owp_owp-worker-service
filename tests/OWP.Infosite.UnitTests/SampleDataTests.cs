@@ -14,7 +14,10 @@ public static class SampleDataTests
             update_timestamp = new DateTime(2018, 1, 1, 8, 0, 0),
             league_name = "Test League",
             home_name = "Test Home",
-            away_name = "Test Away"
+            away_name = "Test Away",
+            ibc_league_id = 1,
+            ibc_home_id = null,
+            ibc_away_id = null
         }
     };
 
