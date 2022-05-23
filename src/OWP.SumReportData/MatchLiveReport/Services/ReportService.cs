@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using OWP.Core.Extensions;
 using OWP.SumReportData.MatchLiveReport.Constants;
@@ -11,7 +13,7 @@ public interface ReportService
 {
     Task Calculate(DateTime eventDate);
 
-    IEnumerable<ReportModel> Calculate(DateTime eventDate, IEnumerable<OWPMatch> matches, IEnumerable<OWPMatch> queriedMainMatches);
+    IEnumerable<ReportModel> Calculate(DateTime eventDate, IEnumerable<OWPMatch> minorMatches, IEnumerable<OWPMatch> mainMatches, IEnumerable<OWPMatch> sabaMatches);
 }
 
 public class ReportServiceImp : ReportService
@@ -27,7 +29,23 @@ public class ReportServiceImp : ReportService
     {
         var (totalMatches, mainMatches) = await reportRepository.QueryMatchesByDate(eventDate);
 
-        var result = Calculate(eventDate, totalMatches, mainMatches);
+        var minorMatchesCategorized = MatchHelper.CategorizeMinorMatches(totalMatches, mainMatches);
+        var mainMatchesCategorized = MatchHelper.CategorizeMainMatches(totalMatches);
+        var sabaMatchesCategorized = MatchHelper.CategorizeSabaMatches(totalMatches);
+
+        var saba5MinOwpMatchIds = sabaMatchesCategorized.Where(x => x.BetTypeName == BetTypeName.SabaEliteFriendlyVirtualPes215MinsPlay).Select(x=>x.OWPMatchId).ToList();
+
+        var saba5MinOwpMatchIdGrouped = await reportRepository.GetSaba5minOWPMatchId(saba5MinOwpMatchIds);
+
+        var sabaMatchesGrouped = sabaMatchesCategorized.Where(x => x.BetTypeName != BetTypeName.SabaEliteFriendlyVirtualPes215MinsPlay).ToList();
+
+        foreach (var item in saba5MinOwpMatchIdGrouped)
+        {
+            var temp = sabaMatchesCategorized.Where(x => x.OWPMatchId == item);
+            sabaMatchesGrouped.AddRange(temp.ToList());
+        }
+
+        var result = Calculate(eventDate, minorMatchesCategorized, mainMatchesCategorized, sabaMatchesGrouped);
 
         if (result.Any())
         {
@@ -35,12 +53,8 @@ public class ReportServiceImp : ReportService
         }
     }
 
-    public IEnumerable<ReportModel> Calculate(DateTime eventDate, IEnumerable<OWPMatch> matches, IEnumerable<OWPMatch> queriedMainMatches)
+    public IEnumerable<ReportModel> Calculate(DateTime eventDate, IEnumerable<OWPMatch> minorMatches, IEnumerable<OWPMatch> mainMatches, IEnumerable<OWPMatch> sabaMatches)
     {
-        var minorMatches = MatchHelper.CategorizeMinorMatches(matches, queriedMainMatches);
-        var mainMatches = MatchHelper.CategorizeMainMatches(matches);
-        var sabaMatches = MatchHelper.CategorizeSabaMatches(matches);
-
         var minorMatchReportData = MatchHelper.SumMatches(eventDate, minorMatches);
         var mainMatchReportData = MatchHelper.SumMatches(eventDate, mainMatches);
         var sabaMatchReportData = MatchHelper.SumMatches(eventDate, sabaMatches);
