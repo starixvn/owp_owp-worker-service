@@ -1,10 +1,8 @@
 ﻿using Fanex.Logging;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using OWP.Core.Extensions;
 using OWP.Core.Services;
-using OWP.Infosite.Models;
-using OWP.Infosite.Services;
+using OWP.Infosite.Settings;
 using OWP.OtherSport.SyncLive.Model;
 using System.Text;
 
@@ -17,43 +15,61 @@ namespace OWP.OtherSport.SyncLive.Services
 
     public class ApiServiceImp: ApiService
     {
-        private readonly IConfiguration configuration;
+        private readonly InfoSiteSettings infoSiteSettings;
 
         private readonly HttpHandler httpHandler;
 
         private readonly ILogger logger;
 
-        public ApiServiceImp(IConfiguration configuration, ILogger logger, HttpHandler httpHandler)
+        public ApiServiceImp(IOptions<InfoSiteSettings> infoSiteSettings, ILogger logger, HttpHandler httpHandler)
         {
-            this.configuration = configuration;
+            this.infoSiteSettings = infoSiteSettings.Value;
             this.httpHandler = httpHandler;
             this.logger = logger;
         }
 
         public async Task PostSyncLiveAsync(BodyModel body)
-{
-            var url = configuration.GetSection("AdminSite:Url").Value;
-            var requestLink = $"{url}/api/Event/Edit";
+        {
+            var path = "/api/Event/Edit";
+            var requestUrl = $"{infoSiteSettings.InfositeAPI}{path}";
 
             var json = JsonConvert.SerializeObject(body);
             var bodyContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            await logger.InfoAsync($"OSSyncLiveToAdminSite {requestLink} {json}");
+            await LogInfo(requestUrl, body);
             try
             {
-                await httpHandler.PostAsync(requestLink, bodyContent);
+                await httpHandler.PostAsync(requestUrl, bodyContent);
             }
             catch (Exception ex)
             {
-                var logInfo = new
-                {
-                    DateTime = DateTime.UtcNow,
-                    RequestUri = requestLink,
-                    ex.Message
-                };
-                var logInfoString = JsonConvert.SerializeObject(logInfo);
-                //logger.Error(logInfoString);
+                await LogError(requestUrl, body, ex);
             }
+        }
+
+        private async Task LogError(string requestUrl, BodyModel body, Exception ex)
+        {
+            var logErrorString = JsonConvert.SerializeObject(new
+            {
+                DateTime = DateTime.UtcNow.AddHours(8),
+                RequestUri = requestUrl,
+                BodyContent = body,
+                ex.Message
+            });
+
+            await logger.ErrorAsync(logErrorString);
+        }
+
+        private async Task LogInfo(string requestUrl, BodyModel body)
+        {
+            var logInfoString = JsonConvert.SerializeObject(new
+            {
+                DateTime = DateTime.UtcNow.AddHours(8),
+                RequestUri = requestUrl,
+                BodyContent = body
+            });
+
+            await logger.InfoAsync($"OSSyncLiveToInfosite {logInfoString}");
         }
     }
 }

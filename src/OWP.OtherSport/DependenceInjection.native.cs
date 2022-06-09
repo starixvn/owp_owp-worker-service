@@ -12,8 +12,8 @@ namespace OWP.OtherSport
             services.AddTransient<SyncAdminSiteMatchesHandler, SyncAdminSiteMatchesHandlerImp>();
             services.AddTransient<SyncLiveToAdminSiteHandler, SyncLiveToAdminSiteHandlerImp>();
             services.AddTransient<EditEventGenerator, EditEventGeneratorImp>();
-            services.AddTransient<ChangedSyncLiveDetector, ChangedSyncLiveDetectorImp>();
             services.AddTransient<ApiService, ApiServiceImp>();
+            services.AddTransient<CacheManipulator, CacheManipulatorImp>();
             return services;
         }
     }

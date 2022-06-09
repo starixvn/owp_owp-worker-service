@@ -6,7 +6,7 @@ namespace OWP.OtherSport.SyncLive
 {
     public interface SyncLiveToAdminSiteHandler
     {
-        void Handle(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> newMatches);
+        Task Handle(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> newMatches, DateTime eventDate);
     }
 
     public class SyncLiveToAdminSiteHandlerImp: SyncLiveToAdminSiteHandler
@@ -15,25 +15,31 @@ namespace OWP.OtherSport.SyncLive
 
         private readonly ApiService apiService;
 
-        public SyncLiveToAdminSiteHandlerImp(EditEventGenerator editEventGenerator, ApiService apiService)
+        private readonly CacheManipulator cacheManipulator;
+
+        public SyncLiveToAdminSiteHandlerImp(
+            EditEventGenerator editEventGenerator, 
+            ApiService apiService, 
+            CacheManipulator cacheManipulator)
         {
             this.editEventGenerator = editEventGenerator;
             this.apiService = apiService;
+            this.cacheManipulator = cacheManipulator;
         }
 
-        public async void Handle(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> newMatches)
+        public async Task Handle(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> newMatches, DateTime eventDate)
         {
-            var editEventList = editEventGenerator.CreateModel(adminSiteMatches, newMatches);
-            if (editEventList.Count == 0) return;
+            var editEventList = editEventGenerator.GetChangedOfferLiveMatches(adminSiteMatches, newMatches);
+            var deletedMatches = await cacheManipulator.GetDeletedMatches();
+            var nonLiveEventList = editEventGenerator.GetNonLiveMatches(deletedMatches, eventDate);
+            var eventList = editEventList.Union(nonLiveEventList);
 
-            var model = new BodyModel
-            {
-                From = "OWP",
-                UserId = 0,
-                EditEventList = editEventList
-            };
+            if (eventList.Count() == 0) return;
+
+            var model = new BodyModel { EditEventList = eventList.ToList() };
 
             await apiService.PostSyncLiveAsync(model);
+            await cacheManipulator.RemoveDeletedMatches();
         }
     }
 }

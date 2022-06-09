@@ -36,8 +36,9 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
         await UpdateUnlinkedMatches(newLinkedMatches);
         await UpdateLinkedMatches(updatedMatches);
 
+        // Sync live to infosite
         var newOwpMatches = await GetOWPMatches(eventDate);
-        syncLiveService.Handle(adminSiteMatches, newOwpMatches);
+        await syncLiveService.Handle(adminSiteMatches, newOwpMatches, eventDate);
     }
 
     private async Task<IEnumerable<Match>> GetOWPMatches(DateTime eventDate)
