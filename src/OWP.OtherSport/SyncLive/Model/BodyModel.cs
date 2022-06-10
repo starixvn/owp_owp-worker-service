@@ -2,7 +2,7 @@
 {
     public class BodyModel
     {
-        public string From = "OWP";
+        public string From { get; set; }
 
         public List<EditEvent> EditEventList { get; set; }
     }

@@ -1,11 +1,13 @@
 ﻿using Fanex.Caching;
+using Newtonsoft.Json;
+using OWP.OtherSport.SyncAdminSiteId.Models;
 using OWP.OtherSport.SyncLive.Model;
 
 namespace OWP.OtherSport.SyncLive.Services
 {
     public interface CacheManipulator
     {
-        Task<List<DeletedMatch>> GetDeletedMatches();
+        Task<List<Match>> GetDeletedMatches();
 
         Task RemoveDeletedMatches();
     }
@@ -21,10 +23,12 @@ namespace OWP.OtherSport.SyncLive.Services
             this.cache = cache;
         }
 
-        public async Task<List<DeletedMatch>> GetDeletedMatches()
+        public async Task<List<Match>> GetDeletedMatches()
         {
-            var cacheResult = await cache.TryGetAsync<List<DeletedMatch>>(DELETED_MATCH_KEY);
-            var matches = cacheResult.Item2 ?? new List<DeletedMatch>();
+            var cacheResult = await cache.TryGetAsync<string>(DELETED_MATCH_KEY);
+            var matches = !string.IsNullOrEmpty(cacheResult.Item2)
+                ? JsonConvert.DeserializeObject<List<Match>>(cacheResult.Item2)
+                : new List<Match>();
 
             return matches.Where(m => m.OSMatchId > 0).ToList();
         }

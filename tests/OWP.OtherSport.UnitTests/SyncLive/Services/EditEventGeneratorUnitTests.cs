@@ -51,29 +51,5 @@ namespace OWP.OtherSport.UnitTests.SyncLive.Services
 
             DeepAssert.Equal(expected, actual);
         }
-
-        [Fact]
-        public void CreateModel_GetNonLiveMatches_ReturnExpectedResult()
-        {
-            var deletedMatches = new List<DeletedMatch>
-            {
-                new(){ AdminSiteMatchId = 111, Sport = "Basketball", EventDate = new DateTime(2022, 6, 9) },
-                new(){ AdminSiteMatchId = 222, Sport = "Basketball", EventDate = new DateTime(2022, 6, 8) },
-                new(){ AdminSiteMatchId = 333, Sport = "Basketball", EventDate = new DateTime(2022, 6, 9) },
-                new(){ AdminSiteMatchId = 444, Sport = "Tennis", EventDate = new DateTime(2022, 6, 9) },
-                new(){ AdminSiteMatchId = 555, Sport = "Basketball", EventDate = new DateTime(2022, 6, 1) },
-            };
-
-            var expected = new List<EditEvent>
-            {
-                new() { Matchid = 111,  OfferLive = false },
-                new() { Matchid = 222,  OfferLive = false },
-                new() { Matchid = 333,  OfferLive = false },
-            };
-
-            var actual = service.GetNonLiveMatches(deletedMatches, new DateTime(2022,6,8)).ToList();
-
-            DeepAssert.Equal(expected, actual);
-        }
     }
 }

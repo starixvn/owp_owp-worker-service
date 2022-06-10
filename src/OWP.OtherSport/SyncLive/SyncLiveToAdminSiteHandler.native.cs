@@ -6,7 +6,7 @@ namespace OWP.OtherSport.SyncLive
 {
     public interface SyncLiveToAdminSiteHandler
     {
-        Task Handle(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> newMatches, DateTime eventDate);
+        Task Handle(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> owpMatches, DateTime eventDate);
     }
 
     public class SyncLiveToAdminSiteHandlerImp: SyncLiveToAdminSiteHandler
@@ -27,16 +27,14 @@ namespace OWP.OtherSport.SyncLive
             this.cacheManipulator = cacheManipulator;
         }
 
-        public async Task Handle(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> newMatches, DateTime eventDate)
+        public async Task Handle(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> owpMatches, DateTime eventDate)
         {
-            var editEventList = editEventGenerator.GetChangedOfferLiveMatches(adminSiteMatches, newMatches);
             var deletedMatches = await cacheManipulator.GetDeletedMatches();
-            var nonLiveEventList = editEventGenerator.GetNonLiveMatches(deletedMatches, eventDate);
-            var eventList = editEventList.Union(nonLiveEventList);
+            var editEventList = editEventGenerator.GetChangedOfferLiveMatches(adminSiteMatches, owpMatches.Union(deletedMatches));
 
-            if (eventList.Count() == 0) return;
+            if (editEventList.Count() == 0) return;
 
-            var model = new BodyModel { EditEventList = eventList.ToList() };
+            var model = new BodyModel { From = "OWP", EditEventList = editEventList.ToList() };
 
             await apiService.PostSyncLiveAsync(model);
             await cacheManipulator.RemoveDeletedMatches();

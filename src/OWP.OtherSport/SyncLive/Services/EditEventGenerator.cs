@@ -6,8 +6,6 @@ namespace OWP.OtherSport.SyncLive.Services
     public interface EditEventGenerator
     {
         IEnumerable<EditEvent> GetChangedOfferLiveMatches(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> owpMatches);
-
-        IEnumerable<EditEvent> GetNonLiveMatches(IEnumerable<DeletedMatch> deletedMatches, DateTime eventDate);
     }
 
     public class EditEventGeneratorImp : EditEventGenerator
@@ -26,7 +24,7 @@ namespace OWP.OtherSport.SyncLive.Services
             var owpMatchHasAdminSiteId = owpMatches.Where(x => x.AdminSiteMatchId.HasValue).Distinct();
             foreach (var match in owpMatchHasAdminSiteId)
             {
-                var adminsiteMatch = adminSiteMatches.Where(x => x.AdminSiteMatchId == match.AdminSiteMatchId).FirstOrDefault();
+                var adminsiteMatch = adminSiteMatches.FirstOrDefault(x => x.AdminSiteMatchId == match.AdminSiteMatchId);
                 if (adminsiteMatch != null && adminsiteMatch.OfferLive != match.OfferLive)
                 {
                     yield return new EditEvent { 
@@ -37,19 +35,9 @@ namespace OWP.OtherSport.SyncLive.Services
             }
         }
 
-        public IEnumerable<EditEvent> GetNonLiveMatches(IEnumerable<DeletedMatch> deletedMatches, DateTime eventDate)
-        {
-            var filterMatches = deletedMatches.Where(x =>
-                IsBasketball(x.Sport) &&
-                x.AdminSiteMatchId.HasValue &&
-                x.EventDate.Date >= eventDate.Date);
-
-            return filterMatches.Select(x => new EditEvent { Matchid = (int)x.AdminSiteMatchId, OfferLive = false });
-        }
-
-        private IEnumerable<Match> FilterBasketballMatch(IEnumerable<Match> matches)
+        private static IEnumerable<Match> FilterBasketballMatch(IEnumerable<Match> matches)
             => matches.Where(x => IsBasketball(x.Sport));
 
-        private bool IsBasketball(string sport) => sport.Trim().Equals("basketball", StringComparison.OrdinalIgnoreCase);
+        private static bool IsBasketball(string sport) => sport.Trim().Equals("basketball", StringComparison.OrdinalIgnoreCase);
     }
 }
