@@ -109,7 +109,7 @@ public static IServiceCollection AddRedisPubSub(this IServiceCollection services
   public static IServiceCollection AddInternalServices(this IServiceCollection services, IConfiguration configuration)
   {
     services.AddInfositeServices(configuration);
-        services.AddOWPCoreServices();
+    services.AddOWPCoreServices();
     services.AddInfositeIdSyncServices();
     services.AddLinkLeagueAndTeamServices();
     services.AddPrematchReportServices();

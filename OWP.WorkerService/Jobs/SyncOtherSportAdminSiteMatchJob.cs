@@ -34,7 +34,7 @@ public class SyncOtherSportAdminSiteMatchJob : IJob
         var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
         if (!underMaintenanceTime.IsUnderMaintenanceTime)
         {
-            var eventDate = DateTime.Now.AddHours(12).Date;
+            var eventDate = DateTime.Now.AddDays(-1).AddHours(12).Date;
             await syncAdminSiteMatchesHandler.Handle(eventDate).ConfigureAwait(false);
         }
     }
