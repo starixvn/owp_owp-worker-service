@@ -56,6 +56,7 @@ services.AddSingleton<IConfiguration>(configuration);
 #region AddRedis
 
 var redisSetting = configuration.GetSection(nameof(RedisSettings)).Get<RedisSettings>();
+
 services.AddSingleton<ICache>(new RedisCache(new RedisCacheOptions
 {
     ConnectionString = redisSetting.ConnectionString,
@@ -105,10 +106,9 @@ services.AddSingleton(serviceProvider => new ConnectionFactory
 
 services.AddSingleton<RabbitMqClient>(new RabbitMqClientImp(configuration).Initialize());
 
-const string redisConfig = "ha.nexdev.net:16379,password=foo1@bared,defaultDatabase=11";
-    var multiplexer = ConnectionMultiplexer.Connect(redisConfig);
-    services.AddSingleton<IConnectionMultiplexer>(multiplexer);
-    services.AddSingleton<PubSubEvent, PubSubEventImp>();
+var multiplexer = ConnectionMultiplexer.Connect(redisSetting.ConnectionString);
+services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+services.AddSingleton<PubSubEvent, PubSubEventImp>();
 
 var apiService = services.BuildServiceProvider().GetService<OWP.InfositeIdSync.Services.SyncInfositeIdService>();
 await apiService.Sync().ConfigureAwait(false);

@@ -9,7 +9,7 @@ builder.Services.AddRedisServices(builder.Configuration);
 builder.Services.AddOneBookUmServices(builder.Configuration);
 builder.Services.AddInternalServices(builder.Configuration);
 builder.Services.InitializeRabbitMq(builder.Configuration);
-builder.Services.AddRedisPubSub(builder.Configuration);
+builder.Services.AddRedisPubSub();
 builder.Services.AddJobsServices();
 builder.Services.AddHostedService<OWPScheduler>();
 
