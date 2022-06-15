@@ -133,7 +133,6 @@ public class ApiServiceImp : ApiService
 
   public void TriggerNetCoreNewLeagueNotification(string sessionId, DateTime fromDate)
   {
-    var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(30));
     var request = new PrematchNewLeagueNotifyRequest
     {
       SessionId = sessionId,
