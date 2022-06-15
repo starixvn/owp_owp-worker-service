@@ -75,6 +75,8 @@ public static class ServiceCollectionExtensions
   public static IServiceCollection AddRedisServices(this IServiceCollection services, IConfiguration configuration)
   {
     var redisSetting = configuration.GetSection(nameof(RedisSettings)).Get<RedisSettings>();
+    var redis = ConnectionMultiplexer.Connect(redisSetting.ConnectionString);
+    services.AddSingleton<IConnectionMultiplexer>(redis);
     services.AddSingleton<ICache>(new RedisCache(new RedisCacheOptions
     {
       ConnectionString = redisSetting.ConnectionString,
@@ -83,6 +85,13 @@ public static class ServiceCollectionExtensions
 
     return services;
   }
+
+public static IServiceCollection AddRedisPubSub(this IServiceCollection services)
+  {
+    services.AddSingleton<PubSubEvent, PubSubEventImp>();
+    return services;
+  }
+  
 
   public static IServiceCollection AddOneBookUmServices(this IServiceCollection services, IConfiguration configuration)
   {
@@ -95,6 +104,7 @@ public static class ServiceCollectionExtensions
 
     return services;
   }
+
 
   public static IServiceCollection AddInternalServices(this IServiceCollection services, IConfiguration configuration)
   {
@@ -141,12 +151,5 @@ public static class ServiceCollectionExtensions
     return services;
   }
 
-  public static IServiceCollection AddRedisPubSub(this IServiceCollection services, IConfiguration configuration)
-  {
-    var redisSetting = configuration.GetSection(nameof(RedisSettings)).Get<RedisSettings>();
-    var multiplexer = ConnectionMultiplexer.Connect(redisSetting.ConnectionString);
-    services.AddSingleton<IConnectionMultiplexer>(multiplexer);
-    services.AddSingleton<PubSubEvent, PubSubEventImp>();
-    return services;
-  }
+  
 }
