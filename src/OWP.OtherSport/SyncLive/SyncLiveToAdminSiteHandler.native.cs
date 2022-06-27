@@ -34,7 +34,7 @@ namespace OWP.OtherSport.SyncLive
 
             if (editEventList.Count() == 0) return;
 
-            var model = new BodyModel { From = "OWP", EditEventList = editEventList.ToList() };
+            var model = new BodyModel { live_configs = editEventList.ToList() };
 
             await apiService.PostSyncLiveAsync(model);
             await cacheManipulator.RemoveDeletedMatches();

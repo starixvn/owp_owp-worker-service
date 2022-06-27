@@ -2,8 +2,8 @@
 {
     public class EditEvent
     {
-        public int Matchid { get; set; }
+        public int in_house_match_id { get; set; }
 
-        public bool OfferLive { get; set; }
+        public bool is_live { get; set; }
     }
 }

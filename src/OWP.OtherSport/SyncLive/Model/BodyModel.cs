@@ -2,8 +2,6 @@
 {
     public class BodyModel
     {
-        public string From { get; set; }
-
-        public List<EditEvent> EditEventList { get; set; }
+        public List<EditEvent> live_configs { get; set; }
     }
 }

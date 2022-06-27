@@ -43,8 +43,8 @@ namespace OWP.OtherSport.UnitTests.SyncLive.Services
 
             var expected = new List<EditEvent>
             {
-                new() { Matchid = 222,  OfferLive = true },
-                new() { Matchid = 555,  OfferLive = false },
+                new() { in_house_match_id = 222,  is_live = true },
+                new() { in_house_match_id = 555,  is_live = false },
             };
 
             var actual = service.GetChangedOfferLiveMatches(adminSiteMatches, owpMatches).ToList();

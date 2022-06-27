@@ -28,8 +28,8 @@ namespace OWP.OtherSport.SyncLive.Services
                 if (adminsiteMatch != null && adminsiteMatch.OfferLive != match.OfferLive)
                 {
                     yield return new EditEvent { 
-                        Matchid = (int)match.AdminSiteMatchId, 
-                        OfferLive = match.OfferLive 
+                        in_house_match_id = (int)match.AdminSiteMatchId, 
+                        is_live = match.OfferLive 
                     };
                 }
             }
