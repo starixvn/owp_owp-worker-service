@@ -14,7 +14,7 @@
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Olympus.OWP.Constants" Version="1.0.0.3" />
-    <PackageReference Include="Olympus.InfoSiteClient" Version="2.1.0.4" />   
+    <PackageReference Include="Olympus.InfoSiteClient" Version="2.1.0.10" />   
     <PackageReference Include="Olympus.Xml" Version="1.0.0.4" />   
   </ItemGroup>
 
