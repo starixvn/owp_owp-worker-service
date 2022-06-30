@@ -14,12 +14,12 @@ public class Match : IEquatable<Match>
 
     public string Sport { get; set; }
 
-    public DateTime EventDate { get; set; }
+    public DateTime EventDateTime { get; set; }
 
     public bool OfferLive { get; set; }
 
     public bool Equals(Match other)
-        => EventDate == other.EventDate &&
+        => EventDateTime == other.EventDateTime &&
            Sport.Trim().Equals(other.Sport.Trim(), StringComparison.OrdinalIgnoreCase) &&
            IsSameEvent(other);
 

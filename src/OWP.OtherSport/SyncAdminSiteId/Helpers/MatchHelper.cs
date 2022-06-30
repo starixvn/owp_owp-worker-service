@@ -23,8 +23,8 @@ public static class MatchHelper
                     OWPHome = match.HomeName,
                     OWPLeague = match.LeagueName,
                     OldAdminSiteMatchId = match.AdminSiteMatchId,
-                    OldEventDate = match.EventDate,
-                    NewEventDate = adminSiteMatch.EventDate
+                    OldEventDate = match.EventDateTime,
+                    NewEventDate = adminSiteMatch.EventDateTime
                 };
             }
         }
@@ -43,7 +43,7 @@ public static class MatchHelper
                     OWPHome = match.HomeName,
                     OWPLeague = match.LeagueName,
                     OldAdminSiteMatchId = match.AdminSiteMatchId,
-                    OldEventDate = match.EventDate
+                    OldEventDate = match.EventDateTime
                 };
             }
         }
