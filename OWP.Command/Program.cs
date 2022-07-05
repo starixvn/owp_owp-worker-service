@@ -112,4 +112,4 @@ services.AddSingleton<IConnectionMultiplexer>(multiplexer);
 services.AddSingleton<PubSubEvent, PubSubEventImp>();
 
 var apiService = services.BuildServiceProvider().GetService<OWP.OtherSport.SyncAdminSiteId.Handlers.SyncAdminSiteMatchesHandler>();
-await apiService.Handle(new DateTime(2022, 04, 19)).ConfigureAwait(false);
+await apiService.Handle(new DateTime(2022, 04, 05)).ConfigureAwait(false);
