@@ -5,6 +5,7 @@ using OWP.Infosite.Settings;
 using System.Globalization;
 using OWP.Core.RabbitMq;
 using OWP.Core.RabbitMq.Models;
+using OWP.Core.Services;
 
 namespace OWP.InfositeIdSync.Services;
 

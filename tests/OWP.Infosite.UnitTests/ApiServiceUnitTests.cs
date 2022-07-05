@@ -9,6 +9,7 @@ using Xunit;
 using Xunit.Asserts.Compare;
 using OWP.Core.RabbitMq;
 using OWP.Core.RedisPubSub;
+using OWP.Core.Services;
 using Fanex.Caching;
 
 namespace OWP.Infosite.UnitTests;

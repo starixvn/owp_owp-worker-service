@@ -6,6 +6,7 @@ using OWP.Core.Extensions;
 using OWP.Core.RabbitMq;
 using OWP.Core.RabbitMq.Models;
 using OWP.Core.RedisPubSub;
+using OWP.Core.Services;
 using OWP.Infosite.Constants;
 using OWP.Infosite.Models;
 using OWP.Infosite.Settings;

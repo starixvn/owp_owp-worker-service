@@ -6,4 +6,5 @@ public class InfoSiteSettings
     public string Infosite180DayAPI { get; set; }
     public string InfositeAPI { get; set; }
     public string OWPNetCoreUri { get; set; }
+    public string InfositeOSAPI { get; set; }
 }

@@ -104,7 +104,7 @@ public class MatchHelperUnitTests
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
                     HomeName = "Dalian Pro FC (N)1",
                     AwayName = "Guangzhou R&F1",
-                    EventDate = new DateTime(2021, 03, 18),
+                    EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = null
                 },
                 new Match
@@ -114,7 +114,7 @@ public class MatchHelperUnitTests
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
                     HomeName = "Dalian Pro FC (N)2",
                     AwayName = "Guangzhou R&F2",
-                    EventDate = new DateTime(2021, 03, 18),
+                    EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = null
                 },
                 new Match
@@ -124,7 +124,7 @@ public class MatchHelperUnitTests
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
                     HomeName = "Dalian Pro FC (N)3",
                     AwayName = "Guangzhou R&F3",
-                    EventDate = new DateTime(2021, 03, 18),
+                    EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = null
                 },
                 new Match
@@ -134,7 +134,7 @@ public class MatchHelperUnitTests
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)15",
                     HomeName = "Dalian Pro FC (N)12",
                     AwayName = "Guangzhou R&F12",
-                    EventDate = new DateTime(2021, 03, 18),
+                    EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = null
                 }
         };
@@ -149,7 +149,7 @@ public class MatchHelperUnitTests
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)11",
                     HomeName = "Dalian Pro FC (N)11",
                     AwayName = "Guangzhou R&F11",
-                    EventDate = new DateTime(2021, 03, 18),
+                    EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 1
                 },
                 new Match
@@ -159,7 +159,7 @@ public class MatchHelperUnitTests
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)11",
                     HomeName = "Dalian Pro FC (N)12",
                     AwayName = "Guangzhou R&F12",
-                    EventDate = new DateTime(2021, 03, 18),
+                    EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 2
                 }
         };
@@ -173,7 +173,7 @@ public class MatchHelperUnitTests
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
                     HomeName = "Dalian Pro FC (N)1",
                     AwayName = "Guangzhou R&F1",
-                    EventDate = new DateTime(2021, 03, 18),
+                    EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 123
                 },
                 new Match
@@ -182,7 +182,7 @@ public class MatchHelperUnitTests
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
                     HomeName = "Dalian Pro FC (N)2",
                     AwayName = "Guangzhou R&F2",
-                    EventDate = new DateTime(2021, 03, 18),
+                    EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 234
                 },
                 new Match
@@ -191,7 +191,7 @@ public class MatchHelperUnitTests
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
                     HomeName = "Dalian Pro FC (N)3",
                     AwayName = "Guangzhou R&F3",
-                    EventDate = new DateTime(2021, 03, 18),
+                    EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 345
                 },
                 new Match
@@ -200,7 +200,7 @@ public class MatchHelperUnitTests
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)113",
                     HomeName = "Dalian Pro FC (N)11",
                     AwayName = "Guangzhou R&F11",
-                    EventDate = new DateTime(2021, 03, 18),
+                    EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 1
                 },
                 new Match
@@ -209,7 +209,7 @@ public class MatchHelperUnitTests
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)114",
                     HomeName = "Dalian Pro FC (N)12",
                     AwayName = "Guangzhou R&F12",
-                    EventDate = new DateTime(2021, 03, 18),
+                    EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 2
                 }
         };
