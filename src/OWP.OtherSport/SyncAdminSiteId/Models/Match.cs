@@ -18,8 +18,13 @@ public class Match : IEquatable<Match>
 
     public bool OfferLive { get; set; }
 
+    public bool IsSaba => LeagueName.Contains("SABA ", StringComparison.OrdinalIgnoreCase);
+
     public bool Equals(Match other)
-        => EventDateTime == other.EventDateTime &&
+        => IsSameMatch(other) && (!IsSaba || EventDateTime == other.EventDateTime);
+
+    public bool IsSameMatch(Match other)
+        => EventDateTime.Date == other.EventDateTime.Date &&
            Sport.Trim().Equals(other.Sport.Trim(), StringComparison.OrdinalIgnoreCase) &&
            IsSameEvent(other);
 
