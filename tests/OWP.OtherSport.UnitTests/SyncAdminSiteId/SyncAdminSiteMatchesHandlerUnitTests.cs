@@ -99,7 +99,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                     OWPHome = "Dalian Pro FC (N)11",
                     OWPAway = "Guangzhou R&F11",
                     OldAdminSiteMatchId = 1,
-                    OldEventDate = new DateTime(2021, 03, 18, 20, 30, 0)
+                    OldEventDate = new DateTime(2021, 03, 18, 20, 05, 0)
                 },
                 new LinkedMatch
                 {
@@ -152,7 +152,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)11",
                     HomeName = "Dalian Pro FC (N)11",
                     AwayName = "Guangzhou R&F11",
-                    EventDateTime = new DateTime(2021, 03, 18, 20, 30, 0),
+                    EventDateTime = new DateTime(2021, 03, 18, 20, 05, 0),
                     AdminSiteMatchId = 1
                 },
                 new Match
