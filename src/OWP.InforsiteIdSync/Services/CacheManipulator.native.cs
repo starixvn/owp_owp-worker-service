@@ -46,7 +46,7 @@ internal class CacheManipulatorImp : CacheManipulator
 
     public async Task SaveOldAssignmentSnapshot(string sessionId, AssignmentSnapshot assignmentSnapshot)
     {
-        var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromDays(CacheKey.CacheExpiredInDays));
+        var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromDays(CacheKey.CacheExpiredIn5Minutes));
         var assignmentSnapshotInJson = JsonConvert.SerializeObject(assignmentSnapshot);
         var cacheKey = $"{CacheKey.KeyAssignmentSnapshot}-{sessionId}";
 

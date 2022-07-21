@@ -34,5 +34,5 @@ public static class Constant
 
     public const string OldPreMatchLeaguesSnapshotKey = "OWP-Old-PreMatchLeagues";
 
-    public const int CacheExpiredInDays = 1;
+    public const int CacheExpiredIn5Minutes = 5;
 }

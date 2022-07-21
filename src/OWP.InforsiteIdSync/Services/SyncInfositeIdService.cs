@@ -1,11 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
 using OWP.InfositeIdSync.Helpers;
 using OWP.Infosite.Services;
-using OWP.Infosite.Settings;
 using System.Globalization;
 using OWP.Core.RabbitMq;
 using OWP.Core.RabbitMq.Models;
-using OWP.Core.Services;
 
 namespace OWP.InfositeIdSync.Services;
 
@@ -16,27 +14,21 @@ public interface SyncInfositeIdService
 
 public class SynInfositeIdServiceImp : SyncInfositeIdService
 {
-  private readonly InfoSiteSettings infoSiteSettings;
   private readonly InfositeIdMappingRepository repository;
   private readonly DateTimeService dateTimeService;
   private readonly CacheManipulator cacheManipulator;
-  private readonly HttpHandler httpHandler;
 
   private readonly RabbitMqClient rabbitMqClient;
 
   public SynInfositeIdServiceImp(
-      IOptions<InfoSiteSettings> infoSiteSettings,
       InfositeIdMappingRepository repository,
       DateTimeService dateTimeService,
       CacheManipulator cacheManipulator,
-      HttpHandler httpHandler,
       RabbitMqClient rabbitMqClient)
   {
-    this.infoSiteSettings = infoSiteSettings.Value;
     this.repository = repository;
     this.dateTimeService = dateTimeService;
     this.cacheManipulator = cacheManipulator;
-    this.httpHandler = httpHandler;
     this.rabbitMqClient = rabbitMqClient;
   }
 
