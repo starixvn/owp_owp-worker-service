@@ -57,6 +57,11 @@ public class RabbitMqClientImp : RabbitMqClient, IDisposable
             type: "direct",
             durable: true,
             autoDelete: false);
+        channel.QueueDeclare(
+            queue: queue,
+            durable: true,
+            exclusive: false,
+            autoDelete: false);
 #endif
   }
 
