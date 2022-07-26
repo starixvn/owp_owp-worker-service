@@ -47,7 +47,7 @@ public class RabbitMqClientImp : RabbitMqClient
         }
         catch (Exception ex)
         {
-            logger.Info($"Connect RabbitMQ failed, exception: {ex}");
+            logger.Error($"Connect RabbitMQ failed, exception: {ex}");
         }
     }
 

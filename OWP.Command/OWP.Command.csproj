@@ -35,12 +35,13 @@
     <PackageReference Include="Fanex.Data.SqlServer" Version="4.2.2" />
     <PackageReference Include="Fanex.Logging.Sentry.RavenClient" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="ONEbook.UM" Version="3.1.3" />
     <PackageReference Include="ONEbook.UM.Transport" Version="3.1.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\src\OWP.Core\OWP.Core.csproj" />
     <ProjectReference Include="..\src\OWP.InforsiteIdSync\OWP.InfositeIdSync.csproj" />
     <ProjectReference Include="..\src\OWP.Infosite\OWP.Infosite.csproj" />
     <ProjectReference Include="..\src\OWP.LinkLeagueAndTeam\OWP.LinkLeagueAndTeam.csproj" />

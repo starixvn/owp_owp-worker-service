@@ -10,25 +10,18 @@ using ONEbook.UM.Services;
 using ONEbook.UM.Transport;
 using OWP.Command;
 using OWP.Command.Settings;
+using Microsoft.Extensions.Options;
+using OWP.Core.RabbitMq.Models;
+using OWP.Core.RabbitMq;
 using OWP.Infosite;
-using OWP.Infosite.Services;
 using OWP.InfositeIdSync;
 using OWP.LinkLeagueAndTeam;
-using OWP.LinkLeagueAndTeam.Services;
 using OWP.MatchReadyNotification;
-using OWP.OtherSport;
 using OWP.SumReportData;
-using OWP.SumReportData.OvertimeReport.Services;
 using OWP.SyncLeagueSettings;
-using OWP.SyncLeagueSettings.Services;
-using OWP.PrematchReport;
 using OWP.ArchiveData;
-using OWP.Core.RabbitMq;
-using OWP.Core.RedisPubSub;
-using StackExchange.Redis;
-using OWP.Core.RabbitMq.Models;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Options;
+using OWP.PrematchReport;
+using OWP.OtherSport;
 
 #region Configuration
 
@@ -110,11 +103,5 @@ services.AddPrematchReportServices();
 services.AddArchiveDataServices();
 #endregion
 
-#region AddPubSub
-var multiplexer = ConnectionMultiplexer.Connect(redisSetting.ConnectionString);
-services.AddSingleton<IConnectionMultiplexer>(multiplexer);
-services.AddSingleton<PubSubEvent, PubSubEventImp>();
-#endregion
-
-var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.TodaySyncService>();
+var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.SyncPreMatchLeagueService>();
 await apiService.Sync().ConfigureAwait(false);

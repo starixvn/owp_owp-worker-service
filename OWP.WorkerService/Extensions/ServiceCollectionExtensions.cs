@@ -12,7 +12,6 @@ using ONEbook.UM.Transport;
 using OWP.ArchiveData;
 using OWP.Core.RabbitMq;
 using OWP.Core.RabbitMq.Models;
-using OWP.Core.RedisPubSub;
 using OWP.Infosite;
 using OWP.InfositeIdSync;
 using OWP.LinkLeagueAndTeam;
@@ -82,12 +81,6 @@ public static class ServiceCollectionExtensions
             ApplicationName = redisSetting.AppName
         }));
 
-        return services;
-    }
-
-    public static IServiceCollection AddRedisPubSub(this IServiceCollection services)
-    {
-        services.AddSingleton<PubSubEvent, PubSubEventImp>();
         return services;
     }
 
