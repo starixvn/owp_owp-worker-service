@@ -1,6 +1,8 @@
 ﻿using Fanex.Caching;
 using Fanex.Data.Repository;
 using Newtonsoft.Json;
+using OWP.Core.RabbitMq;
+using OWP.Core.RabbitMq.Models;
 using OWP.Infosite.Constants;
 using OWP.Infosite.Criteria;
 using OWP.Infosite.Models;
@@ -16,11 +18,12 @@ public class TodaySyncServiceImp : SyncServiceImp, TodaySyncService
 {
     private readonly ICache cacheService;
     private readonly IDynamicRepository repository;
-    private readonly ApiService apiService;
     private readonly UpdateInfositeIdService updateInfositeIdService;
+    private readonly RabbitMqClient rabbitMqClient;
 
     public TodaySyncServiceImp(
         DateTimeService dateTimeService,
+        RabbitMqClient rabbitMqClient,
         ApiService apiService,
         IDynamicRepository repository,
         ICache cacheService,
@@ -29,8 +32,8 @@ public class TodaySyncServiceImp : SyncServiceImp, TodaySyncService
     {
         this.updateInfositeIdService = updateInfositeIdService;
         this.cacheService = cacheService;
+        this.rabbitMqClient = rabbitMqClient;
         this.repository = repository;
-        this.apiService = apiService;
     }
 
     public async Task Sync()
@@ -46,7 +49,7 @@ public class TodaySyncServiceImp : SyncServiceImp, TodaySyncService
         await updateInfositeIdService.UpdateInfositeId(today);
         await updateInfositeIdService.UpdateInfositeId(today.AddDays(1));
 
-        apiService.TriggerNetCoreMatchInfoNotification(sessionId, today, today.AddDays(1));
+        PublishMatchInfoNotification(sessionId, today, today.AddDays(1));
     }
 
     private async Task<IEnumerable<InfoSiteMatch>> GetOldInfoSiteMatches(DateTime fromDate)
@@ -70,5 +73,17 @@ public class TodaySyncServiceImp : SyncServiceImp, TodaySyncService
         var assignmentsJson = JsonConvert.SerializeObject(infoSiteMatches);
 
         await cacheService.SetAsync(cacheKey, assignmentsJson, cachePolicy);
+    }
+
+    public void PublishMatchInfoNotification(string sessionId, DateTime fromDate, DateTime toDate)
+    {
+        var request = new InfoSiteMatchInfoNotifyRequest
+        {
+            SessionId = sessionId,
+            FromDate = fromDate,
+            ToDate = toDate
+        };
+
+        rabbitMqClient.PublishRequestMessage(request);
     }
 }

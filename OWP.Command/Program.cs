@@ -24,10 +24,11 @@ using OWP.SyncLeagueSettings.Services;
 using OWP.PrematchReport;
 using OWP.ArchiveData;
 using OWP.Core.RabbitMq;
-using RabbitMQ.Client;
-using OWP.Core.RabbitMq.Settings;
 using OWP.Core.RedisPubSub;
 using StackExchange.Redis;
+using OWP.Core.RabbitMq.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Options;
 
 #region Configuration
 
@@ -68,8 +69,6 @@ services.AddSingleton<ICache>(new RedisCache(new RedisCacheOptions
 #region AddOneBookUM
 
 var umConfig = configuration.GetSection(nameof(UMClientConfiguration)).Get<UMClientConfiguration>();
-var rabbitMqSettings = configuration.GetSection(nameof(RabbitMqSettings)).Get<RabbitMqSettings>();
-services.AddSingleton(rabbitMqSettings);
 services.AddSingleton(umConfig);
 services.AddSingleton<IPHelper, IPHelperImpl>();
 services.AddSingleton<IMaintenanceService, MaintenanceService>();
@@ -78,6 +77,27 @@ services.AddSingleton<IUMRestClient, UMRestClient>();
 
 #endregion AddOneBookUM
 
+#region AddRabbitMQ
+
+var settings = new RabbitMQSetting()
+{
+    Hosting = "localhost",
+    VirtualHost = "/",
+    UserName = "guest",
+    Password = "guest",
+    Port = 5672,
+    RequestQueue = "OWP.Request.Queue",
+    ReplyQueue = "OWP.Reply.Queue"
+};
+IOptions<RabbitMQSetting> appSettingsOptions = Options.Create(settings);
+var rabbitService = new RabbitMqClientImp(appSettingsOptions, new Logger());
+rabbitService.ConnectRabbitMq();
+
+services.AddSingleton<RabbitMqClient>(rabbitService);
+
+#endregion
+
+#region AddDependenceInjection
 services.AddInfositeServices(configuration);
 services.AddOWPCoreServices();
 services.AddInfositeIdSyncServices();
@@ -88,28 +108,13 @@ services.AddSyncLeagueSettingsServices();
 services.AddOtherSportServices();
 services.AddPrematchReportServices();
 services.AddArchiveDataServices();
+#endregion
 
-var hosting = configuration.GetSection("RabbitMqSettings:Hosting").Value;
-var virtualHosting = configuration.GetSection("RabbitMqSettings:VirtualHost").Value;
-var username = configuration.GetSection("RabbitMqSettings:UserName").Value;
-var password = configuration.GetSection("RabbitMqSettings:Password").Value;
-var port = int.Parse(configuration.GetSection("RabbitMqSettings:Port").Value);
-
-services.AddSingleton(serviceProvider => new ConnectionFactory
-{
-    UserName = username,
-    Password = password,
-    HostName = hosting,
-    Port = port,
-    VirtualHost = virtualHosting,
-    DispatchConsumersAsync = true
-});
-
-services.AddSingleton<RabbitMqClient>(new RabbitMqClientImp(configuration).Initialize());
-
+#region AddPubSub
 var multiplexer = ConnectionMultiplexer.Connect(redisSetting.ConnectionString);
 services.AddSingleton<IConnectionMultiplexer>(multiplexer);
 services.AddSingleton<PubSubEvent, PubSubEventImp>();
+#endregion
 
-var apiService = services.BuildServiceProvider().GetService<OWP.PrematchReport.Services.PrematchReportService>();
-await apiService.CalculateDataReport().ConfigureAwait(false);
+var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.TodaySyncService>();
+await apiService.Sync().ConfigureAwait(false);

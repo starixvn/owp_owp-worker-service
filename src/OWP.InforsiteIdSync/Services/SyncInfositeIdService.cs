@@ -42,9 +42,7 @@ public class SynInfositeIdServiceImp : SyncInfositeIdService
 
         await repository.UpdateInfositeIdForMainMatches(mappingMatches);
 
-#if !DEBUG
         TriggerNetCoreLinkedMatchNotification(sessionId);
-#endif
     }
 
     public async Task SaveOldSnapshot(string sessionId)
@@ -61,6 +59,6 @@ public class SynInfositeIdServiceImp : SyncInfositeIdService
             SessionId = sessionId
         };
 
-        rabbitMqClient.Publish(notifyRequest);
+        rabbitMqClient.PublishRequestMessage(notifyRequest);
     }
 }
