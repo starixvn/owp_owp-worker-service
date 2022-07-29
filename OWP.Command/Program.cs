@@ -111,5 +111,5 @@ var multiplexer = ConnectionMultiplexer.Connect(redisSetting.ConnectionString);
 services.AddSingleton<IConnectionMultiplexer>(multiplexer);
 services.AddSingleton<PubSubEvent, PubSubEventImp>();
 
-var apiService = services.BuildServiceProvider().GetService<OWP.OtherSport.SyncAdminSiteId.Handlers.SyncAdminSiteMatchesHandler>();
-await apiService.Handle(new DateTime(2022, 04, 05)).ConfigureAwait(false);
+var apiService = services.BuildServiceProvider().GetService<OWP.PrematchReport.Services.PrematchReportService>();
+await apiService.CalculateDataReport().ConfigureAwait(false);

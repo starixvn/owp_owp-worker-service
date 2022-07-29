@@ -2,44 +2,44 @@
 
 namespace OWP.PrematchReport.Services.League
 {
-  public interface DataReportService
-  {
-    IList<DataReport> BuildSingleLeagueGroupReport(IList<Models.LeagueInfo> leagues, int bettype);
-
-    Task InsertLeagueReport(IList<DataReport> dataReports);
-  }
-
-  public class DataReportBuilderServiceImp : DataReportService
-  {
-    private readonly DbWriterService dbWriterService;
-
-    public DataReportBuilderServiceImp(DbWriterService dbWriterService)
+    public interface DataReportService
     {
-      this.dbWriterService = dbWriterService;
+        IList<DataReport> BuildSingleLeagueGroupReport(IList<Models.LeagueInfo> leagues, int bettype);
+
+        Task InsertLeagueReport(IList<DataReport> dataReports);
     }
-    public IList<DataReport> BuildSingleLeagueGroupReport(IList<Models.LeagueInfo> leagues, int bettype)
+
+    public class DataReportBuilderServiceImp : DataReportService
     {
-      var dataReport = new List<DataReport>();
-      var group = leagues
-          .GroupBy(league => new { league.UserId, league.GroupId, league.EventDate })
-          .ToDictionary(x => x.Key, x => x.Count());
-      foreach (var key in group.Keys)
-      {
-        var amount = group[key];
-        dataReport.Add(new DataReport
+        private readonly DbWriterService dbWriterService;
+
+        public DataReportBuilderServiceImp(DbWriterService dbWriterService)
         {
-          UserId = key.UserId,
-          EventDate = key.EventDate,
-          GroupId = key.GroupId,
-          Amount = amount,
-          BetType = bettype
-        });
-      }
+            this.dbWriterService = dbWriterService;
+        }
+        public IList<DataReport> BuildSingleLeagueGroupReport(IList<Models.LeagueInfo> leagues, int bettype)
+        {
+            var dataReport = new List<DataReport>();
+            var group = leagues
+                .GroupBy(league => new { league.UserId, league.GroupId, league.EventDate })
+                .ToDictionary(x => x.Key, x => x.Count());
+            foreach (var key in group.Keys)
+            {
+                var amount = group[key];
+                dataReport.Add(new DataReport
+                {
+                    UserId = key.UserId,
+                    EventDate = key.EventDate,
+                    GroupId = key.GroupId,
+                    Amount = amount,
+                    BetType = bettype
+                });
+            }
 
-      return dataReport;
+            return dataReport;
+        }
+
+        public async Task InsertLeagueReport(IList<DataReport> dataReports)
+        => await dbWriterService.InsertLeague(dataReports).ConfigureAwait(false);
     }
-
-    public async Task InsertLeagueReport(IList<DataReport> dataReports)
-    => await dbWriterService.InsertLeague(dataReports).ConfigureAwait(false);
-  }
 }
