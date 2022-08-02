@@ -58,7 +58,6 @@ public class RabbitMqClientImp : RabbitMqClient
 
         var props = channel.CreateBasicProperties();
         props.Type = request.RoutingKey;
-        props.ReplyTo = setting.ReplyQueue;
 
         channel.BasicPublish(
             exchange: "",
