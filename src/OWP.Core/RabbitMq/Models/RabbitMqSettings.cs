@@ -15,6 +15,4 @@ public class RabbitMQSetting
     public int Port { get; set; }
 
     public string RequestQueue { get; set; }
-
-    public string ReplyQueue { get; set; }
 }

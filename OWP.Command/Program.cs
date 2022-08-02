@@ -80,7 +80,6 @@ var settings = new RabbitMQSetting()
     Password = "guest",
     Port = 5672,
     RequestQueue = "OWP.Request.Queue",
-    ReplyQueue = "OWP.Reply.Queue"
 };
 IOptions<RabbitMQSetting> appSettingsOptions = Options.Create(settings);
 var rabbitService = new RabbitMqClientImp(appSettingsOptions, new Logger());
