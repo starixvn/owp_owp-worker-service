@@ -66,7 +66,7 @@ public class TodaySyncServiceImp : SyncServiceImp, TodaySyncService
 
     private async Task SaveOldInfoSiteMatchSnapshot(string sessionId, IEnumerable<InfoSiteMatch> infoSiteMatches)
     {
-        var absoluteTimeSpan = TimeSpan.FromMinutes(Constant.CacheExpiredIn5Minutes);
+        var absoluteTimeSpan = TimeSpan.FromMinutes(Constant.CacheExpiredIn10Minutes);
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(absoluteTimeSpan);
         var cacheKey = $"{Constant.OldInfositeMatchesSnapshotKey}-{sessionId}";
 
