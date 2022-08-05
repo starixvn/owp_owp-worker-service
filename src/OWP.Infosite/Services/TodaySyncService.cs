@@ -1,5 +1,6 @@
 ﻿using Fanex.Caching;
 using Fanex.Data.Repository;
+using Fanex.Logging;
 using Newtonsoft.Json;
 using OWP.Core.RabbitMq;
 using OWP.Core.RabbitMq.Models;
@@ -42,6 +43,7 @@ public class TodaySyncServiceImp : SyncServiceImp, TodaySyncService
 
         var sessionId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
         var infoSiteMatches = await GetOldInfoSiteMatches(today);
+        await LogService.InfoAsync($"SyncInfosite-{DateTime.Now.AddHours(11)}-{sessionId}");
         await SaveOldInfoSiteMatchSnapshot(sessionId, infoSiteMatches);
 
         await Sync(today);
