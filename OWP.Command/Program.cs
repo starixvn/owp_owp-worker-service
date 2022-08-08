@@ -102,5 +102,5 @@ services.AddPrematchReportServices();
 services.AddArchiveDataServices();
 #endregion
 
-var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.SyncPreMatchLeagueService>();
+var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.TodaySyncService>();
 await apiService.Sync().ConfigureAwait(false);
