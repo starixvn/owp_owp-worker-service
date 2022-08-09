@@ -72,7 +72,7 @@ services.AddSingleton<IUMRestClient, UMRestClient>();
 
 #region AddRabbitMQ
 
-var settings = new RabbitMQSetting()
+var settings = new RabbitMQSetting
 {
     Hosting = "localhost",
     VirtualHost = "/",
