@@ -1,4 +1,6 @@
-﻿using Fanex.Data.Repository;
+﻿using Fanex.Caching;
+using Fanex.Data.Repository;
+using OWP.Core.RabbitMq;
 
 namespace OWP.Infosite.Services;
 
@@ -12,10 +14,12 @@ public class FutureSyncServiceImp : SyncServiceImp, FutureSyncService
 
     public FutureSyncServiceImp(
         DateTimeService dateTimeService,
+        RabbitMqClient rabbitMqClient,
         ApiService apiService,
         IDynamicRepository repository,
+        ICache cacheService,
         UpdateInfositeIdService updateInfositeIdService)
-        : base(dateTimeService, apiService, repository)
+        : base(dateTimeService, apiService, rabbitMqClient, cacheService, repository)
     {
         this.updateInfositeIdService = updateInfositeIdService;
     }

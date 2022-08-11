@@ -8,13 +8,13 @@ public static class InfoSiteHelper
 {
     public static List<MatchMappingWithInfosite> Map(List<OWPMatch> owpMatches, List<InfositeMatch> infositeMatches)
     {
-        var leagueDict = infositeMatches.GroupBy(i => i.LeagueName.ToLower(CultureInfo.InvariantCulture))
+        var leagueDict = infositeMatches.GroupBy(i => i.LeagueName.Trim().ToLower(CultureInfo.InvariantCulture))
             .ToDictionary(i => i.Key, i => i.ToList());
 
         var emptyMatchList = new List<InfositeMatch>();
 
         return owpMatches
-            .Select(m => Map(m, leagueDict.GetValue(m.League.ToLower(CultureInfo.InvariantCulture), emptyMatchList)))
+            .Select(m => Map(m, leagueDict.GetValue(m.League.Trim().ToLower(CultureInfo.InvariantCulture), emptyMatchList)))
             .SelectMany(m => m)
             .ToList();
     }
@@ -41,17 +41,17 @@ public static class InfoSiteHelper
 
     public static List<MatchMappingWithInfosite> MapMatchWithSameLeagueHomeAndAway(OWPMatch owpMatch, List<InfositeMatch> infositeMatches)
         => infositeMatches.Where(m =>
-            string.Compare(m.LeagueName, owpMatch.League, StringComparison.OrdinalIgnoreCase) == 0 &&
-            string.Compare(m.HomeName, owpMatch.Home, StringComparison.OrdinalIgnoreCase) == 0 &&
-            string.Compare(m.AwayName, owpMatch.Away, StringComparison.OrdinalIgnoreCase) == 0)
+            CompareOrdinalIgnoreCase(m.LeagueName, owpMatch.League) &&
+            CompareOrdinalIgnoreCase(m.HomeName, owpMatch.Home) &&
+            CompareOrdinalIgnoreCase(m.AwayName, owpMatch.Away))
         .Select(m => new MatchMappingWithInfosite(owpMatch.OWPMatchId, m.InfoSiteMatchId, m.AdminSiteMatchId, owpMatch.EventDateTime))
         .ToList();
 
     public static List<MatchMappingWithInfosite> MapMatchWithSameLeagueHomeAndAwayKOTime(OWPMatch owpMatch, List<InfositeMatch> infositeMatches)
         => infositeMatches.Where(m =>
-            string.Compare(m.LeagueName, owpMatch.League, StringComparison.OrdinalIgnoreCase) == 0 &&
-            string.Compare(m.HomeName, owpMatch.Home, StringComparison.OrdinalIgnoreCase) == 0 &&
-            string.Compare(m.AwayName, owpMatch.Away, StringComparison.OrdinalIgnoreCase) == 0 &&
+            CompareOrdinalIgnoreCase(m.LeagueName, owpMatch.League) &&
+            CompareOrdinalIgnoreCase(m.HomeName, owpMatch.Home) &&
+            CompareOrdinalIgnoreCase(m.AwayName, owpMatch.Away) &&
             m.EventDateTime == owpMatch.EventDateTime)
         .Select(m => new MatchMappingWithInfosite(owpMatch.OWPMatchId, m.InfoSiteMatchId, m.AdminSiteMatchId, owpMatch.EventDateTime))
         .ToList();
@@ -62,11 +62,14 @@ public static class InfoSiteHelper
            .ToList();
 
     public static bool IsSameLeagueKickoffTimeAndSwapTeam(OWPMatch owpMatch, InfositeMatch infositeMatch)
-        => string.Compare(owpMatch.League, infositeMatch.LeagueName, StringComparison.OrdinalIgnoreCase) == 0
+        => CompareOrdinalIgnoreCase(owpMatch.League, infositeMatch.LeagueName)
             && owpMatch.EventDateTime.ToShortTimeString() == infositeMatch.EventDateTime.ToShortTimeString()
-            && string.Compare(owpMatch.Home, infositeMatch.AwayName, StringComparison.OrdinalIgnoreCase) == 0
-            && string.Compare(owpMatch.Away, infositeMatch.HomeName, StringComparison.OrdinalIgnoreCase) == 0;
+            && CompareOrdinalIgnoreCase(owpMatch.Home, infositeMatch.AwayName)
+            && CompareOrdinalIgnoreCase(owpMatch.Away, infositeMatch.HomeName);
 
     private static bool IsSabaMatch(OWPMatch match)
         => match.League.Contains("SABA ", StringComparison.CurrentCultureIgnoreCase);
+
+    private static bool CompareOrdinalIgnoreCase(string text1, string text2)
+        => string.Compare(text1.Trim(), text2.Trim(), StringComparison.OrdinalIgnoreCase) == 0;
 }

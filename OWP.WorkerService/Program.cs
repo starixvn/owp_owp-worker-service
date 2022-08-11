@@ -1,19 +1,21 @@
-using OWP.WorkerService;
+using OWP.Core.RabbitMq.Models;
+using OWP.WorkerService.Extensions;
 using OWP.WorkerService.Scheduler;
 
 var builder = WebApplication.CreateBuilder(args);
-
 builder.Services.AddCoreServices();
 builder.Services.AddFanexServices(builder.Configuration);
 builder.Services.AddRedisServices(builder.Configuration);
 builder.Services.AddOneBookUmServices(builder.Configuration);
 builder.Services.AddInternalServices(builder.Configuration);
-builder.Services.InitializeRabbitMq(builder.Configuration);
-builder.Services.AddRedisPubSub();
+builder.Services.AddRabbitMq(builder.Configuration);
 builder.Services.AddJobsServices();
 builder.Services.AddHostedService<OWPScheduler>();
 
 var app = builder.Build();
+
+app.UseRabbitMQ();
+
 app.Run(async context =>
 {
     var request = context.Request.Path.HasValue
