@@ -6,5 +6,6 @@ public static class Constant
     public const string LALastDateCacheKey = "OWP_SumReportData_LAReport_LastDate";
     public const string OvertimeLastDateCacheKey = "OWP_SumReportData_OvertimeReport_LastDate";
     public const string MatchLiveLastDateCacheKey = "OWP_SumReportData_MatchLiveReport_LastDate";
+    public const string PrematchLastDateCacheKey = "OWP_SumReportData_PrematchReport_LastDate";
     public const int CacheExpiredInDays = 1;
 }

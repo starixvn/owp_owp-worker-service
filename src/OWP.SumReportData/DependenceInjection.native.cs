@@ -1,4 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using OWP.SumReportData.PrematchReport;
+using OWP.SumReportData.PrematchReport.Services;
+using OWP.SumReportData.PrematchReport.Services.League;
+using OWP.SumReportData.PrematchReport.Services.Match;
 using OWP.SumReportData.Services;
 
 namespace OWP.SumReportData;
@@ -32,6 +36,20 @@ public static class DependenceInjection
 
         services.AddTransient<MatchLiveReport.Repository.ReportRepository, MatchLiveReport.Repository.ReportRepositoryImp>();
         services.AddTransient<MatchLiveReport.Services.ReportService, MatchLiveReport.Services.ReportServiceImp>();
+
+        // Prematch Report
+        services.AddTransient<Repository, RepositoryImp>();
+        services.AddTransient<DataReportService, DataReportBuilderServiceImp>();
+        services.AddTransient<DataMatchReportService, DataMatchReportServiceImp>();
+        services.AddTransient<LeagueService, LeagueServiceImp>();
+        services.AddTransient<OULeagueService, OULeagueServiceImp>();
+        services.AddTransient<HDPLeagueService, HDPLeagueServiceImp>();
+        services.AddTransient<MatchService, MatchServiceImp>();
+        services.AddTransient<OUMatchService, OUMatchServiceImp>();
+        services.AddTransient<HDPMatchService, HDPMatchServiceImp>();
+        services.AddTransient<DataReportService, DataReportBuilderServiceImp>();
+        services.AddTransient<DbWriterService, DbWriterServiceImp>();
+        services.AddTransient<PrematchReportService, PrematchReportServiceImp>();
 
         return services;
     }

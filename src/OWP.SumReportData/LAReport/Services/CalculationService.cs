@@ -7,7 +7,7 @@ namespace OWP.SumReportData.LAReport.Services;
 
 public interface CalculationService
 {
-    Task<IEnumerable<LAReportModel>> Calculate(DateTime eventDate);
+    Task<IEnumerable<LAReportModel>> Calculate(DateTime eventDate, bool isGenerateData);
 }
 
 public class CalculationServiceImp : CalculationService
@@ -29,9 +29,9 @@ public class CalculationServiceImp : CalculationService
         this.multipleAndSingleMatchesFactory = multipleAndSingleMatchesFactory;
     }
 
-    public async Task<IEnumerable<LAReportModel>> Calculate(DateTime eventDate)
+    public async Task<IEnumerable<LAReportModel>> Calculate(DateTime eventDate, bool isGenerateData)
     {
-        var assignments = await GetAssignmentDict(eventDate);
+        var assignments = await GetAssignmentDict(eventDate, isGenerateData);
         var userSections = await repository.GetUserSection();
 
         return Calculate(assignments, userSections);
@@ -51,9 +51,9 @@ public class CalculationServiceImp : CalculationService
         }
     }
 
-    private async Task<IDictionary<int, List<Assignment>>> GetAssignmentDict(DateTime eventDate)
+    private async Task<IDictionary<int, List<Assignment>>> GetAssignmentDict(DateTime eventDate, bool isGenerateData)
     {
-        var assignments = await repository.GetLAAssignment(eventDate);
+        var assignments = await repository.GetLAAssignment(eventDate, isGenerateData);
 
         var assignmentsDict = assignments.GroupBy(x => x.UserId)
             .Where(x => x.Any())

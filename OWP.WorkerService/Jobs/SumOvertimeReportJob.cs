@@ -41,17 +41,14 @@ public class SumOvertimeReportJob : IJob
             return;
         }
 
-        var lastDate = await cacheManipulator.GetLastDateOfSumData(Constant.OvertimeLastDateCacheKey);
+        var (isGenerateData, lastDate) = await cacheManipulator.GetLastDateForRegenerateData(Constant.OvertimeLastDateCacheKey);
+        var startDate = isGenerateData ? lastDate : DateTime.Today.AddDays(-3);
 
-        Console.WriteLine($"Job {this.GetType()} is starting at {DateTime.Now} for {lastDate}-{DateTime.Today}");
-
-        for (var date = lastDate; date <= DateTime.Today; date = date.AddDays(1))
+        for (var date = startDate; date < DateTime.Today; date = date.AddDays(1))
         {
-            await calculationService.SumOvertimeReport(date.AddDays(-1)).ConfigureAwait(false);
+            await calculationService.SumOvertimeReport(date).ConfigureAwait(false);
         }
 
-        await cacheManipulator.SaveLastDateOfSumData(Constant.OvertimeLastDateCacheKey, DateTime.Today);
-
-        Console.WriteLine($"Job {this.GetType()} finished at {DateTime.Now}");
+        await cacheManipulator.RemoveLastDateOfSumData(Constant.OvertimeLastDateCacheKey);
     }
 }

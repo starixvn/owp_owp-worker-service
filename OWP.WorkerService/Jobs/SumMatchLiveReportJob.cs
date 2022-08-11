@@ -41,17 +41,14 @@ public class SumMatchLiveReportJob : IJob
             return;
         }
 
-        var lastDate = await cacheManipulator.GetLastDateOfSumData(Constant.MatchLiveLastDateCacheKey);
+        var (isGenerateData, lastDate) = await cacheManipulator.GetLastDateForRegenerateData(Constant.MatchLiveLastDateCacheKey);
+        var startDate = isGenerateData ? lastDate : DateTime.Today.AddDays(-3);
 
-        Console.WriteLine($"Job {this.GetType()} is starting at {DateTime.Now} for {lastDate}-{DateTime.Today}");
-
-        for (var date = lastDate; date <= DateTime.Today; date = date.AddDays(1))
+        for (var date = startDate; date < DateTime.Today; date = date.AddDays(1))
         {
-            await service.Calculate(date.AddDays(-1)).ConfigureAwait(false);
+            await service.Calculate(date, isGenerateData).ConfigureAwait(false);
         }
 
-        await cacheManipulator.SaveLastDateOfSumData(Constant.MatchLiveLastDateCacheKey, DateTime.Today);
-
-        Console.WriteLine($"Job {this.GetType()} finished at {DateTime.Now}");
+        await cacheManipulator.RemoveLastDateOfSumData(Constant.MatchLiveLastDateCacheKey);
     }
 }

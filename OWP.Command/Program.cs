@@ -20,7 +20,6 @@ using OWP.MatchReadyNotification;
 using OWP.SumReportData;
 using OWP.SyncLeagueSettings;
 using OWP.ArchiveData;
-using OWP.PrematchReport;
 using OWP.OtherSport;
 
 #region Configuration
@@ -98,9 +97,30 @@ services.AddMatchReadyNotificationServices();
 services.AddSumReportDataServices();
 services.AddSyncLeagueSettingsServices();
 services.AddOtherSportServices();
-services.AddPrematchReportServices();
 services.AddArchiveDataServices();
 #endregion
 
-var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.TodaySyncService>();
-await apiService.Sync().ConfigureAwait(false);
+//var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.TodaySyncService>();
+//await apiService.Sync().ConfigureAwait(false);
+
+
+var startDate = new DateTime(2022, 01, 01);
+// Match Count Live Report
+var TraderApiService = services.BuildServiceProvider().GetService<OWP.SumReportData.TraderReport.Handler>();
+for (var date = startDate; date <= DateTime.Today; date = date.AddDays(1))
+{
+    await TraderApiService.Handle(date, true).ConfigureAwait(false);
+    Console.WriteLine($"Trader: {date}");
+}
+
+// Match Count Live Report
+var matchLiveApiService = services.BuildServiceProvider().GetService<OWP.SumReportData.MatchLiveReport.Services.ReportService>();
+for (var date = startDate; date < DateTime.Today; date = date.AddDays(1))
+{
+    await matchLiveApiService.Calculate(date, true).ConfigureAwait(false);
+    Console.WriteLine($"Match Count Live: {date}");
+}
+
+// Prematch Report
+var prematchApiService = services.BuildServiceProvider().GetService<OWP.SumReportData.PrematchReport.Services.PrematchReportService>();
+await prematchApiService.CalculateDataReport().ConfigureAwait(false);

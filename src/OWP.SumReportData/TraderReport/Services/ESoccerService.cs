@@ -6,7 +6,7 @@ namespace OWP.SumReportData.TraderReport.Services;
 
 public interface ESoccerService
 {
-    Task<IEnumerable<ESoccerByUser>> SumESoccerFields(DateTime eventDate);
+    Task<IEnumerable<ESoccerByUser>> SumESoccerFields(DateTime eventDate, bool isGenerateData);
 }
 
 public class ESoccerServiceImp : ESoccerService
@@ -18,9 +18,9 @@ public class ESoccerServiceImp : ESoccerService
         this.repository = repository;
     }
 
-    public async Task<IEnumerable<ESoccerByUser>> SumESoccerFields(DateTime eventDate)
+    public async Task<IEnumerable<ESoccerByUser>> SumESoccerFields(DateTime eventDate, bool isGenerateData)
     {
-        var saBaAssignments = await repository.GetSaBaAssignmentByDate(eventDate);
+        var saBaAssignments = await repository.GetSaBaAssignmentByDate(eventDate, isGenerateData);
         saBaAssignments.ForEach(x => x.ReportType = MapReportType(x));
 
         var saBaAssignmentDict = saBaAssignments

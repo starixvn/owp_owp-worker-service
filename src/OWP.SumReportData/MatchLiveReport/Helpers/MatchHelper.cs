@@ -80,7 +80,7 @@ public static class MatchHelper
     }
 
     public static string GetMainLeagueCategory(OWPMatch minorMatch, IEnumerable<OWPMatch> mainMatches)
-        => mainMatches.FirstOrDefault(x => x.OWPMatchId == minorMatch.ParentMatchId).LeagueCategory ?? minorMatch.LeagueCategory;
+        => mainMatches.FirstOrDefault(x => x.OWPMatchId == minorMatch.ParentMatchId)?.LeagueCategory ?? minorMatch.LeagueCategory;
 
     public static IEnumerable<OWPMatch> CategorizeMainMatches(IEnumerable<OWPMatch> matches)
     {

@@ -24,7 +24,7 @@ namespace OWP.PrematchReport.Services
 
         public async Task CalculateDataReport()
         {
-            var fromTime = new DateTime(2021, 01, 01); ;
+            var fromTime = new DateTime(2021, 01, 01);
             var toTime = DateTime.Today;
 
             for (DateTime date = fromTime; date < toTime; date = date.AddDays(1))
