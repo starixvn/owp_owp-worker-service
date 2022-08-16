@@ -22,4 +22,8 @@
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\OWP.SumReportData\OWP.SumReportData.csproj" />
+	</ItemGroup>
 </Project>

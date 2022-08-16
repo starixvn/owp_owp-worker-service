@@ -24,15 +24,11 @@ public static class CronExpressionJob
 
     public const string LinkLeagueAndMatch = "0 0 2 ? * MON *"; //2AM every Monday GMT-4
 
-    public const string SumOvertimeReport = "0 0 2 ? * * *"; //2AM everyday GMT-4
+    public const string SumDataReport = "0 0 2 ? * * *"; //2AM everyday GMT-4
 
     public const string SyncOtherSportAdminSiteJob = "0 0/2 * 1/1 * ? *"; //2mins
 
-    public const string PrematchReport = "0 0 2 ? * * *"; //2AM everyday GMT-4;
-
     public const string DeleteOldMessage = "0 0 4 ? * * *"; //4AM everyday GMT-4;
-        
-    public const string MatchLiveReport = "0 0 2 ? * * *"; //2AM everyday GMT-4;
 
     public const string ArchiveData = "0 10/59 0/12 ? * * *"; //at 12:10 am/pm everyday GMT-4
 }

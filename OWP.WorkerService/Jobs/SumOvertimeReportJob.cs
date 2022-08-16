@@ -46,7 +46,7 @@ public class SumOvertimeReportJob : IJob
 
         for (var date = startDate; date < DateTime.Today; date = date.AddDays(1))
         {
-            await calculationService.SumOvertimeReport(date).ConfigureAwait(false);
+            await calculationService.SumOvertimeReport(date, isGenerateData).ConfigureAwait(false);
         }
 
         await cacheManipulator.RemoveLastDateOfSumData(Constant.OvertimeLastDateCacheKey);

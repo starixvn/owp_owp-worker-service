@@ -18,19 +18,22 @@
 		<Setting Key="OWP_GetLeaderSupervisorSectionHeadOfSession"  SpName="OWP_GetLeaderSupervisorSectionHeadOfSession" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 		<Setting Key="OWP_SyncNotification_MessageInsert"  SpName="OWP_SyncNotification_MessageInsert" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 	</Function>
-	<Function Name="SumReportData">
+	<Function Name="TraderReport">
 		<Setting Key="OWP_LSTReport_ListTraderAssigmmentsX3" SpName="OWP_LSTReport_ListTraderAssigmmentsX3" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
 		<Setting Key="OWP_LSTReport_ListTraderAssigmmentsX5" SpName="OWP_LSTReport_ListTraderAssigmmentsX5" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
 		<Setting Key="OWP_TraderReportUpdateNonRobotFields" SpName="OWP_TraderReportUpdateNonRobotFields" DbName="DBOWP.bodb_OWP.bodbOWPNet" TimeOut="600"></Setting>
 		<Setting Key="OWP_TraderReportUpdateRobotFields" SpName="OWP_TraderReportUpdateRobotFields" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
 		<Setting Key="OWP_TraderReport_GetSaBaAssignments" SpName="OWP_TraderReport_GetSaBaAssignments" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
 		<Setting Key="OWP_TraderReport_UpdateESoccerFields" SpName="OWP_TraderReport_UpdateESoccerFields" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
-		<Setting Key="OWP_UserSectionsSel" SpName="OWP_UserSectionsSel" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
-		<Setting Key="OWP_LAAssignmentsSel" SpName="OWP_LAAssignmentsSel" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
-		<Setting Key="OWP_LAReportUpdate" SpName="OWP_LAReportUpdate" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
+		<Setting Key="OWP_TraderReport_GetOldAndNewSaBaAssignments" SpName="OWP_TraderReport_GetOldAndNewSaBaAssignments" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
 		<Setting Key="OWP_LSTReport_OldAndNewListTraderAssigmmentsX3" SpName="OWP_LSTReport_OldAndNewListTraderAssigmmentsX3" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
 		<Setting Key="OWP_LSTReport_OldAndNewListTraderAssigmmentsX5" SpName="OWP_LSTReport_OldAndNewListTraderAssigmmentsX5" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
-		<Setting Key="OWP_TraderReport_GetOldAndNewSaBaAssignments" SpName="OWP_TraderReport_GetOldAndNewSaBaAssignments" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
+	</Function>
+	<Function Name="LAReport">
+		<Setting Key="OWP_UserSectionsSel" SpName="OWP_UserSectionsSel" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
+		<Setting Key="OWP_LAAssignmentsSel" SpName="OWP_LAAssignmentsSel" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
+		<Setting Key="OWP_LAAssignmentsOldSel" SpName="OWP_LAAssignmentsOldSel" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
+		<Setting Key="OWP_LAReportUpdate" SpName="OWP_LAReportUpdate" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
 	</Function>
 	<Function Name="ArchiveData">
 		<Setting Key="OWP_CopyDataToOldTable" SpName="OWP_CopyDataToOldTable" DbName="DBOWP.bodb_OWP.bodbOWPNet" TimeOut="600"></Setting>
@@ -66,7 +69,9 @@
 	<Function Name="OvertimeReport">
 		<Setting Key="OWP_OvertimeReport_SaveOvertimeReport"  SpName="OWP_OvertimeReport_SaveOvertimeReport" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 		<Setting Key="OWP_OvertimeReport_GetTradersAssignments"  SpName="OWP_OvertimeReport_GetTradersAssignments" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+		<Setting Key="OWP_OvertimeReport_GetOldAndNewTradersAssignments"  SpName="OWP_OvertimeReport_GetOldAndNewTradersAssignments" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 		<Setting Key="OWP_OvertimeReport_GetEmployeeWorkingShift"  SpName="OWP_OvertimeReport_GetEmployeeWorkingShift" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+		<Setting Key="OWP_OvertimeReport_GetOldAndNewEmployeeWorkingShift"  SpName="OWP_OvertimeReport_GetOldAndNewEmployeeWorkingShift" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 	</Function>
 	<Function Name="OtherSport">
 		<Setting Key="OWP_OtherSport_GetMatchesFromDate" SpName="OWP_OtherSport_GetMatchesFromDate" DbName="DBOWP.bodb_OWP.bodbOWPNet" />

@@ -22,9 +22,9 @@ namespace OWP.SumReportData.UnitTests.TraderReport
         [Fact]
         public async Task SumESoccerFields()
         {
-            repository.GetSaBaAssignmentByDate(Arg.Any<DateTime>()).Returns(MockAssignments());
+            repository.GetSaBaAssignmentByDate(Arg.Any<DateTime>(), false).Returns(MockAssignments());
 
-            var result = await service.SumESoccerFields(new DateTime(2022, 1, 20));
+            var result = await service.SumESoccerFields(new DateTime(2022, 1, 20), false);
 
             DeepAssert.Equal(MockExpect(), result.ToList());
         }

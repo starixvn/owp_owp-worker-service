@@ -1,11 +1,11 @@
 ﻿using NSubstitute;
-using OWP.PrematchReport.Models;
-using OWP.PrematchReport.Services;
-using OWP.PrematchReport.Services.Match;
+using OWP.SumReportData.PrematchReport.Models;
+using OWP.SumReportData.PrematchReport.Services;
+using OWP.SumReportData.PrematchReport.Services.Match;
 using Xunit;
 using Xunit.Asserts.Compare;
 
-namespace OWP.PrematchReport.UnitTests.Services.Match
+namespace OWP.SumReportData.PrematchReport.UnitTests.Services.Match
 {
     public class DataMatchReportServiceUnitests
     {

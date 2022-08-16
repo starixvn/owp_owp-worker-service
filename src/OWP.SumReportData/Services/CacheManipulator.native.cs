@@ -7,8 +7,6 @@ public interface CacheManipulator
 {
     Task<(bool, DateTime)> GetLastDateForRegenerateData(string cacheKey);
 
-    //Task SaveLastDateOfSumData(string cacheKey, DateTime date);
-
     Task RemoveLastDateOfSumData(string cacheKey);
 }
 

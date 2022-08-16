@@ -17,7 +17,6 @@ using OWP.InfositeIdSync;
 using OWP.LinkLeagueAndTeam;
 using OWP.MatchReadyNotification;
 using OWP.OtherSport;
-using OWP.PrematchReport;
 using OWP.SumReportData;
 using OWP.SyncLeagueSettings;
 using OWP.WorkerService.Jobs;
@@ -102,7 +101,6 @@ public static class ServiceCollectionExtensions
         services.AddOWPCoreServices();
         services.AddInfositeIdSyncServices();
         services.AddLinkLeagueAndTeamServices();
-        services.AddPrematchReportServices();
         services.AddMatchReadyNotificationServices();
         services.AddSumReportDataServices();
         services.AddSyncLeagueSettingsServices();
