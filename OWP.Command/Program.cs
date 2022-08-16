@@ -21,7 +21,6 @@ using OWP.SumReportData;
 using OWP.SyncLeagueSettings;
 using OWP.ArchiveData;
 using OWP.OtherSport;
-using OWP.WorkerService.Jobs;
 
 #region Configuration
 

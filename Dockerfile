@@ -14,7 +14,6 @@ COPY ./src/OWP.MatchReadyNotification/. ./src/OWP.MatchReadyNotification
 COPY ./src/OWP.OtherSport/. ./src/OWP.OtherSport
 COPY ./src/OWP.SumReportData/. ./src/OWP.SumReportData
 COPY ./src/OWP.SyncLeagueSettings/. ./src/OWP.SyncLeagueSettings
-COPY ./src/OWP.PrematchReport/. ./src/OWP.PrematchReport
 COPY ./src/OWP.ArchiveData/. ./src/OWP.ArchiveData
 COPY ./OWP.WorkerService/OWP.WorkerService.csproj ./OWP.WorkerService/OWP.WorkerService.csproj
 
