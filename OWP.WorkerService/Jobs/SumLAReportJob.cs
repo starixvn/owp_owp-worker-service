@@ -41,17 +41,14 @@ public class SumLAReportJob : IJob
             return;
         }
 
-        var lastDate = await cacheManipulator.GetLastDateOfSumData(Constant.LALastDateCacheKey);
+        var (isGenerateData, lastDate) = await cacheManipulator.GetLastDateForRegenerateData(Constant.LALastDateCacheKey);
+        var startDate = isGenerateData ? lastDate : DateTime.Today.AddDays(-2);
 
-        Console.WriteLine($"Job {this.GetType()} is starting at {DateTime.Now} for {lastDate}-{DateTime.Today}");
-
-        for (var date = lastDate; date <= DateTime.Today; date = date.AddDays(1))
+        for (var date = startDate; date <= DateTime.Today; date = date.AddDays(1))
         {
-            await handler.Handle(date).ConfigureAwait(false);
+            await handler.Handle(date, isGenerateData).ConfigureAwait(false);
         }
 
-        await cacheManipulator.SaveLastDateOfSumData(Constant.LALastDateCacheKey, DateTime.Today.AddDays(-1));
-
-        Console.WriteLine($"Job {this.GetType()} finished at {DateTime.Now}");
+        await cacheManipulator.RemoveLastDateOfSumData(Constant.LALastDateCacheKey);
     }
 }

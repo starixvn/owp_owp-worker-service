@@ -11,11 +11,11 @@ public interface TraderRepository
 
     Task UpdateRobotFields(DateTime eventDate, List<RobotByByUser> robotByByUsers);
 
-    Task<IEnumerable<RobotX3RawModel>> GetAssignmentsX3ByDate(DateTime eventDate);
+    Task<IEnumerable<RobotX3RawModel>> GetAssignmentsX3ByDate(DateTime eventDate, bool isGenerateData);
 
-    Task<IEnumerable<RobotX5RawModel>> GetAssignmentsX5ByDate(DateTime eventDate);
+    Task<IEnumerable<RobotX5RawModel>> GetAssignmentsX5ByDate(DateTime eventDate, bool isGenerateData);
 
-    Task<List<Assignment>> GetSaBaAssignmentByDate(DateTime eventDate);
+    Task<List<Assignment>> GetSaBaAssignmentByDate(DateTime eventDate, bool isGenerateData);
 
     Task UpdateESoccerFields(DateTime eventDate, IEnumerable<ESoccerByUser> eSoccerByUsers);
 }
@@ -50,36 +50,28 @@ public class TraderRepositoryImp : TraderRepository
         await repository.ExecuteAsync(command);
     }
 
-    public async Task<IEnumerable<RobotX3RawModel>> GetAssignmentsX3ByDate(DateTime eventDate)
+    public async Task<IEnumerable<RobotX3RawModel>> GetAssignmentsX3ByDate(DateTime eventDate, bool isGenerateData)
     {
-        var criteria = new GetAssignmentX3ByDateCriteria
-        {
-            FromDate = eventDate,
-            ToDate = eventDate
-        };
+        var criteria = new GetAssignmentX3ByDateCriteria { FromDate = eventDate, ToDate = eventDate };
+        var generatedCriteria = new GetOldAndNewAssignmentX3ByDateCriteria { FromDate = eventDate, ToDate = eventDate };
 
-        return await repository.FetchAsync<RobotX3RawModel>(criteria);
+        return await repository.FetchAsync<RobotX3RawModel>(isGenerateData ? generatedCriteria : criteria);
     }
 
-    public async Task<IEnumerable<RobotX5RawModel>> GetAssignmentsX5ByDate(DateTime eventDate)
+    public async Task<IEnumerable<RobotX5RawModel>> GetAssignmentsX5ByDate(DateTime eventDate, bool isGenerateData)
     {
-        var criteria = new GetAssignmentX5ByDateCriteria
-        {
-            FromDate = eventDate,
-            ToDate = eventDate
-        };
+        var criteria = new GetAssignmentX5ByDateCriteria { FromDate = eventDate, ToDate = eventDate };
+        var generatedCriteria = new GetOldAndNewAssignmentX5ByDateCriteria { FromDate = eventDate, ToDate = eventDate };
 
-        return await repository.FetchAsync<RobotX5RawModel>(criteria);
+        return await repository.FetchAsync<RobotX5RawModel>(isGenerateData ? generatedCriteria : criteria);
     }
 
-    public async Task<List<Assignment>> GetSaBaAssignmentByDate(DateTime eventDate)
+    public async Task<List<Assignment>> GetSaBaAssignmentByDate(DateTime eventDate, bool isGenerateData)
     {
-        var criteria = new GetSaBaAssignmentsCriteria
-        {
-            EventDate = eventDate
-        };
+        var criteria = new GetSaBaAssignmentsCriteria { EventDate = eventDate };
+        var generatedCriteria = new GetOldAndNewSaBaAssignmentsCriteria { EventDate = eventDate };
 
-        return (await repository.FetchAsync<Assignment>(criteria)).ToList();
+        return (await repository.FetchAsync<Assignment>(isGenerateData ? generatedCriteria : criteria)).ToList();
     }
 
     public async Task UpdateESoccerFields(DateTime eventDate, IEnumerable<ESoccerByUser> eSoccerByUsers)

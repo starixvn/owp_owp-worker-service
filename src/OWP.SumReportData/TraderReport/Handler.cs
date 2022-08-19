@@ -4,7 +4,7 @@ namespace OWP.SumReportData.TraderReport;
 
 public interface Handler
 {
-    Task Handle(DateTime eventDate);
+    Task Handle(DateTime eventDate, bool isGenerateData = false);
 }
 
 public class HandlerImp : Handler
@@ -20,10 +20,10 @@ public class HandlerImp : Handler
         this.eSoccerService = eSoccerService;
     }
 
-    public async Task Handle(DateTime eventDate)
+    public async Task Handle(DateTime eventDate, bool isGenerateData)
     {
-        var robotByByUsers = await robotService.SumRobotFields(eventDate);
-        var eSoccerByUsers = await eSoccerService.SumESoccerFields(eventDate);
+        var robotByByUsers = await robotService.SumRobotFields(eventDate, isGenerateData);
+        var eSoccerByUsers = await eSoccerService.SumESoccerFields(eventDate, isGenerateData);
 
         await repository.UpdateNoneRobotFields(eventDate);
         await repository.UpdateRobotFields(eventDate, robotByByUsers);

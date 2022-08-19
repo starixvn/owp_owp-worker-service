@@ -5,7 +5,7 @@ namespace OWP.SumReportData.TraderReport.Services;
 
 public interface RobotService
 {
-    Task<List<RobotByByUser>> SumRobotFields(DateTime eventDate);
+    Task<List<RobotByByUser>> SumRobotFields(DateTime eventDate, bool isGenerateData);
 }
 
 public class RobotServiceImp : RobotService
@@ -22,27 +22,27 @@ public class RobotServiceImp : RobotService
         this.robotX5Service = robotX5Service;
     }
 
-    public async Task<List<RobotByByUser>> SumRobotFields(DateTime eventDate)
+    public async Task<List<RobotByByUser>> SumRobotFields(DateTime eventDate, bool isGenerateData)
     {
-        var robotX3ByUsers = await GetX3Fields(eventDate);
-        var robotX5ByUsers = await GetX5Fields(eventDate);
+        var robotX3ByUsers = await GetX3Fields(eventDate, isGenerateData);
+        var robotX5ByUsers = await GetX5Fields(eventDate, isGenerateData);
 
         var aggregatedResult = Aggregate(robotX3ByUsers, robotX5ByUsers);
 
         return aggregatedResult.ToList();
     }
 
-    private async Task<Dictionary<int, RobotX3ByUser>> GetX3Fields(DateTime eventDate)
+    private async Task<Dictionary<int, RobotX3ByUser>> GetX3Fields(DateTime eventDate, bool isGenerateData)
     {
-        var rawX3Assignments = await repository.GetAssignmentsX3ByDate(eventDate);
+        var rawX3Assignments = await repository.GetAssignmentsX3ByDate(eventDate, isGenerateData);
         var robotX3ByUsers = robotX3Service.Aggregate(rawX3Assignments.ToList());
 
         return robotX3ByUsers.ToDictionary(u => u.UserId, u => u);
     }
 
-    private async Task<Dictionary<int, RobotX5ByUser>> GetX5Fields(DateTime eventDate)
+    private async Task<Dictionary<int, RobotX5ByUser>> GetX5Fields(DateTime eventDate, bool isGenerateData)
     {
-        var rawX5Assignments = await repository.GetAssignmentsX5ByDate(eventDate);
+        var rawX5Assignments = await repository.GetAssignmentsX5ByDate(eventDate, isGenerateData);
         var robotX5ByUsers = robotX5Service.Aggregate(rawX5Assignments.ToList());
 
         return robotX5ByUsers.ToDictionary(u => u.UserId, u => u);

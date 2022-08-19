@@ -24,6 +24,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\OWP.PrematchReport\OWP.PrematchReport.csproj" />
+	  <ProjectReference Include="..\..\src\OWP.SumReportData\OWP.SumReportData.csproj" />
 	</ItemGroup>
 </Project>

@@ -5,9 +5,9 @@ namespace OWP.SumReportData.Services;
 
 public interface CacheManipulator
 {
-    Task<DateTime> GetLastDateOfSumData(string cacheKey);
+    Task<(bool, DateTime)> GetLastDateForRegenerateData(string cacheKey);
 
-    Task SaveLastDateOfSumData(string cacheKey, DateTime date);
+    Task RemoveLastDateOfSumData(string cacheKey);
 }
 
 public class CacheManipulatorImp : CacheManipulator
@@ -19,14 +19,20 @@ public class CacheManipulatorImp : CacheManipulator
         this.cache = cache;
     }
 
-    public async Task<DateTime> GetLastDateOfSumData(string cacheKey)
+    public async Task<(bool, DateTime)> GetLastDateForRegenerateData(string cacheKey)
     {
-        var result = await cache.TryGetAsync<String>(cacheKey);
+        var result = await cache.TryGetAsync<string>(cacheKey);
+        var isGenerateData = result.Item1;
         var dateString = result.Item2 ?? string.Empty;
 
         bool isDate = DateTime.TryParse(dateString, out var date);
 
-        return isDate ? date : DateTime.Today.AddDays(-2);
+        return (isGenerateData, isDate ? date : DateTime.Today);
+    }
+
+    public async Task RemoveLastDateOfSumData(string cacheKey)
+    {
+        await cache.RemoveAsync(cacheKey);
     }
 
     public async Task SaveLastDateOfSumData(string cacheKey, DateTime date)

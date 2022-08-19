@@ -25,7 +25,7 @@ public class RobotServiceUnitTests
         robotX5Service.Aggregate(Arg.Compat.Any<List<RobotX5RawModel>>()).Returns(x5FakeData);
 
         // Act
-        var actual = await service.SumRobotFields(DateTime.Today);
+        var actual = await service.SumRobotFields(DateTime.Today, false);
 
         // Assert
         var expected = CreateExpectedData();

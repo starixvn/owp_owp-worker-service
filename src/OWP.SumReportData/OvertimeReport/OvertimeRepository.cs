@@ -7,9 +7,9 @@ namespace OWP.SumReportData.OvertimeReport;
 
 public interface OvertimeRepository
 {
-    Task<IEnumerable<EmployeeWorkingShift>> GetEmployeeWorkingShift(DateTime date);
+    Task<IEnumerable<EmployeeWorkingShift>> GetEmployeeWorkingShift(DateTime date, bool isGenerateData);
 
-    Task<(IEnumerable<Assignment>, IEnumerable<MainMatch>)> GetTradersAssignments(DateTime date, IEnumerable<int> userIds);
+    Task<(IEnumerable<Assignment>, IEnumerable<MainMatch>)> GetTradersAssignments(DateTime date, IEnumerable<int> userIds, bool isGenerateData);
 
     Task SaveData(DateTime date, IEnumerable<OvertimeData> data);
 }
@@ -23,11 +23,19 @@ public class OvertimeRepositoryImp : OvertimeRepository
         _repository = dynamicRepository;
     }
 
-    public async Task<IEnumerable<EmployeeWorkingShift>> GetEmployeeWorkingShift(DateTime date)
-        => await _repository.FetchAsync<EmployeeWorkingShift>(new GetEmployeeWorkingShiftCriteria { EventDate = date });
+    public async Task<IEnumerable<EmployeeWorkingShift>> GetEmployeeWorkingShift(DateTime date, bool isGenerateData)
+        => await _repository.FetchAsync<EmployeeWorkingShift>(isGenerateData
+            ? new GetOldAndNewEmployeeWorkingShiftCriteria { EventDate = date }
+            : new GetEmployeeWorkingShiftCriteria { EventDate = date });
 
-    public async Task<(IEnumerable<Assignment>, IEnumerable<MainMatch>)> GetTradersAssignments(DateTime date, IEnumerable<int> userIds)
-        => await _repository.FetchMultipleAsync<Assignment, MainMatch>(new GetTradersAssignmentsCriteria
+    public async Task<(IEnumerable<Assignment>, IEnumerable<MainMatch>)> GetTradersAssignments(DateTime date, IEnumerable<int> userIds, bool isGenerateData)
+        => await _repository.FetchMultipleAsync<Assignment, MainMatch>(isGenerateData
+        ? new GetGetOldAndNewTradersAssignmentsCriteria
+        {
+            EventDate = date,
+            UserIds = string.Join(",", userIds)
+        }
+        : new GetTradersAssignmentsCriteria
         {
             EventDate = date,
             UserIds = string.Join(",", userIds)

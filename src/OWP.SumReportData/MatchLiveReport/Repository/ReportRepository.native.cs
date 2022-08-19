@@ -9,7 +9,7 @@ public interface ReportRepository
 {
     Task InsertData(IEnumerable<ReportModel> reportData, DateTime eventDate);
 
-    Task<(IEnumerable<OWPMatch>, IEnumerable<OWPMatch>)> QueryMatchesByDate(DateTime eventDate);
+    Task<(IEnumerable<OWPMatch>, IEnumerable<OWPMatch>)> QueryMatchesByDate(DateTime eventDate, bool isGenerateData);
 
     Task<IEnumerable<int>> GetSaba5minOWPMatchId(IList<int> Ids);
 }
@@ -26,9 +26,11 @@ public class ReportRepositoryImp : ReportRepository
     public async Task InsertData(IEnumerable<ReportModel> reportData, DateTime eventDate)
         => await dynamicRepository.ExecuteAsync(new InsertReportDataCriteria { Data = XmlConverter.Serialize(reportData), EventDate = eventDate });
 
-    public async Task<(IEnumerable<OWPMatch>, IEnumerable<OWPMatch>)> QueryMatchesByDate(DateTime eventDate)
-        => await dynamicRepository.FetchMultipleAsync<OWPMatch, OWPMatch>(new QueryMatchesByDateCriteria { EventDate = eventDate });
-    
+    public async Task<(IEnumerable<OWPMatch>, IEnumerable<OWPMatch>)> QueryMatchesByDate(DateTime eventDate, bool isGenerateData)
+    => await dynamicRepository.FetchMultipleAsync<OWPMatch, OWPMatch>(isGenerateData
+            ? new QueryFullMatchesByDateCriteria { EventDate = eventDate }
+            : new QueryMatchesByDateCriteria { EventDate = eventDate });
+
     public async Task<IEnumerable<int>> GetSaba5minOWPMatchId(IList<int> Ids)
     {
         var criteria = new GetSabaFiveMinMatchIdCriteria

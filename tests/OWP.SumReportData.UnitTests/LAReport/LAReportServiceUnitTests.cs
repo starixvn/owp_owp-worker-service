@@ -19,7 +19,7 @@ public class LAReportServiceUnitTests
         var calculationService = CreateCalculationService();
 
         //Act
-        var actual = (await calculationService.Calculate(DateTime.Today)).ToList();
+        var actual = (await calculationService.Calculate(DateTime.Today, false)).ToList();
 
         //Assert
         var expected = CreateExpectedLAReportModel();
@@ -31,7 +31,7 @@ public class LAReportServiceUnitTests
         var assignments = CreateFakeAssignments();
         var sections = CreateFakeUserSections();
         var queryRepository = Substitute.For<LARepository>();
-        queryRepository.GetLAAssignment(Arg.Compat.Any<DateTime>()).Returns(assignments);
+        queryRepository.GetLAAssignment(Arg.Compat.Any<DateTime>(), false).Returns(assignments);
         queryRepository.GetUserSection().Returns(sections);
 
         var specialProductFactory = Substitute.For<SpecialProductFactory>();

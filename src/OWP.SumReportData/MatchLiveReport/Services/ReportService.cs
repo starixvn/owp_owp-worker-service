@@ -11,7 +11,7 @@ namespace OWP.SumReportData.MatchLiveReport.Services;
 
 public interface ReportService
 {
-    Task Calculate(DateTime eventDate);
+    Task Calculate(DateTime eventDate, bool isGenerateData = false);
 
     IEnumerable<ReportModel> Calculate(DateTime eventDate, IEnumerable<OWPMatch> minorMatches, IEnumerable<OWPMatch> mainMatches, IEnumerable<OWPMatch> sabaMatches);
 }
@@ -25,9 +25,9 @@ public class ReportServiceImp : ReportService
         this.reportRepository = reportRepository;
     }
 
-    public async Task Calculate(DateTime eventDate)
+    public async Task Calculate(DateTime eventDate, bool isGenerateData)
     {
-        var (totalMatches, mainMatches) = await reportRepository.QueryMatchesByDate(eventDate);
+        var (totalMatches, mainMatches) = await reportRepository.QueryMatchesByDate(eventDate, isGenerateData);
 
         var minorMatchesCategorized = MatchHelper.CategorizeMinorMatches(totalMatches, mainMatches);
         var mainMatchesCategorized = MatchHelper.CategorizeMainMatches(totalMatches);
@@ -47,10 +47,7 @@ public class ReportServiceImp : ReportService
 
         var result = Calculate(eventDate, minorMatchesCategorized, mainMatchesCategorized, sabaMatchesGrouped);
 
-        if (result.Any())
-        {
-            await reportRepository.InsertData(result, eventDate);
-        }
+        await reportRepository.InsertData(result, eventDate);
     }
 
     public IEnumerable<ReportModel> Calculate(DateTime eventDate, IEnumerable<OWPMatch> minorMatches, IEnumerable<OWPMatch> mainMatches, IEnumerable<OWPMatch> sabaMatches)

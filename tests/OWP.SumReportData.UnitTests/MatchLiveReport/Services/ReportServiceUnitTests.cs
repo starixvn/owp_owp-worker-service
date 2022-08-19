@@ -12,18 +12,6 @@ namespace OWP.SumReportData.UnitTests.MatchLiveReport.Helpers;
 public class ReportServiceUnitTests
 {
     [Fact]
-    public async Task Calculate_WithEmptyReport_ShouldNotInsertData()
-    {
-        var reportRepository = Substitute.For<ReportRepository>();
-        reportRepository.QueryMatchesByDate(Arg.Any<DateTime>()).Returns((new List<OWPMatch>(), new List<OWPMatch>()));
-        var service = new ReportServiceImp(reportRepository);
-
-        await service.Calculate(DateTime.Today);
-
-        await reportRepository.DidNotReceive().InsertData(Arg.Any<IEnumerable<ReportModel>>(), Arg.Any<DateTime>());
-    }
-
-    [Fact]
     public async Task Calculate_WithNotEmptyReport_ShouldInsertData()
     {
         var reportRepository = Substitute.For<ReportRepository>();
@@ -49,10 +37,10 @@ public class ReportServiceUnitTests
                 OWPMatchId = 2
             }
         };
-        reportRepository.QueryMatchesByDate(Arg.Any<DateTime>()).Returns((matches, mainMatches));
+        reportRepository.QueryMatchesByDate(Arg.Any<DateTime>(), false).Returns((matches, mainMatches));
         var service = new ReportServiceImp(reportRepository);
 
-        await service.Calculate(DateTime.Today);
+        await service.Calculate(DateTime.Today, false);
 
         await reportRepository.Received().InsertData(Arg.Any<IEnumerable<ReportModel>>(), Arg.Any<DateTime>());
     }
@@ -61,7 +49,7 @@ public class ReportServiceUnitTests
     public void Calculate_WithMatches_ShouldReturnReportModel()
     {
         var reportRepository = Substitute.For<ReportRepository>();
-        reportRepository.QueryMatchesByDate(Arg.Any<DateTime>()).Returns((new List<OWPMatch>(), new List<OWPMatch>()));
+        reportRepository.QueryMatchesByDate(Arg.Any<DateTime>(), false).Returns((new List<OWPMatch>(), new List<OWPMatch>()));
         var service = new ReportServiceImp(reportRepository);
         var eventDate = DateTime.Today;
 

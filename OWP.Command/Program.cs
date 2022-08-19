@@ -20,7 +20,6 @@ using OWP.MatchReadyNotification;
 using OWP.SumReportData;
 using OWP.SyncLeagueSettings;
 using OWP.ArchiveData;
-using OWP.PrematchReport;
 using OWP.OtherSport;
 
 #region Configuration
@@ -98,9 +97,8 @@ services.AddMatchReadyNotificationServices();
 services.AddSumReportDataServices();
 services.AddSyncLeagueSettingsServices();
 services.AddOtherSportServices();
-services.AddPrematchReportServices();
 services.AddArchiveDataServices();
 #endregion
 
-var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.TodaySyncService>();
-await apiService.Sync().ConfigureAwait(false);
+//var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.TodaySyncService>();
+//await apiService.Sync().ConfigureAwait(false);

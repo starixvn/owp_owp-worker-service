@@ -6,7 +6,7 @@ namespace OWP.SumReportData.OvertimeReport.Services;
 
 public interface ReportCalculationService
 {
-    Task SumOvertimeReport(DateTime date);
+    Task SumOvertimeReport(DateTime date, bool isGenerateData = false);
 }
 
 public class ReportCalculationServiceImp : ReportCalculationService
@@ -18,24 +18,21 @@ public class ReportCalculationServiceImp : ReportCalculationService
         this.repository = repository;
     }
 
-    public async Task SumOvertimeReport(DateTime date)
+    public async Task SumOvertimeReport(DateTime date, bool isGenerateData)
     {
-        var reportData = await CalculateOvertimeReport(date);
+        var reportData = await CalculateOvertimeReport(date, isGenerateData);
 
-        if (reportData.Any())
-        {
-            await repository.SaveData(date, reportData);
-        }
+        await repository.SaveData(date, reportData);
     }
 
-    public async Task<IEnumerable<OvertimeData>> CalculateOvertimeReport(DateTime date)
+    public async Task<IEnumerable<OvertimeData>> CalculateOvertimeReport(DateTime date, bool isGenerateData)
     {
-        var workingShifts = await repository.GetEmployeeWorkingShift(date);
+        var workingShifts = await repository.GetEmployeeWorkingShift(date, isGenerateData);
 
         if (workingShifts.Any())
         {
             var userIds = workingShifts.Select(x => x.EmployeeId);
-            var (assignments, mainMatchRemarks) = await repository.GetTradersAssignments(date, userIds);
+            var (assignments, mainMatchRemarks) = await repository.GetTradersAssignments(date, userIds, isGenerateData);
             var timeShifts = workingShifts.Where(x => !x.RefShiftId.HasValue);
             var offShifts = workingShifts.Where(x => x.RefShiftId.HasValue);
             var timeShiftUsers = timeShifts.Select(x => x.EmployeeId);

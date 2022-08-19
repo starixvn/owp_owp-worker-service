@@ -9,7 +9,7 @@ public interface LARepository
 {
     Task Update(DateTime eventDate, IEnumerable<LAReportModel> laReportModels);
 
-    Task<IEnumerable<Assignment>> GetLAAssignment(DateTime eventDate);
+    Task<IEnumerable<Assignment>> GetLAAssignment(DateTime eventDate, bool isGenerateData);
 
     Task<Dictionary<int, string>> GetUserSection();
 }
@@ -34,14 +34,20 @@ public class LARepositoryImp : LARepository
         await repository.ExecuteAsync(command);
     }
 
-    public async Task<IEnumerable<Assignment>> GetLAAssignment(DateTime eventDate)
+    public async Task<IEnumerable<Assignment>> GetLAAssignment(DateTime eventDate, bool isGenerateData)
     {
         var criteria = new GetLAAssignmentCriteria
         {
             FromDate = eventDate,
             ToDate = eventDate
         };
-        return await repository.FetchAsync<Assignment>(criteria);
+        var generatedCriteria = new GetOldAndNewLAAssignmentCriteria
+        {
+            FromDate = eventDate,
+            ToDate = eventDate
+        };
+
+        return await repository.FetchAsync<Assignment>(isGenerateData ? generatedCriteria : criteria);
     }
 
     public async Task<Dictionary<int, string>> GetUserSection()
