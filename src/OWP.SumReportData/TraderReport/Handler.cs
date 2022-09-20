@@ -20,7 +20,7 @@ public class HandlerImp : Handler
         this.eSoccerService = eSoccerService;
     }
 
-    public async Task Handle(DateTime eventDate, bool isGenerateData)
+    public async Task Handle(DateTime eventDate, bool isGenerateData = false)
     {
         var robotByByUsers = await robotService.SumRobotFields(eventDate, isGenerateData);
         var eSoccerByUsers = await eSoccerService.SumESoccerFields(eventDate, isGenerateData);

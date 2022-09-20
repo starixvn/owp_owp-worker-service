@@ -15,18 +15,15 @@ public class CalculationServiceImp : CalculationService
     private readonly LARepository repository;
     private readonly SpecialProductFactory specialProductFactory;
     private readonly MainMatchRuleFactory mainMatchRuleFactory;
-    private readonly MultipleAndSingleMatchesFactory multipleAndSingleMatchesFactory;
-
-    private readonly string[] multipleMatchesProviders =
-        { "RB2", "IPSD", "RTS", "BG", "BET", "RB2tv", "RB2(tv)", "BG(tv)", "BGtv", "BET(tv)", "BET(s)", "BETtv" };
+    private readonly SingleMatchesFactory singleMatchesFactory;
 
     public CalculationServiceImp(LARepository repository, SpecialProductFactory specialProductFactory,
-        MainMatchRuleFactory mainMatchRuleFactory, MultipleAndSingleMatchesFactory multipleAndSingleMatchesFactory)
+        MainMatchRuleFactory mainMatchRuleFactory, SingleMatchesFactory singleMatchesFactory)
     {
         this.repository = repository;
         this.specialProductFactory = specialProductFactory;
         this.mainMatchRuleFactory = mainMatchRuleFactory;
-        this.multipleAndSingleMatchesFactory = multipleAndSingleMatchesFactory;
+        this.singleMatchesFactory = singleMatchesFactory;
     }
 
     public async Task<IEnumerable<LAReportModel>> Calculate(DateTime eventDate, bool isGenerateData)
@@ -96,18 +93,16 @@ public class CalculationServiceImp : CalculationService
 
     private LAReportModel SumUpAssignments(int userId, IList<Assignment> assignments)
     {
-        var emptyResult = new LAReportModel { UserId = userId };
-        var specialAndMixedAndESoccerResult = SumUpSpecialAndMixedAndESoccer(assignments, emptyResult);
-        var fullResult = SumUpMultipleAndSingle(assignments, specialAndMixedAndESoccerResult);
-        fullResult.TotalMatches = fullResult.SumTotal();
+        var sumUpResult = new LAReportModel { UserId = userId };
+        SumUpSpecialAndMixedAndESoccer(assignments, sumUpResult);
+        SumUpMultiple(assignments, sumUpResult);
+        SumUpSingleAndOthers(assignments, sumUpResult);
 
-        return fullResult;
+        return sumUpResult;
     }
 
-    private static LAReportModel SumUpSpecialAndMixedAndESoccer(IList<Assignment> assignments, LAReportModel result)
+    private static LAReportModel SumUpSpecialAndMixedAndESoccer(IList<Assignment> assignments, LAReportModel sumUpResult)
     {
-        var sumUpResult = result;
-
         //SPECIAL PRODUCTS
         var tbookingProducts = assignments.Where(x => x.ReportType == ReportType.TOTAL_BOOKING_PLUS)
             .GroupBy(x => x.ParentMatchId).Select(y => y.Key);
@@ -151,138 +146,81 @@ public class CalculationServiceImp : CalculationService
         return sumUpResult;
     }
 
-    private LAReportModel SumUpMultipleAndSingle(IList<Assignment> assignments, LAReportModel result)
+    private void SumUpMultiple(IList<Assignment> assignments, LAReportModel sumUpResult)
     {
-        var sumUpResult = result;
+        var othersTypeAssignments = assignments.Where(x => x.ReportType == ReportType.OTHERS);
+        var consecutiveMultipleMatchesAssignments = GroupMultipleMatches(othersTypeAssignments);
+        var matchGroupAsignments = consecutiveMultipleMatchesAssignments
+            .GroupBy(i => i.LinkGroup)
+            .Select(i => new { LinkGroup = i, MatchCount = i.Count() })
+            .ToArray();
+        var multipleMatchGroup = matchGroupAsignments.Where(x => x.MatchCount > 1).Select(x => x.LinkGroup).Select(x => x.Key);
+        var multipleLinkAssignments = assignments.Where(x => multipleMatchGroup.Contains(x.LinkGroup)).ToList();
+        multipleLinkAssignments.ToList().ForEach(x => { x.ReportType = ReportType.MULTIPLE_MATCHES; });
 
-        //OTHERS
+        sumUpResult.Link2 = matchGroupAsignments.Count(x => x.MatchCount == 2);
+        sumUpResult.Link3 = matchGroupAsignments.Count(x => x.MatchCount == 3);
+        sumUpResult.Link4 = matchGroupAsignments.Count(x => x.MatchCount == 4);
+        sumUpResult.Link5 = matchGroupAsignments.Count(x => x.MatchCount == 5);
+        sumUpResult.Link6 = matchGroupAsignments.Count(x => x.MatchCount == 6);
+        sumUpResult.Link7 = matchGroupAsignments.Count(x => x.MatchCount == 7);
+        sumUpResult.Link8Plus = matchGroupAsignments.Count(x => x.MatchCount >= 8);
+    }
+
+    private void SumUpSingleAndOthers(IEnumerable<Assignment> assignments, LAReportModel sumUpResult)
+    {
+        var singleMatchesRule = singleMatchesFactory.Create(RuleType.SINGLE);
         var othersTypeAssignments = assignments.Where(x => x.ReportType == ReportType.OTHERS);
 
-        var consecutiveMultipleMatchesAssignments = GroupMultipleMatches(othersTypeAssignments);
-        var singleMatchesAssignments = othersTypeAssignments.Where(x =>
-            !consecutiveMultipleMatchesAssignments.Select(y => y.AssignmentId).Contains(x.AssignmentId));
-        var countedMultipleAndSingleReport =
-            CountMultipleMatches(consecutiveMultipleMatchesAssignments, singleMatchesAssignments);
-        var matchGroupAsignments = consecutiveMultipleMatchesAssignments.GroupBy(i => i.LinkGroup)
-            .Select(i => new { LinkGroup = i, MatchCount = i.Count() })
-            .ToArray();
-        var twoMultipleConsecutiveMatches = matchGroupAsignments.Count(x => x.MatchCount == 2);
-        var x3MultipleConsecutiveMatches = matchGroupAsignments.Count(x => x.MatchCount >= 3 && x.MatchCount <= 5);
-        var x6MultipleConsecutiveMatches = matchGroupAsignments.Count(x => x.MatchCount >= 6 && x.MatchCount <= 8);
-        var x9MultipleConsecutiveMatches = matchGroupAsignments.Count(x => x.MatchCount >= 9);
-
-        sumUpResult.LinkLowerThan3 = countedMultipleAndSingleReport.LinkLowerThan3 + twoMultipleConsecutiveMatches;
-        sumUpResult.ProviderTv = countedMultipleAndSingleReport.ProviderTv;
-        sumUpResult.Provider = countedMultipleAndSingleReport.Provider;
-        sumUpResult.TV = countedMultipleAndSingleReport.TV;
-        sumUpResult.Reporter = countedMultipleAndSingleReport.Reporter;
-        sumUpResult.Others = countedMultipleAndSingleReport.Others;
-        sumUpResult.LinkX3 = x3MultipleConsecutiveMatches;
-        sumUpResult.LinkX6 = x6MultipleConsecutiveMatches;
-        sumUpResult.LinkX9Plus = x9MultipleConsecutiveMatches;
-
-        return sumUpResult;
-    }
-
-    private LAReportModel CountMultipleMatches(IEnumerable<Assignment> multipleMatchesAssignments,
-        IEnumerable<Assignment> singleMatchesAssignments)
-    {
-        var matchGroupAsignments = multipleMatchesAssignments.GroupBy(i => i.LinkGroup)
-            .Select(i => new { LinkGroup = i, MatchCount = i.Count() })
-            .ToArray();
-        var singleLinkGroups = matchGroupAsignments.Where(x => x.MatchCount == 1).Select(x => x.LinkGroup)
-            .Select(x => x.Key);
-        var singleLinkAssignments = multipleMatchesAssignments.Where(x => singleLinkGroups.Contains(x.LinkGroup));
-
-        var multipleMatchesRule = multipleAndSingleMatchesFactory.Create(RuleType.MULTIPLE);
-
-        var multipleSingleLinkCount = 0;
-
-        var otherAssignments = new List<Assignment>();
-
-        foreach (var assignment in singleLinkAssignments)
-        {
-            var reportType = multipleMatchesRule.Execute(assignment);
-
-            if (reportType == ReportType.SINGLE_LINK_LOWER_THAN3)
-            {
-                multipleSingleLinkCount += 1;
-            }
-            else
-            {
-                otherAssignments.Add(assignment);
-            }
-        }
-
-        var singleMatchesAssignmentsAndOthers = singleMatchesAssignments.Concat(otherAssignments);
-        var singleAndOthersResult = CountSingleAndOthers(singleMatchesAssignmentsAndOthers);
-
-        return new LAReportModel
-        {
-            LinkLowerThan3 = multipleSingleLinkCount,
-            ProviderTv = singleAndOthersResult.ProviderTv,
-            Provider = singleAndOthersResult.Provider,
-            TV = singleAndOthersResult.TV,
-            Reporter = singleAndOthersResult.Reporter,
-            Others = singleAndOthersResult.Others
-        };
-    }
-
-    private LAReportModel CountSingleAndOthers(IEnumerable<Assignment> singleMatchesAndOthersAssignments)
-    {
-        var singleMatchesRule = multipleAndSingleMatchesFactory.Create(RuleType.SINGLE);
-
-        var singleMatchesProviderTVCount = 0;
+        var singleMatchesMixedProductCount = 0;
         var singleMatchesProviderCount = 0;
         var singleMatchesTVCount = 0;
         var singleMatchesReporterCount = 0;
         var othersCounts = 0;
+        var otherMatchIds = new List<int>();
 
-        foreach (var assignment in singleMatchesAndOthersAssignments)
+        foreach (var assignment in othersTypeAssignments)
         {
             var reportType = singleMatchesRule.Execute(assignment);
-
             switch (reportType)
             {
-                case ReportType.PROVIDER_TV:
-                    singleMatchesProviderTVCount += 1;
+                case ReportType.MIXED_PROVIDER_TV_REPORTER:
+                    singleMatchesMixedProductCount += 1;
                     break;
 
-                case ReportType.PROVIDER:
+                case ReportType.ONLY_PROVIDER:
                     singleMatchesProviderCount += 1;
                     break;
 
-                case ReportType.TV:
+                case ReportType.ONLY_TV:
                     singleMatchesTVCount += 1;
                     break;
 
-                case ReportType.REPORTER:
+                case ReportType.ONLY_REPORTER:
                     singleMatchesReporterCount += 1;
                     break;
 
                 default:
                     othersCounts += 1;
+                    otherMatchIds.Add(assignment.OWPMatchId);
                     break;
             }
         }
 
-        return new LAReportModel
-        {
-            ProviderTv = singleMatchesProviderTVCount,
-            Provider = singleMatchesProviderCount,
-            TV = singleMatchesTVCount,
-            Reporter = singleMatchesReporterCount,
-            Others = othersCounts
-        };
+        sumUpResult.MixedProviderTVReporter = singleMatchesMixedProductCount;
+        sumUpResult.OnlyProvider = singleMatchesProviderCount;
+        sumUpResult.OnlyTV = singleMatchesTVCount;
+        sumUpResult.OnlyReporter = singleMatchesReporterCount;
+        sumUpResult.Others = othersCounts;
+        sumUpResult.OtherProductMatchIds = otherMatchIds;
     }
 
-    private IEnumerable<Assignment> GroupMultipleMatches(IEnumerable<Assignment> assignments)
+    private List<Assignment> GroupMultipleMatches(IEnumerable<Assignment> assignments)
     {
         var result = new List<Assignment>();
         var group = 1;
 
         var groupedAssignments = assignments
-            .Where(x => IsContainsMultipleMatchesProviders(x.ProviderName))
             .OrderBy(x => x.EventDateTime)
             .GroupBy(x => x.EventDateTime.AddHours(-12).Date)
             .Where(x => x.Any())
@@ -295,7 +233,7 @@ public class CalculationServiceImp : CalculationService
 
             for (int i = 1; i < groupedAssignments[key].Count; i++)
             {
-                var isLinked = IsKOTimeDifferentWithin5Mins(groupedAssignments[key][i], groupedAssignments[key][i - 1]);
+                var isLinked = IsKOTimeDifferentWithin45Mins(groupedAssignments[key][i], groupedAssignments[key][i - 1]);
 
                 group = isLinked ? group : group + 1;
                 groupedAssignments[key][i].LinkGroup = group;
@@ -309,15 +247,9 @@ public class CalculationServiceImp : CalculationService
         return result;
     }
 
-    private static bool IsKOTimeDifferentWithin5Mins(Assignment assignmentA, Assignment assignmentB)
+    private static bool IsKOTimeDifferentWithin45Mins(Assignment assignmentA, Assignment assignmentB)
     {
-        const int differenceInMinute = 5;
+        const int differenceInMinute = 45;
         return Math.Abs(assignmentA.EventDateTime.Subtract(assignmentB.EventDateTime).TotalMinutes) <= differenceInMinute;
-    }
-
-    private bool IsContainsMultipleMatchesProviders(string provider)
-    {
-        var matchProviders = string.IsNullOrEmpty(provider) ? Array.Empty<string>() : provider.Split('/');
-        return matchProviders.Any(x => multipleMatchesProviders.Contains(x.Trim(), StringComparer.OrdinalIgnoreCase));
     }
 }

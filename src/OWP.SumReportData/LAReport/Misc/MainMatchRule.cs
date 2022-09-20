@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using OWP.Core.Extensions;
+﻿using OWP.Core.Extensions;
 using OWP.SumReportData.LAReport.Constants;
 using OWP.SumReportData.LAReport.Enum;
 using OWP.SumReportData.LAReport.Models;
@@ -97,11 +96,11 @@ public class ESoccerRule : MainMatchRule
             {
                 return ReportType.ESOCCER_16MINS;
             }
+        }
 
-            if (assignment.OWPLeagueName.IsContainsIgnoreCase("- 20 Mins Play"))
-            {
-                return ReportType.ESOCCER_20MINS;
-            }
+        if (assignment.OWPLeagueName.IsContainsIgnoreCase("- 20 Mins Play"))
+        {
+            return ReportType.ESOCCER_20MINS;
         }
 
         return base.Execute(assignment, userAssignments);
@@ -115,8 +114,8 @@ public class FiveMajorLeagueRule : MainMatchRule
 {
     public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
     {
-        return isMajorLeague(assignment.OWPLeagueName) 
-            ? ReportType.MAJOR_LEAGUE 
+        return isMajorLeague(assignment.OWPLeagueName)
+            ? ReportType.MAJOR_LEAGUE
             : base.Execute(assignment, userAssignments);
     }
 

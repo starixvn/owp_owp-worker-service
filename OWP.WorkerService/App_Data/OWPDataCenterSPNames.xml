@@ -33,7 +33,8 @@
 		<Setting Key="OWP_UserSectionsSel" SpName="OWP_UserSectionsSel" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
 		<Setting Key="OWP_LAAssignmentsSel" SpName="OWP_LAAssignmentsSel" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
 		<Setting Key="OWP_LAAssignmentsOldSel" SpName="OWP_LAAssignmentsOldSel" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
-		<Setting Key="OWP_LAReportUpdate" SpName="OWP_LAReportUpdate" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>		
+		<Setting Key="OWP_LAReportUpdate" SpName="OWP_LAReportUpdate" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
+		<Setting Key="OWP_LAReport_SaveOtherProductMatchIds" SpName="OWP_LAReport_SaveOtherProductMatchIds" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
 	</Function>
 	<Function Name="ArchiveData">
 		<Setting Key="OWP_CopyDataToOldTable" SpName="OWP_CopyDataToOldTable" DbName="DBOWP.bodb_OWP.bodbOWPNet" TimeOut="600"></Setting>

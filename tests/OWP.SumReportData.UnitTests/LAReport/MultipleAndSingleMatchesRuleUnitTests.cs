@@ -86,7 +86,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
     {
         // Arrange
         var firstRule = new MultipleMatchesRule();
-        var secondRule = new SingleMatchesRule();
+        var secondRule = new IsSingleMatchesRule();
         firstRule.NextRule = secondRule;
         var assignment = new Assignment { ProviderName = string.Empty };
 
@@ -102,7 +102,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
     {
         // Arrange
         var firstRule = new MultipleMatchesRule();
-        var secondRule = new SingleMatchesRule();
+        var secondRule = new IsSingleMatchesRule();
         firstRule.NextRule = secondRule;
         var assignment = assignments.FirstOrDefault(x => x.OWPMatchId == 428031);
 
@@ -118,7 +118,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
     {
         // Arrange
         var firstRule = new MultipleMatchesRule();
-        var secondRule = new SingleMatchesRule();
+        var secondRule = new IsSingleMatchesRule();
         firstRule.NextRule = secondRule;
         var assignment = assignments.FirstOrDefault(x => x.OWPMatchId == 428035);
 
@@ -126,7 +126,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
         var actual = firstRule.Execute(assignment);
 
         // Assert
-        Assert.Equal(ReportType.PROVIDER_TV, actual);
+        Assert.Equal(ReportType.MIXED_PROVIDER_TV_REPORTER, actual);
     }
 
     [Fact]
@@ -134,7 +134,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
     {
         // Arrange
         var firstRule = new MultipleMatchesRule();
-        var secondRule = new SingleMatchesRule();
+        var secondRule = new IsSingleMatchesRule();
         firstRule.NextRule = secondRule;
         var assignment = assignments.FirstOrDefault(x => x.OWPMatchId == 425385);
 
@@ -142,7 +142,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
         var actual = firstRule.Execute(assignment);
 
         // Assert
-        Assert.Equal(ReportType.PROVIDER, actual);
+        Assert.Equal(ReportType.ONLY_PROVIDER, actual);
     }
 
     [Fact]
@@ -150,7 +150,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
     {
         // Arrange
         var firstRule = new MultipleMatchesRule();
-        var secondRule = new SingleMatchesRule();
+        var secondRule = new IsSingleMatchesRule();
         firstRule.NextRule = secondRule;
         var assignment = assignments.FirstOrDefault(x => x.OWPMatchId == 425386);
 
@@ -158,7 +158,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
         var actual = firstRule.Execute(assignment);
 
         // Assert
-        Assert.Equal(ReportType.TV, actual);
+        Assert.Equal(ReportType.ONLY_TV, actual);
     }
 
     [Fact]
@@ -166,7 +166,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
     {
         // Arrange
         var firstRule = new MultipleMatchesRule();
-        var secondRule = new SingleMatchesRule();
+        var secondRule = new IsSingleMatchesRule();
         firstRule.NextRule = secondRule;
         var assignment = assignments.FirstOrDefault(x => x.OWPMatchId == 425387);
 
@@ -174,7 +174,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
         var actual = firstRule.Execute(assignment);
 
         // Assert
-        Assert.Equal(ReportType.REPORTER, actual);
+        Assert.Equal(ReportType.ONLY_REPORTER, actual);
     }
 
     [Fact]
@@ -182,7 +182,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
     {
         // Arrange
         var firstRule = new MultipleMatchesRule();
-        var secondRule = new SingleMatchesRule();
+        var secondRule = new IsSingleMatchesRule();
         firstRule.NextRule = secondRule;
         var assignment = assignments.FirstOrDefault(x => x.OWPMatchId == 425388);
 

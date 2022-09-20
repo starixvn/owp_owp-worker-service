@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.ComponentModel.DataAnnotations;
 using OWP.Core.Extensions;
 using OWP.SumReportData.MatchLiveReport.Constants;
+using OWP.SumReportData.MatchLiveReport.Helpers;
 using OWP.SumReportData.MatchLiveReport.Models;
 using OWP.SumReportData.MatchLiveReport.Repository;
-using OWP.SumReportData.MatchLiveReport.Helpers;
+using System.ComponentModel.DataAnnotations;
 
 namespace OWP.SumReportData.MatchLiveReport.Services;
 
@@ -25,7 +23,7 @@ public class ReportServiceImp : ReportService
         this.reportRepository = reportRepository;
     }
 
-    public async Task Calculate(DateTime eventDate, bool isGenerateData)
+    public async Task Calculate(DateTime eventDate, bool isGenerateData = false)
     {
         var (totalMatches, mainMatches) = await reportRepository.QueryMatchesByDate(eventDate, isGenerateData);
 
@@ -33,7 +31,7 @@ public class ReportServiceImp : ReportService
         var mainMatchesCategorized = MatchHelper.CategorizeMainMatches(totalMatches);
         var sabaMatchesCategorized = MatchHelper.CategorizeSabaMatches(totalMatches);
 
-        var saba5MinOwpMatchIds = sabaMatchesCategorized.Where(x => x.BetTypeName == BetTypeName.SabaEliteFriendlyVirtualPes215MinsPlay).Select(x=>x.OWPMatchId).ToList();
+        var saba5MinOwpMatchIds = sabaMatchesCategorized.Where(x => x.BetTypeName == BetTypeName.SabaEliteFriendlyVirtualPes215MinsPlay).Select(x => x.OWPMatchId).ToList();
 
         var saba5MinOwpMatchIdGrouped = await reportRepository.GetSaba5minOWPMatchId(saba5MinOwpMatchIds);
 
@@ -65,7 +63,7 @@ public class ReportServiceImp : ReportService
             MatchCount =
             x.BetType.Equals(BetTypeName.SingleTeamOU.GetAttribute<DisplayAttribute>().Name, StringComparison.InvariantCultureIgnoreCase) ||
             x.BetType.Equals(BetTypeName.PenaltyShootOut.GetAttribute<DisplayAttribute>().Name, StringComparison.InvariantCultureIgnoreCase) ?
-            (int) Math.Ceiling(x.MatchCount / 2m ):
+            (int)Math.Ceiling(x.MatchCount / 2m) :
             x.MatchCount
         });
 

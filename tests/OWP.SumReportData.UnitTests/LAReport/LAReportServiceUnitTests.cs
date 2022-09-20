@@ -45,9 +45,9 @@ public class LAReportServiceUnitTests
         mainMatchRuleFactory.Create(RuleType.FIVE_MAJOR_LEAGUE).Returns(new FiveMajorLeagueRule());
         mainMatchRuleFactory.Create(RuleType.FT_CORNER_FIVE_MAJOR_LEAGUE).Returns(new FTCorner5MLRule());
 
-        var multipleAndSingleMatchesFactory = Substitute.For<MultipleAndSingleMatchesFactory>();
+        var multipleAndSingleMatchesFactory = Substitute.For<SingleMatchesFactory>();
         multipleAndSingleMatchesFactory.Create(RuleType.MULTIPLE).Returns(new MultipleMatchesRule());
-        multipleAndSingleMatchesFactory.Create(RuleType.SINGLE).Returns(new SingleMatchesRule());
+        multipleAndSingleMatchesFactory.Create(RuleType.SINGLE).Returns(new IsSingleMatchesRule());
 
         var calculationService = new CalculationServiceImp(queryRepository, specialProductFactory, mainMatchRuleFactory, multipleAndSingleMatchesFactory);
         return calculationService;
@@ -619,10 +619,10 @@ public class LAReportServiceUnitTests
                     LinkX3 = 1,
                     LinkX6 = 1,
                     LinkX9Plus = 0,
-                    ProviderTv = 1,
-                    Provider = 2,
-                    TV = 1,
-                    Reporter = 2,
+                    MixedProviderTVReporter = 1,
+                    OnlyProvider = 2,
+                    OnlyTV = 1,
+                    OnlyReporter = 2,
                     Others = 2,
                     FiveMajorLeague = 1,
                     FTCorner5ML = 1,
