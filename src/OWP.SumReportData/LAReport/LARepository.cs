@@ -12,8 +12,6 @@ public interface LARepository
     Task<IEnumerable<Assignment>> GetLAAssignment(DateTime eventDate, bool isGenerateData);
 
     Task<Dictionary<int, string>> GetUserSection();
-
-    Task SaveOtherProductMatchIds(DateTime eventDate, IEnumerable<int> owpMatchIds);
 }
 
 public class LARepositoryImp : LARepository
@@ -31,17 +29,6 @@ public class LARepositoryImp : LARepository
         {
             EventDate = eventDate,
             Xml = XmlConverter.Serialize(laReportModels)
-        };
-
-        await repository.ExecuteAsync(command);
-    }
-
-    public async Task SaveOtherProductMatchIds(DateTime eventDate, IEnumerable<int> owpMatchIds)
-    {
-        var command = new SaveOtherProductMatchIdsCommand
-        {
-            EventDate = eventDate,
-            OWPMatchIds = string.Join(",", owpMatchIds)
         };
 
         await repository.ExecuteAsync(command);

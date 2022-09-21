@@ -33,16 +33,7 @@ public class IsSingleMatchesRule : SingleMatchesRule
 
     public override ReportType Execute(Assignment assignment)
     {
-        if (IsFutsalLeague(assignment.OWPLeagueName))
-        {
-            return ReportType.ONLY_TV;
-        }
-        if (string.IsNullOrEmpty(assignment.ProviderName))
-        {
-            return base.Execute(assignment);
-        }
-
-        var matchProviders = assignment.ProviderName.Split('/');
+        var matchProviders = "".Split('/', StringSplitOptions.RemoveEmptyEntries);
         var isOnlyProvider = IsOnlyProvider(matchProviders);
         var isOnlyTV = IsOnlyTV(matchProviders, assignment.OWPLeagueName);
         var isOnlyReporter = IsOnlyReporter(matchProviders);

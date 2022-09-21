@@ -212,7 +212,7 @@ public class CalculationServiceImp : CalculationService
         sumUpResult.OnlyTV = singleMatchesTVCount;
         sumUpResult.OnlyReporter = singleMatchesReporterCount;
         sumUpResult.Others = othersCounts;
-        sumUpResult.OtherProductMatchIds = otherMatchIds;
+        sumUpResult.OtherProductMatchIds = string.Join(",", otherMatchIds.Distinct());
     }
 
     private List<Assignment> GroupMultipleMatches(IEnumerable<Assignment> assignments)

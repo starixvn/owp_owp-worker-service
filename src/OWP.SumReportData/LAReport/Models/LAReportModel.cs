@@ -1,6 +1,4 @@
-﻿using System.Xml.Serialization;
-
-namespace OWP.SumReportData.LAReport.Models;
+﻿namespace OWP.SumReportData.LAReport.Models;
 
 public class LAReportModel
 {
@@ -58,8 +56,7 @@ public class LAReportModel
 
     public int FTCorner5ML { get; set; }
 
-    [XmlIgnore]
-    public List<int> OtherProductMatchIds { get; set; }
+    public string OtherProductMatchIds { get; set; }
 
     public int TotalMatches =>
         Link2 +
