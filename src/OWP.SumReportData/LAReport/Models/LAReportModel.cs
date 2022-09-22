@@ -56,7 +56,7 @@ public class LAReportModel
 
     public int FTCorner5ML { get; set; }
 
-    public string OtherProductMatchIds { get; set; }
+    public string OtherProductMatchIds { get; set; } = string.Empty;
 
     public int TotalMatches =>
         Link2 +
