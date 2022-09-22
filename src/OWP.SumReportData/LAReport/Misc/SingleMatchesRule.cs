@@ -16,8 +16,8 @@ public class SingleMatchesRule
 
 public class IsSingleMatchesRule : SingleMatchesRule
 {
-    private readonly string[] reporterContain = { "Reporter" };
-    private readonly string[] reporterEqual = { "WOO", "SLR", "IPSD", "AL", "BC" };
+    private readonly string[] reporterContain = { "Reporter", "AL" };
+    private readonly string[] reporterEqual = { "WOO", "SLR", "AL", "BC" };
 
     private readonly string[] onlyTVContain = { "Glive", "IPTV", "Inhouse", "WB" };
     private readonly string[] onlyTVTupleContain = { "BET365", "TV" };
