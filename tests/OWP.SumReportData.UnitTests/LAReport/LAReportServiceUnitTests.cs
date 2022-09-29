@@ -45,9 +45,8 @@ public class LAReportServiceUnitTests
         mainMatchRuleFactory.Create(RuleType.FIVE_MAJOR_LEAGUE).Returns(new FiveMajorLeagueRule());
         mainMatchRuleFactory.Create(RuleType.FT_CORNER_FIVE_MAJOR_LEAGUE).Returns(new FTCorner5MLRule());
 
-        var multipleAndSingleMatchesFactory = Substitute.For<MultipleAndSingleMatchesFactory>();
-        multipleAndSingleMatchesFactory.Create(RuleType.MULTIPLE).Returns(new MultipleMatchesRule());
-        multipleAndSingleMatchesFactory.Create(RuleType.SINGLE).Returns(new SingleMatchesRule());
+        var multipleAndSingleMatchesFactory = Substitute.For<SingleMatchesFactory>();
+        multipleAndSingleMatchesFactory.Create(RuleType.SINGLE).Returns(new IsSingleMatchesRule());
 
         var calculationService = new CalculationServiceImp(queryRepository, specialProductFactory, mainMatchRuleFactory, multipleAndSingleMatchesFactory);
         return calculationService;
@@ -73,7 +72,7 @@ public class LAReportServiceUnitTests
                 {
                     AssignmentId = 2,
                     UserId = 15477090,
-                    ProviderName = "BET/TV",
+                    ProviderName = "BET",
                     OWPLeagueName = "leaguemar27 - CORNERS",
                     MinorBettypeId = -6,
                     OWPMatchId = 428035,
@@ -470,67 +469,67 @@ public class LAReportServiceUnitTests
                 {
                     AssignmentId = 33,
                     UserId = 15477090,
-                    ProviderName = "RB2/TV",
+                    ProviderName = "RB2/TV", // Mixed
                     OWPLeagueName = "VIETNAM CHAMPIONSHIP U19 QUALIFIERSPlay",
                     MinorBettypeId = null,
                     OWPMatchId = 424035,
                     ParentMatchId = null,
-                    EventDateTime = new DateTime(2020, 7, 9, 20, 0, 0)
+                    EventDateTime = new DateTime(2020, 7, 9, 1, 0, 0)
                 },
                 new Assignment
                 {
                     AssignmentId = 34,
                     UserId = 15477090,
-                    ProviderName = "MRB",
+                    ProviderName = "RTS", // Only Provider
                     OWPLeagueName = "VIETNAM CHAMPIONSHIP U19 QUALay",
                     MinorBettypeId = null,
                     OWPMatchId = 424036,
                     ParentMatchId = null,
-                    EventDateTime = new DateTime(2020, 7, 9, 20, 1, 0)
+                    EventDateTime = new DateTime(2020, 7, 9, 2, 0, 0)
                 },
                 new Assignment
                 {
                     AssignmentId = 35,
                     UserId = 15477090,
-                    ProviderName = "Bet outside",
+                    ProviderName = "BET365(TV)", // Only TV
                     OWPLeagueName = "VIETNAM CHAMPIONSHIP U19 QUALIFIERSPlay",
                     MinorBettypeId = null,
                     OWPMatchId = 445037,
                     ParentMatchId = null,
-                    EventDateTime = new DateTime(2020, 7, 9, 20, 3, 0)
+                    EventDateTime = new DateTime(2020, 7, 9, 3, 0, 0)
                 },
                 new Assignment
                 {
                     AssignmentId = 36,
                     UserId = 15477090,
-                    ProviderName = "WB",
+                    ProviderName = "Waiting AL", // Only Reporter
                     OWPLeagueName = "VIETNAM CHAMPIONSHIP U19 QUALay",
                     MinorBettypeId = null,
                     OWPMatchId = 424038,
                     ParentMatchId = null,
-                    EventDateTime = new DateTime(2020, 7, 9, 20, 05, 0)
+                    EventDateTime = new DateTime(2020, 7, 9, 4, 0, 0)
                 },
                 new Assignment
                 {
                     AssignmentId = 37,
                     UserId = 15477090,
-                    ProviderName = "Reporter",
-                    OWPLeagueName = "VIETNAM CHAMPIONSHIP U19 QUALay",
+                    ProviderName = "Reporter", // Only reporter
+                    OWPLeagueName = "Futsal", // Only TV
                     MinorBettypeId = null,
                     OWPMatchId = 424039,
                     ParentMatchId = null,
-                    EventDateTime = new DateTime(2020, 7, 9, 20, 8, 0)
+                    EventDateTime = new DateTime(2020, 7, 9, 5, 0, 0)
                 },
                 new Assignment
                 {
                     AssignmentId = 38,
                     UserId = 15477090,
-                    ProviderName = "Reporter**",
-                    OWPLeagueName = "VIETNAM CHAMPIONSHIP U19 QUALay",
+                    ProviderName = null,
+                    OWPLeagueName = "Futsal ABC", // Only TV
                     MinorBettypeId = null,
                     OWPMatchId = 424040,
                     ParentMatchId = null,
-                    EventDateTime = new DateTime(2020, 7, 9, 20, 12, 0)
+                    EventDateTime = new DateTime(2020, 7, 9, 6, 0, 0)
                 },
                 //OTHERS
                 new Assignment
@@ -615,18 +614,21 @@ public class LAReportServiceUnitTests
                     ESoccer6Mins = 2,
                     ESoccer16Mins = 1,
                     ESoccer20Mins = 1,
-                    LinkLowerThan3 = 3,
-                    LinkX3 = 1,
-                    LinkX6 = 1,
-                    LinkX9Plus = 0,
-                    ProviderTv = 1,
-                    Provider = 2,
-                    TV = 1,
-                    Reporter = 2,
+                    Link2 = 3,
+                    Link3 = 0,
+                    Link4 = 0,
+                    Link5 = 1,
+                    Link6 = 1,
+                    Link7 = 0,
+                    Link8Plus = 0,
+                    MixedProviderTVReporter = 1,
+                    OnlyProvider = 1,
+                    OnlyTV = 2,
+                    OnlyReporter = 0,
                     Others = 2,
                     FiveMajorLeague = 1,
                     FTCorner5ML = 1,
-                    TotalMatches = 31
+                    OtherProductMatchIds = "424038,424040"
                 }
             };
     }

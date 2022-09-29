@@ -6,23 +6,27 @@ public class LAReportModel
 
     public string Username { get; set; }
 
-    public int TotalMatches { get; set; }
+    public int Link2 { get; set; }
 
-    public int LinkLowerThan3 { get; set; }
+    public int Link3 { get; set; }
 
-    public int LinkX3 { get; set; }
+    public int Link4 { get; set; }
 
-    public int LinkX6 { get; set; }
+    public int Link5 { get; set; }
 
-    public int LinkX9Plus { get; set; }
+    public int Link6 { get; set; }
 
-    public int ProviderTv { get; set; }
+    public int Link7 { get; set; }
 
-    public int Provider { get; set; }
+    public int Link8Plus { get; set; }
 
-    public int TV { get; set; }
+    public int OnlyProvider { get; set; }
 
-    public int Reporter { get; set; }
+    public int OnlyTV { get; set; }
+
+    public int OnlyReporter { get; set; }
+
+    public int MixedProviderTVReporter { get; set; }
 
     public int CornerPlus { get; set; }
 
@@ -52,15 +56,20 @@ public class LAReportModel
 
     public int FTCorner5ML { get; set; }
 
-    public int SumTotal()
-        => LinkLowerThan3 +
-        LinkX3 +
-        LinkX6 +
-        LinkX9Plus +
-        ProviderTv +
-        Provider +
-        TV +
-        Reporter +
+    public string OtherProductMatchIds { get; set; } = string.Empty;
+
+    public int TotalMatches =>
+        Link2 +
+        Link3 +
+        Link4 +
+        Link5 +
+        Link6 +
+        Link7 +
+        Link8Plus +
+        MixedProviderTVReporter +
+        OnlyProvider +
+        OnlyTV +
+        OnlyReporter +
         CornerPlus +
         TBookingPlus +
         Fantasy +

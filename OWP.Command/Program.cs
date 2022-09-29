@@ -4,23 +4,23 @@ using Fanex.Data.Repository;
 using Fanex.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using ONEbook.UM.Configurations;
 using ONEbook.UM.Helpers;
 using ONEbook.UM.Services;
 using ONEbook.UM.Transport;
+using OWP.ArchiveData;
 using OWP.Command;
 using OWP.Command.Settings;
-using Microsoft.Extensions.Options;
-using OWP.Core.RabbitMq.Models;
 using OWP.Core.RabbitMq;
+using OWP.Core.RabbitMq.Models;
 using OWP.Infosite;
 using OWP.InfositeIdSync;
 using OWP.LinkLeagueAndTeam;
 using OWP.MatchReadyNotification;
+using OWP.OtherSport;
 using OWP.SumReportData;
 using OWP.SyncLeagueSettings;
-using OWP.ArchiveData;
-using OWP.OtherSport;
 
 #region Configuration
 
@@ -100,5 +100,12 @@ services.AddOtherSportServices();
 services.AddArchiveDataServices();
 #endregion
 
-//var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.TodaySyncService>();
-//await apiService.Sync().ConfigureAwait(false);
+//for (var i = new DateTime(2022, 8, 1); i <= DateTime.Now; i = i.AddDays(1))
+//{
+//    var apiService = services.BuildServiceProvider().GetService<OWP.SumReportData.LAReport.Handler>();
+//    await apiService.Handle(i).ConfigureAwait(false);
+//    Console.WriteLine(i.ToString());
+//}
+
+var apiService = services.BuildServiceProvider().GetService<OWP.SumReportData.LAReport.Handler>();
+await apiService.Handle(new DateTime(2022, 9, 19)).ConfigureAwait(false);

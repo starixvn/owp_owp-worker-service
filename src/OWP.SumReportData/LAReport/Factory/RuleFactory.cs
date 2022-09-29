@@ -38,20 +38,15 @@ public class SpecialProductFactoryImp : SpecialProductFactory
     }
 }
 
-public interface MultipleAndSingleMatchesFactory
+public interface SingleMatchesFactory
 {
-    MultipleAndSingleMatchesRule Create(RuleType type);
+    IsSingleMatchesRule Create(RuleType type);
 }
 
-public class MultipleAndSingleMatchesFactoryImp : MultipleAndSingleMatchesFactory
+public class SingleMatchesFactoryImp : SingleMatchesFactory
 {
-    public MultipleAndSingleMatchesRule Create(RuleType type)
+    public IsSingleMatchesRule Create(RuleType type)
     {
-        if (type == RuleType.MULTIPLE)
-        {
-            return new MultipleMatchesRule();
-        }
-
-        return new SingleMatchesRule();
+        return new IsSingleMatchesRule();
     }
 }

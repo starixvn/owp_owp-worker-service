@@ -18,7 +18,7 @@ public class ReportCalculationServiceImp : ReportCalculationService
         this.repository = repository;
     }
 
-    public async Task SumOvertimeReport(DateTime date, bool isGenerateData)
+    public async Task SumOvertimeReport(DateTime date, bool isGenerateData = false)
     {
         var reportData = await CalculateOvertimeReport(date, isGenerateData);
 

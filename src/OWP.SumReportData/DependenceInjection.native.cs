@@ -22,8 +22,8 @@ public static class DependenceInjection
         services.AddTransient<LAReport.LARepository, LAReport.LARepositoryImp>();
         services.AddTransient<LAReport.Factory.MainMatchRuleFactory, LAReport.Factory.MainMatchRuleFactoryImp>();
         services
-            .AddTransient<LAReport.Factory.MultipleAndSingleMatchesFactory,
-                LAReport.Factory.MultipleAndSingleMatchesFactoryImp>();
+            .AddTransient<LAReport.Factory.SingleMatchesFactory,
+                LAReport.Factory.SingleMatchesFactoryImp>();
         services.AddTransient<LAReport.Factory.SpecialProductFactory, LAReport.Factory.SpecialProductFactoryImp>();
         services.AddTransient<LAReport.Services.CalculationService, LAReport.Services.CalculationServiceImp>();
 
