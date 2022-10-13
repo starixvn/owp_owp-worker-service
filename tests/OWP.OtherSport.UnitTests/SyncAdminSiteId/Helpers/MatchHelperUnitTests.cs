@@ -86,10 +86,19 @@ public class MatchHelperUnitTests
                     OWPAway = "Guangzhou R&F12",
                     OldAdminSiteMatchId = 2,
                     OldEventDate = new DateTime(2021, 03, 18)
+                },
+                new LinkedMatch
+                {
+                    OSMatchId = 444,
+                    OWPLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
+                    OWPHome = "Dalian Pro FC (N)1",
+                    OWPAway = "Guangzhou R&F1",
+                    OldAdminSiteMatchId = 111,
+                    OldEventDate = new DateTime(2021, 03, 18, 20, 22, 33)
                 }
             };
 
-        var actual = MatchHelper.GetUpdatedMatches(GetLinkedOWPMatches(), GetAdminSiteMatches());
+        var actual = MatchHelper.GetRemovedMatches(GetLinkedOWPMatches(), GetAdminSiteMatches());
 
         DeepAssert.Equal(expected, actual.ToList());
     }
@@ -161,6 +170,16 @@ public class MatchHelperUnitTests
                     AwayName = "Guangzhou R&F12",
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 2
+                },
+                new Match
+                {
+                    OSMatchId = 444,
+                    Sport = "Basketball",
+                    LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
+                    HomeName = "Dalian Pro FC (N)1",
+                    AwayName = "Guangzhou R&F1",
+                    EventDateTime = new DateTime(2021, 03, 18, 20, 22, 33),
+                    AdminSiteMatchId = 111
                 }
         };
 
