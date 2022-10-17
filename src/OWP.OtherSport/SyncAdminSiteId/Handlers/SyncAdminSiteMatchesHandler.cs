@@ -31,7 +31,7 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
         var linkedMatches = owpMatches.Where(x => x.AdminSiteMatchId.HasValue);
 
         var newLinkedMatches = MatchHelper.GetNewLinkedMatches(unlinkedMatches, adminSiteMatches);
-        var updatedMatches = MatchHelper.GetUpdatedMatches(linkedMatches, adminSiteMatches);
+        var updatedMatches = MatchHelper.GetRemovedMatches(linkedMatches, adminSiteMatches);
 
         await UpdateUnlinkedMatches(newLinkedMatches);
         await UpdateLinkedMatches(updatedMatches);

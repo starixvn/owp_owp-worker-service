@@ -30,11 +30,11 @@ public static class MatchHelper
         }
     }
 
-    public static IEnumerable<LinkedMatch> GetUpdatedMatches(IEnumerable<Match> owpMatches, IEnumerable<Match> adminSiteMatches)
+    public static IEnumerable<LinkedMatch> GetRemovedMatches(IEnumerable<Match> owpMatches, IEnumerable<Match> adminSiteMatches)
     {
         foreach (var match in owpMatches)
         {
-            if (!adminSiteMatches.Any(x => x.Equals(match)))
+            if (!adminSiteMatches.Any(x => x.Equals(match) && x.AdminSiteMatchId == match.AdminSiteMatchId))
             {
                 yield return new LinkedMatch
                 {
