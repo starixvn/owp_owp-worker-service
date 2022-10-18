@@ -68,7 +68,7 @@ public class IsSingleMatchesRule : SingleMatchesRule
         return base.Execute(assignment);
     }
 
-    private bool IsOnlyProduct(string[] matchProviders, string[] equals, string[] contains)
+    private static bool IsOnlyProduct(string[] matchProviders, string[] equals, string[] contains)
         => matchProviders.Any(x => IsContainsExactElement(equals, x.Trim())) ||
            matchProviders.Any(x => IsElementOfListContainText(contains, x.Trim()));
 

@@ -1,6 +1,6 @@
 using Fanex.Data.Repository;
-using OWP.SumReportData.PrematchReport.Models;
 using OWP.SumReportData.PrematchReport.Criteria;
+using OWP.SumReportData.PrematchReport.Models;
 
 namespace OWP.SumReportData.PrematchReport;
 

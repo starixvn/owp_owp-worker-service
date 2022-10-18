@@ -1,7 +1,7 @@
 ﻿using OWP.SumReportData.OvertimeReport.Helpers;
 using Xunit;
 
-namespace OWP.SumReportData.UnitTests.OvertimeReport;
+namespace OWP.SumReportData.UnitTests.OvertimeReport.Helpers;
 
 public class WorkingShiftHelperUnitTests
 {

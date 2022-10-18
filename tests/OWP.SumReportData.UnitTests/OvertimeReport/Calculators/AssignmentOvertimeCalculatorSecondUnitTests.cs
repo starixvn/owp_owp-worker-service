@@ -3,7 +3,7 @@ using OWP.SumReportData.OvertimeReport.Constants;
 using OWP.SumReportData.OvertimeReport.Models;
 using Xunit;
 
-namespace OWP.SumReportData.UnitTests.OvertimeReport;
+namespace OWP.SumReportData.UnitTests.OvertimeReport.Calculators;
 
 public class AssignmentOvertimeCalculatorSecondUnitTests
 {

@@ -3,7 +3,7 @@ using OWP.SumReportData.OvertimeReport.Models;
 using Xunit;
 using static OWP.SumReportData.OvertimeReport.Constants.BetType;
 
-namespace OWP.SumReportData.UnitTests.OvertimeReport;
+namespace OWP.SumReportData.UnitTests.OvertimeReport.Helpers;
 
 public class MatchHelperUnitTests
 {
