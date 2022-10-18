@@ -1,4 +1,3 @@
-using OWP.Core.RabbitMq.Models;
 using OWP.WorkerService.Extensions;
 using OWP.WorkerService.Scheduler;
 
@@ -23,7 +22,7 @@ app.Run(async context =>
     : string.Empty;
     if (request.Contains("Collect"))
     {
-        GC.Collect();
+        GC.Collect(2, GCCollectionMode.Optimized);
         await context.Response.WriteAsync($"OWP Worker Services. GC.Collected = {request}");
     }
     else

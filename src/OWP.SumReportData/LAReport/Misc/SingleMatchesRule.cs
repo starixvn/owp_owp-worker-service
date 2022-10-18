@@ -48,7 +48,7 @@ public class IsSingleMatchesRule : SingleMatchesRule
         var isOnlyReporter = IsOnlyReporter(matchProviders);
         var mixProductList = new List<bool> { isOnlyTV, isOnlyReporter, isOnlyProvider };
 
-        if (mixProductList.Where(x => x).Count() >= 2)
+        if (mixProductList.Count(x => x) >= 2)
         {
             return ReportType.MIXED_PROVIDER_TV_REPORTER;
         }
@@ -83,11 +83,11 @@ public class IsSingleMatchesRule : SingleMatchesRule
     private bool IsOnlyProvider(string[] matchProviders)
         => IsOnlyProduct(matchProviders, providersEqual, providersContain);
 
-    private bool IsFutsalLeague(string leagueName)
+    private static bool IsFutsalLeague(string leagueName)
         => leagueName.IsContainsIgnoreCase(Futsal) &&
           !leagueName.IsContainsIgnoreCase(Saba);
 
-    private bool IsElementOfListContainText(string[] list, string text)
+    private static bool IsElementOfListContainText(string[] list, string text)
     {
         foreach (var element in list)
         {
@@ -100,7 +100,7 @@ public class IsSingleMatchesRule : SingleMatchesRule
         return false;
     }
 
-    private bool IsTextContainAllElementOfList(string[] list, string text)
+    private static bool IsTextContainAllElementOfList(string[] list, string text)
     {
         foreach (var element in list)
         {
@@ -113,6 +113,6 @@ public class IsSingleMatchesRule : SingleMatchesRule
         return true;
     }
 
-    private bool IsContainsExactElement(string[] providerLists, string item)
+    private static bool IsContainsExactElement(string[] providerLists, string item)
         => providerLists.Contains(item, StringComparer.OrdinalIgnoreCase);
 }
