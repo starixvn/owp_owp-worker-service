@@ -621,14 +621,14 @@ public class LAReportServiceUnitTests
                     Link6 = 1,
                     Link7 = 0,
                     Link8Plus = 0,
-                    MixedProviderTVReporter = 1,
+                    MixedProviderTVReporter = 2,
                     OnlyProvider = 1,
                     OnlyTV = 2,
-                    OnlyReporter = 0,
-                    Others = 2,
+                    OnlyReporter = 1,
+                    Others = 0,
                     FiveMajorLeague = 1,
                     FTCorner5ML = 1,
-                    OtherProductMatchIds = "424038,424040"
+                    OtherProductMatchIds = ""
                 }
             };
     }
