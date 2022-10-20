@@ -54,6 +54,20 @@ public class LinkLeagueAndMatchUnitTests
     }
 
     [Fact]
+    public async Task Execute_ReturnTimeRange_Correct()
+    {
+        // Arrange
+        var linkLeagueAndMatch = new LinkLeagueAndTeamServiceImp(cache, repository);
+        var startTime = new DateTime(2021, 10, 21, 0, 0, 0);
+
+        // Act
+        await linkLeagueAndMatch.Execute();
+
+        // Assert
+        await cache.Received().SaveStartTimeQueryTeamInfo(Arg.Is<DateTime>(x => x == startTime));
+    }
+
+    [Fact]
     public async Task PreExecute_ReturnTimeRange_Correct()
     {
         // Arrange
