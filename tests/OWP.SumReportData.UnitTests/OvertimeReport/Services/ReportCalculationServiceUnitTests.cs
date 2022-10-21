@@ -3,6 +3,7 @@ using OWP.SumReportData.OvertimeReport;
 using OWP.SumReportData.OvertimeReport.Models;
 using OWP.SumReportData.OvertimeReport.Services;
 using Xunit;
+using Xunit.Asserts.Compare;
 
 namespace OWP.SumReportData.UnitTests.OvertimeReport.Services
 {
@@ -18,28 +19,38 @@ namespace OWP.SumReportData.UnitTests.OvertimeReport.Services
         }
 
         [Fact]
-        public async Task SumOvertimeReport_CorectModel()
+        public async Task SumOvertimeReport_CorrectModel()
         {
             var date = new DateTime(2022, 10, 18);
             var mockedEmployeeWorkingShift = new List<EmployeeWorkingShift>{
-                new() { EmployeeId = 11, RefShiftId = 100 },
-                new() { EmployeeId = 22, RefShiftId = null }
+                new() { EmployeeId = 11, RefShiftId = null, ShiftDate = date, ShiftStartTime=date.AddHours(8), ShiftEndTime=date.AddHours(20) },
+                new() { EmployeeId = 22, RefShiftId = 300, ShiftDate = date }
             };
             var mockedAssignment = new List<Assignment>
             {
-                new(){ OWPMatchId = 111, UserId = 11, ParentMatchId = null },
-                new(){ OWPMatchId = 222, UserId = 2, Bettype = -1 },
+                new(){ OWPMatchId = 111, UserId = 11, ParentMatchId = null, OWPLeagueName="league", Remark="PK" },
             };
             var mockedMainMatch = new List<MainMatch>
             {
-                new() { OWPMatchId = 111, Remark = ""  }
+                new() { OWPMatchId = 111, Remark = "", EventDateTime = date.AddHours(10)  }
+            };
+            var expected = new List<OvertimeData>
+            {
+                new()
+                {
+                    Hour=3m,
+                    IsOffDay=false,
+                    ReportDate=new DateTime(2022,10,18),
+                    UserId=11
+                }
             };
 
-            repository.GetEmployeeWorkingShift(date, false).Returns(mockedEmployeeWorkingShift);
-            repository.GetTradersAssignments(date, new List<int> { 11, 22 }, false)
-                .Returns(x => (mockedAssignment, mockedMainMatch));
+            repository.GetEmployeeWorkingShift(date, false).ReturnsForAnyArgs(mockedEmployeeWorkingShift);
+            repository.GetTradersAssignments(date, Arg.Any<List<int>>(), false)
+                .ReturnsForAnyArgs((mockedAssignment, mockedMainMatch));
 
-            var actual = service.SumOvertimeReport(date);
+            var actual = await service.CalculateOvertimeReport(date, false);
+            DeepAssert.Equal(expected, actual.ToList());
         }
     }
 }
