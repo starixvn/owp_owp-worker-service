@@ -4,7 +4,7 @@ using OWP.SumReportData.OvertimeReport.Models;
 using Xunit;
 using Xunit.Asserts.Compare;
 
-namespace OWP.SumReportData.UnitTests.OvertimeReport;
+namespace OWP.SumReportData.UnitTests.OvertimeReport.Calculators;
 
 public class AssignmentOvertimeCalculatorUnitTests
 {

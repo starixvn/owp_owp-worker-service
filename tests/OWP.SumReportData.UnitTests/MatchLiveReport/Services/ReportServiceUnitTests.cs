@@ -1,11 +1,11 @@
-using OWP.SumReportData.MatchLiveReport.Constants;
-using OWP.SumReportData.MatchLiveReport.Models;
-using OWP.SumReportData.MatchLiveReport.Services;
 using NSubstitute;
+using OWP.SumReportData.MatchLiveReport.Constants;
+using OWP.SumReportData.MatchLiveReport.Helpers;
+using OWP.SumReportData.MatchLiveReport.Models;
+using OWP.SumReportData.MatchLiveReport.Repository;
+using OWP.SumReportData.MatchLiveReport.Services;
 using Xunit;
 using Xunit.Asserts.Compare;
-using OWP.SumReportData.MatchLiveReport.Repository;
-using OWP.SumReportData.MatchLiveReport.Helpers;
 
 namespace OWP.SumReportData.UnitTests.MatchLiveReport.Helpers;
 
@@ -37,7 +37,9 @@ public class ReportServiceUnitTests
                 OWPMatchId = 2
             }
         };
+        var mockSaba = new List<int> { 1, 3, 4 };
         reportRepository.QueryMatchesByDate(Arg.Any<DateTime>(), false).Returns((matches, mainMatches));
+        reportRepository.GetSaba5minOWPMatchId(Arg.Any<List<int>>()).Returns(mockSaba);
         var service = new ReportServiceImp(reportRepository);
 
         await service.Calculate(DateTime.Today, false);

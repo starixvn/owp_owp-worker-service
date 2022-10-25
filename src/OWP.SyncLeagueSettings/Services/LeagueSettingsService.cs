@@ -2,7 +2,6 @@
 using OWP.SyncLeagueSettings.Constants;
 using OWP.SyncLeagueSettings.Helpers;
 using OWP.SyncLeagueSettings.Models;
-using System.Linq;
 namespace OWP.SyncLeagueSettings.Services;
 
 public interface LeagueSettingsService

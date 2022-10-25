@@ -8,8 +8,14 @@ using Xunit.Asserts.Compare;
 namespace OWP.SyncLeagueSettings.UnitTests
 {
     public class LeagueSettingsServiceUnitTests
-
     {
+        private readonly LeagueSettingsRepository repository;
+
+        public LeagueSettingsServiceUnitTests()
+        {
+            repository = Substitute.For<LeagueSettingsRepository>();
+        }
+
         [Fact]
         public void CreateNewLeaguesSettings_ShouldReturnData()
         {
@@ -29,6 +35,29 @@ namespace OWP.SyncLeagueSettings.UnitTests
             //Assert
             var expected = MockLeagueSettings().OrderBy(x => x.OWPLeagueId).ToList();
             DeepAssert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public async Task InsertNewLeagueSettings_ShouldReturnData()
+        {
+            //Arrange
+            var service = InitLeagueSettingsService();
+            var date = new DateTime(2021, 04, 12, 02, 00, 00);
+            var tvCondition = new List<TvCondition>
+            {
+                new() { Label="TV", Value="TV"},
+                new() { Label="BET(TV)", Value="BET(TV)"},
+            };
+            var leagueSettingResponse = new List<InsertLeagueSettingsResponse>
+            {
+                new() { HasTV=true, LeagueSettingId=1},
+                new() { HasTV=false, LeagueSettingId=2},
+            };
+            repository.InsertNewLeaguesSettings(Arg.Any<List<LeagueSetting>>()).ReturnsForAnyArgs(leagueSettingResponse);
+            repository.GetAllTvConditions().Returns(tvCondition);
+
+            //Act
+            await service.InsertNewLeagueSettings(date);
         }
 
         private LeagueSettingsService InitLeagueSettingsService()

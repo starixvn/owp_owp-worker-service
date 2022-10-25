@@ -1,8 +1,8 @@
-using System.Collections.Immutable;
-using System.ComponentModel.DataAnnotations;
 using OWP.Core.Extensions;
 using OWP.SumReportData.MatchLiveReport.Constants;
 using OWP.SumReportData.MatchLiveReport.Models;
+using System.Collections.Immutable;
+using System.ComponentModel.DataAnnotations;
 
 namespace OWP.SumReportData.MatchLiveReport.Helpers;
 
@@ -100,7 +100,7 @@ public static class MatchHelper
         {
             return BetTypeName.Fantasy;
         }
-        
+
         if (owpLeagueName.Contains("WHICH TEAM TO KICK OFF", StringComparison.InvariantCultureIgnoreCase))
         {
             return BetTypeName.WhichTeamToKickOff;
@@ -129,7 +129,7 @@ public static class MatchHelper
     }
 
     public static bool IsPes(string owpLeagueName) => owpLeagueName.Contains("PES ", StringComparison.InvariantCultureIgnoreCase);
-    
+
     public static bool IsFifa(string owpLeagueName) => owpLeagueName.Contains("FIFA ", StringComparison.InvariantCultureIgnoreCase);
 
     public static BetTypeName GetPesBetType(string owpLeagueName)
@@ -138,7 +138,7 @@ public static class MatchHelper
         {
             return BetTypeName.SabaClubFriendlyVirtualPes2115MinsPlay;
         }
-        
+
         if (owpLeagueName.Contains("20 Mins ", StringComparison.InvariantCultureIgnoreCase))
         {
             return BetTypeName.SabaInternationalFriendlyVirtualPes2120MinsPlay;
@@ -154,7 +154,7 @@ public static class MatchHelper
         {
             return BetTypeName.M88SabaSpanishLeagueVirtualFifa21Season1016MinsPlay;
         }
-        
+
         if (owpLeagueName.Contains("16 Mins ", StringComparison.InvariantCultureIgnoreCase))
         {
             return BetTypeName.SabaClubFriendlyVirtualFifa2116MinsPlay;

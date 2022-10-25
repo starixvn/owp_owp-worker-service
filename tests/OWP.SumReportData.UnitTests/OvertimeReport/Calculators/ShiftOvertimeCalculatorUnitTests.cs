@@ -2,7 +2,7 @@
 using OWP.SumReportData.OvertimeReport.Models;
 using Xunit;
 
-namespace OWP.SumReportData.UnitTests.OvertimeReport;
+namespace OWP.SumReportData.UnitTests.OvertimeReport.Calculators;
 
 public class ShiftOvertimeCalculatorUnitTests
 {

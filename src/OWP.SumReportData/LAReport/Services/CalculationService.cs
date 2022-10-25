@@ -101,7 +101,7 @@ public class CalculationServiceImp : CalculationService
         return sumUpResult;
     }
 
-    private static LAReportModel SumUpSpecialAndMixedAndESoccer(IList<Assignment> assignments, LAReportModel sumUpResult)
+    private static void SumUpSpecialAndMixedAndESoccer(IList<Assignment> assignments, LAReportModel sumUpResult)
     {
         //SPECIAL PRODUCTS
         var tbookingProducts = assignments.Where(x => x.ReportType == ReportType.TOTAL_BOOKING_PLUS)
@@ -142,8 +142,6 @@ public class CalculationServiceImp : CalculationService
         sumUpResult.FTCorner = ftCornerProduct.Count();
         sumUpResult.FiveMajorLeague = fiveML.Count();
         sumUpResult.FTCorner5ML = ftCorner5MLProduct.Count();
-
-        return sumUpResult;
     }
 
     private void SumUpMultiple(IList<Assignment> assignments, LAReportModel sumUpResult)
@@ -215,7 +213,7 @@ public class CalculationServiceImp : CalculationService
         sumUpResult.OtherProductMatchIds = string.Join(",", otherMatchIds.Distinct());
     }
 
-    private List<Assignment> GroupMultipleMatches(IEnumerable<Assignment> assignments)
+    private static List<Assignment> GroupMultipleMatches(IEnumerable<Assignment> assignments)
     {
         var result = new List<Assignment>();
         var group = 1;
