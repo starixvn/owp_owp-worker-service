@@ -33,13 +33,13 @@ public class IsSingleMatchesRule : SingleMatchesRule
 
     public override ReportType Execute(Assignment assignment)
     {
-        if (string.IsNullOrEmpty(assignment.ProviderName))
-        {
-            return base.Execute(assignment);
-        }
         if (IsFutsalLeague(assignment.OWPLeagueName))
         {
             return ReportType.ONLY_TV;
+        }
+        if (string.IsNullOrEmpty(assignment.ProviderName))
+        {
+            return base.Execute(assignment);
         }
 
         var matchProviders = assignment.ProviderName.Split('/', StringSplitOptions.RemoveEmptyEntries);
@@ -91,7 +91,7 @@ public class IsSingleMatchesRule : SingleMatchesRule
     {
         foreach (var element in list)
         {
-            if (element.IsContainsIgnoreCase(text.Trim()))
+            if (text.IsContainsIgnoreCase(element.Trim()))
             {
                 return true;
             }
