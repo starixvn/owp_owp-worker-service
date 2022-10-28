@@ -1,6 +1,6 @@
-﻿using OWP.InfositeIdSync.Constants;
+﻿using OWP.Core.Constants;
 
-namespace OWP.InfositeIdSync.Mics;
+namespace OWP.Core.Mics;
 
 public class RepresentativeSubTypeDetector
 {

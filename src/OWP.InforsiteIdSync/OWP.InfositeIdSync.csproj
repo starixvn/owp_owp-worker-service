@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Olympus.OWP.Constants" Version="1.0.0.3" />
-    <PackageReference Include="Olympus.InfoSiteClient" Version="2.2.0.2" />   
+    <PackageReference Include="Olympus.InfoSiteClient" Version="2.1.0.14" />
+    <PackageReference Include="Olympus.OWP.Constants" Version="1.0.0.3" />   
   </ItemGroup>
 
   <ItemGroup>

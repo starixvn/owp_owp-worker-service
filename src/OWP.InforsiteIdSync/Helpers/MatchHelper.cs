@@ -1,5 +1,5 @@
 ﻿using Olympus.OWP.Constants;
-using OWP.InfositeIdSync.Mics;
+using OWP.Core.Mics;
 using OWP.InfositeIdSync.Models;
 
 namespace OWP.InfositeIdSync.Helpers;

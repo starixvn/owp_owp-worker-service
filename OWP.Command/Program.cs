@@ -100,5 +100,5 @@ services.AddOtherSportServices();
 services.AddArchiveDataServices();
 #endregion
 
-var apiService = services.BuildServiceProvider().GetService<OWP.SumReportData.LAReport.Handler>();
-await apiService.Handle(new DateTime(2022, 9, 19)).ConfigureAwait(false);
+var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.SyncChildMatchService>();
+await apiService.Sync(new DateTime(2022, 10, 25)).ConfigureAwait(false);
