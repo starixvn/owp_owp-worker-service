@@ -9,5 +9,7 @@ public class SyncDeletedChildMatchServiceImp : SyncDeletedChildMatchService
 {
     public async Task Sync(DateTime date)
     {
+        // TO do
+        await Task.CompletedTask;
     }
 }

@@ -50,7 +50,7 @@ public static class SpecialMatchBuilder
 
     private static string GetOwpMatchName(string matchName, string nameExtension)
     {
-        var pattern = @"(((\d+\w{2})\s(\w+))|(\d{2}:\d{2}-\d{2}:\d{2}))$";
+        const string pattern = @"(((\d+\w{2})\s(\w+))|(\d{2}:\d{2}-\d{2}:\d{2}))$";
 
         return Regex.Replace(matchName, pattern, nameExtension);
     }
@@ -58,13 +58,19 @@ public static class SpecialMatchBuilder
     private static int GetSpecialMatchType(MappedChildMatch childMatch)
     {
         if (IsNextCorner(childMatch))
+        {
             return Constant.CornerType;
+        }
 
         if (IsConditionOfBooking(childMatch))
+        {
             return Constant.BookingType;
+        }
 
         if (IsConditionOf15Min(childMatch))
+        {
             return Constant.Special15MinsType;
+        }
 
         return 0;
     }
