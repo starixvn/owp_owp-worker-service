@@ -33,19 +33,10 @@ public static class SpecialMatchBuilder
     private static MappedChildMatch GetPresentationMatch(MappedChildMatch childMatch, int specialType)
     {
         Constant.SpecialMatchDict.TryGetValue(specialType, out var nameExtension);
+        childMatch.HomeName = GetOwpMatchName(childMatch.HomeName, nameExtension);
+        childMatch.AwayName = GetOwpMatchName(childMatch.AwayName, nameExtension);
 
-        return new MappedChildMatch
-        {
-            ParentInfoSiteMatchId = childMatch.ParentInfoSiteMatchId,
-            AdminSiteMatchId = childMatch.AdminSiteMatchId,
-            LeagueName = childMatch.LeagueName,
-            HomeName = GetOwpMatchName(childMatch.HomeName, nameExtension),
-            AwayName = GetOwpMatchName(childMatch.AwayName, nameExtension),
-            EventDateTime = childMatch.EventDateTime,
-            SubType = childMatch.SubType,
-            MinorBettypeId = childMatch.MinorBettypeId,
-            UpdatedTime = childMatch.UpdatedTime
-        };
+        return childMatch;
     }
 
     private static string GetOwpMatchName(string matchName, string nameExtension)

@@ -53,30 +53,35 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
         var representativeSubtype = firstType.GetRepresentativeSubtype(subType.Value);
         var minorBettypeId = MinorBettype.GetMinorBettypeIdBySubtype(representativeSubtype);
 
-        return minorBettypeId != 0 ? minorBettypeId : null;
+        return minorBettypeId < 0 ? minorBettypeId : null;
     }
 
     public IEnumerable<MappedChildMatch> MapChildMatches(IEnumerable<ChildMatch> childMatches)
     {
+        childMatches = FilterMatch(childMatches);
         foreach (var childMatch in childMatches)
         {
-            if (!IsETPKMatch(childMatch.home_name) && IsValidSubType(childMatch.sub_type))
+            var minorBettypeId = GetOWPMinorMatchIdFromSubtype(childMatch.sub_type);
+            if (minorBettypeId.HasValue && minorBettypeId < 0)
             {
                 yield return new MappedChildMatch
                 {
                     ParentInfoSiteMatchId = (int)childMatch.match_id,
-                    AdminSiteMatchId = (int)childMatch.create_match_id,
+                    AdminSiteMatchId = (int?)childMatch.create_match_id,
                     LeagueName = childMatch.league_name,
                     HomeName = childMatch.home_name,
                     AwayName = childMatch.away_name,
                     EventDateTime = (DateTime)childMatch.game_date,
-                    MinorBettypeId = GetOWPMinorMatchIdFromSubtype(childMatch.sub_type),
+                    MinorBettypeId = minorBettypeId,
                     SubType = childMatch.sub_type,
                     UpdatedTime = childMatch.stamp
                 };
             }
         }
     }
+
+    private static IEnumerable<ChildMatch> FilterMatch(IEnumerable<ChildMatch> childMatches)
+        => childMatches.Where(x => !IsETPKMatch(x.home_name) && IsValidSubType(x.sub_type));
 
     private static bool IsETPKMatch(string homeName)
         => homeName.IsContainsIgnoreCase("(ET)") || homeName.IsContainsIgnoreCase("(PEN)");
