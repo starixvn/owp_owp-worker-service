@@ -34,7 +34,7 @@ public static class MatchHelper
     {
         foreach (var match in owpMatches)
         {
-            if (!adminSiteMatches.Any(x => x.Equals(match) && x.AdminSiteMatchId == match.AdminSiteMatchId))
+            if (!adminSiteMatches.Any(x => x.AdminSiteMatchId==match.AdminSiteMatchId))
             {
                 yield return new LinkedMatch
                 {
