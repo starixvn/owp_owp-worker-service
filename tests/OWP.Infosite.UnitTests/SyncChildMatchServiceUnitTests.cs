@@ -85,7 +85,7 @@ public class SyncChildMatchServiceUnitTests
                 ParentInfoSiteMatchId = 1,
                 EventDateTime = new DateTime(2022,04,15),
                 MinorBettypeId = -4,
-                SubType = 2101
+                SubType = 2100
             }
         };
 }

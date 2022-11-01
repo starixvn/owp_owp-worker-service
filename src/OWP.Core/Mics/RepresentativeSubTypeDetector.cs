@@ -35,7 +35,7 @@ public class NextTypesDetector : RepresentativeSubTypeDetector
     {
         >= SubType.NextBookingFromSubType and <= SubType.NextBookingToSubType => SubType.NextBookingRepresentativeSubType,
         >= SubType.NextCornerFromSubType and <= SubType.NextCornerToSubType => SubType.NextCornerRepresentativeSubType,
-        >= SubType.NextGoalFromSubType and <= SubType.NextGoalToSubType => SubType.NextGoalToSubType,
+        >= SubType.NextGoalFromSubType and <= SubType.NextGoalToSubType => SubType.NextGoalRepresentativeSubType,
         _ => base.GetRepresentativeSubtype(subType)
     };
 }

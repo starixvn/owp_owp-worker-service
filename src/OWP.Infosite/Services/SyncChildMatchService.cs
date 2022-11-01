@@ -40,7 +40,7 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
         await SaveInfoSiteChildMatchCommand(mappedChildMatches);
     }
 
-    public static int? GetOWPMinorMatchIdFromSubtype(int? subType)
+    public static (int?, int?) GetOWPMinorMatchIdFromSubtype(int? subType)
     {
         var firstType = new Specific10MinsDetector();
         var secondType = new Specific15MinsDetector();
@@ -53,7 +53,7 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
         var representativeSubtype = firstType.GetRepresentativeSubtype(subType.Value);
         var minorBettypeId = MinorBettype.GetMinorBettypeIdBySubtype(representativeSubtype);
 
-        return minorBettypeId < 0 ? minorBettypeId : null;
+        return (representativeSubtype, minorBettypeId < 0 ? minorBettypeId : null);
     }
 
     public IEnumerable<MappedChildMatch> MapChildMatches(IEnumerable<ChildMatch> childMatches)
@@ -61,7 +61,7 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
         childMatches = FilterMatch(childMatches);
         foreach (var childMatch in childMatches)
         {
-            var minorBettypeId = GetOWPMinorMatchIdFromSubtype(childMatch.sub_type);
+            var (subType, minorBettypeId) = GetOWPMinorMatchIdFromSubtype(childMatch.sub_type);
             if (minorBettypeId.HasValue && minorBettypeId < 0)
             {
                 yield return new MappedChildMatch
@@ -73,7 +73,7 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
                     AwayName = childMatch.away_name,
                     EventDateTime = (DateTime)childMatch.game_date,
                     MinorBettypeId = minorBettypeId,
-                    SubType = childMatch.sub_type,
+                    SubType = subType,
                     UpdatedTime = childMatch.stamp
                 };
             }
