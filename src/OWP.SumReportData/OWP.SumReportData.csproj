@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -13,13 +13,9 @@
     <PackageReference Include="NSubstitute" Version="4.4.0" />
     <PackageReference Include="Olympus.Xml" Version="1.0.0.4" />
   </ItemGroup>
-
+	
   <ItemGroup>
     <ProjectReference Include="..\OWP.Core\OWP.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="TraderReport\Enum\" />
   </ItemGroup>
 
 </Project>
