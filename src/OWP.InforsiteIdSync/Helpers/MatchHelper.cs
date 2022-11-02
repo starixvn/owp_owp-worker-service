@@ -18,28 +18,25 @@ public static class MatchHelper
             x.MinorBettypeId != MinorBettype.FifteenMinsNoOfCorners &&
             x.MinorBettypeId != MinorBettype.FifteenMinsTotalBooking);
 
-        var unsynchorizedMainMatches = mainOWPMatches.Except(mainDB02Matches, new IsLiveComparer()).ToList();
-        var unsynchorizedMinorMatches = GetUnsynchorizedMinorMatches(minorOWPMatches, minorDB02Matches);
-        var unsynchorized15MinsMinorMatches = Get15MinsUnsynchorizedMinorMatches(unsynchorizedMinorMatches);
+        var unsynchronizedMainMatches = mainOWPMatches.Except(mainDB02Matches, new IsLiveComparer()).ToList();
+        var unsynchronizedMinorMatches = GetUnsynchorizedMinorMatches(minorOWPMatches, minorDB02Matches);
+        var unsynchronized15MinsMinorMatches = Get15MinsUnsynchronizedMinorMatches(unsynchronizedMinorMatches);
 
-        return unsynchorizedMainMatches.Union(unsynchorizedMinorMatches).Union(unsynchorized15MinsMinorMatches).ToList();
+        return unsynchronizedMainMatches.Union(unsynchronizedMinorMatches).Union(unsynchronized15MinsMinorMatches).ToList();
     }
 
-    private static IEnumerable<SyncIsLiveModel> Get15MinsUnsynchorizedMinorMatches(IEnumerable<SyncIsLiveModel> unsynchorizedMinorMatches)
+    private static IEnumerable<SyncIsLiveModel> Get15MinsUnsynchronizedMinorMatches(IEnumerable<SyncIsLiveModel> unsynchorizedMinorMatches)
     {
-        foreach (var match in unsynchorizedMinorMatches)
-        {
-            if (match.MinorBettypeId == MinorBettype.TotalBooking || match.MinorBettypeId == MinorBettype.NoOfCorners)
+        return unsynchorizedMinorMatches.Where(m =>
+                m.MinorBettypeId == MinorBettype.TotalBooking || m.MinorBettypeId == MinorBettype.NoOfCorners)
+            .Select(m => new SyncIsLiveModel
             {
-                yield return new SyncIsLiveModel
-                {
-                    InfoSiteMatchId = match.InfoSiteMatchId,
-                    MinorBettypeId = (match.MinorBettypeId == MinorBettype.NoOfCorners ?
-                            MinorBettype.FifteenMinsNoOfCorners : MinorBettype.FifteenMinsTotalBooking),
-                    IsLive = match.IsLive
-                };
-            }
-        }
+                InfoSiteMatchId = m.InfoSiteMatchId,
+                MinorBettypeId = (m.MinorBettypeId == MinorBettype.NoOfCorners
+                    ? MinorBettype.FifteenMinsNoOfCorners
+                    : MinorBettype.FifteenMinsTotalBooking),
+                IsLive = m.IsLive
+            });
     }
 
     internal static IEnumerable<(int, int?)> GetDistinctNonLiveMatches(IEnumerable<SyncIsLiveModel> liveMatches, IEnumerable<SyncIsLiveModel> nonLiveMatches)
