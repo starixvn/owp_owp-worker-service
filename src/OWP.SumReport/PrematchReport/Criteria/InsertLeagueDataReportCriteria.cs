@@ -1,6 +1,6 @@
 ﻿namespace OWP.SumReport.PrematchReport.Criteria;
 
-public class InsertLeagueDataReportCriteria : InsertDataReportCriteriaBase
+public class InsertLeagueDataReportCriteria : InsertDataReportBaseCriteria
 {
     public override string GetSettingKey() => "OWP_PrematchReport_InsertLeague";
 
