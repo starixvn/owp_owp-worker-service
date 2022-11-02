@@ -6,7 +6,7 @@ namespace OWP.InfositeIdSync.Helpers;
 
 public static class MatchHelper
 {
-    public static List<SyncIsLiveModel> GetUnsynchorizedMatches(List<SyncIsLiveModel> owpMatches, List<MainDBMatch> db02Matches)
+    public static List<SyncIsLiveModel> GetUnsynchronizedMatches(List<SyncIsLiveModel> owpMatches, List<MainDBMatch> db02Matches)
     {
         var mappedDB02Matches = MainDBMatchesMapping(owpMatches, db02Matches);
 
@@ -19,16 +19,16 @@ public static class MatchHelper
             x.MinorBettypeId != MinorBettype.FifteenMinsTotalBooking);
 
         var unsynchronizedMainMatches = mainOWPMatches.Except(mainDB02Matches, new IsLiveComparer()).ToList();
-        var unsynchronizedMinorMatches = GetUnsynchorizedMinorMatches(minorOWPMatches, minorDB02Matches);
+        var unsynchronizedMinorMatches = GetUnsynchronizedMinorMatches(minorOWPMatches, minorDB02Matches);
         var unsynchronized15MinsMinorMatches = Get15MinsUnsynchronizedMinorMatches(unsynchronizedMinorMatches);
 
         return unsynchronizedMainMatches.Union(unsynchronizedMinorMatches).Union(unsynchronized15MinsMinorMatches).ToList();
     }
 
-    private static IEnumerable<SyncIsLiveModel> Get15MinsUnsynchronizedMinorMatches(IEnumerable<SyncIsLiveModel> unsynchorizedMinorMatches)
+    private static IEnumerable<SyncIsLiveModel> Get15MinsUnsynchronizedMinorMatches(IEnumerable<SyncIsLiveModel> unsynchronizedMinorMatches)
     {
-        return unsynchorizedMinorMatches.Where(m =>
-                m.MinorBettypeId == MinorBettype.TotalBooking || m.MinorBettypeId == MinorBettype.NoOfCorners)
+        return unsynchronizedMinorMatches.Where(m =>
+                m.MinorBettypeId is MinorBettype.TotalBooking or MinorBettype.NoOfCorners)
             .Select(m => new SyncIsLiveModel
             {
                 InfoSiteMatchId = m.InfoSiteMatchId,
@@ -49,7 +49,7 @@ public static class MatchHelper
             .Except(nonLiveMatches, new SyncIsLiveModel())
             .Select(x => (x.InfoSiteMatchId, GetRepresentativeSubType(x.MinorBettypeId)));
 
-    private static IEnumerable<SyncIsLiveModel> GetUnsynchorizedMinorMatches(IEnumerable<SyncIsLiveModel> minorOWPMatches, IEnumerable<SyncIsLiveModel> minorDB02Matches)
+    private static IEnumerable<SyncIsLiveModel> GetUnsynchronizedMinorMatches(IEnumerable<SyncIsLiveModel> minorOWPMatches, IEnumerable<SyncIsLiveModel> minorDB02Matches)
     {
         return minorOWPMatches.Where(match => minorDB02Matches
             .Any(x => x.InfoSiteMatchId == match.InfoSiteMatchId

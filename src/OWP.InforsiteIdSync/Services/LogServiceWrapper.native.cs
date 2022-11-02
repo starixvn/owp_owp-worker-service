@@ -13,7 +13,7 @@ public interface LogServiceWrapper
     Task Error(string header, params object[] parameters);
 
     Task LogSynIsLive(
-         List<SyncIsLiveModel> unsynchorizedMatches,
+         List<SyncIsLiveModel> unsynchronizedMatches,
         IEnumerable<ValueTuple<int, int?>> deletedMatches,
         IEnumerable<ValueTuple<int, int?>> liveMatches,
         IEnumerable<ValueTuple<int, int?>> nonLiveMatches,
@@ -55,13 +55,13 @@ public class LogServiceWrapperImp : LogServiceWrapper
     }
 
     public async Task LogSynIsLive(
-        List<SyncIsLiveModel> unsynchorizedMatches,
+        List<SyncIsLiveModel> unsynchronizedMatches,
         IEnumerable<(int, int?)> deletedMatches,
         IEnumerable<(int, int?)> liveMatches, IEnumerable<(int, int?)> nonLiveMatches,
         IsLiveSynchronizedResult synchronizedLiveMatchResult,
         IsLiveSynchronizedResult synchronizedNonLiveMatchResult)
     {
-        if (!unsynchorizedMatches.Any() &&
+        if (!unsynchronizedMatches.Any() &&
             !deletedMatches.Any() &&
             !liveMatches.Any() &&
             !nonLiveMatches.Any())
@@ -72,7 +72,7 @@ public class LogServiceWrapperImp : LogServiceWrapper
         var duplicatedMatches = liveMatches.Intersect(nonLiveMatches);
         var logObject = new
         {
-            unsynchorizedMatches = unsynchorizedMatches.ToArray(),
+            unsynchronizedMatches = unsynchronizedMatches.ToArray(),
             deletedMatches = deletedMatches.ToArray(),
             liveMatches = liveMatches.ToArray(),
             nonLiveMatches = nonLiveMatches.ToArray(),
