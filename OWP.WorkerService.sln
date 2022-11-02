@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.InfositeIdSync.UnitTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.SyncLeagueSetting.UnitTests", "tests\OWP.SyncLeagueSetting.UnitTests\OWP.SyncLeagueSetting.UnitTests.csproj", "{7629F2E6-08D8-48EE-83C9-087D556AEABD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.SumReportData", "src\OWP.SumReportData\OWP.SumReportData.csproj", "{D8A59B78-D069-4533-969B-C892877E0ABF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.SumReport", "src\OWP.SumReport\OWP.SumReport.csproj", "{D8A59B78-D069-4533-969B-C892877E0ABF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.SyncLeagueSettings", "src\OWP.SyncLeagueSettings\OWP.SyncLeagueSettings.csproj", "{618BC863-16E1-4339-B64E-508D9E04EA4B}"
 EndProject
@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.LinkLeagueAndTeam.UnitT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.MatchReadyNotification.UnitTests", "tests\OWP.MatchReadyNotification.UnitTests\OWP.MatchReadyNotification.UnitTests.csproj", "{AAB782AA-8748-4F52-B9EB-E91586D3FAC4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.SumReportData.UnitTests", "tests\OWP.SumReportData.UnitTests\OWP.SumReportData.UnitTests.csproj", "{5CC0BD1F-7D26-403F-A567-4AFB93BC61B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.SumReport.UnitTests", "tests\OWP.SumReport.UnitTests\OWP.SumReport.UnitTests.csproj", "{5CC0BD1F-7D26-403F-A567-4AFB93BC61B7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.OtherSport", "src\OWP.OtherSport\OWP.OtherSport.csproj", "{765B5FBB-9368-4EB1-8916-87C539C041A0}"
 EndProject

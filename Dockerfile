@@ -12,7 +12,7 @@ COPY ./src/OWP.Infosite/. ./src/OWP.Infosite
 COPY ./src/OWP.LinkLeagueAndTeam/. ./src/OWP.LinkLeagueAndTeam
 COPY ./src/OWP.MatchReadyNotification/. ./src/OWP.MatchReadyNotification
 COPY ./src/OWP.OtherSport/. ./src/OWP.OtherSport
-COPY ./src/OWP.SumReportData/. ./src/OWP.SumReportData
+COPY ./src/OWP.SumReport/. ./src/OWP.SumReport
 COPY ./src/OWP.SyncLeagueSettings/. ./src/OWP.SyncLeagueSettings
 COPY ./src/OWP.ArchiveData/. ./src/OWP.ArchiveData
 COPY ./OWP.WorkerService/OWP.WorkerService.csproj ./OWP.WorkerService/OWP.WorkerService.csproj

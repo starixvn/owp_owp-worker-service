@@ -1,0 +1,52 @@
+﻿using OWP.SumReport.LAReport.Enum;
+using OWP.SumReport.LAReport.Misc;
+
+namespace OWP.SumReport.LAReport.Factory;
+
+public interface MainMatchRuleFactory
+{
+    MainMatchRule Create(RuleType type);
+}
+
+public class MainMatchRuleFactoryImp : MainMatchRuleFactory
+{
+    public MainMatchRule Create(RuleType type) => type switch
+    {
+        RuleType.FANTASY => new IsFantasyRule(),
+        RuleType.ESOCCER => new ESoccerRule(),
+        RuleType.FIVE_MAJOR_LEAGUE => new FiveMajorLeagueRule(),
+        RuleType.FT_CORNER_FIVE_MAJOR_LEAGUE => new FTCorner5MLRule(),
+        _ => new FTCornerRule()
+    };
+}
+
+public interface SpecialProductFactory
+{
+    SpecialProductRule Create(RuleType type);
+}
+
+public class SpecialProductFactoryImp : SpecialProductFactory
+{
+    public SpecialProductRule Create(RuleType type)
+    {
+        if (type == RuleType.NOT_CORNER)
+        {
+            return new NotCornerRule();
+        }
+
+        return new IsCornerRule();
+    }
+}
+
+public interface SingleMatchesFactory
+{
+    IsSingleMatchesRule Create(RuleType type);
+}
+
+public class SingleMatchesFactoryImp : SingleMatchesFactory
+{
+    public IsSingleMatchesRule Create(RuleType type)
+    {
+        return new IsSingleMatchesRule();
+    }
+}

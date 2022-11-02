@@ -1,8 +1,8 @@
 ﻿using Fanex.Logging;
 using ONEbook.UM.Services;
-using OWP.SumReportData.Constants;
-using OWP.SumReportData.PrematchReport.Services;
-using OWP.SumReportData.Services;
+using OWP.SumReport.Constants;
+using OWP.SumReport.PrematchReport.Services;
+using OWP.SumReport.Services;
 using Quartz;
 
 namespace OWP.WorkerService.Jobs

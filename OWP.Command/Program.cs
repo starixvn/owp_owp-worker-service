@@ -19,7 +19,7 @@ using OWP.InfositeIdSync;
 using OWP.LinkLeagueAndTeam;
 using OWP.MatchReadyNotification;
 using OWP.OtherSport;
-using OWP.SumReportData;
+using OWP.SumReport;
 using OWP.SyncLeagueSettings;
 
 #region Configuration
@@ -94,7 +94,7 @@ services.AddOWPCoreServices();
 services.AddInfositeIdSyncServices();
 services.AddLinkLeagueAndTeamServices();
 services.AddMatchReadyNotificationServices();
-services.AddSumReportDataServices();
+services.AddSumReportServices();
 services.AddSyncLeagueSettingsServices();
 services.AddOtherSportServices();
 services.AddArchiveDataServices();

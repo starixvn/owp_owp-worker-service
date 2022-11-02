@@ -24,7 +24,7 @@
 		<ProjectReference Include="..\src\OWP.LinkLeagueAndTeam\OWP.LinkLeagueAndTeam.csproj" />
 		<ProjectReference Include="..\src\OWP.MatchReadyNotification\OWP.MatchReadyNotification.csproj" />
 		<ProjectReference Include="..\src\OWP.OtherSport\OWP.OtherSport.csproj" />
-		<ProjectReference Include="..\src\OWP.SumReportData\OWP.SumReportData.csproj" />
+		<ProjectReference Include="..\src\OWP.SumReport\OWP.SumReport.csproj" />
 		<ProjectReference Include="..\src\OWP.SyncLeagueSettings\OWP.SyncLeagueSettings.csproj" />
 	</ItemGroup>
 
