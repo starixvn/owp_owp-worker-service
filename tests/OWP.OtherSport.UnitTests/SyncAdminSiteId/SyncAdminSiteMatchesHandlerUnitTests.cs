@@ -37,9 +37,6 @@ public class SyncAdminSiteMatchesHandlerUnitTests
         await dynamicRepository.Received()
             .ExecuteAsync(Arg.Is<UpdateUnlinkedMatchesCriteria>(u
                 => u.UnlinkedMatches == XmlConverter.Serialize(GetUnlinkedMatches())));
-        await dynamicRepository.Received()
-            .ExecuteAsync(Arg.Is<UpdateLinkedMatchesCriteria>(u
-                => u.LinkedMatches == XmlConverter.Serialize(GetLinkedMatches())));
     }
 
     private IEnumerable<LinkedMatch> GetUnlinkedMatches()
