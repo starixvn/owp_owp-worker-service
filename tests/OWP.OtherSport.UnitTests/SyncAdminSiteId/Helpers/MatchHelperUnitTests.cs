@@ -71,24 +71,6 @@ public class MatchHelperUnitTests
             {
                 new LinkedMatch
                 {
-                    OSMatchId = 79,
-                    OWPLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)11",
-                    OWPHome = "Dalian Pro FC (N)11",
-                    OWPAway = "Guangzhou R&F11",
-                    OldAdminSiteMatchId = 1,
-                    OldEventDate = new DateTime(2021, 03, 18)
-                },
-                new LinkedMatch
-                {
-                    OSMatchId = 113,
-                    OWPLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)11",
-                    OWPHome = "Dalian Pro FC (N)12",
-                    OWPAway = "Guangzhou R&F12",
-                    OldAdminSiteMatchId = 2,
-                    OldEventDate = new DateTime(2021, 03, 18)
-                },
-                new LinkedMatch
-                {
                     OSMatchId = 444,
                     OWPLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
                     OWPHome = "Dalian Pro FC (N)1",
@@ -99,7 +81,6 @@ public class MatchHelperUnitTests
             };
 
         var actual = MatchHelper.GetRemovedMatches(GetLinkedOWPMatches(), GetAdminSiteMatches());
-
         DeepAssert.Equal(expected, actual.ToList());
     }
 
