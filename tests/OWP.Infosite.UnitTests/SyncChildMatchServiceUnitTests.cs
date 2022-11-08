@@ -30,7 +30,7 @@ public class SyncChildMatchServiceUnitTests
 
         var actual = service.MapChildMatches(childMatches);
 
-        DeepAssert.Equal(actual.ToList(), expected);
+        DeepAssert.Equal(expected, actual.ToList());
     }
 
     public IList<ChildMatch> MockChildMatch()
@@ -42,7 +42,7 @@ public class SyncChildMatchServiceUnitTests
                 away_name = "Kyoto Sanga Next Corners",
                 league_name = "JAPAN LEAGUE CUP - CORNERS",
                 match_id = 1,
-                game_date = new DateTime(2022,04,15),
+                game_date = new DateTime(2022,04,15,1,0,0),
                 sub_type = 2101
             },
             new ChildMatch
@@ -83,7 +83,7 @@ public class SyncChildMatchServiceUnitTests
                 AwayName = "Kyoto Sanga Next Corners",
                 LeagueName = "JAPAN LEAGUE CUP - CORNERS",
                 ParentInfoSiteMatchId = 1,
-                EventDateTime = new DateTime(2022,04,15),
+                EventDateTime = new DateTime(2022,04,15,9,0,0),
                 MinorBettypeId = -4,
                 SubType = 2100
             }

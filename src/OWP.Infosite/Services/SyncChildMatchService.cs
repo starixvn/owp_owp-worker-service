@@ -71,7 +71,7 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
                     LeagueName = childMatch.league_name,
                     HomeName = childMatch.home_name,
                     AwayName = childMatch.away_name,
-                    EventDateTime = (DateTime)childMatch.game_date,
+                    EventDateTime = ((DateTime)childMatch.game_date).ToUtc8(),
                     MinorBettypeId = minorBettypeId,
                     SubType = subType,
                     UpdatedTime = childMatch.stamp
