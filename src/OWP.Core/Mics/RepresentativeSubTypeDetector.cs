@@ -49,3 +49,13 @@ public class SingleTeamPenaltyShootOut : RepresentativeSubTypeDetector
         _ => base.GetRepresentativeSubtype(subType)
     };
 }
+
+public class WinnerAndNextRound : RepresentativeSubTypeDetector
+{
+    public override int GetRepresentativeSubtype(int subType) => subType switch
+    {
+        >= SubType.WinnerFromSubType and <= SubType.WinnerToSubType => SubType.WinnerRepresentativeSubType,
+        >= SubType.NextRoundFromSubType and <= SubType.NextRoundToSubType => SubType.NextRoundRepresentativeSubType,
+        _ => base.GetRepresentativeSubtype(subType)
+    };
+}

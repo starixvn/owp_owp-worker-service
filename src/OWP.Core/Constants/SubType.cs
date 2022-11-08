@@ -47,5 +47,13 @@ namespace OWP.Core.Constants
         public const int NextGoalToSubType = 499;
 
         public const int NextGoalRepresentativeSubType = 400;
+
+        public const int WinnerFromSubType = 601;
+        public const int WinnerToSubType = 699;
+        public const int WinnerRepresentativeSubType = 600;
+
+        public const int NextRoundFromSubType = 801;
+        public const int NextRoundToSubType = 899;
+        public const int NextRoundRepresentativeSubType = 800;
     }
 }

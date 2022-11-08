@@ -46,10 +46,12 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
         var secondType = new Specific15MinsDetector();
         var thirdType = new NextTypesDetector();
         var fourthType = new SingleTeamPenaltyShootOut();
+        var fifthType = new WinnerAndNextRound();
 
         firstType.NextType = secondType;
         secondType.NextType = thirdType;
         thirdType.NextType = fourthType;
+        fourthType.NextType = fifthType;
         var representativeSubtype = firstType.GetRepresentativeSubtype(subType.Value);
         var minorBettypeId = MinorBettype.GetMinorBettypeIdBySubtype(representativeSubtype);
 
@@ -81,7 +83,7 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
     }
 
     private static IEnumerable<ChildMatch> FilterMatch(IEnumerable<ChildMatch> childMatches)
-        => childMatches.Where(x => !IsETPKMatch(x.home_name) && IsValidSubType(x.sub_type));
+        => childMatches.Where(x => !IsETPKMatch(x.home_name) && IsValidSubType(x.sub_type) && x.main_type.HasValue);
 
     private static bool IsETPKMatch(string homeName)
         => homeName.IsContainsIgnoreCase("(ET)") || homeName.IsContainsIgnoreCase("(PEN)");
