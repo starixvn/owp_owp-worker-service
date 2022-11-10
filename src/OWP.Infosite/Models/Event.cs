@@ -77,6 +77,16 @@ public class Event
 
     public string MatchCode { get; private set; }
 
+    public bool IsTest { get; set; }
+
+    public string Remark2 { get; set; }
+
+    public string HomeRemark { get; set; }
+
+    public string AwayRemark { get; set; }
+
+    public string TotalRound { get; set; }
+
     public Event(CommonMatchModel infositeMatch)
     {
         InfositeMatch = infositeMatch;
@@ -111,6 +121,11 @@ public class Event
         IsValid = IsValidMatch();
         MatchCode = GetMatchCode();
         Remark = ExtInfo.remark;
+        IsTest = infositeMatch.is_test;
+        Remark2 = ExtInfo.remark2.ConvertNullToEmpty();
+        HomeRemark = ExtInfo.home_remark.ConvertNullToEmpty();
+        AwayRemark = ExtInfo.away_remark.ConvertNullToEmpty();
+        TotalRound = infositeMatch.round_total.ConvertNullToEmpty();
     }
 
     private string GetHomeName()
