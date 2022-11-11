@@ -40,7 +40,7 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
         await SaveInfoSiteChildMatchCommand(mappedChildMatches);
     }
 
-    public static (int?, int?) GetOWPMinorMatchIdFromSubtype(int? subType)
+    public static (int, int) GetOWPMinorMatchIdFromSubtype(int? subType)
     {
         var firstType = new Specific10MinsDetector();
         var secondType = new Specific15MinsDetector();
@@ -55,7 +55,7 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
         var representativeSubtype = firstType.GetRepresentativeSubtype(subType.Value);
         var minorBettypeId = MinorBettype.GetMinorBettypeIdBySubtype(representativeSubtype);
 
-        return (representativeSubtype, minorBettypeId < 0 ? minorBettypeId : null);
+        return (representativeSubtype, minorBettypeId);
     }
 
     public IEnumerable<MappedChildMatch> MapChildMatches(IEnumerable<ChildMatch> childMatches)
@@ -64,7 +64,7 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
         foreach (var childMatch in childMatches)
         {
             var (subType, minorBettypeId) = GetOWPMinorMatchIdFromSubtype(childMatch.sub_type);
-            if (minorBettypeId.HasValue && minorBettypeId < 0)
+            if (minorBettypeId < 0)
             {
                 yield return new MappedChildMatch
                 {

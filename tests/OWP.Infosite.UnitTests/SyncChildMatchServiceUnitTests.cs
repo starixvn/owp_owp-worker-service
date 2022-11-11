@@ -2,6 +2,7 @@ using Fanex.Data.Repository;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 using Olympus.InfoSiteClient.Models;
+using OWP.Infosite.Criteria;
 using OWP.Infosite.Models;
 using OWP.Infosite.Services;
 using OWP.Infosite.Settings;
@@ -31,6 +32,29 @@ public class SyncChildMatchServiceUnitTests
         var actual = service.MapChildMatches(childMatches);
 
         DeepAssert.Equal(expected, actual.ToList());
+    }
+
+    [Fact]
+    public async Task SaveInfoSiteChildMatchCommand()
+    {
+        var matches = new List<MappedChildMatch>()
+        {
+            new MappedChildMatch
+            {
+                HomeName = "Hokkaido Consadole Sapporo Next Corners",
+                AwayName = "Kyoto Sanga Next Corners",
+                LeagueName = "JAPAN LEAGUE CUP - CORNERS",
+                ParentInfoSiteMatchId = 1,
+                EventDateTime = new DateTime(2022,04,15,9,0,0),
+                UpdatedTime = new DateTime(2022,04,15,9,0,0),
+                MinorBettypeId = -4,
+                SubType = 2100,
+            }
+        };
+
+        await service.SaveInfoSiteChildMatchCommand(matches);
+
+        await repository.Received().ExecuteAsync(Arg.Is<PushInfoSiteChildMatchCommand>(x => x.ChildMatchesJson.Contains("JAPAN LEAGUE CUP - CORNERS")));
     }
 
     public IList<ChildMatch> MockChildMatch()
@@ -113,6 +137,8 @@ public class SyncChildMatchServiceUnitTests
                 sub_type = 12345,
                 main_type = null
             },
+            new ChildMatch { home_name = "League A (ET)" },
+            new ChildMatch { home_name = "League B (PEN)" },
         };
 
     public IList<MappedChildMatch> MockExpected()
