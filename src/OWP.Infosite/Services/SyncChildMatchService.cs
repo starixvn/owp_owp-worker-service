@@ -76,7 +76,7 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
                     EventDateTime = ((DateTime)childMatch.game_date).ToUtc8(),
                     MinorBettypeId = minorBettypeId,
                     SubType = subType,
-                    UpdatedTime = childMatch.stamp
+                    UpdatedTime = childMatch.stamp.ToUtc8()
                 };
             }
         }
