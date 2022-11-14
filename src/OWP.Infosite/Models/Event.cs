@@ -125,7 +125,7 @@ public class Event
         Remark2 = ExtInfo.remark2.ConvertNullToEmpty();
         HomeRemark = ExtInfo.home_remark.ConvertNullToEmpty();
         AwayRemark = ExtInfo.away_remark.ConvertNullToEmpty();
-        TotalRound = infositeMatch.round_total.ConvertNullToEmpty();
+        TotalRound = ExtInfo.round_total;
     }
 
     private string GetHomeName()
