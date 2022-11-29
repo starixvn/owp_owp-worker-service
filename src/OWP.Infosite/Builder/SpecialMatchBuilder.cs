@@ -35,6 +35,7 @@ public static class SpecialMatchBuilder
         Constant.SpecialMatchDict.TryGetValue(specialType, out var nameExtension);
         childMatch.HomeName = GetOwpMatchName(childMatch.HomeName, nameExtension);
         childMatch.AwayName = GetOwpMatchName(childMatch.AwayName, nameExtension);
+        childMatch.SubType = childMatch.RepresentativeSubtype;
 
         return childMatch;
     }

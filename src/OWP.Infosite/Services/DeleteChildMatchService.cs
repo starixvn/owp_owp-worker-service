@@ -5,18 +5,18 @@ using OWP.Infosite.Models;
 
 namespace OWP.Infosite.Services;
 
-public interface SyncDeletedChildMatchService
+public interface SyncDeleteChildMatchService
 {
     Task Sync(DateTime date);
 }
 
-public class SyncDeletedChildMatchServiceImp : SyncDeletedChildMatchService
+public class SyncDeleteChildMatchServiceImp : SyncDeleteChildMatchService
 {
     private readonly ApiService apiService;
 
     private readonly IDynamicRepository repository;
 
-    public SyncDeletedChildMatchServiceImp(ApiService apiService)
+    public SyncDeleteChildMatchServiceImp(ApiService apiService)
     {
         this.apiService = apiService;
     }

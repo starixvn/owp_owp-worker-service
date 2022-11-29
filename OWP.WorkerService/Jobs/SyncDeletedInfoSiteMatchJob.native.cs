@@ -8,11 +8,11 @@ namespace OWP.WorkerService.Jobs;
 [DisallowConcurrentExecution]
 internal class SyncDeletedChildInfoSiteMatchJob : IJob
 {
-    private readonly SyncDeletedChildMatchService syncDeletedService;
+    private readonly SyncDeleteChildMatchService syncDeletedService;
 
     private readonly IMaintenanceService maintenanceService;
 
-    public SyncDeletedChildInfoSiteMatchJob(SyncDeletedChildMatchService syncDeletedService, IMaintenanceService maintenanceService)
+    public SyncDeletedChildInfoSiteMatchJob(SyncDeleteChildMatchService syncDeletedService, IMaintenanceService maintenanceService)
     {
         this.syncDeletedService = syncDeletedService;
         this.maintenanceService = maintenanceService;

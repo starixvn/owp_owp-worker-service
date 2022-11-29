@@ -44,7 +44,7 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
         childMatches = FilterMatch(childMatches);
         foreach (var childMatch in childMatches)
         {
-            var (subType, minorBettypeId) = DetectSubtypeHelper.GetOWPMinorMatchIdFromSubtype(childMatch.sub_type);
+            var (representativeSubtype, minorBettypeId) = DetectSubtypeHelper.GetOWPMinorMatchIdFromSubtype(childMatch.sub_type);
             if (minorBettypeId < 0)
             {
                 yield return new MappedChildMatch
@@ -56,7 +56,8 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
                     AwayName = childMatch.away_name,
                     EventDateTime = ((DateTime)childMatch.game_date).ToUtc8(),
                     MinorBettypeId = minorBettypeId,
-                    SubType = subType,
+                    SubType = childMatch.sub_type,
+                    RepresentativeSubtype = representativeSubtype,
                     UpdatedTime = childMatch.stamp.ToUtc8()
                 };
             }

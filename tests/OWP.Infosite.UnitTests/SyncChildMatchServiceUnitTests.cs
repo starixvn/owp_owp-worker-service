@@ -153,7 +153,8 @@ public class SyncChildMatchServiceUnitTests
                 EventDateTime = new DateTime(2022,04,15,9,0,0),
                 UpdatedTime = new DateTime(2022,04,15,9,0,0),
                 MinorBettypeId = -4,
-                SubType = 2100,
+                SubType = 2101,
+                RepresentativeSubtype = 2100
             },
             new MappedChildMatch
             {
@@ -164,7 +165,8 @@ public class SyncChildMatchServiceUnitTests
                 EventDateTime = new DateTime(2022,04,15,8,0,0),
                 UpdatedTime = new DateTime(2022,04,15,8,0,0),
                 MinorBettypeId= -15,
-                SubType = 800
+                SubType = 801,
+                RepresentativeSubtype = 800
             },
             new MappedChildMatch
             {
@@ -175,7 +177,8 @@ public class SyncChildMatchServiceUnitTests
                 EventDateTime = new DateTime(2022,04,15,8,0,0),
                 UpdatedTime = new DateTime(2022,04,15,8,0,0),
                 MinorBettypeId= -14,
-                SubType = 600
+                SubType = 610,
+                RepresentativeSubtype = 600
             }
         };
 }

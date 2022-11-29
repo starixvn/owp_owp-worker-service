@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace OWP.Infosite.Models;
 
 public class MappedChildMatch
@@ -9,6 +11,9 @@ public class MappedChildMatch
     public int? MinorBettypeId { get; set; }
 
     public int? SubType { get; set; }
+
+    [JsonIgnore]
+    public int? RepresentativeSubtype { get; set; }
 
     public string LeagueName { get; set; }
 
