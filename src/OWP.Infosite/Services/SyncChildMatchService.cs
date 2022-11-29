@@ -65,7 +65,11 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
     }
 
     private static IEnumerable<ChildMatch> FilterMatch(IEnumerable<ChildMatch> childMatches)
-        => childMatches.Where(x => !IsETPKMatch(x.home_name) && IsValidSubType(x.sub_type) && x.main_type.HasValue);
+        => childMatches.Where(x =>
+            x.match_id > 0 &&
+            !IsETPKMatch(x.home_name) &&
+            IsValidSubType(x.sub_type) &&
+            x.main_type.HasValue);
 
     private static bool IsETPKMatch(string homeName)
         => homeName.IsContainsIgnoreCase("(ET)") || homeName.IsContainsIgnoreCase("(PEN)");
