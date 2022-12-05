@@ -5,7 +5,7 @@ namespace OWP.Infosite.Builder;
 
 public class SpecialMatchBuilder
 {
-    public NextCornerRule firstRule;
+    private readonly NextCornerRule firstRule;
 
     public SpecialMatchBuilder()
     {

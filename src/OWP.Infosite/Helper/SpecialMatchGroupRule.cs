@@ -210,5 +210,7 @@ public class PenaltyAwardedRule : SpecialMatchGroupRule
             match.AwayName = teamNames[1];
             return;
         }
+
+        base.GetHomeAwayName(match);
     }
 }
