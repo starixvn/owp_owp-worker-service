@@ -8,7 +8,7 @@ namespace OWP.Infosite.Services;
 
 public interface SyncDeletedChildMatchService
 {
-  Task Sync(DateTime date);
+  Task Sync();
 }
 
 public class SyncDeletedChildMatchServiceImp : SyncDeletedChildMatchService
@@ -17,15 +17,20 @@ public class SyncDeletedChildMatchServiceImp : SyncDeletedChildMatchService
 
   private readonly IDynamicRepository repository;
 
-  public SyncDeletedChildMatchServiceImp(ApiService apiService, IDynamicRepository repository)
+  private readonly DateTimeService dateTimeService;
+
+  public SyncDeletedChildMatchServiceImp(ApiService apiService, IDynamicRepository repository, DateTimeService dateTimeService)
   {
     this.apiService = apiService;
     this.repository = repository;
+    this.dateTimeService= dateTimeService;
   }
 
-  public async Task Sync(DateTime date)
+  public async Task Sync()
   {
-    var deletedMatch = await apiService.QueryDeletedChildMatch(date, date.AddDays(1));
+    var dateFrom = dateTimeService.Today;
+    var dateTo = dateTimeService.Today.AddDays(7);
+    var deletedMatch = await apiService.QueryDeletedChildMatch(dateFrom, dateTo);
     var mappedChildMatches = deletedMatch
     .Where(m => m.sub_type > 0)
     .Select(m => BuildMappedDeletedChildMatch(m))
@@ -49,11 +54,11 @@ public class SyncDeletedChildMatchServiceImp : SyncDeletedChildMatchService
 
   private MappedDeletedChildMatch BuildMappedDeletedChildMatch(DeleteChildMatch childMatch)
   {
-    var (subType, minorBettypeId) = DetectSubtypeHelper.GetOWPMinorMatchIdFromSubtype(childMatch.sub_type);
+    var (subType, _) = ChildMatchHelper.GetBettypeIdAndRepresentativeSubtype(childMatch.sub_type);
     return new()
     {
       InfoSiteMatchId = childMatch.match_id,
-      SubType = childMatch.sub_type,
+      SubType = subType,
     };
   }
 }
