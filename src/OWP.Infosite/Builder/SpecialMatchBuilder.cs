@@ -32,7 +32,7 @@ public class SpecialMatchBuilder
 
         foreach (var key in childMatchDict.Keys)
         {
-            var firstMatch = childMatchDict[key].OrderBy(x => x.FirstMatch).FirstOrDefault();
+            var firstMatch = childMatchDict[key].OrderByDescending(x => x.FirstMatch).FirstOrDefault();
             if (key.type == 0)
             {
                 match.AddRange(childMatchDict[key]);
