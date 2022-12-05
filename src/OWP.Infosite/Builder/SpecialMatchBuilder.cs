@@ -1,13 +1,29 @@
-using OWP.Core.Extensions;
-using OWP.Infosite.Constants;
+using OWP.Infosite.Helper;
 using OWP.Infosite.Models;
-using System.Text.RegularExpressions;
 
 namespace OWP.Infosite.Builder;
 
-public static class SpecialMatchBuilder
+public class SpecialMatchBuilder
 {
-    public static List<MappedChildMatch> ReduceSpecialMatch(IEnumerable<MappedChildMatch> childMatches)
+    public NextCornerRule firstRule;
+
+    public SpecialMatchBuilder()
+    {
+        firstRule = new NextCornerRule();
+        var secondRule = new NextBookingRule();
+        var thirdRule = new Specific15MinsRule();
+        var fourthRule = new GoalKickRule();
+        var fifthRule = new PenaltyToScoreRule();
+        var sixthRule = new PenaltyAwardedRule();
+
+        firstRule.NextType = secondRule;
+        secondRule.NextType = thirdRule;
+        thirdRule.NextType = fourthRule;
+        fourthRule.NextType = fifthRule;
+        fifthRule.NextType = sixthRule;
+    }
+
+    public List<MappedChildMatch> ReduceSpecialMatch(IEnumerable<MappedChildMatch> childMatches)
     {
         var childMatchDict = childMatches
             .GroupBy(x => new { type = GetSpecialMatchType(x), x.ParentInfoSiteMatchId, x.EventDateTime })
@@ -16,78 +32,28 @@ public static class SpecialMatchBuilder
 
         foreach (var key in childMatchDict.Keys)
         {
-            var firstMatch = childMatchDict[key].OrderBy(x => x.HomeName).FirstOrDefault();
+            var firstMatch = childMatchDict[key].OrderBy(x => x.FirstMatch).FirstOrDefault();
             if (key.type == 0)
             {
                 match.AddRange(childMatchDict[key]);
             }
             else
             {
-                match.Add(GetPresentationMatch(firstMatch, key.type));
+                match.Add(GetPresentationMatch(firstMatch));
             }
         }
 
         return match;
     }
 
-    private static MappedChildMatch GetPresentationMatch(MappedChildMatch childMatch, int specialType)
+    private int GetSpecialMatchType(MappedChildMatch childMatch)
+        => firstRule.GetMinorType(childMatch);
+
+    private MappedChildMatch GetPresentationMatch(MappedChildMatch childMatch)
     {
-        Constant.SpecialMatchDict.TryGetValue(specialType, out var nameExtension);
-        childMatch.HomeName = GetOwpMatchName(childMatch.HomeName, nameExtension);
-        childMatch.AwayName = GetOwpMatchName(childMatch.AwayName, nameExtension);
+        firstRule.GetHomeAwayName(childMatch);
         childMatch.SubType = childMatch.RepresentativeSubtype;
 
         return childMatch;
-    }
-
-    private static string GetOwpMatchName(string matchName, string nameExtension)
-    {
-        const string pattern = @"(((\d+\w{2})\s(\w+))|(\d{2}:\d{2}-\d{2}:\d{2}))$";
-
-        return Regex.Replace(matchName, pattern, nameExtension);
-    }
-
-    private static int GetSpecialMatchType(MappedChildMatch childMatch)
-    {
-        if (IsNextCorner(childMatch))
-        {
-            return Constant.CornerType;
-        }
-
-        if (IsConditionOfBooking(childMatch))
-        {
-            return Constant.BookingType;
-        }
-
-        if (IsConditionOf15Min(childMatch))
-        {
-            return Constant.Special15MinsType;
-        }
-
-        return 0;
-    }
-
-    private static bool IsNextCorner(MappedChildMatch match)
-    {
-        return match.MinorBettypeId == Constant.NextCornerBettypeId &&
-               char.IsNumber(char.Parse(match.AwayName.Substring(match.AwayName.Length - 10, 1)));
-    }
-
-    private static bool IsConditionOfBooking(MappedChildMatch match)
-    {
-        return match.MinorBettypeId == Constant.NextBookingBettypeId &&
-               char.IsNumber(char.Parse(match.AwayName.Substring(match.AwayName.Length - 11, 1)));
-    }
-
-    private static bool IsConditionOf15Min(MappedChildMatch match)
-    {
-        return match.MinorBettypeId == Constant.Specific15MinBettypeId &&
-               Constant.Special15Min.Any(x => CheckContainHomeAway(match, x));
-    }
-
-    private static bool CheckContainHomeAway(MappedChildMatch match, string typeSpecial)
-    {
-        return match.AwayName.IsContainsIgnoreCase(typeSpecial) &&
-               match.HomeName.IsContainsIgnoreCase(typeSpecial);
     }
 }

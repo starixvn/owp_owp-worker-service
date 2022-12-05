@@ -101,4 +101,4 @@ services.AddArchiveDataServices();
 #endregion
 
 var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.SyncChildMatchService>();
-await apiService.Sync(new DateTime(2022, 10, 25)).ConfigureAwait(false);
+await apiService.Sync(new DateTime(2022, 12, 05)).ConfigureAwait(false);

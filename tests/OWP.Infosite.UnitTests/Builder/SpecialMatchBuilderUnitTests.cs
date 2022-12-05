@@ -12,7 +12,7 @@ public class SpecialMatchBuilderUnitTests
     {
         var expected = MockExpected();
 
-        var actual = SpecialMatchBuilder.ReduceSpecialMatch(MockMappedChildMatch());
+        var actual = new SpecialMatchBuilder().ReduceSpecialMatch(MockMappedChildMatch());
 
         DeepAssert.Equal(expected, actual);
     }

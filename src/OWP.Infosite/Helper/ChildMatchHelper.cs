@@ -3,9 +3,9 @@ using OWP.Core.Mics;
 
 namespace OWP.Infosite.Helper;
 
-public static class DetectSubtypeHelper
+public static class ChildMatchHelper
 {
-    public static (int, int) GetOWPMinorMatchIdFromSubtype(int? subType)
+    public static (int, int) GetBettypeIdAndRepresentativeSubtype(int? subType)
     {
         var firstType = new Specific10MinsDetector();
         var secondType = new Specific15MinsDetector();
@@ -22,4 +22,7 @@ public static class DetectSubtypeHelper
 
         return (representativeSubtype, minorBettypeId);
     }
+
+    public static bool IsFirstMatch(string awayName)
+        => awayName.Contains(" 1st ", StringComparison.OrdinalIgnoreCase);
 }

@@ -34,7 +34,7 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
     {
         var childMatches = pullingChildMatch.Query(infoSiteSettings.InfositeAPI, date, date.AddDays(1));
         var mappedChildMatches = MapChildMatches(childMatches);
-        mappedChildMatches = SpecialMatchBuilder.ReduceSpecialMatch(mappedChildMatches);
+        mappedChildMatches = new SpecialMatchBuilder().ReduceSpecialMatch(mappedChildMatches);
 
         await SaveInfoSiteChildMatchCommand(mappedChildMatches);
     }
@@ -44,7 +44,7 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
         childMatches = FilterMatch(childMatches);
         foreach (var childMatch in childMatches)
         {
-            var (representativeSubtype, minorBettypeId) = DetectSubtypeHelper.GetOWPMinorMatchIdFromSubtype(childMatch.sub_type);
+            var (representativeSubtype, minorBettypeId) = ChildMatchHelper.GetBettypeIdAndRepresentativeSubtype(childMatch.sub_type);
             if (minorBettypeId < 0)
             {
                 yield return new MappedChildMatch

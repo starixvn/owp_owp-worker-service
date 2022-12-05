@@ -35,21 +35,15 @@ public static class Constant
     public const string OldPreMatchLeaguesSnapshotKey = "OWP-Old-PreMatchLeagues";
 
     public const int CacheExpiredIn10Minutes = 10;
+}
 
-    // Mics Match
-    public const int CornerType = 1;
-    public const int BookingType = 2;
-    public const int Special15MinsType = 3;
-    public static readonly IImmutableDictionary<int, string> SpecialMatchDict = new Dictionary<int, string>
-    {
-        { CornerType, "Next Corners" },
-        { BookingType, "Next Booking" },
-        { Special15MinsType, "(SPECIFIC 15 MINS)" }
-    }.ToImmutableDictionary();
-    public static readonly ImmutableList<string> Special15Min = new List<string>
-        {"00:00-15:00", "15:01-30:00", "30:01-45:00", "45:01-60:00", "60:01-75:00", "75:01-90:00"}.ToImmutableList();
-
-    public const int NextCornerBettypeId = -4;
-    public const int NextBookingBettypeId = -7;
-    public const int Specific15MinBettypeId = -1;
+//ChildMatch
+public static class MinorBettypeId
+{
+    public const int NextCorner = -4;
+    public const int NextBooking = -7;
+    public const int Specific15Min = -1;
+    public const int PenaltyToScore = -96;
+    public const int PenaltyAwarded = -97;
+    public const int NextGoalKick = -100;
 }

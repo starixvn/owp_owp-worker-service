@@ -24,4 +24,7 @@ public class MappedChildMatch
     public DateTime EventDateTime { get; set; }
 
     public DateTime UpdatedTime { get; set; }
+
+    [JsonIgnore]
+    public bool FirstMatch { get; set; }
 }
