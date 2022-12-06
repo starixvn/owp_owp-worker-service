@@ -135,10 +135,10 @@ public class SyncChildMatchServiceUnitTests
                 game_date = new DateTime(2022,04,15),
                 stamp = new DateTime(2022,04,15),
                 sub_type = 12345,
-                main_type = null
+                main_type = 111
             },
-            new ChildMatch { home_name = "League A (ET)" },
-            new ChildMatch { home_name = "League B (PEN)" },
+            new ChildMatch { match_id = 111, home_name = "League A (ET)" },
+            new ChildMatch { match_id = 222, home_name = "League B (PEN)" },
         };
 
     public IList<MappedChildMatch> MockExpected()
