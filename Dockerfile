@@ -1,4 +1,4 @@
-FROM hub.nexdev.net/base/dotnet/core/sdk:6.0 AS builder
+FROM hub.nexdev.net/base/dotnet/core/sdk:7.0-alpine AS builder
 # Install the tools
 RUN dotnet tool install --tool-path /tools dotnet-trace
 RUN dotnet tool install --tool-path /tools dotnet-dump
