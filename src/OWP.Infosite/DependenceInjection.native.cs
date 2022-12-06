@@ -21,7 +21,7 @@ public static class DependenceInjection
         services.AddTransient<Sync180DayInfositeMatchService, Sync180DayInfositeMatchServiceImp>();
         services.AddTransient<FutureSyncService, FutureSyncServiceImp>();
         services.AddTransient<SyncChildMatchService, SyncChildMatchServiceImp>();
-        services.AddTransient<SyncDeletedChildMatchService, SyncDeletedChildMatchServiceImp>();
+        services.AddTransient<SyncDeleteChildMatchService, SyncDeleteChildMatchServiceImp>();
 
         return services;
     }

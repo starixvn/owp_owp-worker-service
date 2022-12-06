@@ -6,12 +6,12 @@ using OWP.Infosite.Models;
 
 namespace OWP.Infosite.Services;
 
-public interface SyncDeletedChildMatchService
+public interface SyncDeleteChildMatchService
 {
     Task Sync();
 }
 
-public class SyncDeletedChildMatchServiceImp : SyncDeletedChildMatchService
+public class SyncDeleteChildMatchServiceImp : SyncDeleteChildMatchService
 {
     private readonly ApiService apiService;
 
@@ -19,7 +19,7 @@ public class SyncDeletedChildMatchServiceImp : SyncDeletedChildMatchService
 
     private readonly DateTimeService dateTimeService;
 
-    public SyncDeletedChildMatchServiceImp(ApiService apiService, IDynamicRepository repository, DateTimeService dateTimeService)
+    public SyncDeleteChildMatchServiceImp(ApiService apiService, IDynamicRepository repository, DateTimeService dateTimeService)
     {
         this.apiService = apiService;
         this.repository = repository;
@@ -32,10 +32,10 @@ public class SyncDeletedChildMatchServiceImp : SyncDeletedChildMatchService
         var dateTo = dateTimeService.Today.AddDays(7);
         var deletedMatch = await apiService.QueryDeletedChildMatch(dateFrom, dateTo);
         var mappedChildMatches = deletedMatch
-        .Where(m => m.sub_type > 0)
-        .Select(m => BuildMappedDeletedChildMatch(m))
-        .GroupBy(x => new { x.InfoSiteMatchId, x.SubType })
-        .Select(x => x.First());
+            .Where(m => m.sub_type > 0)
+            .Select(m => BuildMappedDeletedChildMatch(m))
+            .GroupBy(x => new { x.InfoSiteMatchId, x.SubType })
+            .Select(x => x.First());
 
         await DeleteChildMatch(mappedChildMatches);
 
@@ -54,11 +54,12 @@ public class SyncDeletedChildMatchServiceImp : SyncDeletedChildMatchService
 
     private MappedDeletedChildMatch BuildMappedDeletedChildMatch(DeleteChildMatch childMatch)
     {
-        var (subType, _) = ChildMatchHelper.GetBettypeIdAndRepresentativeSubtype(childMatch.sub_type);
+        var (representativeSubtype, _) = ChildMatchHelper.GetBettypeIdAndRepresentativeSubtype(childMatch.sub_type);
+
         return new()
         {
             InfoSiteMatchId = childMatch.match_id,
-            SubType = subType,
+            SubType = representativeSubtype,
         };
     }
 }
