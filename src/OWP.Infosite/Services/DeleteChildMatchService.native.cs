@@ -34,9 +34,8 @@ public class SyncDeleteChildMatchServiceImp : SyncDeleteChildMatchService
         var mappedChildMatches = deletedMatch
             .Where(m => m.sub_type > 0)
             .Select(m => BuildMappedDeletedChildMatch(m))
-            .GroupBy(x => new { x.InfoSiteMatchId, x.SubType })
+            .GroupBy(x => new { x.AdminSiteMatchId, x.InfoSiteMatchId, x.SubType })
             .Select(x => x.First());
-
         await DeleteChildMatch(mappedChildMatches);
 
         await Task.CompletedTask;
