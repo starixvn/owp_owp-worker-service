@@ -60,6 +60,7 @@ public class SyncDeleteChildMatchServiceImp : SyncDeleteChildMatchService
         {
             InfoSiteMatchId = childMatch.match_id,
             SubType = representativeSubtype,
+            AdminSiteMatchId = childMatch.create_match_id
         };
     }
 }

@@ -9,6 +9,8 @@ namespace OWP.ArchiveData.Services
         Task DeleteOldData(DateTime date);
 
         Task DeleteOldNotify(DateTime date);
+        
+        Task DeleteOldNoOfferMatch(DateTime today);
     }
 
     public class ArchiveDataServiceImp : ArchiveDataService
@@ -35,6 +37,12 @@ namespace OWP.ArchiveData.Services
         public async Task DeleteOldMessage(DateTime date)
         {
             await repository.DeleteOldMessage(date);
+        }
+
+        public async Task DeleteOldNoOfferMatch(DateTime date)
+        {
+            var deletingDate = date.AddDays(-40);
+             await repository.DeleteOldNoOfferMatch(deletingDate);
         }
 
         public async Task DeleteOldNotify(DateTime date)
