@@ -30,16 +30,20 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
         var unlinkedMatches = owpMatches.Where(x => !x.AdminSiteMatchId.HasValue);
         var linkedMatches = owpMatches.Where(x => x.AdminSiteMatchId.HasValue);
 
-        var newLinkedMatches = MatchHelper.GetNewLinkedMatches(unlinkedMatches, adminSiteMatches);
+        var newLinkedMatches = MatchHelper.GetNewLinkedMatches(unlinkedMatches, adminSiteMatches).ToList();
         var updatedMatches = MatchHelper.GetRemovedMatches(linkedMatches, adminSiteMatches);
-
-        await UpdateUnlinkedMatches(newLinkedMatches);
+        
+        var filterUnlinkedMatches = newLinkedMatches.Where(x => CheckDuplicateAdminSiteId(newLinkedMatches, x.AdminSiteMatchId));
+    
+        await UpdateUnlinkedMatches(filterUnlinkedMatches);
         await UpdateLinkedMatches(updatedMatches);
 
         // Sync live to infosite
         var newOwpMatches = await GetOWPMatches(eventDate);
         await syncLiveService.Handle(adminSiteMatches, newOwpMatches, eventDate);
     }
+    public bool CheckDuplicateAdminSiteId(IEnumerable<LinkedMatch> match, int? id)
+     => match.Count(x => x.AdminSiteMatchId == id) == 1;
 
     private async Task<IEnumerable<Match>> GetOWPMatches(DateTime eventDate)
         => await dynamicRepository.FetchAsync<Match>(new GetMatchesFromOWPCriteria { EventDate = eventDate });
