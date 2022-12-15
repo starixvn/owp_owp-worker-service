@@ -40,7 +40,7 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
         var newLinkedDuplicatedMatches = newLinkedMatches.Where(x => !CheckDuplicateAdminSiteId(newLinkedMatches, x.AdminSiteMatchId));
         var excludeDuplicatedMatches = newLinkedMatches.Except(newLinkedDuplicatedMatches);
 
-        await cacheManipulator.SaveMathIdsDuplicatedSnapshot(newLinkedDuplicatedMatches.Select(x=>x.AdminSiteMatchId));
+        await cacheManipulator.SaveMathIdsDuplicatedSnapshot(newLinkedDuplicatedMatches.Select(x=>x.OSMatchId));
 
         await UpdateUnlinkedMatches(excludeDuplicatedMatches);
         await UpdateLinkedMatches(updatedMatches);

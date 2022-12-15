@@ -33,24 +33,24 @@ public class OWPScheduler : IHostedService
 
     private async Task RunJobSchedulerAsync()
     {
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(SyncFutureInfoSiteMatchJob), CronExpressionJob.SyncFutureInfoSiteMatch));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(SyncEventDeletedJob), CronExpressionJob.SyncEventDeleted));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(SyncDataNotificationSettingJob), CronExpressionJob.SyncDataNotificationSetting));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(MatchReadyNotificationJob), CronExpressionJob.MatchReadyNotification));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(SumTraderReportJob), CronExpressionJob.SumDataReport));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(SumLAReportJob), CronExpressionJob.SumDataReport));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(SyncInfositeIdJob), CronExpressionJob.SyncInfositeId));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(SyncPreMatchLeagueJob), CronExpressionJob.SyncPreMatchLeague));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(Sync180DayInfositeMatchJob), CronExpressionJob.Sync180DayInfoSiteMatch));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(SyncLeagueSettingsJob), CronExpressionJob.SyncLeagueSetting));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(LinkLeagueAndTeamJob), CronExpressionJob.LinkLeagueAndMatch));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(SumOvertimeReportJob), CronExpressionJob.SumDataReport));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(SyncTodayInfoSiteMatchJob), CronExpressionJob.SyncTodayInfoSiteMatch));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncFutureInfoSiteMatchJob), CronExpressionJob.SyncFutureInfoSiteMatch));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncEventDeletedJob), CronExpressionJob.SyncEventDeleted));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncDataNotificationSettingJob), CronExpressionJob.SyncDataNotificationSetting));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(MatchReadyNotificationJob), CronExpressionJob.MatchReadyNotification));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SumTraderReportJob), CronExpressionJob.SumDataReport));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SumLAReportJob), CronExpressionJob.SumDataReport));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncInfositeIdJob), CronExpressionJob.SyncInfositeId));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncPreMatchLeagueJob), CronExpressionJob.SyncPreMatchLeague));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(Sync180DayInfositeMatchJob), CronExpressionJob.Sync180DayInfoSiteMatch));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncLeagueSettingsJob), CronExpressionJob.SyncLeagueSetting));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(LinkLeagueAndTeamJob), CronExpressionJob.LinkLeagueAndMatch));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SumOvertimeReportJob), CronExpressionJob.SumDataReport));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncTodayInfoSiteMatchJob), CronExpressionJob.SyncTodayInfoSiteMatch));
         await AddJobToSchedulerAsync(new JobInfo(typeof(SyncOtherSportAdminSiteMatchJob), CronExpressionJob.SyncOtherSportAdminSiteJob));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(SumPrematchReportJob), CronExpressionJob.SumDataReport));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(SumMatchLiveReportJob), CronExpressionJob.SumDataReport));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(DeleteOldMessageJob), CronExpressionJob.DeleteOldMessage));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(ArchiveDataJob), CronExpressionJob.ArchiveData));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SumPrematchReportJob), CronExpressionJob.SumDataReport));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SumMatchLiveReportJob), CronExpressionJob.SumDataReport));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(DeleteOldMessageJob), CronExpressionJob.DeleteOldMessage));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(ArchiveDataJob), CronExpressionJob.ArchiveData));
     }
 
     private async Task CreateScheduler()

@@ -1,6 +1,7 @@
 ﻿using OWP.Core.Extensions;
 using OWP.SumReportData.LAReport.Enum;
 using OWP.SumReportData.LAReport.Models;
+using System.Xml.Linq;
 
 namespace OWP.SumReportData.LAReport.Misc;
 
@@ -27,9 +28,11 @@ public class IsSingleMatchesRule : SingleMatchesRule
 
     private readonly string[] providersContain =
     {
-        "RB2", "RTS", "IPSD", "BG", "BET", "outside", "MRB", "accept", "FC",
+        "RB2", "RTS", "IPSD", "BG", "outside", "MRB", "follow", "FC",
     };
     private readonly string[] providersEqual = { "SM", "VI" };
+
+    private const string ProviderBet = "BET"; 
 
     public override ReportType Execute(Assignment assignment)
     {
@@ -68,9 +71,10 @@ public class IsSingleMatchesRule : SingleMatchesRule
         return base.Execute(assignment);
     }
 
-    private static bool IsOnlyProduct(string[] matchProviders, string[] equals, string[] contains)
+    private static bool IsOnlyProduct(string[] matchProviders, string[] equals, string[] contains, string providerBet = null)
         => matchProviders.Any(x => IsContainsExactElement(equals, x.Trim())) ||
-           matchProviders.Any(x => IsElementOfListContainText(contains, x.Trim()));
+           matchProviders.Any(x => IsElementOfListContainText(contains, x.Trim())) || 
+           matchProviders.Any(x=> IsElementContainBetProvider(x.Trim(), ProviderBet.Equals(providerBet)));
 
     private bool IsOnlyTV(string[] matchProviders, string leagueName)
         => IsOnlyProduct(matchProviders, onlyTVEqual, onlyTVContain) ||
@@ -81,7 +85,7 @@ public class IsSingleMatchesRule : SingleMatchesRule
         => IsOnlyProduct(matchProviders, reporterEqual, reporterContain);
 
     private bool IsOnlyProvider(string[] matchProviders)
-        => IsOnlyProduct(matchProviders, providersEqual, providersContain);
+        => IsOnlyProduct(matchProviders, providersEqual, providersContain, ProviderBet);
 
     private static bool IsFutsalLeague(string leagueName)
         => leagueName.IsContainsIgnoreCase(Futsal) &&
@@ -97,6 +101,15 @@ public class IsSingleMatchesRule : SingleMatchesRule
             }
         }
 
+        return false;
+    }
+
+    private static bool IsElementContainBetProvider(string text, bool providerBet)
+    {
+        if (providerBet && !text.IsContainsIgnoreCase("BET365"))
+        {
+            return true;
+        }
         return false;
     }
 

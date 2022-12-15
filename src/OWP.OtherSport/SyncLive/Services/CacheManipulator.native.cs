@@ -11,7 +11,7 @@ namespace OWP.OtherSport.SyncLive.Services
 
         Task RemoveDeletedMatches();
 
-        Task SaveMathIdsDuplicatedSnapshot(IEnumerable<int?> matchIds);
+        Task SaveMathIdsDuplicatedSnapshot(IEnumerable<int> matchIds);
     }
 
     internal class CacheManipulatorImp : CacheManipulator
@@ -22,7 +22,7 @@ namespace OWP.OtherSport.SyncLive.Services
 
         private const string KEY_OS_SYNCADMINSITEID = "OWP-OS-MatchesHaveTheSameAdminSiteId";
 
-        private const int ASSIGNMENT_CACHE_EXPIRED_IN_MINUTE = 15;
+        private const int ASSIGNMENT_CACHE_EXPIRED_IN_MINUTE = 3;
 
         public CacheManipulatorImp(ICache cache)
         {
@@ -38,7 +38,7 @@ namespace OWP.OtherSport.SyncLive.Services
 
             return matches.Where(m => m.OSMatchId > 0).ToList();
         }
-        public async Task SaveMathIdsDuplicatedSnapshot(IEnumerable<int?> matchIds)
+        public async Task SaveMathIdsDuplicatedSnapshot(IEnumerable<int> matchIds)
         {
             var absoluteTimeSpan = TimeSpan.FromMinutes(ASSIGNMENT_CACHE_EXPIRED_IN_MINUTE);
             var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(absoluteTimeSpan);
