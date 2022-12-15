@@ -5,6 +5,7 @@ using OWP.OtherSport.SyncAdminSiteId.Criteria;
 using OWP.OtherSport.SyncAdminSiteId.Handlers;
 using OWP.OtherSport.SyncAdminSiteId.Models;
 using OWP.OtherSport.SyncLive;
+using OWP.OtherSport.SyncLive.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,16 +18,18 @@ public class SyncAdminSiteMatchesHandlerUnitTests
     private readonly IDynamicRepository dynamicRepository;
     private readonly SyncLiveToAdminSiteHandler syncLiveService;
     private readonly SyncAdminSiteMatchesHandlerImp service;
+    private readonly CacheManipulator cacheManipulator;
 
     public SyncAdminSiteMatchesHandlerUnitTests()
     {
         dynamicRepository = Substitute.For<IDynamicRepository>();
         syncLiveService = Substitute.For<SyncLiveToAdminSiteHandler>();
+        cacheManipulator = Substitute.For<CacheManipulator>();
 
         dynamicRepository.FetchAsync<Match>(Arg.Any<GetMatchesFromOWPCriteria>()).Returns(GetOWPMatches());
         dynamicRepository.FetchAsync<Match>(Arg.Any<GetMatchesFromAdminSiteCriteria>()).Returns(GetAdminSiteMatches());
 
-        service = new SyncAdminSiteMatchesHandlerImp(dynamicRepository, syncLiveService);
+        service = new SyncAdminSiteMatchesHandlerImp(dynamicRepository, syncLiveService, cacheManipulator);
     }
 
     [Fact]

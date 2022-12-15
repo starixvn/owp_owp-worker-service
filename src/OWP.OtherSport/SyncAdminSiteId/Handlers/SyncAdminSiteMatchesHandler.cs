@@ -1,5 +1,4 @@
 ﻿using Fanex.Data.Repository;
-using Fanex.Logging;
 using Olympus.Xml;
 using OWP.OtherSport.SyncAdminSiteId.Criteria;
 using OWP.OtherSport.SyncAdminSiteId.Helpers;
@@ -49,7 +48,7 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
         var newOwpMatches = await GetOWPMatches(eventDate);
         await syncLiveService.Handle(adminSiteMatches, newOwpMatches, eventDate);
     }
-    public bool CheckDuplicateAdminSiteId(IEnumerable<LinkedMatch> match, int? id)
+    private static bool CheckDuplicateAdminSiteId(IEnumerable<LinkedMatch> match, int? id)
         => match.Count(x => x.AdminSiteMatchId == id) == 1;
 
     private async Task<IEnumerable<Match>> GetOWPMatches(DateTime eventDate)
