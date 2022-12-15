@@ -71,10 +71,9 @@ public class IsSingleMatchesRule : SingleMatchesRule
         return base.Execute(assignment);
     }
 
-    private static bool IsOnlyProduct(string[] matchProviders, string[] equals, string[] contains, string providerBet = null)
+    private static bool IsOnlyProduct(string[] matchProviders, string[] equals, string[] contains)
         => matchProviders.Any(x => IsContainsExactElement(equals, x.Trim())) ||
-           matchProviders.Any(x => IsElementOfListContainText(contains, x.Trim())) || 
-           matchProviders.Any(x=> IsElementContainBetProvider(x.Trim(), ProviderBet.Equals(providerBet)));
+           matchProviders.Any(x => IsElementOfListContainText(contains, x.Trim())) ;
 
     private bool IsOnlyTV(string[] matchProviders, string leagueName)
         => IsOnlyProduct(matchProviders, onlyTVEqual, onlyTVContain) ||
@@ -85,7 +84,8 @@ public class IsSingleMatchesRule : SingleMatchesRule
         => IsOnlyProduct(matchProviders, reporterEqual, reporterContain);
 
     private bool IsOnlyProvider(string[] matchProviders)
-        => IsOnlyProduct(matchProviders, providersEqual, providersContain, ProviderBet);
+        => IsOnlyProduct(matchProviders, providersEqual, providersContain) ||
+           matchProviders.Any(x => IsElementContainBetProvider(x.Trim()));
 
     private static bool IsFutsalLeague(string leagueName)
         => leagueName.IsContainsIgnoreCase(Futsal) &&
@@ -104,9 +104,9 @@ public class IsSingleMatchesRule : SingleMatchesRule
         return false;
     }
 
-    private static bool IsElementContainBetProvider(string text, bool providerBet)
+    private static bool IsElementContainBetProvider(string text)
     {
-        if (providerBet && !text.IsContainsIgnoreCase("BET365"))
+        if (text.IsContainsIgnoreCase(ProviderBet) && !text.IsContainsIgnoreCase("BET365"))
         {
             return true;
         }
