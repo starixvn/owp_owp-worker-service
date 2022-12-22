@@ -33,24 +33,17 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
         var unlinkedMatches = owpMatches.Where(x => !x.AdminSiteMatchId.HasValue);
         var linkedMatches = owpMatches.Where(x => x.AdminSiteMatchId.HasValue);
 
-        var newLinkedMatches = MatchHelper.GetNewLinkedMatches(unlinkedMatches, adminSiteMatches).ToList();
+        var newLinkedMatches = MatchHelper.GetNewLinkedMatches(unlinkedMatches, adminSiteMatches);
         var updatedMatches = MatchHelper.GetRemovedMatches(linkedMatches, adminSiteMatches);
 
-        var newLinkedDuplicatedMatches = newLinkedMatches.Where(x => !CheckDuplicateAdminSiteId(newLinkedMatches, x.AdminSiteMatchId));
-        var excludeDuplicatedMatches = newLinkedMatches.Except(newLinkedDuplicatedMatches);
-
-        await cacheManipulator.SaveMathIdsDuplicatedSnapshot(newLinkedDuplicatedMatches.Select(x=>x.OSMatchId));
-
-        await UpdateUnlinkedMatches(excludeDuplicatedMatches);
+        await UpdateUnlinkedMatches(newLinkedMatches);
         await UpdateLinkedMatches(updatedMatches);
 
         // Sync live to infosite
         var newOwpMatches = await GetOWPMatches(eventDate);
         await syncLiveService.Handle(adminSiteMatches, newOwpMatches, eventDate);
     }
-    private static bool CheckDuplicateAdminSiteId(IEnumerable<LinkedMatch> match, int? id)
-        => match.Count(x => x.AdminSiteMatchId == id) == 1;
-
+    
     private async Task<IEnumerable<Match>> GetOWPMatches(DateTime eventDate)
         => await dynamicRepository.FetchAsync<Match>(new GetMatchesFromOWPCriteria { EventDate = eventDate });
 
