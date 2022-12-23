@@ -4,6 +4,7 @@ using OWP.OtherSport.SyncAdminSiteId.Criteria;
 using OWP.OtherSport.SyncAdminSiteId.Helpers;
 using OWP.OtherSport.SyncAdminSiteId.Models;
 using OWP.OtherSport.SyncLive;
+using OWP.OtherSport.SyncLive.Services;
 
 namespace OWP.OtherSport.SyncAdminSiteId.Handlers;
 
@@ -16,11 +17,13 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
 {
     private readonly IDynamicRepository dynamicRepository;
     private readonly SyncLiveToAdminSiteHandler syncLiveService;
+    private readonly CacheManipulator cacheManipulator;
 
-    public SyncAdminSiteMatchesHandlerImp(IDynamicRepository repository, SyncLiveToAdminSiteHandler syncLiveService)
+    public SyncAdminSiteMatchesHandlerImp(IDynamicRepository repository, SyncLiveToAdminSiteHandler syncLiveService, CacheManipulator cacheManipulator)
     {
         dynamicRepository = repository;
         this.syncLiveService = syncLiveService;
+        this.cacheManipulator = cacheManipulator;
     }
 
     public async Task Handle(DateTime eventDate)
@@ -40,7 +43,7 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
         var newOwpMatches = await GetOWPMatches(eventDate);
         await syncLiveService.Handle(adminSiteMatches, newOwpMatches, eventDate);
     }
-
+    
     private async Task<IEnumerable<Match>> GetOWPMatches(DateTime eventDate)
         => await dynamicRepository.FetchAsync<Match>(new GetMatchesFromOWPCriteria { EventDate = eventDate });
 

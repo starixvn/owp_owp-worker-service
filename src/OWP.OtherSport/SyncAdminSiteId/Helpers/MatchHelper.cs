@@ -8,7 +8,7 @@ public static class MatchHelper
     {
         foreach (var match in owpMatches)
         {
-            var adminSiteMatch = adminSiteMatches.FirstOrDefault(x => x.Equals(match));
+            var adminSiteMatch = adminSiteMatches.FirstOrDefault(x => CompareMatch(match, x));
 
             if (adminSiteMatch != null)
             {
@@ -30,11 +30,33 @@ public static class MatchHelper
         }
     }
 
+    private static bool CompareMatch(Match owpMatch, Match adminSiteMatch)
+        => ConditionOfRealMatch(owpMatch, adminSiteMatch) || ConditionOfSabaMatch(owpMatch, adminSiteMatch);
+
+    private static bool ConditionOfSabaMatch(Match owpMatch, Match adminSiteMatch)
+        => IsSameEvent(owpMatch, adminSiteMatch) && 
+        CheckIsEqual(owpMatch.Sport, adminSiteMatch.Sport) && 
+        owpMatch.EventDateTime == adminSiteMatch.EventDateTime;
+
+    private static bool ConditionOfRealMatch(Match owpMatch, Match adminSiteMatch)
+        => IsSameEvent(owpMatch, adminSiteMatch) && !adminSiteMatch.IsSaba;
+
+    private static bool IsSameEvent(Match owpMatch, Match adminSiteMatch)
+        => owpMatch.EventDateTime.Date == adminSiteMatch.EventDateTime.Date && 
+        CheckIsEqual(owpMatch.LeagueName, adminSiteMatch.LeagueName) &&
+        CheckIsEqual(owpMatch.HomeName, adminSiteMatch.HomeName) &&
+        CheckIsEqual(owpMatch.AwayName, adminSiteMatch.AwayName);
+
+    private static bool CheckIsEqual(string first, string second)
+        => !string.IsNullOrEmpty(first) &&
+        !string.IsNullOrEmpty(second) &&
+        first.Trim().Equals(second.Trim(), StringComparison.OrdinalIgnoreCase);
+
     public static IEnumerable<LinkedMatch> GetRemovedMatches(IEnumerable<Match> owpMatches, IEnumerable<Match> adminSiteMatches)
     {
         foreach (var match in owpMatches)
         {
-            if (!adminSiteMatches.Any(x => x.AdminSiteMatchId==match.AdminSiteMatchId))
+            if (!adminSiteMatches.Any(x => x.AdminSiteMatchId == match.AdminSiteMatchId))
             {
                 yield return new LinkedMatch
                 {

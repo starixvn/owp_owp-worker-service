@@ -30,7 +30,11 @@ namespace OWP.OtherSport.SyncLive
         public async Task Handle(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> owpMatches, DateTime eventDate)
         {
             var deletedMatches = await cacheManipulator.GetDeletedMatches();
-            var editEventList = editEventGenerator.GetChangedOfferLiveMatches(adminSiteMatches, owpMatches.Union(deletedMatches));
+
+            var duplicateAdminSiteIdMatches = owpMatches.Where(x => CheckDuplicateAdminSiteId(owpMatches, x.AdminSiteMatchId));
+            var syncMatches = owpMatches.Except(duplicateAdminSiteIdMatches);
+            
+            var editEventList = editEventGenerator.GetChangedOfferLiveMatches(adminSiteMatches, syncMatches.Union(deletedMatches));
 
             if (editEventList.Count() == 0) return;
 
@@ -39,5 +43,8 @@ namespace OWP.OtherSport.SyncLive
             await apiService.PostSyncLiveAsync(model);
             await cacheManipulator.RemoveDeletedMatches();
         }
+
+        private static bool CheckDuplicateAdminSiteId(IEnumerable<Match> match, int? id)
+            => match.Count(x => x.AdminSiteMatchId == id) > 1;
     }
 }
