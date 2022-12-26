@@ -1,16 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="SyncAdminSiteId\Criteria\" />
-    <Folder Include="SyncAdminSiteId\Handlers\" />
-    <Folder Include="SyncAdminSiteId\Helpers\" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OWP.Core\OWP.Core.csproj" />

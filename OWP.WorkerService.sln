@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.InfositeIdSync.UnitTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.SyncLeagueSetting.UnitTests", "tests\OWP.SyncLeagueSetting.UnitTests\OWP.SyncLeagueSetting.UnitTests.csproj", "{7629F2E6-08D8-48EE-83C9-087D556AEABD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.SumReportData", "src\OWP.SumReportData\OWP.SumReportData.csproj", "{D8A59B78-D069-4533-969B-C892877E0ABF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.SumReport", "src\OWP.SumReport\OWP.SumReport.csproj", "{D8A59B78-D069-4533-969B-C892877E0ABF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.SyncLeagueSettings", "src\OWP.SyncLeagueSettings\OWP.SyncLeagueSettings.csproj", "{618BC863-16E1-4339-B64E-508D9E04EA4B}"
 EndProject
@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.LinkLeagueAndTeam.UnitT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.MatchReadyNotification.UnitTests", "tests\OWP.MatchReadyNotification.UnitTests\OWP.MatchReadyNotification.UnitTests.csproj", "{AAB782AA-8748-4F52-B9EB-E91586D3FAC4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.SumReportData.UnitTests", "tests\OWP.SumReportData.UnitTests\OWP.SumReportData.UnitTests.csproj", "{5CC0BD1F-7D26-403F-A567-4AFB93BC61B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.SumReport.UnitTests", "tests\OWP.SumReport.UnitTests\OWP.SumReport.UnitTests.csproj", "{5CC0BD1F-7D26-403F-A567-4AFB93BC61B7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.OtherSport", "src\OWP.OtherSport\OWP.OtherSport.csproj", "{765B5FBB-9368-4EB1-8916-87C539C041A0}"
 EndProject
@@ -40,8 +40,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.Command", "OWP.Command\OWP.Command.csproj", "{A3854FF0-0705-4947-B7A8-79B884199C35}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.WorkerService", "OWP.WorkerService\OWP.WorkerService.csproj", "{29D67727-63C0-4A89-9272-5FD28026AF15}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.PrematchReport.UnitTests", "tests\OWP.PrematchReport.UnitTests\OWP.PrematchReport.UnitTests.csproj", "{3B726B0C-E473-443F-9104-783BBF3AC14C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.ArchiveData", "src\OWP.ArchiveData\OWP.ArchiveData.csproj", "{49E6BEA3-E0ED-44C0-86D7-EE768422A5F1}"
 EndProject
@@ -259,18 +257,6 @@ Global
 		{29D67727-63C0-4A89-9272-5FD28026AF15}.Release|x64.Build.0 = Release|Any CPU
 		{29D67727-63C0-4A89-9272-5FD28026AF15}.Release|x86.ActiveCfg = Release|Any CPU
 		{29D67727-63C0-4A89-9272-5FD28026AF15}.Release|x86.Build.0 = Release|Any CPU
-		{3B726B0C-E473-443F-9104-783BBF3AC14C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B726B0C-E473-443F-9104-783BBF3AC14C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B726B0C-E473-443F-9104-783BBF3AC14C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{3B726B0C-E473-443F-9104-783BBF3AC14C}.Debug|x64.Build.0 = Debug|Any CPU
-		{3B726B0C-E473-443F-9104-783BBF3AC14C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{3B726B0C-E473-443F-9104-783BBF3AC14C}.Debug|x86.Build.0 = Debug|Any CPU
-		{3B726B0C-E473-443F-9104-783BBF3AC14C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B726B0C-E473-443F-9104-783BBF3AC14C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3B726B0C-E473-443F-9104-783BBF3AC14C}.Release|x64.ActiveCfg = Release|Any CPU
-		{3B726B0C-E473-443F-9104-783BBF3AC14C}.Release|x64.Build.0 = Release|Any CPU
-		{3B726B0C-E473-443F-9104-783BBF3AC14C}.Release|x86.ActiveCfg = Release|Any CPU
-		{3B726B0C-E473-443F-9104-783BBF3AC14C}.Release|x86.Build.0 = Release|Any CPU
 		{49E6BEA3-E0ED-44C0-86D7-EE768422A5F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{49E6BEA3-E0ED-44C0-86D7-EE768422A5F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49E6BEA3-E0ED-44C0-86D7-EE768422A5F1}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -303,7 +289,6 @@ Global
 		{5CC0BD1F-7D26-403F-A567-4AFB93BC61B7} = {308E34D0-B331-4635-91E5-24683F8B9D52}
 		{765B5FBB-9368-4EB1-8916-87C539C041A0} = {1803BCBE-FD2C-417B-9403-52C461D04055}
 		{53A34500-8C1F-453B-8CFA-ED6F36F258CC} = {308E34D0-B331-4635-91E5-24683F8B9D52}
-		{3B726B0C-E473-443F-9104-783BBF3AC14C} = {308E34D0-B331-4635-91E5-24683F8B9D52}
 		{49E6BEA3-E0ED-44C0-86D7-EE768422A5F1} = {1803BCBE-FD2C-417B-9403-52C461D04055}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

@@ -1,4 +1,4 @@
-FROM hub.nexdev.net/base/dotnet/core/sdk:6.0 AS builder
+FROM hub.nexdev.net/base/dotnet/core/sdk:7.0-alpine AS builder
 # Install the tools
 RUN dotnet tool install --tool-path /tools dotnet-trace
 RUN dotnet tool install --tool-path /tools dotnet-dump
@@ -12,7 +12,7 @@ COPY ./src/OWP.Infosite/. ./src/OWP.Infosite
 COPY ./src/OWP.LinkLeagueAndTeam/. ./src/OWP.LinkLeagueAndTeam
 COPY ./src/OWP.MatchReadyNotification/. ./src/OWP.MatchReadyNotification
 COPY ./src/OWP.OtherSport/. ./src/OWP.OtherSport
-COPY ./src/OWP.SumReportData/. ./src/OWP.SumReportData
+COPY ./src/OWP.SumReport/. ./src/OWP.SumReport
 COPY ./src/OWP.SyncLeagueSettings/. ./src/OWP.SyncLeagueSettings
 COPY ./src/OWP.ArchiveData/. ./src/OWP.ArchiveData
 COPY ./OWP.WorkerService/OWP.WorkerService.csproj ./OWP.WorkerService/OWP.WorkerService.csproj
@@ -26,12 +26,7 @@ COPY ./OWP.WorkerService .
 
 RUN dotnet publish -r linux-x64 --self-contained false -c Release -o /app 
 
-FROM hub.nexdev.net/base/dotnet/core/aspnet:6.0 AS base
-
-RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
-RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1/g' /etc/ssl/openssl.cnf
-RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /usr/lib/ssl/openssl.cnf
-RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1/g' /usr/lib/ssl/openssl.cnf
+FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0-alpine AS base
 
 WORKDIR /app
 COPY --from=builder /app .

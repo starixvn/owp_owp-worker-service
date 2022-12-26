@@ -36,3 +36,14 @@ public static class Constant
 
     public const int CacheExpiredIn10Minutes = 10;
 }
+
+//ChildMatch
+public static class MinorBettypeId
+{
+    public const int NextCorner = -4;
+    public const int NextBooking = -7;
+    public const int Specific15Min = -1;
+    public const int PenaltyToScore = -96;
+    public const int PenaltyAwarded = -97;
+    public const int NextGoalKick = -100;
+}

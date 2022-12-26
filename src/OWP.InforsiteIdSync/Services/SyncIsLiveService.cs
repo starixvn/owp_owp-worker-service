@@ -38,15 +38,15 @@ public class SyncIsLiveServiceImp : SyncIsLiveService
         var adminSiteMatchIds = owpMatches.Select(x => x.AdminSiteMatchId).Distinct();
         var mainDBMatches = await repository.GetOfferLiveStatusFromMainDB(string.Join(',', adminSiteMatchIds));
 
-        var unsynchorizedMatches = MatchHelper.GetUnsynchorizedMatches(owpMatches, mainDBMatches);
+        var unsynchronizedMatches = MatchHelper.GetUnsynchronizedMatches(owpMatches, mainDBMatches);
 
         var deletedMatches = await cacheManipulator.GetDeletedMatches();
         var unsynchronizedDeletedMatches = deletedMatches
             .Select(x => new SyncIsLiveModel { InfoSiteMatchId = x.MatchId, MinorBettypeId = x.MinorBettypeId })
-            .Except(unsynchorizedMatches, new SyncIsLiveModel()).ToList();
+            .Except(unsynchronizedMatches, new SyncIsLiveModel()).ToList();
 
-        var liveMatches = unsynchorizedMatches.Where(m => m.IsLive).Distinct();
-        var nonLiveMatches = unsynchorizedMatches.Where(m => !m.IsLive)
+        var liveMatches = unsynchronizedMatches.Where(m => m.IsLive).Distinct();
+        var nonLiveMatches = unsynchronizedMatches.Where(m => !m.IsLive)
                                         .Union(unsynchronizedDeletedMatches)
                                         .Distinct();
 
@@ -62,7 +62,7 @@ public class SyncIsLiveServiceImp : SyncIsLiveService
         await cacheManipulator.SaveDeletedMatches(successfulNonLiveMatches);
 
         await logService.LogSynIsLive(
-            unsynchorizedMatches,
+            unsynchronizedMatches,
             deletedMatches.Select(x => (x.MatchId, x.MinorBettypeId)),
             liveMatches.Select(x => (x.InfoSiteMatchId, x.MinorBettypeId)),
             nonLiveMatches.Select(x => (x.InfoSiteMatchId, x.MinorBettypeId)),

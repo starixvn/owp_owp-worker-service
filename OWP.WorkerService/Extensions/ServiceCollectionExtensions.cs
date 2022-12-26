@@ -17,7 +17,7 @@ using OWP.InfositeIdSync;
 using OWP.LinkLeagueAndTeam;
 using OWP.MatchReadyNotification;
 using OWP.OtherSport;
-using OWP.SumReportData;
+using OWP.SumReport;
 using OWP.SyncLeagueSettings;
 using OWP.WorkerService.Jobs;
 using OWP.WorkerService.Settings;
@@ -102,7 +102,7 @@ public static class ServiceCollectionExtensions
         services.AddInfositeIdSyncServices();
         services.AddLinkLeagueAndTeamServices();
         services.AddMatchReadyNotificationServices();
-        services.AddSumReportDataServices();
+        services.AddSumReportServices();
         services.AddSyncLeagueSettingsServices();
         services.AddOtherSportServices();
         services.AddArchiveDataServices();
@@ -125,6 +125,9 @@ public static class ServiceCollectionExtensions
         services.AddTransient<LinkLeagueAndTeamJob>();
         services.AddTransient<SumOvertimeReportJob>();
         services.AddTransient<SyncTodayInfoSiteMatchJob>();
+        services.AddTransient<SyncTodayInfoSiteChildMatchJob>();
+        services.AddTransient<SyncFutureInfoSiteChildMatchJob>();
+        services.AddTransient<SyncDeletedChildInfoSiteMatchJob>();
         services.AddTransient<SyncOtherSportAdminSiteMatchJob>();
         services.AddTransient<SumPrematchReportJob>();
         services.AddTransient<SumMatchLiveReportJob>();

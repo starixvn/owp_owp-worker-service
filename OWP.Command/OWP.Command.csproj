@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<SonarQubeExclude>True</SonarQubeExclude>
 	</PropertyGroup>
@@ -32,7 +32,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Fanex.Caching.Redis" Version="2.2.2.1" />
+		<PackageReference Include="Fanex.Caching.Redis" Version="2.2.3" />
 		<PackageReference Include="Fanex.Data.SqlServer" Version="4.2.2" />
 		<PackageReference Include="Fanex.Logging.Sentry.RavenClient" Version="1.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
@@ -48,7 +48,7 @@
 		<ProjectReference Include="..\src\OWP.LinkLeagueAndTeam\OWP.LinkLeagueAndTeam.csproj" />
 		<ProjectReference Include="..\src\OWP.MatchReadyNotification\OWP.MatchReadyNotification.csproj" />
 		<ProjectReference Include="..\src\OWP.OtherSport\OWP.OtherSport.csproj" />
-		<ProjectReference Include="..\src\OWP.SumReportData\OWP.SumReportData.csproj" />
+		<ProjectReference Include="..\src\OWP.SumReport\OWP.SumReport.csproj" />
 		<ProjectReference Include="..\src\OWP.SyncLeagueSettings\OWP.SyncLeagueSettings.csproj" />
 		<ProjectReference Include="..\src\OWP.ArchiveData\OWP.ArchiveData.csproj" />
 	</ItemGroup>

@@ -10,6 +10,8 @@
 		<Setting Key="OWP_PreMatchAssignment_DeleteUnSavedIssueMessage"  SpName="OWP_PreMatchAssignment_DeleteUnSavedIssueMessage" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 		<Setting Key="OWP_API_UpdateInfositeIdForMergedMatch"  SpName="OWP_API_UpdateInfositeIdForMergedMatch" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 		<Setting Key="OWP_InfoSiteMatch_DetectSoloMatch"  SpName="OWP_InfoSiteMatch_DetectSoloMatch" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+		<Setting Key="OWP_API_PushInfoSiteChildMatches"  SpName="OWP_API_PushInfoSiteChildMatches" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+		<Setting Key="OWP_API_DeletedChildMatch"  SpName="OWP_API_DeletedChildMatch" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 	</Function>
 	<Function Name="MatchReady">
 		<Setting Key="OWP_API_SyncNotificationSettingWatcher"  SpName="OWP_API_SyncNotificationSettingWatcher" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
@@ -39,6 +41,7 @@
 		<Setting Key="OWP_CopyDataToOldTable" SpName="OWP_CopyDataToOldTable" DbName="DBOWP.bodb_OWP.bodbOWPNet" TimeOut="600"></Setting>
 		<Setting Key="OWP_DeleteOldData" SpName="OWP_DeleteOldData" DbName="DBOWP.bodb_OWP.bodbOWPNet" TimeOut="600"></Setting>
 		<Setting Key="OWP_DeleteOldData_Message" SpName="OWP_DeleteOldData_Message" DbName="DBOWP.bodb_OWP.bodbOWPNet" TimeOut="600"></Setting>
+		<Setting Key="OWP_DeleteOldData_NoOfferMatch" SpName="OWP_DeleteOldData_NoOfferMatch" DbName="DBOWP.bodb_OWP.bodbOWPNet" TimeOut="600"></Setting>
 		<Setting Key="OWP_DeleteOldMessage" SpName="OWP_DeleteOldMessage" DbName="DBOWP.bodb_OWP.bodbOWPNet" TimeOut="600"></Setting>
 	</Function>
 	<Function Name="InfositeIdSync">

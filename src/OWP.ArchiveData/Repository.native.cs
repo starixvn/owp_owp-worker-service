@@ -12,6 +12,8 @@ public interface Repository
     Task DeleteOldData(DateTime date);
 
     Task DeleteOldNotify(DateTime date);
+
+    Task DeleteOldNoOfferMatch(DateTime date);
 }
 
 public class RepositoryImp : Repository
@@ -47,6 +49,12 @@ public class RepositoryImp : Repository
     public async Task DeleteOldMessage(DateTime date)
     {
         var criteria = new DeleteOldMessageCriteria { Date = date };
+        await repository.ExecuteAsync(criteria);
+    }
+
+    public async Task DeleteOldNoOfferMatch(DateTime date)
+    {
+        var criteria = new DeleteOldNoOfferMatchCriteria { Date = date };
         await repository.ExecuteAsync(criteria);
     }
 

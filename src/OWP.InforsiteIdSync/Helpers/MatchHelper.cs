@@ -1,12 +1,12 @@
 ﻿using Olympus.OWP.Constants;
-using OWP.InfositeIdSync.Mics;
+using OWP.Core.Mics;
 using OWP.InfositeIdSync.Models;
 
 namespace OWP.InfositeIdSync.Helpers;
 
 public static class MatchHelper
 {
-    public static List<SyncIsLiveModel> GetUnsynchorizedMatches(List<SyncIsLiveModel> owpMatches, List<MainDBMatch> db02Matches)
+    public static List<SyncIsLiveModel> GetUnsynchronizedMatches(List<SyncIsLiveModel> owpMatches, List<MainDBMatch> db02Matches)
     {
         var mappedDB02Matches = MainDBMatchesMapping(owpMatches, db02Matches);
 
@@ -18,28 +18,25 @@ public static class MatchHelper
             x.MinorBettypeId != MinorBettype.FifteenMinsNoOfCorners &&
             x.MinorBettypeId != MinorBettype.FifteenMinsTotalBooking);
 
-        var unsynchorizedMainMatches = mainOWPMatches.Except(mainDB02Matches, new IsLiveComparer()).ToList();
-        var unsynchorizedMinorMatches = GetUnsynchorizedMinorMatches(minorOWPMatches, minorDB02Matches);
-        var unsynchorized15MinsMinorMatches = Get15MinsUnsynchorizedMinorMatches(unsynchorizedMinorMatches);
+        var unsynchronizedMainMatches = mainOWPMatches.Except(mainDB02Matches, new IsLiveComparer()).ToList();
+        var unsynchronizedMinorMatches = GetUnsynchronizedMinorMatches(minorOWPMatches, minorDB02Matches);
+        var unsynchronized15MinsMinorMatches = Get15MinsUnsynchronizedMinorMatches(unsynchronizedMinorMatches);
 
-        return unsynchorizedMainMatches.Union(unsynchorizedMinorMatches).Union(unsynchorized15MinsMinorMatches).ToList();
+        return unsynchronizedMainMatches.Union(unsynchronizedMinorMatches).Union(unsynchronized15MinsMinorMatches).ToList();
     }
 
-    private static IEnumerable<SyncIsLiveModel> Get15MinsUnsynchorizedMinorMatches(IEnumerable<SyncIsLiveModel> unsynchorizedMinorMatches)
+    private static IEnumerable<SyncIsLiveModel> Get15MinsUnsynchronizedMinorMatches(IEnumerable<SyncIsLiveModel> unsynchronizedMinorMatches)
     {
-        foreach (var match in unsynchorizedMinorMatches)
-        {
-            if (match.MinorBettypeId == MinorBettype.TotalBooking || match.MinorBettypeId == MinorBettype.NoOfCorners)
+        return unsynchronizedMinorMatches.Where(m =>
+                m.MinorBettypeId is MinorBettype.TotalBooking or MinorBettype.NoOfCorners)
+            .Select(m => new SyncIsLiveModel
             {
-                yield return new SyncIsLiveModel
-                {
-                    InfoSiteMatchId = match.InfoSiteMatchId,
-                    MinorBettypeId = (match.MinorBettypeId == MinorBettype.NoOfCorners ?
-                            MinorBettype.FifteenMinsNoOfCorners : MinorBettype.FifteenMinsTotalBooking),
-                    IsLive = match.IsLive
-                };
-            }
-        }
+                InfoSiteMatchId = m.InfoSiteMatchId,
+                MinorBettypeId = (m.MinorBettypeId == MinorBettype.NoOfCorners
+                    ? MinorBettype.FifteenMinsNoOfCorners
+                    : MinorBettype.FifteenMinsTotalBooking),
+                IsLive = m.IsLive
+            });
     }
 
     internal static IEnumerable<(int, int?)> GetDistinctNonLiveMatches(IEnumerable<SyncIsLiveModel> liveMatches, IEnumerable<SyncIsLiveModel> nonLiveMatches)
@@ -52,7 +49,7 @@ public static class MatchHelper
             .Except(nonLiveMatches, new SyncIsLiveModel())
             .Select(x => (x.InfoSiteMatchId, GetRepresentativeSubType(x.MinorBettypeId)));
 
-    private static IEnumerable<SyncIsLiveModel> GetUnsynchorizedMinorMatches(IEnumerable<SyncIsLiveModel> minorOWPMatches, IEnumerable<SyncIsLiveModel> minorDB02Matches)
+    private static IEnumerable<SyncIsLiveModel> GetUnsynchronizedMinorMatches(IEnumerable<SyncIsLiveModel> minorOWPMatches, IEnumerable<SyncIsLiveModel> minorDB02Matches)
     {
         return minorOWPMatches.Where(match => minorDB02Matches
             .Any(x => x.InfoSiteMatchId == match.InfoSiteMatchId

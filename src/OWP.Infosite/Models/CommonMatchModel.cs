@@ -39,6 +39,9 @@ public class CommonSubMatch
 
 public class CommonMatch : CommonSubMatch
 {
+    // testing match
+    public bool is_test { get; set; }
+
     #region league team id/name info
 
     public int? ibc_league_id { get; set; }

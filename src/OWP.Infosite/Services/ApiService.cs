@@ -11,6 +11,8 @@ namespace OWP.Infosite.Services;
 
 public interface ApiService
 {
+    Task<List<DeleteChildMatch>> QueryDeletedChildMatch(DateTime fromDate, DateTime toDate);
+
     Task<List<CommonMatchModel>> QueryAsync(ParamsQueryModel param);
 
     Task<List<MatchRelation>> QueryMatchesRelation(ParamsQueryModel param);
@@ -35,6 +37,34 @@ public class ApiServiceImp : ApiService
         this.httpHandler = httpHandler;
         this.logger = logger;
         this.infoSiteSettings = infoSiteSettings.Value;
+    }
+
+    public async Task<List<DeleteChildMatch>> QueryDeletedChildMatch(DateTime fromDate, DateTime toDate)
+    {
+        var date_from = fromDate.ToString(Constant.DateTimeFormat);
+        var date_to = toDate.ToString(Constant.DateTimeFormat);
+        var requestLink = $"{infoSiteSettings.InfositeAPI}api/EventSchedule/getInvalidChildEventInHouseByDate?date_from={date_from}&date_to={date_to}";
+
+        var response = await httpHandler.GetAsync(requestLink);
+        if (response.IsSuccessStatusCode)
+        {
+            var jsonData = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<List<DeleteChildMatch>>(jsonData, new TrimmingConverter());
+        }
+        else
+        {
+            var logInfo = new
+            {
+                DateTime = DateTime.UtcNow,
+                RequestUri = requestLink,
+                StatusCode = (int)response.StatusCode,
+                response.RequestMessage
+            };
+            var logInfoString = JsonConvert.SerializeObject(logInfo);
+            logger.Error(logInfoString);
+
+            return new List<DeleteChildMatch>();
+        }
     }
 
     public async Task<List<CommonMatchModel>> QueryAsync(ParamsQueryModel param)

@@ -1,4 +1,4 @@
-using OWP.InfositeIdSync.Mics;
+using OWP.Core.Mics;
 using Xunit;
 
 namespace OWP.InfositeIdSync.UnitTests.Mics
@@ -21,7 +21,7 @@ namespace OWP.InfositeIdSync.UnitTests.Mics
         [InlineData(2950, 2900)]
         [InlineData(2150, 2100)]
         [InlineData(3555, 3555)]
-        [InlineData(402, 499)]
+        [InlineData(402, 400)]
         public void NextTypesDetector(int value, int expected)
         {
             var actual = new NextTypesDetector().GetRepresentativeSubtype(value);
