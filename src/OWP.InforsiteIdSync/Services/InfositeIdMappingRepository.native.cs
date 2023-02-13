@@ -8,7 +8,7 @@ using Olympus.Xml;
 
 public interface InfositeIdMappingRepository
 {
-    Task<List<OWPMatch>> QueryUnmappingOWPMatch();
+    Task<List<OwpMatch>> QueryUnmappingOwpMatch();
 
     Task<List<InfositeMatch>> QueryInfositeMatch();
 
@@ -16,7 +16,7 @@ public interface InfositeIdMappingRepository
 
     Task<List<SyncIsLiveModel>> GetInfositeMatchIsLive(DateTime fromTime, DateTime toTime);
 
-    Task<List<MainDBMatch>> GetOfferLiveStatusFromMainDB(string matchIds);
+    Task<List<MainDbMatch>> GetOfferLiveStatusFromMainDb(string matchIds);
 
     Task<AssignmentSnapshot> QueryMatchesByDate(DateTime eventDate);
 }
@@ -40,10 +40,10 @@ public class InfositeIdMappingRepositoryImp : InfositeIdMappingRepository
         return (await repository.FetchAsync<SyncIsLiveModel>(criteria)).ToList();
     }
 
-    public async Task<List<MainDBMatch>> GetOfferLiveStatusFromMainDB(string matchIds)
+    public async Task<List<MainDbMatch>> GetOfferLiveStatusFromMainDb(string matchIds)
     {
-        var criteria = new GetMatchesFromMainDBCriteria { AdminSiteIds = matchIds };
-        return (await repository.FetchAsync<MainDBMatch>(criteria)).ToList();
+        var criteria = new GetMatchesFromMainDbCriteria { AdminSiteIds = matchIds };
+        return (await repository.FetchAsync<MainDbMatch>(criteria)).ToList();
     }
 
     public async Task<List<InfositeMatch>> QueryInfositeMatch()
@@ -56,14 +56,14 @@ public class InfositeIdMappingRepositoryImp : InfositeIdMappingRepository
         return (await repository.FetchAsync<InfositeMatch>(criteria)).ToList();
     }
 
-    public async Task<List<OWPMatch>> QueryUnmappingOWPMatch()
+    public async Task<List<OwpMatch>> QueryUnmappingOwpMatch()
     {
-        var criteria = new QueryUnmappingOWPMatchCriteria
+        var criteria = new QueryUnmappingOwpMatchCriteria
         {
             FromDate = dateTimeService.Today
         };
 
-        return (await repository.FetchAsync<OWPMatch>(criteria)).ToList();
+        return (await repository.FetchAsync<OwpMatch>(criteria)).ToList();
     }
 
     public async Task UpdateInfositeIdForMainMatches(List<MatchMappingWithInfosite> matches)

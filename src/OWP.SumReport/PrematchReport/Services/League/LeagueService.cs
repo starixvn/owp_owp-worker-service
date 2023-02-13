@@ -7,10 +7,10 @@ public interface LeagueService
 
 public class LeagueServiceImp : LeagueService
 {
-    private readonly OULeagueService ouLeagueService;
-    private readonly HDPLeagueService hdpLeagueService;
+    private readonly OuLeagueService ouLeagueService;
+    private readonly HdpLeagueService hdpLeagueService;
 
-    public LeagueServiceImp(OULeagueService ouLeagueService, HDPLeagueService hdpLeagueService)
+    public LeagueServiceImp(OuLeagueService ouLeagueService, HdpLeagueService hdpLeagueService)
     {
         this.ouLeagueService = ouLeagueService;
         this.hdpLeagueService = hdpLeagueService;
@@ -18,7 +18,7 @@ public class LeagueServiceImp : LeagueService
 
     public async Task BuildLeagueReport(DateTime eventDate)
     {
-        await ouLeagueService.BuildSingleOULeagueReport(eventDate);
-        await hdpLeagueService.BuildSingleHDPLeagueReport(eventDate);
+        await ouLeagueService.BuildSingleOuLeagueReport(eventDate);
+        await hdpLeagueService.BuildSingleHdpLeagueReport(eventDate);
     }
 }

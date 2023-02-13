@@ -10,11 +10,11 @@ public class Assignment
 
     public string ProviderName { get; set; }
 
-    public string OWPLeagueName { get; set; }
+    public string OwpLeagueName { get; set; }
 
     public int? MinorBettypeId { get; set; }
 
-    public int OWPMatchId { get; set; }
+    public int OwpMatchId { get; set; }
 
     public int? ParentMatchId { get; set; }
 

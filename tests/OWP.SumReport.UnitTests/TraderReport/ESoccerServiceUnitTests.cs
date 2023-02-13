@@ -29,7 +29,7 @@ public class ESoccerServiceUnitTests
         DeepAssert.Equal(MockExpect(), result.ToList());
     }
 
-    private List<ESoccerByUser> MockExpect()
+    private static List<ESoccerByUser> MockExpect()
         => new()
         {
             new ESoccerByUser
@@ -55,17 +55,17 @@ public class ESoccerServiceUnitTests
     private static List<Assignment> MockAssignments()
         => new()
         {
-            new Assignment { UserId = 111, OWPMatchId = 1, OWPLeagueName = "SABA - 5 Mins Play"},
-            new Assignment { UserId = 111, OWPMatchId = 2, OWPLeagueName = "SABA - 6 Mins Play"},
-            new Assignment { UserId = 111, OWPMatchId = 3, OWPLeagueName = "SABA - 15 Mins Play"},
-            new Assignment { UserId = 111, OWPMatchId = 4, OWPLeagueName = "SABA - 15 Mins Play"},
-            new Assignment { UserId = 111, OWPMatchId = 5, OWPLeagueName = "SABA - 16 Mins Play"},
-            new Assignment { UserId = 111, OWPMatchId = 6, OWPLeagueName = "SABA - 20 Mins Play"},
-            new Assignment { UserId = 111, OWPMatchId = 7, OWPLeagueName = "SABA - 20 Mins Play"},
-            new Assignment { UserId = 111, OWPMatchId = 7, OWPLeagueName = "SABA - 20 Mins Play"},
-            new Assignment { UserId = 111, OWPMatchId = 9, OWPLeagueName = "SABA"},
-            new Assignment { UserId = 222, OWPMatchId = 10, OWPLeagueName = "SABA - 5 Mins Play"},
-            new Assignment { UserId = 222, OWPMatchId = 11, OWPLeagueName = "SABA - 6 Mins Play"},
-            new Assignment { UserId = 222, OWPMatchId = 12, OWPLeagueName = "SABA - 15 Mins Play"}
+            new Assignment { UserId = 111, OwpMatchId = 1, OwpLeagueName = "SABA - 5 Mins Play"},
+            new Assignment { UserId = 111, OwpMatchId = 2, OwpLeagueName = "SABA - 6 Mins Play"},
+            new Assignment { UserId = 111, OwpMatchId = 3, OwpLeagueName = "SABA - 15 Mins Play"},
+            new Assignment { UserId = 111, OwpMatchId = 4, OwpLeagueName = "SABA - 15 Mins Play"},
+            new Assignment { UserId = 111, OwpMatchId = 5, OwpLeagueName = "SABA - 16 Mins Play"},
+            new Assignment { UserId = 111, OwpMatchId = 6, OwpLeagueName = "SABA - 20 Mins Play"},
+            new Assignment { UserId = 111, OwpMatchId = 7, OwpLeagueName = "SABA - 20 Mins Play"},
+            new Assignment { UserId = 111, OwpMatchId = 7, OwpLeagueName = "SABA - 20 Mins Play"},
+            new Assignment { UserId = 111, OwpMatchId = 9, OwpLeagueName = "SABA"},
+            new Assignment { UserId = 222, OwpMatchId = 10, OwpLeagueName = "SABA - 5 Mins Play"},
+            new Assignment { UserId = 222, OwpMatchId = 11, OwpLeagueName = "SABA - 6 Mins Play"},
+            new Assignment { UserId = 222, OwpMatchId = 12, OwpLeagueName = "SABA - 15 Mins Play"}
         };
 }

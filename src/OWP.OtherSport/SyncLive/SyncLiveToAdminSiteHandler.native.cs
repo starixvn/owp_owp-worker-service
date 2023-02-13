@@ -6,7 +6,7 @@ using SyncAdminSiteId.Models;
 
 public interface SyncLiveToAdminSiteHandler
 {
-    Task Handle(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> owpMatches, DateTime eventDate);
+    Task Handle(IList<Match> adminSiteMatches, IList<Match> owpMatches, DateTime eventDate);
 }
 
 public class SyncLiveToAdminSiteHandlerImp : SyncLiveToAdminSiteHandler
@@ -27,7 +27,7 @@ public class SyncLiveToAdminSiteHandlerImp : SyncLiveToAdminSiteHandler
         this.cacheManipulator = cacheManipulator;
     }
 
-    public async Task Handle(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> owpMatches, DateTime eventDate)
+    public async Task Handle(IList<Match> adminSiteMatches, IList<Match> owpMatches, DateTime eventDate)
     {
         var deletedMatches = await cacheManipulator.GetDeletedMatches();
 

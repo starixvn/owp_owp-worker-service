@@ -7,19 +7,19 @@ using Models;
 
 public static class AssignmentOvertimeCalculator
 {
-    private static readonly Dictionary<string, Func<Assignment, int>> sabaOperations =
+    private static readonly Dictionary<string, Func<Assignment, int>> SabaOperations =
         new(StringComparer.InvariantCultureIgnoreCase)
         {
-            { "PES ", MatchHelper.CalculateSABAPESMatchDuration },
-            { "FIFA ", MatchHelper.CalculateSABAFIFAMatchDuration },
+            { "PES ", MatchHelper.CalculateSabaPesMatchDuration },
+            { "FIFA ", MatchHelper.CalculateSabaFifaMatchDuration }
         };
 
     public static decimal CalculateOvertimeData(
-        IEnumerable<Assignment> userAssignments,
         EmployeeWorkingShift workingShift,
-        IEnumerable<MainMatch> mainMatchRemarks)
+        IList<Assignment> userAssignments,
+        IList<MainMatch> mainMatchRemarks)
     {
-        var finalMatchEndTime = GetLatestMatchEndTime(userAssignments, workingShift, mainMatchRemarks);
+        var finalMatchEndTime = GetLatestMatchEndTime(workingShift, userAssignments, mainMatchRemarks);
 
         if (finalMatchEndTime <= workingShift.ShiftEndTime)
         {
@@ -30,12 +30,11 @@ public static class AssignmentOvertimeCalculator
     }
 
     public static DateTime GetLatestMatchEndTime(
-        IEnumerable<Assignment> userAssignments,
         EmployeeWorkingShift workingShift,
-        IEnumerable<MainMatch> mainMatchRemarks)
+        IList<Assignment> userAssignments,
+        IList<MainMatch> mainMatchRemarks)
     {
-        var latestAssignments =
-            GetLatestAssignmentsInShift(userAssignments, workingShift.ShiftStartTime, workingShift.ShiftEndTime);
+        var latestAssignments = GetLatestAssignmentsInShift(userAssignments, workingShift.ShiftStartTime, workingShift.ShiftEndTime).ToList();
 
         if (!latestAssignments.Any())
         {
@@ -47,11 +46,11 @@ public static class AssignmentOvertimeCalculator
         foreach (var assignment in latestAssignments)
         {
             if (assignment.ParentMatchId.HasValue &&
-                (BetType.FullTimeMinorBetTypes.Contains(assignment.MinorBettypeId ?? 0) ||
-                 BetType.MinorMatchBetTypes.Contains(assignment.MinorBettypeId.Value))
+                (BetType.FullTimeMinorBetTypes.Contains(assignment.MinorBettypeId ?? int.MinValue) ||
+                 BetType.MinorMatchBetTypes.Contains(assignment.MinorBettypeId ?? int.MinValue))
                )
             {
-                var mainMatch = mainMatchRemarks.FirstOrDefault(x => x.OWPMatchId == assignment.ParentMatchId.Value);
+                var mainMatch = mainMatchRemarks.FirstOrDefault(x => x.OwpMatchId == assignment.ParentMatchId.Value);
 
                 if (mainMatch != null)
                 {
@@ -70,48 +69,46 @@ public static class AssignmentOvertimeCalculator
     public static (string, DateTime) GetMainMatchInfo(MainMatch mainMatch, Assignment assignment)
     {
         if (BetType.MinorMatchBetTypes.Contains(assignment.MinorBettypeId ?? 0) &&
-            MatchHelper.IsHavingETPK(mainMatch.Remark))
+            MatchHelper.IsHavingEtpk(mainMatch.Remark))
         {
             return (" ET", mainMatch.EventDateTime);
         }
 
-        if (BetType.FullTimeMinorBetTypes.Contains(assignment.MinorBettypeId.Value))
-        {
-            return (mainMatch.Remark, mainMatch.EventDateTime);
-        }
-
-        return (assignment.Remark, mainMatch.EventDateTime);
+        return BetType.FullTimeMinorBetTypes.Contains(assignment.MinorBettypeId ?? int.MinValue)
+            ? (mainMatch.Remark, mainMatch.EventDateTime)
+            : (assignment.Remark, mainMatch.EventDateTime);
     }
 
     public static DateTime CalculateMatchEndTime(Assignment assignment)
     {
-        if (MatchHelper.IsSabaMatch(assignment.OWPLeagueName) &&
-            BetType.FullTimeBetTypes.Contains(assignment.Bettype))
+        if (!MatchHelper.IsSabaMatch(assignment.OwpLeagueName) ||
+            !BetType.FullTimeBetTypes.Contains(assignment.Bettype))
         {
-            var method = sabaOperations.LookupByKey(assignment.OWPLeagueName, null);
-            var duration = method?.Invoke(assignment) ?? 0;
-
-            return assignment.EventDateTime.AddMinutes(duration);
+            return assignment.EventDateTime.AddMinutes(MatchHelper.CalculateNormalMatchDuration(assignment));
         }
 
-        return assignment.EventDateTime.AddMinutes(MatchHelper.CalculateNormalMatchDuration(assignment));
+        var method = SabaOperations.LookupByKey(assignment.OwpLeagueName, null);
+        var duration = method?.Invoke(assignment) ?? 0;
+
+        return assignment.EventDateTime.AddMinutes(duration);
     }
 
     public static IEnumerable<Assignment> GetLatestAssignmentsInShift(
-        IEnumerable<Assignment> userAssignments,
+        IList<Assignment> userAssignments,
         DateTime shiftStartTime,
         DateTime shiftEndTime)
     {
         var latestAssignments = userAssignments
-            .Where(x => x.EventDateTime >= shiftStartTime && x.EventDateTime <= shiftEndTime);
+            .Where(x => x.EventDateTime >= shiftStartTime && x.EventDateTime <= shiftEndTime)
+            .ToList();
 
-        if (latestAssignments.Any())
+        if (!latestAssignments.Any())
         {
-            var latestEventDateTime = latestAssignments.Max(x => x.EventDateTime);
-
-            return userAssignments.Where(x => x.EventDateTime.Equals(latestEventDateTime));
+            return new List<Assignment>();
         }
 
-        return new List<Assignment>();
+        var latestEventDateTime = latestAssignments.Max(x => x.EventDateTime);
+
+        return userAssignments.Where(x => x.EventDateTime.Equals(latestEventDateTime));
     }
 }

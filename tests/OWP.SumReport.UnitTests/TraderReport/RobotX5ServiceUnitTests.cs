@@ -20,7 +20,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("04/01/2020 4:30:00 PM"),
             IsFullTime = false,
-            OWPMatchId = 346949,
+            OwpMatchId = 346949,
             UserId = 4635564
         };
 
@@ -28,7 +28,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("04/01/2020 4:30:00 PM"),
             IsFullTime = false,
-            OWPMatchId = 346949,
+            OwpMatchId = 346949,
             UserId = 4635564
         };
 
@@ -36,7 +36,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("04/01/2020 10:00:00 PM"),
             IsFullTime = false,
-            OWPMatchId = 346954,
+            OwpMatchId = 346954,
             UserId = 4635564
         };
 
@@ -44,7 +44,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("04/01/2020 10:00:00 PM"),
             IsFullTime = false,
-            OWPMatchId = 347145,
+            OwpMatchId = 347145,
             UserId = 4635564
         };
 
@@ -52,14 +52,14 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("04/01/2020 10:00:00 PM"),
             IsFullTime = false,
-            OWPMatchId = 347152,
+            OwpMatchId = 347152,
             UserId = 4635564
         };
 
         var model6 = new RobotX5RawGroupModel
         {
             EventDateTime = DateTime.Parse("04/01/2020 4:30:00 PM"),
-            OWPMatchId = 346949,
+            OwpMatchId = 346949,
             UserId = 4635564,
             Minutes = 45,
             MatchGroup = 1,
@@ -69,7 +69,7 @@ public class RobotX5ServiceUnitTests
         var model7 = new RobotX5RawGroupModel
         {
             EventDateTime = DateTime.Parse("04/01/2020 4:30:00 PM"),
-            OWPMatchId = 346949,
+            OwpMatchId = 346949,
             UserId = 4635564,
             Minutes = 45,
             MatchGroup = 1,
@@ -79,7 +79,7 @@ public class RobotX5ServiceUnitTests
         var model8 = new RobotX5RawGroupModel
         {
             EventDateTime = DateTime.Parse("04/01/2020 10:00:00 PM"),
-            OWPMatchId = 346954,
+            OwpMatchId = 346954,
             UserId = 4635564,
             Minutes = 45,
             MatchGroup = 2,
@@ -89,7 +89,7 @@ public class RobotX5ServiceUnitTests
         var model9 = new RobotX5RawGroupModel
         {
             EventDateTime = DateTime.Parse("04/01/2020 10:00:00 PM"),
-            OWPMatchId = 347145,
+            OwpMatchId = 347145,
             UserId = 4635564,
             Minutes = 45,
             MatchGroup = 2,
@@ -99,7 +99,7 @@ public class RobotX5ServiceUnitTests
         var model10 = new RobotX5RawGroupModel
         {
             EventDateTime = DateTime.Parse("04/01/2020 10:00:00 PM"),
-            OWPMatchId = 347152,
+            OwpMatchId = 347152,
             UserId = 4635564,
             Minutes = 45,
             MatchGroup = 2,
@@ -123,7 +123,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("04/01/2020 2:00:00 PM"),
             IsFullTime = false,
-            OWPMatchId = 346921,
+            OwpMatchId = 346921,
             UserId = 846029
         };
 
@@ -131,7 +131,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("04/01/2020 2:00:00 PM"),
             IsFullTime = true,
-            OWPMatchId = 346921,
+            OwpMatchId = 346921,
             UserId = 846029
         };
 
@@ -139,7 +139,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/16/2020 2:00:00 PM"),
             IsFullTime = true,
-            OWPMatchId = 406897,
+            OwpMatchId = 406897,
             UserId = 360418
         };
 
@@ -147,7 +147,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/16/2020 2:30:00 PM"),
             IsFullTime = true,
-            OWPMatchId = 406902,
+            OwpMatchId = 406902,
             UserId = 360418
         };
 
@@ -155,7 +155,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/16/2020 3:30:00 PM"),
             IsFullTime = false,
-            OWPMatchId = 406907,
+            OwpMatchId = 406907,
             UserId = 360418
         };
 
@@ -163,7 +163,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/16/2020 3:30:00 PM"),
             IsFullTime = true,
-            OWPMatchId = 406903,
+            OwpMatchId = 406903,
             UserId = 360418
         };
 
@@ -171,7 +171,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/16/2020 10:00:00 PM"),
             IsFullTime = false,
-            OWPMatchId = 406904,
+            OwpMatchId = 406904,
             UserId = 360418
         };
 
@@ -179,7 +179,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/16/2020 10:00:00 PM"),
             IsFullTime = true,
-            OWPMatchId = 406905,
+            OwpMatchId = 406905,
             UserId = 360418
         };
 
@@ -187,7 +187,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/17/2020 10:00:00 AM"),
             IsFullTime = true,
-            OWPMatchId = 406913,
+            OwpMatchId = 406913,
             UserId = 360418
         };
 
@@ -195,7 +195,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/17/2020 10:40:00 AM"),
             IsFullTime = true,
-            OWPMatchId = 406918,
+            OwpMatchId = 406918,
             UserId = 360418
         };
 
@@ -203,7 +203,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/17/2020 11:30:00 AM"),
             IsFullTime = true,
-            OWPMatchId = 406919,
+            OwpMatchId = 406919,
             UserId = 360418
         };
 
@@ -211,7 +211,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/17/2020 1:00:00 PM"),
             IsFullTime = true,
-            OWPMatchId = 406920,
+            OwpMatchId = 406920,
             UserId = 360418
         };
 
@@ -219,7 +219,7 @@ public class RobotX5ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/17/2020 2:00:00 PM"),
             IsFullTime = true,
-            OWPMatchId = 406921,
+            OwpMatchId = 406921,
             UserId = 360418
         };
 

@@ -53,6 +53,6 @@ public class UpdateInfositeIdServiceImp : UpdateInfositeIdService
         await repository.ExecuteAsync(criteria);
     }
 
-    private static List<MatchRelationEvent> ToEvents(List<MatchRelation> matchRelations)
+    private static List<MatchRelationEvent> ToEvents(IEnumerable<MatchRelation> matchRelations)
         => matchRelations.Select(matchRelation => new MatchRelationEvent(matchRelation)).ToList();
 }

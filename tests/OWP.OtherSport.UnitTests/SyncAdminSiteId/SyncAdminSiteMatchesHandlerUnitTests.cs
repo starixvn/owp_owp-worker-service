@@ -22,12 +22,12 @@ public class SyncAdminSiteMatchesHandlerUnitTests
     {
         dynamicRepository = Substitute.For<IDynamicRepository>();
         var syncLiveService = Substitute.For<SyncLiveToAdminSiteHandler>();
-        var cacheManipulator = Substitute.For<CacheManipulator>();
+        Substitute.For<CacheManipulator>();
 
-        dynamicRepository.FetchAsync<Match>(Arg.Any<GetMatchesFromOwpCriteria>()).Returns(GetOWPMatches());
+        dynamicRepository.FetchAsync<Match>(Arg.Any<GetMatchesFromOwpCriteria>()).Returns(GetOwpMatches());
         dynamicRepository.FetchAsync<Match>(Arg.Any<GetMatchesFromAdminSiteCriteria>()).Returns(GetAdminSiteMatches());
 
-        service = new SyncAdminSiteMatchesHandlerImp(dynamicRepository, syncLiveService, cacheManipulator);
+        service = new SyncAdminSiteMatchesHandlerImp(dynamicRepository, syncLiveService);
     }
 
     [Fact]
@@ -40,7 +40,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                 => u.UnlinkedMatches == XmlConverter.Serialize(GetUnlinkedMatches())));
     }
 
-    private IEnumerable<LinkedMatch> GetUnlinkedMatches()
+    private static IEnumerable<LinkedMatch> GetUnlinkedMatches()
         => new List<LinkedMatch>
         {
                 new()
@@ -87,7 +87,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                 }
         };
 
-    private IEnumerable<Match> GetOWPMatches()
+    private static IEnumerable<Match> GetOwpMatches()
         => new List<Match>
         {
                 new()
@@ -152,7 +152,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                 }
         };
 
-    private IEnumerable<Match> GetAdminSiteMatches()
+    private static IEnumerable<Match> GetAdminSiteMatches()
         => new List<Match>
         {
                 new()

@@ -35,13 +35,15 @@ internal class CacheManipulatorImp : CacheManipulator
             ? JsonConvert.DeserializeObject<List<Match>>(cacheResult.Item2)
             : new List<Match>();
 
+        matches ??= new List<Match>();
+
         return matches.Where(m => m.OsMatchId > 0).ToList();
     }
     public async Task SaveMathIdsDuplicatedSnapshot(IEnumerable<int> matchIds)
     {
         var absoluteTimeSpan = TimeSpan.FromMinutes(AssignmentCacheExpiredInMinute);
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(absoluteTimeSpan);
-        var cacheKey = $"{KeyOsSyncadminsiteid}";
+        const string cacheKey = $"{KeyOsSyncadminsiteid}";
 
         var assignmentsJson = JsonConvert.SerializeObject(matchIds);
         await cache.SetAsync(cacheKey, assignmentsJson, cachePolicy);

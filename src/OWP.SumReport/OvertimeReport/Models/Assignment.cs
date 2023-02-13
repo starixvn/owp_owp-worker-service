@@ -4,7 +4,7 @@ public class Assignment
 {
     public int UserId { get; set; }
 
-    public int OWPMatchId { get; set; }
+    public int OwpMatchId { get; set; }
 
     public int? ParentMatchId { get; set; }
 
@@ -16,5 +16,5 @@ public class Assignment
 
     public string Remark { get; set; }
 
-    public string OWPLeagueName { get; set; }
+    public string OwpLeagueName { get; set; }
 }

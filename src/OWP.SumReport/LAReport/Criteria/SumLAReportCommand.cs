@@ -2,7 +2,7 @@
 
 using Fanex.Data.Repository;
 
-public class SumLAReportCommand : INonQueryCommand
+public class SumLaReportCommand : INonQueryCommand
 {
     public DateTime EventDate { get; set; }
 

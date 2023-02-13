@@ -11,7 +11,7 @@ public interface ReportService
 {
     Task Calculate(DateTime eventDate, bool isGenerateData = false);
 
-    IEnumerable<ReportModel> Calculate(DateTime eventDate, IEnumerable<OWPMatch> minorMatches, IEnumerable<OWPMatch> mainMatches, IEnumerable<OWPMatch> sabaMatches);
+    IEnumerable<ReportModel> Calculate(DateTime eventDate, IList<OwpMatch> minorMatches, IList<OwpMatch> mainMatches, IList<OwpMatch> sabaMatches);
 }
 
 public class ReportServiceImp : ReportService
@@ -25,21 +25,22 @@ public class ReportServiceImp : ReportService
 
     public async Task Calculate(DateTime eventDate, bool isGenerateData = false)
     {
-        var (totalMatches, mainMatches) = await reportRepository.QueryMatchesByDate(eventDate, isGenerateData);
+        var matchesByDate = await reportRepository.QueryMatchesByDate(eventDate, isGenerateData);
+        var (totalMatches, mainMatches) = (matchesByDate.Item1.ToList(),matchesByDate.Item2.ToList());
 
-        var minorMatchesCategorized = MatchHelper.CategorizeMinorMatches(totalMatches, mainMatches);
-        var mainMatchesCategorized = MatchHelper.CategorizeMainMatches(totalMatches);
-        var sabaMatchesCategorized = MatchHelper.CategorizeSabaMatches(totalMatches);
+        var minorMatchesCategorized = MatchHelper.CategorizeMinorMatches(totalMatches, mainMatches).ToList();
+        var mainMatchesCategorized = MatchHelper.CategorizeMainMatches(totalMatches).ToList();
+        var sabaMatchesCategorized = MatchHelper.CategorizeSabaMatches(totalMatches).ToList();
 
-        var saba5MinOwpMatchIds = sabaMatchesCategorized.Where(x => x.BetTypeName == BetTypeName.SabaEliteFriendlyVirtualPes215MinsPlay).Select(x => x.OWPMatchId).ToList();
+        var saba5MinOwpMatchIds = sabaMatchesCategorized.Where(x => x.BetTypeName == BetTypeName.SabaEliteFriendlyVirtualPes215MinsPlay).Select(x => x.OwpMatchId).ToList();
 
-        var saba5MinOwpMatchIdGrouped = await reportRepository.GetSaba5minOWPMatchId(saba5MinOwpMatchIds);
+        var saba5MinOwpMatchIdGrouped = await reportRepository.GetSaba5MinOwpMatchId(saba5MinOwpMatchIds);
 
         var sabaMatchesGrouped = sabaMatchesCategorized.Where(x => x.BetTypeName != BetTypeName.SabaEliteFriendlyVirtualPes215MinsPlay).ToList();
 
         foreach (var item in saba5MinOwpMatchIdGrouped)
         {
-            var temp = sabaMatchesCategorized.Where(x => x.OWPMatchId == item);
+            var temp = sabaMatchesCategorized.Where(x => x.OwpMatchId == item);
             sabaMatchesGrouped.AddRange(temp.ToList());
         }
 
@@ -48,7 +49,7 @@ public class ReportServiceImp : ReportService
         await reportRepository.InsertData(result, eventDate);
     }
 
-    public IEnumerable<ReportModel> Calculate(DateTime eventDate, IEnumerable<OWPMatch> minorMatches, IEnumerable<OWPMatch> mainMatches, IEnumerable<OWPMatch> sabaMatches)
+    public IEnumerable<ReportModel> Calculate(DateTime eventDate, IList<OwpMatch> minorMatches, IList<OwpMatch> mainMatches, IList<OwpMatch> sabaMatches)
     {
         var minorMatchReportData = MatchHelper.SumMatches(eventDate, minorMatches);
         var mainMatchReportData = MatchHelper.SumMatches(eventDate, mainMatches);
@@ -61,7 +62,7 @@ public class ReportServiceImp : ReportService
             IsSaba = x.IsSaba,
             LeagueCategory = x.LeagueCategory,
             MatchCount =
-            x.BetType.Equals(BetTypeName.SingleTeamOU.GetAttribute<DisplayAttribute>().Name, StringComparison.InvariantCultureIgnoreCase) ||
+            x.BetType.Equals(BetTypeName.SingleTeamOu.GetAttribute<DisplayAttribute>().Name, StringComparison.InvariantCultureIgnoreCase) ||
             x.BetType.Equals(BetTypeName.PenaltyShootOut.GetAttribute<DisplayAttribute>().Name, StringComparison.InvariantCultureIgnoreCase) ?
             (int)Math.Ceiling(x.MatchCount / 2m) :
             x.MatchCount

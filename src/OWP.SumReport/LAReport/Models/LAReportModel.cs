@@ -1,6 +1,6 @@
 ﻿namespace OWP.SumReport.LAReport.Models;
 
-public class LAReportModel
+public class LaReportModel
 {
     public int UserId { get; set; }
 
@@ -22,15 +22,15 @@ public class LAReportModel
 
     public int OnlyProvider { get; set; }
 
-    public int OnlyTV { get; set; }
+    public int OnlyTv { get; set; }
 
     public int OnlyReporter { get; set; }
 
-    public int MixedProviderTVReporter { get; set; }
+    public int MixedProviderTvReporter { get; set; }
 
     public int CornerPlus { get; set; }
 
-    public int TBookingPlus { get; set; }
+    public int BookingPlus { get; set; }
 
     public int Fantasy { get; set; }
 
@@ -38,7 +38,7 @@ public class LAReportModel
 
     public int OtherProducts { get; set; }
 
-    public int FTCorner { get; set; }
+    public int FtCorner { get; set; }
 
     public int ESoccer5Mins { get; set; }
 
@@ -54,7 +54,7 @@ public class LAReportModel
 
     public int FiveMajorLeague { get; set; }
 
-    public int FTCorner5ML { get; set; }
+    public int FtCorner5Ml { get; set; }
 
     public string OtherProductMatchIds { get; set; } = string.Empty;
 
@@ -66,16 +66,16 @@ public class LAReportModel
         Link6 +
         Link7 +
         Link8Plus +
-        MixedProviderTVReporter +
+        MixedProviderTvReporter +
         OnlyProvider +
-        OnlyTV +
+        OnlyTv +
         OnlyReporter +
         CornerPlus +
-        TBookingPlus +
+        BookingPlus +
         Fantasy +
         GoalKick +
         OtherProducts +
-        FTCorner +
+        FtCorner +
         ESoccer5Mins +
         ESoccer6Mins +
         ESoccer15Mins +
@@ -83,5 +83,5 @@ public class LAReportModel
         ESoccer20Mins +
         Others +
         FiveMajorLeague +
-        FTCorner5ML;
+        FtCorner5Ml;
 }

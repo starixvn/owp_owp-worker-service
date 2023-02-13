@@ -22,8 +22,8 @@ public static class MatchHelper
         {MinorBetType.LastBookings, BetTypeName.LastBookings},
         {MinorBetType.Winner, BetTypeName.Winner},
         {MinorBetType.SpecialGoal, BetTypeName.SpecialGoal},
-        {MinorBetType.HomeSingleTeamOU, BetTypeName.SingleTeamOU},
-        {MinorBetType.AwaySingleTeamOU, BetTypeName.SingleTeamOU},
+        {MinorBetType.HomeSingleTeamOu, BetTypeName.SingleTeamOu},
+        {MinorBetType.AwaySingleTeamOu, BetTypeName.SingleTeamOu},
         {MinorBetType.FirstPenaltyToScore, BetTypeName.FirstPenaltyToScore},
         {MinorBetType.FirstPenaltyAwarded, BetTypeName.FirstPenaltyAwarded},
         {MinorBetType.FreeKick, BetTypeName.FreeKick},
@@ -36,10 +36,10 @@ public static class MatchHelper
         {MinorBetType.NextGoalKick, BetTypeName.NextGoalKick},
         {MinorBetType.HomePenaltyShootOut, BetTypeName.PenaltyShootOut},
         {MinorBetType.AwayPenaltyShootOut, BetTypeName.PenaltyShootOut},
-        {MinorBetType.WhichTeamToTakeTheFirstPenalty, BetTypeName.WhichTeamToTakeTheFirstPenalty},
+        {MinorBetType.WhichTeamToTakeTheFirstPenalty, BetTypeName.WhichTeamToTakeTheFirstPenalty}
     }.ToImmutableDictionary();
 
-    public static IEnumerable<ReportModel> SumMatches(DateTime eventDate, IEnumerable<OWPMatch> matches)
+    public static IEnumerable<ReportModel> SumMatches(DateTime eventDate, IList<OwpMatch> matches)
     {
         var isSaba = matches.Any(x => x.IsSaba);
         var matchTypeDict = matches.GroupBy(x => x.BetTypeName).ToDictionary(x => x.Key, x => x.AsQueryable());
@@ -65,9 +65,9 @@ public static class MatchHelper
         }
     }
 
-    public static IEnumerable<OWPMatch> CategorizeMinorMatches(IEnumerable<OWPMatch> matches, IEnumerable<OWPMatch> mainMatches)
+    public static IEnumerable<OwpMatch> CategorizeMinorMatches(IList<OwpMatch> matches, IList<OwpMatch> mainMatches)
     {
-        var minorMatches = matches.Where(x => x.MinorBettypeId.HasValue && !x.IsSaba);
+        var minorMatches = matches.Where(x => x.MinorBettypeId.HasValue && !x.IsSaba).ToList();
 
         foreach (var match in minorMatches)
         {
@@ -79,16 +79,16 @@ public static class MatchHelper
         return minorMatches.Where(x => x.BetTypeName != BetTypeName.Other);
     }
 
-    public static string GetMainLeagueCategory(OWPMatch minorMatch, IEnumerable<OWPMatch> mainMatches)
-        => mainMatches.FirstOrDefault(x => x.OWPMatchId == minorMatch.ParentMatchId)?.LeagueCategory ?? minorMatch.LeagueCategory;
+    public static string GetMainLeagueCategory(OwpMatch minorMatch, IEnumerable<OwpMatch> mainMatches)
+        => mainMatches.FirstOrDefault(x => x.OwpMatchId == minorMatch.ParentMatchId)?.LeagueCategory ?? minorMatch.LeagueCategory;
 
-    public static IEnumerable<OWPMatch> CategorizeMainMatches(IEnumerable<OWPMatch> matches)
+    public static IEnumerable<OwpMatch> CategorizeMainMatches(IEnumerable<OwpMatch> matches)
     {
-        var mainMatches = matches.Where(x => !x.MinorBettypeId.HasValue && !x.IsSaba);
+        var mainMatches = matches.Where(x => !x.MinorBettypeId.HasValue && !x.IsSaba).ToList();
 
         foreach (var match in mainMatches)
         {
-            match.BetTypeName = GetMainCategory(match.OWPLeagueName);
+            match.BetTypeName = GetMainCategory(match.OwpLeagueName);
         }
 
         return mainMatches;
@@ -101,28 +101,25 @@ public static class MatchHelper
             return BetTypeName.Fantasy;
         }
 
-        if (owpLeagueName.Contains("WHICH TEAM TO KICK OFF", StringComparison.InvariantCultureIgnoreCase))
-        {
-            return BetTypeName.WhichTeamToKickOff;
-        }
-
-        return BetTypeName.Main;
+        return owpLeagueName.Contains("WHICH TEAM TO KICK OFF", StringComparison.InvariantCultureIgnoreCase) 
+            ? BetTypeName.WhichTeamToKickOff 
+            : BetTypeName.Main;
     }
 
-    public static IEnumerable<OWPMatch> CategorizeSabaMatches(IEnumerable<OWPMatch> matches)
+    public static IEnumerable<OwpMatch> CategorizeSabaMatches(IEnumerable<OwpMatch> matches)
     {
-        var sabaMatches = matches.Where(x => !x.MinorBettypeId.HasValue && x.IsSaba);
-        var fifaMatches = sabaMatches.Where(x => IsFifa(x.OWPLeagueName));
-        var pesMatches = sabaMatches.Where(x => IsPes(x.OWPLeagueName));
+        var sabaMatches = matches.Where(x => !x.MinorBettypeId.HasValue && x.IsSaba).ToList();
+        var fifaMatches = sabaMatches.Where(x => IsFifa(x.OwpLeagueName)).ToList();
+        var pesMatches = sabaMatches.Where(x => IsPes(x.OwpLeagueName)).ToList();
 
         foreach (var match in fifaMatches)
         {
-            match.BetTypeName = GetFifaBetType(match.OWPLeagueName);
+            match.BetTypeName = GetFifaBetType(match.OwpLeagueName);
         }
 
         foreach (var match in pesMatches)
         {
-            match.BetTypeName = GetPesBetType(match.OWPLeagueName);
+            match.BetTypeName = GetPesBetType(match.OwpLeagueName);
         }
 
         return fifaMatches.Concat(pesMatches);
@@ -139,12 +136,9 @@ public static class MatchHelper
             return BetTypeName.SabaClubFriendlyVirtualPes2115MinsPlay;
         }
 
-        if (owpLeagueName.Contains("20 Mins ", StringComparison.InvariantCultureIgnoreCase))
-        {
-            return BetTypeName.SabaInternationalFriendlyVirtualPes2120MinsPlay;
-        }
-
-        return BetTypeName.SabaEliteFriendlyVirtualPes215MinsPlay;
+        return owpLeagueName.Contains("20 Mins ", StringComparison.InvariantCultureIgnoreCase) 
+            ? BetTypeName.SabaInternationalFriendlyVirtualPes2120MinsPlay
+            : BetTypeName.SabaEliteFriendlyVirtualPes215MinsPlay;
     }
 
     public static BetTypeName GetFifaBetType(string owpLeagueName)
@@ -155,11 +149,8 @@ public static class MatchHelper
             return BetTypeName.M88SabaSpanishLeagueVirtualFifa21Season1016MinsPlay;
         }
 
-        if (owpLeagueName.Contains("16 Mins ", StringComparison.InvariantCultureIgnoreCase))
-        {
-            return BetTypeName.SabaClubFriendlyVirtualFifa2116MinsPlay;
-        }
-
-        return BetTypeName.SabaClubFriendlyVirtualFifa20Futsal6MinsPlay;
+        return owpLeagueName.Contains("16 Mins ", StringComparison.InvariantCultureIgnoreCase)
+            ? BetTypeName.SabaClubFriendlyVirtualFifa2116MinsPlay 
+            : BetTypeName.SabaClubFriendlyVirtualFifa20Futsal6MinsPlay;
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 
 public static class MajorLeague
 {
-    public static readonly ImmutableList<string> majorLeagueCornerList = new List<string>{
+    public static readonly ImmutableList<string> MajorLeagueCornerList = new List<string>{
         "*ENGLISH PREMIER LEAGUE - CORNERS",
         "*GERMANY-BUNDESLIGA I - CORNERS",
         "*ITALY SERIE A - CORNERS",
@@ -12,7 +12,7 @@ public static class MajorLeague
         "*UEFA CHAMPIONS LEAGUE - CORNERS"
     }.ToImmutableList();
 
-    public static readonly ImmutableList<string> majorLeagueList = new List<string>{
+    public static readonly ImmutableList<string> MajorLeagueList = new List<string>{
         "*ENGLISH PREMIER LEAGUE",
         "*GERMANY-BUNDESLIGA I",
         "*ITALY SERIE A",

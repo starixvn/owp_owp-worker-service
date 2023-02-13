@@ -11,7 +11,7 @@ public static class MatchHelpers
     public static DateTime GetMatchTime(Match match)
         => match.EventDateTime.Hour >= 12 ? match.EventDateTime.Date.AddDays(1) : match.EventDateTime.Date;
 
-    public static DateTime FindLatestDay(IEnumerable<Match> matches)
+    public static DateTime FindLatestDay(IList<Match> matches)
         => matches.Any() ? matches.Select(GetMatchTime).Max() : new DateTime(2021, 01, 01);
 
     public static List<Match> FindMatchesWithTv(IEnumerable<Match> matches, int leagueId, DateTime from, DateTime to, IEnumerable<TvCondition> tvConditions)
@@ -28,26 +28,28 @@ public static class MatchHelpers
 
     public static Match GetMatchWithLargestMaxbet(IList<Match> matches)
     {
-        if (!matches.Any())
+        var firstMatch = matches.FirstOrDefault();
+        if (firstMatch == null)
         {
             return null;
         }
 
-        var result = matches.FirstOrDefault();
-        var resultMaxbet = result.MatchSettings.Max(x => x.Maxbet);
+        var resultMaxbet = firstMatch.MatchSettings.Max(x => x.Maxbet);
 
         for (var i = 1; i < matches.Count; i++)
         {
             var maxbet = matches[i].MatchSettings.Max(x => x.Maxbet);
 
-            if (maxbet > resultMaxbet)
+            if (!(maxbet > resultMaxbet))
             {
-                result = matches[i];
-                resultMaxbet = maxbet;
+                continue;
             }
+
+            firstMatch = matches[i];
+            resultMaxbet = maxbet;
         }
 
-        return result;
+        return firstMatch;
     }
 
     public static bool IsWithTv(Match match, IEnumerable<TvCondition> tvConditions)
@@ -64,14 +66,11 @@ public static class MatchHelpers
 
         foreach (var condition in tvConditions)
         {
-            if (condition.Label == equalCondition && tvs.Any(x => x == condition.Value))
+            switch (condition.Label)
             {
-                return true;
-            }
-
-            if (condition.Label == containsCondition && tvs.Any(x => x.IsContainsIgnoreCase(condition.Value)))
-            {
-                return true;
+                case equalCondition when tvs.Any(x => x == condition.Value):
+                case containsCondition when tvs.Any(x => x.IsContainsIgnoreCase(condition.Value)):
+                    return true;
             }
         }
 

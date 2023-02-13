@@ -6,7 +6,7 @@ using Models;
 
 public interface NapUserControlService
 {
-    IEnumerable<UserFunctionModel> GetUserFunctionModels(string functionKey);
+    IList<UserFunctionModel> GetUserFunctionModels(string functionKey);
 
     Task SynDataFunctionPermissionAsync();
 }
@@ -43,13 +43,13 @@ public class NapUserControlServiceImp : NapUserControlService
         }
     }
 
-    public IEnumerable<UserFunctionModel> GetUserFunctionModels(string functionKey)
+    public IList<UserFunctionModel> GetUserFunctionModels(string functionKey)
     {
         var criteria = new GetAllUserByFunctionKeyCriteria
         {
             FunctionKey = functionKey
         };
 
-        return repository.Fetch<UserFunctionModel>(criteria);
+        return repository.Fetch<UserFunctionModel>(criteria).ToList();
     }
 }

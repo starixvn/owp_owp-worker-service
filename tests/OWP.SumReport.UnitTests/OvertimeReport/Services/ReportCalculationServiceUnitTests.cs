@@ -28,11 +28,11 @@ public class ReportCalculationServiceUnitTests
         };
         var mockedAssignment = new List<Assignment>
         {
-            new(){ OWPMatchId = 111, UserId = 11, ParentMatchId = null, OWPLeagueName="league", Remark="PK" },
+            new(){ OwpMatchId = 111, UserId = 11, ParentMatchId = null, OwpLeagueName="league", Remark="PK" }
         };
         var mockedMainMatch = new List<MainMatch>
         {
-            new() { OWPMatchId = 111, Remark = "", EventDateTime = date.AddHours(10)  }
+            new() { OwpMatchId = 111, Remark = "", EventDateTime = date.AddHours(10)  }
         };
         var expected = new List<OvertimeData>
         {

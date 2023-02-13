@@ -27,40 +27,42 @@ public class ReportCalculationServiceImp : ReportCalculationService
 
     public async Task<IEnumerable<OvertimeData>> CalculateOvertimeReport(DateTime date, bool isGenerateData)
     {
-        var workingShifts = await repository.GetEmployeeWorkingShift(date, isGenerateData);
+        var workingShifts = (await repository.GetEmployeeWorkingShift(date, isGenerateData)).ToList();
 
-        if (workingShifts.Any())
+        if (!workingShifts.Any())
         {
-            var userIds = workingShifts.Select(x => x.EmployeeId);
-            var (assignments, mainMatchRemarks) = await repository.GetTradersAssignments(date, userIds, isGenerateData);
-            var timeShifts = workingShifts.Where(x => !x.RefShiftId.HasValue);
-            var offShifts = workingShifts.Where(x => x.RefShiftId.HasValue);
-            var timeShiftUsers = timeShifts.Select(x => x.EmployeeId);
-            var offShiftUsers = offShifts.Select(x => x.EmployeeId);
-            var timeShiftAssignments = assignments.Where(x => timeShiftUsers.Contains(x.UserId));
-            var offShiftAssignments = assignments.Where(x => offShiftUsers.Contains(x.UserId));
-
-            var timeShiftBatch = CalculateForTimeShifts(timeShifts, timeShiftAssignments, mainMatchRemarks);
-            var offShiftBatch = CalculateForOffShifts(offShifts, offShiftAssignments, mainMatchRemarks);
-
-            return timeShiftBatch.Concat(offShiftBatch);
+            return new List<OvertimeData>();
         }
 
-        return new List<OvertimeData>();
+        var userIds = workingShifts.Select(x => x.EmployeeId);
+        var tradersAssignments = await repository.GetTradersAssignments(date, userIds, isGenerateData);
+        var (assignments, mainMatchRemarks) = (tradersAssignments.Item1.ToList(), tradersAssignments.Item2.ToList());
+        var timeShifts = workingShifts.Where(x => !x.RefShiftId.HasValue).ToList();
+        var offShifts = workingShifts.Where(x => x.RefShiftId.HasValue).ToList();
+        var timeShiftUsers = timeShifts.Select(x => x.EmployeeId);
+        var offShiftUsers = offShifts.Select(x => x.EmployeeId);
+        var timeShiftAssignments = assignments.Where(x => timeShiftUsers.Contains(x.UserId)).ToList();
+        var offShiftAssignments = assignments.Where(x => offShiftUsers.Contains(x.UserId)).ToList();
+
+        var timeShiftBatch = CalculateForTimeShifts(timeShifts, timeShiftAssignments, mainMatchRemarks);
+        var offShiftBatch = CalculateForOffShifts(offShifts, offShiftAssignments, mainMatchRemarks);
+
+        return timeShiftBatch.Concat(offShiftBatch);
+
     }
 
     public IEnumerable<OvertimeData> CalculateForTimeShifts(
-        IEnumerable<EmployeeWorkingShift> timeShifts,
-        IEnumerable<Assignment> assignments,
-        IEnumerable<MainMatch> mainMatchRemarks)
+        IList<EmployeeWorkingShift> timeShifts,
+        IList<Assignment> assignments,
+        IList<MainMatch> mainMatchRemarks)
     {
         foreach (var shift in timeShifts)
         {
-            var userAssignments = assignments.Where(x => x.UserId == shift.EmployeeId);
+            var userAssignments = assignments.Where(x => x.UserId == shift.EmployeeId).ToList();
 
             var shiftOt = ShiftOvertimeCalculator.CalculateTimeShiftOvertimeData(shift);
             var assignmentOt =
-                AssignmentOvertimeCalculator.CalculateOvertimeData(userAssignments, shift, mainMatchRemarks);
+                AssignmentOvertimeCalculator.CalculateOvertimeData(shift, userAssignments, mainMatchRemarks);
             var otTime = WorkingShiftHelper.RoundUpOvertime(shiftOt + assignmentOt);
 
             if (otTime > 0)
@@ -77,17 +79,17 @@ public class ReportCalculationServiceImp : ReportCalculationService
     }
 
     public IEnumerable<OvertimeData> CalculateForOffShifts(
-        IEnumerable<EmployeeWorkingShift> offShift,
-        IEnumerable<Assignment> assignments,
-        IEnumerable<MainMatch> mainMatchRemarks)
+        IList<EmployeeWorkingShift> offShift,
+        IList<Assignment> assignments,
+        IList<MainMatch> mainMatchRemarks)
     {
         foreach (var shift in offShift)
         {
-            var userAssignments = assignments.Where(x => x.UserId == shift.EmployeeId);
+            var userAssignments = assignments.Where(x => x.UserId == shift.EmployeeId).ToList();
 
             var shiftOt = ShiftOvertimeCalculator.CalculateOffShiftOvertimeData(shift);
             var assignmentOt =
-                AssignmentOvertimeCalculator.CalculateOvertimeData(userAssignments, shift, mainMatchRemarks);
+                AssignmentOvertimeCalculator.CalculateOvertimeData(shift, userAssignments,  mainMatchRemarks);
             var otTime = WorkingShiftHelper.RoundUpOvertime(shiftOt + assignmentOt);
 
             if (otTime > 0)

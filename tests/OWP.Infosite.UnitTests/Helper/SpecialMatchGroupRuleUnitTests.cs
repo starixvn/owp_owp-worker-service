@@ -32,7 +32,7 @@ public class SpecialMatchGroupRuleUnitTests
             MinorBettypeId = -4,
             LeagueName = "CHINA FOOTBALL SUPER LEAGUE - CORNERS",
             HomeName = "Shandong Taishan 1st Corner",
-            AwayName = "Cangzhou Mighty Lions 1st corner",
+            AwayName = "Cangzhou Mighty Lions 1st corner"
         };
 
         var actual = firstRule.GetMinorType(match);
@@ -52,7 +52,7 @@ public class SpecialMatchGroupRuleUnitTests
             MinorBettypeId = -7,
             LeagueName = "CHINA FOOTBALL SUPER LEAGUE - BOOKING",
             HomeName = "Shandong Taishan 1st Booking",
-            AwayName = "Cangzhou Mighty Lions 1st Booking",
+            AwayName = "Cangzhou Mighty Lions 1st Booking"
         };
 
         var actual = firstRule.GetMinorType(match);
@@ -72,7 +72,7 @@ public class SpecialMatchGroupRuleUnitTests
             MinorBettypeId = -100,
             LeagueName = "CHINA FOOTBALL SUPER LEAGUE - GOAL KICK",
             HomeName = "Shandong Taishan 2nd Goal Kick",
-            AwayName = "Cangzhou Mighty Lions 2nd Goal Kick",
+            AwayName = "Cangzhou Mighty Lions 2nd Goal Kick"
         };
 
         var actual = firstRule.GetMinorType(match);
@@ -92,7 +92,7 @@ public class SpecialMatchGroupRuleUnitTests
             MinorBettypeId = -96,
             LeagueName = "*FIFA WORLD CUP 2022 (IN QATAR) - PENALTY",
             HomeName = "Argentina -vs- Poland 1st Penalty To Score - No",
-            AwayName = "Argentina -vs- Poland 1st Penalty To Score - Yes",
+            AwayName = "Argentina -vs- Poland 1st Penalty To Score - Yes"
         };
 
         var actual = firstRule.GetMinorType(match);
@@ -112,7 +112,7 @@ public class SpecialMatchGroupRuleUnitTests
             MinorBettypeId = -97,
             LeagueName = "*FIFA WORLD CUP 2022 (IN QATAR) - PENALTY",
             HomeName = "Mexico -vs- Saudi Arabia 22nd Penalty Awarded - No",
-            AwayName = "Mexico -vs- Saudi Arabia 22nd Penalty Awarded - Yes",
+            AwayName = "Mexico -vs- Saudi Arabia 22nd Penalty Awarded - Yes"
         };
 
         var actual = firstRule.GetMinorType(match);

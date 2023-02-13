@@ -19,35 +19,35 @@ public class RobotX3ServiceUnitTests
         var model1 = new RobotX3RawModel
         {
             EventDateTime = DateTime.Parse("03/16/2020 2:00:00 PM"),
-            OWPMatchId = 406897,
+            OwpMatchId = 406897,
             UserId = 8
         };
 
         var model2 = new RobotX3RawModel
         {
             EventDateTime = DateTime.Parse("03/17/2020 11:01:00 AM"),
-            OWPMatchId = 406913,
+            OwpMatchId = 406913,
             UserId = 8
         };
 
         var model3 = new RobotX3RawModel
         {
             EventDateTime = DateTime.Parse("03/17/2020 1:00:00 PM"),
-            OWPMatchId = 406934,
+            OwpMatchId = 406934,
             UserId = 8
         };
 
         var model4 = new RobotX3RawModel
         {
             EventDateTime = DateTime.Parse("03/18/2020 10:00:00 AM"),
-            OWPMatchId = 406950,
+            OwpMatchId = 406950,
             UserId = 8
         };
 
         var model5 = new RobotX3RawModel
         {
             EventDateTime = DateTime.Parse("03/27/2020 2:00:00 PM"),
-            OWPMatchId = 406987,
+            OwpMatchId = 406987,
             UserId = 8
         };
 
@@ -55,7 +55,7 @@ public class RobotX3ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/16/2020 2:00:00 PM"),
             MatchGroup = 1,
-            OWPMatchId = 406897,
+            OwpMatchId = 406897,
             UserId = 8
         };
 
@@ -63,7 +63,7 @@ public class RobotX3ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/17/2020 11:01:00 AM"),
             MatchGroup = 2,
-            OWPMatchId = 406913,
+            OwpMatchId = 406913,
             UserId = 8
         };
 
@@ -71,7 +71,7 @@ public class RobotX3ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/17/2020 1:00:00 PM"),
             MatchGroup = 3,
-            OWPMatchId = 406934,
+            OwpMatchId = 406934,
             UserId = 8
         };
 
@@ -79,7 +79,7 @@ public class RobotX3ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/18/2020 10:00:00 AM"),
             MatchGroup = 4,
-            OWPMatchId = 406950,
+            OwpMatchId = 406950,
             UserId = 8
         };
 
@@ -87,7 +87,7 @@ public class RobotX3ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/27/2020 2:00:00 PM"),
             MatchGroup = 5,
-            OWPMatchId = 406987,
+            OwpMatchId = 406987,
             UserId = 8
         };
 
@@ -108,13 +108,13 @@ public class RobotX3ServiceUnitTests
                  new()
                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:30:00 PM"),
-                      OWPMatchId = 347272,
+                      OwpMatchId = 347272,
                       UserId = 17013702
                  },
                  new()
                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:45:00 PM"),
-                      OWPMatchId = 347277,
+                      OwpMatchId = 347277,
                       UserId = 17013702
                  }
             };
@@ -125,14 +125,14 @@ public class RobotX3ServiceUnitTests
                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:30:00 PM"),
                       MatchGroup = 1,
-                      OWPMatchId = 347272,
+                      OwpMatchId = 347272,
                       UserId = 17013702
                  },
                  new()
                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:45:00 PM"),
                       MatchGroup = 1,
-                      OWPMatchId = 347277,
+                      OwpMatchId = 347277,
                       UserId = 17013702
                  }
             };
@@ -152,43 +152,43 @@ public class RobotX3ServiceUnitTests
                  new()
                  {
                       EventDateTime = DateTime.Parse("03/16/2020 2:00:00 PM"),
-                      OWPMatchId = 406897,
+                      OwpMatchId = 406897,
                       UserId = 8
                  },
                  new()
                  {
                       EventDateTime = DateTime.Parse("03/17/2020 11:01:00 AM"),
-                      OWPMatchId = 406913,
+                      OwpMatchId = 406913,
                       UserId = 8
                  },
                  new()
                  {
                       EventDateTime = DateTime.Parse("03/17/2020 1:00:00 PM"),
-                      OWPMatchId = 406934,
+                      OwpMatchId = 406934,
                       UserId = 8
                  },
                  new()
                  {
                       EventDateTime = DateTime.Parse("03/18/2020 10:00:00 AM"),
-                      OWPMatchId = 406950,
+                      OwpMatchId = 406950,
                       UserId = 8
                  },
                   new()
                   {
                       EventDateTime = DateTime.Parse("03/27/2020 2:00:00 PM"),
-                      OWPMatchId = 406987,
+                      OwpMatchId = 406987,
                       UserId = 8
                  },
                   new()
                   {
                       EventDateTime = DateTime.Parse("04/02/2020 1:30:00 PM"),
-                      OWPMatchId = 347272,
+                      OwpMatchId = 347272,
                       UserId = 17013702
                  },
                  new()
                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:45:00 PM"),
-                      OWPMatchId = 347277,
+                      OwpMatchId = 347277,
                       UserId = 17013702
                  }
             };

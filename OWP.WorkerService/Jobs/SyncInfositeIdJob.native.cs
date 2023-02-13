@@ -43,7 +43,7 @@ public class SyncInfositeIdJob : IJob
 
     public async Task ExecuteJob()
     {
-        var underMaintenanceTime = (await maintenanceService.GetUnderMaintenanceTimeAsync());
+        var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
 
         if (underMaintenanceTime.IsUnderMaintenanceTime)
         {

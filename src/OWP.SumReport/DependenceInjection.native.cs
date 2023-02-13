@@ -30,7 +30,7 @@ public static class DependenceInjection
         services.AddTransient<ESoccerService, ESoccerServiceImp>();
 
         services.AddTransient<LAReport.Handler, LAReport.HandlerImp>();
-        services.AddTransient<LARepository, LARepositoryImp>();
+        services.AddTransient<LaRepository, LaRepositoryImp>();
         services.AddTransient<MainMatchRuleFactory, MainMatchRuleFactoryImp>();
         services
             .AddTransient<SingleMatchesFactory,
@@ -53,11 +53,11 @@ public static class DependenceInjection
         services.AddTransient<DataReportService, DataReportBuilderServiceImp>();
         services.AddTransient<DataMatchReportService, DataMatchReportServiceImp>();
         services.AddTransient<LeagueService, LeagueServiceImp>();
-        services.AddTransient<OULeagueService, OULeagueServiceImp>();
-        services.AddTransient<HDPLeagueService, HDPLeagueServiceImp>();
+        services.AddTransient<OuLeagueService, OuLeagueServiceImp>();
+        services.AddTransient<HdpLeagueService, HdpLeagueServiceImp>();
         services.AddTransient<MatchService, MatchServiceImp>();
-        services.AddTransient<OUMatchService, OUMatchServiceImp>();
-        services.AddTransient<HDPMatchService, HDPMatchServiceImp>();
+        services.AddTransient<OuMatchService, OuMatchServiceImp>();
+        services.AddTransient<HdpMatchService, HdpMatchServiceImp>();
         services.AddTransient<DataReportService, DataReportBuilderServiceImp>();
         services.AddTransient<DbWriterService, DbWriterServiceImp>();
         services.AddTransient<PrematchReportService, PrematchReportServiceImp>();

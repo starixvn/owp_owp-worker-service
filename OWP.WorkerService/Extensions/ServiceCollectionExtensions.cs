@@ -73,12 +73,14 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddRedisServices(this IServiceCollection services, IConfiguration configuration)
     {
         var redisSetting = configuration.GetSection(nameof(RedisSettings)).Get<RedisSettings>();
-        var redis = ConnectionMultiplexer.Connect(redisSetting.ConnectionString);
+        var connectionString = redisSetting?.ConnectionString ?? string.Empty;
+        var appName = redisSetting?.AppName ?? string.Empty;
+        var redis = ConnectionMultiplexer.Connect(connectionString);
         services.AddSingleton<IConnectionMultiplexer>(redis);
         services.AddSingleton<ICache>(new RedisCache(new RedisCacheOptions
         {
-            ConnectionString = redisSetting.ConnectionString,
-            ApplicationName = redisSetting.AppName
+            ConnectionString = connectionString,
+            ApplicationName = appName
         }));
 
         return services;
@@ -87,7 +89,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddOneBookUmServices(this IServiceCollection services, IConfiguration configuration)
     {
         var umConfig = configuration.GetSection(nameof(UMClientConfiguration)).Get<UMClientConfiguration>();
-        services.AddSingleton(umConfig);
+        services.AddSingleton(umConfig ?? new UMClientConfiguration());
         services.AddSingleton<IPHelper, IPHelperImpl>();
         services.AddSingleton<IMaintenanceService, MaintenanceService>();
         services.AddSingleton<IUMCacheService, UMCacheService>();
@@ -99,7 +101,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddInternalServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddInfositeServices(configuration);
-        services.AddOWPCoreServices();
+        services.AddOwpCoreServices();
         services.AddInfositeIdSyncServices();
         services.AddLinkLeagueAndTeamServices();
         services.AddMatchReadyNotificationServices();
@@ -140,7 +142,7 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddRabbitMq(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<RabbitMQSetting>(configuration.GetSection(RabbitMQSetting.RabbitMQ));
+        services.Configure<RabbitMqSetting>(configuration.GetSection(RabbitMqSetting.RabbitMq));
         services.AddSingleton<RabbitMqClient, RabbitMqClientImp>();
 
         return services;

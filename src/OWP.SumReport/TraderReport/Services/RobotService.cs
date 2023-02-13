@@ -48,7 +48,7 @@ public class RobotServiceImp : RobotService
         return robotX5ByUsers.ToDictionary(u => u.UserId, u => u);
     }
 
-    private IEnumerable<RobotByByUser> Aggregate(Dictionary<int, RobotX3ByUser> robotX3ByUsers,
+    private static IEnumerable<RobotByByUser> Aggregate(Dictionary<int, RobotX3ByUser> robotX3ByUsers,
         Dictionary<int, RobotX5ByUser> robotX5ByUsers)
     {
         var userIds = robotX3ByUsers.Keys.Union(robotX5ByUsers.Keys);

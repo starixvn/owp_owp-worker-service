@@ -33,7 +33,7 @@ public class SynInfositeIdServiceImp : SyncInfositeIdService
 
     public async Task Sync()
     {
-        var owpMatches = await repository.QueryUnmappingOWPMatch();
+        var owpMatches = await repository.QueryUnmappingOwpMatch();
         var infositeMatches = await repository.QueryInfositeMatch();
         var mappingMatches = InfoSiteHelper.Map(owpMatches, infositeMatches);
 

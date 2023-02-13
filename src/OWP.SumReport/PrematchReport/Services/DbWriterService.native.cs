@@ -24,7 +24,7 @@ public class DbWriterServiceImp : DbWriterService
     {
         var criteria = new InsertLeagueDataReportCriteria
         {
-            XML = XmlConverter.Serialize(dataReports)
+            Xml = XmlConverter.Serialize(dataReports)
         };
         await repository.InsertLeague(criteria);
     }
@@ -33,7 +33,7 @@ public class DbWriterServiceImp : DbWriterService
     {
         var criteria = new InsertMatchDataReportCriteria
         {
-            XML = XmlConverter.Serialize(dataReports)
+            Xml = XmlConverter.Serialize(dataReports)
         };
         await repository.InsertMatch(criteria);
     }

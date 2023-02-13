@@ -30,7 +30,7 @@ public class ApiServiceImp : ApiService
 
     public async Task PostSyncLiveAsync(BodyModel body)
     {
-        var path = "api/EventSchedule/SetEventLiveByInHouseMatchId";
+        const string path = "api/EventSchedule/SetEventLiveByInHouseMatchId";
         var infositeDomain = infoSiteSettings.InfositeOsapi;
         if (string.IsNullOrEmpty(infositeDomain)) return;
 
@@ -57,7 +57,7 @@ public class ApiServiceImp : ApiService
             DateTime = DateTime.UtcNow.AddHours(8),
             RequestUri = requestUrl,
             ex.Message,
-            BodyContent = body,
+            BodyContent = body
         });
 
         await logger.ErrorAsync($"OSSyncLiveToInfosite {logErrorString}");

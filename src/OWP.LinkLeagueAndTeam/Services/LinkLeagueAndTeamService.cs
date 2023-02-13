@@ -41,29 +41,28 @@ public class LinkLeagueAndTeamServiceImp : LinkLeagueAndTeamService
 
     public async Task<DateTime> Execute(TimeRange timeRange)
     {
-        var startTime = timeRange.StartTime;
-        var endTime = timeRange.EndTime;
-        var finishRunTime = timeRange.FinishRunTime;
-
-        if (DateTime.Compare(startTime, finishRunTime) <= 0 &&
-            DateTime.Compare(endTime, finishRunTime) >= 0)
+        while (true)
         {
-            endTime = finishRunTime;
+            var startTime = timeRange.StartTime;
+            var endTime = timeRange.EndTime;
+            var finishRunTime = timeRange.FinishRunTime;
+
+            if (DateTime.Compare(startTime, finishRunTime) <= 0 && DateTime.Compare(endTime, finishRunTime) >= 0)
+            {
+                endTime = finishRunTime;
+            }
+
+            if (DateTime.Compare(endTime, finishRunTime) >= 0 && DateTime.Compare(startTime, finishRunTime) >= 0)
+            {
+                return finishRunTime;
+            }
+
+            var teamInfo = await GetTeamInfoByTimRange(startTime, endTime);
+            await UpdateTeamInfo(teamInfo);
+
+            timeRange.StartTime = endTime;
+            timeRange.EndTime = BuildEndTime(timeRange.StartTime);
         }
-
-        if (DateTime.Compare(endTime, finishRunTime) >= 0 &&
-            DateTime.Compare(startTime, finishRunTime) >= 0)
-        {
-            return finishRunTime;
-        }
-
-        var teamInfo = await GetTeamInfoByTimRange(startTime, endTime);
-        await UpdateTeamInfo(teamInfo);
-
-        timeRange.StartTime = endTime;
-        timeRange.EndTime = BuildEndTime(timeRange.StartTime);
-
-        return await Execute(timeRange);
     }
 
     private async Task PostExecute(DateTime endTime)

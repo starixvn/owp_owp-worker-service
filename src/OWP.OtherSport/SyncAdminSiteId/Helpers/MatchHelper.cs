@@ -4,7 +4,7 @@ using Models;
 
 public static class MatchHelper
 {
-    public static IEnumerable<LinkedMatch> GetNewLinkedMatches(IEnumerable<Match> owpMatches, IEnumerable<Match> adminSiteMatches)
+    public static IEnumerable<LinkedMatch> GetNewLinkedMatches(IList<Match> owpMatches, IList<Match> adminSiteMatches)
     {
         foreach (var match in owpMatches)
         {
@@ -52,11 +52,11 @@ public static class MatchHelper
         !string.IsNullOrEmpty(second) &&
         first.Trim().Equals(second.Trim(), StringComparison.OrdinalIgnoreCase);
 
-    public static IEnumerable<LinkedMatch> GetRemovedMatches(IEnumerable<Match> owpMatches, IEnumerable<Match> adminSiteMatches)
+    public static IEnumerable<LinkedMatch> GetRemovedMatches(IList<Match> owpMatches, IList<Match> adminSiteMatches)
     {
         foreach (var match in owpMatches)
         {
-            if (!adminSiteMatches.Any(x => x.AdminSiteMatchId == match.AdminSiteMatchId))
+            if (adminSiteMatches.All(x => x.AdminSiteMatchId != match.AdminSiteMatchId))
             {
                 yield return new LinkedMatch
                 {

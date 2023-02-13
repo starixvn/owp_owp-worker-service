@@ -41,7 +41,7 @@ public class SumLaReportJob : IJob
             return;
         }
 
-        var (isGenerateData, lastDate) = await cacheManipulator.GetLastDateForRegenerateData(Constant.LALastDateCacheKey);
+        var (isGenerateData, lastDate) = await cacheManipulator.GetLastDateForRegenerateData(Constant.LaLastDateCacheKey);
         var startDate = isGenerateData ? lastDate : DateTime.Today.AddDays(-2);
 
         for (var date = startDate; date <= DateTime.Today; date = date.AddDays(1))
@@ -49,6 +49,6 @@ public class SumLaReportJob : IJob
             await handler.Handle(date, isGenerateData).ConfigureAwait(false);
         }
 
-        await cacheManipulator.RemoveLastDateOfSumData(Constant.LALastDateCacheKey);
+        await cacheManipulator.RemoveLastDateOfSumData(Constant.LaLastDateCacheKey);
     }
 }

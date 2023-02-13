@@ -1,11 +1,11 @@
-namespace OWP.SumReport.UnitTests.MatchLiveReport.Helpers;
+namespace OWP.SumReport.UnitTests.MatchLiveReport.Services;
 
 using NSubstitute;
-using SumReport.MatchLiveReport.Constants;
-using SumReport.MatchLiveReport.Helpers;
-using SumReport.MatchLiveReport.Models;
-using SumReport.MatchLiveReport.Repository;
-using SumReport.MatchLiveReport.Services;
+using OWP.SumReport.MatchLiveReport.Constants;
+using OWP.SumReport.MatchLiveReport.Helpers;
+using OWP.SumReport.MatchLiveReport.Models;
+using OWP.SumReport.MatchLiveReport.Repository;
+using OWP.SumReport.MatchLiveReport.Services;
 using Xunit;
 using Xunit.Asserts.Compare;
 
@@ -15,7 +15,7 @@ public class ReportServiceUnitTests
     public async Task Calculate_WithNotEmptyReport_ShouldInsertData()
     {
         var reportRepository = Substitute.For<ReportRepository>();
-        var matches = new List<OWPMatch> {
+        var matches = new List<OwpMatch> {
             new()
             {
                 MinorBettypeId = (int)MinorBetType.Specific15Mins,
@@ -29,21 +29,21 @@ public class ReportServiceUnitTests
                 ParentMatchId = 1
             }
         };
-        var mainMatches = new List<OWPMatch> {
+        var mainMatches = new List<OwpMatch> {
             new()
             {
                 LeagueCategory = "MJ",
-                OWPMatchId = 1
+                OwpMatchId = 1
             },
             new()
             {
                 LeagueCategory = "MJ",
-                OWPMatchId = 2
+                OwpMatchId = 2
             }
         };
         var mockSaba = new List<int> { 1, 3, 4 };
         reportRepository.QueryMatchesByDate(Arg.Any<DateTime>(), false).Returns((matches, mainMatches));
-        reportRepository.GetSaba5minOWPMatchId(Arg.Any<List<int>>()).Returns(mockSaba);
+        reportRepository.GetSaba5MinOwpMatchId(Arg.Any<List<int>>()).Returns(mockSaba);
         var service = new ReportServiceImp(reportRepository);
 
         await service.Calculate(DateTime.Today);
@@ -55,60 +55,60 @@ public class ReportServiceUnitTests
     public void Calculate_WithMatches_ShouldReturnReportModel()
     {
         var reportRepository = Substitute.For<ReportRepository>();
-        reportRepository.QueryMatchesByDate(Arg.Any<DateTime>(), false).Returns((new List<OWPMatch>(), new List<OWPMatch>()));
+        reportRepository.QueryMatchesByDate(Arg.Any<DateTime>(), false).Returns((new List<OwpMatch>(), new List<OwpMatch>()));
         var service = new ReportServiceImp(reportRepository);
         var eventDate = DateTime.Today;
 
-        var mainMatches = new List<OWPMatch>
+        var mainMatches = new List<OwpMatch>
         {
             new()
             {
-                OWPMatchId = 1,
+                OwpMatchId = 1,
                 LeagueCategory = "MJ"
             },
             new()
             {
-                OWPMatchId = 2,
+                OwpMatchId = 2,
                 LeagueCategory = "M1"
             },
             new()
             {
-                OWPMatchId = 3,
+                OwpMatchId = 3,
                 LeagueCategory = "Others 1"
             },
             new()
             {
-                OWPMatchId = 4,
+                OwpMatchId = 4,
                 LeagueCategory = "Others 2"
             },
             new()
             {
-                OWPMatchId = 5,
+                OwpMatchId = 5,
                 LeagueCategory = "Others 3"
             },
             new()
             {
-                OWPMatchId = 6,
+                OwpMatchId = 6,
                 LeagueCategory = "Others 4"
             },
             new()
             {
-                OWPMatchId = 7,
+                OwpMatchId = 7,
                 LeagueCategory = "Others 5"
             },
             new()
             {
-                OWPMatchId = 8,
+                OwpMatchId = 8,
                 LeagueCategory = "Others 6"
             },
             new()
             {
-                OWPMatchId = 9,
+                OwpMatchId = 9,
                 LeagueCategory = "Unknown"
             }
         };
 
-        var matches = new List<OWPMatch>
+        var matches = new List<OwpMatch>
         {
             new()
             {
@@ -173,17 +173,17 @@ public class ReportServiceUnitTests
                 LeagueCategory = "Others 3"
             },new()
             {
-                MinorBettypeId = (int)MinorBetType.HomeSingleTeamOU,
+                MinorBettypeId = (int)MinorBetType.HomeSingleTeamOu,
                 ParentMatchId = 6,
                 LeagueCategory = "Others 4"
             },new()
             {
-                MinorBettypeId = (int)MinorBetType.AwaySingleTeamOU,
+                MinorBettypeId = (int)MinorBetType.AwaySingleTeamOu,
                 ParentMatchId = 6,
                 LeagueCategory = "Others 4"
             },new()
             {
-                MinorBettypeId = (int)MinorBetType.HomeSingleTeamOU,
+                MinorBettypeId = (int)MinorBetType.HomeSingleTeamOu,
                 ParentMatchId = 6,
                 LeagueCategory = "Others 4"
             },new()
@@ -266,28 +266,28 @@ public class ReportServiceUnitTests
             new()
             {
                 IsSaba = true,
-                OWPLeagueName = "SABA ABC FIFA - 16 Mins ",
+                OwpLeagueName = "SABA ABC FIFA - 16 Mins ",
                 ParentMatchId = 8,
                 LeagueCategory = "Others 6"
             },
             new()
             {
                 IsSaba = true,
-                OWPLeagueName = "SABA ABC FIFA - 6 mins ",
+                OwpLeagueName = "SABA ABC FIFA - 6 mins ",
                 ParentMatchId = 7,
                 LeagueCategory = "Others 5"
             },
             new()
             {
                 IsSaba = true,
-                OWPLeagueName = "M88 SABA ABC FIFA - 16 mins ",
+                OwpLeagueName = "M88 SABA ABC FIFA - 16 mins ",
                 ParentMatchId = 6,
                 LeagueCategory = "Others 4"
             },
             new()
             {
                 IsSaba = true,
-                OWPLeagueName = "SABA ABC PES - 15 Mins ",
+                OwpLeagueName = "SABA ABC PES - 15 Mins ",
                 ParentMatchId = 5,
                 LeagueCategory = "Others 3"
             }
@@ -295,29 +295,29 @@ public class ReportServiceUnitTests
             new()
             {
                 IsSaba = false,
-                OWPLeagueName = "abc fantasy ",
+                OwpLeagueName = "abc fantasy ",
                 ParentMatchId = 1,
                 LeagueCategory = "MJ"
             },
             new()
             {
                 IsSaba = false,
-                OWPLeagueName = "AUSTRIA REGIONAL LEAGUE MITTE",
+                OwpLeagueName = "AUSTRIA REGIONAL LEAGUE MITTE",
                 ParentMatchId = 1,
                 LeagueCategory = "MJ"
             },
             new()
             {
                 IsSaba = false,
-                OWPLeagueName = "AUSTRIA REGIONAL WHICH TEAM TO KICK OFF",
+                OwpLeagueName = "AUSTRIA REGIONAL WHICH TEAM TO KICK OFF",
                 ParentMatchId = 1,
                 LeagueCategory = "MJ"
-            },
+            }
         };
 
-        var minorMatchesCategorized = MatchHelper.CategorizeMinorMatches(matches, mainMatches);
-        var mainMatchesCategorized = MatchHelper.CategorizeMainMatches(matches);
-        var sabaMatchesCategorized = MatchHelper.CategorizeSabaMatches(matches);
+        var minorMatchesCategorized = MatchHelper.CategorizeMinorMatches(matches, mainMatches).ToList();
+        var mainMatchesCategorized = MatchHelper.CategorizeMainMatches(matches).ToList();
+        var sabaMatchesCategorized = MatchHelper.CategorizeSabaMatches(matches).ToList();
 
         var expected = new List<ReportModel> {
             new()
@@ -600,6 +600,8 @@ public class ReportServiceUnitTests
             }
         };
 
-        DeepAssert.Equal(expected, service.Calculate(eventDate, minorMatchesCategorized, mainMatchesCategorized, sabaMatchesCategorized).ToList());
+        var actual = service.Calculate(eventDate, minorMatchesCategorized, mainMatchesCategorized, sabaMatchesCategorized)
+            .ToList();
+        DeepAssert.Equal(expected, actual);
     }
 }

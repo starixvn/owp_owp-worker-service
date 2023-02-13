@@ -2,7 +2,7 @@ namespace OWP.SumReport.PrematchReport.Models;
 
 public class LeagueInfo
 {
-    public int OWPLeagueId { get; set; }
+    public int OwpLeagueId { get; set; }
 
     public DateTime EventDate { get; set; }
 

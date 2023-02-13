@@ -9,54 +9,54 @@ public class MainMatchRule
 {
     private MainMatchRule nextRule;
 
-    public void SetSuccessor(MainMatchRule nextRule) => this.nextRule = nextRule;
+    public void SetSuccessor(MainMatchRule rule) => nextRule = rule;
 
     public virtual ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
     {
-        return nextRule?.Execute(assignment, userAssignments) ?? ReportType.OTHERS;
+        return nextRule?.Execute(assignment, userAssignments) ?? ReportType.Others;
     }
 }
 
-public class FTCornerRule : MainMatchRule
+public class FtCornerRule : MainMatchRule
 {
     private readonly int[] cornerBettypeArray = { BettypeConst.NextCorner, BettypeConst.NoOfCorner, BettypeConst.NoOfCorner15Mins };
 
     public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
     {
-        return isContainCorner(assignment, userAssignments)
-            ? ReportType.FT_CORNER
+        return IsContainCorner(assignment, userAssignments)
+            ? ReportType.FtCorner
             : base.Execute(assignment, userAssignments);
     }
 
-    private bool isContainCorner(Assignment assignment, IList<Assignment> assignments)
+    private bool IsContainCorner(Assignment assignment, IEnumerable<Assignment> assignments)
     {
         return assignments.Any(x =>
             x.MinorBettypeId.HasValue && cornerBettypeArray.Contains(x.MinorBettypeId.Value) &&
-            x.ParentMatchId == assignment.OWPMatchId);
+            x.ParentMatchId == assignment.OwpMatchId);
     }
 }
 
-public class FTCorner5MLRule : MainMatchRule
+public class FtCorner5MlRule : MainMatchRule
 {
     private readonly int[] cornerBettypeArray = { BettypeConst.NextCorner, BettypeConst.NoOfCorner, BettypeConst.NoOfCorner15Mins };
 
     public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
     {
-        return isContainCorner5ML(assignment, userAssignments)
-            ? ReportType.FT_CORNER_5ML
+        return IsContainCorner5Ml(assignment, userAssignments)
+            ? ReportType.FtCorner5Ml
             : base.Execute(assignment, userAssignments);
     }
 
-    private static bool isMajorCornerLeague(string leagueName)
+    private static bool IsMajorCornerLeague(string leagueName)
     {
-        return MajorLeague.majorLeagueCornerList.Any(x => x == leagueName);
+        return MajorLeague.MajorLeagueCornerList.Any(x => x == leagueName);
     }
 
-    private bool isContainCorner5ML(Assignment assignment, IList<Assignment> assignments)
+    private bool IsContainCorner5Ml(Assignment assignment, IEnumerable<Assignment> assignments)
     {
         return assignments.Any(x =>
             x.MinorBettypeId.HasValue && cornerBettypeArray.Contains(x.MinorBettypeId.Value) &&
-            x.ParentMatchId == assignment.OWPMatchId && isMajorCornerLeague(x.OWPLeagueName));
+            x.ParentMatchId == assignment.OwpMatchId && IsMajorCornerLeague(x.OwpLeagueName));
     }
 }
 
@@ -64,7 +64,7 @@ public class IsFantasyRule : MainMatchRule
 {
     public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
     {
-        return IsFantasy(assignment.OWPLeagueName) ? ReportType.FANTASY : base.Execute(assignment, userAssignments);
+        return IsFantasy(assignment.OwpLeagueName) ? ReportType.Fantasy : base.Execute(assignment, userAssignments);
     }
 
     private static bool IsFantasy(string leagueName)
@@ -75,38 +75,39 @@ public class ESoccerRule : MainMatchRule
 {
     public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
     {
-        if (isESoccer(assignment.OWPLeagueName))
+        if (!IsESoccer(assignment.OwpLeagueName))
         {
-            if (assignment.OWPLeagueName.IsContainsIgnoreCase("- 5 Mins Play"))
-            {
-                return ReportType.ESOCCER_5MINS;
-            }
-
-            if (assignment.OWPLeagueName.IsContainsIgnoreCase("- 6 Mins Play"))
-            {
-                return ReportType.ESOCCER_6MINS;
-            }
-
-            if (assignment.OWPLeagueName.IsContainsIgnoreCase("- 15 Mins Play"))
-            {
-                return ReportType.ESOCCER_15MINS;
-            }
-
-            if (assignment.OWPLeagueName.IsContainsIgnoreCase("- 16 Mins Play"))
-            {
-                return ReportType.ESOCCER_16MINS;
-            }
+            return assignment.OwpLeagueName.IsContainsIgnoreCase("- 20 Mins Play")
+                ? ReportType.Esoccer20Mins
+                : base.Execute(assignment, userAssignments);
+        }
+            
+        if (assignment.OwpLeagueName.IsContainsIgnoreCase("- 5 Mins Play"))
+        {
+            return ReportType.Esoccer5Mins;
         }
 
-        if (assignment.OWPLeagueName.IsContainsIgnoreCase("- 20 Mins Play"))
+        if (assignment.OwpLeagueName.IsContainsIgnoreCase("- 6 Mins Play"))
         {
-            return ReportType.ESOCCER_20MINS;
+            return ReportType.Esoccer6Mins;
         }
 
-        return base.Execute(assignment, userAssignments);
+        if (assignment.OwpLeagueName.IsContainsIgnoreCase("- 15 Mins Play"))
+        {
+            return ReportType.Esoccer15Mins;
+        }
+
+        if (assignment.OwpLeagueName.IsContainsIgnoreCase("- 16 Mins Play"))
+        {
+            return ReportType.Esoccer16Mins;
+        }
+
+        return assignment.OwpLeagueName.IsContainsIgnoreCase("- 20 Mins Play")
+            ? ReportType.Esoccer20Mins 
+            : base.Execute(assignment, userAssignments);
     }
 
-    private static bool isESoccer(string leagueName)
+    private static bool IsESoccer(string leagueName)
         => leagueName.IsContainsIgnoreCase("SABA ");
 }
 
@@ -114,11 +115,11 @@ public class FiveMajorLeagueRule : MainMatchRule
 {
     public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
     {
-        return isMajorLeague(assignment.OWPLeagueName)
-            ? ReportType.MAJOR_LEAGUE
+        return IsMajorLeague(assignment.OwpLeagueName)
+            ? ReportType.MajorLeague
             : base.Execute(assignment, userAssignments);
     }
 
-    private static bool isMajorLeague(string leagueName)
-        => MajorLeague.majorLeagueList.Any(x => x == leagueName);
+    private static bool IsMajorLeague(string leagueName)
+        => MajorLeague.MajorLeagueList.Any(x => x == leagueName);
 }

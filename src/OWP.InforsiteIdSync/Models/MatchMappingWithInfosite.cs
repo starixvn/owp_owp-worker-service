@@ -6,19 +6,19 @@ using Olympus.InfoSiteClient.Extensions.XMLExtensions;
 [XMLName("Row")]
 public class MatchMappingWithInfosite
 {
-    public int OWPMatchId { get; set; }
+    public int OwpMatchId { get; set; }
 
     public int InfositeMatchId { get; set; }
 
-    public int AdminsiteMatchId { get; set; }
+    public int AdminSiteMatchId { get; set; }
 
     public DateTime EventDateTime { get; set; }
 
-    public MatchMappingWithInfosite(int owpMatchId, int infositeMatchId, int adminsiteMatchId, DateTime eventDateTime)
+    public MatchMappingWithInfosite(int owpMatchId, int infositeMatchId, int adminSiteMatchId, DateTime eventDateTime)
     {
-        OWPMatchId = owpMatchId;
+        OwpMatchId = owpMatchId;
         InfositeMatchId = infositeMatchId;
-        AdminsiteMatchId = adminsiteMatchId;
+        AdminSiteMatchId = adminSiteMatchId;
         EventDateTime = eventDateTime;
     }
 }

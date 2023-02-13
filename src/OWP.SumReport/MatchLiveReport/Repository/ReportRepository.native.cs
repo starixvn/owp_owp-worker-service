@@ -9,9 +9,9 @@ public interface ReportRepository
 {
     Task InsertData(IEnumerable<ReportModel> reportData, DateTime eventDate);
 
-    Task<(IEnumerable<OWPMatch>, IEnumerable<OWPMatch>)> QueryMatchesByDate(DateTime eventDate, bool isGenerateData);
+    Task<(IEnumerable<OwpMatch>, IEnumerable<OwpMatch>)> QueryMatchesByDate(DateTime eventDate, bool isGenerateData);
 
-    Task<IEnumerable<int>> GetSaba5minOWPMatchId(IList<int> Ids);
+    Task<IEnumerable<int>> GetSaba5MinOwpMatchId(IList<int> ids);
 }
 
 public class ReportRepositoryImp : ReportRepository
@@ -26,16 +26,16 @@ public class ReportRepositoryImp : ReportRepository
     public async Task InsertData(IEnumerable<ReportModel> reportData, DateTime eventDate)
         => await dynamicRepository.ExecuteAsync(new InsertReportDataCriteria { Data = XmlConverter.Serialize(reportData), EventDate = eventDate });
 
-    public async Task<(IEnumerable<OWPMatch>, IEnumerable<OWPMatch>)> QueryMatchesByDate(DateTime eventDate, bool isGenerateData)
-    => await dynamicRepository.FetchMultipleAsync<OWPMatch, OWPMatch>(isGenerateData
+    public async Task<(IEnumerable<OwpMatch>, IEnumerable<OwpMatch>)> QueryMatchesByDate(DateTime eventDate, bool isGenerateData)
+    => await dynamicRepository.FetchMultipleAsync<OwpMatch, OwpMatch>(isGenerateData
             ? new QueryFullMatchesByDateCriteria { EventDate = eventDate }
             : new QueryMatchesByDateCriteria { EventDate = eventDate });
 
-    public async Task<IEnumerable<int>> GetSaba5minOWPMatchId(IList<int> Ids)
+    public async Task<IEnumerable<int>> GetSaba5MinOwpMatchId(IList<int> ids)
     {
         var criteria = new GetSabaFiveMinMatchIdCriteria
         {
-            Id = String.Join(',', Ids)
+            Id = string.Join(',', ids)
         };
 
         return await dynamicRepository.FetchAsync<int>(criteria);

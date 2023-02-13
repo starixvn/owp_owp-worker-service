@@ -1,6 +1,7 @@
 ﻿namespace OWP.InfositeIdSync.UnitTests;
 
 using Infosite.Settings;
+using KellermanSoftware.CompareNetObjects;
 using Microsoft.Extensions.Options;
 using Models;
 using NSubstitute;
@@ -24,14 +25,14 @@ public class SyncIsLiveServiceUnitTests
             };
         repository.GetInfositeMatchIsLive(DateTime.Today, DateTime.Today).Returns(syncIsLiveModels);
 
-        var mainDbMatches = new List<MainDBMatch>
+        var mainDbMatches = new List<MainDbMatch>
             {
                 new() { MatchId = 202, OfferLive = true, SubType = 1900, ParentId = 200 },
                 new() { MatchId = 201, OfferLive = false, SubType = 1910, ParentId = 200 },
                 new() { MatchId = 200, OfferLive = true, SubType = null, ParentId = null },
                 new() { MatchId = 300, OfferLive = true, SubType = null, ParentId = null }
             };
-        repository.GetOfferLiveStatusFromMainDB(Arg.Any<string>()).Returns(mainDbMatches);
+        repository.GetOfferLiveStatusFromMainDb(Arg.Any<string>()).Returns(mainDbMatches);
 
         var cacheManipulator = Substitute.For<CacheManipulator>();
         cacheManipulator.GetDeletedMatches().Returns(new List<MatchKickoffDate> { new() { MatchId = 3, MinorBettypeId = 1 } });
@@ -55,11 +56,22 @@ public class SyncIsLiveServiceUnitTests
         // Act
         await syncIsLiveService.Sync(DateTime.Today, DateTime.Today);
 
+        var expectedLiveMatch = new List<ValueTuple<int, int?>>
+        {
+            new(1, 1900)
+        };
+        var expectedNoneLiveMatch = new List<ValueTuple<int, int?>>
+        {
+            new(2, null),
+            new(3, 0)
+        };
+        
+        var compareLogic = new CompareLogic();
         // Assert
         await liveMatchApi.Received().SetLiveMatches(infositeSettings.Value.InfositeApi, Arg.Compat.Is<IEnumerable<(int, int?)>>(
-            x => x.Count() == 1 && x.FirstOrDefault().Item1 == 1 && x.FirstOrDefault().Item2 == 1900));
+            x => compareLogic.Compare(x, expectedLiveMatch).AreEqual));
         await liveMatchApi.Received().SetNonLiveMatches(infositeSettings.Value.InfositeApi, Arg.Compat.Is<IEnumerable<(int, int?)>>(
-            x => x.Count() == 2 && x.FirstOrDefault().Item1 == 2 && x.LastOrDefault().Item1 == 3));
+            x => compareLogic.Compare(x, expectedNoneLiveMatch).AreEqual));
         await cacheManipulator.Received().SaveDeletedMatches(Arg.Compat.Any<List<(int, int?)>>());
     }
 }

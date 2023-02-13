@@ -2,7 +2,7 @@
 
 using Fanex.Data.Repository;
 
-public class QueryUnmappingOWPMatchCriteria : CriteriaBase
+public class QueryUnmappingOwpMatchCriteria : CriteriaBase
 {
     public DateTime FromDate { get; set; }
 

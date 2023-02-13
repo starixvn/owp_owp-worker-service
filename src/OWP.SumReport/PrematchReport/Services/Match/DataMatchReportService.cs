@@ -43,14 +43,14 @@ public class DataMatchReportServiceImp : DataMatchReportService
         return dataReport;
     }
 
-    private static int GetTotalAssignment(IList<LeagueDetailInfo> leagueDetailInfos, IList<TotalDataMatch> totalDataMatches)
+    private static int GetTotalAssignment(IEnumerable<LeagueDetailInfo> leagueDetailInfos, IList<TotalDataMatch> totalDataMatches)
     {
         var totalAssignment = 0;
-        var leagueInfoByLeagueId = leagueDetailInfos.GroupBy(x => x.OWPLeagueId)
+        var leagueInfoByLeagueId = leagueDetailInfos.GroupBy(x => x.OwpLeagueId)
             .ToDictionary(x => x.Key, x => x.ToList());
         foreach (var item in leagueInfoByLeagueId.Keys)
         {
-            var totalMatch = totalDataMatches.Where(x => x.OWPLeagueId == item);
+            var totalMatch = totalDataMatches.Where(x => x.OwpLeagueId == item).ToList();
             if (totalMatch.Any())
             {
                 totalAssignment += leagueInfoByLeagueId[item].Any(x => x.IsDay)
@@ -66,20 +66,20 @@ public class DataMatchReportServiceImp : DataMatchReportService
     {
         var fromDate = eventDate.AddHours(12);
         var fromDateNightShift = startNightShift.HasValue ?
-            CalculateQueryDateTime(startNightShift, eventDate) : fromDate;
+            CalculateQueryDateTime(startNightShift.Value, eventDate) : fromDate;
         var toDate = eventDate.AddDays(1).AddHours(11).AddMinutes(59).AddSeconds(59);
 
         return await repository.GetTotalMatchByLeagueIds(preMatchIds, fromDate, toDate, fromDateNightShift);
     }
 
-    private static DateTime CalculateQueryDateTime(TimeSpan? time, DateTime eventDate)
+    private static DateTime CalculateQueryDateTime(TimeSpan time, DateTime eventDate)
     {
-        if (time.Value.CompareTo(new TimeSpan(0, 0, 0)) >= 0 && time.Value.CompareTo(new TimeSpan(11, 59, 59)) <= 0)
+        if (time.CompareTo(new TimeSpan(0, 0, 0)) >= 0 && time.CompareTo(new TimeSpan(11, 59, 59)) <= 0)
         {
-            return eventDate.Date.AddDays(1).Add(time.Value);
+            return eventDate.Date.AddDays(1).Add(time);
         }
 
-        return eventDate.Date.Add(time.Value);
+        return eventDate.Date.Add(time);
     }
 
     public async Task InsertMatchReport(IList<DataReport> dataReports)

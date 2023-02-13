@@ -52,6 +52,6 @@ public static class WatchBetBuilder
 
         var existsValue = options.TryGetValue(src.Value, out var streamName);
 
-        return existsValue ? (streamName ?? "") : $"{src.Value}";
+        return existsValue ? streamName ?? "" : $"{src.Value}";
     }
 }

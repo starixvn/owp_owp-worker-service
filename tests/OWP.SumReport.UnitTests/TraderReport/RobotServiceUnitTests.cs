@@ -32,7 +32,7 @@ public class RobotServiceUnitTests
         DeepAssert.Equal(expected, actual);
     }
 
-    private List<RobotX3ByUser> CreateX3FakeData()
+    private static List<RobotX3ByUser> CreateX3FakeData()
     {
         var item1 = new RobotX3ByUser
         {
@@ -66,7 +66,7 @@ public class RobotServiceUnitTests
             };
     }
 
-    private List<RobotX5ByUser> CreateX5FakeData()
+    private static List<RobotX5ByUser> CreateX5FakeData()
     {
         var item1 = new RobotX5ByUser
         {
@@ -94,7 +94,7 @@ public class RobotServiceUnitTests
             };
     }
 
-    private List<RobotByByUser> CreateExpectedData()
+    private static List<RobotByByUser> CreateExpectedData()
     {
         var item1 = new RobotByByUser
         {

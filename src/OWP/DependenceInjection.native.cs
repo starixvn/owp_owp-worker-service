@@ -5,7 +5,7 @@ using Services;
 
 public static class DependenceInjection
 {
-    public static IServiceCollection AddOWPCoreServices(this IServiceCollection services)
+    public static IServiceCollection AddOwpCoreServices(this IServiceCollection services)
     {
         services.AddTransient<HttpHandler, HttpHandlerImp>();
 

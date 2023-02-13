@@ -57,7 +57,7 @@ public class RobotX3ServiceImp : RobotX3Service
             {
                 EventDateTime = i.EventDateTime,
                 MatchGroup = 1,
-                OWPMatchId = i.OWPMatchId,
+                OwpMatchId = i.OwpMatchId,
                 UserId = i.UserId
             })
             .OrderBy(i => i.EventDateTime)

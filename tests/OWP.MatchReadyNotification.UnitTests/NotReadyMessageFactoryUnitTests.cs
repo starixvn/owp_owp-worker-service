@@ -45,7 +45,7 @@ public class NotReadyMessageFactoryUnitTests
         Assert.Equal(expected, actual);
     }
 
-    private Dictionary<int, List<Assignee>> GetLeadersOfSession()
+    private static Dictionary<int, List<Assignee>> GetLeadersOfSession()
     {
         var leader = new Assignee
         {
@@ -85,7 +85,7 @@ public class NotReadyMessageFactoryUnitTests
         return leadersByUserId;
     }
 
-    private AssignmentSnapshot DataInput()
+    private static AssignmentSnapshot DataInput()
     {
         var match = new MatchInfo
         {
@@ -100,10 +100,10 @@ public class NotReadyMessageFactoryUnitTests
         {
             MatchId = 2345,
             MatchNo = "1234",
-            Home = "LiverPool-Coners",
-            Away = "Arsenal-Coners",
+            Home = "LiverPool-Corners",
+            Away = "Arsenal-Corners",
             ParentMatchId = 3456,
-            LeagueName = "PremierLeague-Coners"
+            LeagueName = "PremierLeague-Corners"
         };
 
         var matches = new Dictionary<int, MatchInfo> { { 1234, match }, { 2345, match2 } };
@@ -118,7 +118,7 @@ public class NotReadyMessageFactoryUnitTests
         return snapshot;
     }
 
-    private Dictionary<int, List<MatchAssignment>> GetAssignment()
+    private static Dictionary<int, List<MatchAssignment>> GetAssignment()
     {
         var assignment = new MatchAssignment
         {
@@ -148,7 +148,7 @@ public class NotReadyMessageFactoryUnitTests
         return assignmentByMatchId;
     }
 
-    private List<MessageModel> MessagesExpected()
+    private static List<MessageModel> MessagesExpected()
     {
         var messageModel = new MessageModel
         {
@@ -165,7 +165,7 @@ public class NotReadyMessageFactoryUnitTests
             IsImportant = true,
             IsWatcher = true,
             MessageType = 0,
-            MessageContent = "Curry are NOT READY for match #1234 - PremierLeague-Coners - LiverPool-Coners -vs- Arsenal-Coners - K.O Time 12:00 AM",
+            MessageContent = "Curry are NOT READY for match #1234 - PremierLeague-Corners - LiverPool-Corners -vs- Arsenal-Corners - K.O Time 12:00 AM",
             ReceivedUserIds = "33",
             ReceivedUserNames = "Giannis"
         };

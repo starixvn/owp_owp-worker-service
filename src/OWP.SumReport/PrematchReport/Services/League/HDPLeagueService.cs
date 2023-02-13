@@ -2,18 +2,18 @@
 
 using Constants;
 
-public interface HDPLeagueService
+public interface HdpLeagueService
 {
-    Task BuildSingleHDPLeagueReport(DateTime eventDate);
+    Task BuildSingleHdpLeagueReport(DateTime eventDate);
 }
 
-public class HDPLeagueServiceImp : HDPLeagueService
+public class HdpLeagueServiceImp : HdpLeagueService
 {
     private readonly DataReportService dataReportService;
 
     private readonly Repository repository;
 
-    public HDPLeagueServiceImp(
+    public HdpLeagueServiceImp(
         DataReportService dataReportService,
         Repository repository)
     {
@@ -21,10 +21,10 @@ public class HDPLeagueServiceImp : HDPLeagueService
         this.repository = repository;
     }
 
-    public async Task BuildSingleHDPLeagueReport(DateTime eventDate)
+    public async Task BuildSingleHdpLeagueReport(DateTime eventDate)
     {
-        var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constant.HDPID);
-        var dataReport = dataReportService.BuildSingleLeagueGroupReport(leagues, Constant.HDPID);
+        var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constant.Hdpid);
+        var dataReport = dataReportService.BuildSingleLeagueGroupReport(leagues, Constant.Hdpid);
         await dataReportService.InsertLeagueReport(dataReport);
     }
 }

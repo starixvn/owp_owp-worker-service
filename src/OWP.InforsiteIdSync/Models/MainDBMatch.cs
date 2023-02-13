@@ -1,6 +1,6 @@
 ﻿namespace OWP.InfositeIdSync.Models;
 
-public class MainDBMatch
+public class MainDbMatch
 {
     public int MatchId { get; set; } // AdminSiteMatchId
 

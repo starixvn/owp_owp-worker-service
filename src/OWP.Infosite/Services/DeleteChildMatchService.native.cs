@@ -51,11 +51,11 @@ public class SyncDeleteChildMatchServiceImp : SyncDeleteChildMatchService
         await repository.ExecuteAsync(criteria);
     }
 
-    private MappedDeletedChildMatch BuildMappedDeletedChildMatch(DeleteChildMatch childMatch)
+    private static MappedDeletedChildMatch BuildMappedDeletedChildMatch(DeleteChildMatch childMatch)
     {
         var (representativeSubtype, _) = ChildMatchHelper.GetBetTypeIdAndRepresentativeSubtype(childMatch.sub_type);
 
-        return new()
+        return new MappedDeletedChildMatch
         {
             InfoSiteMatchId = childMatch.match_id,
             SubType = representativeSubtype,

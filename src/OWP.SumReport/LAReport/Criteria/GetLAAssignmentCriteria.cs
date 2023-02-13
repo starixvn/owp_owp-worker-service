@@ -2,7 +2,7 @@
 
 using Fanex.Data.Repository;
 
-public class GetLAAssignmentCriteria : CriteriaBase
+public class GetLaAssignmentCriteria : CriteriaBase
 {
     public DateTime FromDate { get; set; }
 
@@ -13,7 +13,7 @@ public class GetLAAssignmentCriteria : CriteriaBase
     public override bool IsValid() => true;
 }
 
-public class GetOldAndNewLAAssignmentCriteria : CriteriaBase // from old and new table
+public class GetOldAndNewLaAssignmentCriteria : CriteriaBase // from old and new table
 {
     public DateTime FromDate { get; set; }
 

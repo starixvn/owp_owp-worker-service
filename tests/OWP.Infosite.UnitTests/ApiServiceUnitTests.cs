@@ -22,7 +22,7 @@ public class ApiServiceUnitTests
 
     private readonly ILogger logger;
 
-    private const int expectedNumberOfMatchsAllDays = 1;
+    private const int ExpectedNumberOfMatchsAllDays = 1;
 
     private readonly DateTime fromDate = new(2018, 1, 2);
 
@@ -84,7 +84,7 @@ public class ApiServiceUnitTests
 
         // Assert
         var actualNumberOfMatchs = actualResult.Count;
-        Assert.Equal(expectedNumberOfMatchsAllDays, actualNumberOfMatchs);
+        Assert.Equal(ExpectedNumberOfMatchsAllDays, actualNumberOfMatchs);
     }
 
     [Fact]
@@ -156,7 +156,7 @@ public class ApiServiceUnitTests
 
         // Assert
         var actualNumberOfMatchs = actualResult.Count;
-        Assert.Equal(expectedNumberOfMatchsAllDays, actualNumberOfMatchs);
+        Assert.Equal(ExpectedNumberOfMatchsAllDays, actualNumberOfMatchs);
     }
 
     [Fact]

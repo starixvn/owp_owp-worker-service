@@ -143,9 +143,7 @@ public class Event
 
     private DateTime GetEventDateTime()
     {
-        var exInfoGameDate = infositeMatch.ext_info?.game_date != null && infositeMatch.ext_info.game_date.HasValue
-            ? infositeMatch.ext_info.game_date.Value
-            : MinDate;
+        var exInfoGameDate = infositeMatch.ext_info?.game_date ?? MinDate;
 
         return exInfoGameDate.ToUtc8();
     }

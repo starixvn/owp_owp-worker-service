@@ -59,7 +59,7 @@ public class MatchHelperUnitTests
                 }
             };
 
-        var actual = MatchHelper.GetNewLinkedMatches(GetUnlinkedOWPMatches(), GetAdminSiteMatches());
+        var actual = MatchHelper.GetNewLinkedMatches(GetUnlinkedOwpMatches().ToList(), GetAdminSiteMatches().ToList());
 
         DeepAssert.Equal(expected, actual.ToList());
     }
@@ -80,11 +80,11 @@ public class MatchHelperUnitTests
                 }
             };
 
-        var actual = MatchHelper.GetRemovedMatches(GetLinkedOWPMatches(), GetAdminSiteMatches());
+        var actual = MatchHelper.GetRemovedMatches(GetLinkedOwpMatches().ToList(), GetAdminSiteMatches().ToList());
         DeepAssert.Equal(expected, actual.ToList());
     }
 
-    private IEnumerable<Match> GetUnlinkedOWPMatches()
+    private static IEnumerable<Match> GetUnlinkedOwpMatches()
         => new List<Match>
         {
                 new()
@@ -129,7 +129,7 @@ public class MatchHelperUnitTests
                 }
         };
 
-    private IEnumerable<Match> GetLinkedOWPMatches()
+    private static IEnumerable<Match> GetLinkedOwpMatches()
         => new List<Match>
         {
                 new()
@@ -164,7 +164,7 @@ public class MatchHelperUnitTests
                 }
         };
 
-    private IEnumerable<Match> GetAdminSiteMatches()
+    private static IEnumerable<Match> GetAdminSiteMatches()
         => new List<Match>
         {
                 new()

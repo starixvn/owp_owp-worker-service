@@ -98,7 +98,7 @@ public class LinkLeagueAndMatchUnitTests
         {
             new() { TeamId = 11, EventDateTime = new DateTime(2022, 10, 20)},
             new() { TeamId = 11, EventDateTime = new DateTime(2022, 10, 21)},
-            new() { TeamId = 22, EventDateTime = new DateTime(2022, 10, 20)},
+            new() { TeamId = 22, EventDateTime = new DateTime(2022, 10, 20)}
         };
         repository.GetTeamInfoInTimeRange(Arg.Any<DateTime>(), Arg.Any<DateTime>()).Returns(teamInfo);
         var timeRange = new TimeRange

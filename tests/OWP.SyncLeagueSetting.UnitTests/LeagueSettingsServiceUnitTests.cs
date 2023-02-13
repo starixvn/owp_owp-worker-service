@@ -1,9 +1,10 @@
-namespace OWP.SyncLeagueSettings.UnitTests;
+namespace OWP.SyncLeagueSetting.UnitTests;
 
-using Constants;
-using Models;
 using NSubstitute;
-using Services;
+using OWP.SyncLeagueSettings.Constants;
+using SyncLeagueSettings.Models;
+using OWP.SyncLeagueSettings.Services;
+using SyncLeagueSettings;
 using Xunit;
 using Xunit.Asserts.Compare;
 
@@ -46,12 +47,12 @@ public class LeagueSettingsServiceUnitTests
         var tvCondition = new List<TvCondition>
         {
             new() { Label="TV", Value="TV"},
-            new() { Label="BET(TV)", Value="BET(TV)"},
+            new() { Label="BET(TV)", Value="BET(TV)"}
         };
         var leagueSettingResponse = new List<InsertLeagueSettingsResponse>
         {
             new() { HasTv=true, LeagueSettingId=1},
-            new() { HasTv=false, LeagueSettingId=2},
+            new() { HasTv=false, LeagueSettingId=2}
         };
         repository.InsertNewLeaguesSettings(Arg.Any<List<LeagueSetting>>()).ReturnsForAnyArgs(leagueSettingResponse);
         repository.GetAllTvConditions().Returns(tvCondition);
@@ -60,19 +61,19 @@ public class LeagueSettingsServiceUnitTests
         await service.InsertNewLeagueSettings(date);
     }
 
-    private LeagueSettingsService InitLeagueSettingsService()
+    private static LeagueSettingsService InitLeagueSettingsService()
     {
         var matches = MockMatches();
         var matchSettings = MockMatchSettings();
         var queryRepository = Substitute.For<LeagueSettingsRepository>();
-        queryRepository.GetMatchesAndSettings(new DateTime(2021, 04, 12, 02, 00, 00)).Returns(Tuple.Create(matches, matchSettings));
+        queryRepository.GetMatchesAndSettings(new DateTime(2021, 04, 12, 02, 00, 00)).Returns(Tuple.Create(matches.AsEnumerable(), matchSettings.AsEnumerable()));
         queryRepository.GetAllTvConditions().Returns(MockTvConditions());
 
         var syncService = new LeagueSettingsServiceImp(queryRepository);
         return syncService;
     }
 
-    private IEnumerable<TvCondition> MockTvConditions()
+    private static IList<TvCondition> MockTvConditions()
         => new List<TvCondition>
         {
             new()
@@ -92,7 +93,7 @@ public class LeagueSettingsServiceUnitTests
             }
         };
 
-    private IEnumerable<Match> MockMatches()
+    private static IList<Match> MockMatches()
         => new List<Match>
         {
             new()
@@ -142,10 +143,10 @@ public class LeagueSettingsServiceUnitTests
                 OwpLeagueId = 54,
                 Tv = null,
                 MatchSettings = new List<MatchSetting>()
-            },
+            }
         };
 
-    private IEnumerable<MatchSetting> MockMatchSettings()
+    private static IEnumerable<MatchSetting> MockMatchSettings()
         => new List<MatchSetting>
         {
             new()
@@ -234,7 +235,7 @@ public class LeagueSettingsServiceUnitTests
             }
         };
 
-    private IList<LeagueSetting> MockLeagueSettings()
+    private static IEnumerable<LeagueSetting> MockLeagueSettings()
         => new List<LeagueSetting>
         {
             new()

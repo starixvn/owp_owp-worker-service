@@ -11,7 +11,7 @@ public static class WorkingShiftHelper
         {
             <= 14 => time.Hours,
             >= 15 and <= 39 => (decimal)(time.Hours + 0.5),
-            _ => time.Hours + 1,
+            _ => time.Hours + 1
         };
     }
 }

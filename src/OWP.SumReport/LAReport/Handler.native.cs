@@ -9,10 +9,10 @@ public interface Handler
 
 public class HandlerImp : Handler
 {
-    private readonly LARepository repository;
+    private readonly LaRepository repository;
     private readonly CalculationService calculationService;
 
-    public HandlerImp(LARepository repository, CalculationService calculationService)
+    public HandlerImp(LaRepository repository, CalculationService calculationService)
     {
         this.repository = repository;
         this.calculationService = calculationService;

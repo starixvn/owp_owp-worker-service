@@ -23,6 +23,7 @@ public class DataReportBuilderServiceImp : DataReportService
         var group = leagues
             .GroupBy(league => new { league.UserId, league.GroupId, league.EventDate })
             .ToDictionary(x => x.Key, x => x.Count());
+
         foreach (var key in group.Keys)
         {
             var amount = group[key];

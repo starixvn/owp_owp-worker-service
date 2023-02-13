@@ -23,7 +23,7 @@ public static class Constant
     public static readonly IImmutableDictionary<int, string> StreamNameSrc2InfoSite = new Dictionary<int, string>
     {
         {0, string.Empty },
-        {11, "Glive"},
+        {11, "Glive"}
     }.ToImmutableDictionary();
 
     public const string DateTimeFormat = "yyyy-MM-dd";

@@ -18,5 +18,5 @@ public static class BettypeConst
 
     public const int LastGoalKick = -101;
 
-    public const int SecondHaft1stGoalKick = -102;
+    public const int SecondHaft1StGoalKick = -102;
 }

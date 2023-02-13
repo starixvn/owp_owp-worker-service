@@ -2,7 +2,7 @@
 
 using Fanex.Data.Repository;
 
-public class GetMatchesFromMainDBCriteria : CriteriaBase
+public class GetMatchesFromMainDbCriteria : CriteriaBase
 {
     public string AdminSiteIds { get; set; }
 

@@ -30,15 +30,15 @@ public class GeneralMatch
     public string MatchNo { get; set; }
     public string MatchOffer { get; set; }
     public string MatchStatus { get; set; }
-    public string NoOfHDP { get; set; }
+    public string NoOfHdp { get; set; }
     public string Note { get; set; }
     public string Phone { get; set; }
     public string Provider { get; set; }
     public string OtherProvider { get; set; }
     public string Remark { get; set; }
     public string Round { get; set; }
-    public string TV { get; set; }
-    public string WB { get; set; }
+    public string Tv { get; set; }
+    public string Wb { get; set; }
     public string Website1 { get; set; }
     public string Website2 { get; set; }
     public string Website3 { get; set; }

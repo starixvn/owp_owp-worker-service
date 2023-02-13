@@ -16,7 +16,7 @@ public class AssignmentOvertimeCalculatorUnitTests
                 new()
                 {
                     UserId = 1,
-                    OWPMatchId = 1,
+                    OwpMatchId = 1,
                     ParentMatchId = null,
                     MinorBettypeId = null,
                     Bettype = 1,
@@ -25,7 +25,7 @@ public class AssignmentOvertimeCalculatorUnitTests
                 new()
                 {
                     UserId = 1,
-                    OWPMatchId = 1,
+                    OwpMatchId = 1,
                     ParentMatchId = null,
                     MinorBettypeId = null,
                     Bettype = 3,
@@ -34,7 +34,7 @@ public class AssignmentOvertimeCalculatorUnitTests
                 new()
                 {
                     UserId = 1,
-                    OWPMatchId = 2,
+                    OwpMatchId = 2,
                     ParentMatchId = null,
                     MinorBettypeId = null,
                     Bettype = 1,
@@ -43,7 +43,7 @@ public class AssignmentOvertimeCalculatorUnitTests
                 new()
                 {
                     UserId = 1,
-                    OWPMatchId = 1880087,
+                    OwpMatchId = 1880087,
                     ParentMatchId = 2,
                     MinorBettypeId = -88,
                     Bettype = 1,
@@ -67,7 +67,7 @@ public class AssignmentOvertimeCalculatorUnitTests
                 new()
                 {
                     UserId = 1,
-                    OWPMatchId = 1,
+                    OwpMatchId = 1,
                     ParentMatchId = null,
                     MinorBettypeId = null,
                     Bettype = 1,
@@ -76,7 +76,7 @@ public class AssignmentOvertimeCalculatorUnitTests
                 new()
                 {
                     UserId = 1,
-                    OWPMatchId = 1,
+                    OwpMatchId = 1,
                     ParentMatchId = null,
                     MinorBettypeId = null,
                     Bettype = 3,
@@ -85,7 +85,7 @@ public class AssignmentOvertimeCalculatorUnitTests
                 new()
                 {
                     UserId = 1,
-                    OWPMatchId = 2,
+                    OwpMatchId = 2,
                     ParentMatchId = null,
                     MinorBettypeId = null,
                     Bettype = 1,
@@ -94,7 +94,7 @@ public class AssignmentOvertimeCalculatorUnitTests
                 new()
                 {
                     UserId = 1,
-                    OWPMatchId = 1880087,
+                    OwpMatchId = 1880087,
                     ParentMatchId = 2,
                     MinorBettypeId = -88,
                     Bettype = 1,
@@ -112,10 +112,10 @@ public class AssignmentOvertimeCalculatorUnitTests
 
     [Theory]
     [InlineData("SABA CLUB FRIENDLY Virtual PES 21 - 15 Mins Play", BetType.FullTimeBetType.Handicap, " ET/PK", 45)]
-    [InlineData("SABA INTERNATIONAL FRIENDLY Virtual PES 21 - 20 Mins Play", BetType.FullTimeBetType.FT1X2, "PK only", 45)]
-    [InlineData("SABA CLUB FRIENDLY Virtual FIFA 21 - 16 Mins Play", BetType.FullTimeBetType.FT1X2, "", 45)]
-    [InlineData("SABA CLUB FRIENDLY Virtual FIFA 20 FUTSAL - 6 Mins Play", BetType.FullTimeBetType.FT1X2, " ET/PK", 60)]
-    [InlineData("M88 SABA SPANISH LEAGUE Virtual FIFA 21 Season 8 - 16 Mins Play", BetType.FullTimeBetType.FT1X2, "PK", 60)]
+    [InlineData("SABA INTERNATIONAL FRIENDLY Virtual PES 21 - 20 Mins Play", BetType.FullTimeBetType.Ft1X2, "PK only", 45)]
+    [InlineData("SABA CLUB FRIENDLY Virtual FIFA 21 - 16 Mins Play", BetType.FullTimeBetType.Ft1X2, "", 45)]
+    [InlineData("SABA CLUB FRIENDLY Virtual FIFA 20 FUTSAL - 6 Mins Play", BetType.FullTimeBetType.Ft1X2, " ET/PK", 60)]
+    [InlineData("M88 SABA SPANISH LEAGUE Virtual FIFA 21 Season 8 - 16 Mins Play", BetType.FullTimeBetType.Ft1X2, "PK", 60)]
     [InlineData("SABA ELITE FRIENDLY Virtual PES 21 - 5 Mins Play", BetType.FullTimeBetType.Handicap, "PK", 60)]
     [InlineData("SABA ELITE FRIENDLY Virtual PES 21 - 5 Mins Play", BetType.FullTimeBetType.Handicap, " ET/PK", 60)]
     [InlineData("SABA ELITE FRIENDLY Virtual PES 21 - 5 Mins Play - FAST MARKET", BetType.FullTimeBetType.Handicap, " ET/PK", 60)]
@@ -128,7 +128,7 @@ public class AssignmentOvertimeCalculatorUnitTests
         var mockAssignment = new Assignment
         {
             Bettype = betType,
-            OWPLeagueName = leagueName,
+            OwpLeagueName = leagueName,
             EventDateTime = new DateTime(2021, 11, 04, 12, 0, 0),
             Remark = remark
         };
@@ -155,7 +155,7 @@ public class AssignmentOvertimeCalculatorUnitTests
         var mockAssignment = new Assignment
         {
             Bettype = betType,
-            OWPLeagueName = leagueName,
+            OwpLeagueName = leagueName,
             EventDateTime = new DateTime(2021, 11, 04, 12, 0, 0),
             Remark = remark
         };

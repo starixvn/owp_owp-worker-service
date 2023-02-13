@@ -17,10 +17,10 @@ public interface RabbitMqClient
 public class RabbitMqClientImp : RabbitMqClient
 {
     private IModel channel;
-    private readonly RabbitMQSetting setting;
+    private readonly RabbitMqSetting setting;
     private readonly ILogger logger;
 
-    public RabbitMqClientImp(IOptions<RabbitMQSetting> options, ILogger logger)
+    public RabbitMqClientImp(IOptions<RabbitMqSetting> options, ILogger logger)
     {
         setting = options.Value;
         this.logger = logger;

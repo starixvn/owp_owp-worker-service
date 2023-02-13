@@ -48,7 +48,7 @@ public class SyncChildMatchServiceUnitTests
                 EventDateTime = new DateTime(2022,04,15,9,0,0),
                 UpdatedTime = new DateTime(2022,04,15,9,0,0),
                 MinorBettypeId = -4,
-                SubType = 2100,
+                SubType = 2100
             }
         };
 
@@ -69,7 +69,7 @@ public class SyncChildMatchServiceUnitTests
                 game_date = new DateTime(2022,04,15,1,0,0),
                 sub_type = 2101,
                 main_type = 1,
-                stamp = new DateTime(2022,04,15,1,0,0),
+                stamp = new DateTime(2022,04,15,1,0,0)
             },
             new()
             {
@@ -80,7 +80,7 @@ public class SyncChildMatchServiceUnitTests
                 game_date = new DateTime(2022,04,15),
                 sub_type = null,
                 main_type = 1,
-                stamp = new DateTime(2022,04,15),
+                stamp = new DateTime(2022,04,15)
             },
             new()
             {
@@ -91,7 +91,7 @@ public class SyncChildMatchServiceUnitTests
                 game_date = new DateTime(2022,04,15),
                 sub_type = 0,
                 stamp = new DateTime(2022,04,15),
-                main_type = 1,
+                main_type = 1
             },
             new()
             {
@@ -138,7 +138,7 @@ public class SyncChildMatchServiceUnitTests
                 main_type = 111
             },
             new() { match_id = 111, home_name = "League A (ET)" },
-            new() { match_id = 222, home_name = "League B (PEN)" },
+            new() { match_id = 222, home_name = "League B (PEN)" }
         };
 
     public IList<MappedChildMatch> MockExpected()

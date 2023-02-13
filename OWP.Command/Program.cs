@@ -73,16 +73,16 @@ services.AddSingleton<IUMRestClient, UMRestClient>();
 
 #region AddRabbitMQ
 
-var settings = new RabbitMQSetting
+var settings = new RabbitMqSetting
 {
     Hosting = "localhost",
     VirtualHost = "/",
     UserName = "guest",
     Password = "guest",
     Port = 5672,
-    RequestQueue = "OWP.Request.Queue",
+    RequestQueue = "OWP.Request.Queue"
 };
-IOptions<RabbitMQSetting> appSettingsOptions = Options.Create(settings);
+var appSettingsOptions = Options.Create(settings);
 var rabbitService = new RabbitMqClientImp(appSettingsOptions, new Logger());
 rabbitService.ConnectRabbitMq();
 
@@ -92,7 +92,7 @@ services.AddSingleton<RabbitMqClient>(rabbitService);
 
 #region AddDependenceInjection
 services.AddInfositeServices(configuration);
-services.AddOWPCoreServices();
+services.AddOwpCoreServices();
 services.AddInfositeIdSyncServices();
 services.AddLinkLeagueAndTeamServices();
 services.AddMatchReadyNotificationServices();
@@ -103,4 +103,7 @@ services.AddArchiveDataServices();
 #endregion
 
 var apiService = services.BuildServiceProvider().GetService<SyncChildMatchService>();
-await apiService.Sync(new DateTime(2022, 12, 05)).ConfigureAwait(false);
+if (apiService != null)
+{
+    await apiService.Sync(new DateTime(2022, 12, 05)).ConfigureAwait(false);
+}

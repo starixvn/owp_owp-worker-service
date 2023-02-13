@@ -12,14 +12,14 @@ public class EditEventGeneratorImp : EditEventGenerator
 {
     public IEnumerable<EditEvent> GetChangedOfferLiveMatches(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> owpMatches)
     {
-        var owpBasketballMatch = FilterBasketballMatch(owpMatches);
-        var adminSiteBasketballMatch = FilterBasketballMatch(adminSiteMatches);
+        var owpBasketballMatch = FilterBasketballMatch(owpMatches).ToList();
+        var adminSiteBasketballMatch = FilterBasketballMatch(adminSiteMatches).ToList();
         var changedAdminSites = GetChangedLiveAdminSites(adminSiteBasketballMatch, owpBasketballMatch);
 
         return changedAdminSites;
     }
 
-    public IEnumerable<EditEvent> GetChangedLiveAdminSites(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> owpMatches)
+    public IEnumerable<EditEvent> GetChangedLiveAdminSites(IList<Match> adminSiteMatches, IList<Match> owpMatches)
     {
         var owpMatchHasAdminSiteId = owpMatches.Where(x => x.AdminSiteMatchId.HasValue).Distinct();
         foreach (var match in owpMatchHasAdminSiteId)

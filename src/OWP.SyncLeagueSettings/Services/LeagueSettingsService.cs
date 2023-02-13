@@ -9,7 +9,7 @@ public interface LeagueSettingsService
 {
     Task InsertNewLeagueSettings(DateTime date);
 
-    List<LeagueSetting> CreateNewLeaguesSettings(DateTime date, IEnumerable<Match> matches, IEnumerable<TvCondition> tvConditions);
+    List<LeagueSetting> CreateNewLeaguesSettings(DateTime date, IList<Match> matches, IList<TvCondition> tvConditions);
 }
 
 public class LeagueSettingsServiceImp : LeagueSettingsService
@@ -59,14 +59,14 @@ public class LeagueSettingsServiceImp : LeagueSettingsService
     public async Task InsertNewLeagueSettings(DateTime date)
     {
         var matchesAndSettings = await repository.GetMatchesAndSettings(date);
-        var matches = matchesAndSettings.Item1;
+        var matches = matchesAndSettings.Item1.ToList();
 
         foreach (var match in matches)
         {
             match.MatchSettings = matchesAndSettings.Item2.Where(x => x.OwpMatchId == match.OwpMatchId).ToList();
         }
 
-        var tvConditions = await repository.GetAllTvConditions();
+        var tvConditions = (await repository.GetAllTvConditions()).ToList();
         var leagueSettings = CreateNewLeaguesSettings(date, matches, tvConditions);
 
         var insertLeagueSettingsResponses = await repository.InsertNewLeaguesSettings(leagueSettings);
@@ -76,14 +76,14 @@ public class LeagueSettingsServiceImp : LeagueSettingsService
             var leagueSettingCondition = new LeagueSettingCondition
             {
                 HasTv = leagueSetting.HasTv,
-                LeagueSettingId = leagueSetting.LeagueSettingId,
+                LeagueSettingId = leagueSetting.LeagueSettingId
             };
 
             await repository.UpdateLeagueSettingFullCondition(leagueSettingCondition);
         }
     }
 
-    public List<LeagueSetting> CreateNewLeaguesSettings(DateTime date, IEnumerable<Match> matches, IEnumerable<TvCondition> tvConditions)
+    public List<LeagueSetting> CreateNewLeaguesSettings(DateTime date, IList<Match> matches, IList<TvCondition> tvConditions)
     {
         var leagueIds = matches.Select(x => x.OwpLeagueId).Distinct();
         var monday = FindLastWeekDay(date, DayOfWeek.Monday); //12PM GMT+8
@@ -91,8 +91,8 @@ public class LeagueSettingsServiceImp : LeagueSettingsService
         var saturday = FindLastWeekDay(date, DayOfWeek.Saturday); //12PM GMT+8
         var sunday = FindLastWeekDay(date, DayOfWeek.Sunday).AddDays(1).AddMinutes(-1); //11:59AM GMT+8
 
-        var weekdayMatches = matches.Where(x => MatchHelpers.IsInRangeMatch(x, monday, friday));
-        var weekendMatches = matches.Where(x => MatchHelpers.IsInRangeMatch(x, saturday, sunday));
+        var weekdayMatches = matches.Where(x => MatchHelpers.IsInRangeMatch(x, monday, friday)).ToList();
+        var weekendMatches = matches.Where(x => MatchHelpers.IsInRangeMatch(x, saturday, sunday)).ToList();
 
         var result = new List<LeagueSetting>();
 
@@ -129,11 +129,13 @@ public class LeagueSettingsServiceImp : LeagueSettingsService
                 result.Add(withTvLeagueSettings);
             }
 
-            if (largestMaxbetWeekdayMatchWithoutTv != null || largestMaxbetWeekendMatchWithoutTv != null)
+            if (largestMaxbetWeekdayMatchWithoutTv == null && largestMaxbetWeekendMatchWithoutTv == null)
             {
-                var withoutTvLeagueSettings = CreateLeagueSetting(largestMaxbetWeekdayMatchWithoutTv, largestMaxbetWeekendMatchWithoutTv, false);
-                result.Add(withoutTvLeagueSettings);
+                continue;
             }
+
+            var withoutTvLeagueSettings = CreateLeagueSetting(largestMaxbetWeekdayMatchWithoutTv, largestMaxbetWeekendMatchWithoutTv, false);
+            result.Add(withoutTvLeagueSettings);
         }
 
         return result;

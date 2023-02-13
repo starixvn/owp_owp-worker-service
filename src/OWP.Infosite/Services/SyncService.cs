@@ -33,7 +33,7 @@ public class SyncServiceImp
         ICache cacheService,
         IDynamicRepository repository)
     {
-        this.DateTimeService = dateTimeService;
+        DateTimeService = dateTimeService;
         this.apiService = apiService;
         this.repository = repository;
         this.cacheService = cacheService;
@@ -61,7 +61,7 @@ public class SyncServiceImp
         }
     }
 
-    private async Task SaveEvents(List<Event> events)
+    private async Task SaveEvents(IEnumerable<Event> events)
     {
         var xml = XmlConverter.Serialize(events);
         var criteria = new PushInfoSiteMatchCommand

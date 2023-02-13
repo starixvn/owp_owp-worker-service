@@ -5,27 +5,27 @@ using Fanex.Data.Repository;
 using Models;
 using Olympus.Xml;
 
-public interface LARepository
+public interface LaRepository
 {
-    Task Update(DateTime eventDate, IEnumerable<LAReportModel> laReportModels);
+    Task Update(DateTime eventDate, IEnumerable<LaReportModel> laReportModels);
 
-    Task<IEnumerable<Assignment>> GetLAAssignment(DateTime eventDate, bool isGenerateData);
+    Task<IEnumerable<Assignment>> GetLaAssignment(DateTime eventDate, bool isGenerateData);
 
     Task<Dictionary<int, string>> GetUserSection();
 }
 
-public class LARepositoryImp : LARepository
+public class LaRepositoryImp : LaRepository
 {
     private readonly IDynamicRepository repository;
 
-    public LARepositoryImp(IDynamicRepository repository)
+    public LaRepositoryImp(IDynamicRepository repository)
     {
         this.repository = repository;
     }
 
-    public async Task Update(DateTime eventDate, IEnumerable<LAReportModel> laReportModels)
+    public async Task Update(DateTime eventDate, IEnumerable<LaReportModel> laReportModels)
     {
-        var command = new SumLAReportCommand
+        var command = new SumLaReportCommand
         {
             EventDate = eventDate,
             Xml = XmlConverter.Serialize(laReportModels)
@@ -34,14 +34,14 @@ public class LARepositoryImp : LARepository
         await repository.ExecuteAsync(command);
     }
 
-    public async Task<IEnumerable<Assignment>> GetLAAssignment(DateTime eventDate, bool isGenerateData)
+    public async Task<IEnumerable<Assignment>> GetLaAssignment(DateTime eventDate, bool isGenerateData)
     {
-        var criteria = new GetLAAssignmentCriteria
+        var criteria = new GetLaAssignmentCriteria
         {
             FromDate = eventDate,
             ToDate = eventDate
         };
-        var generatedCriteria = new GetOldAndNewLAAssignmentCriteria
+        var generatedCriteria = new GetOldAndNewLaAssignmentCriteria
         {
             FromDate = eventDate,
             ToDate = eventDate

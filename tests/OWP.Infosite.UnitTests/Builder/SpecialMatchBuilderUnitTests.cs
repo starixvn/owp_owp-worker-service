@@ -27,7 +27,7 @@ public class SpecialMatchBuilderUnitTests
                 LeagueName = "JAPAN LEAGUE CUP - CORNERS",
                 MinorBettypeId = -4,
                 ParentInfoSiteMatchId = 1,
-                EventDateTime = new DateTime(2022,04,15),
+                EventDateTime = new DateTime(2022,04,15)
             },
             new()
             {
@@ -36,7 +36,7 @@ public class SpecialMatchBuilderUnitTests
                 LeagueName = "JAPAN LEAGUE CUP - CORNERS",
                 MinorBettypeId = -4,
                 ParentInfoSiteMatchId = 1,
-                EventDateTime = new DateTime(2022,04,15),
+                EventDateTime = new DateTime(2022,04,15)
             },
             new()
             {
@@ -45,7 +45,7 @@ public class SpecialMatchBuilderUnitTests
                 LeagueName = "JAPAN LEAGUE CUP - BOOKING",
                 MinorBettypeId = -7,
                 ParentInfoSiteMatchId = 1,
-                EventDateTime = new DateTime(2022,04,15),
+                EventDateTime = new DateTime(2022,04,15)
             },
             new()
             {
@@ -54,7 +54,7 @@ public class SpecialMatchBuilderUnitTests
                 LeagueName = "JAPAN LEAGUE CUP - BOOKING",
                 MinorBettypeId = -7,
                 ParentInfoSiteMatchId = 1,
-                EventDateTime = new DateTime(2022,04,15),
+                EventDateTime = new DateTime(2022,04,15)
             },
             new()
             {
@@ -63,7 +63,7 @@ public class SpecialMatchBuilderUnitTests
                 LeagueName = "JAPAN LEAGUE CUP",
                 MinorBettypeId = null,
                 ParentInfoSiteMatchId = 1,
-                EventDateTime = new DateTime(2022,04,15),
+                EventDateTime = new DateTime(2022,04,15)
             },
             new()
             {
@@ -72,7 +72,7 @@ public class SpecialMatchBuilderUnitTests
                 LeagueName = "JAPAN LEAGUE CUP - SPECIFIC 15 MINS",
                 MinorBettypeId = -1,
                 ParentInfoSiteMatchId = 2,
-                EventDateTime = new DateTime(2022,04,15),
+                EventDateTime = new DateTime(2022,04,15)
             }
         };
 
@@ -86,7 +86,7 @@ public class SpecialMatchBuilderUnitTests
                 LeagueName = "JAPAN LEAGUE CUP - CORNERS",
                 ParentInfoSiteMatchId = 1,
                 EventDateTime = new DateTime(2022,04,15),
-                MinorBettypeId = -4,
+                MinorBettypeId = -4
             },
             new()
             {
@@ -95,7 +95,7 @@ public class SpecialMatchBuilderUnitTests
                 LeagueName = "JAPAN LEAGUE CUP - BOOKING",
                 ParentInfoSiteMatchId = 1,
                 EventDateTime = new DateTime(2022,04,15),
-                MinorBettypeId = -7,
+                MinorBettypeId = -7
             },
             new()
             {
@@ -112,7 +112,7 @@ public class SpecialMatchBuilderUnitTests
                 LeagueName = "JAPAN LEAGUE CUP - SPECIFIC 15 MINS",
                 ParentInfoSiteMatchId = 2,
                 EventDateTime = new DateTime(2022,04,15),
-                MinorBettypeId = -1,
+                MinorBettypeId = -1
             }
         };
 }

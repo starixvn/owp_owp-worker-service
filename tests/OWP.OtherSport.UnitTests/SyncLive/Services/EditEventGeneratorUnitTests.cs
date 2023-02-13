@@ -27,7 +27,7 @@ public class EditEventGeneratorUnitTests
             new(){ OsMatchId = 3, AdminSiteMatchId = 333, Sport = "Basketball", OfferLive = true },
             new(){ OsMatchId = 4, AdminSiteMatchId = 555, Sport = "Basketball", OfferLive = true },
             new(){ OsMatchId = 5, AdminSiteMatchId = 666, Sport = "Tennis", OfferLive = true },
-            new(){ OsMatchId = 6, AdminSiteMatchId = null, Sport = "Tennis", OfferLive = true },
+            new(){ OsMatchId = 6, AdminSiteMatchId = null, Sport = "Tennis", OfferLive = true }
         };
 
         var owpMatches = new List<Match>
@@ -37,13 +37,13 @@ public class EditEventGeneratorUnitTests
             new(){ AdminSiteMatchId = 444, Sport = "Basketball", OfferLive = false },
             new(){ AdminSiteMatchId = 555, Sport = "Basketball", OfferLive = false }, 
             new(){ AdminSiteMatchId = 666, Sport = "Tennis", OfferLive = false },
-            new(){ AdminSiteMatchId = null, Sport = "Tennis", OfferLive = false },
+            new(){ AdminSiteMatchId = null, Sport = "Tennis", OfferLive = false }
         };
 
         var expected = new List<EditEvent>
         {
             new() { InHouseMatchId = 222,  IsLive = true },
-            new() { InHouseMatchId = 555,  IsLive = false },
+            new() { InHouseMatchId = 555,  IsLive = false }
         };
 
         var actual = service.GetChangedOfferLiveMatches(adminSiteMatches, owpMatches).ToList();
