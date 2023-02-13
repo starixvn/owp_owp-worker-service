@@ -53,7 +53,7 @@ public class SyncDeleteChildMatchServiceImp : SyncDeleteChildMatchService
 
     private MappedDeletedChildMatch BuildMappedDeletedChildMatch(DeleteChildMatch childMatch)
     {
-        var (representativeSubtype, _) = ChildMatchHelper.GetBettypeIdAndRepresentativeSubtype(childMatch.sub_type);
+        var (representativeSubtype, _) = ChildMatchHelper.GetBetTypeIdAndRepresentativeSubtype(childMatch.sub_type);
 
         return new()
         {

@@ -10,13 +10,13 @@ public static class MatchHelper
     {
         var mappedDB02Matches = MainDBMatchesMapping(owpMatches, db02Matches);
 
-        var mainDB02Matches = mappedDB02Matches.Where(x => !x.MinorBettypeId.HasValue);
-        var minorDB02Matches = mappedDB02Matches.Where(x => x.MinorBettypeId.HasValue);
+        var mainDB02Matches = mappedDB02Matches.Where(x => !x.MinorBetTypeId.HasValue);
+        var minorDB02Matches = mappedDB02Matches.Where(x => x.MinorBetTypeId.HasValue);
 
-        var mainOWPMatches = owpMatches.Where(x => !x.MinorBettypeId.HasValue);
-        var minorOWPMatches = owpMatches.Where(x => x.MinorBettypeId.HasValue &&
-            x.MinorBettypeId != MinorBettype.FifteenMinsNoOfCorners &&
-            x.MinorBettypeId != MinorBettype.FifteenMinsTotalBooking);
+        var mainOWPMatches = owpMatches.Where(x => !x.MinorBetTypeId.HasValue);
+        var minorOWPMatches = owpMatches.Where(x => x.MinorBetTypeId.HasValue &&
+            x.MinorBetTypeId != MinorBettype.FifteenMinsNoOfCorners &&
+            x.MinorBetTypeId != MinorBettype.FifteenMinsTotalBooking);
 
         var unsynchronizedMainMatches = mainOWPMatches.Except(mainDB02Matches, new IsLiveComparer()).ToList();
         var unsynchronizedMinorMatches = GetUnsynchronizedMinorMatches(minorOWPMatches, minorDB02Matches);
@@ -28,11 +28,11 @@ public static class MatchHelper
     private static IEnumerable<SyncIsLiveModel> Get15MinsUnsynchronizedMinorMatches(IEnumerable<SyncIsLiveModel> unsynchronizedMinorMatches)
     {
         return unsynchronizedMinorMatches.Where(m =>
-                m.MinorBettypeId is MinorBettype.TotalBooking or MinorBettype.NoOfCorners)
+                m.MinorBetTypeId is MinorBettype.TotalBooking or MinorBettype.NoOfCorners)
             .Select(m => new SyncIsLiveModel
             {
                 InfoSiteMatchId = m.InfoSiteMatchId,
-                MinorBettypeId = (m.MinorBettypeId == MinorBettype.NoOfCorners
+                MinorBetTypeId = (m.MinorBetTypeId == MinorBettype.NoOfCorners
                     ? MinorBettype.FifteenMinsNoOfCorners
                     : MinorBettype.FifteenMinsTotalBooking),
                 IsLive = m.IsLive
@@ -42,18 +42,18 @@ public static class MatchHelper
     internal static IEnumerable<(int, int?)> GetDistinctNonLiveMatches(IEnumerable<SyncIsLiveModel> liveMatches, IEnumerable<SyncIsLiveModel> nonLiveMatches)
         => nonLiveMatches
             .Except(liveMatches, new SyncIsLiveModel())
-            .Select(x => (x.InfoSiteMatchId, GetRepresentativeSubType(x.MinorBettypeId)));
+            .Select(x => (x.InfoSiteMatchId, GetRepresentativeSubType(x.MinorBetTypeId)));
 
     internal static IEnumerable<(int, int?)> GetDistinctLiveMatches(IEnumerable<SyncIsLiveModel> liveMatches, IEnumerable<SyncIsLiveModel> nonLiveMatches)
         => liveMatches
             .Except(nonLiveMatches, new SyncIsLiveModel())
-            .Select(x => (x.InfoSiteMatchId, GetRepresentativeSubType(x.MinorBettypeId)));
+            .Select(x => (x.InfoSiteMatchId, GetRepresentativeSubType(x.MinorBetTypeId)));
 
     private static IEnumerable<SyncIsLiveModel> GetUnsynchronizedMinorMatches(IEnumerable<SyncIsLiveModel> minorOWPMatches, IEnumerable<SyncIsLiveModel> minorDB02Matches)
     {
         return minorOWPMatches.Where(match => minorDB02Matches
             .Any(x => x.InfoSiteMatchId == match.InfoSiteMatchId
-                      && x.MinorBettypeId == match.MinorBettypeId
+                      && x.MinorBetTypeId == match.MinorBetTypeId
                       && x.IsLive != match.IsLive));
     }
 
@@ -65,7 +65,7 @@ public static class MatchHelper
             {
                 InfoSiteMatchId = 1,
                 IsLive = x.OfferLive,
-                MinorBettypeId = null
+                MinorBetTypeId = null
             });
 
         var minorMatches = db02Matches
@@ -81,7 +81,7 @@ public static class MatchHelper
         var mainInfositeMatchId = GetInfoSiteMatchIdForMainMatch(owpMatches, minorDB02Match.ParentId.Value);
         return new SyncIsLiveModel
         {
-            MinorBettypeId = minorBettypeId,
+            MinorBetTypeId = minorBettypeId,
             InfoSiteMatchId = mainInfositeMatchId,
             IsLive = minorDB02Match.OfferLive
         };

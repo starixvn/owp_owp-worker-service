@@ -42,7 +42,7 @@ public class SyncIsLiveServiceImp : SyncIsLiveService
 
         var deletedMatches = await cacheManipulator.GetDeletedMatches();
         var unsynchronizedDeletedMatches = deletedMatches
-            .Select(x => new SyncIsLiveModel { InfoSiteMatchId = x.MatchId, MinorBettypeId = x.MinorBettypeId })
+            .Select(x => new SyncIsLiveModel { InfoSiteMatchId = x.MatchId, MinorBetTypeId = x.MinorBettypeId })
             .Except(unsynchronizedMatches, new SyncIsLiveModel()).ToList();
 
         var liveMatches = unsynchronizedMatches.Where(m => m.IsLive).Distinct();
@@ -64,8 +64,8 @@ public class SyncIsLiveServiceImp : SyncIsLiveService
         await logService.LogSynIsLive(
             unsynchronizedMatches,
             deletedMatches.Select(x => (x.MatchId, x.MinorBettypeId)),
-            liveMatches.Select(x => (x.InfoSiteMatchId, x.MinorBettypeId)),
-            nonLiveMatches.Select(x => (x.InfoSiteMatchId, x.MinorBettypeId)),
+            liveMatches.Select(x => (x.InfoSiteMatchId, MinorBettypeId: x.MinorBetTypeId)),
+            nonLiveMatches.Select(x => (x.InfoSiteMatchId, MinorBettypeId: x.MinorBetTypeId)),
             synchronizedLiveMatchResult,
             synchronizedNonLiveMatchResult);
     }

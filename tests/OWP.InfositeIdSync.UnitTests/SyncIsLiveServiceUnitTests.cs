@@ -18,9 +18,9 @@ public class SyncIsLiveServiceUnitTests
 
         var syncIsLiveModels = new List<SyncIsLiveModel>
             {
-                new SyncIsLiveModel { InfoSiteMatchId = 1, IsLive = true, MinorBettypeId = -2, AdminSiteMatchId = 200 },
-                new SyncIsLiveModel { InfoSiteMatchId = 1, IsLive = true, MinorBettypeId = null, AdminSiteMatchId = 200 },
-                new SyncIsLiveModel { InfoSiteMatchId = 2, IsLive = false, MinorBettypeId = null, AdminSiteMatchId = 300 }
+                new SyncIsLiveModel { InfoSiteMatchId = 1, IsLive = true, MinorBetTypeId = -2, AdminSiteMatchId = 200 },
+                new SyncIsLiveModel { InfoSiteMatchId = 1, IsLive = true, MinorBetTypeId = null, AdminSiteMatchId = 200 },
+                new SyncIsLiveModel { InfoSiteMatchId = 2, IsLive = false, MinorBetTypeId = null, AdminSiteMatchId = 300 }
             };
         repository.GetInfositeMatchIsLive(DateTime.Today, DateTime.Today).Returns(syncIsLiveModels);
 

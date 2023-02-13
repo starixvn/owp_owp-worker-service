@@ -61,7 +61,7 @@ public class ApiServiceImp : ApiService
                 response.RequestMessage
             };
             var logInfoString = JsonConvert.SerializeObject(logInfo);
-            logger.Error(logInfoString);
+            await logger.ErrorAsync(logInfoString);
 
             return new List<DeleteChildMatch>();
         }
@@ -91,7 +91,7 @@ public class ApiServiceImp : ApiService
                 response.RequestMessage
             };
             var logInfoString = JsonConvert.SerializeObject(logInfo);
-            logger.Error(logInfoString);
+            await logger.ErrorAsync(logInfoString);
 
             return new List<CommonMatchModel>();
         }
@@ -122,7 +122,7 @@ public class ApiServiceImp : ApiService
             };
 
             var logInfoString = JsonConvert.SerializeObject(logInfo);
-            logger.Error(logInfoString);
+            await logger.ErrorAsync(logInfoString);
 
             return new List<MatchRelation>();
         }
@@ -150,7 +150,7 @@ public class ApiServiceImp : ApiService
                 response.RequestMessage
             };
             var logInfoString = JsonConvert.SerializeObject(logInfo);
-            logger.Error(logInfoString);
+            await logger.ErrorAsync(logInfoString);
 
             return new List<string>();
         }
@@ -176,7 +176,7 @@ public class ApiServiceImp : ApiService
                 response.RequestMessage
             };
             var logInfoString = JsonConvert.SerializeObject(logInfo);
-            logger.Error(logInfoString);
+            await logger.ErrorAsync(logInfoString);
 
             return new List<MatchModelQuery180Day>();
         }

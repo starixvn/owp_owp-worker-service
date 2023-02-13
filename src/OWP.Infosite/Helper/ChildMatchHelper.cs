@@ -5,7 +5,7 @@ namespace OWP.Infosite.Helper;
 
 public static class ChildMatchHelper
 {
-    public static (int, int) GetBettypeIdAndRepresentativeSubtype(int? subType)
+    public static (int, int) GetBetTypeIdAndRepresentativeSubtype(int? subType)
     {
         var firstType = new Specific10MinsDetector();
         var secondType = new Specific15MinsDetector();
@@ -18,9 +18,9 @@ public static class ChildMatchHelper
         thirdType.NextType = fourthType;
         fourthType.NextType = fifthType;
         var representativeSubtype = firstType.GetRepresentativeSubtype(subType.Value);
-        var minorBettypeId = MinorBettype.GetMinorBettypeIdBySubtype(representativeSubtype);
+        var minorBetTypeId = MinorBettype.GetMinorBettypeIdBySubtype(representativeSubtype);
 
-        return (representativeSubtype, minorBettypeId);
+        return (representativeSubtype, minorBetTypeId);
     }
 
     public static bool IsFirstMatch(string awayName)
