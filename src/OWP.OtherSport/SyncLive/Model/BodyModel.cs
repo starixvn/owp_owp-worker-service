@@ -1,7 +1,6 @@
-﻿namespace OWP.OtherSport.SyncLive.Model
+﻿namespace OWP.OtherSport.SyncLive.Model;
+
+public class BodyModel
 {
-    public class BodyModel
-    {
-        public List<EditEvent> live_configs { get; set; }
-    }
+    public List<EditEvent> live_configs { get; set; }
 }

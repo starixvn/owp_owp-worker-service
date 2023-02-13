@@ -1,29 +1,28 @@
-namespace OWP.SumReport.PrematchReport.Services.League
+namespace OWP.SumReport.PrematchReport.Services.League;
+
+public interface OULeagueService
 {
-    public interface OULeagueService
+    Task BuildSingleOULeagueReport(DateTime eventDate);
+}
+
+public class OULeagueServiceImp : OULeagueService
+{
+    private readonly DataReportService dataReportService;
+
+    private readonly Repository repository;
+
+    public OULeagueServiceImp(
+        DataReportService dataReportService,
+        Repository repository)
     {
-        Task BuildSingleOULeagueReport(DateTime eventDate);
+        this.dataReportService = dataReportService;
+        this.repository = repository;
     }
 
-    public class OULeagueServiceImp : OULeagueService
+    public async Task BuildSingleOULeagueReport(DateTime eventDate)
     {
-        private readonly DataReportService dataReportService;
-
-        private readonly Repository repository;
-
-        public OULeagueServiceImp(
-            DataReportService dataReportService,
-            Repository repository)
-        {
-            this.dataReportService = dataReportService;
-            this.repository = repository;
-        }
-
-        public async Task BuildSingleOULeagueReport(DateTime eventDate)
-        {
-            var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constants.Constant.OUID);
-            var dataReport = dataReportService.BuildSingleLeagueGroupReport(leagues, Constants.Constant.OUID);
-            await dataReportService.InsertLeagueReport(dataReport);
-        }
+        var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constants.Constant.OUID);
+        var dataReport = dataReportService.BuildSingleLeagueGroupReport(leagues, Constants.Constant.OUID);
+        await dataReportService.InsertLeagueReport(dataReport);
     }
 }

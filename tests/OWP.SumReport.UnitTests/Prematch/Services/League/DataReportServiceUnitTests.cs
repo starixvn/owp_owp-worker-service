@@ -9,7 +9,7 @@ namespace OWP.SumReport.PrematchReport.UnitTests.Services.League;
 
 public class DataReportServiceUnitTests
 {
-    private DbWriterService dbWriterService;
+    private readonly DbWriterService dbWriterService;
 
     public DataReportServiceUnitTests()
     {

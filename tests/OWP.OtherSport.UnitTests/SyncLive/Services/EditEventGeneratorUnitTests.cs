@@ -7,49 +7,48 @@ using System.Linq;
 using Xunit;
 using Xunit.Asserts.Compare;
 
-namespace OWP.OtherSport.UnitTests.SyncLive.Services
+namespace OWP.OtherSport.UnitTests.SyncLive.Services;
+
+public class EditEventGeneratorUnitTests
 {
-    public class EditEventGeneratorUnitTests
+    private readonly EditEventGeneratorImp service;
+
+    public EditEventGeneratorUnitTests()
     {
-        private readonly EditEventGeneratorImp service;
+        service = new EditEventGeneratorImp();
+    }
 
-        public EditEventGeneratorUnitTests()
+    [Fact]
+    public void CreateModel_GetChangedOfferLiveMatches_ReturnExpectedResult()
+    {
+        var adminSiteMatches = new List<Match>
         {
-            service = new EditEventGeneratorImp();
-        }
+            new(){ OSMatchId = 1, AdminSiteMatchId = 111, Sport = "Basketball", OfferLive = true  },
+            new(){ OSMatchId = 2, AdminSiteMatchId = 222, Sport = "Basketball", OfferLive = false },
+            new(){ OSMatchId = 3, AdminSiteMatchId = 333, Sport = "Basketball", OfferLive = true },
+            new(){ OSMatchId = 4, AdminSiteMatchId = 555, Sport = "Basketball", OfferLive = true },
+            new(){ OSMatchId = 5, AdminSiteMatchId = 666, Sport = "Tennis", OfferLive = true },
+            new(){ OSMatchId = 6, AdminSiteMatchId = null, Sport = "Tennis", OfferLive = true },
+        };
 
-        [Fact]
-        public void CreateModel_GetChangedOfferLiveMatches_ReturnExpectedResult()
+        var owpMatches = new List<Match>
         {
-            var adminSiteMatches = new List<Match>
-            {
-                new(){ OSMatchId = 1, AdminSiteMatchId = 111, Sport = "Basketball", OfferLive = true  },
-                new(){ OSMatchId = 2, AdminSiteMatchId = 222, Sport = "Basketball", OfferLive = false },
-                new(){ OSMatchId = 3, AdminSiteMatchId = 333, Sport = "Basketball", OfferLive = true },
-                new(){ OSMatchId = 4, AdminSiteMatchId = 555, Sport = "Basketball", OfferLive = true },
-                new(){ OSMatchId = 5, AdminSiteMatchId = 666, Sport = "Tennis", OfferLive = true },
-                new(){ OSMatchId = 6, AdminSiteMatchId = null, Sport = "Tennis", OfferLive = true },
-            };
+            new(){ AdminSiteMatchId = 111, Sport = "Basketball", OfferLive = true },
+            new(){ AdminSiteMatchId = 222, Sport = "Basketball", OfferLive = true },
+            new(){ AdminSiteMatchId = 444, Sport = "Basketball", OfferLive = false },
+            new(){ AdminSiteMatchId = 555, Sport = "Basketball", OfferLive = false }, 
+            new(){ AdminSiteMatchId = 666, Sport = "Tennis", OfferLive = false },
+            new(){ AdminSiteMatchId = null, Sport = "Tennis", OfferLive = false },
+        };
 
-            var owpMatches = new List<Match>
-            {
-                new(){ AdminSiteMatchId = 111, Sport = "Basketball", OfferLive = true },
-                new(){ AdminSiteMatchId = 222, Sport = "Basketball", OfferLive = true },
-                new(){ AdminSiteMatchId = 444, Sport = "Basketball", OfferLive = false },
-                new(){ AdminSiteMatchId = 555, Sport = "Basketball", OfferLive = false }, 
-                new(){ AdminSiteMatchId = 666, Sport = "Tennis", OfferLive = false },
-                new(){ AdminSiteMatchId = null, Sport = "Tennis", OfferLive = false },
-            };
+        var expected = new List<EditEvent>
+        {
+            new() { in_house_match_id = 222,  is_live = true },
+            new() { in_house_match_id = 555,  is_live = false },
+        };
 
-            var expected = new List<EditEvent>
-            {
-                new() { in_house_match_id = 222,  is_live = true },
-                new() { in_house_match_id = 555,  is_live = false },
-            };
+        var actual = service.GetChangedOfferLiveMatches(adminSiteMatches, owpMatches).ToList();
 
-            var actual = service.GetChangedOfferLiveMatches(adminSiteMatches, owpMatches).ToList();
-
-            DeepAssert.Equal(expected, actual);
-        }
+        DeepAssert.Equal(expected, actual);
     }
 }

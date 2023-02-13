@@ -9,8 +9,8 @@ namespace OWP.SumReport.PrematchReport.UnitTests.Services.Match;
 
 public class DataMatchReportServiceUnitests
 {
-    private Repository repository;
-    private DbWriterService dbWriterService;
+    private readonly Repository repository;
+    private readonly DbWriterService dbWriterService;
 
     public DataMatchReportServiceUnitests()
     {
