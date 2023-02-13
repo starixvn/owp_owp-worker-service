@@ -75,17 +75,17 @@ public class LeagueSettingsServiceUnitTests
     private IEnumerable<TvCondition> MockTvConditions()
         => new List<TvCondition>
         {
-            new TvCondition
+            new()
             {
                 Label = "Equals",
                 Value = "Euro12"
             },
-            new TvCondition
+            new()
             {
                 Label = "Equals",
                 Value = "Euro61"
             },
-            new TvCondition
+            new()
             {
                 Label = "Contains",
                 Value = "Euro121"
@@ -95,7 +95,7 @@ public class LeagueSettingsServiceUnitTests
     private IEnumerable<Match> MockMatches()
         => new List<Match>
         {
-            new Match
+            new()
             {
                 OWPMatchId = 738253,
                 EventDateTime = new DateTime(2021, 04, 07, 15, 00, 00),
@@ -103,7 +103,7 @@ public class LeagueSettingsServiceUnitTests
                 TV = "Euro12",
                 MatchSettings = new List<MatchSetting>()
             },
-            new Match
+            new()
             {
                 OWPMatchId = 738254,
                 EventDateTime = new DateTime(2021, 04, 07, 15, 00, 00),
@@ -111,7 +111,7 @@ public class LeagueSettingsServiceUnitTests
                 TV = null,
                 MatchSettings = new List<MatchSetting>()
             },
-            new Match
+            new()
             {
                 OWPMatchId = 738283,
                 EventDateTime = new DateTime(2021, 04, 10, 15, 00, 00),
@@ -119,7 +119,7 @@ public class LeagueSettingsServiceUnitTests
                 TV = "Euro12",
                 MatchSettings = new List<MatchSetting>()
             },
-            new Match
+            new()
             {
                 OWPMatchId = 738284,
                 EventDateTime = new DateTime(2021, 04, 10, 15, 00, 00),
@@ -127,7 +127,7 @@ public class LeagueSettingsServiceUnitTests
                 TV = "Euro61",
                 MatchSettings = new List<MatchSetting>()
             },
-            new Match
+            new()
             {
                 OWPMatchId = 738293,
                 EventDateTime = new DateTime(2021, 04, 10, 15, 00, 00),
@@ -135,7 +135,7 @@ public class LeagueSettingsServiceUnitTests
                 TV = "testing",
                 MatchSettings = new List<MatchSetting>()
             },
-            new Match
+            new()
             {
                 OWPMatchId = 738294,
                 EventDateTime = new DateTime(2021, 04, 10, 15, 30, 00),
@@ -148,84 +148,84 @@ public class LeagueSettingsServiceUnitTests
     private IEnumerable<MatchSetting> MockMatchSettings()
         => new List<MatchSetting>
         {
-            new MatchSetting
+            new()
             {
                 OWPMatchId = 738253,
                 Bettype = Bettype.HDP,
                 Spread = 0.2m,
                 Maxbet = 100000.00m
             },
-            new MatchSetting
+            new()
             {
                 OWPMatchId = 738253,
                 Bettype = Bettype.OU,
                 Spread = 0.15m,
                 Maxbet = null
             },
-            new MatchSetting
+            new()
             {
                 OWPMatchId = 738254,
                 Bettype = Bettype.HDP,
                 Spread = 0.25m,
                 Maxbet = 200000.00m
             },
-            new MatchSetting
+            new()
             {
                 OWPMatchId = 738254,
                 Bettype = Bettype.OU,
                 Spread = 0.30m,
                 Maxbet = null
             },
-            new MatchSetting
+            new()
             {
                 OWPMatchId = 738283,
                 Bettype = Bettype.HDP,
                 Spread = 0.05m,
                 Maxbet = 150000.00m
             },
-            new MatchSetting
+            new()
             {
                 OWPMatchId = 738283,
                 Bettype = Bettype.OU,
                 Spread = 0.05m,
                 Maxbet = null
             },
-            new MatchSetting
+            new()
             {
                 OWPMatchId = 738284,
                 Bettype = Bettype.HDP,
                 Spread = 0.5m,
                 Maxbet = 180000.00m
             },
-            new MatchSetting
+            new()
             {
                 OWPMatchId = 738284,
                 Bettype = Bettype.OU,
                 Spread = 0.40m,
                 Maxbet = null
             },
-            new MatchSetting
+            new()
             {
                 OWPMatchId = 738293,
                 Bettype = Bettype.HDP,
                 Spread = 0.04m,
                 Maxbet = 300000.00m
             },
-            new MatchSetting
+            new()
             {
                 OWPMatchId = 738293,
                 Bettype = Bettype.OU,
                 Spread = 0.04m,
                 Maxbet = null
             },
-            new MatchSetting
+            new()
             {
                 OWPMatchId = 738294,
                 Bettype = Bettype.HDP,
                 Spread = 0.15m,
                 Maxbet = 200000.00m
             },
-            new MatchSetting
+            new()
             {
                 OWPMatchId = 738294,
                 Bettype = Bettype.OU,
@@ -237,7 +237,7 @@ public class LeagueSettingsServiceUnitTests
     private IList<LeagueSetting> MockLeagueSettings()
         => new List<LeagueSetting>
         {
-            new LeagueSetting
+            new()
             {
                 OWPLeagueId = 4,
                 HasTv = true,
@@ -252,7 +252,7 @@ public class LeagueSettingsServiceUnitTests
                 MaxbetWK_HDP = null,
                 MaxbetWK_OU = null
             },
-            new LeagueSetting
+            new()
             {
                 OWPLeagueId = 15,
                 HasTv = true,
@@ -267,7 +267,7 @@ public class LeagueSettingsServiceUnitTests
                 MaxbetWK_HDP = 180000.00m,
                 MaxbetWK_OU = null
             },
-            new LeagueSetting
+            new()
             {
                 OWPLeagueId = 34,
                 HasTv = false,
@@ -278,7 +278,7 @@ public class LeagueSettingsServiceUnitTests
                 MaxbetWD_HDP = 200000.00m,
                 MaxbetWD_1H = 100000.00m
             },
-            new LeagueSetting
+            new()
             {
                 OWPLeagueId = 54,
                 HasTv = false,

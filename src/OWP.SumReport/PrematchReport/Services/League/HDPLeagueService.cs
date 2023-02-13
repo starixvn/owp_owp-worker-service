@@ -15,8 +15,7 @@ public class HDPLeagueServiceImp : HDPLeagueService
 
     public HDPLeagueServiceImp(
         DataReportService dataReportService,
-        Repository repository,
-        DbWriterService dbWriterService)
+        Repository repository)
     {
         this.dataReportService = dataReportService;
         this.repository = repository;

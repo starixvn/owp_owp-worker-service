@@ -21,7 +21,7 @@ public class MatchModelFor180Day
 
     public bool IsNeutral { get; set; }
 
-    public DateTime UpdatedTime { get; set; } = new DateTime(Year, 1, 1);
+    public DateTime UpdatedTime { get; set; } = new(Year, 1, 1);
 
     private const int Year = 2000;
 

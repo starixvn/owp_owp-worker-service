@@ -83,7 +83,7 @@ public class InfoSiteHelperUnitTests
         };
         var infositeMatch = new List<InfositeMatch>
             {
-                new InfositeMatch
+                new()
                 {
                     LeagueName = "SABA league",
                     HomeName = "away",
@@ -117,7 +117,7 @@ public class InfoSiteHelperUnitTests
         };
         var infositeMatch = new List<InfositeMatch>
             {
-                new InfositeMatch
+                new()
                 {
                     LeagueName = "SABA league",
                     HomeName = "home",
@@ -182,7 +182,7 @@ public class InfoSiteHelperUnitTests
         var infositeMatch = GetInfositeMatch();
         var expected = new List<MatchMappingWithInfosite>
             {
-                new MatchMappingWithInfosite(6, 2221, 0, new DateTime(2020,08,27,23,20,00))
+                new(6, 2221, 0, new DateTime(2020,08,27,23,20,00))
             };
 
         // Act
@@ -202,7 +202,7 @@ public class InfoSiteHelperUnitTests
 
         var expected = new List<MatchMappingWithInfosite>
             {
-                new MatchMappingWithInfosite(7, 2222, 0, new DateTime(2020,08,27,23,20,00))
+                new(7, 2222, 0, new DateTime(2020,08,27,23,20,00))
             };
 
         // Act
@@ -221,9 +221,9 @@ public class InfoSiteHelperUnitTests
         var infositeMatch = GetInfositeMatch();
         var expected = new List<MatchMappingWithInfosite>
             {
-                new MatchMappingWithInfosite(1, 123456, 0, new DateTime(2020, 08, 28)),
-                new MatchMappingWithInfosite(2, 2000, 0, new DateTime(2020, 08, 27, 22, 00, 00)),
-                new MatchMappingWithInfosite(3, 5000, 0, new DateTime(2020, 08, 27, 23, 20, 00))
+                new(1, 123456, 0, new DateTime(2020, 08, 28)),
+                new(2, 2000, 0, new DateTime(2020, 08, 27, 22, 00, 00)),
+                new(3, 5000, 0, new DateTime(2020, 08, 27, 23, 20, 00))
             };
 
         // Act
@@ -248,7 +248,7 @@ public class InfoSiteHelperUnitTests
         };
         var infositeMatch = new List<InfositeMatch>
             {
-                new InfositeMatch
+                new()
                 {
                     LeagueName = "M88 SABA league",
                     HomeName = "away",
@@ -308,7 +308,7 @@ public class InfoSiteHelperUnitTests
     {
         return new List<OWPMatch>
             {
-                new OWPMatch
+                new()
                 {
                     OWPMatchId = 1,
                     EventDateTime = new DateTime(2020,08,28),
@@ -316,7 +316,7 @@ public class InfoSiteHelperUnitTests
                     Home = "Kaizer Chiefs",
                     Away = "Mamelodi Sundowns"
                 },
-                new OWPMatch
+                new()
                 {
                     OWPMatchId = 2,
                     EventDateTime = new DateTime(2020,08,27,22,00,00),
@@ -324,7 +324,7 @@ public class InfoSiteHelperUnitTests
                     Home = "Pakhtakor Tashkent",
                     Away = "Pakhtakor Tashkent"
                 },
-                new OWPMatch
+                new()
                 {
                     OWPMatchId = 3,
                     EventDateTime = new DateTime(2020,08,27,23,20,00),
@@ -332,7 +332,7 @@ public class InfoSiteHelperUnitTests
                     Home = "Levski Sofia U19",
                     Away = "Pirin Blagoevgrad U19"
                 },
-                new OWPMatch
+                new()
                 {
                     OWPMatchId = 4,
                     EventDateTime = new DateTime(2020,08,27,02,20,00),
@@ -340,7 +340,7 @@ public class InfoSiteHelperUnitTests
                     Home = "a",
                     Away = "a"
                 },
-                new OWPMatch
+                new()
                 {
                     OWPMatchId = 6,
                     EventDateTime = new DateTime(2020,08,27,02,20,00),
@@ -355,7 +355,7 @@ public class InfoSiteHelperUnitTests
     {
         return new List<InfositeMatch>
             {
-                new InfositeMatch
+                new()
                 {
                     InfoSiteMatchId = 123456,
                     AdminSiteMatchId = 0,
@@ -364,7 +364,7 @@ public class InfoSiteHelperUnitTests
                     HomeName = "Kaizer Chiefs",
                     AwayName = "Mamelodi Sundowns"
                 },
-                new InfositeMatch
+                new()
                 {
                     InfoSiteMatchId = 2000,
                     AdminSiteMatchId = 0,
@@ -373,7 +373,7 @@ public class InfoSiteHelperUnitTests
                     HomeName = "Pakhtakor Tashkent",
                     AwayName = "Pakhtakor Tashkent"
                 },
-                new InfositeMatch
+                new()
                 {
                     InfoSiteMatchId = 5000,
                     AdminSiteMatchId = 0,
@@ -382,7 +382,7 @@ public class InfoSiteHelperUnitTests
                     HomeName = "Levski Sofia U19",
                     AwayName = "Pirin Blagoevgrad U19"
                 },
-                new InfositeMatch
+                new()
                 {
                     InfoSiteMatchId = 5555,
                     AdminSiteMatchId = 0,
@@ -391,7 +391,7 @@ public class InfoSiteHelperUnitTests
                     HomeName = "h",
                     AwayName = "a"
                 },
-                new InfositeMatch
+                new()
                 {
                     InfoSiteMatchId = 2221,
                     AdminSiteMatchId = 0,
@@ -400,7 +400,7 @@ public class InfoSiteHelperUnitTests
                     HomeName = "home Test Count 2",
                     AwayName = "away Test Count 2"
                 },
-                new InfositeMatch
+                new()
                 {
                     InfoSiteMatchId = 2222,
                     AdminSiteMatchId = 0,
@@ -409,7 +409,7 @@ public class InfoSiteHelperUnitTests
                     HomeName = "home Test Count 2",
                     AwayName = "away Test Count 2"
                 },
-                new InfositeMatch
+                new()
                 {
                     InfoSiteMatchId = 2221,
                     AdminSiteMatchId = 0,
@@ -418,7 +418,7 @@ public class InfoSiteHelperUnitTests
                     HomeName = "A",
                     AwayName = "B"
                 },
-                new InfositeMatch
+                new()
                 {
                     InfoSiteMatchId = 2222,
                     AdminSiteMatchId = 0,

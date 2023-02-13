@@ -4,7 +4,7 @@ using Models;
 
 public static class SampleDataTests
 {
-    public static readonly List<CommonMatchModel> ListCommonMatches = new List<CommonMatchModel>
+    public static readonly List<CommonMatchModel> ListCommonMatches = new()
     {
         new CommonMatchModel
         {
@@ -21,7 +21,7 @@ public static class SampleDataTests
         }
     };
 
-    public static readonly List<MatchModelQuery180Day> ListMatchModelQuery180Day = new List<MatchModelQuery180Day>
+    public static readonly List<MatchModelQuery180Day> ListMatchModelQuery180Day = new()
     {
         new MatchModelQuery180Day
         {
@@ -35,11 +35,11 @@ public static class SampleDataTests
         }
     };
 
-    public static readonly List<CommonMatchModel> EmptyListCommonMatches = new List<CommonMatchModel>();
+    public static readonly List<CommonMatchModel> EmptyListCommonMatches = new();
 
-    public static readonly List<MatchModelQuery180Day> EmptyListMatchModelQuery180Day = new List<MatchModelQuery180Day>();
+    public static readonly List<MatchModelQuery180Day> EmptyListMatchModelQuery180Day = new();
 
-    public static readonly List<MatchRelation> ListMatchRelation = new List<MatchRelation>
+    public static readonly List<MatchRelation> ListMatchRelation = new()
     {
         new MatchRelation
         {

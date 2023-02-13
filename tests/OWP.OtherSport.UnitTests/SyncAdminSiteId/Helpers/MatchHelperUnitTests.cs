@@ -15,7 +15,7 @@ public class MatchHelperUnitTests
     {
         var expected = new List<LinkedMatch>
             {
-                new LinkedMatch
+                new()
                 {
                     AdminSiteMatchId = 123,
                     OSMatchId = 1,
@@ -29,7 +29,7 @@ public class MatchHelperUnitTests
                     NewEventDate = new DateTime(2021, 03, 18, 20, 22, 33),
                     OldEventDate = new DateTime(2021, 03, 18)
                 },
-                new LinkedMatch
+                new()
                 {
                     AdminSiteMatchId = 234,
                     OSMatchId = 53,
@@ -43,7 +43,7 @@ public class MatchHelperUnitTests
                     NewEventDate = new DateTime(2021, 03, 18),
                     OldEventDate = new DateTime(2021, 03, 18)
                 },
-                new LinkedMatch
+                new()
                 {
                     AdminSiteMatchId = 345,
                     OSMatchId = 54,
@@ -69,7 +69,7 @@ public class MatchHelperUnitTests
     {
         var expected = new List<LinkedMatch>
             {
-                new LinkedMatch
+                new()
                 {
                     OSMatchId = 444,
                     OWPLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
@@ -87,7 +87,7 @@ public class MatchHelperUnitTests
     private IEnumerable<Match> GetUnlinkedOWPMatches()
         => new List<Match>
         {
-                new Match
+                new()
                 {
                     OSMatchId = 1,
                     Sport = "Basketball",
@@ -97,7 +97,7 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = null
                 },
-                new Match
+                new()
                 {
                     OSMatchId = 53,
                     Sport = "Basketball",
@@ -107,7 +107,7 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = null
                 },
-                new Match
+                new()
                 {
                     OSMatchId = 54,
                     Sport = "Basketball",
@@ -117,7 +117,7 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18, 11, 22, 33),
                     AdminSiteMatchId = null
                 },
-                new Match
+                new()
                 {
                     OSMatchId = 114,
                     Sport = "Netball",
@@ -132,7 +132,7 @@ public class MatchHelperUnitTests
     private IEnumerable<Match> GetLinkedOWPMatches()
         => new List<Match>
         {
-                new Match
+                new()
                 {
                     OSMatchId = 79,
                     Sport = "Netball",
@@ -142,7 +142,7 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 1
                 },
-                new Match
+                new()
                 {
                     OSMatchId = 113,
                     Sport = "Netball",
@@ -152,7 +152,7 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 2
                 },
-                new Match
+                new()
                 {
                     OSMatchId = 444,
                     Sport = "Basketball",
@@ -167,7 +167,7 @@ public class MatchHelperUnitTests
     private IEnumerable<Match> GetAdminSiteMatches()
         => new List<Match>
         {
-                new Match
+                new()
                 {
                     Sport = "Basketball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
@@ -176,7 +176,7 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18, 20, 22, 33),
                     AdminSiteMatchId = 123
                 },
-                new Match
+                new()
                 {
                     Sport = "Basketball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
@@ -185,7 +185,7 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 234
                 },
-                new Match
+                new()
                 {
                     Sport = "Basketball",
                     LeagueName = "CHINA SABA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
@@ -194,7 +194,7 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18, 11, 22, 33),
                     AdminSiteMatchId = 345
                 },
-                new Match
+                new()
                 {
                     Sport = "Netball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)113",
@@ -203,7 +203,7 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 1
                 },
-                new Match
+                new()
                 {
                     Sport = "Netball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)114",

@@ -23,7 +23,7 @@ public class TodaySyncServiceUnitTests
 
     private readonly RabbitMqClient rabbitMqClient;
 
-    private readonly DateTime from = new DateTime(2018, 1, 1);
+    private readonly DateTime from = new(2018, 1, 1);
 
     public TodaySyncServiceUnitTests()
     {

@@ -9,7 +9,7 @@ public class SpecialProductRuleUnitTests
 {
     private readonly IList<Assignment> assignments = new List<Assignment>
             {
-                new Assignment
+                new()
                 {
                     UserId = 15477090,
                     ProviderName = "IPSD",
@@ -19,7 +19,7 @@ public class SpecialProductRuleUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 25, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 15477090,
                     ProviderName = "IPSD",
@@ -29,7 +29,7 @@ public class SpecialProductRuleUnitTests
                     ParentMatchId = 428031,
                     EventDateTime = new DateTime(2020, 7, 25, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 15477090,
                     ProviderName = "IPSD",
@@ -39,7 +39,7 @@ public class SpecialProductRuleUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 25, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 15477090,
                     ProviderName = "IPSD",
@@ -49,7 +49,7 @@ public class SpecialProductRuleUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 26, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 15477090,
                     ProviderName = "IPSD",
@@ -59,7 +59,7 @@ public class SpecialProductRuleUnitTests
                     ParentMatchId = 123456,
                     EventDateTime = new DateTime(2020, 7, 26, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 15477090,
                     ProviderName = "IPSD",
@@ -69,7 +69,7 @@ public class SpecialProductRuleUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 26, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 15477090,
                     ProviderName = "IPSD",
@@ -79,7 +79,7 @@ public class SpecialProductRuleUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 26, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 131,
                     UserId = 15477090,
@@ -89,7 +89,7 @@ public class SpecialProductRuleUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2022, 4, 9, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 131,
                     UserId = 15477090,

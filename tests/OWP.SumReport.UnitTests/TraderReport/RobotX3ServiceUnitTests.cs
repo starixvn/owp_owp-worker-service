@@ -105,13 +105,13 @@ public class RobotX3ServiceUnitTests
     {
         var assignmentList = new List<RobotX3RawModel>
             {
-                 new RobotX3RawModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:30:00 PM"),
                       OWPMatchId = 347272,
                       UserId = 17013702
                  },
-                 new RobotX3RawModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:45:00 PM"),
                       OWPMatchId = 347277,
@@ -121,14 +121,14 @@ public class RobotX3ServiceUnitTests
 
         var expected = new List<RobotX3RawGroupModel>
             {
-                 new RobotX3RawGroupModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:30:00 PM"),
                       MatchGroup = 1,
                       OWPMatchId = 347272,
                       UserId = 17013702
                  },
-                 new RobotX3RawGroupModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:45:00 PM"),
                       MatchGroup = 1,
@@ -149,43 +149,43 @@ public class RobotX3ServiceUnitTests
     {
         var assignmentList = new List<RobotX3RawModel>
             {
-                 new RobotX3RawModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("03/16/2020 2:00:00 PM"),
                       OWPMatchId = 406897,
                       UserId = 8
                  },
-                 new RobotX3RawModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("03/17/2020 11:01:00 AM"),
                       OWPMatchId = 406913,
                       UserId = 8
                  },
-                 new RobotX3RawModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("03/17/2020 1:00:00 PM"),
                       OWPMatchId = 406934,
                       UserId = 8
                  },
-                 new RobotX3RawModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("03/18/2020 10:00:00 AM"),
                       OWPMatchId = 406950,
                       UserId = 8
                  },
-                  new RobotX3RawModel
-                 {
+                  new()
+                  {
                       EventDateTime = DateTime.Parse("03/27/2020 2:00:00 PM"),
                       OWPMatchId = 406987,
                       UserId = 8
                  },
-                  new RobotX3RawModel
-                 {
+                  new()
+                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:30:00 PM"),
                       OWPMatchId = 347272,
                       UserId = 17013702
                  },
-                 new RobotX3RawModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:45:00 PM"),
                       OWPMatchId = 347277,
@@ -195,14 +195,14 @@ public class RobotX3ServiceUnitTests
 
         var expected = new List<RobotX3ByUser>
             {
-                new RobotX3ByUser
+                new()
                 {
                     UserId = 8,
                     X2 = 0,
                     X3 = 0,
                     X3Plus = 0
                 },
-                new RobotX3ByUser
+                new()
                 {
                     UserId = 17013702,
                     X2 = 1,

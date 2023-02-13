@@ -57,7 +57,7 @@ public class LAReportServiceUnitTests
         return new List<Assignment>
             {
                 //T.Booking+
-                new Assignment
+                new()
                 {
                     AssignmentId = 1,
                     UserId = 15477090,
@@ -68,7 +68,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = 428020,
                     EventDateTime = new DateTime(2020, 7, 1, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 2,
                     UserId = 15477090,
@@ -79,7 +79,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = 428031,
                     EventDateTime = new DateTime(2020, 7, 1, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 3,
                     UserId = 15477090,
@@ -91,7 +91,7 @@ public class LAReportServiceUnitTests
                     EventDateTime = new DateTime(2020, 7, 1, 15, 0, 0)
                 },
                 //Goal Kick
-                new Assignment
+                new()
                 {
                     AssignmentId = 4,
                     UserId = 15477090,
@@ -102,7 +102,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = 123456,
                     EventDateTime = new DateTime(2020, 7, 2, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 5,
                     UserId = 15477090,
@@ -114,7 +114,7 @@ public class LAReportServiceUnitTests
                     EventDateTime = new DateTime(2020, 7, 2, 15, 0, 0)
                 },
                 //Other Products
-                new Assignment
+                new()
                 {
                     AssignmentId = 6,
                     UserId = 15477090,
@@ -125,7 +125,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = 123456,
                     EventDateTime = new DateTime(2020, 7, 2, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 7,
                     UserId = 15477090,
@@ -137,7 +137,7 @@ public class LAReportServiceUnitTests
                     EventDateTime = new DateTime(2020, 7, 2, 15, 0, 0)
                 },
                 //FT_Corner
-                new Assignment
+                new()
                 {
                     AssignmentId = 8,
                     UserId = 15477090,
@@ -148,7 +148,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = 123456,
                     EventDateTime = new DateTime(2020, 7, 3, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 9,
                     UserId = 15477090,
@@ -159,7 +159,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = 123456,
                     EventDateTime = new DateTime(2020, 7, 3, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 10,
                     UserId = 15477090,
@@ -171,7 +171,7 @@ public class LAReportServiceUnitTests
                     EventDateTime = new DateTime(2020, 7, 3, 15, 0, 0)
                 },
                 //Corner+
-                new Assignment
+                new()
                 {
                     AssignmentId = 11,
                     UserId = 15477090,
@@ -182,7 +182,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = 425000,
                     EventDateTime = new DateTime(2020, 7, 4, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 12,
                     UserId = 15477090,
@@ -193,7 +193,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = 425000,
                     EventDateTime = new DateTime(2020, 7, 4, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 13,
                     UserId = 15477090,
@@ -206,7 +206,7 @@ public class LAReportServiceUnitTests
                 },
 
                 //Fantasy
-                new Assignment
+                new()
                 {
                     AssignmentId = 14,
                     UserId = 15477090,
@@ -217,7 +217,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 5, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 15,
                     UserId = 15477090,
@@ -229,7 +229,7 @@ public class LAReportServiceUnitTests
                     EventDateTime = new DateTime(2020, 7, 5, 15, 0, 0)
                 },
                 //ESOCCER
-                new Assignment
+                new()
                 {
                     AssignmentId = 16,
                     UserId = 15477090,
@@ -240,7 +240,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 6, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 16,
                     UserId = 15477090,
@@ -251,7 +251,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 6, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 16,
                     UserId = 15477090,
@@ -262,7 +262,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 6, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 17,
                     UserId = 15477090,
@@ -273,7 +273,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 6, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 17,
                     UserId = 15477090,
@@ -284,7 +284,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2021, 09, 06, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 17,
                     UserId = 15477090,
@@ -297,7 +297,7 @@ public class LAReportServiceUnitTests
                 },
 
                 //MULTIPLE MATCHES
-                new Assignment
+                new()
                 {
                     AssignmentId = 18,
                     UserId = 15477090,
@@ -308,7 +308,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 7, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 19,
                     UserId = 15477090,
@@ -319,7 +319,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 7, 15, 15, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 20,
                     UserId = 15477090,
@@ -330,7 +330,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 7, 16, 05, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 21,
                     UserId = 15477090,
@@ -342,7 +342,7 @@ public class LAReportServiceUnitTests
                     EventDateTime = new DateTime(2020, 7, 7, 16, 8, 0)
                 },
                 //X3
-                new Assignment
+                new()
                 {
                     AssignmentId = 22,
                     UserId = 15477090,
@@ -353,7 +353,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 8, 16, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 23,
                     UserId = 15477090,
@@ -364,7 +364,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 8, 16, 1, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 24,
                     UserId = 15477090,
@@ -375,7 +375,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 8, 16, 3, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 25,
                     UserId = 15477090,
@@ -386,7 +386,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 8, 16, 05, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 26,
                     UserId = 15477090,
@@ -398,7 +398,7 @@ public class LAReportServiceUnitTests
                     EventDateTime = new DateTime(2020, 7, 8, 16, 8, 0)
                 },
                 //X6
-                new Assignment
+                new()
                 {
                     AssignmentId = 27,
                     UserId = 15477090,
@@ -409,7 +409,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 25, 20, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 28,
                     UserId = 15477090,
@@ -420,7 +420,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 25, 20, 1, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 29,
                     UserId = 15477090,
@@ -431,7 +431,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 25, 20, 3, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 30,
                     UserId = 15477090,
@@ -442,7 +442,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 25, 20, 05, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 31,
                     UserId = 15477090,
@@ -453,7 +453,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 25, 20, 8, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 32,
                     UserId = 15477090,
@@ -465,7 +465,7 @@ public class LAReportServiceUnitTests
                     EventDateTime = new DateTime(2020, 7, 25, 20, 12, 0)
                 },
                 //SINGLE MATCHES
-                new Assignment
+                new()
                 {
                     AssignmentId = 33,
                     UserId = 15477090,
@@ -476,7 +476,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 9, 1, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 34,
                     UserId = 15477090,
@@ -487,7 +487,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 9, 2, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 35,
                     UserId = 15477090,
@@ -498,7 +498,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 9, 3, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 36,
                     UserId = 15477090,
@@ -509,7 +509,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 9, 4, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 37,
                     UserId = 15477090,
@@ -520,7 +520,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 9, 5, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 38,
                     UserId = 15477090,
@@ -532,7 +532,7 @@ public class LAReportServiceUnitTests
                     EventDateTime = new DateTime(2020, 7, 9, 6, 0, 0)
                 },
                 //OTHERS
-                new Assignment
+                new()
                 {
                     AssignmentId = 110,
                     UserId = 15477090,
@@ -542,7 +542,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 4, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 130,
                     UserId = 15477090,
@@ -553,7 +553,7 @@ public class LAReportServiceUnitTests
                     EventDateTime = new DateTime(2020, 7, 4, 15, 0, 0)
                 },
                 //5ML
-                new Assignment
+                new()
                 {
                     AssignmentId = 131,
                     UserId = 15477090,
@@ -564,7 +564,7 @@ public class LAReportServiceUnitTests
                     EventDateTime = new DateTime(2022, 4, 9, 15, 0, 0)
                 },
                 //FT_Corner_5ML
-                new Assignment
+                new()
                 {
                     AssignmentId = 131,
                     UserId = 15477090,
@@ -574,7 +574,7 @@ public class LAReportServiceUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2022, 4, 9, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     AssignmentId = 131,
                     UserId = 15477090,
@@ -599,7 +599,7 @@ public class LAReportServiceUnitTests
     {
         return new List<LAReportModel>
             {
-                new LAReportModel
+                new()
                 {
                     UserId = 15477090,
                     Username = "sa",

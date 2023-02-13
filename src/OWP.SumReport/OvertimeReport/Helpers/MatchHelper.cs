@@ -7,7 +7,7 @@ using Models;
 public static class MatchHelper
 {
     private static readonly Dictionary<string, Func<Assignment, int>> pesOperations =
-        new Dictionary<string, Func<Assignment, int>>(StringComparer.InvariantCultureIgnoreCase)
+        new(StringComparer.InvariantCultureIgnoreCase)
         {
             { "15 Mins ", CalculateSABAPES15And20MinsMatchDuration },
             { "20 Mins ", CalculateSABAPES15And20MinsMatchDuration },

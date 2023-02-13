@@ -22,7 +22,7 @@ public class FutureSyncServiceUnitTests
 
     private readonly ICache cacheService;
 
-    private readonly DateTime from = new DateTime(2018, 1, 1);
+    private readonly DateTime from = new(2018, 1, 1);
 
     public FutureSyncServiceUnitTests()
     {

@@ -66,7 +66,6 @@ public class CoverageBuilderUnitTests
                 new() {website_id = 20, coverage_id = 2}
             }
         });
-        var expected = new List<string> { "" };
 
         Assert.Equal("RB2TV", actual);
     }

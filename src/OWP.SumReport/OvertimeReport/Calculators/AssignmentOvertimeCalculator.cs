@@ -8,7 +8,7 @@ using Models;
 public static class AssignmentOvertimeCalculator
 {
     private static readonly Dictionary<string, Func<Assignment, int>> sabaOperations =
-        new Dictionary<string, Func<Assignment, int>>(StringComparer.InvariantCultureIgnoreCase)
+        new(StringComparer.InvariantCultureIgnoreCase)
         {
             { "PES ", MatchHelper.CalculateSABAPESMatchDuration },
             { "FIFA ", MatchHelper.CalculateSABAFIFAMatchDuration },
@@ -51,7 +51,7 @@ public static class AssignmentOvertimeCalculator
                  BetType.MinorMatchBetTypes.Contains(assignment.MinorBettypeId.Value))
                )
             {
-                var mainMatch = mainMatchRemarks.First(x => x.OWPMatchId == assignment.ParentMatchId.Value);
+                var mainMatch = mainMatchRemarks.FirstOrDefault(x => x.OWPMatchId == assignment.ParentMatchId.Value);
 
                 if (mainMatch != null)
                 {

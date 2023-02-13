@@ -22,7 +22,7 @@ public class NapUserControlServiceUnitTests
         // Arrange
         var userFunctionModels = new List<UserFunctionModel>
             {
-                new UserFunctionModel
+                new()
                 {
                      FunctionId=1,
                       Policy=2,
@@ -46,7 +46,7 @@ public class NapUserControlServiceUnitTests
         // Arrange
         var userFunctionModels = new List<UserFunctionModel>
             {
-                new UserFunctionModel
+                new()
                 {
                      FunctionId=1,
                      Policy=2,

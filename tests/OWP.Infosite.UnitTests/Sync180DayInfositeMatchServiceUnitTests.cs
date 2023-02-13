@@ -7,7 +7,7 @@ using Xunit;
 
 public class Sync180DayInfositeMatchServiceUnitTests
 {
-    private readonly DateTime from = new DateTime(2018, 1, 1);
+    private readonly DateTime from = new(2018, 1, 1);
 
     [Fact]
     public async Task Sync_GetDataForSevenFutureDay()

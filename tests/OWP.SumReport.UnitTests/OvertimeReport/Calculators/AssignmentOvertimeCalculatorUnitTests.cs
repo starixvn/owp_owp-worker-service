@@ -13,7 +13,7 @@ public class AssignmentOvertimeCalculatorUnitTests
     {
         var mockAssignments = new List<Assignment>
             {
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 1,
@@ -22,7 +22,7 @@ public class AssignmentOvertimeCalculatorUnitTests
                     Bettype = 1,
                     EventDateTime = new DateTime(2021, 10, 27, 2, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 1,
@@ -31,7 +31,7 @@ public class AssignmentOvertimeCalculatorUnitTests
                     Bettype = 3,
                     EventDateTime = new DateTime(2021, 10, 27, 2, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 2,
@@ -40,7 +40,7 @@ public class AssignmentOvertimeCalculatorUnitTests
                     Bettype = 1,
                     EventDateTime = new DateTime(2021, 10, 27, 13, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 1880087,
@@ -64,7 +64,7 @@ public class AssignmentOvertimeCalculatorUnitTests
     {
         var mockAssignments = new List<Assignment>
             {
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 1,
@@ -73,7 +73,7 @@ public class AssignmentOvertimeCalculatorUnitTests
                     Bettype = 1,
                     EventDateTime = new DateTime(2021, 10, 27, 2, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 1,
@@ -82,7 +82,7 @@ public class AssignmentOvertimeCalculatorUnitTests
                     Bettype = 3,
                     EventDateTime = new DateTime(2021, 10, 27, 2, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 2,
@@ -91,7 +91,7 @@ public class AssignmentOvertimeCalculatorUnitTests
                     Bettype = 1,
                     EventDateTime = new DateTime(2021, 10, 27, 13, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 1880087,

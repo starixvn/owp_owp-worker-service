@@ -28,11 +28,11 @@ public class ApiServiceUnitTests
 
     private const int expectedNumberOfMatchsAllDays = 1;
 
-    private readonly DateTime fromDate = new DateTime(2018, 1, 2);
+    private readonly DateTime fromDate = new(2018, 1, 2);
 
-    private readonly DateTime toDate = new DateTime(2018, 1, 4);
+    private readonly DateTime toDate = new(2018, 1, 4);
 
-    private readonly DateTime lastUpdatedTime = new DateTime(2018, 1, 1);
+    private readonly DateTime lastUpdatedTime = new(2018, 1, 1);
 
     public ApiServiceUnitTests()
     {

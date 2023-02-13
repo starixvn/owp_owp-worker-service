@@ -30,7 +30,7 @@ public static class WatchBetBuilder
     }
 
     public static string SelectTemplateWb(string wb, string stream)
-        => wb = !string.IsNullOrWhiteSpace(wb)
+        => !string.IsNullOrWhiteSpace(wb)
             ? $"{wb}/{stream}"
             : stream;
 

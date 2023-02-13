@@ -188,7 +188,7 @@ public class LeagueSettingsServiceImp : LeagueSettingsService
             return weekdayMatch;
         }
 
-        return weekendMatch?.EventDateTime >= weekdayMatch?.EventDateTime ? weekendMatch : weekdayMatch;
+        return weekendMatch.EventDateTime >= weekdayMatch.EventDateTime ? weekendMatch : weekdayMatch;
     }
 
     private static decimal? Get1HSpread(decimal? ftSpread)

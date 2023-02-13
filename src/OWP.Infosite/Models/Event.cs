@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 public class Event
 {
     private const int SoccerSportId = 1;
-    private static readonly DateTime MinDate = new DateTime(2000, 1, 1);
+    private static readonly DateTime MinDate = new(2000, 1, 1);
     private readonly CommonMatchModel InfositeMatch;
     private readonly SoccerEventSchedule ExtInfo;
 

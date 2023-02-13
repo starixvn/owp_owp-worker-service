@@ -28,13 +28,13 @@ public class UpdateInfositeIdServiceUnitTests
     {
         var matchRelations = new List<MatchRelation>
             {
-                new MatchRelation { match_id = 111, parent_match_id = 222 },
-                new MatchRelation{ match_id = 200, parent_match_id = 200 }
+                new() { match_id = 111, parent_match_id = 222 },
+                new() { match_id = 200, parent_match_id = 200 }
             };
 
         apiService.QueryMatchesRelation(Arg.Compat.Any<ParamsQueryModel>()).Returns(matchRelations);
 
-        var expected = new List<MatchRelationEvent> { new MatchRelationEvent(matchRelations[0]) };
+        var expected = new List<MatchRelationEvent> { new(matchRelations[0]) };
 
         var actual = await services.QueryMergedMatchEvents(new DateTime(2021, 04, 29));
 
@@ -46,8 +46,8 @@ public class UpdateInfositeIdServiceUnitTests
     {
         var matchRelations = new List<MatchRelation>
             {
-                new MatchRelation { match_id = 111, parent_match_id = 222 },
-                new MatchRelation{ match_id = 200, parent_match_id = 200 }
+                new() { match_id = 111, parent_match_id = 222 },
+                new() { match_id = 200, parent_match_id = 200 }
             };
 
         apiService.QueryMatchesRelation(Arg.Compat.Any<ParamsQueryModel>()).Returns(matchRelations);

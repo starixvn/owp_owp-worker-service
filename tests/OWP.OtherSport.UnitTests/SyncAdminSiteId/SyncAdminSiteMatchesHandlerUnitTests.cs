@@ -16,15 +16,13 @@ using Xunit;
 public class SyncAdminSiteMatchesHandlerUnitTests
 {
     private readonly IDynamicRepository dynamicRepository;
-    private readonly SyncLiveToAdminSiteHandler syncLiveService;
     private readonly SyncAdminSiteMatchesHandlerImp service;
-    private readonly CacheManipulator cacheManipulator;
 
     public SyncAdminSiteMatchesHandlerUnitTests()
     {
         dynamicRepository = Substitute.For<IDynamicRepository>();
-        syncLiveService = Substitute.For<SyncLiveToAdminSiteHandler>();
-        cacheManipulator = Substitute.For<CacheManipulator>();
+        var syncLiveService = Substitute.For<SyncLiveToAdminSiteHandler>();
+        var cacheManipulator = Substitute.For<CacheManipulator>();
 
         dynamicRepository.FetchAsync<Match>(Arg.Any<GetMatchesFromOWPCriteria>()).Returns(GetOWPMatches());
         dynamicRepository.FetchAsync<Match>(Arg.Any<GetMatchesFromAdminSiteCriteria>()).Returns(GetAdminSiteMatches());
@@ -45,7 +43,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
     private IEnumerable<LinkedMatch> GetUnlinkedMatches()
         => new List<LinkedMatch>
         {
-                new LinkedMatch
+                new()
                 {
                     AdminSiteMatchId = 123,
                     OSMatchId = 1,
@@ -59,7 +57,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                     NewEventDate = new DateTime(2021, 03, 18),
                     OldEventDate = new DateTime(2021, 03, 18)
                 },
-                new LinkedMatch
+                new()
                 {
                     AdminSiteMatchId = 234,
                     OSMatchId = 53,
@@ -73,7 +71,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                     NewEventDate = new DateTime(2021, 03, 18),
                     OldEventDate = new DateTime(2021, 03, 18)
                 },
-                new LinkedMatch
+                new()
                 {
                     AdminSiteMatchId = 345,
                     OSMatchId = 54,
@@ -89,33 +87,10 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                 }
         };
 
-    private IEnumerable<LinkedMatch> GetLinkedMatches()
-        => new List<LinkedMatch>
-        {
-                new LinkedMatch
-                {
-                    OSMatchId = 79,
-                    OWPLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)11",
-                    OWPHome = "Dalian Pro FC (N)11",
-                    OWPAway = "Guangzhou R&F11",
-                    OldAdminSiteMatchId = 1,
-                    OldEventDate = new DateTime(2021, 03, 18, 20, 05, 0)
-                },
-                new LinkedMatch
-                {
-                    OSMatchId = 113,
-                    OWPLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)11",
-                    OWPHome = "Dalian Pro FC (N)12",
-                    OWPAway = "Guangzhou R&F12",
-                    OldAdminSiteMatchId = 2,
-                    OldEventDate = new DateTime(2021, 03, 18)
-                }
-        };
-
     private IEnumerable<Match> GetOWPMatches()
         => new List<Match>
         {
-                new Match
+                new()
                 {
                     OSMatchId = 1,
                     Sport = "Basketball",
@@ -125,7 +100,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = null
                 },
-                new Match
+                new()
                 {
                     OSMatchId = 53,
                     Sport = "Basketball",
@@ -135,7 +110,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = null
                 },
-                new Match
+                new()
                 {
                     OSMatchId = 54,
                     Sport = "Basketball",
@@ -145,7 +120,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = null
                 },
-                new Match
+                new()
                 {
                     OSMatchId = 79,
                     Sport = "Netball",
@@ -155,7 +130,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                     EventDateTime = new DateTime(2021, 03, 18, 20, 05, 0),
                     AdminSiteMatchId = 1
                 },
-                new Match
+                new()
                 {
                     OSMatchId = 113,
                     Sport = "Netball",
@@ -165,7 +140,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 2
                 },
-                new Match
+                new()
                 {
                     OSMatchId = 114,
                     Sport = "Netball",
@@ -180,7 +155,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
     private IEnumerable<Match> GetAdminSiteMatches()
         => new List<Match>
         {
-                new Match
+                new()
                 {
                     Sport = "Basketball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
@@ -189,7 +164,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 123
                 },
-                new Match
+                new()
                 {
                     Sport = "Basketball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
@@ -198,7 +173,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 234
                 },
-                new Match
+                new()
                 {
                     Sport = "Basketball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
@@ -207,7 +182,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 345
                 },
-                new Match
+                new()
                 {
                     Sport = "Netball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)113",
@@ -216,7 +191,7 @@ public class SyncAdminSiteMatchesHandlerUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 1
                 },
-                new Match
+                new()
                 {
                     Sport = "Netball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)114",

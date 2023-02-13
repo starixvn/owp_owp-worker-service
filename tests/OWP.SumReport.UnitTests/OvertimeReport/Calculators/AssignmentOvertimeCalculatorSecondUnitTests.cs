@@ -18,7 +18,7 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
         };
         var mainMatchRemarks = new List<MainMatch>
         {
-                new MainMatch
+                new()
                 {
                     OWPMatchId = 2,
                     Remark = " ET/PK"
@@ -41,7 +41,7 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
         };
         var mainMatchRemarks = new List<MainMatch>
         {
-                new MainMatch
+                new()
                 {
                     OWPMatchId = 2,
                     Remark = " ET/PK"
@@ -68,7 +68,7 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
         };
         var mainMatchRemarks = new List<MainMatch>
         {
-                new MainMatch
+                new()
                 {
                     OWPMatchId = 2,
                     Remark = "ET/PK",
@@ -96,7 +96,7 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
         };
         var mainMatchRemarks = new List<MainMatch>
         {
-                new MainMatch
+                new()
                 {
                     OWPMatchId = 2,
                     Remark = " ET/PK",
@@ -124,7 +124,7 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
         };
         var mainMatchRemarks = new List<MainMatch>
         {
-                new MainMatch
+                new()
                 {
                     OWPMatchId = 2,
                     Remark = "ET/PK"
@@ -142,7 +142,7 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
     private IEnumerable<Assignment> MockFTAssignmentsHavingETPK()
         => new List<Assignment>
         {
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 1,
@@ -153,7 +153,7 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
                     OWPLeagueName = "SABA",
                     Remark = " ET/PK"
                 },
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 2,
@@ -164,7 +164,7 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
                     OWPLeagueName = "CLeague",
                     Remark = " ET/PK"
                 },
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 169368,
@@ -180,7 +180,7 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
     private IEnumerable<Assignment> Mock1HAssignments()
         => new List<Assignment>
         {
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 1,
@@ -191,7 +191,7 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
                     OWPLeagueName = "SABA",
                     Remark = "ET/PK"
                 },
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 169368,
@@ -207,7 +207,7 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
     private IEnumerable<Assignment> MockCornerAssignmentsWithETPKMainMatch()
         => new List<Assignment>
         {
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 1,
@@ -218,7 +218,7 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
                     OWPLeagueName = "SABA",
                     Remark = "ET/PK"
                 },
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 169368,
@@ -234,7 +234,7 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
     private IEnumerable<Assignment> MockOutShiftAssignments()
         => new List<Assignment>
         {
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 1,
@@ -245,7 +245,7 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
                     OWPLeagueName = "SABA",
                     Remark = " ET/PK"
                 },
-                new Assignment
+                new()
                 {
                     UserId = 1,
                     OWPMatchId = 169368,

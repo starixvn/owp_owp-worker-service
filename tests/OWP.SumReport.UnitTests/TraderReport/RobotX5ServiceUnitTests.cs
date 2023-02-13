@@ -241,12 +241,12 @@ public class RobotX5ServiceUnitTests
             };
         var expected = new List<RobotX5ByUser>
             {
-                new RobotX5ByUser
+                new()
                 {
                     UserId = 846029,
                     X5 = 0
                 },
-                new RobotX5ByUser
+                new()
                 {
                     UserId = 360418,
                     X5 = 1

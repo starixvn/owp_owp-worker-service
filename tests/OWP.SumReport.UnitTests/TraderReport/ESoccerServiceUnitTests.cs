@@ -30,7 +30,7 @@ public class ESoccerServiceUnitTests
     }
 
     private List<ESoccerByUser> MockExpect()
-        => new List<ESoccerByUser>
+        => new()
         {
             new ESoccerByUser
             {
@@ -53,7 +53,7 @@ public class ESoccerServiceUnitTests
         };
 
     private static List<Assignment> MockAssignments()
-        => new List<Assignment>
+        => new()
         {
             new Assignment { UserId = 111, OWPMatchId = 1, OWPLeagueName = "SABA - 5 Mins Play"},
             new Assignment { UserId = 111, OWPMatchId = 2, OWPLeagueName = "SABA - 6 Mins Play"},

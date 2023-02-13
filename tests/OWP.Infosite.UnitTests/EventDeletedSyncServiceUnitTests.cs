@@ -17,7 +17,7 @@ public class EventDeletedSyncServiceUnitTests
 
     private readonly ILogger logger;
 
-    private readonly DateTime from = new DateTime(2018, 1, 1);
+    private readonly DateTime from = new(2018, 1, 1);
 
     public EventDeletedSyncServiceUnitTests()
     {

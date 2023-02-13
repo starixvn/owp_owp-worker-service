@@ -39,7 +39,7 @@ public class LinkLeagueAndMatchUnitTests
 
         var teamInfo = new List<TeamInfo>
             {
-                new TeamInfo
+                new()
                 {
                     TeamId = 123,
                     LeagueCategoryId = 5
@@ -58,7 +58,6 @@ public class LinkLeagueAndMatchUnitTests
     {
         // Arrange
         var linkLeagueAndMatch = new LinkLeagueAndTeamServiceImp(cache, repository);
-        var startTime = new DateTime(2021, 10, 21, 0, 0, 0);
 
         // Act
         await linkLeagueAndMatch.Execute();
@@ -130,12 +129,12 @@ public class LinkLeagueAndMatchUnitTests
             .GetTeamInfoInTimeRange(startTime, endTime)
             .Returns(new List<TeamInfo>
             {
-                    new TeamInfo
+                    new()
                     {
                         TeamId = 123,
                         LeagueCategoryId = 1
                     },
-                    new TeamInfo
+                    new()
                     {
                         TeamId = 123,
                         LeagueCategoryId = 1

@@ -20,7 +20,7 @@ public class SpecialMatchBuilderUnitTests
     public IEnumerable<MappedChildMatch> MockMappedChildMatch()
         => new List<MappedChildMatch>
         {
-            new MappedChildMatch
+            new()
             {
                 HomeName = "Hokkaido Consadole Sapporo 3rd Corner",
                 AwayName = "Kyoto Sanga 3rd Corner",
@@ -29,7 +29,7 @@ public class SpecialMatchBuilderUnitTests
                 ParentInfoSiteMatchId = 1,
                 EventDateTime = new DateTime(2022,04,15),
             },
-            new MappedChildMatch
+            new()
             {
                 HomeName = "Hokkaido Consadole Sapporo 3rd Corner",
                 AwayName = "Kyoto Sanga 3rd Corner",
@@ -38,7 +38,7 @@ public class SpecialMatchBuilderUnitTests
                 ParentInfoSiteMatchId = 1,
                 EventDateTime = new DateTime(2022,04,15),
             },
-            new MappedChildMatch
+            new()
             {
                 HomeName = "Hokkaido Consadole Sapporo 3rd booking",
                 AwayName = "Kyoto Sanga 3rd booking",
@@ -47,7 +47,7 @@ public class SpecialMatchBuilderUnitTests
                 ParentInfoSiteMatchId = 1,
                 EventDateTime = new DateTime(2022,04,15),
             },
-            new MappedChildMatch
+            new()
             {
                 HomeName = "Hokkaido Consadole Sapporo 4rd booking",
                 AwayName = "Kyoto Sanga 4rd booking",
@@ -56,7 +56,7 @@ public class SpecialMatchBuilderUnitTests
                 ParentInfoSiteMatchId = 1,
                 EventDateTime = new DateTime(2022,04,15),
             },
-            new MappedChildMatch
+            new()
             {
                 HomeName = "Hokkaido Consadole Sapporo",
                 AwayName = "Kyoto Sanga ",
@@ -65,7 +65,7 @@ public class SpecialMatchBuilderUnitTests
                 ParentInfoSiteMatchId = 1,
                 EventDateTime = new DateTime(2022,04,15),
             },
-            new MappedChildMatch
+            new()
             {
                 HomeName = "Hokkaido Consadole Sapporo  00:00-15:00",
                 AwayName = "Kyoto Sanga  00:00-15:00",
@@ -79,7 +79,7 @@ public class SpecialMatchBuilderUnitTests
     public IList<MappedChildMatch> MockExpected()
         => new List<MappedChildMatch>
         {
-            new MappedChildMatch
+            new()
             {
                 HomeName = "Hokkaido Consadole Sapporo Next Corners",
                 AwayName = "Kyoto Sanga Next Corners",
@@ -88,7 +88,7 @@ public class SpecialMatchBuilderUnitTests
                 EventDateTime = new DateTime(2022,04,15),
                 MinorBettypeId = -4,
             },
-            new MappedChildMatch
+            new()
             {
                 HomeName = "Hokkaido Consadole Sapporo Next Booking",
                 AwayName = "Kyoto Sanga Next Booking",
@@ -97,7 +97,7 @@ public class SpecialMatchBuilderUnitTests
                 EventDateTime = new DateTime(2022,04,15),
                 MinorBettypeId = -7,
             },
-            new MappedChildMatch
+            new()
             {
                 HomeName = "Hokkaido Consadole Sapporo",
                 AwayName = "Kyoto Sanga ",
@@ -105,7 +105,7 @@ public class SpecialMatchBuilderUnitTests
                 ParentInfoSiteMatchId = 1,
                 EventDateTime = new DateTime(2022,04,15)
             },
-            new MappedChildMatch
+            new()
             {
                 HomeName = "Hokkaido Consadole Sapporo  (SPECIFIC 15 MINS)",
                 AwayName = "Kyoto Sanga  (SPECIFIC 15 MINS)",

@@ -23,7 +23,7 @@ public class SyncServiceImp
     private readonly RabbitMqClient rabbitMqClient;
     private readonly ICache cacheService;
 
-    protected readonly DateTime minDate = new DateTime(2000, 1, 1);
+    protected readonly DateTime minDate = new(2000, 1, 1);
     protected DateTimeService dateTimeService { get; }
 
     public SyncServiceImp(

@@ -9,7 +9,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
 {
     private readonly IList<Assignment> assignments = new List<Assignment>
             {
-                new Assignment
+                new()
                 {
                     UserId = 15477090,
                     ProviderName = "IPSD",
@@ -19,7 +19,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 25, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 15477090,
                     ProviderName = "BET/TV",
@@ -29,7 +29,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
                     ParentMatchId = 428031,
                     EventDateTime = new DateTime(2020, 7, 25, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 15477090,
                     ProviderName = "MRB",
@@ -39,7 +39,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 25, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 15477090,
                     ProviderName = "FC",
@@ -49,7 +49,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 26, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 15477090,
                     ProviderName = "TV",
@@ -59,7 +59,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
                     ParentMatchId = 123456,
                     EventDateTime = new DateTime(2020, 7, 26, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 15477090,
                     ProviderName = "Reporter",
@@ -69,7 +69,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
                     ParentMatchId = null,
                     EventDateTime = new DateTime(2020, 7, 26, 15, 0, 0)
                 },
-                new Assignment
+                new()
                 {
                     UserId = 15477090,
                     ProviderName = "IPSD/TV",
@@ -86,7 +86,6 @@ public class MultipleAndSingleMatchesRuleUnitTests
     {
         // Arrange
         var firstRule = new SingleMatchesRule();
-        var secondRule = new IsSingleMatchesRule();
         var assignment = new Assignment { ProviderName = string.Empty };
 
         // Act
