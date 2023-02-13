@@ -1,6 +1,6 @@
-﻿using System;
+﻿namespace OWP.Attributes;
 
-namespace OWP.Core.Attributes;
+using System;
 
 [AttributeUsage(AttributeTargets.All)]
 public sealed class XmlNameAttribute : Attribute

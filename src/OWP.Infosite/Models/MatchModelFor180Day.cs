@@ -1,5 +1,5 @@
-﻿using OWP.Core.Attributes;
-using OWP.Core.Extensions;
+﻿using OWP.Attributes;
+using OWP.Extensions;
 
 namespace OWP.Infosite.Models;
 

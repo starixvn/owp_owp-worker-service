@@ -1,11 +1,11 @@
+namespace OWP.RabbitMq;
+
 using System.Text;
 using Fanex.Logging;
 using Microsoft.Extensions.Options;
+using Models;
 using Newtonsoft.Json;
-using OWP.Core.RabbitMq.Models;
 using RabbitMQ.Client;
-
-namespace OWP.Core.RabbitMq;
 
 public interface RabbitMqClient
 {

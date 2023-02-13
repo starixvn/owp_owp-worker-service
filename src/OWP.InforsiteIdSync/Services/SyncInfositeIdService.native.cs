@@ -1,8 +1,8 @@
 ﻿using OWP.InfositeIdSync.Helpers;
 using OWP.Infosite.Services;
 using System.Globalization;
-using OWP.Core.RabbitMq;
-using OWP.Core.RabbitMq.Models;
+using OWP.RabbitMq;
+using OWP.RabbitMq.Models;
 
 namespace OWP.InfositeIdSync.Services;
 

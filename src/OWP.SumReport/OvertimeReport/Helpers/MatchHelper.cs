@@ -1,4 +1,4 @@
-﻿using OWP.Core.Extensions;
+﻿using OWP.Extensions;
 using OWP.SumReport.OvertimeReport.Constants;
 using OWP.SumReport.OvertimeReport.Models;
 

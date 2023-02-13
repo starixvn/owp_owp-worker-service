@@ -1,4 +1,4 @@
-﻿using OWP.Core.Extensions;
+﻿using OWP.Extensions;
 using OWP.SumReport.LAReport.Enum;
 using OWP.SumReport.LAReport.Models;
 using System.Xml.Linq;

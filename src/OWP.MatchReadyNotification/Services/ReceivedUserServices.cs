@@ -1,4 +1,4 @@
-﻿using OWP.Core.Extensions;
+﻿using OWP.Extensions;
 using OWP.MatchReadyNotification.Models;
 
 namespace OWP.MatchReadyNotification.Services;

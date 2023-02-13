@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Olympus.InfoSiteClient;
 using Olympus.InfoSiteClient.Models;
-using OWP.Core.Extensions;
+using OWP.Extensions;
 using OWP.Infosite.Builder;
 using OWP.Infosite.Criteria;
 using OWP.Infosite.Helper;

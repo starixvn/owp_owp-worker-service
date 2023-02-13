@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using OWP.Core.Extensions;
+using OWP.Extensions;
 using OWP.InfositeIdSync.Models;
 
 namespace OWP.InfositeIdSync.Helpers;

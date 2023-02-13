@@ -1,6 +1,6 @@
 ﻿using Fanex.Caching;
 using Fanex.Data.Repository;
-using OWP.Core.RabbitMq;
+using OWP.RabbitMq;
 
 namespace OWP.Infosite.Services;
 

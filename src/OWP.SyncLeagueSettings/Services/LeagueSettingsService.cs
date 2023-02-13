@@ -1,4 +1,4 @@
-﻿using OWP.Core.Extensions;
+﻿using OWP.Extensions;
 using OWP.SyncLeagueSettings.Constants;
 using OWP.SyncLeagueSettings.Helpers;
 using OWP.SyncLeagueSettings.Models;

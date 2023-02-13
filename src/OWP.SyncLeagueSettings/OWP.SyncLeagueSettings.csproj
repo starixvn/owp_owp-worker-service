@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OWP.Core\OWP.csproj" />
+    <ProjectReference Include="..\OWP\OWP.csproj" />
   </ItemGroup>
 
   <ItemGroup>

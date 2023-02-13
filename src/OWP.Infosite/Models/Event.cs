@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
-using OWP.Core.Attributes;
-using OWP.Core.Extensions;
+using OWP.Attributes;
+using OWP.Extensions;
 using OWP.Infosite.Builder;
 using System.Xml.Serialization;
 

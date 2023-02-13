@@ -1,4 +1,4 @@
-namespace OWP.Core.RabbitMq.Models;
+namespace OWP.RabbitMq.Models;
 
 public class RabbitMQSetting
 {

@@ -1,7 +1,7 @@
 ﻿using Fanex.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using OWP.Core.Services;
+using OWP.Services;
 using OWP.Infosite.Settings;
 using OWP.OtherSport.SyncLive.Model;
 using System.Text;

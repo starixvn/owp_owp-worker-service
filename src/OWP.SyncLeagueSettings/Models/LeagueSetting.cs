@@ -1,4 +1,4 @@
-﻿using OWP.Core.Attributes;
+﻿using OWP.Attributes;
 
 namespace OWP.SyncLeagueSettings.Models;
 

@@ -1,8 +1,8 @@
 ﻿using Fanex.Caching;
 using Fanex.Data.Repository;
 using Newtonsoft.Json;
-using OWP.Core.RabbitMq;
-using OWP.Core.RabbitMq.Models;
+using OWP.RabbitMq;
+using OWP.RabbitMq.Models;
 using OWP.Infosite.Constants;
 using OWP.Infosite.Criteria;
 using OWP.Infosite.Models;

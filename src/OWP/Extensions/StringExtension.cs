@@ -1,4 +1,4 @@
-﻿namespace OWP.Core.Extensions;
+﻿namespace OWP.Extensions;
 
 public static class StringExtension
 {

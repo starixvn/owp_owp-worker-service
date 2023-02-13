@@ -7,8 +7,8 @@ using OWP.Infosite.Settings;
 using System.Net;
 using Xunit;
 using Xunit.Asserts.Compare;
-using OWP.Core.RabbitMq;
-using OWP.Core.Services;
+using OWP.RabbitMq;
+using OWP.Services;
 using Fanex.Caching;
 
 namespace OWP.Infosite.UnitTests;

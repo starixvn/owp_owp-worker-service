@@ -13,7 +13,7 @@ builder.Services.AddHostedService<OWPScheduler>();
 
 var app = builder.Build();
 
-app.UseRabbitMQ();
+app.UseRabbitMq();
 
 app.Run(async context =>
 {

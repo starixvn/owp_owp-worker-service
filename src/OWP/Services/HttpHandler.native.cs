@@ -1,4 +1,4 @@
-﻿namespace OWP.Core.Services;
+﻿namespace OWP.Services;
 
 public interface HttpHandler
 {

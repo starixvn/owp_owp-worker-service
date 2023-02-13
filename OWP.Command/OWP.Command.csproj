@@ -42,7 +42,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\src\OWP.Core\OWP.csproj" />
+		<ProjectReference Include="..\src\OWP\OWP.csproj" />
 		<ProjectReference Include="..\src\OWP.InforsiteIdSync\OWP.InfositeIdSync.csproj" />
 		<ProjectReference Include="..\src\OWP.Infosite\OWP.Infosite.csproj" />
 		<ProjectReference Include="..\src\OWP.LinkLeagueAndTeam\OWP.LinkLeagueAndTeam.csproj" />

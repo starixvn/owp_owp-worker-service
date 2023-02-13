@@ -1,4 +1,4 @@
-﻿using OWP.Core.Extensions;
+﻿using OWP.Extensions;
 using OWP.Infosite.Constants;
 using OWP.Infosite.Models;
 using System.Collections.Immutable;

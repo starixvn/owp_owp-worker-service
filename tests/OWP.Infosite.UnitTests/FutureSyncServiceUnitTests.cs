@@ -1,7 +1,7 @@
 ﻿using Fanex.Caching;
 using Fanex.Data.Repository;
 using NSubstitute;
-using OWP.Core.RabbitMq;
+using OWP.RabbitMq;
 using OWP.Infosite.Models;
 using OWP.Infosite.Services;
 using Xunit;

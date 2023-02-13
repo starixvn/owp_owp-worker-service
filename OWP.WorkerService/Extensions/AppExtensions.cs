@@ -1,4 +1,4 @@
-﻿using OWP.Core.RabbitMq;
+﻿using OWP.RabbitMq;
 
 namespace OWP.WorkerService.Extensions;
 

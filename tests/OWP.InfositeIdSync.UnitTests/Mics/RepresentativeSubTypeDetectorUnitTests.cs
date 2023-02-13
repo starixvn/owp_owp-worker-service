@@ -1,4 +1,4 @@
-using OWP.Core.Mics;
+using OWP.Mics;
 using Xunit;
 
 namespace OWP.InfositeIdSync.UnitTests.Mics;

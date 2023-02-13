@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using OWP.Core.Services;
+﻿namespace OWP;
 
-namespace OWP.InfositeIdSync;
+using Microsoft.Extensions.DependencyInjection;
+using Services;
 
 public static class DependenceInjection
 {

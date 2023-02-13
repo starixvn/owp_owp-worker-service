@@ -1,6 +1,6 @@
-using OWP.Core.RabbitMq.Consts;
+namespace OWP.RabbitMq.Models;
 
-namespace OWP.Core.RabbitMq.Models;
+using Consts;
 
 public class PrematchNewLeagueNotifyRequest: RequestBaseModel
 {

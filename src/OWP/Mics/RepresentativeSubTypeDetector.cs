@@ -1,6 +1,6 @@
-﻿using OWP.Core.Constants;
+﻿namespace OWP.Mics;
 
-namespace OWP.Core.Mics;
+using Constants;
 
 public class RepresentativeSubTypeDetector
 {

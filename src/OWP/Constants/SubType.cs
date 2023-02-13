@@ -1,4 +1,4 @@
-namespace OWP.Core.Constants;
+namespace OWP.Constants;
 
 public static class SubType
 {

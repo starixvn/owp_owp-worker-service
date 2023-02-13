@@ -1,8 +1,8 @@
 ﻿using Fanex.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using OWP.Core.Extensions;
-using OWP.Core.Services;
+using OWP.Extensions;
+using OWP.Services;
 using OWP.Infosite.Constants;
 using OWP.Infosite.Models;
 using OWP.Infosite.Settings;

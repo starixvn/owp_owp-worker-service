@@ -1,4 +1,4 @@
-﻿using OWP.Core.Extensions;
+﻿using OWP.Extensions;
 using OWP.SumReport.TraderReport.Models;
 
 namespace OWP.SumReport.TraderReport.Services;
