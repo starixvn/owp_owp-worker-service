@@ -36,7 +36,7 @@ public static class MatchHelpers
         var result = matches.FirstOrDefault();
         var resultMaxbet = result.MatchSettings.Max(x => x.Maxbet);
 
-        for (var i = 1; i < matches.Count(); i++)
+        for (var i = 1; i < matches.Count; i++)
         {
             var maxbet = matches[i].MatchSettings.Max(x => x.Maxbet);
 

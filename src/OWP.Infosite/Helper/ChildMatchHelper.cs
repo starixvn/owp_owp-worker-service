@@ -17,7 +17,7 @@ public static class ChildMatchHelper
         secondType.NextType = thirdType;
         thirdType.NextType = fourthType;
         fourthType.NextType = fifthType;
-        var representativeSubtype = firstType.GetRepresentativeSubtype(subType.Value);
+        var representativeSubtype = firstType.GetRepresentativeSubtype(subType ?? 0);
         var minorBetTypeId = MinorBettype.GetMinorBettypeIdBySubtype(representativeSubtype);
 
         return (representativeSubtype, minorBetTypeId);

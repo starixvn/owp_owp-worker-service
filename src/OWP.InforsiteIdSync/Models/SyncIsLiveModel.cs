@@ -11,7 +11,7 @@ public class SyncIsLiveModel : IEqualityComparer<SyncIsLiveModel>
     public int? MinorBetTypeId { get; set; }
 
     public bool Equals(SyncIsLiveModel x, SyncIsLiveModel y)
-        => x.InfoSiteMatchId == y.InfoSiteMatchId && x.MinorBetTypeId == y.MinorBetTypeId;
+        => x != null && y != null && x.InfoSiteMatchId == y.InfoSiteMatchId && x.MinorBetTypeId == y.MinorBetTypeId;
 
     public int GetHashCode(SyncIsLiveModel obj)
         => MinorBetTypeId.HasValue ? InfoSiteMatchId * MinorBetTypeId.Value : InfoSiteMatchId;
@@ -20,7 +20,7 @@ public class SyncIsLiveModel : IEqualityComparer<SyncIsLiveModel>
 public class IsLiveComparer : IEqualityComparer<SyncIsLiveModel>
 {
     public bool Equals(SyncIsLiveModel x, SyncIsLiveModel y)
-        => x.InfoSiteMatchId == y.InfoSiteMatchId && x.MinorBetTypeId == y.MinorBetTypeId && x.IsLive == y.IsLive;
+        => x != null && y != null && x.InfoSiteMatchId == y.InfoSiteMatchId && x.MinorBetTypeId == y.MinorBetTypeId && x.IsLive == y.IsLive;
 
     public int GetHashCode(SyncIsLiveModel obj)
         => obj.MinorBetTypeId.HasValue ? obj.InfoSiteMatchId * obj.MinorBetTypeId.Value : obj.InfoSiteMatchId;

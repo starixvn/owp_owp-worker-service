@@ -78,7 +78,7 @@ public static class MatchHelper
     private static SyncIsLiveModel MapMinorMatch(List<SyncIsLiveModel> owpMatches, MainDBMatch minorDB02Match)
     {
         var minorBettypeId = GetOWPMinorMatchIdFromSubtype(minorDB02Match.SubType);
-        var mainInfositeMatchId = GetInfoSiteMatchIdForMainMatch(owpMatches, minorDB02Match.ParentId.Value);
+        var mainInfositeMatchId = GetInfoSiteMatchIdForMainMatch(owpMatches, minorDB02Match.ParentId ?? 0);
         return new SyncIsLiveModel
         {
             MinorBetTypeId = minorBettypeId,

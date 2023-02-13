@@ -47,7 +47,7 @@ public static class AssignmentOvertimeCalculator
         foreach (var assignment in latestAssignments)
         {
             if (assignment.ParentMatchId.HasValue &&
-                (BetType.FullTimeMinorBetTypes.Contains(assignment.MinorBettypeId.Value) ||
+                (BetType.FullTimeMinorBetTypes.Contains(assignment.MinorBettypeId ?? 0) ||
                  BetType.MinorMatchBetTypes.Contains(assignment.MinorBettypeId.Value))
                )
             {
@@ -69,7 +69,7 @@ public static class AssignmentOvertimeCalculator
 
     public static (string, DateTime) GetMainMatchInfo(MainMatch mainMatch, Assignment assignment)
     {
-        if (BetType.MinorMatchBetTypes.Contains(assignment.MinorBettypeId.Value) &&
+        if (BetType.MinorMatchBetTypes.Contains(assignment.MinorBettypeId ?? 0) &&
             MatchHelper.IsHavingETPK(mainMatch.Remark))
         {
             return (" ET", mainMatch.EventDateTime);

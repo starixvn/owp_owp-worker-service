@@ -17,13 +17,11 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
 {
     private readonly IDynamicRepository dynamicRepository;
     private readonly SyncLiveToAdminSiteHandler syncLiveService;
-    private readonly CacheManipulator cacheManipulator;
 
     public SyncAdminSiteMatchesHandlerImp(IDynamicRepository repository, SyncLiveToAdminSiteHandler syncLiveService, CacheManipulator cacheManipulator)
     {
         dynamicRepository = repository;
         this.syncLiveService = syncLiveService;
-        this.cacheManipulator = cacheManipulator;
     }
 
     public async Task Handle(DateTime eventDate)

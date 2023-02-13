@@ -24,12 +24,13 @@ public class EditEventGeneratorImp : EditEventGenerator
         var owpMatchHasAdminSiteId = owpMatches.Where(x => x.AdminSiteMatchId.HasValue).Distinct();
         foreach (var match in owpMatchHasAdminSiteId)
         {
-            var adminsiteMatch = adminSiteMatches.FirstOrDefault(x => x.AdminSiteMatchId == match.AdminSiteMatchId);
-            if (adminsiteMatch != null && adminsiteMatch.OfferLive != match.OfferLive)
+            var adminSiteMatch = adminSiteMatches.FirstOrDefault(x => x.AdminSiteMatchId == match.AdminSiteMatchId);
+            if (adminSiteMatch != null && adminSiteMatch.OfferLive != match.OfferLive)
             {
-                yield return new EditEvent { 
-                    in_house_match_id = (int)match.AdminSiteMatchId, 
-                    is_live = match.OfferLive 
+                yield return new EditEvent
+                {
+                    in_house_match_id = match.AdminSiteMatchId ?? 0,
+                    is_live = match.OfferLive
                 };
             }
         }

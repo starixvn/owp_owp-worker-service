@@ -22,10 +22,6 @@ public class ApiServiceUnitTests
 
     private readonly ILogger logger;
 
-    private readonly RabbitMqClient rabbitMqClient;
-
-    private readonly ICache cacheService;
-
     private const int expectedNumberOfMatchsAllDays = 1;
 
     private readonly DateTime fromDate = new(2018, 1, 2);
@@ -39,8 +35,8 @@ public class ApiServiceUnitTests
         appSettings = Options.Create(new InfoSiteSettings());
         httpHandler = Substitute.For<HttpHandler>();
         logger = Substitute.For<ILogger>();
-        rabbitMqClient = Substitute.For<RabbitMqClient>();
-        cacheService = Substitute.For<ICache>();
+        Substitute.For<RabbitMqClient>();
+        Substitute.For<ICache>();
     }
 
     [Fact]

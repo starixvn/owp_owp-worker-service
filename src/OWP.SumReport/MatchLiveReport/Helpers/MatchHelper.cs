@@ -71,7 +71,7 @@ public static class MatchHelper
 
         foreach (var match in minorMatches)
         {
-            var isBetTypeExisted = BetTypeMap.TryGetValue((MinorBetType)match.MinorBettypeId.Value, out var streamName);
+            var isBetTypeExisted = BetTypeMap.TryGetValue((MinorBetType)(match.MinorBettypeId ?? 0), out var streamName);
             match.BetTypeName = isBetTypeExisted ? streamName : BetTypeName.Other;
             match.LeagueCategory = GetMainLeagueCategory(match, mainMatches);
         }
