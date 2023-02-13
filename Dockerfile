@@ -6,7 +6,7 @@ RUN dotnet tool install --tool-path /tools dotnet-counters
 
 WORKDIR /src
 
-COPY ./src/OWP.Core/. ./src/OWP.Core
+COPY ./src/OWP/. ./src/OWP
 COPY ./src/OWP.InforsiteIdSync/. ./src/OWP.InforsiteIdSync
 COPY ./src/OWP.Infosite/. ./src/OWP.Infosite
 COPY ./src/OWP.LinkLeagueAndTeam/. ./src/OWP.LinkLeagueAndTeam
