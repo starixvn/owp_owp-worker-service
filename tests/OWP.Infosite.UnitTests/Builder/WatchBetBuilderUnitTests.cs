@@ -7,7 +7,7 @@ using Xunit;
 public class WatchBetBuilderUnitTests
 {
     [Fact]
-    public void Build_WBhasValue_ReturnWB()
+    public void Build_WBHasValue_ReturnWB()
     {
         var actual = WatchBetBuilder.Build(new SoccerEventSchedule { wb = "WB" });
 
@@ -15,7 +15,7 @@ public class WatchBetBuilderUnitTests
     }
 
     [Fact]
-    public void Build_streamSrc1hasValue_ReturnWB()
+    public void Build_StreamSrc1hasValue_ReturnWB()
     {
         var actual = WatchBetBuilder.Build(new SoccerEventSchedule
         {

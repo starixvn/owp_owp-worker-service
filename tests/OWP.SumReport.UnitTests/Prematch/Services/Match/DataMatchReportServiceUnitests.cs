@@ -8,12 +8,12 @@ using PrematchReport;
 using Xunit;
 using Xunit.Asserts.Compare;
 
-public class DataMatchReportServiceUnitests
+public class DataMatchReportServiceUnitTests
 {
     private readonly Repository repository;
     private readonly DbWriterService dbWriterService;
 
-    public DataMatchReportServiceUnitests()
+    public DataMatchReportServiceUnitTests()
     {
         repository = Substitute.For<Repository>();
         dbWriterService = Substitute.For<DbWriterService>();
@@ -23,13 +23,13 @@ public class DataMatchReportServiceUnitests
     public async Task BuildMatchReport_Always_ReturnDataReport()
     {
         //Arrange
-        var matchservice = new DataMatchReportServiceImp(repository, dbWriterService);
+        var matchService = new DataMatchReportServiceImp(repository, dbWriterService);
         repository.GetTotalMatchByLeagueIds(Arg.Compat.Any<IList<int>>(), Arg.Compat.Any<DateTime>(), Arg.Compat.Any<DateTime>(), Arg.Compat.Any<DateTime>())
             .Returns(MockTotalDataMatch());
         var leagueDetailInfos = MockLeagueDetailInfo();
 
         //Act
-        var actual = await matchservice.BuildMatchReport(leagueDetailInfos, DateTime.Now, null, 1);
+        var actual = await matchService.BuildMatchReport(leagueDetailInfos, DateTime.Now, null, 1);
 
         //Assert
         var expected = MockExpected();

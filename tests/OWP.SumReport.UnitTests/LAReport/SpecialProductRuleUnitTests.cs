@@ -101,7 +101,7 @@ public class SpecialProductRuleUnitTests
                 }
             };
     [Fact]
-    public void Excute_CornerRule_ShouldReturnFT_CORNER_5ML()
+    public void Execute_CornerRule_ShouldReturnFT_CORNER_5ML()
     {
         // Arrange
         var firstRule = new NotCornerRule();
@@ -116,7 +116,7 @@ public class SpecialProductRuleUnitTests
         Assert.Equal(ReportType.FtCorner5Ml, actual);
     }
     [Fact]
-    public void Excute_NotCornerRule_ShouldReturnTOTAL_BOOKING_PLUS()
+    public void Execute_NotCornerRule_ShouldReturnTOTAL_BOOKING_PLUS()
     {
         // Arrange
         var firstRule = new NotCornerRule();
@@ -132,7 +132,7 @@ public class SpecialProductRuleUnitTests
     }
 
     [Fact]
-    public void Excute_NotCornerRule_ShouldReturnOTHER_SPECIAL_PRODUCTS()
+    public void Execute_NotCornerRule_ShouldReturnOTHER_SPECIAL_PRODUCTS()
     {
         // Arrange
         var firstRule = new NotCornerRule();
@@ -148,7 +148,7 @@ public class SpecialProductRuleUnitTests
     }
 
     [Fact]
-    public void Excute_NotCornerRule_ShouldReturnGOALKICK()
+    public void Execute_NotCornerRule_ShouldReturnGoalKick()
     {
         // Arrange
         var firstRule = new NotCornerRule();
@@ -164,7 +164,7 @@ public class SpecialProductRuleUnitTests
     }
 
     [Fact]
-    public void Excute_IsCornerRule_ShouldReturnFT_CORNER()
+    public void Execute_IsCornerRule_ShouldReturnFT_CORNER()
     {
         // Arrange
         var firstRule = new NotCornerRule();
@@ -180,7 +180,7 @@ public class SpecialProductRuleUnitTests
     }
 
     [Fact]
-    public void Excute_IsCornerRule_ShouldReturnCORNER_PLUS()
+    public void Execute_IsCornerRule_ShouldReturnCORNER_PLUS()
     {
         // Arrange
         var firstRule = new NotCornerRule();

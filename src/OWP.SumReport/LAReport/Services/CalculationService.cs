@@ -40,8 +40,8 @@ public class CalculationServiceImp : CalculationService
         var userIds = assignments.Select(x => x.Key);
         foreach (var id in userIds)
         {
-            var categoriedAssignment = CategorizeAssignments(assignments[id]);
-            var reportModel = SumUpAssignments(id, categoriedAssignment);
+            var categorizeAssignments = CategorizeAssignments(assignments[id]);
+            var reportModel = SumUpAssignments(id, categorizeAssignments);
             reportModel.Username = userSections.GetValue(id, string.Empty);
 
             yield return reportModel;
@@ -103,7 +103,7 @@ public class CalculationServiceImp : CalculationService
     private static void SumUpSpecialAndMixedAndESoccer(IList<Assignment> assignments, LaReportModel sumUpResult)
     {
         //SPECIAL PRODUCTS
-        var tbookingProducts = assignments.Where(x => x.ReportType == ReportType.TotalBookingPlus)
+        var totalBookingProducts = assignments.Where(x => x.ReportType == ReportType.TotalBookingPlus)
             .GroupBy(x => x.ParentMatchId).Select(y => y.Key);
         var cornerProducts = assignments.Where(x => x.ReportType == ReportType.CornerPlus)
             .GroupBy(x => x.ParentMatchId).Select(y => y.Key);
@@ -128,7 +128,7 @@ public class CalculationServiceImp : CalculationService
         //5ML
         var fiveMl = assignments.Where(x => x.ReportType == ReportType.MajorLeague);
 
-        sumUpResult.BookingPlus = tbookingProducts.Count();
+        sumUpResult.BookingPlus = totalBookingProducts.Count();
         sumUpResult.CornerPlus = cornerProducts.Count();
         sumUpResult.Fantasy = fantasyProducts.Count();
         sumUpResult.GoalKick = goalKickProducts.Count();
@@ -147,21 +147,21 @@ public class CalculationServiceImp : CalculationService
     {
         var othersTypeAssignments = assignments.Where(x => x.ReportType == ReportType.Others);
         var consecutiveMultipleMatchesAssignments = GroupMultipleMatches(othersTypeAssignments);
-        var matchGroupAsignments = consecutiveMultipleMatchesAssignments
+        var matchGroupAssignments = consecutiveMultipleMatchesAssignments
             .GroupBy(i => i.LinkGroup)
             .Select(i => new { LinkGroup = i, MatchCount = i.Count() })
             .ToArray();
-        var multipleMatchGroup = matchGroupAsignments.Where(x => x.MatchCount > 1).Select(x => x.LinkGroup).Select(x => x.Key);
+        var multipleMatchGroup = matchGroupAssignments.Where(x => x.MatchCount > 1).Select(x => x.LinkGroup).Select(x => x.Key);
         var multipleLinkAssignments = assignments.Where(x => multipleMatchGroup.Contains(x.LinkGroup)).ToList();
         multipleLinkAssignments.ToList().ForEach(x => { x.ReportType = ReportType.MultipleMatches; });
 
-        sumUpResult.Link2 = matchGroupAsignments.Count(x => x.MatchCount == 2);
-        sumUpResult.Link3 = matchGroupAsignments.Count(x => x.MatchCount == 3);
-        sumUpResult.Link4 = matchGroupAsignments.Count(x => x.MatchCount == 4);
-        sumUpResult.Link5 = matchGroupAsignments.Count(x => x.MatchCount == 5);
-        sumUpResult.Link6 = matchGroupAsignments.Count(x => x.MatchCount == 6);
-        sumUpResult.Link7 = matchGroupAsignments.Count(x => x.MatchCount == 7);
-        sumUpResult.Link8Plus = matchGroupAsignments.Count(x => x.MatchCount >= 8);
+        sumUpResult.Link2 = matchGroupAssignments.Count(x => x.MatchCount == 2);
+        sumUpResult.Link3 = matchGroupAssignments.Count(x => x.MatchCount == 3);
+        sumUpResult.Link4 = matchGroupAssignments.Count(x => x.MatchCount == 4);
+        sumUpResult.Link5 = matchGroupAssignments.Count(x => x.MatchCount == 5);
+        sumUpResult.Link6 = matchGroupAssignments.Count(x => x.MatchCount == 6);
+        sumUpResult.Link7 = matchGroupAssignments.Count(x => x.MatchCount == 7);
+        sumUpResult.Link8Plus = matchGroupAssignments.Count(x => x.MatchCount >= 8);
     }
 
     private void SumUpSingleAndOthers(IEnumerable<Assignment> assignments, LaReportModel sumUpResult)

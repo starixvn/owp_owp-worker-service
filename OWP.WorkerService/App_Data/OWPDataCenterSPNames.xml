@@ -21,15 +21,15 @@
 		<Setting Key="OWP_SyncNotification_MessageInsert"  SpName="OWP_SyncNotification_MessageInsert" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 	</Function>
 	<Function Name="TraderReport">
-		<Setting Key="OWP_LSTReport_ListTraderAssigmmentsX3" SpName="OWP_LSTReport_ListTraderAssigmmentsX3" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
-		<Setting Key="OWP_LSTReport_ListTraderAssigmmentsX5" SpName="OWP_LSTReport_ListTraderAssigmmentsX5" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
+		<Setting Key="OWP_LSTReport_ListTraderAssignmentsX3" SpName="OWP_LSTReport_ListTraderAssigmmentsX3" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
+		<Setting Key="OWP_LSTReport_ListTraderAssignmentsX5" SpName="OWP_LSTReport_ListTraderAssigmmentsX5" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
 		<Setting Key="OWP_TraderReportUpdateNonRobotFields" SpName="OWP_TraderReportUpdateNonRobotFields" DbName="DBOWP.bodb_OWP.bodbOWPNet" TimeOut="600"></Setting>
 		<Setting Key="OWP_TraderReportUpdateRobotFields" SpName="OWP_TraderReportUpdateRobotFields" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
 		<Setting Key="OWP_TraderReport_GetSaBaAssignments" SpName="OWP_TraderReport_GetSaBaAssignments" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
 		<Setting Key="OWP_TraderReport_UpdateESoccerFields" SpName="OWP_TraderReport_UpdateESoccerFields" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
 		<Setting Key="OWP_TraderReport_GetOldAndNewSaBaAssignments" SpName="OWP_TraderReport_GetOldAndNewSaBaAssignments" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
-		<Setting Key="OWP_LSTReport_OldAndNewListTraderAssigmmentsX3" SpName="OWP_LSTReport_OldAndNewListTraderAssigmmentsX3" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
-		<Setting Key="OWP_LSTReport_OldAndNewListTraderAssigmmentsX5" SpName="OWP_LSTReport_OldAndNewListTraderAssigmmentsX5" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
+		<Setting Key="OWP_LSTReport_OldAndNewListTraderAssignmentsX3" SpName="OWP_LSTReport_OldAndNewListTraderAssigmmentsX3" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
+		<Setting Key="OWP_LSTReport_OldAndNewListTraderAssignmentsX5" SpName="OWP_LSTReport_OldAndNewListTraderAssigmmentsX5" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
 	</Function>
 	<Function Name="LAReport">
 		<Setting Key="OWP_UserSectionsSel" SpName="OWP_UserSectionsSel" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>

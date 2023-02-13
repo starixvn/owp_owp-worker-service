@@ -21,8 +21,8 @@ public class HdpMatchServiceImp : HdpMatchService
 
     public async Task BuildSingleHdpMatchReport(DateTime eventDate, TimeSpan? startNightShift)
     {
-        var leagueDetails = await repository.GetLeagueDetailByDate(eventDate, Constant.Hdpid);
-        var data = await dataMatchReportService.BuildMatchReport(leagueDetails, eventDate, startNightShift, Constant.Hdpid);
+        var leagueDetails = await repository.GetLeagueDetailByDate(eventDate, Constant.HdpId);
+        var data = await dataMatchReportService.BuildMatchReport(leagueDetails, eventDate, startNightShift, Constant.HdpId);
         await dataMatchReportService.InsertMatchReport(data);
     }
 }

@@ -23,8 +23,8 @@ public class HdpLeagueServiceImp : HdpLeagueService
 
     public async Task BuildSingleHdpLeagueReport(DateTime eventDate)
     {
-        var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constant.Hdpid);
-        var dataReport = dataReportService.BuildSingleLeagueGroupReport(leagues, Constant.Hdpid);
+        var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constant.HdpId);
+        var dataReport = dataReportService.BuildSingleLeagueGroupReport(leagues, Constant.HdpId);
         await dataReportService.InsertLeagueReport(dataReport);
     }
 }

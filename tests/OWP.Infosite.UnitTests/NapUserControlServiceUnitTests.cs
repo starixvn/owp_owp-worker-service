@@ -33,7 +33,7 @@ public class NapUserControlServiceUnitTests
         var syncService = new NapUserControlServiceImp(repository);
 
         repository.Fetch<UserFunctionModel>(Arg.Compat.Any<GetAllUserByFunctionKeyCriteria>()).Returns(userFunctionModels);
-        syncService.GetUserFunctionModels("funtionKey").Returns(userFunctionModels);
+        syncService.GetUserFunctionModels("functionKey").Returns(userFunctionModels);
 
         await syncService.SynDataFunctionPermissionAsync();
 
@@ -57,7 +57,7 @@ public class NapUserControlServiceUnitTests
 
         repository.Fetch<UserFunctionModel>(Arg.Compat.Any<GetAllUserByFunctionKeyCriteria>()).Returns(userFunctionModels);
 
-        var result = syncService.GetUserFunctionModels("funtionKey");
+        var result = syncService.GetUserFunctionModels("functionKey");
         repository.Received().Fetch<UserFunctionModel>(Arg.Compat.Any<GetAllUserByFunctionKeyCriteria>());
 
         // Assert

@@ -19,7 +19,7 @@ internal class CacheManipulatorImp : CacheManipulator
 
     private const string DeletedMatchKey = "OS-DELETED-MATCH";
 
-    private const string KeyOsSyncadminsiteid = "OWP-OS-MatchesHaveTheSameAdminSiteId";
+    private const string KeyOsSyncAdminSiteId = "OWP-OS-MatchesHaveTheSameAdminSiteId";
 
     private const int AssignmentCacheExpiredInMinute = 3;
 
@@ -43,7 +43,7 @@ internal class CacheManipulatorImp : CacheManipulator
     {
         var absoluteTimeSpan = TimeSpan.FromMinutes(AssignmentCacheExpiredInMinute);
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(absoluteTimeSpan);
-        const string cacheKey = $"{KeyOsSyncadminsiteid}";
+        const string cacheKey = $"{KeyOsSyncAdminSiteId}";
 
         var assignmentsJson = JsonConvert.SerializeObject(matchIds);
         await cache.SetAsync(cacheKey, assignmentsJson, cachePolicy);

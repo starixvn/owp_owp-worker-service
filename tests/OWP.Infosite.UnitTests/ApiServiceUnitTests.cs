@@ -22,7 +22,7 @@ public class ApiServiceUnitTests
 
     private readonly ILogger logger;
 
-    private const int ExpectedNumberOfMatchsAllDays = 1;
+    private const int ExpectedNumberOfMatchesAllDays = 1;
 
     private readonly DateTime fromDate = new(2018, 1, 2);
 
@@ -83,8 +83,8 @@ public class ApiServiceUnitTests
         var actualResult = await apiService.QueryAsync(param);
 
         // Assert
-        var actualNumberOfMatchs = actualResult.Count;
-        Assert.Equal(ExpectedNumberOfMatchsAllDays, actualNumberOfMatchs);
+        var actualNumberOfMatches = actualResult.Count;
+        Assert.Equal(ExpectedNumberOfMatchesAllDays, actualNumberOfMatches);
     }
 
     [Fact]
@@ -104,8 +104,8 @@ public class ApiServiceUnitTests
 
         // Assert
         const int expectedResultNumberOfMatchIds = 1;
-        var actualNumberOfMatchs = actualResult.Count;
-        Assert.Equal(expectedResultNumberOfMatchIds, actualNumberOfMatchs);
+        var actualNumberOfMatches = actualResult.Count;
+        Assert.Equal(expectedResultNumberOfMatchIds, actualNumberOfMatches);
     }
 
     [Fact]
@@ -155,8 +155,8 @@ public class ApiServiceUnitTests
         var actualResult = await apiService.QueryInfoSiteMatchFor180Day();
 
         // Assert
-        var actualNumberOfMatchs = actualResult.Count;
-        Assert.Equal(ExpectedNumberOfMatchsAllDays, actualNumberOfMatchs);
+        var actualNumberOfMatches = actualResult.Count;
+        Assert.Equal(ExpectedNumberOfMatchesAllDays, actualNumberOfMatches);
     }
 
     [Fact]

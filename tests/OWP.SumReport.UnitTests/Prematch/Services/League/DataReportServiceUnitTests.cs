@@ -25,7 +25,7 @@ public class DataReportServiceUnitTests
         var leagueInfos = MockLeagueInfo();
 
         //Act
-        var actual = service.BuildSingleLeagueGroupReport(leagueInfos, Constant.Hdpid);
+        var actual = service.BuildSingleLeagueGroupReport(leagueInfos, Constant.HdpId);
 
         //Assert
         var expected = MockExpected();

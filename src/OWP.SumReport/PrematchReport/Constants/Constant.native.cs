@@ -2,8 +2,8 @@ namespace OWP.SumReport.PrematchReport.Constants;
 
 public static class Constant
 {
-    public const int Hdpid = 1;
-    public const int Ouid = 3;
+    public const int HdpId = 1;
+    public const int OuId = 3;
 
     public const string PreMatchReportKey = "OWP_PRE_MATCH_REPORT";
 

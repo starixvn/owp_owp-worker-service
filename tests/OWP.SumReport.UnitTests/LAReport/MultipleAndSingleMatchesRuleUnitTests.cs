@@ -82,7 +82,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
             };
 
     [Fact]
-    public void Excute_EmptyProviderName_ShouldReturnOTHERS()
+    public void Execute_EmptyProviderName_ShouldReturnOTHERS()
     {
         // Arrange
         var firstRule = new SingleMatchesRule();
@@ -96,7 +96,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
     }
 
     [Fact]
-    public void Excute_MultipleMatchesRule_ShouldReturnONLY_PROVIDER()
+    public void Execute_MultipleMatchesRule_ShouldReturnONLY_PROVIDER()
     {
         // Arrange
         var firstRule = new SingleMatchesRule();
@@ -112,7 +112,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
     }
 
     [Fact]
-    public void Excute_MultipleMatchesRule_ShouldReturnPROVIDER_TV()
+    public void Execute_MultipleMatchesRule_ShouldReturnPROVIDER_TV()
     {
         // Arrange
         var firstRule = new SingleMatchesRule();
@@ -128,7 +128,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
     }
 
     [Fact]
-    public void Excute_SingleMatchesRule_ShouldReturnPROVIDER()
+    public void Execute_SingleMatchesRule_ShouldReturnPROVIDER()
     {
         // Arrange
         var firstRule = new SingleMatchesRule();
@@ -144,7 +144,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
     }
 
     [Fact]
-    public void Excute_SingleMatchesRule_ShouldReturnTV()
+    public void Execute_SingleMatchesRule_ShouldReturnTV()
     {
         // Arrange
         var firstRule = new SingleMatchesRule();
@@ -160,7 +160,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
     }
 
     [Fact]
-    public void Excute_SingleMatchesRule_ShouldReturnREPORTER()
+    public void Execute_SingleMatchesRule_ShouldReturnREPORTER()
     {
         // Arrange
         var firstRule = new SingleMatchesRule();
@@ -176,7 +176,7 @@ public class MultipleAndSingleMatchesRuleUnitTests
     }
 
     [Fact]
-    public void Excute_SingleMatchesRule_ShouldReturnMIXED_PROVIDER_TV_REPORTER()
+    public void Execute_SingleMatchesRule_ShouldReturnMIXED_PROVIDER_TV_REPORTER()
     {
         // Arrange
         var firstRule = new SingleMatchesRule();

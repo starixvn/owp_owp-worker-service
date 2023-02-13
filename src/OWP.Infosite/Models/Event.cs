@@ -131,8 +131,8 @@ public class Event
     private string GetHomeName()
     {
         var isReverse = extInfo.is_team_reverse.HasValue && extInfo.is_team_reverse.Value;
-        var homename = isReverse ? infositeMatch.away_name : infositeMatch.home_name;
-        return homename;
+        var homeName = isReverse ? infositeMatch.away_name : infositeMatch.home_name;
+        return homeName;
     }
 
     private string GetAwayName()

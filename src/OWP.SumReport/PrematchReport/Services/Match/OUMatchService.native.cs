@@ -21,8 +21,8 @@ public class OuMatchServiceImp : OuMatchService
 
     public async Task BuildSingleOuMatchReport(DateTime eventDate, TimeSpan? startNightShift)
     {
-        var leagueDetails = await repository.GetLeagueDetailByDate(eventDate, Constant.Ouid);
-        var data = await dataMatchReportService.BuildMatchReport(leagueDetails, eventDate, startNightShift, Constant.Ouid);
+        var leagueDetails = await repository.GetLeagueDetailByDate(eventDate, Constant.OuId);
+        var data = await dataMatchReportService.BuildMatchReport(leagueDetails, eventDate, startNightShift, Constant.OuId);
         await dataMatchReportService.InsertMatchReport(data);
     }
 }

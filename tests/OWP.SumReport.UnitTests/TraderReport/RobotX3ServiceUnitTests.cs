@@ -14,7 +14,7 @@ public class RobotX3ServiceUnitTests
     }
 
     [Fact]
-    public void GroupConecutiveMatch_AssigmentEventDateTimeOver30_DifferentGroup()
+    public void GroupConsecutiveMatch_AssignmentEventDateTimeOver30_DifferentGroup()
     {
         var model1 = new RobotX3RawModel
         {
@@ -91,9 +91,9 @@ public class RobotX3ServiceUnitTests
             UserId = 8
         };
 
-        var assigmentList = new List<RobotX3RawModel> { model1, model2, model3, model4, model5 };
+        var assignmentList = new List<RobotX3RawModel> { model1, model2, model3, model4, model5 };
         var expected = new List<RobotX3RawGroupModel> { model6, model7, model8, model9, model10 };
-        var actual = robotX3Service.GroupConecutiveMatch(assigmentList);
+        var actual = robotX3Service.GroupConsecutiveMatch(assignmentList);
         for (var i = 0; i < actual.Count; i++)
         {
             Assert.True(actual[i].MatchGroup.Equals(expected[i].MatchGroup));
@@ -101,7 +101,7 @@ public class RobotX3ServiceUnitTests
     }
 
     [Fact]
-    public void GroupConecutiveMatch_AssigmentEventDateTimeWithin30_TogetherGroup()
+    public void GroupConsecutiveMatch_AssignmentEventDateTimeWithin30_TogetherGroup()
     {
         var assignmentList = new List<RobotX3RawModel>
             {
@@ -137,7 +137,7 @@ public class RobotX3ServiceUnitTests
                  }
             };
 
-        var actual = robotX3Service.GroupConecutiveMatch(assignmentList);
+        var actual = robotX3Service.GroupConsecutiveMatch(assignmentList);
         for (var i = 0; i < actual.Count; i++)
         {
             Assert.True(actual[i].MatchGroup.Equals(expected[i].MatchGroup));

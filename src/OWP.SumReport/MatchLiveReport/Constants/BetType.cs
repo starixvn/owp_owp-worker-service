@@ -1,11 +1,5 @@
 namespace OWP.SumReport.MatchLiveReport.Constants;
 
-public static class Consts
-{
-    
-}
-
-
 public enum MinorBetType
 {
     Corners = -3,

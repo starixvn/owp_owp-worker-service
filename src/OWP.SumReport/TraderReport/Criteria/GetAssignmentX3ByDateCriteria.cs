@@ -10,7 +10,7 @@ public class GetAssignmentX3ByDateCriteria : CriteriaBase
 
     public override bool IsValid() => true;
 
-    public override string GetSettingKey() => "OWP_LSTReport_ListTraderAssigmmentsX3";
+    public override string GetSettingKey() => "OWP_LSTReport_ListTraderAssignmentsX3";
 }
 
 public class GetOldAndNewAssignmentX3ByDateCriteria : CriteriaBase // from old and new table
@@ -21,5 +21,5 @@ public class GetOldAndNewAssignmentX3ByDateCriteria : CriteriaBase // from old a
 
     public override bool IsValid() => true;
 
-    public override string GetSettingKey() => "OWP_LSTReport_OldAndNewListTraderAssigmmentsX3";
+    public override string GetSettingKey() => "OWP_LSTReport_OldAndNewListTraderAssignmentsX3";
 }

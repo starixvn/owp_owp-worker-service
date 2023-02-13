@@ -23,8 +23,8 @@ public class OuLeagueServiceImp : OuLeagueService
 
     public async Task BuildSingleOuLeagueReport(DateTime eventDate)
     {
-        var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constant.Ouid);
-        var dataReport = dataReportService.BuildSingleLeagueGroupReport(leagues, Constant.Ouid);
+        var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constant.OuId);
+        var dataReport = dataReportService.BuildSingleLeagueGroupReport(leagues, Constant.OuId);
         await dataReportService.InsertLeagueReport(dataReport);
     }
 }

@@ -14,7 +14,7 @@ public class RobotX5ServiceUnitTests
     }
 
     [Fact]
-    public void GroupByShiftAndMatchGroup_AssigmentEventDateTimeOver30AndOver300OfTwoShift_DifferentGroupAndDifferentShift()
+    public void GroupByShiftAndMatchGroup_AssignmentEventDateTimeOver30AndOver300OfTwoShift_DifferentGroupAndDifferentShift()
     {
         var model1 = new RobotX5RawModel
         {
@@ -106,9 +106,9 @@ public class RobotX5ServiceUnitTests
             Shift = 2
         };
 
-        var assigmentListOfUser = new List<RobotX5RawModel> { model1, model2, model3, model4, model5 };
+        var assignmentListOfUser = new List<RobotX5RawModel> { model1, model2, model3, model4, model5 };
         var expected = new List<RobotX5RawGroupModel> { model6, model7, model8, model9, model10 };
-        var actual = robotX5Service.GroupByShiftAndMatchGroup(assigmentListOfUser);
+        var actual = robotX5Service.GroupByShiftAndMatchGroup(assignmentListOfUser);
         for (var i = 0; i < actual.Count; i++)
         {
             Assert.True(actual[i].MatchGroup.Equals(expected[i].MatchGroup));

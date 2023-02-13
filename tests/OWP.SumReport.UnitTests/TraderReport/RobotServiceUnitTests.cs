@@ -10,7 +10,7 @@ using Xunit.Asserts.Compare;
 public class RobotServiceUnitTests
 {
     [Fact]
-    public async Task SumRobotFields_AlwayReturnsDataForX3AndX5()
+    public async Task SumRobotFields_AlwaysReturnsDataForX3AndX5()
     {
         // Arrange
         var repository = Substitute.For<TraderRepository>();
