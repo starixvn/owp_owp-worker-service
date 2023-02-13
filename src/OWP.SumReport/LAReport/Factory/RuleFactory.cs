@@ -1,7 +1,7 @@
-﻿using OWP.SumReport.LAReport.Enum;
-using OWP.SumReport.LAReport.Misc;
+﻿namespace OWP.SumReport.LAReport.Factory;
 
-namespace OWP.SumReport.LAReport.Factory;
+using Enum;
+using Misc;
 
 public interface MainMatchRuleFactory
 {

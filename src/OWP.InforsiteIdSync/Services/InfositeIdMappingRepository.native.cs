@@ -1,9 +1,10 @@
-﻿using Fanex.Data.Repository;
-using OWP.Infosite.Services;
-using OWP.InfositeIdSync.Criteria;
-using OWP.InfositeIdSync.Models;
+﻿namespace OWP.InfositeIdSync.Services;
+
+using Criteria;
+using Fanex.Data.Repository;
+using Infosite.Services;
+using Models;
 using Olympus.Xml;
-namespace OWP.InfositeIdSync.Services;
 
 public interface InfositeIdMappingRepository
 {

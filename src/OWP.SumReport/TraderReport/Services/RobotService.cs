@@ -1,7 +1,7 @@
-﻿using OWP.Extensions;
-using OWP.SumReport.TraderReport.Models;
+﻿namespace OWP.SumReport.TraderReport.Services;
 
-namespace OWP.SumReport.TraderReport.Services;
+using Extensions;
+using Models;
 
 public interface RobotService
 {

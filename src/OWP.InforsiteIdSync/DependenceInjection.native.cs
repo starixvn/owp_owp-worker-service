@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Olympus.InfoSiteClient;
-using OWP.InfositeIdSync.Services;
+﻿namespace OWP.InfositeIdSync;
 
-namespace OWP.InfositeIdSync;
+using Microsoft.Extensions.DependencyInjection;
+using Olympus.InfoSiteClient;
+using Services;
 
 public static class DependenceInjection
 {

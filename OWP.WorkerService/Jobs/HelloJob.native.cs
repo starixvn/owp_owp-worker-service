@@ -1,7 +1,8 @@
-﻿using Quartz;
-using static System.Console;
+﻿using static System.Console;
 
 namespace OWP.WorkerService.Jobs;
+
+using Quartz;
 
 [DisallowConcurrentExecution]
 public class HelloJob : IJob

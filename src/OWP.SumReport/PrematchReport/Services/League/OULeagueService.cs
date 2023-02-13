@@ -1,5 +1,7 @@
 namespace OWP.SumReport.PrematchReport.Services.League;
 
+using Constants;
+
 public interface OULeagueService
 {
     Task BuildSingleOULeagueReport(DateTime eventDate);
@@ -21,8 +23,8 @@ public class OULeagueServiceImp : OULeagueService
 
     public async Task BuildSingleOULeagueReport(DateTime eventDate)
     {
-        var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constants.Constant.OUID);
-        var dataReport = dataReportService.BuildSingleLeagueGroupReport(leagues, Constants.Constant.OUID);
+        var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constant.OUID);
+        var dataReport = dataReportService.BuildSingleLeagueGroupReport(leagues, Constant.OUID);
         await dataReportService.InsertLeagueReport(dataReport);
     }
 }

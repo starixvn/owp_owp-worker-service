@@ -1,8 +1,8 @@
-﻿using Fanex.Caching;
-using Fanex.Data.Repository;
-using OWP.RabbitMq;
+﻿namespace OWP.Infosite.Services;
 
-namespace OWP.Infosite.Services;
+using Fanex.Caching;
+using Fanex.Data.Repository;
+using RabbitMq;
 
 public interface FutureSyncService : SyncService
 {

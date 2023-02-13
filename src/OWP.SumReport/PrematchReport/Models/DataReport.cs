@@ -1,6 +1,6 @@
-﻿using OWP.Attributes;
+﻿namespace OWP.SumReport.PrematchReport.Models;
 
-namespace OWP.SumReport.PrematchReport.Models;
+using Attributes;
 
 [Serializable]
 [XmlName("Row")]

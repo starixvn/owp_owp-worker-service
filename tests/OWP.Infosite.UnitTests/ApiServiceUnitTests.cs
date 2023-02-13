@@ -1,17 +1,18 @@
+namespace OWP.Infosite.UnitTests;
+
+using System.Net;
+using Fanex.Caching;
 using Fanex.Logging;
 using Microsoft.Extensions.Options;
+using Models;
+using Newtonsoft.Json;
 using NSubstitute;
-using OWP.Infosite.Models;
-using OWP.Infosite.Services;
-using OWP.Infosite.Settings;
-using System.Net;
+using OWP.Services;
+using RabbitMq;
+using Services;
+using Settings;
 using Xunit;
 using Xunit.Asserts.Compare;
-using OWP.RabbitMq;
-using OWP.Services;
-using Fanex.Caching;
-
-namespace OWP.Infosite.UnitTests;
 
 public class ApiServiceUnitTests
 {
@@ -75,7 +76,7 @@ public class ApiServiceUnitTests
             LastUpdatedTime = lastUpdatedTime
         };
 
-        var mockContent = Newtonsoft.Json.JsonConvert.SerializeObject(SampleDataTests.ListCommonMatches);
+        var mockContent = JsonConvert.SerializeObject(SampleDataTests.ListCommonMatches);
         var httpContent = new StringContent(mockContent);
 
         var httpResponseMessage = new HttpResponseMessage { Content = httpContent, StatusCode = HttpStatusCode.OK };
@@ -95,7 +96,7 @@ public class ApiServiceUnitTests
     {
         // Arrange
 
-        var mockContent = Newtonsoft.Json.JsonConvert.SerializeObject(new List<string> { "1423405-5-False" });
+        var mockContent = JsonConvert.SerializeObject(new List<string> { "1423405-5-False" });
         var httpContent = new StringContent(mockContent);
 
         var httpResponseMessage = new HttpResponseMessage { Content = httpContent, StatusCode = HttpStatusCode.OK };
@@ -147,7 +148,7 @@ public class ApiServiceUnitTests
     public async Task QueryInfoSiteMatchFor180Day_HttpStatusOK_ListMatchModelQuery180Day()
     {
         // Arrange
-        var mockContent = Newtonsoft.Json.JsonConvert.SerializeObject(SampleDataTests.ListMatchModelQuery180Day);
+        var mockContent = JsonConvert.SerializeObject(SampleDataTests.ListMatchModelQuery180Day);
         var httpContent = new StringContent(mockContent);
 
         var httpResponseMessage = new HttpResponseMessage { Content = httpContent, StatusCode = HttpStatusCode.OK };
@@ -171,7 +172,7 @@ public class ApiServiceUnitTests
             FromDate = fromDate,
             ToDate = toDate
         };
-        var mockContent = Newtonsoft.Json.JsonConvert.SerializeObject(SampleDataTests.ListMatchRelation);
+        var mockContent = JsonConvert.SerializeObject(SampleDataTests.ListMatchRelation);
         var httpContent = new StringContent(mockContent);
 
         var httpResponseMessage = new HttpResponseMessage { Content = httpContent, StatusCode = HttpStatusCode.OK };

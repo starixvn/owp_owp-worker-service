@@ -1,13 +1,13 @@
+namespace OWP.SumReport.UnitTests.MatchLiveReport.Helpers;
+
 using NSubstitute;
-using OWP.SumReport.MatchLiveReport.Constants;
-using OWP.SumReport.MatchLiveReport.Helpers;
-using OWP.SumReport.MatchLiveReport.Models;
-using OWP.SumReport.MatchLiveReport.Repository;
-using OWP.SumReport.MatchLiveReport.Services;
+using SumReport.MatchLiveReport.Constants;
+using SumReport.MatchLiveReport.Helpers;
+using SumReport.MatchLiveReport.Models;
+using SumReport.MatchLiveReport.Repository;
+using SumReport.MatchLiveReport.Services;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.SumReport.UnitTests.MatchLiveReport.Helpers;
 
 public class ReportServiceUnitTests
 {
@@ -42,7 +42,7 @@ public class ReportServiceUnitTests
         reportRepository.GetSaba5minOWPMatchId(Arg.Any<List<int>>()).Returns(mockSaba);
         var service = new ReportServiceImp(reportRepository);
 
-        await service.Calculate(DateTime.Today, false);
+        await service.Calculate(DateTime.Today);
 
         await reportRepository.Received().InsertData(Arg.Any<IEnumerable<ReportModel>>(), Arg.Any<DateTime>());
     }

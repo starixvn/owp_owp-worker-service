@@ -1,8 +1,8 @@
-﻿using Fanex.Data.Repository;
-using Fanex.Logging;
-using OWP.Infosite.Criteria;
+﻿namespace OWP.Infosite.Services;
 
-namespace OWP.Infosite.Services;
+using Criteria;
+using Fanex.Data.Repository;
+using Fanex.Logging;
 
 public interface SyncEventDeletedService
 {

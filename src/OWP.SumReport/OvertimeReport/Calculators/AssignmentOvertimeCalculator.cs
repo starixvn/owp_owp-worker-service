@@ -1,9 +1,9 @@
-﻿using OWP.Extensions;
-using OWP.SumReport.OvertimeReport.Constants;
-using OWP.SumReport.OvertimeReport.Helpers;
-using OWP.SumReport.OvertimeReport.Models;
+﻿namespace OWP.SumReport.OvertimeReport.Calculators;
 
-namespace OWP.SumReport.OvertimeReport.Calculators;
+using Constants;
+using Extensions;
+using Helpers;
+using Models;
 
 public static class AssignmentOvertimeCalculator
 {
@@ -88,8 +88,8 @@ public static class AssignmentOvertimeCalculator
         if (MatchHelper.IsSabaMatch(assignment.OWPLeagueName) &&
             BetType.FullTimeBetTypes.Contains(assignment.Bettype))
         {
-            var method = sabaOperations.LookupByKey<Func<Assignment, int>>(assignment.OWPLeagueName, null);
-            var duration = method != null ? method(assignment) : 0;
+            var method = sabaOperations.LookupByKey(assignment.OWPLeagueName, null);
+            var duration = method?.Invoke(assignment) ?? 0;
 
             return assignment.EventDateTime.AddMinutes(duration);
         }

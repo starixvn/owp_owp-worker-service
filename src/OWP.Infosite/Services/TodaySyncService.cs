@@ -1,15 +1,8 @@
-﻿using Fanex.Caching;
-using Fanex.Data.Repository;
-using Fanex.Logging;
-using Newtonsoft.Json;
-using OWP.RabbitMq;
-using OWP.RabbitMq.Models;
-using OWP.Infosite.Constants;
-using OWP.Infosite.Criteria;
-using OWP.Infosite.Models;
-using System.Globalization;
+﻿namespace OWP.Infosite.Services;
 
-namespace OWP.Infosite.Services;
+using Fanex.Caching;
+using Fanex.Data.Repository;
+using RabbitMq;
 
 public interface TodaySyncService : SyncService
 {

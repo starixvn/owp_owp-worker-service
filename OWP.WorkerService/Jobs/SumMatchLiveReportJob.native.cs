@@ -1,11 +1,11 @@
-﻿using Fanex.Logging;
-using ONEbook.UM.Services;
-using OWP.SumReport.Constants;
-using OWP.SumReport.Services;
-using OWP.SumReport.MatchLiveReport.Services;
-using Quartz;
+﻿namespace OWP.WorkerService.Jobs;
 
-namespace OWP.WorkerService.Jobs;
+using Fanex.Logging;
+using ONEbook.UM.Services;
+using Quartz;
+using SumReport.Constants;
+using SumReport.MatchLiveReport.Services;
+using SumReport.Services;
 
 [DisallowConcurrentExecution]
 public class SumMatchLiveReportJob : IJob

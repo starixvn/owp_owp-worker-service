@@ -1,7 +1,7 @@
-﻿using OWP.Extensions;
-using OWP.SyncLeagueSettings.Models;
+﻿namespace OWP.SyncLeagueSettings.Helpers;
 
-namespace OWP.SyncLeagueSettings.Helpers;
+using Extensions;
+using Models;
 
 public static class MatchHelpers
 {

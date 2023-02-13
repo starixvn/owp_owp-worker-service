@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using OWP.OtherSport.SyncAdminSiteId.Handlers;
-using OWP.OtherSport.SyncLive;
-using OWP.OtherSport.SyncLive.Services;
+﻿namespace OWP.OtherSport;
 
-namespace OWP.OtherSport;
+using Microsoft.Extensions.DependencyInjection;
+using SyncAdminSiteId.Handlers;
+using SyncLive;
+using SyncLive.Services;
 
 public static class DependenceInjection
 {

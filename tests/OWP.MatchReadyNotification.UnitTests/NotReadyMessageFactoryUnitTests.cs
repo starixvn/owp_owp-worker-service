@@ -1,10 +1,10 @@
+namespace OWP.MatchReadyNotification.UnitTests;
+
+using Models;
 using NSubstitute;
-using OWP.MatchReadyNotification.Models;
-using OWP.MatchReadyNotification.Services;
+using Services;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.MatchReadyNotification.UnitTests;
 
 public class NotReadyMessageFactoryUnitTests
 {

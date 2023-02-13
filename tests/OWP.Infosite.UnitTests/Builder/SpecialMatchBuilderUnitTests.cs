@@ -1,9 +1,9 @@
-using OWP.Infosite.Builder;
-using OWP.Infosite.Models;
+namespace OWP.Infosite.UnitTests.Builder;
+
+using Infosite.Builder;
+using Models;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.Infosite.UnitTests.Builder;
 
 public class SpecialMatchBuilderUnitTests
 {

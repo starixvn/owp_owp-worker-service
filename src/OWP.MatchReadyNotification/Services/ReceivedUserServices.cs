@@ -1,7 +1,7 @@
-﻿using OWP.Extensions;
-using OWP.MatchReadyNotification.Models;
+﻿namespace OWP.MatchReadyNotification.Services;
 
-namespace OWP.MatchReadyNotification.Services;
+using Extensions;
+using Models;
 
 public interface ReceivedUserServices
 {

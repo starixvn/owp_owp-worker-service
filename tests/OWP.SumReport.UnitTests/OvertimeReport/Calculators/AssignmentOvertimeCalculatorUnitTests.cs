@@ -1,10 +1,10 @@
-﻿using OWP.SumReport.OvertimeReport.Calculators;
-using OWP.SumReport.OvertimeReport.Constants;
-using OWP.SumReport.OvertimeReport.Models;
+﻿namespace OWP.SumReport.UnitTests.OvertimeReport.Calculators;
+
+using SumReport.OvertimeReport.Calculators;
+using SumReport.OvertimeReport.Constants;
+using SumReport.OvertimeReport.Models;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.SumReport.UnitTests.OvertimeReport.Calculators;
 
 public class AssignmentOvertimeCalculatorUnitTests
 {

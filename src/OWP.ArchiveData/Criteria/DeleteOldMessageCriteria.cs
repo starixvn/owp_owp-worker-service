@@ -1,6 +1,6 @@
-using Fanex.Data.Repository;
-
 namespace OWP.ArchiveData.Criteria;
+
+using Fanex.Data.Repository;
 
 public class DeleteOldMessageCriteria : NonQueryCommand
 {

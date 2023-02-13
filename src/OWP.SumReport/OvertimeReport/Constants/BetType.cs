@@ -1,6 +1,6 @@
-﻿using System.Collections.Immutable;
+﻿namespace OWP.SumReport.OvertimeReport.Constants;
 
-namespace OWP.SumReport.OvertimeReport.Constants;
+using System.Collections.Immutable;
 
 public static class BetType
 {

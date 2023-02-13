@@ -1,7 +1,7 @@
-using Microsoft.Extensions.DependencyInjection;
-using OWP.ArchiveData.Services;
-
 namespace OWP.ArchiveData;
+
+using Microsoft.Extensions.DependencyInjection;
+using Services;
 
 public static class DependenceInjection
 {

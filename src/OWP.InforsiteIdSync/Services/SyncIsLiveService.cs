@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Options;
-using Olympus.InfoSiteClient;
-using OWP.Infosite.Settings;
-using OWP.InfositeIdSync.Helpers;
-using OWP.InfositeIdSync.Models;
+﻿namespace OWP.InfositeIdSync.Services;
 
-namespace OWP.InfositeIdSync.Services;
+using Helpers;
+using Infosite.Settings;
+using Microsoft.Extensions.Options;
+using Models;
+using Olympus.InfoSiteClient;
 
 public interface SyncIsLiveService
 {

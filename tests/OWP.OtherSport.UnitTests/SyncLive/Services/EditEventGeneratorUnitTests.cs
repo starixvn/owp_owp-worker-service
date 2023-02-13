@@ -1,13 +1,12 @@
-﻿using OWP.OtherSport.SyncAdminSiteId.Models;
-using OWP.OtherSport.SyncLive.Model;
-using OWP.OtherSport.SyncLive.Services;
-using System;
+﻿namespace OWP.OtherSport.UnitTests.SyncLive.Services;
+
 using System.Collections.Generic;
 using System.Linq;
+using OtherSport.SyncAdminSiteId.Models;
+using OtherSport.SyncLive.Model;
+using OtherSport.SyncLive.Services;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.OtherSport.UnitTests.SyncLive.Services;
 
 public class EditEventGeneratorUnitTests
 {

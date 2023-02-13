@@ -1,10 +1,11 @@
-﻿using Fanex.Data;
+﻿namespace OWP.Command;
+
+using Fanex.Data;
 using Fanex.Data.SqlServer;
 using Fanex.Logging;
 using Fanex.Logging.Sentry.RavenClient;
 using Microsoft.Extensions.Configuration;
-
-namespace OWP.Command;
+using SharpRaven;
 
 internal static class FanexInitializer
 {
@@ -29,7 +30,7 @@ internal static class FanexInitializer
             {
                 new SentryLogging( new SentryEngineOptions
                 {
-                    Dsn = new SharpRaven.Dsn(configuration.GetSection("SentryToken").Value)
+                    Dsn = new Dsn(configuration.GetSection("SentryToken").Value)
                 })
             });
     }

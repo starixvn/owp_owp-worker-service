@@ -1,10 +1,10 @@
-﻿using OWP.WorkerService.Constants;
-using OWP.WorkerService.Jobs;
-using OWP.WorkerService.Models;
+﻿namespace OWP.WorkerService.Scheduler;
+
+using Constants;
+using Jobs;
+using Models;
 using Quartz;
 using Quartz.Spi;
-
-namespace OWP.WorkerService.Scheduler;
 
 public class OWPScheduler : IHostedService
 {

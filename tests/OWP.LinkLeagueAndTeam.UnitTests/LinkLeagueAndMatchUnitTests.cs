@@ -1,10 +1,10 @@
+namespace OWP.LinkLeagueAndTeam.UnitTests;
+
+using Models;
 using NSubstitute;
-using OWP.LinkLeagueAndTeam.Models;
-using OWP.LinkLeagueAndTeam.Services;
+using Services;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.LinkLeagueAndTeam.UnitTests;
 
 public class LinkLeagueAndMatchUnitTests
 {

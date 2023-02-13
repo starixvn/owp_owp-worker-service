@@ -1,9 +1,9 @@
-﻿using OWP.SumReport.LAReport.Enum;
-using OWP.SumReport.LAReport.Misc;
-using OWP.SumReport.LAReport.Models;
-using Xunit;
+﻿namespace OWP.SumReport.UnitTests.LAReport;
 
-namespace OWP.SumReport.UnitTests.LAReport;
+using SumReport.LAReport.Enum;
+using SumReport.LAReport.Misc;
+using SumReport.LAReport.Models;
+using Xunit;
 
 public class SpecialProductRuleUnitTests
 {
@@ -194,4 +194,4 @@ public class SpecialProductRuleUnitTests
         // Assert
         Assert.Equal(ReportType.CORNER_PLUS, actual);
     }
-};
+}

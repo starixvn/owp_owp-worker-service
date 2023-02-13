@@ -1,6 +1,6 @@
-﻿using OWP.RabbitMq;
+﻿namespace OWP.WorkerService.Extensions;
 
-namespace OWP.WorkerService.Extensions;
+using RabbitMq;
 
 public static class AppExtensions
 {

@@ -1,6 +1,6 @@
-﻿using System.Collections.Immutable;
+﻿namespace OWP.Infosite.Constants;
 
-namespace OWP.Infosite.Constants;
+using System.Collections.Immutable;
 
 public static class Constant
 {

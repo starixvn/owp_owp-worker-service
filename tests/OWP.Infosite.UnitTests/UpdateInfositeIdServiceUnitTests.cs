@@ -1,12 +1,12 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.Infosite.UnitTests;
+
+using Criteria;
+using Fanex.Data.Repository;
+using Models;
 using NSubstitute;
-using OWP.Infosite.Criteria;
-using OWP.Infosite.Models;
-using OWP.Infosite.Services;
+using Services;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.Infosite.UnitTests;
 
 public class UpdateInfositeIdServiceUnitTests
 {

@@ -1,7 +1,7 @@
-﻿using Fanex.Caching;
-using OWP.SumReport.Constants;
+﻿namespace OWP.SumReport.Services;
 
-namespace OWP.SumReport.Services;
+using Constants;
+using Fanex.Caching;
 
 public interface CacheManipulator
 {

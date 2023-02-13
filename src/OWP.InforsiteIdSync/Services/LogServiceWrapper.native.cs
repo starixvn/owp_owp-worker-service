@@ -1,10 +1,10 @@
-﻿using Fanex.Logging;
+﻿namespace OWP.InfositeIdSync.Services;
+
+using System.Text;
+using Fanex.Logging;
+using Models;
 using Newtonsoft.Json;
 using Olympus.InfoSiteClient;
-using OWP.InfositeIdSync.Models;
-using System.Text;
-
-namespace OWP.InfositeIdSync.Services;
 
 public interface LogServiceWrapper
 {
@@ -91,7 +91,7 @@ public class LogServiceWrapperImp : LogServiceWrapper
         var duplicatedMatches = liveMatches.Intersect(nonLiveMatches);
         if (duplicatedMatches.Any())
         {
-            await Error($"=== Sync Is Live to Info Site: Duplicated matches ===", duplicatedMatches.ToArray());
+            await Error("=== Sync Is Live to Info Site: Duplicated matches ===", duplicatedMatches.ToArray());
         }
     }
 }

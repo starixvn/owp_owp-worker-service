@@ -1,6 +1,6 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.SumReport.PrematchReport.Criteria;
 
-namespace OWP.SumReport.PrematchReport.Criteria;
+using Fanex.Data.Repository;
 
 public abstract class InsertDataReportBaseCriteria : NonQueryCommand
 {

@@ -1,10 +1,10 @@
-using OWP.Extensions;
-using OWP.SumReport.MatchLiveReport.Constants;
-using OWP.SumReport.MatchLiveReport.Models;
+namespace OWP.SumReport.MatchLiveReport.Helpers;
+
 using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
-
-namespace OWP.SumReport.MatchLiveReport.Helpers;
+using Constants;
+using Extensions;
+using Models;
 
 public static class MatchHelper
 {

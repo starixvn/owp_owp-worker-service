@@ -1,32 +1,33 @@
-﻿using Fanex.Caching;
+﻿namespace OWP.WorkerService.Extensions;
+
+using ArchiveData;
+using Fanex.Caching;
 using Fanex.Caching.Redis;
 using Fanex.Data;
 using Fanex.Data.Repository;
 using Fanex.Data.SqlServer;
 using Fanex.Logging;
 using Fanex.Logging.Sentry.RavenClient;
+using Infosite;
+using InfositeIdSync;
+using Jobs;
+using LinkLeagueAndTeam;
+using MatchReadyNotification;
 using ONEbook.UM.Configurations;
 using ONEbook.UM.Helpers;
 using ONEbook.UM.Services;
 using ONEbook.UM.Transport;
-using OWP.ArchiveData;
-using OWP.RabbitMq;
-using OWP.RabbitMq.Models;
-using OWP.Infosite;
-using OWP.InfositeIdSync;
-using OWP.LinkLeagueAndTeam;
-using OWP.MatchReadyNotification;
-using OWP.OtherSport;
-using OWP.SumReport;
-using OWP.SyncLeagueSettings;
-using OWP.WorkerService.Jobs;
-using OWP.WorkerService.Settings;
+using OtherSport;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
+using RabbitMq;
+using RabbitMq.Models;
+using Settings;
+using SharpRaven;
 using StackExchange.Redis;
-
-namespace OWP.WorkerService.Extensions;
+using SumReport;
+using SyncLeagueSettings;
 
 public static class ServiceCollectionExtensions
 {
@@ -35,7 +36,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IJobFactory, JobFactory>();
         services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
         services.AddSingleton<IDynamicRepository, DynamicRepository>();
-        services.AddSingleton<Fanex.Logging.ILogger, Logger>();
+        services.AddSingleton<ILogger, Logger>();
 
         return services;
     }
@@ -62,7 +63,7 @@ public static class ServiceCollectionExtensions
             {
                 new SentryLogging( new SentryEngineOptions
                 {
-                    Dsn = new SharpRaven.Dsn(configuration.GetSection("SentryToken").Value)
+                    Dsn = new Dsn(configuration.GetSection("SentryToken").Value)
                 })
             });
 

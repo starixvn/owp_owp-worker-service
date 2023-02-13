@@ -1,12 +1,12 @@
-﻿using Microsoft.Extensions.Options;
+﻿namespace OWP.InfositeIdSync.UnitTests;
+
+using Infosite.Settings;
+using Microsoft.Extensions.Options;
+using Models;
 using NSubstitute;
 using Olympus.InfoSiteClient;
-using OWP.Infosite.Settings;
-using OWP.InfositeIdSync.Models;
-using OWP.InfositeIdSync.Services;
+using Services;
 using Xunit;
-
-namespace OWP.InfositeIdSync.UnitTests;
 
 public class SyncIsLiveServiceUnitTests
 {

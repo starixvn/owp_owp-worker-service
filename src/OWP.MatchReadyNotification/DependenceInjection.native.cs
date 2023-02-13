@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using OWP.MatchReadyNotification.Services;
+﻿namespace OWP.MatchReadyNotification;
 
-namespace OWP.MatchReadyNotification;
+using Microsoft.Extensions.DependencyInjection;
+using Services;
 
 public static class DependenceInjection
 {

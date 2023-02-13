@@ -1,13 +1,13 @@
-﻿using Fanex.Logging;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using OWP.Extensions;
-using OWP.Services;
-using OWP.Infosite.Constants;
-using OWP.Infosite.Models;
-using OWP.Infosite.Settings;
+﻿namespace OWP.Infosite.Services;
 
-namespace OWP.Infosite.Services;
+using Constants;
+using Extensions;
+using Fanex.Logging;
+using Microsoft.Extensions.Options;
+using Models;
+using Newtonsoft.Json;
+using OWP.Services;
+using Settings;
 
 public interface ApiService
 {
@@ -51,20 +51,18 @@ public class ApiServiceImp : ApiService
             var jsonData = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<DeleteChildMatch>>(jsonData, new TrimmingConverter());
         }
-        else
-        {
-            var logInfo = new
-            {
-                DateTime = DateTime.UtcNow,
-                RequestUri = requestLink,
-                StatusCode = (int)response.StatusCode,
-                response.RequestMessage
-            };
-            var logInfoString = JsonConvert.SerializeObject(logInfo);
-            await logger.ErrorAsync(logInfoString);
 
-            return new List<DeleteChildMatch>();
-        }
+        var logInfo = new
+        {
+            DateTime = DateTime.UtcNow,
+            RequestUri = requestLink,
+            StatusCode = (int)response.StatusCode,
+            response.RequestMessage
+        };
+        var logInfoString = JsonConvert.SerializeObject(logInfo);
+        await logger.ErrorAsync(logInfoString);
+
+        return new List<DeleteChildMatch>();
     }
 
     public async Task<List<CommonMatchModel>> QueryAsync(ParamsQueryModel param)
@@ -81,20 +79,18 @@ public class ApiServiceImp : ApiService
             var jsonData = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<CommonMatchModel>>(jsonData, new TrimmingConverter());
         }
-        else
-        {
-            var logInfo = new
-            {
-                DateTime = DateTime.UtcNow,
-                RequestUri = requestLink,
-                StatusCode = (int)response.StatusCode,
-                response.RequestMessage
-            };
-            var logInfoString = JsonConvert.SerializeObject(logInfo);
-            await logger.ErrorAsync(logInfoString);
 
-            return new List<CommonMatchModel>();
-        }
+        var logInfo = new
+        {
+            DateTime = DateTime.UtcNow,
+            RequestUri = requestLink,
+            StatusCode = (int)response.StatusCode,
+            response.RequestMessage
+        };
+        var logInfoString = JsonConvert.SerializeObject(logInfo);
+        await logger.ErrorAsync(logInfoString);
+
+        return new List<CommonMatchModel>();
     }
 
     public async Task<List<MatchRelation>> QueryMatchesRelation(ParamsQueryModel param)
@@ -111,21 +107,19 @@ public class ApiServiceImp : ApiService
             var jsonData = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<MatchRelation>>(jsonData, new TrimmingConverter());
         }
-        else
+
+        var logInfo = new
         {
-            var logInfo = new
-            {
-                DateTime = DateTime.UtcNow,
-                RequestUri = requestLink,
-                StatusCode = (int)response.StatusCode,
-                response.RequestMessage
-            };
+            DateTime = DateTime.UtcNow,
+            RequestUri = requestLink,
+            StatusCode = (int)response.StatusCode,
+            response.RequestMessage
+        };
 
-            var logInfoString = JsonConvert.SerializeObject(logInfo);
-            await logger.ErrorAsync(logInfoString);
+        var logInfoString = JsonConvert.SerializeObject(logInfo);
+        await logger.ErrorAsync(logInfoString);
 
-            return new List<MatchRelation>();
-        }
+        return new List<MatchRelation>();
     }
 
     public async Task<List<string>> GetInvalidEventKeysByDateAsync(DateTime date)
@@ -140,20 +134,18 @@ public class ApiServiceImp : ApiService
             var jsonData = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<string>>(jsonData, new TrimmingConverter());
         }
-        else
-        {
-            var logInfo = new
-            {
-                DateTime = DateTime.UtcNow,
-                RequestPath = requestLink,
-                StatusCode = (int)response.StatusCode,
-                response.RequestMessage
-            };
-            var logInfoString = JsonConvert.SerializeObject(logInfo);
-            await logger.ErrorAsync(logInfoString);
 
-            return new List<string>();
-        }
+        var logInfo = new
+        {
+            DateTime = DateTime.UtcNow,
+            RequestPath = requestLink,
+            StatusCode = (int)response.StatusCode,
+            response.RequestMessage
+        };
+        var logInfoString = JsonConvert.SerializeObject(logInfo);
+        await logger.ErrorAsync(logInfoString);
+
+        return new List<string>();
     }
 
     public async Task<List<MatchModelQuery180Day>> QueryInfoSiteMatchFor180Day()
@@ -166,19 +158,17 @@ public class ApiServiceImp : ApiService
             var jsonData = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<MatchModelQuery180Day>>(jsonData, new TrimmingConverter());
         }
-        else
-        {
-            var logInfo = new
-            {
-                DateTime = DateTime.UtcNow,
-                RequestUri = requestLink,
-                StatusCode = (int)response.StatusCode,
-                response.RequestMessage
-            };
-            var logInfoString = JsonConvert.SerializeObject(logInfo);
-            await logger.ErrorAsync(logInfoString);
 
-            return new List<MatchModelQuery180Day>();
-        }
+        var logInfo = new
+        {
+            DateTime = DateTime.UtcNow,
+            RequestUri = requestLink,
+            StatusCode = (int)response.StatusCode,
+            response.RequestMessage
+        };
+        var logInfoString = JsonConvert.SerializeObject(logInfo);
+        await logger.ErrorAsync(logInfoString);
+
+        return new List<MatchModelQuery180Day>();
     }
 }

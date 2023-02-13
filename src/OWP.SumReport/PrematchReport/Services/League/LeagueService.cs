@@ -1,9 +1,5 @@
 namespace OWP.SumReport.PrematchReport.Services.League;
 
-using Constants;
-using System;
-using System.Threading.Tasks;
-
 public interface LeagueService
 {
     Task BuildLeagueReport(DateTime eventDate);

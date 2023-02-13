@@ -1,9 +1,9 @@
-﻿using OWP.Extensions;
-using OWP.SumReport.LAReport.Enum;
-using OWP.SumReport.LAReport.Factory;
-using OWP.SumReport.LAReport.Models;
+﻿namespace OWP.SumReport.LAReport.Services;
 
-namespace OWP.SumReport.LAReport.Services;
+using Enum;
+using Extensions;
+using Factory;
+using Models;
 
 public interface CalculationService
 {

@@ -1,10 +1,10 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.SyncLeagueSettings;
+
+using Criteria;
+using Fanex.Data.Repository;
+using Models;
 using Newtonsoft.Json;
 using Olympus.Xml;
-using OWP.SyncLeagueSettings.Criteria;
-using OWP.SyncLeagueSettings.Models;
-
-namespace OWP.SyncLeagueSettings;
 
 public interface LeagueSettingsRepository
 {

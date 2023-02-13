@@ -1,6 +1,6 @@
-﻿using OWP.SumReport.TraderReport.Models;
+﻿namespace OWP.SumReport.TraderReport.Services;
 
-namespace OWP.SumReport.TraderReport.Services;
+using Models;
 
 public interface RobotX5Service
 {

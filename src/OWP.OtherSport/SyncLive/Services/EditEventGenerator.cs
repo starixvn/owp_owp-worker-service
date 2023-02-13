@@ -1,7 +1,7 @@
-﻿using OWP.OtherSport.SyncAdminSiteId.Models;
-using OWP.OtherSport.SyncLive.Model;
+﻿namespace OWP.OtherSport.SyncLive.Services;
 
-namespace OWP.OtherSport.SyncLive.Services;
+using Model;
+using SyncAdminSiteId.Models;
 
 public interface EditEventGenerator
 {

@@ -1,6 +1,6 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.SumReport.LAReport.Criteria;
 
-namespace OWP.SumReport.LAReport.Criteria;
+using Fanex.Data.Repository;
 
 public class GetUserSectionCriteria : CriteriaBase
 {

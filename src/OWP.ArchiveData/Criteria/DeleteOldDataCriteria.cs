@@ -1,6 +1,6 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.ArchiveData.Criteria;
 
-namespace OWP.ArchiveData.Criteria;
+using Fanex.Data.Repository;
 
 public class DeleteOldDataCriteria : INonQueryCommand
 {

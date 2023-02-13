@@ -1,7 +1,7 @@
-﻿using OWP.Attributes;
-using OWP.Extensions;
+﻿namespace OWP.Infosite.Models;
 
-namespace OWP.Infosite.Models;
+using Attributes;
+using Extensions;
 
 [Serializable]
 [XmlName("Row")]
@@ -33,6 +33,6 @@ public class MatchModelFor180Day
         HomeName = infositeMatch.team_home_name;
         AwayName = infositeMatch.team_away_name;
         AdminSiteId = infositeMatch.ibc_match_id;
-        IsNeutral = infositeMatch.is_neutral.HasValue && infositeMatch.is_neutral.Value == 1;
+        IsNeutral = infositeMatch.is_neutral is 1;
     }
 }

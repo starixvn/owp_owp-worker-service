@@ -1,9 +1,9 @@
-﻿using Fanex.Data.Repository;
-using Olympus.Xml;
-using OWP.SumReport.TraderReport.Criteria;
-using OWP.SumReport.TraderReport.Models;
+﻿namespace OWP.SumReport.TraderReport;
 
-namespace OWP.SumReport.TraderReport;
+using Criteria;
+using Fanex.Data.Repository;
+using Models;
+using Olympus.Xml;
 
 public interface TraderRepository
 {

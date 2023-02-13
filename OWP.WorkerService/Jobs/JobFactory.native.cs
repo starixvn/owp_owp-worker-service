@@ -1,7 +1,7 @@
-﻿using Quartz;
-using Quartz.Spi;
+﻿namespace OWP.WorkerService.Jobs;
 
-namespace OWP.WorkerService.Jobs;
+using Quartz;
+using Quartz.Spi;
 
 public class JobFactory : IJobFactory
 {

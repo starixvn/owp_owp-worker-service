@@ -1,9 +1,9 @@
-﻿using Fanex.Data.Repository;
-using Olympus.Xml;
-using OWP.SumReport.OvertimeReport.Criteria;
-using OWP.SumReport.OvertimeReport.Models;
+﻿namespace OWP.SumReport.OvertimeReport;
 
-namespace OWP.SumReport.OvertimeReport;
+using Criteria;
+using Fanex.Data.Repository;
+using Models;
+using Olympus.Xml;
 
 public interface OvertimeRepository
 {

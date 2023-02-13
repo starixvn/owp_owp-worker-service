@@ -1,6 +1,6 @@
-using System.Collections.Immutable;
-using System.Collections.Generic;
 namespace OWP.SumReport.LAReport.Constants;
+
+using System.Collections.Immutable;
 
 public static class MajorLeague
 {

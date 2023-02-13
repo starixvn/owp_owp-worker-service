@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace OWP.SumReport.MatchLiveReport.Constants;
+
+using System.ComponentModel.DataAnnotations;
 
 public enum BetTypeName
 {

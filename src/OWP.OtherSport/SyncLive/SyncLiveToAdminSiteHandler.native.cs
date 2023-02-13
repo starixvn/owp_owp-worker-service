@@ -1,8 +1,8 @@
-﻿using OWP.OtherSport.SyncAdminSiteId.Models;
-using OWP.OtherSport.SyncLive.Model;
-using OWP.OtherSport.SyncLive.Services;
+﻿namespace OWP.OtherSport.SyncLive;
 
-namespace OWP.OtherSport.SyncLive;
+using Model;
+using Services;
+using SyncAdminSiteId.Models;
 
 public interface SyncLiveToAdminSiteHandler
 {

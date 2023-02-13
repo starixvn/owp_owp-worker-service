@@ -1,6 +1,6 @@
-﻿using OWP.SumReport.LAReport.Services;
+﻿namespace OWP.SumReport.LAReport;
 
-namespace OWP.SumReport.LAReport;
+using Services;
 
 public interface Handler
 {

@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
-using OWP.Attributes;
-using OWP.Extensions;
-using OWP.Infosite.Builder;
-using System.Xml.Serialization;
+﻿namespace OWP.Infosite.Models;
 
-namespace OWP.Infosite.Models;
+using System.Xml.Serialization;
+using Attributes;
+using Builder;
+using Extensions;
+using Newtonsoft.Json;
 
 [Serializable]
 [XmlName("Row")]
@@ -152,8 +152,8 @@ public class Event
 
     private DateTime GetUpdateTime()
     {
-        var exInfoTime = ExtInfo.update_time.HasValue ? ExtInfo.update_time.Value : MinDate;
-        var matchTime = InfositeMatch.update_timestamp.HasValue ? InfositeMatch.update_timestamp.Value : MinDate;
+        var exInfoTime = ExtInfo.update_time ?? MinDate;
+        var matchTime = InfositeMatch.update_timestamp ?? MinDate;
         matchTime = matchTime.ToUtc0();
         return exInfoTime > matchTime ? exInfoTime : matchTime;
     }
@@ -167,10 +167,9 @@ public class Event
         => IsValidExtInfoMatch() && IsConfirmMatch();
 
     private bool IsValidExtInfoMatch()
-        => InfositeMatch.ext_info != null
-            && InfositeMatch.ext_info.rd_checked.HasValue
-            && InfositeMatch.ext_info.rd_checked.Value
-            && ExtInfo.sport_id == SoccerSportId;
+        => InfositeMatch.ext_info is { rd_checked: { } } 
+           && InfositeMatch.ext_info.rd_checked.Value 
+           && ExtInfo.sport_id == SoccerSportId;
 
     private bool IsConfirmMatch()
         => !(InfositeMatch.ibc_league_id == null

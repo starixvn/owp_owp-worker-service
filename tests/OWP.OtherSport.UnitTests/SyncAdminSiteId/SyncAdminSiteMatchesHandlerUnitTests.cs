@@ -1,17 +1,17 @@
-﻿using Fanex.Data.Repository;
-using NSubstitute;
-using Olympus.Xml;
-using OWP.OtherSport.SyncAdminSiteId.Criteria;
-using OWP.OtherSport.SyncAdminSiteId.Handlers;
-using OWP.OtherSport.SyncAdminSiteId.Models;
-using OWP.OtherSport.SyncLive;
-using OWP.OtherSport.SyncLive.Services;
+﻿namespace OWP.OtherSport.UnitTests.SyncAdminSiteId;
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Fanex.Data.Repository;
+using NSubstitute;
+using Olympus.Xml;
+using OtherSport.SyncAdminSiteId.Criteria;
+using OtherSport.SyncAdminSiteId.Handlers;
+using OtherSport.SyncAdminSiteId.Models;
+using OtherSport.SyncLive;
+using OtherSport.SyncLive.Services;
 using Xunit;
-
-namespace OWP.OtherSport.UnitTests.SyncAdminSiteId;
 
 public class SyncAdminSiteMatchesHandlerUnitTests
 {

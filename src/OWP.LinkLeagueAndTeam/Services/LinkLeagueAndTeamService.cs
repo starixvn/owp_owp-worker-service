@@ -1,6 +1,6 @@
-﻿using OWP.LinkLeagueAndTeam.Models;
+﻿namespace OWP.LinkLeagueAndTeam.Services;
 
-namespace OWP.LinkLeagueAndTeam.Services;
+using Models;
 
 public interface LinkLeagueAndTeamService
 {

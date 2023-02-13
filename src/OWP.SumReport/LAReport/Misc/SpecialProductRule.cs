@@ -1,8 +1,8 @@
-﻿using OWP.SumReport.LAReport.Constants;
-using OWP.SumReport.LAReport.Enum;
-using OWP.SumReport.LAReport.Models;
+﻿namespace OWP.SumReport.LAReport.Misc;
 
-namespace OWP.SumReport.LAReport.Misc;
+using Constants;
+using Enum;
+using Models;
 
 public class SpecialProductRule
 {

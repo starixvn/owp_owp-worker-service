@@ -1,11 +1,11 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.Infosite.UnitTests;
+
+using Criteria;
+using Fanex.Data.Repository;
 using Fanex.Logging;
 using NSubstitute;
-using OWP.Infosite.Criteria;
-using OWP.Infosite.Services;
+using Services;
 using Xunit;
-
-namespace OWP.Infosite.UnitTests;
 
 public class EventDeletedSyncServiceUnitTests
 {

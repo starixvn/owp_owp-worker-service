@@ -1,9 +1,9 @@
-﻿using OWP.SumReport.OvertimeReport.Calculators;
-using OWP.SumReport.OvertimeReport.Constants;
-using OWP.SumReport.OvertimeReport.Models;
-using Xunit;
+﻿namespace OWP.SumReport.UnitTests.OvertimeReport.Calculators;
 
-namespace OWP.SumReport.UnitTests.OvertimeReport.Calculators;
+using SumReport.OvertimeReport.Calculators;
+using SumReport.OvertimeReport.Constants;
+using SumReport.OvertimeReport.Models;
+using Xunit;
 
 public class AssignmentOvertimeCalculatorSecondUnitTests
 {
@@ -16,8 +16,8 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
             ShiftStartTime = new DateTime(2021, 10, 27, 2, 0, 0),
             ShiftEndTime = new DateTime(2021, 10, 27, 13, 0, 0)
         };
-        var mainMatchRemarks = new List<MainMatch>()
-            {
+        var mainMatchRemarks = new List<MainMatch>
+        {
                 new MainMatch
                 {
                     OWPMatchId = 2,
@@ -39,8 +39,8 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
             ShiftStartTime = new DateTime(2021, 10, 27, 2, 0, 0),
             ShiftEndTime = new DateTime(2021, 10, 27, 13, 0, 0)
         };
-        var mainMatchRemarks = new List<MainMatch>()
-            {
+        var mainMatchRemarks = new List<MainMatch>
+        {
                 new MainMatch
                 {
                     OWPMatchId = 2,
@@ -66,8 +66,8 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
             ShiftStartTime = new DateTime(2021, 10, 27, 2, 0, 0),
             ShiftEndTime = new DateTime(2021, 10, 27, 13, 0, 0)
         };
-        var mainMatchRemarks = new List<MainMatch>()
-            {
+        var mainMatchRemarks = new List<MainMatch>
+        {
                 new MainMatch
                 {
                     OWPMatchId = 2,
@@ -94,8 +94,8 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
             ShiftStartTime = new DateTime(2021, 10, 27, 2, 0, 0),
             ShiftEndTime = new DateTime(2021, 10, 27, 13, 0, 0)
         };
-        var mainMatchRemarks = new List<MainMatch>()
-            {
+        var mainMatchRemarks = new List<MainMatch>
+        {
                 new MainMatch
                 {
                     OWPMatchId = 2,
@@ -122,8 +122,8 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
             ShiftStartTime = new DateTime(2021, 10, 27, 2, 0, 0),
             ShiftEndTime = new DateTime(2021, 10, 27, 13, 0, 0)
         };
-        var mainMatchRemarks = new List<MainMatch>()
-            {
+        var mainMatchRemarks = new List<MainMatch>
+        {
                 new MainMatch
                 {
                     OWPMatchId = 2,

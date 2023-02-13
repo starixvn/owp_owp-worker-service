@@ -1,8 +1,8 @@
-﻿using OWP.Extensions;
-using OWP.SumReport.OvertimeReport.Constants;
-using OWP.SumReport.OvertimeReport.Models;
+﻿namespace OWP.SumReport.OvertimeReport.Helpers;
 
-namespace OWP.SumReport.OvertimeReport.Helpers;
+using Constants;
+using Extensions;
+using Models;
 
 public static class MatchHelper
 {
@@ -19,8 +19,8 @@ public static class MatchHelper
 
     public static int CalculateSABAPESMatchDuration(Assignment assignment)
     {
-        var method = pesOperations.LookupByKey<Func<Assignment, int>>(assignment.OWPLeagueName, null);
-        return method != null ? method(assignment) : 0;
+        var method = pesOperations.LookupByKey(assignment.OWPLeagueName, null);
+        return method?.Invoke(assignment) ?? 0;
     }
 
     public static int CalculateSABAPES5MinsMatchDuration(Assignment assignment)

@@ -1,9 +1,10 @@
-﻿using OWP.SumReport.OvertimeReport.Helpers;
-using OWP.SumReport.OvertimeReport.Models;
-using Xunit;
-using static OWP.SumReport.OvertimeReport.Constants.BetType;
+﻿using static OWP.SumReport.OvertimeReport.Constants.BetType;
 
 namespace OWP.SumReport.UnitTests.OvertimeReport.Helpers;
+
+using SumReport.OvertimeReport.Helpers;
+using SumReport.OvertimeReport.Models;
+using Xunit;
 
 public class MatchHelperUnitTests
 {

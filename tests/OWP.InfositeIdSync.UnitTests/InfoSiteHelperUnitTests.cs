@@ -1,9 +1,9 @@
-using OWP.InfositeIdSync.Models;
-using OWP.InfositeIdSync.Helpers;
+namespace OWP.InfositeIdSync.UnitTests;
+
+using Helpers;
+using Models;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.InfositeIdSync.UnitTests;
 
 public class InfoSiteHelperUnitTests
 {

@@ -1,14 +1,14 @@
-using OWP.SumReport.MatchLiveReport.Helpers;
-using OWP.SumReport.MatchLiveReport.Constants;
-using Xunit;
-using OWP.SumReport.MatchLiveReport.Models;
-using Xunit.Asserts.Compare;
-
 namespace OWP.SumReport.UnitTests.MatchLiveReport.Helpers;
+
+using SumReport.MatchLiveReport.Constants;
+using SumReport.MatchLiveReport.Helpers;
+using SumReport.MatchLiveReport.Models;
+using Xunit;
+using Xunit.Asserts.Compare;
 
 public class MatchHelperUnitTests
 {
-    [Theory()]
+    [Theory]
     [InlineData("SABA ABC PES ", true)]
     [InlineData("SABA ABC PES - 5mins", true)]
     [InlineData("SABA ABC fifa - 5mins", false)]
@@ -17,7 +17,7 @@ public class MatchHelperUnitTests
         Assert.Equal(result, MatchHelper.IsPes(owpLeagueName));
     }
 
-    [Theory()]
+    [Theory]
     [InlineData("SABA ABC FIFA ", true)]
     [InlineData("SABA ABC FIFA - 5mins", true)]
     [InlineData("SABA ABC PES - 5mins", false)]
@@ -26,7 +26,7 @@ public class MatchHelperUnitTests
         Assert.Equal(result, MatchHelper.IsFifa(owpLeagueName));
     }
 
-    [Theory()]
+    [Theory]
     [InlineData("SABA ABC PES - 15 Mins ", BetTypeName.SabaClubFriendlyVirtualPes2115MinsPlay)]
     [InlineData("SABA ABC PES - 5 mins ", BetTypeName.SabaEliteFriendlyVirtualPes215MinsPlay)]
     [InlineData("SABA ABC PES - 20 mins ", BetTypeName.SabaInternationalFriendlyVirtualPes2120MinsPlay)]
@@ -35,7 +35,7 @@ public class MatchHelperUnitTests
         Assert.Equal(result, MatchHelper.GetPesBetType(owpLeagueName));
     }
 
-    [Theory()]
+    [Theory]
     [InlineData("SABA ABC FIFA - 16 Mins ", BetTypeName.SabaClubFriendlyVirtualFifa2116MinsPlay)]
     [InlineData("SABA ABC FIFA - 6 mins ", BetTypeName.SabaClubFriendlyVirtualFifa20Futsal6MinsPlay)]
     [InlineData("M88 SABA ABC FIFA - 16 mins ", BetTypeName.M88SabaSpanishLeagueVirtualFifa21Season1016MinsPlay)]
@@ -102,7 +102,7 @@ public class MatchHelperUnitTests
         DeepAssert.Equal(expected, MatchHelper.CategorizeSabaMatches(matches).ToList());
     }
 
-    [Theory()]
+    [Theory]
     [InlineData("abc fantasy ", BetTypeName.Fantasy)]
     [InlineData("AUSTRIA REGIONAL LEAGUE MITTE", BetTypeName.Main)]
     [InlineData("AUSTRIA REGIONAL WHICH TEAM TO KICK OFF", BetTypeName.WhichTeamToKickOff)]

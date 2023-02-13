@@ -1,10 +1,10 @@
-﻿using OWP.SumReport.PrematchReport.Models;
+﻿namespace OWP.SumReport.PrematchReport.Services.League;
 
-namespace OWP.SumReport.PrematchReport.Services.League;
+using Models;
 
 public interface DataReportService
 {
-    IList<DataReport> BuildSingleLeagueGroupReport(IList<Models.LeagueInfo> leagues, int bettype);
+    IList<DataReport> BuildSingleLeagueGroupReport(IList<LeagueInfo> leagues, int bettype);
 
     Task InsertLeagueReport(IList<DataReport> dataReports);
 }
@@ -17,7 +17,7 @@ public class DataReportBuilderServiceImp : DataReportService
     {
         this.dbWriterService = dbWriterService;
     }
-    public IList<DataReport> BuildSingleLeagueGroupReport(IList<Models.LeagueInfo> leagues, int bettype)
+    public IList<DataReport> BuildSingleLeagueGroupReport(IList<LeagueInfo> leagues, int bettype)
     {
         var dataReport = new List<DataReport>();
         var group = leagues

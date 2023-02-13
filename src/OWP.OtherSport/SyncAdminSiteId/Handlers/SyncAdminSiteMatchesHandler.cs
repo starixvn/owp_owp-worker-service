@@ -1,12 +1,12 @@
-﻿using Fanex.Data.Repository;
-using Olympus.Xml;
-using OWP.OtherSport.SyncAdminSiteId.Criteria;
-using OWP.OtherSport.SyncAdminSiteId.Helpers;
-using OWP.OtherSport.SyncAdminSiteId.Models;
-using OWP.OtherSport.SyncLive;
-using OWP.OtherSport.SyncLive.Services;
+﻿namespace OWP.OtherSport.SyncAdminSiteId.Handlers;
 
-namespace OWP.OtherSport.SyncAdminSiteId.Handlers;
+using Criteria;
+using Fanex.Data.Repository;
+using Helpers;
+using Models;
+using Olympus.Xml;
+using SyncLive;
+using SyncLive.Services;
 
 public interface SyncAdminSiteMatchesHandler
 {

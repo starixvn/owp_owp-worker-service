@@ -30,7 +30,7 @@ public class RabbitMqClientImp : RabbitMqClient
     {
         try
         {
-            var factory = new ConnectionFactory()
+            var factory = new ConnectionFactory
             {
                 UserName = setting.UserName,
                 Password = setting.Password,

@@ -1,6 +1,6 @@
-using Fanex.Data.Repository;
-
 namespace OWP.SumReport.MatchLiveReport.Criteria;
+
+using Fanex.Data.Repository;
 
 public class GetSabaFiveMinMatchIdCriteria : NonQueryCommand
 {

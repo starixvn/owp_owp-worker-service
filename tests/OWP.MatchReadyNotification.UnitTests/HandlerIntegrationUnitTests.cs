@@ -1,10 +1,10 @@
-﻿using Fanex.Caching;
+﻿namespace OWP.MatchReadyNotification.UnitTests;
+
+using Fanex.Caching;
 using Fanex.Data.Repository;
 using NSubstitute;
-using OWP.MatchReadyNotification.Services;
+using Services;
 using Xunit;
-
-namespace OWP.MatchReadyNotification.UnitTests;
 
 public class HandlerIntegrationUnitTests
 {

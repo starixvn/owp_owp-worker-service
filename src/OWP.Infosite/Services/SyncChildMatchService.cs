@@ -1,16 +1,16 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.Infosite.Services;
+
+using Builder;
+using Criteria;
+using Extensions;
+using Fanex.Data.Repository;
+using Helper;
 using Microsoft.Extensions.Options;
+using Models;
 using Newtonsoft.Json;
 using Olympus.InfoSiteClient;
 using Olympus.InfoSiteClient.Models;
-using OWP.Extensions;
-using OWP.Infosite.Builder;
-using OWP.Infosite.Criteria;
-using OWP.Infosite.Helper;
-using OWP.Infosite.Models;
-using OWP.Infosite.Settings;
-
-namespace OWP.Infosite.Services;
+using Settings;
 
 public interface SyncChildMatchService
 {
@@ -74,7 +74,7 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
     private static bool IsETPKMatch(string homeName)
         => homeName.IsContainsIgnoreCase("(ET)") || homeName.IsContainsIgnoreCase("(PEN)");
 
-    private static bool IsValidSubType(int? subType) => subType.HasValue && subType > 0;
+    private static bool IsValidSubType(int? subType) => subType is > 0;
 
     public async Task SaveInfoSiteChildMatchCommand(IEnumerable<MappedChildMatch> childMatches)
     {

@@ -1,14 +1,14 @@
-﻿using NSubstitute;
-using OWP.SumReport.LAReport;
-using OWP.SumReport.LAReport.Enum;
-using OWP.SumReport.LAReport.Factory;
-using OWP.SumReport.LAReport.Misc;
-using OWP.SumReport.LAReport.Models;
-using OWP.SumReport.LAReport.Services;
+﻿namespace OWP.SumReport.UnitTests.LAReport;
+
+using NSubstitute;
+using SumReport.LAReport;
+using SumReport.LAReport.Enum;
+using SumReport.LAReport.Factory;
+using SumReport.LAReport.Misc;
+using SumReport.LAReport.Models;
+using SumReport.LAReport.Services;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.SumReport.UnitTests.LAReport;
 
 public class LAReportServiceUnitTests
 {

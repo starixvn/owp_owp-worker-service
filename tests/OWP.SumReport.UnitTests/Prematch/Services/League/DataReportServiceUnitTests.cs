@@ -1,11 +1,12 @@
-﻿using NSubstitute;
-using OWP.SumReport.PrematchReport.Models;
-using OWP.SumReport.PrematchReport.Services;
-using OWP.SumReport.PrematchReport.Services.League;
+﻿namespace OWP.SumReport.PrematchReport.UnitTests.Services.League;
+
+using Constants;
+using Models;
+using NSubstitute;
+using PrematchReport.Services;
+using PrematchReport.Services.League;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.SumReport.PrematchReport.UnitTests.Services.League;
 
 public class DataReportServiceUnitTests
 {
@@ -24,7 +25,7 @@ public class DataReportServiceUnitTests
         var leagueInfos = MockLeagueInfo();
 
         //Act
-        var actual = service.BuildSingleLeagueGroupReport(leagueInfos, Constants.Constant.HDPID);
+        var actual = service.BuildSingleLeagueGroupReport(leagueInfos, Constant.HDPID);
 
         //Assert
         var expected = MockExpected();

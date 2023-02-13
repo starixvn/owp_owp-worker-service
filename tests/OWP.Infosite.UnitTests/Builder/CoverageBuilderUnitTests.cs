@@ -1,8 +1,8 @@
-using OWP.Infosite.Builder;
-using OWP.Infosite.Models;
-using Xunit;
-
 namespace OWP.Infosite.UnitTests.Builder;
+
+using Infosite.Builder;
+using Models;
+using Xunit;
 
 public class CoverageBuilderUnitTests
 {

@@ -1,7 +1,7 @@
-﻿using OWP.MatchReadyNotification.Models;
-using System.Globalization;
+﻿namespace OWP.MatchReadyNotification.Services;
 
-namespace OWP.MatchReadyNotification.Services;
+using System.Globalization;
+using Models;
 
 public interface NotReadyMessageFactory
 {

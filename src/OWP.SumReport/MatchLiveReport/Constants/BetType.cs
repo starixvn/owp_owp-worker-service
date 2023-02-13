@@ -1,5 +1,3 @@
-using System.Collections.Immutable;
-
 namespace OWP.SumReport.MatchLiveReport.Constants;
 
 public static class Consts

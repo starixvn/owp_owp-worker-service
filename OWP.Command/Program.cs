@@ -13,13 +13,14 @@ using OWP;
 using OWP.ArchiveData;
 using OWP.Command;
 using OWP.Command.Settings;
-using OWP.RabbitMq;
-using OWP.RabbitMq.Models;
 using OWP.Infosite;
+using OWP.Infosite.Services;
 using OWP.InfositeIdSync;
 using OWP.LinkLeagueAndTeam;
 using OWP.MatchReadyNotification;
 using OWP.OtherSport;
+using OWP.RabbitMq;
+using OWP.RabbitMq.Models;
 using OWP.SumReport;
 using OWP.SyncLeagueSettings;
 
@@ -27,7 +28,7 @@ using OWP.SyncLeagueSettings;
 
 var environment = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
 var configuration = new ConfigurationBuilder()
-    .AddJsonFile($"appsettings.json", true, true)
+    .AddJsonFile("appsettings.json", true, true)
     .AddJsonFile($"appsettings.{environment}.json", true, true)
     .Build();
 
@@ -101,5 +102,5 @@ services.AddOtherSportServices();
 services.AddArchiveDataServices();
 #endregion
 
-var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.SyncChildMatchService>();
+var apiService = services.BuildServiceProvider().GetService<SyncChildMatchService>();
 await apiService.Sync(new DateTime(2022, 12, 05)).ConfigureAwait(false);

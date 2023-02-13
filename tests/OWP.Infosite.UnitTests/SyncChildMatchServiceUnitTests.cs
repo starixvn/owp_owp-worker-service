@@ -1,15 +1,15 @@
+namespace OWP.Infosite.UnitTests;
+
+using Criteria;
 using Fanex.Data.Repository;
 using Microsoft.Extensions.Options;
+using Models;
 using NSubstitute;
 using Olympus.InfoSiteClient.Models;
-using OWP.Infosite.Criteria;
-using OWP.Infosite.Models;
-using OWP.Infosite.Services;
-using OWP.Infosite.Settings;
+using Services;
+using Settings;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.Infosite.UnitTests;
 
 public class SyncChildMatchServiceUnitTests
 {
@@ -37,7 +37,7 @@ public class SyncChildMatchServiceUnitTests
     [Fact]
     public async Task SaveInfoSiteChildMatchCommand()
     {
-        var matches = new List<MappedChildMatch>()
+        var matches = new List<MappedChildMatch>
         {
             new MappedChildMatch
             {

@@ -1,6 +1,6 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.MatchReadyNotification.Criteria;
 
-namespace OWP.MatchReadyNotification.Criteria;
+using Fanex.Data.Repository;
 
 internal class GetLeaderSupervisorSectionHeadOfSessionCriteria : CriteriaBase
 {

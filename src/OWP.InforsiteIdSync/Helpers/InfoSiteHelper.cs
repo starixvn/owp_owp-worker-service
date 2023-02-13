@@ -1,8 +1,8 @@
-﻿using System.Globalization;
-using OWP.Extensions;
-using OWP.InfositeIdSync.Models;
+﻿namespace OWP.InfositeIdSync.Helpers;
 
-namespace OWP.InfositeIdSync.Helpers;
+using System.Globalization;
+using Extensions;
+using Models;
 
 public static class InfoSiteHelper
 {

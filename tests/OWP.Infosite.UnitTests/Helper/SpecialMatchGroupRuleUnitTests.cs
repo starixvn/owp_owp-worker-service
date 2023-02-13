@@ -1,8 +1,8 @@
-﻿using OWP.Infosite.Helper;
-using OWP.Infosite.Models;
-using Xunit;
+﻿namespace OWP.Infosite.UnitTests.Helper;
 
-namespace OWP.Infosite.UnitTests.Helper;
+using Infosite.Helper;
+using Models;
+using Xunit;
 
 public class SpecialMatchGroupRuleUnitTests
 {

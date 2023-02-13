@@ -1,10 +1,10 @@
-﻿using OWP.Extensions;
-using OWP.Infosite.Constants;
-using OWP.Infosite.Models;
+﻿namespace OWP.Infosite.Helper;
+
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
-
-namespace OWP.Infosite.Helper;
+using Constants;
+using Extensions;
+using Models;
 
 public class SpecialMatchGroupRule
 {

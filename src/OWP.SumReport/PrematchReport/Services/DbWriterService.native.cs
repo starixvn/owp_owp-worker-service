@@ -1,8 +1,8 @@
-﻿using OWP.SumReport.PrematchReport.Criteria;
-using OWP.SumReport.PrematchReport.Models;
-using System.Xml.Linq;
+﻿namespace OWP.SumReport.PrematchReport.Services;
+
+using Criteria;
+using Models;
 using Olympus.Xml;
-namespace OWP.SumReport.PrematchReport.Services;
 
 public interface DbWriterService
 {

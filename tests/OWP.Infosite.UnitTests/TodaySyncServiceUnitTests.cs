@@ -1,13 +1,13 @@
-﻿using Fanex.Caching;
-using Fanex.Data.Repository;
-using NSubstitute;
-using OWP.RabbitMq;
-using OWP.Infosite.Criteria;
-using OWP.Infosite.Models;
-using OWP.Infosite.Services;
-using Xunit;
+﻿namespace OWP.Infosite.UnitTests;
 
-namespace OWP.Infosite.UnitTests;
+using Criteria;
+using Fanex.Caching;
+using Fanex.Data.Repository;
+using Models;
+using NSubstitute;
+using RabbitMq;
+using Services;
+using Xunit;
 
 public class TodaySyncServiceUnitTests
 {

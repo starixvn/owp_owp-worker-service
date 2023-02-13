@@ -1,7 +1,5 @@
 ﻿namespace OWP.Attributes;
 
-using System;
-
 [AttributeUsage(AttributeTargets.All)]
 public sealed class XmlNameAttribute : Attribute
 {
@@ -9,6 +7,6 @@ public sealed class XmlNameAttribute : Attribute
 
     public XmlNameAttribute(string name)
     {
-        this.Name = name;
+        Name = name;
     }
 }

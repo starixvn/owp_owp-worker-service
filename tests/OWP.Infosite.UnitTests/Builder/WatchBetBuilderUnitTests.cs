@@ -1,14 +1,15 @@
-using OWP.Infosite.Builder;
-using Xunit;
-
 namespace OWP.Infosite.UnitTests.Builder;
+
+using Infosite.Builder;
+using Models;
+using Xunit;
 
 public class WatchBetBuilderUnitTests
 {
     [Fact]
     public void Build_WBhasValue_ReturnWB()
     {
-        var actual = WatchBetBuilder.Build(new Models.SoccerEventSchedule { wb = "WB" });
+        var actual = WatchBetBuilder.Build(new SoccerEventSchedule { wb = "WB" });
 
         Assert.Equal("WB", actual);
     }
@@ -16,7 +17,7 @@ public class WatchBetBuilderUnitTests
     [Fact]
     public void Build_streamSrc1hasValue_ReturnWB()
     {
-        var actual = WatchBetBuilder.Build(new Models.SoccerEventSchedule
+        var actual = WatchBetBuilder.Build(new SoccerEventSchedule
         {
             create_streaming_src = 1,
             create_streaming_id = "stream1"
@@ -28,7 +29,7 @@ public class WatchBetBuilderUnitTests
     [Fact]
     public void Build_streamSrc2hasValue_ReturnWB()
     {
-        var actual = WatchBetBuilder.Build(new Models.SoccerEventSchedule
+        var actual = WatchBetBuilder.Build(new SoccerEventSchedule
         {
             create_streaming2_src = 1,
             create_streaming2_id = "stream2"

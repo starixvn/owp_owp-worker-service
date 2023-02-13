@@ -1,7 +1,7 @@
-﻿using OWP.Extensions;
-using OWP.Infosite.Models;
+﻿namespace OWP.Infosite.Builder;
 
-namespace OWP.Infosite.Builder;
+using Extensions;
+using Models;
 
 public class CoverageBuilder
 {

@@ -1,6 +1,6 @@
-﻿using OWP.Attributes;
+﻿namespace OWP.SyncLeagueSettings.Models;
 
-namespace OWP.SyncLeagueSettings.Models;
+using Attributes;
 
 [XmlName("LeagueSetting")]
 public class LeagueSetting

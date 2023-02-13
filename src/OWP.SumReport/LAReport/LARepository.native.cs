@@ -1,9 +1,9 @@
-﻿using Fanex.Data.Repository;
-using Olympus.Xml;
-using OWP.SumReport.LAReport.Criteria;
-using OWP.SumReport.LAReport.Models;
+﻿namespace OWP.SumReport.LAReport;
 
-namespace OWP.SumReport.LAReport;
+using Criteria;
+using Fanex.Data.Repository;
+using Models;
+using Olympus.Xml;
 
 public interface LARepository
 {

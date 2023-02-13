@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using OWP.Infosite.Services;
-using OWP.Infosite.Settings;
+﻿namespace OWP.Infosite;
 
-namespace OWP.Infosite;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Services;
+using Settings;
 
 public static class DependenceInjection
 {

@@ -1,6 +1,6 @@
-﻿using OWP.SumReport.TraderReport.Enum;
+﻿namespace OWP.SumReport.TraderReport.Models;
 
-namespace OWP.SumReport.TraderReport.Models;
+using Enum;
 
 public class Assignment
 {

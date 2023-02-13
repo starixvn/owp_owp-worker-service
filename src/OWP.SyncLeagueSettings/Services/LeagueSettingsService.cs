@@ -1,8 +1,9 @@
-﻿using OWP.Extensions;
-using OWP.SyncLeagueSettings.Constants;
-using OWP.SyncLeagueSettings.Helpers;
-using OWP.SyncLeagueSettings.Models;
-namespace OWP.SyncLeagueSettings.Services;
+﻿namespace OWP.SyncLeagueSettings.Services;
+
+using Constants;
+using Extensions;
+using Helpers;
+using Models;
 
 public interface LeagueSettingsService
 {

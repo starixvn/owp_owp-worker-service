@@ -1,6 +1,6 @@
-﻿using OWP.SumReport.LAReport.Enum;
+﻿namespace OWP.SumReport.LAReport.Models;
 
-namespace OWP.SumReport.LAReport.Models;
+using Enum;
 
 public class Assignment
 {

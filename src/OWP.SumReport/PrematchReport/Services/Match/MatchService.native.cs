@@ -1,9 +1,5 @@
 ﻿namespace OWP.SumReport.PrematchReport.Services.Match;
 
-using System;
-using System.Threading.Tasks;
-using OWP.SumReport.PrematchReport.Models;
-
 public interface MatchService
 {
     Task BuildMatchReportAsync(DateTime eventDate);

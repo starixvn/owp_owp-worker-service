@@ -1,12 +1,12 @@
-﻿using Fanex.Caching;
-using Fanex.Data.Repository;
-using NSubstitute;
-using OWP.RabbitMq;
-using OWP.Infosite.Models;
-using OWP.Infosite.Services;
-using Xunit;
+﻿namespace OWP.Infosite.UnitTests;
 
-namespace OWP.Infosite.UnitTests;
+using Fanex.Caching;
+using Fanex.Data.Repository;
+using Models;
+using NSubstitute;
+using RabbitMq;
+using Services;
+using Xunit;
 
 public class FutureSyncServiceUnitTests
 {

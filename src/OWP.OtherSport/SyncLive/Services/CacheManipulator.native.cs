@@ -1,9 +1,8 @@
-﻿using Fanex.Caching;
-using Newtonsoft.Json;
-using OWP.OtherSport.SyncAdminSiteId.Models;
-using OWP.OtherSport.SyncLive.Model;
+﻿namespace OWP.OtherSport.SyncLive.Services;
 
-namespace OWP.OtherSport.SyncLive.Services;
+using Fanex.Caching;
+using Newtonsoft.Json;
+using SyncAdminSiteId.Models;
 
 public interface CacheManipulator
 {

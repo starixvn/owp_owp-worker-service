@@ -1,8 +1,8 @@
-﻿using Olympus.OWP.Constants;
-using OWP.Mics;
-using OWP.InfositeIdSync.Models;
+﻿namespace OWP.InfositeIdSync.Helpers;
 
-namespace OWP.InfositeIdSync.Helpers;
+using Mics;
+using Models;
+using Olympus.OWP.Constants;
 
 public static class MatchHelper
 {

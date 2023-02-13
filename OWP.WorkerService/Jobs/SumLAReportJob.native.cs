@@ -1,11 +1,11 @@
-﻿using Fanex.Logging;
-using ONEbook.UM.Services;
-using OWP.SumReport.Constants;
-using OWP.SumReport.LAReport;
-using OWP.SumReport.Services;
-using Quartz;
+﻿namespace OWP.WorkerService.Jobs;
 
-namespace OWP.WorkerService.Jobs;
+using Fanex.Logging;
+using ONEbook.UM.Services;
+using Quartz;
+using SumReport.Constants;
+using SumReport.LAReport;
+using SumReport.Services;
 
 [DisallowConcurrentExecution]
 public class SumLAReportJob : IJob

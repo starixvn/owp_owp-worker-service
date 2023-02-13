@@ -1,9 +1,9 @@
-﻿using Fanex.Caching;
-using Newtonsoft.Json;
-using OWP.InfositeIdSync.Constants;
-using OWP.InfositeIdSync.Models;
+﻿namespace OWP.InfositeIdSync.Services;
 
-namespace OWP.InfositeIdSync.Services;
+using Constants;
+using Fanex.Caching;
+using Models;
+using Newtonsoft.Json;
 
 public interface CacheManipulator
 {

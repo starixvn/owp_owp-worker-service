@@ -1,6 +1,6 @@
-using OWP.SumReport.MatchLiveReport.Constants;
-
 namespace OWP.SumReport.MatchLiveReport.Models;
+
+using Constants;
 
 public class OWPMatch {
     public int OWPMatchId { get; set; }

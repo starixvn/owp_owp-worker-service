@@ -1,9 +1,9 @@
-﻿using Fanex.Logging;
-using ONEbook.UM.Services;
-using OWP.OtherSport.SyncAdminSiteId.Handlers;
-using Quartz;
+﻿namespace OWP.WorkerService.Jobs;
 
-namespace OWP.WorkerService.Jobs;
+using Fanex.Logging;
+using ONEbook.UM.Services;
+using OtherSport.SyncAdminSiteId.Handlers;
+using Quartz;
 
 [DisallowConcurrentExecution]
 public class SyncOtherSportAdminSiteMatchJob : IJob

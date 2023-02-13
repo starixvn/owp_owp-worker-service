@@ -1,8 +1,8 @@
-﻿using OWP.SumReport.TraderReport.Models;
-using OWP.SumReport.TraderReport.Services;
-using Xunit;
+﻿namespace OWP.SumReport.UnitTests.TraderReport;
 
-namespace OWP.SumReport.UnitTests.TraderReport;
+using SumReport.TraderReport.Models;
+using SumReport.TraderReport.Services;
+using Xunit;
 
 public class RobotX5ServiceUnitTests
 {

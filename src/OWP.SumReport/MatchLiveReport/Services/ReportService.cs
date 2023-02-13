@@ -1,11 +1,11 @@
-using OWP.Extensions;
-using OWP.SumReport.MatchLiveReport.Constants;
-using OWP.SumReport.MatchLiveReport.Helpers;
-using OWP.SumReport.MatchLiveReport.Models;
-using OWP.SumReport.MatchLiveReport.Repository;
-using System.ComponentModel.DataAnnotations;
-
 namespace OWP.SumReport.MatchLiveReport.Services;
+
+using System.ComponentModel.DataAnnotations;
+using Constants;
+using Extensions;
+using Helpers;
+using Models;
+using Repository;
 
 public interface ReportService
 {

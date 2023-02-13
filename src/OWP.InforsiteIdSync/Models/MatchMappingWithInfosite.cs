@@ -1,6 +1,6 @@
-﻿using Olympus.InfoSiteClient.Extensions.XMLExtensions;
+﻿namespace OWP.InfositeIdSync.Models;
 
-namespace OWP.InfositeIdSync.Models;
+using Olympus.InfoSiteClient.Extensions.XMLExtensions;
 
 [Serializable]
 [XMLName("Row")]

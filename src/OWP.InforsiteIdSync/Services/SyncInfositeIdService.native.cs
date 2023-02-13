@@ -1,10 +1,10 @@
-﻿using OWP.InfositeIdSync.Helpers;
-using OWP.Infosite.Services;
-using System.Globalization;
-using OWP.RabbitMq;
-using OWP.RabbitMq.Models;
+﻿namespace OWP.InfositeIdSync.Services;
 
-namespace OWP.InfositeIdSync.Services;
+using System.Globalization;
+using Helpers;
+using Infosite.Services;
+using RabbitMq;
+using RabbitMq.Models;
 
 public interface SyncInfositeIdService
 {

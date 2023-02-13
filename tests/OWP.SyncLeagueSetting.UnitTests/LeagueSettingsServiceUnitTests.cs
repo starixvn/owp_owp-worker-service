@@ -1,11 +1,11 @@
+namespace OWP.SyncLeagueSettings.UnitTests;
+
+using Constants;
+using Models;
 using NSubstitute;
-using OWP.SyncLeagueSettings.Constants;
-using OWP.SyncLeagueSettings.Models;
-using OWP.SyncLeagueSettings.Services;
+using Services;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.SyncLeagueSettings.UnitTests;
 
 public class LeagueSettingsServiceUnitTests
 {

@@ -1,6 +1,6 @@
 ﻿namespace OWP.SumReport.PrematchReport.Services.Match;
 
-using OWP.SumReport.PrematchReport.Constants;
+using Constants;
 
 public interface OUMatchService
 {

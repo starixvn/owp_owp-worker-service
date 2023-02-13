@@ -1,8 +1,8 @@
-﻿using OWP.SumReport.OvertimeReport.Calculators;
-using OWP.SumReport.OvertimeReport.Helpers;
-using OWP.SumReport.OvertimeReport.Models;
+﻿namespace OWP.SumReport.OvertimeReport.Services;
 
-namespace OWP.SumReport.OvertimeReport.Services;
+using Calculators;
+using Helpers;
+using Models;
 
 public interface ReportCalculationService
 {

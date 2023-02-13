@@ -1,11 +1,11 @@
-﻿using NSubstitute;
-using OWP.SumReport.OvertimeReport;
-using OWP.SumReport.OvertimeReport.Models;
-using OWP.SumReport.OvertimeReport.Services;
+﻿namespace OWP.SumReport.UnitTests.OvertimeReport.Services;
+
+using NSubstitute;
+using SumReport.OvertimeReport;
+using SumReport.OvertimeReport.Models;
+using SumReport.OvertimeReport.Services;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.SumReport.UnitTests.OvertimeReport.Services;
 
 public class ReportCalculationServiceUnitTests
 {

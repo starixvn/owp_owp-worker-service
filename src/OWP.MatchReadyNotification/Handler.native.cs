@@ -1,7 +1,7 @@
-﻿using OWP.MatchReadyNotification.Services;
-using System.Globalization;
+﻿namespace OWP.MatchReadyNotification;
 
-namespace OWP.MatchReadyNotification;
+using System.Globalization;
+using Services;
 
 public interface Handler
 {

@@ -1,6 +1,6 @@
-﻿using OWP.OtherSport.SyncAdminSiteId.Models;
+﻿namespace OWP.OtherSport.SyncAdminSiteId.Helpers;
 
-namespace OWP.OtherSport.SyncAdminSiteId.Helpers;
+using Models;
 
 public static class MatchHelper
 {

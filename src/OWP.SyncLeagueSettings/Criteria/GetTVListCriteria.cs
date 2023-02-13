@@ -1,6 +1,6 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.SyncLeagueSettings.Criteria;
 
-namespace OWP.SyncLeagueSettings.Criteria;
+using Fanex.Data.Repository;
 
 public class GetTVListCriteria : CriteriaBase
 {

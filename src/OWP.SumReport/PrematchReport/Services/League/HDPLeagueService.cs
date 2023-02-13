@@ -1,5 +1,7 @@
 ﻿namespace OWP.SumReport.PrematchReport.Services.League;
 
+using Constants;
+
 public interface HDPLeagueService
 {
     Task BuildSingleHDPLeagueReport(DateTime eventDate);
@@ -22,8 +24,8 @@ public class HDPLeagueServiceImp : HDPLeagueService
 
     public async Task BuildSingleHDPLeagueReport(DateTime eventDate)
     {
-        var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constants.Constant.HDPID);
-        var dataReport = dataReportService.BuildSingleLeagueGroupReport(leagues, Constants.Constant.HDPID);
+        var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constant.HDPID);
+        var dataReport = dataReportService.BuildSingleLeagueGroupReport(leagues, Constant.HDPID);
         await dataReportService.InsertLeagueReport(dataReport);
     }
 }

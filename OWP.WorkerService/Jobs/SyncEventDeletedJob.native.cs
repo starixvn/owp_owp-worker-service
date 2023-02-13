@@ -1,9 +1,9 @@
-﻿using Fanex.Logging;
-using ONEbook.UM.Services;
-using OWP.Infosite.Services;
-using Quartz;
+﻿namespace OWP.WorkerService.Jobs;
 
-namespace OWP.WorkerService.Jobs;
+using Fanex.Logging;
+using Infosite.Services;
+using ONEbook.UM.Services;
+using Quartz;
 
 [DisallowConcurrentExecution]
 internal class SyncEventDeletedJob : IJob
@@ -13,7 +13,7 @@ internal class SyncEventDeletedJob : IJob
 
     public SyncEventDeletedJob(SyncEventDeletedService syncService, IMaintenanceService maintenanceService)
     {
-        this.syncEventDeletedService = syncService;
+        syncEventDeletedService = syncService;
         this.maintenanceService = maintenanceService;
     }
 

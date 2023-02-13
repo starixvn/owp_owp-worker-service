@@ -1,6 +1,6 @@
-﻿using OWP.SumReport.TraderReport.Services;
+﻿namespace OWP.SumReport.TraderReport;
 
-namespace OWP.SumReport.TraderReport;
+using Services;
 
 public interface Handler
 {

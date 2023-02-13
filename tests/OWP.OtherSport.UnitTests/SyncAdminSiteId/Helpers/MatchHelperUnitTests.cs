@@ -1,12 +1,12 @@
-﻿using OWP.OtherSport.SyncAdminSiteId.Helpers;
-using OWP.OtherSport.SyncAdminSiteId.Models;
+﻿namespace OWP.OtherSport.UnitTests.SyncAdminSiteId.Helpers;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OtherSport.SyncAdminSiteId.Helpers;
+using OtherSport.SyncAdminSiteId.Models;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.OtherSport.UnitTests.SyncAdminSiteId.Helpers;
 
 public class MatchHelperUnitTests
 {

@@ -1,6 +1,6 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.Infosite.Criteria;
 
-namespace OWP.Infosite.Criteria;
+using Fanex.Data.Repository;
 
 public class PushInfoSiteMatchCommand : NonQueryCommand
 {

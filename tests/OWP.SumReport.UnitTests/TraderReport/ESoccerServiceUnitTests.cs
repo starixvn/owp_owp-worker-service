@@ -1,11 +1,11 @@
-﻿using NSubstitute;
-using OWP.SumReport.TraderReport;
-using OWP.SumReport.TraderReport.Models;
-using OWP.SumReport.TraderReport.Services;
+﻿namespace OWP.SumReport.UnitTests.TraderReport;
+
+using NSubstitute;
+using SumReport.TraderReport;
+using SumReport.TraderReport.Models;
+using SumReport.TraderReport.Services;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.SumReport.UnitTests.TraderReport;
 
 public class ESoccerServiceUnitTests
 {

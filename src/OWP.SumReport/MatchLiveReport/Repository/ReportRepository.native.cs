@@ -1,9 +1,9 @@
-using Fanex.Data.Repository;
-using Olympus.Xml;
-using OWP.SumReport.MatchLiveReport.Criteria;
-using OWP.SumReport.MatchLiveReport.Models;
-
 namespace OWP.SumReport.MatchLiveReport.Repository;
+
+using Criteria;
+using Fanex.Data.Repository;
+using Models;
+using Olympus.Xml;
 
 public interface ReportRepository
 {

@@ -1,9 +1,8 @@
-﻿using OWP.Extensions;
-using OWP.SumReport.LAReport.Enum;
-using OWP.SumReport.LAReport.Models;
-using System.Xml.Linq;
+﻿namespace OWP.SumReport.LAReport.Misc;
 
-namespace OWP.SumReport.LAReport.Misc;
+using Enum;
+using Extensions;
+using Models;
 
 public class SingleMatchesRule
 {

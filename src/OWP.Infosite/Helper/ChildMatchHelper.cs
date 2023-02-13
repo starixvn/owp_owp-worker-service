@@ -1,7 +1,7 @@
-using Olympus.OWP.Constants;
-using OWP.Mics;
-
 namespace OWP.Infosite.Helper;
+
+using Mics;
+using Olympus.OWP.Constants;
 
 public static class ChildMatchHelper
 {

@@ -1,6 +1,6 @@
-﻿using OWP.Infosite.Models;
+﻿namespace OWP.Infosite.UnitTests;
 
-namespace OWP.Infosite.UnitTests;
+using Models;
 
 public static class SampleDataTests
 {

@@ -1,15 +1,15 @@
-﻿using Fanex.Caching;
+﻿namespace OWP.Infosite.Services;
+
+using System.Globalization;
+using Constants;
+using Criteria;
+using Fanex.Caching;
 using Fanex.Data.Repository;
+using Models;
 using Newtonsoft.Json;
 using Olympus.Xml;
-using OWP.RabbitMq;
-using OWP.RabbitMq.Models;
-using OWP.Infosite.Constants;
-using OWP.Infosite.Criteria;
-using OWP.Infosite.Models;
-using System.Globalization;
-
-namespace OWP.Infosite.Services;
+using RabbitMq;
+using RabbitMq.Models;
 
 public interface SyncService
 {

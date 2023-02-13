@@ -1,8 +1,8 @@
-﻿using Fanex.Data.Repository;
-using OWP.Infosite.Criteria;
-using OWP.Infosite.Models;
+﻿namespace OWP.Infosite.Services;
 
-namespace OWP.Infosite.Services;
+using Criteria;
+using Fanex.Data.Repository;
+using Models;
 
 public interface NAPUserControlService
 {

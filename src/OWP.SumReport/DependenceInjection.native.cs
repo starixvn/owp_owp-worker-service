@@ -1,41 +1,52 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using OWP.SumReport.PrematchReport;
-using OWP.SumReport.PrematchReport.Services;
-using OWP.SumReport.PrematchReport.Services.League;
-using OWP.SumReport.PrematchReport.Services.Match;
-using OWP.SumReport.Services;
+﻿namespace OWP.SumReport;
 
-namespace OWP.SumReport;
+using LAReport;
+using LAReport.Factory;
+using LAReport.Services;
+using MatchLiveReport.Repository;
+using MatchLiveReport.Services;
+using Microsoft.Extensions.DependencyInjection;
+using OvertimeReport;
+using OvertimeReport.Services;
+using PrematchReport;
+using PrematchReport.Services;
+using PrematchReport.Services.League;
+using PrematchReport.Services.Match;
+using Services;
+using TraderReport;
+using TraderReport.Services;
+using Handler = TraderReport.Handler;
+using HandlerImp = TraderReport.HandlerImp;
 
 public static class DependenceInjection
 {
     public static IServiceCollection AddSumReportServices(this IServiceCollection services)
     {
-        services.AddTransient<TraderReport.TraderRepository, TraderReport.TraderRepositoryImp>();
-        services.AddTransient<TraderReport.Handler, TraderReport.HandlerImp>();
-        services.AddTransient<TraderReport.Services.RobotService, TraderReport.Services.RobotServiceImp>();
-        services.AddTransient<TraderReport.Services.RobotX3Service, TraderReport.Services.RobotX3ServiceImp>();
-        services.AddTransient<TraderReport.Services.RobotX5Service, TraderReport.Services.RobotX5ServiceImp>();
-        services.AddTransient<TraderReport.Services.ESoccerService, TraderReport.Services.ESoccerServiceImp>();
+        services.AddTransient<TraderRepository, TraderRepositoryImp>();
+        services.AddTransient<Handler, HandlerImp>();
+        services.AddTransient<RobotService, RobotServiceImp>();
+        services.AddTransient<RobotX3Service, RobotX3ServiceImp>();
+        services.AddTransient<RobotX5Service, RobotX5ServiceImp>();
+        services.AddTransient<ESoccerService, ESoccerServiceImp>();
 
         services.AddTransient<LAReport.Handler, LAReport.HandlerImp>();
-        services.AddTransient<LAReport.LARepository, LAReport.LARepositoryImp>();
-        services.AddTransient<LAReport.Factory.MainMatchRuleFactory, LAReport.Factory.MainMatchRuleFactoryImp>();
+        services.AddTransient<LARepository, LARepositoryImp>();
+        services.AddTransient<MainMatchRuleFactory, MainMatchRuleFactoryImp>();
         services
-            .AddTransient<LAReport.Factory.SingleMatchesFactory,
-                LAReport.Factory.SingleMatchesFactoryImp>();
-        services.AddTransient<LAReport.Factory.SpecialProductFactory, LAReport.Factory.SpecialProductFactoryImp>();
-        services.AddTransient<LAReport.Services.CalculationService, LAReport.Services.CalculationServiceImp>();
+            .AddTransient<SingleMatchesFactory,
+                SingleMatchesFactoryImp>();
+        services.AddTransient<SpecialProductFactory, SpecialProductFactoryImp>();
+        services.AddTransient<CalculationService, CalculationServiceImp>();
 
-        services.AddTransient<OvertimeReport.OvertimeRepository, OvertimeReport.OvertimeRepositoryImp>();
+        services.AddTransient<OvertimeRepository, OvertimeRepositoryImp>();
         services
-            .AddTransient<OvertimeReport.Services.ReportCalculationService,
-                OvertimeReport.Services.ReportCalculationServiceImp>();
+            .AddTransient<ReportCalculationService,
+                ReportCalculationServiceImp>();
 
         services.AddTransient<CacheManipulator, CacheManipulatorImp>();
 
-        services.AddTransient<MatchLiveReport.Repository.ReportRepository, MatchLiveReport.Repository.ReportRepositoryImp>();
-        services.AddTransient<MatchLiveReport.Services.ReportService, MatchLiveReport.Services.ReportServiceImp>();
+        services.AddTransient<ReportRepository, ReportRepositoryImp>();
+        services.AddTransient<ReportService, ReportServiceImp>();
 
         // Prematch Report
         services.AddTransient<Repository, RepositoryImp>();
