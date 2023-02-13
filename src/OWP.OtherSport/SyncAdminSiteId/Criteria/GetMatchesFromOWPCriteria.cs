@@ -2,7 +2,7 @@
 
 using Fanex.Data.Repository;
 
-public class GetMatchesFromOWPCriteria : CriteriaBase
+public class GetMatchesFromOwpCriteria : CriteriaBase
 {
     public DateTime EventDate { get; set; }
 

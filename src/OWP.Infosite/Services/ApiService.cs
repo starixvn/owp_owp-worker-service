@@ -41,9 +41,9 @@ public class ApiServiceImp : ApiService
 
     public async Task<List<DeleteChildMatch>> QueryDeletedChildMatch(DateTime fromDate, DateTime toDate)
     {
-        var date_from = fromDate.ToString(Constant.DateTimeFormat);
-        var date_to = toDate.ToString(Constant.DateTimeFormat);
-        var requestLink = $"{infoSiteSettings.InfositeAPI}api/EventSchedule/getInvalidChildEventInHouseByDate?date_from={date_from}&date_to={date_to}";
+        var dateFrom = fromDate.ToString(Constant.DateTimeFormat);
+        var dateTo = toDate.ToString(Constant.DateTimeFormat);
+        var requestLink = $"{infoSiteSettings.InfositeApi}api/EventSchedule/getInvalidChildEventInHouseByDate?date_from={dateFrom}&date_to={dateTo}";
 
         var response = await httpHandler.GetAsync(requestLink);
         if (response.IsSuccessStatusCode)
@@ -67,11 +67,11 @@ public class ApiServiceImp : ApiService
 
     public async Task<List<CommonMatchModel>> QueryAsync(ParamsQueryModel param)
     {
-        var date_from = param.FromDate.ToString(Constant.DateTimeFormat);
-        var date_to = param.ToDate.ToString(Constant.DateTimeFormat);
+        var dateFrom = param.FromDate.ToString(Constant.DateTimeFormat);
+        var dateTo = param.ToDate.ToString(Constant.DateTimeFormat);
         var stamp = param.LastUpdatedTime.ToString(Constant.DateTimeWithHourFormat);
 
-        var requestLink = $"{infoSiteSettings.InfositeAPI}api/EventSchedule/getEventsByDate?rd_checked=true&date_from={date_from}&date_to={date_to}&stamp={stamp}";
+        var requestLink = $"{infoSiteSettings.InfositeApi}api/EventSchedule/getEventsByDate?rd_checked=true&date_from={dateFrom}&date_to={dateTo}&stamp={stamp}";
 
         var response = await httpHandler.GetAsync(requestLink);
         if (response.IsSuccessStatusCode)
@@ -98,7 +98,7 @@ public class ApiServiceImp : ApiService
         var fromDate = param.FromDate.ToString(Constant.DateTimeFormat);
         var toDate = param.ToDate.ToString(Constant.DateTimeFormat);
 
-        var requestLink = $"{infoSiteSettings.InfositeAPI}api/EventSchedule/GetEventScheduleRelationForOWP?dateFrom={fromDate}&dateTo={toDate}";
+        var requestLink = $"{infoSiteSettings.InfositeApi}api/EventSchedule/GetEventScheduleRelationForOWP?dateFrom={fromDate}&dateTo={toDate}";
 
         var response = await httpHandler.GetAsync(requestLink);
 
@@ -126,7 +126,7 @@ public class ApiServiceImp : ApiService
     {
         var dateInString = date.ToString(Constant.DateTimeFormat);
 
-        var requestLink = $"{infoSiteSettings.InfositeAPI}api/EventSchedule/getInvalidEventKeysByDate?rd_checked=true&date_from={dateInString}&date_to={dateInString}";
+        var requestLink = $"{infoSiteSettings.InfositeApi}api/EventSchedule/getInvalidEventKeysByDate?rd_checked=true&date_from={dateInString}&date_to={dateInString}";
 
         var response = await httpHandler.GetAsync(requestLink);
         if (response.IsSuccessStatusCode)
@@ -150,7 +150,7 @@ public class ApiServiceImp : ApiService
 
     public async Task<List<MatchModelQuery180Day>> QueryInfoSiteMatchFor180Day()
     {
-        var requestLink = $"{infoSiteSettings.Infosite180DayAPI}api/EventSchedule/GetEventScheduleForOWP?sport_id=1";
+        var requestLink = $"{infoSiteSettings.Infosite180DayApi}api/EventSchedule/GetEventScheduleForOWP?sport_id=1";
         var response = await httpHandler.GetAsync(requestLink);
 
         if (response.IsSuccessStatusCode)

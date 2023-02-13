@@ -32,7 +32,7 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
 
     public async Task Sync(DateTime date)
     {
-        var childMatches = pullingChildMatch.Query(infoSiteSettings.InfositeAPI, date, date.AddDays(1));
+        var childMatches = pullingChildMatch.Query(infoSiteSettings.InfositeApi, date, date.AddDays(1));
         var mappedChildMatches = MapChildMatches(childMatches);
         mappedChildMatches = new SpecialMatchBuilder().ReduceSpecialMatch(mappedChildMatches);
 
@@ -67,11 +67,11 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
     private static IEnumerable<ChildMatch> FilterMatch(IEnumerable<ChildMatch> childMatches)
         => childMatches.Where(x =>
             x.match_id > 0 &&
-            !IsETPKMatch(x.home_name) &&
+            !IsEtpkMatch(x.home_name) &&
             IsValidSubType(x.sub_type) &&
             x.main_type.HasValue);
 
-    private static bool IsETPKMatch(string homeName)
+    private static bool IsEtpkMatch(string homeName)
         => homeName.IsContainsIgnoreCase("(ET)") || homeName.IsContainsIgnoreCase("(PEN)");
 
     private static bool IsValidSubType(int? subType) => subType is > 0;

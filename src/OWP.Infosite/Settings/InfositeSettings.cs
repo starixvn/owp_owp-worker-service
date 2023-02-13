@@ -3,7 +3,7 @@
 public class InfoSiteSettings
 {
     public int DefaultInfositeUserId { get; set; }
-    public string Infosite180DayAPI { get; set; }
-    public string InfositeAPI { get; set; }
-    public string InfositeOSAPI { get; set; }
+    public string Infosite180DayApi { get; set; }
+    public string InfositeApi { get; set; }
+    public string InfositeOsapi { get; set; }
 }

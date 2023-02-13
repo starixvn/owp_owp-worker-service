@@ -17,11 +17,11 @@ internal class CacheManipulatorImp : CacheManipulator
 {
     private readonly ICache cache;
 
-    private const string DELETED_MATCH_KEY = "OS-DELETED-MATCH";
+    private const string DeletedMatchKey = "OS-DELETED-MATCH";
 
-    private const string KEY_OS_SYNCADMINSITEID = "OWP-OS-MatchesHaveTheSameAdminSiteId";
+    private const string KeyOsSyncadminsiteid = "OWP-OS-MatchesHaveTheSameAdminSiteId";
 
-    private const int ASSIGNMENT_CACHE_EXPIRED_IN_MINUTE = 3;
+    private const int AssignmentCacheExpiredInMinute = 3;
 
     public CacheManipulatorImp(ICache cache)
     {
@@ -30,24 +30,24 @@ internal class CacheManipulatorImp : CacheManipulator
 
     public async Task<List<Match>> GetDeletedMatches()
     {
-        var cacheResult = await cache.TryGetAsync<string>(DELETED_MATCH_KEY);
+        var cacheResult = await cache.TryGetAsync<string>(DeletedMatchKey);
         var matches = !string.IsNullOrEmpty(cacheResult.Item2)
             ? JsonConvert.DeserializeObject<List<Match>>(cacheResult.Item2)
             : new List<Match>();
 
-        return matches.Where(m => m.OSMatchId > 0).ToList();
+        return matches.Where(m => m.OsMatchId > 0).ToList();
     }
     public async Task SaveMathIdsDuplicatedSnapshot(IEnumerable<int> matchIds)
     {
-        var absoluteTimeSpan = TimeSpan.FromMinutes(ASSIGNMENT_CACHE_EXPIRED_IN_MINUTE);
+        var absoluteTimeSpan = TimeSpan.FromMinutes(AssignmentCacheExpiredInMinute);
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(absoluteTimeSpan);
-        var cacheKey = $"{KEY_OS_SYNCADMINSITEID}";
+        var cacheKey = $"{KeyOsSyncadminsiteid}";
 
         var assignmentsJson = JsonConvert.SerializeObject(matchIds);
         await cache.SetAsync(cacheKey, assignmentsJson, cachePolicy);
     }
     public async Task RemoveDeletedMatches()
     {
-        await cache.RemoveAsync(DELETED_MATCH_KEY);
+        await cache.RemoveAsync(DeletedMatchKey);
     }
 }

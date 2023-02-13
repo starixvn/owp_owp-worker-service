@@ -4,18 +4,18 @@ using Criteria;
 using Fanex.Data.Repository;
 using Models;
 
-public interface NAPUserControlService
+public interface NapUserControlService
 {
     IEnumerable<UserFunctionModel> GetUserFunctionModels(string functionKey);
 
     Task SynDataFunctionPermissionAsync();
 }
 
-public class NAPUserControlServiceImp : NAPUserControlService
+public class NapUserControlServiceImp : NapUserControlService
 {
     private readonly IDynamicRepository repository;
 
-    public NAPUserControlServiceImp(IDynamicRepository repository)
+    public NapUserControlServiceImp(IDynamicRepository repository)
     {
         this.repository = repository;
     }

@@ -11,7 +11,7 @@ public static class DependenceInjection
     {
         services.Configure<InfoSiteSettings>(configuration.GetSection(nameof(InfoSiteSettings)));
 
-        services.AddTransient<NAPUserControlService, NAPUserControlServiceImp>();
+        services.AddTransient<NapUserControlService, NapUserControlServiceImp>();
         services.AddTransient<ApiService, ApiServiceImp>();
         services.AddTransient<DateTimeService, DateTimeServiceImp>();
         services.AddTransient<UpdateInfositeIdService, UpdateInfositeIdServiceImp>();

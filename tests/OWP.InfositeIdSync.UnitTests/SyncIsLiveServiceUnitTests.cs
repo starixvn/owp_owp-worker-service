@@ -43,9 +43,9 @@ public class SyncIsLiveServiceUnitTests
         };
         var infositeSettings = Options.Create(new InfoSiteSettings());
         var liveMatchApi = Substitute.For<IsLiveMatchApi>();
-        liveMatchApi.SetLiveMatches(infositeSettings.Value.InfositeAPI, Arg.Compat.Any<IEnumerable<(int, int?)>>())
+        liveMatchApi.SetLiveMatches(infositeSettings.Value.InfositeApi, Arg.Compat.Any<IEnumerable<(int, int?)>>())
                     .Returns(emptySynchronizedResult);
-        liveMatchApi.SetNonLiveMatches(infositeSettings.Value.InfositeAPI, Arg.Compat.Any<IEnumerable<(int, int?)>>())
+        liveMatchApi.SetNonLiveMatches(infositeSettings.Value.InfositeApi, Arg.Compat.Any<IEnumerable<(int, int?)>>())
                     .Returns(emptySynchronizedResult);
 
         var logService = Substitute.For<LogServiceWrapper>();
@@ -56,9 +56,9 @@ public class SyncIsLiveServiceUnitTests
         await syncIsLiveService.Sync(DateTime.Today, DateTime.Today);
 
         // Assert
-        await liveMatchApi.Received().SetLiveMatches(infositeSettings.Value.InfositeAPI, Arg.Compat.Is<IEnumerable<(int, int?)>>(
+        await liveMatchApi.Received().SetLiveMatches(infositeSettings.Value.InfositeApi, Arg.Compat.Is<IEnumerable<(int, int?)>>(
             x => x.Count() == 1 && x.FirstOrDefault().Item1 == 1 && x.FirstOrDefault().Item2 == 1900));
-        await liveMatchApi.Received().SetNonLiveMatches(infositeSettings.Value.InfositeAPI, Arg.Compat.Is<IEnumerable<(int, int?)>>(
+        await liveMatchApi.Received().SetNonLiveMatches(infositeSettings.Value.InfositeApi, Arg.Compat.Is<IEnumerable<(int, int?)>>(
             x => x.Count() == 2 && x.FirstOrDefault().Item1 == 2 && x.LastOrDefault().Item1 == 3));
         await cacheManipulator.Received().SaveDeletedMatches(Arg.Compat.Any<List<(int, int?)>>());
     }

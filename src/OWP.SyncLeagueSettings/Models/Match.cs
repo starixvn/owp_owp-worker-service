@@ -2,13 +2,13 @@
 
 public class Match
 {
-    public int OWPLeagueId { get; set; }
+    public int OwpLeagueId { get; set; }
 
-    public int OWPMatchId { get; set; }
+    public int OwpMatchId { get; set; }
 
     public DateTime EventDateTime { get; set; }
 
-    public string TV { get; set; }
+    public string Tv { get; set; }
 
     public IList<MatchSetting> MatchSettings { get; set; }
 }

@@ -31,7 +31,7 @@ public class ApiServiceImp : ApiService
     public async Task PostSyncLiveAsync(BodyModel body)
     {
         var path = "api/EventSchedule/SetEventLiveByInHouseMatchId";
-        var infositeDomain = infoSiteSettings.InfositeOSAPI;
+        var infositeDomain = infoSiteSettings.InfositeOsapi;
         if (string.IsNullOrEmpty(infositeDomain)) return;
 
         var requestUrl = $"{infositeDomain}{path}";

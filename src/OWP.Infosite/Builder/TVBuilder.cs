@@ -2,7 +2,7 @@
 
 using Models;
 
-public static class TVBuilder
+public static class TvBuilder
 {
     public static string TvBuild(this CommonMatchModel infositeMatch)
     {

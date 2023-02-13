@@ -25,15 +25,15 @@ public class LeagueSettingsServiceUnitTests
         var tv = MockTvConditions();
         foreach (var match in matches)
         {
-            match.MatchSettings = MockMatchSettings().Where(x => x.OWPMatchId == match.OWPMatchId).ToList();
+            match.MatchSettings = MockMatchSettings().Where(x => x.OwpMatchId == match.OwpMatchId).ToList();
         }
         var date = new DateTime(2021, 04, 12, 02, 00, 00);
 
         //Act
-        var actual = service.CreateNewLeaguesSettings(date, matches, tv).OrderBy(x => x.OWPLeagueId).ToList();
+        var actual = service.CreateNewLeaguesSettings(date, matches, tv).OrderBy(x => x.OwpLeagueId).ToList();
 
         //Assert
-        var expected = MockLeagueSettings().OrderBy(x => x.OWPLeagueId).ToList();
+        var expected = MockLeagueSettings().OrderBy(x => x.OwpLeagueId).ToList();
         DeepAssert.Equal(expected, actual);
     }
 
@@ -50,8 +50,8 @@ public class LeagueSettingsServiceUnitTests
         };
         var leagueSettingResponse = new List<InsertLeagueSettingsResponse>
         {
-            new() { HasTV=true, LeagueSettingId=1},
-            new() { HasTV=false, LeagueSettingId=2},
+            new() { HasTv=true, LeagueSettingId=1},
+            new() { HasTv=false, LeagueSettingId=2},
         };
         repository.InsertNewLeaguesSettings(Arg.Any<List<LeagueSetting>>()).ReturnsForAnyArgs(leagueSettingResponse);
         repository.GetAllTvConditions().Returns(tvCondition);
@@ -97,50 +97,50 @@ public class LeagueSettingsServiceUnitTests
         {
             new()
             {
-                OWPMatchId = 738253,
+                OwpMatchId = 738253,
                 EventDateTime = new DateTime(2021, 04, 07, 15, 00, 00),
-                OWPLeagueId = 4,
-                TV = "Euro12",
+                OwpLeagueId = 4,
+                Tv = "Euro12",
                 MatchSettings = new List<MatchSetting>()
             },
             new()
             {
-                OWPMatchId = 738254,
+                OwpMatchId = 738254,
                 EventDateTime = new DateTime(2021, 04, 07, 15, 00, 00),
-                OWPLeagueId = 34,
-                TV = null,
+                OwpLeagueId = 34,
+                Tv = null,
                 MatchSettings = new List<MatchSetting>()
             },
             new()
             {
-                OWPMatchId = 738283,
+                OwpMatchId = 738283,
                 EventDateTime = new DateTime(2021, 04, 10, 15, 00, 00),
-                OWPLeagueId = 15,
-                TV = "Euro12",
+                OwpLeagueId = 15,
+                Tv = "Euro12",
                 MatchSettings = new List<MatchSetting>()
             },
             new()
             {
-                OWPMatchId = 738284,
+                OwpMatchId = 738284,
                 EventDateTime = new DateTime(2021, 04, 10, 15, 00, 00),
-                OWPLeagueId = 15,
-                TV = "Euro61",
+                OwpLeagueId = 15,
+                Tv = "Euro61",
                 MatchSettings = new List<MatchSetting>()
             },
             new()
             {
-                OWPMatchId = 738293,
+                OwpMatchId = 738293,
                 EventDateTime = new DateTime(2021, 04, 10, 15, 00, 00),
-                OWPLeagueId = 54,
-                TV = "testing",
+                OwpLeagueId = 54,
+                Tv = "testing",
                 MatchSettings = new List<MatchSetting>()
             },
             new()
             {
-                OWPMatchId = 738294,
+                OwpMatchId = 738294,
                 EventDateTime = new DateTime(2021, 04, 10, 15, 30, 00),
-                OWPLeagueId = 54,
-                TV = null,
+                OwpLeagueId = 54,
+                Tv = null,
                 MatchSettings = new List<MatchSetting>()
             },
         };
@@ -150,85 +150,85 @@ public class LeagueSettingsServiceUnitTests
         {
             new()
             {
-                OWPMatchId = 738253,
-                Bettype = Bettype.HDP,
+                OwpMatchId = 738253,
+                Bettype = Bettype.Hdp,
                 Spread = 0.2m,
                 Maxbet = 100000.00m
             },
             new()
             {
-                OWPMatchId = 738253,
-                Bettype = Bettype.OU,
+                OwpMatchId = 738253,
+                Bettype = Bettype.Ou,
                 Spread = 0.15m,
                 Maxbet = null
             },
             new()
             {
-                OWPMatchId = 738254,
-                Bettype = Bettype.HDP,
+                OwpMatchId = 738254,
+                Bettype = Bettype.Hdp,
                 Spread = 0.25m,
                 Maxbet = 200000.00m
             },
             new()
             {
-                OWPMatchId = 738254,
-                Bettype = Bettype.OU,
+                OwpMatchId = 738254,
+                Bettype = Bettype.Ou,
                 Spread = 0.30m,
                 Maxbet = null
             },
             new()
             {
-                OWPMatchId = 738283,
-                Bettype = Bettype.HDP,
+                OwpMatchId = 738283,
+                Bettype = Bettype.Hdp,
                 Spread = 0.05m,
                 Maxbet = 150000.00m
             },
             new()
             {
-                OWPMatchId = 738283,
-                Bettype = Bettype.OU,
+                OwpMatchId = 738283,
+                Bettype = Bettype.Ou,
                 Spread = 0.05m,
                 Maxbet = null
             },
             new()
             {
-                OWPMatchId = 738284,
-                Bettype = Bettype.HDP,
+                OwpMatchId = 738284,
+                Bettype = Bettype.Hdp,
                 Spread = 0.5m,
                 Maxbet = 180000.00m
             },
             new()
             {
-                OWPMatchId = 738284,
-                Bettype = Bettype.OU,
+                OwpMatchId = 738284,
+                Bettype = Bettype.Ou,
                 Spread = 0.40m,
                 Maxbet = null
             },
             new()
             {
-                OWPMatchId = 738293,
-                Bettype = Bettype.HDP,
+                OwpMatchId = 738293,
+                Bettype = Bettype.Hdp,
                 Spread = 0.04m,
                 Maxbet = 300000.00m
             },
             new()
             {
-                OWPMatchId = 738293,
-                Bettype = Bettype.OU,
+                OwpMatchId = 738293,
+                Bettype = Bettype.Ou,
                 Spread = 0.04m,
                 Maxbet = null
             },
             new()
             {
-                OWPMatchId = 738294,
-                Bettype = Bettype.HDP,
+                OwpMatchId = 738294,
+                Bettype = Bettype.Hdp,
                 Spread = 0.15m,
                 Maxbet = 200000.00m
             },
             new()
             {
-                OWPMatchId = 738294,
-                Bettype = Bettype.OU,
+                OwpMatchId = 738294,
+                Bettype = Bettype.Ou,
                 Spread = 0.15m,
                 Maxbet = null
             }
@@ -239,55 +239,55 @@ public class LeagueSettingsServiceUnitTests
         {
             new()
             {
-                OWPLeagueId = 4,
+                OwpLeagueId = 4,
                 HasTv = true,
-                Spread_HDP = 0.2m,
-                Spread_OU = 0.15m,
-                Spread_1HHDP = 0.2m,
-                Spread_1HOU = 0.15m,
-                MaxbetWD_HDP = 100000.00m,
-                MaxbetWD_1H = 50000.00m,
-                MaxbetWD_OU = null,
-                MaxbetWK_1H = null,
-                MaxbetWK_HDP = null,
-                MaxbetWK_OU = null
+                SpreadHdp = 0.2m,
+                SpreadOu = 0.15m,
+                Spread1Hhdp = 0.2m,
+                Spread1Hou = 0.15m,
+                MaxbetWdHdp = 100000.00m,
+                MaxbetWd1H = 50000.00m,
+                MaxbetWdOu = null,
+                MaxbetWk1H = null,
+                MaxbetWkHdp = null,
+                MaxbetWkOu = null
             },
             new()
             {
-                OWPLeagueId = 15,
+                OwpLeagueId = 15,
                 HasTv = true,
-                Spread_HDP = 0.50m,
-                Spread_OU = 0.40m,
-                Spread_1HHDP = 0.50m,
-                Spread_1HOU = 0.40m,
-                MaxbetWD_HDP = null,
-                MaxbetWD_1H = null,
-                MaxbetWD_OU = null,
-                MaxbetWK_1H = 90000.00m,
-                MaxbetWK_HDP = 180000.00m,
-                MaxbetWK_OU = null
+                SpreadHdp = 0.50m,
+                SpreadOu = 0.40m,
+                Spread1Hhdp = 0.50m,
+                Spread1Hou = 0.40m,
+                MaxbetWdHdp = null,
+                MaxbetWd1H = null,
+                MaxbetWdOu = null,
+                MaxbetWk1H = 90000.00m,
+                MaxbetWkHdp = 180000.00m,
+                MaxbetWkOu = null
             },
             new()
             {
-                OWPLeagueId = 34,
+                OwpLeagueId = 34,
                 HasTv = false,
-                Spread_HDP = 0.25m,
-                Spread_OU = 0.30m,
-                Spread_1HHDP = 0.25m,
-                Spread_1HOU = 0.30m,
-                MaxbetWD_HDP = 200000.00m,
-                MaxbetWD_1H = 100000.00m
+                SpreadHdp = 0.25m,
+                SpreadOu = 0.30m,
+                Spread1Hhdp = 0.25m,
+                Spread1Hou = 0.30m,
+                MaxbetWdHdp = 200000.00m,
+                MaxbetWd1H = 100000.00m
             },
             new()
             {
-                OWPLeagueId = 54,
+                OwpLeagueId = 54,
                 HasTv = false,
-                Spread_HDP = 0.04m,
-                Spread_OU = 0.04m,
-                Spread_1HHDP = 0.10m,
-                Spread_1HOU = 0.10m,
-                MaxbetWK_HDP = 300000.00m,
-                MaxbetWK_1H = 300000.00m
+                SpreadHdp = 0.04m,
+                SpreadOu = 0.04m,
+                Spread1Hhdp = 0.10m,
+                Spread1Hou = 0.10m,
+                MaxbetWkHdp = 300000.00m,
+                MaxbetWk1H = 300000.00m
             }
         };
 }

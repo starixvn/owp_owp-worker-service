@@ -2,15 +2,15 @@
 
 public class LinkedMatch
 {
-    public int OSMatchId { get; set; }
+    public int OsMatchId { get; set; }
 
     public int? AdminSiteMatchId { get; set; }
 
-    public string OWPLeague { get; set; }
+    public string OwpLeague { get; set; }
 
-    public string OWPHome { get; set; }
+    public string OwpHome { get; set; }
 
-    public string OWPAway { get; set; }
+    public string OwpAway { get; set; }
 
     public int? OldAdminSiteMatchId { get; set; }
 

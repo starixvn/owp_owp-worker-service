@@ -9,7 +9,7 @@ public class MatchModelFor180Day
 {
     public int MatchId { get; set; }
 
-    public DateTime KOTime { get; set; }
+    public DateTime KoTime { get; set; }
 
     public string LeagueName { get; set; }
 
@@ -28,7 +28,7 @@ public class MatchModelFor180Day
     public MatchModelFor180Day(MatchModelQuery180Day infositeMatch)
     {
         MatchId = infositeMatch.info_match_id;
-        KOTime = infositeMatch.global_datetime.ToUtc8();
+        KoTime = infositeMatch.global_datetime.ToUtc8();
         LeagueName = infositeMatch.league_name;
         HomeName = infositeMatch.team_home_name;
         AwayName = infositeMatch.team_away_name;

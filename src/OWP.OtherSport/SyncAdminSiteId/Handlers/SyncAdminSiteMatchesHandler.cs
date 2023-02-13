@@ -26,7 +26,7 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
 
     public async Task Handle(DateTime eventDate)
     {
-        var owpMatches = await GetOWPMatches(eventDate);
+        var owpMatches = await GetOwpMatches(eventDate);
         var adminSiteMatches = await GetAdminSiteMatches(eventDate);
         var unlinkedMatches = owpMatches.Where(x => !x.AdminSiteMatchId.HasValue);
         var linkedMatches = owpMatches.Where(x => x.AdminSiteMatchId.HasValue);
@@ -38,12 +38,12 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
         await UpdateLinkedMatches(updatedMatches);
 
         // Sync live to infosite
-        var newOwpMatches = await GetOWPMatches(eventDate);
+        var newOwpMatches = await GetOwpMatches(eventDate);
         await syncLiveService.Handle(adminSiteMatches, newOwpMatches, eventDate);
     }
     
-    private async Task<IEnumerable<Match>> GetOWPMatches(DateTime eventDate)
-        => await dynamicRepository.FetchAsync<Match>(new GetMatchesFromOWPCriteria { EventDate = eventDate });
+    private async Task<IEnumerable<Match>> GetOwpMatches(DateTime eventDate)
+        => await dynamicRepository.FetchAsync<Match>(new GetMatchesFromOwpCriteria { EventDate = eventDate });
 
     private async Task<IEnumerable<Match>> GetAdminSiteMatches(DateTime eventDate)
         => await dynamicRepository.FetchAsync<Match>(new GetMatchesFromAdminSiteCriteria { EventDate = eventDate });

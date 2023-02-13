@@ -9,7 +9,7 @@ builder.Services.AddOneBookUmServices(builder.Configuration);
 builder.Services.AddInternalServices(builder.Configuration);
 builder.Services.AddRabbitMq(builder.Configuration);
 builder.Services.AddJobsServices();
-builder.Services.AddHostedService<OWPScheduler>();
+builder.Services.AddHostedService<OwpScheduler>();
 
 var app = builder.Build();
 

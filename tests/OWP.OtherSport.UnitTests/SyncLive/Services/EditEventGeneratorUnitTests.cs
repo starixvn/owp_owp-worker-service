@@ -22,12 +22,12 @@ public class EditEventGeneratorUnitTests
     {
         var adminSiteMatches = new List<Match>
         {
-            new(){ OSMatchId = 1, AdminSiteMatchId = 111, Sport = "Basketball", OfferLive = true  },
-            new(){ OSMatchId = 2, AdminSiteMatchId = 222, Sport = "Basketball", OfferLive = false },
-            new(){ OSMatchId = 3, AdminSiteMatchId = 333, Sport = "Basketball", OfferLive = true },
-            new(){ OSMatchId = 4, AdminSiteMatchId = 555, Sport = "Basketball", OfferLive = true },
-            new(){ OSMatchId = 5, AdminSiteMatchId = 666, Sport = "Tennis", OfferLive = true },
-            new(){ OSMatchId = 6, AdminSiteMatchId = null, Sport = "Tennis", OfferLive = true },
+            new(){ OsMatchId = 1, AdminSiteMatchId = 111, Sport = "Basketball", OfferLive = true  },
+            new(){ OsMatchId = 2, AdminSiteMatchId = 222, Sport = "Basketball", OfferLive = false },
+            new(){ OsMatchId = 3, AdminSiteMatchId = 333, Sport = "Basketball", OfferLive = true },
+            new(){ OsMatchId = 4, AdminSiteMatchId = 555, Sport = "Basketball", OfferLive = true },
+            new(){ OsMatchId = 5, AdminSiteMatchId = 666, Sport = "Tennis", OfferLive = true },
+            new(){ OsMatchId = 6, AdminSiteMatchId = null, Sport = "Tennis", OfferLive = true },
         };
 
         var owpMatches = new List<Match>
@@ -42,8 +42,8 @@ public class EditEventGeneratorUnitTests
 
         var expected = new List<EditEvent>
         {
-            new() { in_house_match_id = 222,  is_live = true },
-            new() { in_house_match_id = 555,  is_live = false },
+            new() { InHouseMatchId = 222,  IsLive = true },
+            new() { InHouseMatchId = 555,  IsLive = false },
         };
 
         var actual = service.GetChangedOfferLiveMatches(adminSiteMatches, owpMatches).ToList();

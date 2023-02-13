@@ -2,5 +2,5 @@
 
 public class BodyModel
 {
-    public List<EditEvent> live_configs { get; set; }
+    public List<EditEvent> LiveConfigs { get; set; }
 }

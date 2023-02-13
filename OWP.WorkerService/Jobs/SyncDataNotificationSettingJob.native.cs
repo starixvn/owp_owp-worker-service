@@ -8,10 +8,10 @@ using Quartz;
 [DisallowConcurrentExecution]
 public class SyncDataNotificationSettingJob : IJob
 {
-    private readonly NAPUserControlService napUserControlService;
+    private readonly NapUserControlService napUserControlService;
     private readonly IMaintenanceService maintenanceService;
 
-    public SyncDataNotificationSettingJob(NAPUserControlService napUserControlService, IMaintenanceService maintenanceService)
+    public SyncDataNotificationSettingJob(NapUserControlService napUserControlService, IMaintenanceService maintenanceService)
     {
         this.napUserControlService = napUserControlService;
         this.maintenanceService = maintenanceService;

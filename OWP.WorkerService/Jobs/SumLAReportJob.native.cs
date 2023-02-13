@@ -8,13 +8,13 @@ using SumReport.LAReport;
 using SumReport.Services;
 
 [DisallowConcurrentExecution]
-public class SumLAReportJob : IJob
+public class SumLaReportJob : IJob
 {
     private readonly CacheManipulator cacheManipulator;
     private readonly IMaintenanceService maintenanceService;
     private readonly Handler handler;
 
-    public SumLAReportJob(CacheManipulator cacheManipulator, IMaintenanceService maintenanceService, Handler handler)
+    public SumLaReportJob(CacheManipulator cacheManipulator, IMaintenanceService maintenanceService, Handler handler)
     {
         this.cacheManipulator = cacheManipulator;
         this.maintenanceService = maintenanceService;

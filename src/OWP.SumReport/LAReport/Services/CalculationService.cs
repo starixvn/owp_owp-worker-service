@@ -63,15 +63,15 @@ public class CalculationServiceImp : CalculationService
     {
         var result = new List<Assignment>();
 
-        var notCornerRule = specialProductFactory.Create(RuleType.NOT_CORNER);
-        var cornerRule = specialProductFactory.Create(RuleType.CORNER);
+        var notCornerRule = specialProductFactory.Create(RuleType.NotCorner);
+        var cornerRule = specialProductFactory.Create(RuleType.Corner);
         notCornerRule.SetSuccessor(cornerRule);
 
-        var ftCorner5MLRule = mainMatchRuleFactory.Create(RuleType.FT_CORNER_FIVE_MAJOR_LEAGUE);
-        var ftCornerRule = mainMatchRuleFactory.Create(RuleType.FT_CORNER);
-        var fantasyRule = mainMatchRuleFactory.Create(RuleType.FANTASY);
-        var eSoccerRule = mainMatchRuleFactory.Create(RuleType.ESOCCER);
-        var fiveMajorLeagueRule = mainMatchRuleFactory.Create(RuleType.FIVE_MAJOR_LEAGUE);
+        var ftCorner5MLRule = mainMatchRuleFactory.Create(RuleType.FtCornerFiveMajorLeague);
+        var ftCornerRule = mainMatchRuleFactory.Create(RuleType.FtCorner);
+        var fantasyRule = mainMatchRuleFactory.Create(RuleType.Fantasy);
+        var eSoccerRule = mainMatchRuleFactory.Create(RuleType.ESoccer);
+        var fiveMajorLeagueRule = mainMatchRuleFactory.Create(RuleType.FiveMajorLeague);
 
         ftCorner5MLRule.SetSuccessor(ftCornerRule);
         ftCornerRule.SetSuccessor(fantasyRule);
@@ -167,7 +167,7 @@ public class CalculationServiceImp : CalculationService
 
     private void SumUpSingleAndOthers(IEnumerable<Assignment> assignments, LAReportModel sumUpResult)
     {
-        var singleMatchesRule = singleMatchesFactory.Create(RuleType.SINGLE);
+        var singleMatchesRule = singleMatchesFactory.Create(RuleType.Single);
         var othersTypeAssignments = assignments.Where(x => x.ReportType == ReportType.OTHERS);
 
         var singleMatchesMixedProductCount = 0;

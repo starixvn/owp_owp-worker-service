@@ -30,7 +30,7 @@ public class NapUserControlServiceUnitTests
                 }
             };
 
-        var syncService = new NAPUserControlServiceImp(repository);
+        var syncService = new NapUserControlServiceImp(repository);
 
         repository.Fetch<UserFunctionModel>(Arg.Compat.Any<GetAllUserByFunctionKeyCriteria>()).Returns(userFunctionModels);
         syncService.GetUserFunctionModels("funtionKey").Returns(userFunctionModels);
@@ -53,7 +53,7 @@ public class NapUserControlServiceUnitTests
                      UserId=8
                 }
             };
-        var syncService = new NAPUserControlServiceImp(repository);
+        var syncService = new NapUserControlServiceImp(repository);
 
         repository.Fetch<UserFunctionModel>(Arg.Compat.Any<GetAllUserByFunctionKeyCriteria>()).Returns(userFunctionModels);
 

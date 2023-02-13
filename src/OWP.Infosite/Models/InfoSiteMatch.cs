@@ -4,7 +4,7 @@ public class InfoSiteMatch
 {
     public int InfoSiteMatchId { get; set; }
 
-    public int OWPLeagueId { get; set; }
+    public int OwpLeagueId { get; set; }
 
     public DateTime EventDateTime { get; set; }
 

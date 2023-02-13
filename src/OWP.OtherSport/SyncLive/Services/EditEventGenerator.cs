@@ -29,8 +29,8 @@ public class EditEventGeneratorImp : EditEventGenerator
             {
                 yield return new EditEvent
                 {
-                    in_house_match_id = match.AdminSiteMatchId ?? 0,
-                    is_live = match.OfferLive
+                    InHouseMatchId = match.AdminSiteMatchId ?? 0,
+                    IsLive = match.OfferLive
                 };
             }
         }

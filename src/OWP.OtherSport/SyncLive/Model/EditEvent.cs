@@ -2,7 +2,7 @@
 
 public class EditEvent
 {
-    public int in_house_match_id { get; set; }
+    public int InHouseMatchId { get; set; }
 
-    public bool is_live { get; set; }
+    public bool IsLive { get; set; }
 }

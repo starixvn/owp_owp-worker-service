@@ -35,18 +35,18 @@ public class LAReportServiceUnitTests
         queryRepository.GetUserSection().Returns(sections);
 
         var specialProductFactory = Substitute.For<SpecialProductFactory>();
-        specialProductFactory.Create(RuleType.NOT_CORNER).Returns(new NotCornerRule());
-        specialProductFactory.Create(RuleType.CORNER).Returns(new IsCornerRule());
+        specialProductFactory.Create(RuleType.NotCorner).Returns(new NotCornerRule());
+        specialProductFactory.Create(RuleType.Corner).Returns(new IsCornerRule());
 
         var mainMatchRuleFactory = Substitute.For<MainMatchRuleFactory>();
-        mainMatchRuleFactory.Create(RuleType.FT_CORNER).Returns(new FTCornerRule());
-        mainMatchRuleFactory.Create(RuleType.FANTASY).Returns(new IsFantasyRule());
-        mainMatchRuleFactory.Create(RuleType.ESOCCER).Returns(new ESoccerRule());
-        mainMatchRuleFactory.Create(RuleType.FIVE_MAJOR_LEAGUE).Returns(new FiveMajorLeagueRule());
-        mainMatchRuleFactory.Create(RuleType.FT_CORNER_FIVE_MAJOR_LEAGUE).Returns(new FTCorner5MLRule());
+        mainMatchRuleFactory.Create(RuleType.FtCorner).Returns(new FTCornerRule());
+        mainMatchRuleFactory.Create(RuleType.Fantasy).Returns(new IsFantasyRule());
+        mainMatchRuleFactory.Create(RuleType.ESoccer).Returns(new ESoccerRule());
+        mainMatchRuleFactory.Create(RuleType.FiveMajorLeague).Returns(new FiveMajorLeagueRule());
+        mainMatchRuleFactory.Create(RuleType.FtCornerFiveMajorLeague).Returns(new FTCorner5MLRule());
 
         var multipleAndSingleMatchesFactory = Substitute.For<SingleMatchesFactory>();
-        multipleAndSingleMatchesFactory.Create(RuleType.SINGLE).Returns(new IsSingleMatchesRule());
+        multipleAndSingleMatchesFactory.Create(RuleType.Single).Returns(new IsSingleMatchesRule());
 
         var calculationService = new CalculationServiceImp(queryRepository, specialProductFactory, mainMatchRuleFactory, multipleAndSingleMatchesFactory);
         return calculationService;

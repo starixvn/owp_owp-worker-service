@@ -19,7 +19,7 @@ public class SyncChildMatchServiceUnitTests
     public SyncChildMatchServiceUnitTests()
     {
         repository = Substitute.For<IDynamicRepository>();
-        var infositeSettings = Options.Create(new InfoSiteSettings { InfositeAPI = "url" });
+        var infositeSettings = Options.Create(new InfoSiteSettings { InfositeApi = "url" });
         service = new SyncChildMatchServiceImp(infositeSettings, repository);
     }
 

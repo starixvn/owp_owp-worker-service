@@ -53,8 +53,8 @@ public class SyncIsLiveServiceImp : SyncIsLiveService
         var distinctLiveMatches = MatchHelper.GetDistinctLiveMatches(liveMatches, nonLiveMatches);
         var distinctNonLiveMatches = MatchHelper.GetDistinctNonLiveMatches(liveMatches, nonLiveMatches);
 
-        var synchronizedLiveMatchResult = await liveMatchApi.SetLiveMatches(infoSiteSettings.InfositeAPI, distinctLiveMatches);
-        var synchronizedNonLiveMatchResult = await liveMatchApi.SetNonLiveMatches(infoSiteSettings.InfositeAPI, distinctNonLiveMatches);
+        var synchronizedLiveMatchResult = await liveMatchApi.SetLiveMatches(infoSiteSettings.InfositeApi, distinctLiveMatches);
+        var synchronizedNonLiveMatchResult = await liveMatchApi.SetNonLiveMatches(infoSiteSettings.InfositeApi, distinctNonLiveMatches);
         var failedMatchesWithMinorBettypeId = synchronizedNonLiveMatchResult.FailedMatches
             .Select(x => (x.Item1, MatchHelper.GetOWPMinorMatchIdFromSubtype(x.Item2)));
 

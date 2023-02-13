@@ -23,8 +23,8 @@ public class SyncServiceImp
     private readonly RabbitMqClient rabbitMqClient;
     private readonly ICache cacheService;
 
-    protected readonly DateTime minDate = new(2000, 1, 1);
-    protected DateTimeService dateTimeService { get; }
+    protected readonly DateTime MinDate = new(2000, 1, 1);
+    protected DateTimeService DateTimeService { get; }
 
     public SyncServiceImp(
         DateTimeService dateTimeService,
@@ -33,7 +33,7 @@ public class SyncServiceImp
         ICache cacheService,
         IDynamicRepository repository)
     {
-        this.dateTimeService = dateTimeService;
+        this.DateTimeService = dateTimeService;
         this.apiService = apiService;
         this.repository = repository;
         this.cacheService = cacheService;
@@ -83,7 +83,7 @@ public class SyncServiceImp
         {
             FromDate = date,
             ToDate = date,
-            LastUpdatedTime = minDate
+            LastUpdatedTime = MinDate
         };
 
         var commonMatches = await apiService.QueryAsync(param);

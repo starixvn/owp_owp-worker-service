@@ -2,7 +2,7 @@
 
 using Fanex.Data.Repository;
 
-public class GetTVListCriteria : CriteriaBase
+public class GetTvListCriteria : CriteriaBase
 {
     public override string GetSettingKey() => "OWP_LeagueManagement_GetAllTVCondition";
 

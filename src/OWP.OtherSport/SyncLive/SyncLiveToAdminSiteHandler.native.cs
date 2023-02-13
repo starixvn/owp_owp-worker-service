@@ -41,7 +41,7 @@ public class SyncLiveToAdminSiteHandlerImp : SyncLiveToAdminSiteHandler
             return;
         }
 
-        var model = new BodyModel { live_configs = editEventList };
+        var model = new BodyModel { LiveConfigs = editEventList };
 
         await apiService.PostSyncLiveAsync(model);
         await cacheManipulator.RemoveDeletedMatches();

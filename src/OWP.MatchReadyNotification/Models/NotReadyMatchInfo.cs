@@ -8,7 +8,7 @@ public class NotReadyMatchInfo
 
     public string LeagueName { get; set; }
 
-    public TimeSpan KOTime { get; set; }
+    public TimeSpan KoTime { get; set; }
 
     public List<Assignee> Assignees { get; set; }
 }

@@ -118,7 +118,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<SyncDataNotificationSettingJob>();
         services.AddTransient<MatchReadyNotificationJob>();
         services.AddTransient<SumTraderReportJob>();
-        services.AddTransient<SumLAReportJob>();
+        services.AddTransient<SumLaReportJob>();
         services.AddTransient<SyncInfositeIdJob>();
         services.AddTransient<SyncPreMatchLeagueJob>();
         services.AddTransient<Sync180DayInfositeMatchJob>();

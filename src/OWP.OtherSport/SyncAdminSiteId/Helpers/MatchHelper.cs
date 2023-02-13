@@ -14,14 +14,14 @@ public static class MatchHelper
             {
                 yield return new LinkedMatch
                 {
-                    OSMatchId = match.OSMatchId,
+                    OsMatchId = match.OsMatchId,
                     AdminSiteMatchId = adminSiteMatch.AdminSiteMatchId,
                     AdminSiteAway = adminSiteMatch.AwayName,
                     AdminSiteHome = adminSiteMatch.HomeName,
                     AdminSiteLeague = adminSiteMatch.LeagueName,
-                    OWPAway = match.AwayName,
-                    OWPHome = match.HomeName,
-                    OWPLeague = match.LeagueName,
+                    OwpAway = match.AwayName,
+                    OwpHome = match.HomeName,
+                    OwpLeague = match.LeagueName,
                     OldAdminSiteMatchId = match.AdminSiteMatchId,
                     OldEventDate = match.EventDateTime,
                     NewEventDate = adminSiteMatch.EventDateTime
@@ -60,10 +60,10 @@ public static class MatchHelper
             {
                 yield return new LinkedMatch
                 {
-                    OSMatchId = match.OSMatchId,
-                    OWPAway = match.AwayName,
-                    OWPHome = match.HomeName,
-                    OWPLeague = match.LeagueName,
+                    OsMatchId = match.OsMatchId,
+                    OwpAway = match.AwayName,
+                    OwpHome = match.HomeName,
+                    OwpLeague = match.LeagueName,
                     OldAdminSiteMatchId = match.AdminSiteMatchId,
                     OldEventDate = match.EventDateTime
                 };

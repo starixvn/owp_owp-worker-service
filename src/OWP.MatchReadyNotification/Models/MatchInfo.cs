@@ -14,5 +14,5 @@ public class MatchInfo
 
     public string MatchNo { get; set; }
 
-    public TimeSpan KOTime { get; set; }
+    public TimeSpan KoTime { get; set; }
 }

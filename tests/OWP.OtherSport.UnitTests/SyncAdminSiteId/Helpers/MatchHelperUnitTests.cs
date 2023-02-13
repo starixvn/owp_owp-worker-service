@@ -18,10 +18,10 @@ public class MatchHelperUnitTests
                 new()
                 {
                     AdminSiteMatchId = 123,
-                    OSMatchId = 1,
-                    OWPLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
-                    OWPHome = "Dalian Pro FC (N)1",
-                    OWPAway = "Guangzhou R&F1",
+                    OsMatchId = 1,
+                    OwpLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
+                    OwpHome = "Dalian Pro FC (N)1",
+                    OwpAway = "Guangzhou R&F1",
                     AdminSiteLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
                     AdminSiteHome = "Dalian Pro FC (N)1",
                     AdminSiteAway = "Guangzhou R&F1",
@@ -32,10 +32,10 @@ public class MatchHelperUnitTests
                 new()
                 {
                     AdminSiteMatchId = 234,
-                    OSMatchId = 53,
-                    OWPLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
-                    OWPHome = "Dalian Pro FC (N)2",
-                    OWPAway = "Guangzhou R&F2",
+                    OsMatchId = 53,
+                    OwpLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
+                    OwpHome = "Dalian Pro FC (N)2",
+                    OwpAway = "Guangzhou R&F2",
                     AdminSiteLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
                     AdminSiteHome = "Dalian Pro FC (N)2",
                     AdminSiteAway = "Guangzhou R&F2",
@@ -46,10 +46,10 @@ public class MatchHelperUnitTests
                 new()
                 {
                     AdminSiteMatchId = 345,
-                    OSMatchId = 54,
-                    OWPLeague = "CHINA SABA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
-                    OWPHome = "Dalian Pro FC (N)3",
-                    OWPAway = "Guangzhou R&F3",
+                    OsMatchId = 54,
+                    OwpLeague = "CHINA SABA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
+                    OwpHome = "Dalian Pro FC (N)3",
+                    OwpAway = "Guangzhou R&F3",
                     AdminSiteLeague = "CHINA SABA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
                     AdminSiteHome = "Dalian Pro FC (N)3",
                     AdminSiteAway = "Guangzhou R&F3",
@@ -71,10 +71,10 @@ public class MatchHelperUnitTests
             {
                 new()
                 {
-                    OSMatchId = 444,
-                    OWPLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
-                    OWPHome = "Dalian Pro FC (N)1",
-                    OWPAway = "Guangzhou R&F1",
+                    OsMatchId = 444,
+                    OwpLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
+                    OwpHome = "Dalian Pro FC (N)1",
+                    OwpAway = "Guangzhou R&F1",
                     OldAdminSiteMatchId = 111,
                     OldEventDate = new DateTime(2021, 03, 18, 20, 22, 33)
                 }
@@ -89,7 +89,7 @@ public class MatchHelperUnitTests
         {
                 new()
                 {
-                    OSMatchId = 1,
+                    OsMatchId = 1,
                     Sport = "Basketball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
                     HomeName = "Dalian Pro FC (N)1",
@@ -99,7 +99,7 @@ public class MatchHelperUnitTests
                 },
                 new()
                 {
-                    OSMatchId = 53,
+                    OsMatchId = 53,
                     Sport = "Basketball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
                     HomeName = "Dalian Pro FC (N)2",
@@ -109,7 +109,7 @@ public class MatchHelperUnitTests
                 },
                 new()
                 {
-                    OSMatchId = 54,
+                    OsMatchId = 54,
                     Sport = "Basketball",
                     LeagueName = "CHINA SABA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
                     HomeName = "Dalian Pro FC (N)3",
@@ -119,7 +119,7 @@ public class MatchHelperUnitTests
                 },
                 new()
                 {
-                    OSMatchId = 114,
+                    OsMatchId = 114,
                     Sport = "Netball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)15",
                     HomeName = "Dalian Pro FC (N)12",
@@ -134,7 +134,7 @@ public class MatchHelperUnitTests
         {
                 new()
                 {
-                    OSMatchId = 79,
+                    OsMatchId = 79,
                     Sport = "Netball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)11",
                     HomeName = "Dalian Pro FC (N)11",
@@ -144,7 +144,7 @@ public class MatchHelperUnitTests
                 },
                 new()
                 {
-                    OSMatchId = 113,
+                    OsMatchId = 113,
                     Sport = "Netball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)11",
                     HomeName = "Dalian Pro FC (N)12",
@@ -154,7 +154,7 @@ public class MatchHelperUnitTests
                 },
                 new()
                 {
-                    OSMatchId = 444,
+                    OsMatchId = 444,
                     Sport = "Basketball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
                     HomeName = "Dalian Pro FC (N)1",

@@ -15,10 +15,10 @@ public static class MatchHelpers
         => matches.Any() ? matches.Select(GetMatchTime).Max() : new DateTime(2021, 01, 01);
 
     public static List<Match> FindMatchesWithTv(IEnumerable<Match> matches, int leagueId, DateTime from, DateTime to, IEnumerable<TvCondition> tvConditions)
-        => matches.Where(x => x.OWPLeagueId == leagueId && x.EventDateTime >= from && x.EventDateTime <= to && IsWithTv(x, tvConditions)).ToList();
+        => matches.Where(x => x.OwpLeagueId == leagueId && x.EventDateTime >= from && x.EventDateTime <= to && IsWithTv(x, tvConditions)).ToList();
 
     public static List<Match> FindMatchesWithoutTv(IEnumerable<Match> matches, int leagueId, DateTime from, DateTime to, IEnumerable<TvCondition> tvConditions)
-        => matches.Where(x => x.OWPLeagueId == leagueId && x.EventDateTime >= from && x.EventDateTime <= to && !IsWithTv(x, tvConditions)).ToList();
+        => matches.Where(x => x.OwpLeagueId == leagueId && x.EventDateTime >= from && x.EventDateTime <= to && !IsWithTv(x, tvConditions)).ToList();
 
     public static decimal? GetSpread(Match match, int betType)
         => match.MatchSettings?.FirstOrDefault(x => x.Bettype == betType)?.Spread;
@@ -55,12 +55,12 @@ public static class MatchHelpers
         const string equalCondition = "Equals";
         const string containsCondition = "Contains";
 
-        if (string.IsNullOrEmpty(match.TV))
+        if (string.IsNullOrEmpty(match.Tv))
         {
             return false;
         }
 
-        var tvs = match.TV.Split(',');
+        var tvs = match.Tv.Split(',');
 
         foreach (var condition in tvConditions)
         {
