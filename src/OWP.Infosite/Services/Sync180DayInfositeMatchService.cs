@@ -23,8 +23,8 @@ public class Sync180DayInfositeMatchServiceImp : Sync180DayInfositeMatchService
 
     public async Task Sync()
     {
-        var infoSiteMatch = await apiService.QueryInfoSiteMatchFor180Day();
-        var matchInfo = infoSiteMatch.Select(m => new MatchModelFor180Day(m));
+        var infoSiteMatches = await apiService.QueryInfoSiteMatchFor180Day();
+        var matchInfo = infoSiteMatches.Select(m => new MatchModelFor180Day(m));
 
         var criteria = new SyncInfoMatchFor180DayCriteria
         {

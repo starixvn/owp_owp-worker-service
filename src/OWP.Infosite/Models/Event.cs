@@ -1,13 +1,12 @@
 ﻿namespace OWP.Infosite.Models;
 
 using System.Xml.Serialization;
-using Attributes;
 using Builder;
 using Extensions;
 using Newtonsoft.Json;
+using Olympus.Xml;
 
 [Serializable]
-[XmlName("Row")]
 public class Event
 {
     private const int SoccerSportId = 1;
@@ -49,14 +48,17 @@ public class Event
 
     public string OtherProvider { get; set; }
 
+    [XmlName("ProviderTV")]
     public string ProviderTv { get; set; }
 
     public string ProviderUsed { get; set; }
 
     public DateTime EventDateTime { get; private set; }
 
+    [XmlName("LocalTV")]
     public string LocalTv { get; private set; }
 
+    [XmlName("LiveTV")]
     public string LiveTv { get; private set; }
 
     public string Iptv { get; private set; }
@@ -67,6 +69,7 @@ public class Event
 
     public int SportId { get; set; }
 
+    [XmlName("ETPK")]
     public string Etpk { get; set; }
 
     public string Remark { get; set; }

@@ -1,9 +1,6 @@
 ﻿namespace OWP.SumReport.PrematchReport.Models;
 
-using Attributes;
-
 [Serializable]
-[XmlName("Row")]
 public record DataReport : DataReportBase
 {
     public int GroupId { get; init; }

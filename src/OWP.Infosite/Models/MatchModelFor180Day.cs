@@ -1,14 +1,14 @@
 ﻿namespace OWP.Infosite.Models;
 
-using Attributes;
 using Extensions;
+using Olympus.Xml;
 
 [Serializable]
-[XmlName("Row")]
 public class MatchModelFor180Day
 {
     public int MatchId { get; set; }
-
+    
+    [XmlName("KOTime")]
     public DateTime KoTime { get; set; }
 
     public string LeagueName { get; set; }

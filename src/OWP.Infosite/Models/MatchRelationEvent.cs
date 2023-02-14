@@ -1,9 +1,6 @@
 ﻿namespace OWP.Infosite.Models;
 
-using Attributes;
-
 [Serializable]
-[XmlName("MatchRelationEvent")]
 public class MatchRelationEvent
 {
     public MatchRelationEvent(MatchRelation matchRelation)

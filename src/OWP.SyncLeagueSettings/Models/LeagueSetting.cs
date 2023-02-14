@@ -1,8 +1,6 @@
 ﻿namespace OWP.SyncLeagueSettings.Models;
 
-using Attributes;
-
-[XmlName("LeagueSetting")]
+using Olympus.Xml;
 public class LeagueSetting
 {
     [XmlName("OWPLeagueId")] public int OwpLeagueId { get; set; }

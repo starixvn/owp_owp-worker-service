@@ -1,5 +1,7 @@
 ﻿namespace OWP.SumReport.LAReport.Models;
 
+using Olympus.Xml;
+
 public class LaReportModel
 {
     public int UserId { get; set; }
@@ -22,14 +24,17 @@ public class LaReportModel
 
     public int OnlyProvider { get; set; }
 
+    [XmlName("OnlyTV")]
     public int OnlyTv { get; set; }
 
     public int OnlyReporter { get; set; }
 
+    [XmlName("MixedProviderTVReporter")]
     public int MixedProviderTvReporter { get; set; }
 
     public int CornerPlus { get; set; }
 
+    [XmlName("TBookingPlus")]
     public int BookingPlus { get; set; }
 
     public int Fantasy { get; set; }
@@ -38,6 +43,7 @@ public class LaReportModel
 
     public int OtherProducts { get; set; }
 
+    [XmlName("FTCorner")]
     public int FtCorner { get; set; }
 
     public int ESoccer5Mins { get; set; }
@@ -54,6 +60,7 @@ public class LaReportModel
 
     public int FiveMajorLeague { get; set; }
 
+    [XmlName("FTCorner5ML")]
     public int FtCorner5Ml { get; set; }
 
     public string OtherProductMatchIds { get; set; } = string.Empty;
