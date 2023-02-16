@@ -1,6 +1,5 @@
 ﻿namespace OWP.Infosite.Services;
 
-using System.Globalization;
 using Constants;
 using Criteria;
 using Fanex.Caching;
@@ -10,6 +9,7 @@ using Newtonsoft.Json;
 using Olympus.Xml;
 using RabbitMq;
 using RabbitMq.Models;
+using System.Globalization;
 
 public interface SyncService
 {
@@ -45,7 +45,7 @@ public class SyncServiceImp
         var queriedResult = await QueryEvents(fromDate);
         if (matchInfoNotification)
         {
-            var today = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
+            var today = DateTime.Today;
             var sessionId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
             await SaveOldInfoSiteMatchSnapshot(sessionId, today);
 

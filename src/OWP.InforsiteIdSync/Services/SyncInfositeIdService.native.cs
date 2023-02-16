@@ -1,10 +1,10 @@
 ﻿namespace OWP.InfositeIdSync.Services;
 
-using System.Globalization;
 using Helpers;
 using Infosite.Services;
 using RabbitMq;
 using RabbitMq.Models;
+using System.Globalization;
 
 public interface SyncInfositeIdService
 {
@@ -55,7 +55,7 @@ public class SynInfositeIdServiceImp : SyncInfositeIdService
     {
         var notifyRequest = new LinkedMatchNotifyRequest
         {
-            EventDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified),
+            EventDate = DateTime.Today,
             SessionId = sessionId
         };
 

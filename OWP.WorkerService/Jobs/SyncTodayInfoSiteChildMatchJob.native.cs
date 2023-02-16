@@ -36,7 +36,7 @@ internal class SyncTodayInfoSiteChildMatchJob : IJob
 
         if (!underMaintenanceTime.IsUnderMaintenanceTime)
         {
-            var today = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
+            var today = DateTime.Today;
             await todaySyncService.Sync(today).ConfigureAwait(false);
         }
     }

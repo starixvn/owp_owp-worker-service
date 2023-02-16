@@ -9,7 +9,7 @@ public interface TodaySyncService : SyncService
 }
 
 public class TodaySyncServiceImp : SyncServiceImp, TodaySyncService
-{    
+{
     private readonly UpdateInfositeIdService updateInfositeIdService;
 
     public TodaySyncServiceImp(
@@ -26,7 +26,7 @@ public class TodaySyncServiceImp : SyncServiceImp, TodaySyncService
 
     public async Task Sync()
     {
-        var today = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
+        var today = DateTime.Today;
 
         await Sync(today, true);
         await Sync(today.AddDays(1), true);
