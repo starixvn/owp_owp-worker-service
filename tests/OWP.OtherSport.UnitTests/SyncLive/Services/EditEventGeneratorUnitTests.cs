@@ -42,8 +42,8 @@ public class EditEventGeneratorUnitTests
 
         var expected = new List<EditEvent>
         {
-            new() { InHouseMatchId = 222,  IsLive = true },
-            new() { InHouseMatchId = 555,  IsLive = false }
+            new() { in_house_match_id = 222,  is_live = true },
+            new() { in_house_match_id = 555,  is_live = false }
         };
 
         var actual = service.GetChangedOfferLiveMatches(adminSiteMatches, owpMatches).ToList();
