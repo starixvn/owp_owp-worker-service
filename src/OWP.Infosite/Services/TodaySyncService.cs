@@ -2,6 +2,7 @@
 
 using Fanex.Caching;
 using Fanex.Data.Repository;
+using Fanex.Logging;
 using RabbitMq;
 
 public interface TodaySyncService : SyncService
@@ -27,6 +28,8 @@ public class TodaySyncServiceImp : SyncServiceImp, TodaySyncService
     public async Task Sync()
     {
         var today = DateTime.Today;
+        var logMessage = $"SyncInfoSite QueryEvents with params: FromDate: {today}. ToDate: {today}";
+        await Logger.Log.InfoAsync(logMessage).ConfigureAwait(false);
 
         await Sync(today, true);
         await Sync(today.AddDays(1), true);
