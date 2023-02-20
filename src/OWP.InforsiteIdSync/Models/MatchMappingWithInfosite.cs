@@ -3,7 +3,7 @@
 using Olympus.InfoSiteClient.Extensions.XMLExtensions;
 
 [Serializable]
-[XMLName("Row")]
+[XMLName("MatchMappingWithInfosite")]
 public class MatchMappingWithInfosite
 {
     [XMLName("OWPMatchId")]

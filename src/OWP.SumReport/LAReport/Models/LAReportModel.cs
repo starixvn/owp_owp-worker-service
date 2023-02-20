@@ -2,6 +2,7 @@
 
 using Olympus.Xml;
 
+[XmlName("LAReportModel")]
 public class LaReportModel
 {
     public int UserId { get; set; }
