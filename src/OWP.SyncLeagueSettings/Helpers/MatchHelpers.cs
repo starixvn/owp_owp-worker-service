@@ -71,6 +71,7 @@ public static class MatchHelpers
                 case equalCondition when tvs.Any(x => x == condition.Value):
                 case containsCondition when tvs.Any(x => x.IsContainsIgnoreCase(condition.Value)):
                     return true;
+                default: continue;
             }
         }
 

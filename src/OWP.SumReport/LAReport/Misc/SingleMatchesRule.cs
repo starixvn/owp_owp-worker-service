@@ -31,7 +31,7 @@ public class IsSingleMatchesRule : SingleMatchesRule
     };
     private readonly string[] providersEqual = { "SM", "VI" };
 
-    private const string ProviderBet = "BET"; 
+    private const string ProviderBet = "BET";
 
     public override ReportType Execute(Assignment assignment)
     {
@@ -68,7 +68,7 @@ public class IsSingleMatchesRule : SingleMatchesRule
 
     private static bool IsOnlyProduct(string[] matchProviders, string[] equals, string[] contains)
         => matchProviders.Any(x => IsContainsExactElement(equals, x.Trim())) ||
-           matchProviders.Any(x => IsElementOfListContainText(contains, x.Trim())) ;
+           matchProviders.Any(x => IsElementOfListContainText(contains, x.Trim()));
 
     private bool IsOnlyTV(string[] matchProviders, string leagueName)
         => IsOnlyProduct(matchProviders, onlyTvEqual, onlyTvContain) ||
@@ -96,10 +96,12 @@ public class IsSingleMatchesRule : SingleMatchesRule
         return text.IsContainsIgnoreCase(ProviderBet) && !text.IsContainsIgnoreCase("BET365");
     }
 
+#pragma warning disable S1172
     private static bool IsTextContainAllElementOfList(IEnumerable<string> list, string text)
     {
         return list.All(text.IsContainsIgnoreCase);
     }
+#pragma warning restore S1172
 
     private static bool IsContainsExactElement(IEnumerable<string> providerLists, string item)
         => providerLists.Contains(item, StringComparer.OrdinalIgnoreCase);

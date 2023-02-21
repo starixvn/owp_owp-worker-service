@@ -197,29 +197,6 @@ public class CalculationServiceImp : CalculationService
                     singleMatchesReporterCount += 1;
                     break;
 
-                case ReportType.Others:
-                case ReportType.Fantasy:
-                case ReportType.TotalBookingPlus:
-                case ReportType.GoalKick:
-                case ReportType.OtherSpecialProducts:
-                case ReportType.CornerPlus:
-                case ReportType.FtCorner:
-                case ReportType.Esoccer5Mins:
-                case ReportType.Esoccer15Mins:
-                case ReportType.Esoccer20Mins:
-                case ReportType.SingleLinkLowerThan3:
-                case ReportType.Link2:
-                case ReportType.Link3:
-                case ReportType.Link4:
-                case ReportType.Link5:
-                case ReportType.Link6:
-                case ReportType.Link7:
-                case ReportType.Link8Plus:
-                case ReportType.MultipleMatches:
-                case ReportType.Esoccer6Mins:
-                case ReportType.Esoccer16Mins:
-                case ReportType.MajorLeague:
-                case ReportType.FtCorner5Ml:
                 default:
                     othersCounts += 1;
                     otherMatchIds.Add(assignment.OwpMatchId);
