@@ -18,6 +18,8 @@ public interface TraderRepository
     Task<List<Assignment>> GetSaBaAssignmentByDate(DateTime eventDate, bool isGenerateData);
 
     Task UpdateESoccerFields(DateTime eventDate, IEnumerable<ESoccerByUser> eSoccerByUsers);
+
+    Task UpdateFTOtherFields(DateTime eventDate);
 }
 
 public class TraderRepositoryImp : TraderRepository
@@ -32,6 +34,17 @@ public class TraderRepositoryImp : TraderRepository
     public async Task UpdateNoneRobotFields(DateTime eventDate)
     {
         var command = new UpdateNonRobotFieldsCommand
+        {
+            EventDate = eventDate
+        };
+
+        await repository.ExecuteAsync(command);
+    }
+
+    
+    public async Task UpdateFTOtherFields(DateTime eventDate)
+    {
+        var command = new UpdateFTOtherFieldsCommand
         {
             EventDate = eventDate
         };
