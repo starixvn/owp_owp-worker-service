@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using OWP.Infosite.Services;
-using OWP.Infosite.Settings;
+﻿namespace OWP.Infosite;
 
-namespace OWP.Infosite;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Services;
+using Settings;
 
 public static class DependenceInjection
 {
@@ -11,7 +11,7 @@ public static class DependenceInjection
     {
         services.Configure<InfoSiteSettings>(configuration.GetSection(nameof(InfoSiteSettings)));
 
-        services.AddTransient<NAPUserControlService, NAPUserControlServiceImp>();
+        services.AddTransient<NapUserControlService, NapUserControlServiceImp>();
         services.AddTransient<ApiService, ApiServiceImp>();
         services.AddTransient<DateTimeService, DateTimeServiceImp>();
         services.AddTransient<UpdateInfositeIdService, UpdateInfositeIdServiceImp>();

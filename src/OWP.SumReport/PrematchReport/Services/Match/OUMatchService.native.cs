@@ -1,28 +1,28 @@
 ﻿namespace OWP.SumReport.PrematchReport.Services.Match;
 
-using OWP.SumReport.PrematchReport.Constants;
+using Constants;
 
-public interface OUMatchService
+public interface OuMatchService
 {
-    Task BuildSingleOUMatchReport(DateTime eventDate, TimeSpan? startNightShift);
+    Task BuildSingleOuMatchReport(DateTime eventDate, TimeSpan? startNightShift);
 }
 
-public class OUMatchServiceImp : OUMatchService
+public class OuMatchServiceImp : OuMatchService
 {
     private readonly Repository repository;
 
     private readonly DataMatchReportService dataMatchReportService;
 
-    public OUMatchServiceImp(Repository repository, DataMatchReportService dataMatchReportService)
+    public OuMatchServiceImp(Repository repository, DataMatchReportService dataMatchReportService)
     {
         this.repository = repository;
         this.dataMatchReportService = dataMatchReportService;
     }
 
-    public async Task BuildSingleOUMatchReport(DateTime eventDate, TimeSpan? startNightShift)
+    public async Task BuildSingleOuMatchReport(DateTime eventDate, TimeSpan? startNightShift)
     {
-        var leagueDetails = await repository.GetLeagueDetailByDate(eventDate, Constant.OUID);
-        var data = await dataMatchReportService.BuildMatchReport(leagueDetails, eventDate, startNightShift, Constant.OUID);
+        var leagueDetails = await repository.GetLeagueDetailByDate(eventDate, Constant.OuId);
+        var data = await dataMatchReportService.BuildMatchReport(leagueDetails, eventDate, startNightShift, Constant.OuId);
         await dataMatchReportService.InsertMatchReport(data);
     }
 }

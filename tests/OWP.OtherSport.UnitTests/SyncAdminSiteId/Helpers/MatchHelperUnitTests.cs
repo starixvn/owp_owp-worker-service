@@ -1,12 +1,12 @@
-﻿using OWP.OtherSport.SyncAdminSiteId.Helpers;
-using OWP.OtherSport.SyncAdminSiteId.Models;
+﻿namespace OWP.OtherSport.UnitTests.SyncAdminSiteId.Helpers;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OtherSport.SyncAdminSiteId.Helpers;
+using OtherSport.SyncAdminSiteId.Models;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.OtherSport.UnitTests.SyncAdminSiteId.Helpers;
 
 public class MatchHelperUnitTests
 {
@@ -15,13 +15,13 @@ public class MatchHelperUnitTests
     {
         var expected = new List<LinkedMatch>
             {
-                new LinkedMatch
+                new()
                 {
                     AdminSiteMatchId = 123,
-                    OSMatchId = 1,
-                    OWPLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
-                    OWPHome = "Dalian Pro FC (N)1",
-                    OWPAway = "Guangzhou R&F1",
+                    OsMatchId = 1,
+                    OwpLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
+                    OwpHome = "Dalian Pro FC (N)1",
+                    OwpAway = "Guangzhou R&F1",
                     AdminSiteLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
                     AdminSiteHome = "Dalian Pro FC (N)1",
                     AdminSiteAway = "Guangzhou R&F1",
@@ -29,13 +29,13 @@ public class MatchHelperUnitTests
                     NewEventDate = new DateTime(2021, 03, 18, 20, 22, 33),
                     OldEventDate = new DateTime(2021, 03, 18)
                 },
-                new LinkedMatch
+                new()
                 {
                     AdminSiteMatchId = 234,
-                    OSMatchId = 53,
-                    OWPLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
-                    OWPHome = "Dalian Pro FC (N)2",
-                    OWPAway = "Guangzhou R&F2",
+                    OsMatchId = 53,
+                    OwpLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
+                    OwpHome = "Dalian Pro FC (N)2",
+                    OwpAway = "Guangzhou R&F2",
                     AdminSiteLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
                     AdminSiteHome = "Dalian Pro FC (N)2",
                     AdminSiteAway = "Guangzhou R&F2",
@@ -43,13 +43,13 @@ public class MatchHelperUnitTests
                     NewEventDate = new DateTime(2021, 03, 18),
                     OldEventDate = new DateTime(2021, 03, 18)
                 },
-                new LinkedMatch
+                new()
                 {
                     AdminSiteMatchId = 345,
-                    OSMatchId = 54,
-                    OWPLeague = "CHINA SABA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
-                    OWPHome = "Dalian Pro FC (N)3",
-                    OWPAway = "Guangzhou R&F3",
+                    OsMatchId = 54,
+                    OwpLeague = "CHINA SABA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
+                    OwpHome = "Dalian Pro FC (N)3",
+                    OwpAway = "Guangzhou R&F3",
                     AdminSiteLeague = "CHINA SABA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
                     AdminSiteHome = "Dalian Pro FC (N)3",
                     AdminSiteAway = "Guangzhou R&F3",
@@ -59,7 +59,7 @@ public class MatchHelperUnitTests
                 }
             };
 
-        var actual = MatchHelper.GetNewLinkedMatches(GetUnlinkedOWPMatches(), GetAdminSiteMatches());
+        var actual = MatchHelper.GetNewLinkedMatches(GetUnlinkedOwpMatches().ToList(), GetAdminSiteMatches().ToList());
 
         DeepAssert.Equal(expected, actual.ToList());
     }
@@ -69,27 +69,27 @@ public class MatchHelperUnitTests
     {
         var expected = new List<LinkedMatch>
             {
-                new LinkedMatch
+                new()
                 {
-                    OSMatchId = 444,
-                    OWPLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
-                    OWPHome = "Dalian Pro FC (N)1",
-                    OWPAway = "Guangzhou R&F1",
+                    OsMatchId = 444,
+                    OwpLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
+                    OwpHome = "Dalian Pro FC (N)1",
+                    OwpAway = "Guangzhou R&F1",
                     OldAdminSiteMatchId = 111,
                     OldEventDate = new DateTime(2021, 03, 18, 20, 22, 33)
                 }
             };
 
-        var actual = MatchHelper.GetRemovedMatches(GetLinkedOWPMatches(), GetAdminSiteMatches());
+        var actual = MatchHelper.GetRemovedMatches(GetLinkedOwpMatches().ToList(), GetAdminSiteMatches().ToList());
         DeepAssert.Equal(expected, actual.ToList());
     }
 
-    private IEnumerable<Match> GetUnlinkedOWPMatches()
+    private static IEnumerable<Match> GetUnlinkedOwpMatches()
         => new List<Match>
         {
-                new Match
+                new()
                 {
-                    OSMatchId = 1,
+                    OsMatchId = 1,
                     Sport = "Basketball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
                     HomeName = "Dalian Pro FC (N)1",
@@ -97,9 +97,9 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = null
                 },
-                new Match
+                new()
                 {
-                    OSMatchId = 53,
+                    OsMatchId = 53,
                     Sport = "Basketball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
                     HomeName = "Dalian Pro FC (N)2",
@@ -107,9 +107,9 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = null
                 },
-                new Match
+                new()
                 {
-                    OSMatchId = 54,
+                    OsMatchId = 54,
                     Sport = "Basketball",
                     LeagueName = "CHINA SABA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
                     HomeName = "Dalian Pro FC (N)3",
@@ -117,9 +117,9 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18, 11, 22, 33),
                     AdminSiteMatchId = null
                 },
-                new Match
+                new()
                 {
-                    OSMatchId = 114,
+                    OsMatchId = 114,
                     Sport = "Netball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)15",
                     HomeName = "Dalian Pro FC (N)12",
@@ -129,12 +129,12 @@ public class MatchHelperUnitTests
                 }
         };
 
-    private IEnumerable<Match> GetLinkedOWPMatches()
+    private static IEnumerable<Match> GetLinkedOwpMatches()
         => new List<Match>
         {
-                new Match
+                new()
                 {
-                    OSMatchId = 79,
+                    OsMatchId = 79,
                     Sport = "Netball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)11",
                     HomeName = "Dalian Pro FC (N)11",
@@ -142,9 +142,9 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 1
                 },
-                new Match
+                new()
                 {
-                    OSMatchId = 113,
+                    OsMatchId = 113,
                     Sport = "Netball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)11",
                     HomeName = "Dalian Pro FC (N)12",
@@ -152,9 +152,9 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 2
                 },
-                new Match
+                new()
                 {
-                    OSMatchId = 444,
+                    OsMatchId = 444,
                     Sport = "Basketball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
                     HomeName = "Dalian Pro FC (N)1",
@@ -164,10 +164,10 @@ public class MatchHelperUnitTests
                 }
         };
 
-    private IEnumerable<Match> GetAdminSiteMatches()
+    private static IEnumerable<Match> GetAdminSiteMatches()
         => new List<Match>
         {
-                new Match
+                new()
                 {
                     Sport = "Basketball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
@@ -176,7 +176,7 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18, 20, 22, 33),
                     AdminSiteMatchId = 123
                 },
-                new Match
+                new()
                 {
                     Sport = "Basketball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
@@ -185,7 +185,7 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 234
                 },
-                new Match
+                new()
                 {
                     Sport = "Basketball",
                     LeagueName = "CHINA SABA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
@@ -194,7 +194,7 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18, 11, 22, 33),
                     AdminSiteMatchId = 345
                 },
-                new Match
+                new()
                 {
                     Sport = "Netball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)113",
@@ -203,7 +203,7 @@ public class MatchHelperUnitTests
                     EventDateTime = new DateTime(2021, 03, 18),
                     AdminSiteMatchId = 1
                 },
-                new Match
+                new()
                 {
                     Sport = "Netball",
                     LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)114",

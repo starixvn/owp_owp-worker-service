@@ -1,8 +1,8 @@
-using Fanex.Data.Repository;
-using OWP.SumReport.PrematchReport.Criteria;
-using OWP.SumReport.PrematchReport.Models;
-
 namespace OWP.SumReport.PrematchReport;
+
+using Criteria;
+using Fanex.Data.Repository;
+using Models;
 
 public interface Repository
 {
@@ -14,9 +14,9 @@ public interface Repository
 
     Task InsertMatch(InsertMatchDataReportCriteria criteria);
 
-    Task<IList<TotalDataMatch>> GetTotalMatchByLeagueIds(IList<int> PreMatchleagueIds, DateTime fromDate, DateTime toDate, DateTime fromDateNightShift);
+    Task<IList<TotalDataMatch>> GetTotalMatchByLeagueIds(IList<int> preMatchLeagueIds, DateTime fromDate, DateTime toDate, DateTime fromDateNightShift);
 
-    Task<TimeSpan?> QueryExistedStartTime(DateTime EventDate);
+    Task<TimeSpan?> QueryExistedStartTime(DateTime eventDate);
 }
 
 public class RepositoryImp : Repository
@@ -52,11 +52,11 @@ public class RepositoryImp : Repository
         return leagueInfo.ToList();
     }
 
-    public async Task<IList<TotalDataMatch>> GetTotalMatchByLeagueIds(IList<int> PreMatchleagueIds, DateTime fromDate, DateTime toDate, DateTime fromDateNightShift)
+    public async Task<IList<TotalDataMatch>> GetTotalMatchByLeagueIds(IList<int> preMatchLeagueIds, DateTime fromDate, DateTime toDate, DateTime fromDateNightShift)
     {
         var command = new GetTotalMatchCriteria
         {
-            PreMatchLeagueIds = string.Join(",", PreMatchleagueIds),
+            PreMatchLeagueIds = string.Join(",", preMatchLeagueIds),
             FromDateTime = fromDate,
             ToDateTime = toDate,
             FromDateTimeNightShift = fromDateNightShift
@@ -66,13 +66,13 @@ public class RepositoryImp : Repository
         return totals.ToList();
     }
 
-    public async Task<TimeSpan?> QueryExistedStartTime(DateTime EventDate)
+    public async Task<TimeSpan?> QueryExistedStartTime(DateTime eventDate)
     {
         var criteria = new GetStartTimeCriteria
         {
-            EventDate = EventDate
+            EventDate = eventDate
         };
-        var result = await repository.FetchAsync<TimeSpan>(criteria);
+        var result = (await repository.FetchAsync<TimeSpan>(criteria)).ToList();
 
         return result.Any() ? new TimeSpan?(result.FirstOrDefault()) : null;
     }

@@ -1,9 +1,9 @@
-﻿using Fanex.Logging;
-using ONEbook.UM.Services;
-using OWP.LinkLeagueAndTeam.Services;
-using Quartz;
+﻿namespace OWP.WorkerService.Jobs;
 
-namespace OWP.WorkerService.Jobs;
+using Fanex.Logging;
+using LinkLeagueAndTeam.Services;
+using ONEbook.UM.Services;
+using Quartz;
 
 [DisallowConcurrentExecution]
 public class LinkLeagueAndTeamJob : IJob
@@ -13,7 +13,7 @@ public class LinkLeagueAndTeamJob : IJob
 
     public LinkLeagueAndTeamJob(LinkLeagueAndTeamService handler, IMaintenanceService maintenanceService)
     {
-        this.linkLeagueAndTeamService = handler;
+        linkLeagueAndTeamService = handler;
         this.maintenanceService = maintenanceService;
     }
 
@@ -31,7 +31,7 @@ public class LinkLeagueAndTeamJob : IJob
 
     private async Task ExecuteJob()
     {
-        await LogService.InfoAsync($"Job {this.GetType()} started at {DateTime.Now}");
+        await LogService.InfoAsync($"Job {GetType()} started at {DateTime.Now}");
 
         var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
         if (underMaintenanceTime.IsUnderMaintenanceTime)
@@ -42,6 +42,6 @@ public class LinkLeagueAndTeamJob : IJob
         await linkLeagueAndTeamService
             .Execute()
             .ConfigureAwait(false);
-        await LogService.InfoAsync($"Job {this.GetType()} finished at {DateTime.Now}");
+        await LogService.InfoAsync($"Job {GetType()} finished at {DateTime.Now}");
     }
 }

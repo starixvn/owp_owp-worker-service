@@ -1,10 +1,10 @@
-﻿using Fanex.Logging;
+﻿namespace OWP.InfositeIdSync.Services;
+
+using System.Text;
+using Fanex.Logging;
+using Models;
 using Newtonsoft.Json;
 using Olympus.InfoSiteClient;
-using OWP.InfositeIdSync.Models;
-using System.Text;
-
-namespace OWP.InfositeIdSync.Services;
 
 public interface LogServiceWrapper
 {
@@ -14,9 +14,9 @@ public interface LogServiceWrapper
 
     Task LogSynIsLive(
          List<SyncIsLiveModel> unsynchronizedMatches,
-        IEnumerable<ValueTuple<int, int?>> deletedMatches,
-        IEnumerable<ValueTuple<int, int?>> liveMatches,
-        IEnumerable<ValueTuple<int, int?>> nonLiveMatches,
+         List<ValueTuple<int, int?>> deletedMatches,
+         List<ValueTuple<int, int?>> liveMatches,
+         List<ValueTuple<int, int?>> nonLiveMatches,
         IsLiveSynchronizedResult synchronizedLiveMatchResult,
         IsLiveSynchronizedResult synchronizedNonLiveMatchResult);
 
@@ -47,7 +47,8 @@ public class LogServiceWrapperImp : LogServiceWrapper
         var index = 0;
         foreach (var parameter in parameters)
         {
-            stringBuilder.AppendFormat("Parameter {0}-{1}: {2}\r\n", index, parameter.GetType(), JsonConvert.SerializeObject(parameter));
+            stringBuilder.Append(
+                $"Parameter {index}-{parameter.GetType()}: {JsonConvert.SerializeObject(parameter)}\r\n");
             index++;
         }
 
@@ -56,8 +57,9 @@ public class LogServiceWrapperImp : LogServiceWrapper
 
     public async Task LogSynIsLive(
         List<SyncIsLiveModel> unsynchronizedMatches,
-        IEnumerable<(int, int?)> deletedMatches,
-        IEnumerable<(int, int?)> liveMatches, IEnumerable<(int, int?)> nonLiveMatches,
+        List<ValueTuple<int, int?>> deletedMatches,
+        List<ValueTuple<int, int?>> liveMatches,
+        List<ValueTuple<int, int?>> nonLiveMatches,
         IsLiveSynchronizedResult synchronizedLiveMatchResult,
         IsLiveSynchronizedResult synchronizedNonLiveMatchResult)
     {
@@ -88,10 +90,10 @@ public class LogServiceWrapperImp : LogServiceWrapper
 
     public async Task ErrorDuplicatedMatch(IEnumerable<int> liveMatches, IEnumerable<int> nonLiveMatches)
     {
-        var duplicatedMatches = liveMatches.Intersect(nonLiveMatches);
+        var duplicatedMatches = liveMatches.Intersect(nonLiveMatches).ToList();
         if (duplicatedMatches.Any())
         {
-            await Error($"=== Sync Is Live to Info Site: Duplicated matches ===", duplicatedMatches.ToArray());
+            await Error("=== Sync Is Live to Info Site: Duplicated matches ===", duplicatedMatches.ToArray());
         }
     }
 }

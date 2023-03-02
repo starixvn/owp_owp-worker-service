@@ -1,10 +1,10 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.SyncLeagueSettings;
+
+using Criteria;
+using Fanex.Data.Repository;
+using Models;
 using Newtonsoft.Json;
 using Olympus.Xml;
-using OWP.SyncLeagueSettings.Criteria;
-using OWP.SyncLeagueSettings.Models;
-
-namespace OWP.SyncLeagueSettings;
 
 public interface LeagueSettingsRepository
 {
@@ -39,7 +39,7 @@ public class LeagueSettingsRepositoryImp : LeagueSettingsRepository
     }
 
     public async Task<IEnumerable<TvCondition>> GetAllTvConditions()
-       => await dynamicRepository.FetchAsync<TvCondition>(new GetTVListCriteria());
+       => await dynamicRepository.FetchAsync<TvCondition>(new GetTvListCriteria());
 
     public async Task<IEnumerable<InsertLeagueSettingsResponse>> InsertNewLeaguesSettings(List<LeagueSetting> leaguesSettings)
     {
@@ -57,7 +57,7 @@ public class LeagueSettingsRepositoryImp : LeagueSettingsRepository
         {
             ActorId = 0,
             LeagueSettingId = model.LeagueSettingId,
-            HasTV = model.HasTV,
+            HasTv = model.HasTv,
             FullConditionDescription = JsonConvert.SerializeObject(model)
         };
 

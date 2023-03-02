@@ -1,8 +1,8 @@
-﻿using OWP.Infosite.Models;
+﻿namespace OWP.Infosite.Builder;
 
-namespace OWP.Infosite.Builder;
+using Models;
 
-public static class TVBuilder
+public static class TvBuilder
 {
     public static string TvBuild(this CommonMatchModel infositeMatch)
     {

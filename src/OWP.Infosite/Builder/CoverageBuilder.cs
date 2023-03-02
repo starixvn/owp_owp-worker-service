@@ -1,7 +1,7 @@
-﻿using OWP.Core.Extensions;
-using OWP.Infosite.Models;
+﻿namespace OWP.Infosite.Builder;
 
-namespace OWP.Infosite.Builder;
+using Extensions;
+using Models;
 
 public class CoverageBuilder
 {
@@ -12,7 +12,7 @@ public class CoverageBuilder
         { 17, "RB2" },
         { 18, "RTS" },
         { 19, "BG" },
-        { 20, "BET" },
+        { 20, "BET" }
     };
 
     private readonly Dictionary<int, string> coveragePair = new()
@@ -35,29 +35,33 @@ public class CoverageBuilder
 
     public List<string> BuildCoverageMainMatch(CommonMatch infoSiteMatch)
     {
-        List<string> coverages = new List<string>();
+        var coverages = new List<string>();
         var isExistsInWebsiteIdValid = validWebsiteId.Any(item => item == infoSiteMatch.website_id);
-        if (isExistsInWebsiteIdValid)
+        if (!isExistsInWebsiteIdValid)
         {
-            var coverage = BuildCoverage(infoSiteMatch.coverage_id, infoSiteMatch.website_id);
-            coverages.Add(coverage);
+            return coverages;
         }
+
+        var coverage = BuildCoverage(infoSiteMatch.coverage_id, infoSiteMatch.website_id);
+        coverages.Add(coverage);
         return coverages;
     }
 
     public List<string> BuildCoverageMergeMatch(CommonMatchModel infoSiteMatch)
     {
-        List<string> coverages = new List<string>();
+        var coverages = new List<string>();
         infoSiteMatch.ls_merge_match?.ForEach(match =>
         {
             var isExistsInWebsiteIdValid = validWebsiteId.Any(
                 item => item == match.website_id
             );
-            if (isExistsInWebsiteIdValid)
+            if (!isExistsInWebsiteIdValid)
             {
-                var coverage = BuildCoverage(match.coverage_id, match.website_id);
-                coverages.Add(coverage);
+                return;
             }
+
+            var coverage = BuildCoverage(match.coverage_id, match.website_id);
+            coverages.Add(coverage);
         });
         return coverages;
     }

@@ -1,30 +1,30 @@
-﻿namespace OWP.SumReport.PrematchReport.Services.League
+﻿namespace OWP.SumReport.PrematchReport.Services.League;
+
+using Constants;
+
+public interface HdpLeagueService
 {
-    public interface HDPLeagueService
+    Task BuildSingleHdpLeagueReport(DateTime eventDate);
+}
+
+public class HdpLeagueServiceImp : HdpLeagueService
+{
+    private readonly DataReportService dataReportService;
+
+    private readonly Repository repository;
+
+    public HdpLeagueServiceImp(
+        DataReportService dataReportService,
+        Repository repository)
     {
-        Task BuildSingleHDPLeagueReport(DateTime eventDate);
+        this.dataReportService = dataReportService;
+        this.repository = repository;
     }
 
-    public class HDPLeagueServiceImp : HDPLeagueService
+    public async Task BuildSingleHdpLeagueReport(DateTime eventDate)
     {
-        private readonly DataReportService dataReportService;
-
-        private readonly Repository repository;
-
-        public HDPLeagueServiceImp(
-            DataReportService dataReportService,
-            Repository repository,
-            DbWriterService dbWriterService)
-        {
-            this.dataReportService = dataReportService;
-            this.repository = repository;
-        }
-
-        public async Task BuildSingleHDPLeagueReport(DateTime eventDate)
-        {
-            var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constants.Constant.HDPID);
-            var dataReport = dataReportService.BuildSingleLeagueGroupReport(leagues, Constants.Constant.HDPID);
-            await dataReportService.InsertLeagueReport(dataReport);
-        }
+        var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constant.HdpId);
+        var dataReport = dataReportService.BuildSingleLeagueGroupReport(leagues, Constant.HdpId);
+        await dataReportService.InsertLeagueReport(dataReport);
     }
 }

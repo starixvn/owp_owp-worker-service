@@ -1,9 +1,9 @@
-﻿using Fanex.Logging;
-using ONEbook.UM.Services;
-using OWP.MatchReadyNotification;
-using Quartz;
+﻿namespace OWP.WorkerService.Jobs;
 
-namespace OWP.WorkerService.Jobs;
+using Fanex.Logging;
+using MatchReadyNotification;
+using ONEbook.UM.Services;
+using Quartz;
 
 [DisallowConcurrentExecution]
 public class MatchReadyNotificationJob : IJob

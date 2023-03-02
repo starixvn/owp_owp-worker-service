@@ -1,7 +1,7 @@
-﻿using OWP.Core.Extensions;
-using OWP.SumReport.TraderReport.Models;
+﻿namespace OWP.SumReport.TraderReport.Services;
 
-namespace OWP.SumReport.TraderReport.Services;
+using Extensions;
+using Models;
 
 public interface RobotService
 {
@@ -48,7 +48,7 @@ public class RobotServiceImp : RobotService
         return robotX5ByUsers.ToDictionary(u => u.UserId, u => u);
     }
 
-    private IEnumerable<RobotByByUser> Aggregate(Dictionary<int, RobotX3ByUser> robotX3ByUsers,
+    private static IEnumerable<RobotByByUser> Aggregate(Dictionary<int, RobotX3ByUser> robotX3ByUsers,
         Dictionary<int, RobotX5ByUser> robotX5ByUsers)
     {
         var userIds = robotX3ByUsers.Keys.Union(robotX5ByUsers.Keys);

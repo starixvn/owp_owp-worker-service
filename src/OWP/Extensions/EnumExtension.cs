@@ -1,6 +1,6 @@
-using System.Reflection;
+namespace OWP.Extensions;
 
-namespace OWP.Core.Extensions;
+using System.Reflection;
 
 public static class EnumExtension
 {

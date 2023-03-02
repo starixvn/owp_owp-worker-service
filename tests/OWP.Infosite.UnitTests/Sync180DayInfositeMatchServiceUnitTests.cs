@@ -1,17 +1,13 @@
-﻿using Fanex.Data.Repository;
-using NSubstitute;
-using OWP.Infosite.Services;
-using Xunit;
+﻿namespace OWP.Infosite.UnitTests;
 
-namespace OWP.Infosite.UnitTests;
+using Fanex.Data.Repository;
+using NSubstitute;
+using Services;
+using Xunit;
 
 public class Sync180DayInfositeMatchServiceUnitTests
 {
-    private readonly DateTime from = new DateTime(2018, 1, 1);
-
-    public Sync180DayInfositeMatchServiceUnitTests()
-    {
-    }
+    private readonly DateTime from = new(2018, 1, 1);
 
     [Fact]
     public async Task Sync_GetDataForSevenFutureDay()

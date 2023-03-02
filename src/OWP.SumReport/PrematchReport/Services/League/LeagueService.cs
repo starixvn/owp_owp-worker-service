@@ -1,29 +1,24 @@
-namespace OWP.SumReport.PrematchReport.Services.League
-{
-    using Constants;
-    using System;
-    using System.Threading.Tasks;
+namespace OWP.SumReport.PrematchReport.Services.League;
 
-    public interface LeagueService
+public interface LeagueService
+{
+    Task BuildLeagueReport(DateTime eventDate);
+}
+
+public class LeagueServiceImp : LeagueService
+{
+    private readonly OuLeagueService ouLeagueService;
+    private readonly HdpLeagueService hdpLeagueService;
+
+    public LeagueServiceImp(OuLeagueService ouLeagueService, HdpLeagueService hdpLeagueService)
     {
-        Task BuildLeagueReport(DateTime eventDate);
+        this.ouLeagueService = ouLeagueService;
+        this.hdpLeagueService = hdpLeagueService;
     }
 
-    public class LeagueServiceImp : LeagueService
+    public async Task BuildLeagueReport(DateTime eventDate)
     {
-        private readonly OULeagueService ouLeagueService;
-        private readonly HDPLeagueService hdpLeagueService;
-
-        public LeagueServiceImp(OULeagueService ouLeagueService, HDPLeagueService hdpLeagueService)
-        {
-            this.ouLeagueService = ouLeagueService;
-            this.hdpLeagueService = hdpLeagueService;
-        }
-
-        public async Task BuildLeagueReport(DateTime eventDate)
-        {
-            await ouLeagueService.BuildSingleOULeagueReport(eventDate);
-            await hdpLeagueService.BuildSingleHDPLeagueReport(eventDate);
-        }
+        await ouLeagueService.BuildSingleOuLeagueReport(eventDate);
+        await hdpLeagueService.BuildSingleHdpLeagueReport(eventDate);
     }
 }

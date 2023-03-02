@@ -1,15 +1,15 @@
+namespace OWP.Infosite.UnitTests;
+
+using Criteria;
 using Fanex.Data.Repository;
 using Microsoft.Extensions.Options;
+using Models;
 using NSubstitute;
 using Olympus.InfoSiteClient.Models;
-using OWP.Infosite.Criteria;
-using OWP.Infosite.Models;
-using OWP.Infosite.Services;
-using OWP.Infosite.Settings;
+using Services;
+using Settings;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.Infosite.UnitTests;
 
 public class SyncChildMatchServiceUnitTests
 {
@@ -19,7 +19,7 @@ public class SyncChildMatchServiceUnitTests
     public SyncChildMatchServiceUnitTests()
     {
         repository = Substitute.For<IDynamicRepository>();
-        var infositeSettings = Options.Create(new InfoSiteSettings { InfositeAPI = "url" });
+        var infositeSettings = Options.Create(new InfoSiteSettings { InfositeApi = "url" });
         service = new SyncChildMatchServiceImp(infositeSettings, repository);
     }
 
@@ -37,9 +37,9 @@ public class SyncChildMatchServiceUnitTests
     [Fact]
     public async Task SaveInfoSiteChildMatchCommand()
     {
-        var matches = new List<MappedChildMatch>()
+        var matches = new List<MappedChildMatch>
         {
-            new MappedChildMatch
+            new()
             {
                 HomeName = "Hokkaido Consadole Sapporo Next Corners",
                 AwayName = "Kyoto Sanga Next Corners",
@@ -48,7 +48,7 @@ public class SyncChildMatchServiceUnitTests
                 EventDateTime = new DateTime(2022,04,15,9,0,0),
                 UpdatedTime = new DateTime(2022,04,15,9,0,0),
                 MinorBettypeId = -4,
-                SubType = 2100,
+                SubType = 2100
             }
         };
 
@@ -60,7 +60,7 @@ public class SyncChildMatchServiceUnitTests
     public IList<ChildMatch> MockChildMatch()
         => new List<ChildMatch>
         {
-            new ChildMatch
+            new()
             {
                 home_name = "Hokkaido Consadole Sapporo Next Corners",
                 away_name = "Kyoto Sanga Next Corners",
@@ -69,9 +69,9 @@ public class SyncChildMatchServiceUnitTests
                 game_date = new DateTime(2022,04,15,1,0,0),
                 sub_type = 2101,
                 main_type = 1,
-                stamp = new DateTime(2022,04,15,1,0,0),
+                stamp = new DateTime(2022,04,15,1,0,0)
             },
-            new ChildMatch
+            new()
             {
                 home_name = "Hokkaido Consadole Sapporo Next booking",
                 away_name = "Kyoto Sanga Next booking",
@@ -80,9 +80,9 @@ public class SyncChildMatchServiceUnitTests
                 game_date = new DateTime(2022,04,15),
                 sub_type = null,
                 main_type = 1,
-                stamp = new DateTime(2022,04,15),
+                stamp = new DateTime(2022,04,15)
             },
-            new ChildMatch
+            new()
             {
                 home_name = "Hokkaido Consadole Sapporo Next booking",
                 away_name = "Kyoto Sanga Next booking",
@@ -91,9 +91,9 @@ public class SyncChildMatchServiceUnitTests
                 game_date = new DateTime(2022,04,15),
                 sub_type = 0,
                 stamp = new DateTime(2022,04,15),
-                main_type = 1,
+                main_type = 1
             },
-            new ChildMatch
+            new()
             {
                 home_name = "Hokkaido Consadole Sapporo  00:00-15:00",
                 away_name = "Kyoto Sanga  00:00-15:00",
@@ -104,7 +104,7 @@ public class SyncChildMatchServiceUnitTests
                 main_type = null,
                 stamp = new DateTime(2022,04,15)
             },
-            new ChildMatch
+            new()
             {
                 home_name = "Home A",
                 away_name = "Away A",
@@ -115,7 +115,7 @@ public class SyncChildMatchServiceUnitTests
                 sub_type = 801,
                 main_type = 1
             },
-            new ChildMatch
+            new()
             {
                 home_name = "Home A",
                 away_name = "Away A",
@@ -126,7 +126,7 @@ public class SyncChildMatchServiceUnitTests
                 sub_type = 610,
                 main_type = 1
             },
-            new ChildMatch
+            new()
             {
                 home_name = "A",
                 away_name = "B",
@@ -137,14 +137,14 @@ public class SyncChildMatchServiceUnitTests
                 sub_type = 12345,
                 main_type = 111
             },
-            new ChildMatch { match_id = 111, home_name = "League A (ET)" },
-            new ChildMatch { match_id = 222, home_name = "League B (PEN)" },
+            new() { match_id = 111, home_name = "League A (ET)" },
+            new() { match_id = 222, home_name = "League B (PEN)" }
         };
 
     public IList<MappedChildMatch> MockExpected()
         => new List<MappedChildMatch>
         {
-            new MappedChildMatch
+            new()
             {
                 HomeName = "Hokkaido Consadole Sapporo Next Corners",
                 AwayName = "Kyoto Sanga Next Corners",
@@ -156,7 +156,7 @@ public class SyncChildMatchServiceUnitTests
                 SubType = 2101,
                 RepresentativeSubtype = 2100
             },
-            new MappedChildMatch
+            new()
             {
                 HomeName = "Home A",
                 AwayName = "Away A",
@@ -168,7 +168,7 @@ public class SyncChildMatchServiceUnitTests
                 SubType = 801,
                 RepresentativeSubtype = 800
             },
-            new MappedChildMatch
+            new()
             {
                 HomeName = "Home A",
                 AwayName = "Away A",

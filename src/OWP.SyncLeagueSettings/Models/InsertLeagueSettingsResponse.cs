@@ -4,5 +4,5 @@ public class InsertLeagueSettingsResponse
 {
     public int LeagueSettingId { get; set; }
 
-    public bool HasTV { get; set; }
+    public bool HasTv { get; set; }
 }

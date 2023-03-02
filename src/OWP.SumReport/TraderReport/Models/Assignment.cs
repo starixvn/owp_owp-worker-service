@@ -1,14 +1,14 @@
-﻿using OWP.SumReport.TraderReport.Enum;
+﻿namespace OWP.SumReport.TraderReport.Models;
 
-namespace OWP.SumReport.TraderReport.Models;
+using Enum;
 
 public class Assignment
 {
     public int UserId { get; set; }
 
-    public string OWPLeagueName { get; set; }
+    public string OwpLeagueName { get; set; }
 
-    public int OWPMatchId { get; set; }
+    public int OwpMatchId { get; set; }
 
     public DateTime EventDateTime { get; set; }
 

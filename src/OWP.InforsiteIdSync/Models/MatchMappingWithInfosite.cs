@@ -1,24 +1,26 @@
-﻿using Olympus.InfoSiteClient.Extensions.XMLExtensions;
+﻿namespace OWP.InfositeIdSync.Models;
 
-namespace OWP.InfositeIdSync.Models;
+using Olympus.InfoSiteClient.Extensions.XMLExtensions;
 
 [Serializable]
-[XMLName("Row")]
+[XMLName("MatchMappingWithInfosite")]
 public class MatchMappingWithInfosite
 {
-    public int OWPMatchId { get; set; }
+    [XMLName("OWPMatchId")]
+    public int OwpMatchId { get; set; }
 
     public int InfositeMatchId { get; set; }
 
-    public int AdminsiteMatchId { get; set; }
+    [XMLName("AdminsiteMatchId")]
+    public int AdminSiteMatchId { get; set; }
 
     public DateTime EventDateTime { get; set; }
 
-    public MatchMappingWithInfosite(int owpMatchId, int infositeMatchId, int adminsiteMatchId, DateTime eventDateTime)
+    public MatchMappingWithInfosite(int owpMatchId, int infositeMatchId, int adminSiteMatchId, DateTime eventDateTime)
     {
-        OWPMatchId = owpMatchId;
+        OwpMatchId = owpMatchId;
         InfositeMatchId = infositeMatchId;
-        AdminsiteMatchId = adminsiteMatchId;
+        AdminSiteMatchId = adminSiteMatchId;
         EventDateTime = eventDateTime;
     }
 }

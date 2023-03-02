@@ -1,15 +1,15 @@
-﻿using Fanex.Caching;
+﻿namespace OWP.Infosite.Services;
+
+using Constants;
+using Criteria;
+using Fanex.Caching;
 using Fanex.Data.Repository;
+using Models;
 using Newtonsoft.Json;
 using Olympus.Xml;
-using OWP.Core.RabbitMq;
-using OWP.Core.RabbitMq.Models;
-using OWP.Infosite.Constants;
-using OWP.Infosite.Criteria;
-using OWP.Infosite.Models;
+using RabbitMq;
+using RabbitMq.Models;
 using System.Globalization;
-
-namespace OWP.Infosite.Services;
 
 public interface SyncService
 {
@@ -23,8 +23,8 @@ public class SyncServiceImp
     private readonly RabbitMqClient rabbitMqClient;
     private readonly ICache cacheService;
 
-    protected readonly DateTime minDate = new DateTime(2000, 1, 1);
-    protected DateTimeService dateTimeService { get; }
+    protected readonly DateTime MinDate = new(2000, 1, 1);
+    protected DateTimeService DateTimeService { get; }
 
     public SyncServiceImp(
         DateTimeService dateTimeService,
@@ -33,7 +33,7 @@ public class SyncServiceImp
         ICache cacheService,
         IDynamicRepository repository)
     {
-        this.dateTimeService = dateTimeService;
+        DateTimeService = dateTimeService;
         this.apiService = apiService;
         this.repository = repository;
         this.cacheService = cacheService;
@@ -45,7 +45,7 @@ public class SyncServiceImp
         var queriedResult = await QueryEvents(fromDate);
         if (matchInfoNotification)
         {
-            var today = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
+            var today = DateTime.Today;
             var sessionId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
             await SaveOldInfoSiteMatchSnapshot(sessionId, today);
 
@@ -61,7 +61,7 @@ public class SyncServiceImp
         }
     }
 
-    private async Task SaveEvents(List<Event> events)
+    private async Task SaveEvents(IEnumerable<Event> events)
     {
         var xml = XmlConverter.Serialize(events);
         var criteria = new PushInfoSiteMatchCommand
@@ -83,7 +83,7 @@ public class SyncServiceImp
         {
             FromDate = date,
             ToDate = date,
-            LastUpdatedTime = minDate
+            LastUpdatedTime = MinDate
         };
 
         var commonMatches = await apiService.QueryAsync(param);

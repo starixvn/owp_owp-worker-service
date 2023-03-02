@@ -1,16 +1,16 @@
-﻿using NSubstitute;
-using OWP.SumReport.TraderReport;
-using OWP.SumReport.TraderReport.Models;
-using OWP.SumReport.TraderReport.Services;
+﻿namespace OWP.SumReport.UnitTests.TraderReport;
+
+using NSubstitute;
+using SumReport.TraderReport;
+using SumReport.TraderReport.Models;
+using SumReport.TraderReport.Services;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.SumReport.UnitTests.TraderReport;
 
 public class RobotServiceUnitTests
 {
     [Fact]
-    public async Task SumRobotFields_AlwayReturnsDataForX3AndX5()
+    public async Task SumRobotFields_AlwaysReturnsDataForX3AndX5()
     {
         // Arrange
         var repository = Substitute.For<TraderRepository>();
@@ -32,7 +32,7 @@ public class RobotServiceUnitTests
         DeepAssert.Equal(expected, actual);
     }
 
-    private List<RobotX3ByUser> CreateX3FakeData()
+    private static List<RobotX3ByUser> CreateX3FakeData()
     {
         var item1 = new RobotX3ByUser
         {
@@ -66,7 +66,7 @@ public class RobotServiceUnitTests
             };
     }
 
-    private List<RobotX5ByUser> CreateX5FakeData()
+    private static List<RobotX5ByUser> CreateX5FakeData()
     {
         var item1 = new RobotX5ByUser
         {
@@ -94,7 +94,7 @@ public class RobotServiceUnitTests
             };
     }
 
-    private List<RobotByByUser> CreateExpectedData()
+    private static List<RobotByByUser> CreateExpectedData()
     {
         var item1 = new RobotByByUser
         {

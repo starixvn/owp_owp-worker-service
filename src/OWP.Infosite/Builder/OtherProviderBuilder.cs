@@ -1,6 +1,6 @@
-﻿using OWP.Infosite.Models;
+﻿namespace OWP.Infosite.Builder;
 
-namespace OWP.Infosite.Builder;
+using Models;
 
 public static class OtherProviderBuilder
 {

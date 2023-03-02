@@ -1,8 +1,8 @@
-﻿using OWP.SumReport.OvertimeReport.Calculators;
-using OWP.SumReport.OvertimeReport.Models;
-using Xunit;
+﻿namespace OWP.SumReport.UnitTests.OvertimeReport.Calculators;
 
-namespace OWP.SumReport.UnitTests.OvertimeReport.Calculators;
+using SumReport.OvertimeReport.Calculators;
+using SumReport.OvertimeReport.Models;
+using Xunit;
 
 public class ShiftOvertimeCalculatorUnitTests
 {

@@ -1,6 +1,6 @@
-﻿using OWP.SumReport.OvertimeReport.Models;
+﻿namespace OWP.SumReport.OvertimeReport.Calculators;
 
-namespace OWP.SumReport.OvertimeReport.Calculators;
+using Models;
 
 public static class ShiftOvertimeCalculator
 {

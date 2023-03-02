@@ -1,6 +1,6 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.LinkLeagueAndTeam.Criteria;
 
-namespace OWP.LinkLeagueAndTeam.Criteria;
+using Fanex.Data.Repository;
 
 public class InsertOrUpdateCriteria : INonQueryCommand
 {

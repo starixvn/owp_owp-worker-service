@@ -1,40 +1,40 @@
-using OWP.Infosite.Builder;
+namespace OWP.Infosite.UnitTests.Builder;
+
+using Infosite.Builder;
+using Models;
 using Xunit;
 
-namespace OWP.Infosite.UnitTests.Builder
+public class WatchBetBuilderUnitTests
 {
-    public class WatchBetBuilderUnitTests
+    [Fact]
+    public void Build_WBHasValue_ReturnWB()
     {
-        [Fact]
-        public void Build_WBhasValue_ReturnWB()
+        var actual = WatchBetBuilder.Build(new SoccerEventSchedule { wb = "WB" });
+
+        Assert.Equal("WB", actual);
+    }
+
+    [Fact]
+    public void Build_StreamSrc1hasValue_ReturnWB()
+    {
+        var actual = WatchBetBuilder.Build(new SoccerEventSchedule
         {
-            var actual = WatchBetBuilder.Build(new Models.SoccerEventSchedule { wb = "WB" });
+            create_streaming_src = 1,
+            create_streaming_id = "stream1"
+        });
 
-            Assert.Equal("WB", actual);
-        }
+        Assert.Equal("1-stream1", actual);
+    }
 
-        [Fact]
-        public void Build_streamSrc1hasValue_ReturnWB()
+    [Fact]
+    public void Build_streamSrc2hasValue_ReturnWB()
+    {
+        var actual = WatchBetBuilder.Build(new SoccerEventSchedule
         {
-            var actual = WatchBetBuilder.Build(new Models.SoccerEventSchedule
-            {
-                create_streaming_src = 1,
-                create_streaming_id = "stream1"
-            });
+            create_streaming2_src = 1,
+            create_streaming2_id = "stream2"
+        });
 
-            Assert.Equal("1-stream1", actual);
-        }
-
-        [Fact]
-        public void Build_streamSrc2hasValue_ReturnWB()
-        {
-            var actual = WatchBetBuilder.Build(new Models.SoccerEventSchedule
-            {
-                create_streaming2_src = 1,
-                create_streaming2_id = "stream2"
-            });
-
-            Assert.Equal("1-stream2", actual);
-        }
+        Assert.Equal("1-stream2", actual);
     }
 }

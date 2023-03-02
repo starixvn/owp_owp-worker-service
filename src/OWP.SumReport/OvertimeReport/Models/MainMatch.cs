@@ -2,7 +2,7 @@
 
 public class MainMatch
 {
-    public int OWPMatchId { get; set; }
+    public int OwpMatchId { get; set; }
 
     public string Remark { get; set; }
 

@@ -1,12 +1,12 @@
-﻿using Fanex.Caching;
-using Fanex.Data.Repository;
-using NSubstitute;
-using OWP.Core.RabbitMq;
-using OWP.Infosite.Models;
-using OWP.Infosite.Services;
-using Xunit;
+﻿namespace OWP.Infosite.UnitTests;
 
-namespace OWP.Infosite.UnitTests;
+using Fanex.Caching;
+using Fanex.Data.Repository;
+using Models;
+using NSubstitute;
+using RabbitMq;
+using Services;
+using Xunit;
 
 public class FutureSyncServiceUnitTests
 {
@@ -22,7 +22,7 @@ public class FutureSyncServiceUnitTests
 
     private readonly ICache cacheService;
 
-    private readonly DateTime from = new DateTime(2018, 1, 1);
+    private readonly DateTime from = new(2018, 1, 1);
 
     public FutureSyncServiceUnitTests()
     {

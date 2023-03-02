@@ -1,9 +1,10 @@
-﻿using OWP.SumReport.OvertimeReport.Helpers;
-using OWP.SumReport.OvertimeReport.Models;
-using Xunit;
-using static OWP.SumReport.OvertimeReport.Constants.BetType;
+﻿using static OWP.SumReport.OvertimeReport.Constants.BetType;
 
 namespace OWP.SumReport.UnitTests.OvertimeReport.Helpers;
+
+using SumReport.OvertimeReport.Helpers;
+using SumReport.OvertimeReport.Models;
+using Xunit;
 
 public class MatchHelperUnitTests
 {
@@ -12,7 +13,7 @@ public class MatchHelperUnitTests
     [InlineData(FirstHalfBettype.FirstHalfOverUnder, "", 60)]
     [InlineData(FullTimeBetType.Handicap, "", 120)]
     [InlineData(FullTimeBetType.Handicap, " ETPK", 150)]
-    [InlineData(FullTimeBetType.FT1X2, " ET", 150)]
+    [InlineData(FullTimeBetType.Ft1X2, " ET", 150)]
     [InlineData(FullTimeBetType.OverUnder, "PK", 135)]
     public void CalculateNormalMatchDuration_WithFTBetTypes_ReturnCorrectValue(int bettype, string remark, int expected)
     {
@@ -27,8 +28,8 @@ public class MatchHelperUnitTests
     }
 
     [Theory]
-    [InlineData(FullTimeBetType.FM, "", 120)]
-    [InlineData(FullTimeBetType.AIO, " ET/PK", 150)]
+    [InlineData(FullTimeBetType.Fm, "", 120)]
+    [InlineData(FullTimeBetType.Aio, " ET/PK", 150)]
     [InlineData(-8, " ET/PK", 0)]
     public void CalculateNormalMatchDuration_WithFTMinorBetTypes_ReturnCorrectValue(int bettype, string remark, int expected)
     {
@@ -50,8 +51,8 @@ public class MatchHelperUnitTests
     [InlineData("SABA INTERNATIONAL FRIENDLY Virtual PES 21 - 20 Mins Play", " ET", 30)]
     public void CalculateSABAPESMatchDuration_ReturnCorrectValue(string leagueName, string remark, int expected)
     {
-        var assignment = new Assignment { OWPLeagueName = leagueName, Remark = remark };
-        var actual = MatchHelper.CalculateSABAPESMatchDuration(assignment);
+        var assignment = new Assignment { OwpLeagueName = leagueName, Remark = remark };
+        var actual = MatchHelper.CalculateSabaPesMatchDuration(assignment);
 
         Assert.Equal(expected, actual);
     }
@@ -64,7 +65,7 @@ public class MatchHelperUnitTests
     public void CalculateSABAPES5MinsMatchDuration_ReturnCorrectValue(string remark, int expected)
     {
         var assignment = new Assignment { Remark = remark };
-        var actual = MatchHelper.CalculateSABAPES5MinsMatchDuration(assignment);
+        var actual = MatchHelper.CalculateSabaPes5MinsMatchDuration(assignment);
 
         Assert.Equal(expected, actual);
     }
@@ -77,7 +78,7 @@ public class MatchHelperUnitTests
     public void CalculateSABAFIFAMatchDuration_ReturnCorrectValue(string remark, int expected)
     {
         var assignment = new Assignment { Remark = remark };
-        var actual = MatchHelper.CalculateSABAFIFAMatchDuration(assignment);
+        var actual = MatchHelper.CalculateSabaFifaMatchDuration(assignment);
 
         Assert.Equal(expected, actual);
     }

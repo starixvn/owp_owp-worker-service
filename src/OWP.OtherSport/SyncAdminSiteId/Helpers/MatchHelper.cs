@@ -1,10 +1,10 @@
-﻿using OWP.OtherSport.SyncAdminSiteId.Models;
+﻿namespace OWP.OtherSport.SyncAdminSiteId.Helpers;
 
-namespace OWP.OtherSport.SyncAdminSiteId.Helpers;
+using Models;
 
 public static class MatchHelper
 {
-    public static IEnumerable<LinkedMatch> GetNewLinkedMatches(IEnumerable<Match> owpMatches, IEnumerable<Match> adminSiteMatches)
+    public static IEnumerable<LinkedMatch> GetNewLinkedMatches(IList<Match> owpMatches, IList<Match> adminSiteMatches)
     {
         foreach (var match in owpMatches)
         {
@@ -14,14 +14,14 @@ public static class MatchHelper
             {
                 yield return new LinkedMatch
                 {
-                    OSMatchId = match.OSMatchId,
+                    OsMatchId = match.OsMatchId,
                     AdminSiteMatchId = adminSiteMatch.AdminSiteMatchId,
                     AdminSiteAway = adminSiteMatch.AwayName,
                     AdminSiteHome = adminSiteMatch.HomeName,
                     AdminSiteLeague = adminSiteMatch.LeagueName,
-                    OWPAway = match.AwayName,
-                    OWPHome = match.HomeName,
-                    OWPLeague = match.LeagueName,
+                    OwpAway = match.AwayName,
+                    OwpHome = match.HomeName,
+                    OwpLeague = match.LeagueName,
                     OldAdminSiteMatchId = match.AdminSiteMatchId,
                     OldEventDate = match.EventDateTime,
                     NewEventDate = adminSiteMatch.EventDateTime
@@ -52,18 +52,18 @@ public static class MatchHelper
         !string.IsNullOrEmpty(second) &&
         first.Trim().Equals(second.Trim(), StringComparison.OrdinalIgnoreCase);
 
-    public static IEnumerable<LinkedMatch> GetRemovedMatches(IEnumerable<Match> owpMatches, IEnumerable<Match> adminSiteMatches)
+    public static IEnumerable<LinkedMatch> GetRemovedMatches(IList<Match> owpMatches, IList<Match> adminSiteMatches)
     {
         foreach (var match in owpMatches)
         {
-            if (!adminSiteMatches.Any(x => x.AdminSiteMatchId == match.AdminSiteMatchId))
+            if (adminSiteMatches.All(x => x.AdminSiteMatchId != match.AdminSiteMatchId))
             {
                 yield return new LinkedMatch
                 {
-                    OSMatchId = match.OSMatchId,
-                    OWPAway = match.AwayName,
-                    OWPHome = match.HomeName,
-                    OWPLeague = match.LeagueName,
+                    OsMatchId = match.OsMatchId,
+                    OwpAway = match.AwayName,
+                    OwpHome = match.HomeName,
+                    OwpLeague = match.LeagueName,
                     OldAdminSiteMatchId = match.AdminSiteMatchId,
                     OldEventDate = match.EventDateTime
                 };

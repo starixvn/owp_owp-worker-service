@@ -1,8 +1,8 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.InfositeIdSync.Criteria;
 
-namespace OWP.InfositeIdSync.Criteria;
+using Fanex.Data.Repository;
 
-public class QueryUnmappingOWPMatchCriteria : CriteriaBase
+public class QueryUnmappingOwpMatchCriteria : CriteriaBase
 {
     public DateTime FromDate { get; set; }
 

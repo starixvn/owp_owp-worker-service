@@ -1,7 +1,7 @@
-﻿using Fanex.Caching;
-using OWP.MatchReadyNotification.Constants;
+﻿namespace OWP.MatchReadyNotification.Services;
 
-namespace OWP.MatchReadyNotification.Services;
+using Constants;
+using Fanex.Caching;
 
 public interface CacheManipulator
 {

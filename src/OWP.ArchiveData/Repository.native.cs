@@ -1,7 +1,7 @@
-using Fanex.Data.Repository;
-using OWP.ArchiveData.Criteria;
-
 namespace OWP.ArchiveData;
+
+using Criteria;
+using Fanex.Data.Repository;
 
 public interface Repository
 {

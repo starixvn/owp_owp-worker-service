@@ -2,7 +2,7 @@
 
 public class Match
 {
-    public int OSMatchId { get; set; }
+    public int OsMatchId { get; set; }
 
     public int? AdminSiteMatchId { get; set; }
 

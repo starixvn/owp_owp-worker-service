@@ -1,8 +1,8 @@
-﻿using Fanex.Data.Repository;
-using OWP.LinkLeagueAndTeam.Criteria;
-using OWP.LinkLeagueAndTeam.Models;
+﻿namespace OWP.LinkLeagueAndTeam;
 
-namespace OWP.LinkLeagueAndTeam;
+using Criteria;
+using Fanex.Data.Repository;
+using Models;
 
 public interface LinkLeagueAndTeamRepository
 {
@@ -20,7 +20,7 @@ public class LinkLeagueAndTeamRepositoryImp : LinkLeagueAndTeamRepository
         this.repository = repository;
     }
 
-    public async Task<IList<TeamInfo>> GetTeamInfoInTimeRange(DateTime @from, DateTime to)
+    public async Task<IList<TeamInfo>> GetTeamInfoInTimeRange(DateTime from, DateTime to)
     {
         var command = new GetTeamInfoInTimeRangeCriteria
         {

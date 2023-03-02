@@ -1,6 +1,6 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.SumReport.OvertimeReport.Criteria;
 
-namespace OWP.SumReport.OvertimeReport.Criteria;
+using Fanex.Data.Repository;
 
 public class GetTradersAssignmentsCriteria : CriteriaBase
 {

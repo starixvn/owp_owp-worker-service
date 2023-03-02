@@ -1,6 +1,6 @@
-﻿using OWP.SumReport.TraderReport.Models;
+﻿namespace OWP.SumReport.TraderReport.Services;
 
-namespace OWP.SumReport.TraderReport.Services;
+using Models;
 
 public interface RobotX3Service
 {
@@ -8,7 +8,7 @@ public interface RobotX3Service
 
     RobotX3ByUser Transform(int userId, List<RobotX3RawModel> assignments);
 
-    List<RobotX3RawGroupModel> GroupConecutiveMatch(List<RobotX3RawModel> assignmentsOfUser);
+    List<RobotX3RawGroupModel> GroupConsecutiveMatch(List<RobotX3RawModel> assignmentsOfUser);
 }
 
 public class RobotX3ServiceImp : RobotX3Service
@@ -36,28 +36,28 @@ public class RobotX3ServiceImp : RobotX3Service
 
     public RobotX3ByUser Transform(int userId, List<RobotX3RawModel> assignments)
     {
-        var consecutiveAssignments = GroupConecutiveMatch(assignments);
-        var matchGroupAsignments = consecutiveAssignments.GroupBy(i => i.MatchGroup)
+        var consecutiveAssignments = GroupConsecutiveMatch(assignments);
+        var matchGroupAssignments = consecutiveAssignments.GroupBy(i => i.MatchGroup)
             .Select(i => new { MatchGroup = i, MatchCount = i.Count() })
             .ToArray();
 
         return new RobotX3ByUser
         {
             UserId = userId,
-            X2 = matchGroupAsignments.Count(x => x.MatchCount == X2),
-            X3 = matchGroupAsignments.Count(x => x.MatchCount == X3),
-            X3Plus = matchGroupAsignments.Count(x => x.MatchCount > X3)
+            X2 = matchGroupAssignments.Count(x => x.MatchCount == X2),
+            X3 = matchGroupAssignments.Count(x => x.MatchCount == X3),
+            X3Plus = matchGroupAssignments.Count(x => x.MatchCount > X3)
         };
     }
 
-    public List<RobotX3RawGroupModel> GroupConecutiveMatch(List<RobotX3RawModel> assignmentsOfUser)
+    public List<RobotX3RawGroupModel> GroupConsecutiveMatch(List<RobotX3RawModel> assignmentsOfUser)
     {
         var sortedList = assignmentsOfUser
             .Select(i => new RobotX3RawGroupModel
             {
                 EventDateTime = i.EventDateTime,
                 MatchGroup = 1,
-                OWPMatchId = i.OWPMatchId,
+                OwpMatchId = i.OwpMatchId,
                 UserId = i.UserId
             })
             .OrderBy(i => i.EventDateTime)

@@ -1,6 +1,6 @@
-﻿using OWP.SumReport.TraderReport.Models;
+﻿namespace OWP.SumReport.TraderReport.Services;
 
-namespace OWP.SumReport.TraderReport.Services;
+using Models;
 
 public interface RobotX5Service
 {
@@ -68,7 +68,7 @@ public class RobotX5ServiceImp : RobotX5Service
             .Select(i => new RobotX5RawGroupModel
             {
                 EventDateTime = i.EventDateTime,
-                OWPMatchId = i.OWPMatchId,
+                OwpMatchId = i.OwpMatchId,
                 UserId = i.UserId,
                 Minutes = GetMinuteOfMatch(i.IsFullTime, i.Is35MinuteMatch),
                 MatchGroup = 1,

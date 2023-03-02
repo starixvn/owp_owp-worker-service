@@ -1,10 +1,10 @@
-﻿using OWP.Core.Extensions;
-using OWP.Infosite.Constants;
-using OWP.Infosite.Models;
+﻿namespace OWP.Infosite.Helper;
+
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
-
-namespace OWP.Infosite.Helper;
+using Constants;
+using Extensions;
+using Models;
 
 public class SpecialMatchGroupRule
 {
@@ -19,27 +19,27 @@ public class SpecialMatchGroupRule
 
 public class NextCornerRule : SpecialMatchGroupRule
 {
-    const string pattern = @"(?i)\d+\w{2}\s(Corner)";
-    const string replaceText = "Next Corners";
+    private const string Pattern = @"(?i)\d+\w{2}\s(Corner)";
+    private const string ReplaceText = "Next Corners";
 
     public override int GetMinorType(MappedChildMatch match)
     {
-        if (match.MinorBettypeId == MinorBettypeId.NextCorner &&
-            Regex.IsMatch(match.AwayName, pattern))
+        if (match.MinorBettypeId != MinorBettypeId.NextCorner ||
+            !Regex.IsMatch(match.AwayName, Pattern))
         {
-            match.FirstMatch = ChildMatchHelper.IsFirstMatch(match.AwayName);
-            return MinorBettypeId.NextCorner;
+            return base.GetMinorType(match);
         }
 
-        return base.GetMinorType(match);
+        match.FirstMatch = ChildMatchHelper.IsFirstMatch(match.AwayName);
+        return MinorBettypeId.NextCorner;
     }
 
     public override void GetHomeAwayName(MappedChildMatch match)
     {
         if (match.MinorBettypeId == MinorBettypeId.NextCorner)
         {
-            match.HomeName = Regex.Replace(match.HomeName, pattern, replaceText);
-            match.AwayName = Regex.Replace(match.AwayName, pattern, replaceText);
+            match.HomeName = Regex.Replace(match.HomeName, Pattern, ReplaceText);
+            match.AwayName = Regex.Replace(match.AwayName, Pattern, ReplaceText);
             return;
         }
 
@@ -49,27 +49,27 @@ public class NextCornerRule : SpecialMatchGroupRule
 
 public class NextBookingRule : SpecialMatchGroupRule
 {
-    const string pattern = @"(?i)\d+\w{2}\s(Booking)";
-    const string replaceText = "Next Booking";
+    private const string Pattern = @"(?i)\d+\w{2}\s(Booking)";
+    private const string ReplaceText = "Next Booking";
 
     public override int GetMinorType(MappedChildMatch match)
     {
-        if (match.MinorBettypeId == MinorBettypeId.NextBooking &&
-           Regex.IsMatch(match.AwayName, pattern))
+        if (match.MinorBettypeId != MinorBettypeId.NextBooking ||
+            !Regex.IsMatch(match.AwayName, Pattern))
         {
-            match.FirstMatch = ChildMatchHelper.IsFirstMatch(match.AwayName);
-            return MinorBettypeId.NextBooking;
+            return base.GetMinorType(match);
         }
 
-        return base.GetMinorType(match);
+        match.FirstMatch = ChildMatchHelper.IsFirstMatch(match.AwayName);
+        return MinorBettypeId.NextBooking;
     }
 
     public override void GetHomeAwayName(MappedChildMatch match)
     {
         if (match.MinorBettypeId == MinorBettypeId.NextBooking)
         {
-            match.HomeName = Regex.Replace(match.HomeName, pattern, replaceText);
-            match.AwayName = Regex.Replace(match.AwayName, pattern, replaceText);
+            match.HomeName = Regex.Replace(match.HomeName, Pattern, ReplaceText);
+            match.AwayName = Regex.Replace(match.AwayName, Pattern, ReplaceText);
             return;
         }
 
@@ -79,8 +79,8 @@ public class NextBookingRule : SpecialMatchGroupRule
 
 public class Specific15MinsRule : SpecialMatchGroupRule
 {
-    const string pattern = @"\d{2}:\d{2}-\d{2}:\d{2}";
-    public static readonly ImmutableList<string> special15MinContain = new List<string>
+    private const string Pattern = @"\d{2}:\d{2}-\d{2}:\d{2}";
+    public static readonly ImmutableList<string> Special15MinContain = new List<string>
        {"00:00-15:00",
         "15:01-30:00",
         "30:01-45:00",
@@ -88,7 +88,8 @@ public class Specific15MinsRule : SpecialMatchGroupRule
         "60:01-75:00",
         "75:01-90:00"}
     .ToImmutableList();
-    const string replaceText = "(SPECIFIC 15 MINS)";
+
+    private const string ReplaceText = "(SPECIFIC 15 MINS)";
 
     private static bool CheckContainHomeAway(MappedChildMatch match, string typeSpecial)
         => match.AwayName.IsContainsIgnoreCase(typeSpecial) &&
@@ -96,22 +97,22 @@ public class Specific15MinsRule : SpecialMatchGroupRule
 
     public override int GetMinorType(MappedChildMatch match)
     {
-        if (match.MinorBettypeId == MinorBettypeId.Specific15Min &&
-            special15MinContain.Any(x => CheckContainHomeAway(match, x)))
+        if (match.MinorBettypeId != MinorBettypeId.Specific15Min ||
+            !Special15MinContain.Any(x => CheckContainHomeAway(match, x)))
         {
-            match.FirstMatch = ChildMatchHelper.IsFirstMatch(match.AwayName);
-            return MinorBettypeId.Specific15Min;
+            return base.GetMinorType(match);
         }
-
-        return base.GetMinorType(match);
+        
+        match.FirstMatch = ChildMatchHelper.IsFirstMatch(match.AwayName);
+        return MinorBettypeId.Specific15Min;
     }
 
     public override void GetHomeAwayName(MappedChildMatch match)
     {
         if (match.MinorBettypeId == MinorBettypeId.Specific15Min)
         {
-            match.HomeName = Regex.Replace(match.HomeName, pattern, replaceText);
-            match.AwayName = Regex.Replace(match.AwayName, pattern, replaceText);
+            match.HomeName = Regex.Replace(match.HomeName, Pattern, ReplaceText);
+            match.AwayName = Regex.Replace(match.AwayName, Pattern, ReplaceText);
             return;
         }
 
@@ -121,27 +122,27 @@ public class Specific15MinsRule : SpecialMatchGroupRule
 
 public class GoalKickRule : SpecialMatchGroupRule
 {
-    const string pattern = @"(?i)\d+\w{2}\s(Goal Kick)$";
-    const string replaceText = "Next Goal Kick";
+    private const string Pattern = @"(?i)\d+\w{2}\s(Goal Kick)$";
+    private const string ReplaceText = "Next Goal Kick";
 
     public override int GetMinorType(MappedChildMatch match)
     {
-        if (match.MinorBettypeId == MinorBettypeId.NextGoalKick &&
-           Regex.IsMatch(match.AwayName, pattern))
+        if (match.MinorBettypeId != MinorBettypeId.NextGoalKick ||
+            !Regex.IsMatch(match.AwayName, Pattern))
         {
-            match.FirstMatch = ChildMatchHelper.IsFirstMatch(match.AwayName);
-            return MinorBettypeId.NextGoalKick;
+            return base.GetMinorType(match);
         }
-
-        return base.GetMinorType(match);
+        
+        match.FirstMatch = ChildMatchHelper.IsFirstMatch(match.AwayName);
+        return MinorBettypeId.NextGoalKick;
     }
 
     public override void GetHomeAwayName(MappedChildMatch match)
     {
         if (match.MinorBettypeId == MinorBettypeId.NextGoalKick)
         {
-            match.HomeName = Regex.Replace(match.HomeName, pattern, replaceText);
-            match.AwayName = Regex.Replace(match.AwayName, pattern, replaceText);
+            match.HomeName = Regex.Replace(match.HomeName, Pattern, ReplaceText);
+            match.AwayName = Regex.Replace(match.AwayName, Pattern, ReplaceText);
             return;
         }
 
@@ -151,27 +152,27 @@ public class GoalKickRule : SpecialMatchGroupRule
 
 public class PenaltyToScoreRule : SpecialMatchGroupRule
 {
-    const string pattern = @"(?i)\d+\w{2}\s(Penalty To Score) - (\w+)";
-    const string replaceAwayText = "1st Penalty To Score - Yes";
+    private const string Pattern = @"(?i)\d+\w{2}\s(Penalty To Score) - (\w+)";
+    private const string ReplaceAwayText = "1st Penalty To Score - Yes";
 
     public override int GetMinorType(MappedChildMatch match)
     {
-        if (match.MinorBettypeId == MinorBettypeId.PenaltyToScore &&
-           Regex.IsMatch(match.AwayName, pattern))
+        if (match.MinorBettypeId != MinorBettypeId.PenaltyToScore ||
+            !Regex.IsMatch(match.AwayName, Pattern))
         {
-            match.FirstMatch = ChildMatchHelper.IsFirstMatch(match.AwayName);
-            return MinorBettypeId.PenaltyToScore;
+            return base.GetMinorType(match);
         }
-
-        return base.GetMinorType(match);
+        
+        match.FirstMatch = ChildMatchHelper.IsFirstMatch(match.AwayName);
+        return MinorBettypeId.PenaltyToScore;
     }
 
     public override void GetHomeAwayName(MappedChildMatch match)
     {
         if (match.MinorBettypeId == MinorBettypeId.PenaltyToScore)
         {
-            var teamName = Regex.Replace(match.AwayName, pattern, replaceAwayText);
-            string[] teamNames = teamName.Split(" -vs- ");
+            var teamName = Regex.Replace(match.AwayName, Pattern, ReplaceAwayText);
+            var teamNames = teamName.Split(" -vs- ");
 
             match.HomeName = teamNames[0];
             match.AwayName = teamNames[1];
@@ -184,27 +185,27 @@ public class PenaltyToScoreRule : SpecialMatchGroupRule
 
 public class PenaltyAwardedRule : SpecialMatchGroupRule
 {
-    const string pattern = @"(?i)\d+\w{2}\s(Penalty Awarded) - (\w+)";
-    const string replaceAwayText = "1st Penalty Awarded - Yes";
+    private const string Pattern = @"(?i)\d+\w{2}\s(Penalty Awarded) - (\w+)";
+    private const string ReplaceAwayText = "1st Penalty Awarded - Yes";
 
     public override int GetMinorType(MappedChildMatch match)
     {
-        if (match.MinorBettypeId == MinorBettypeId.PenaltyAwarded &&
-           Regex.IsMatch(match.AwayName, pattern))
+        if (match.MinorBettypeId != MinorBettypeId.PenaltyAwarded ||
+            !Regex.IsMatch(match.AwayName, Pattern))
         {
-            match.FirstMatch = ChildMatchHelper.IsFirstMatch(match.AwayName);
-            return MinorBettypeId.PenaltyAwarded;
+            return base.GetMinorType(match);
         }
-
-        return base.GetMinorType(match);
+        
+        match.FirstMatch = ChildMatchHelper.IsFirstMatch(match.AwayName);
+        return MinorBettypeId.PenaltyAwarded;
     }
 
     public override void GetHomeAwayName(MappedChildMatch match)
     {
         if (match.MinorBettypeId == MinorBettypeId.PenaltyAwarded)
         {
-            var teamName = Regex.Replace(match.AwayName, pattern, replaceAwayText);
-            string[] teamNames = teamName.Split(" -vs- ");
+            var teamName = Regex.Replace(match.AwayName, Pattern, ReplaceAwayText);
+            var teamNames = teamName.Split(" -vs- ");
 
             match.HomeName = teamNames[0];
             match.AwayName = teamNames[1];

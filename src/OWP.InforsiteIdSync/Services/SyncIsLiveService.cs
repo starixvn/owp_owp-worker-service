@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Options;
-using Olympus.InfoSiteClient;
-using OWP.Infosite.Settings;
-using OWP.InfositeIdSync.Helpers;
-using OWP.InfositeIdSync.Models;
+﻿namespace OWP.InfositeIdSync.Services;
 
-namespace OWP.InfositeIdSync.Services;
+using Helpers;
+using Infosite.Settings;
+using Microsoft.Extensions.Options;
+using Models;
+using Olympus.InfoSiteClient;
 
 public interface SyncIsLiveService
 {
@@ -36,36 +36,37 @@ public class SyncIsLiveServiceImp : SyncIsLiveService
     {
         var owpMatches = await repository.GetInfositeMatchIsLive(fromTime, toTime);
         var adminSiteMatchIds = owpMatches.Select(x => x.AdminSiteMatchId).Distinct();
-        var mainDBMatches = await repository.GetOfferLiveStatusFromMainDB(string.Join(',', adminSiteMatchIds));
+        var mainDbMatches = await repository.GetOfferLiveStatusFromMainDb(string.Join(',', adminSiteMatchIds));
 
-        var unsynchronizedMatches = MatchHelper.GetUnsynchronizedMatches(owpMatches, mainDBMatches);
+        var unsynchronizedMatches = MatchHelper.GetUnsynchronizedMatches(owpMatches, mainDbMatches);
 
         var deletedMatches = await cacheManipulator.GetDeletedMatches();
         var unsynchronizedDeletedMatches = deletedMatches
-            .Select(x => new SyncIsLiveModel { InfoSiteMatchId = x.MatchId, MinorBettypeId = x.MinorBettypeId })
+            .Select(x => new SyncIsLiveModel { InfoSiteMatchId = x.MatchId, MinorBetTypeId = x.MinorBettypeId })
             .Except(unsynchronizedMatches, new SyncIsLiveModel()).ToList();
 
-        var liveMatches = unsynchronizedMatches.Where(m => m.IsLive).Distinct();
+        var liveMatches = unsynchronizedMatches.Where(m => m.IsLive).Distinct().ToList();
         var nonLiveMatches = unsynchronizedMatches.Where(m => !m.IsLive)
                                         .Union(unsynchronizedDeletedMatches)
-                                        .Distinct();
+                                        .Distinct()
+                                        .ToList();
 
-        var distinctLiveMatches = MatchHelper.GetDistinctLiveMatches(liveMatches, nonLiveMatches);
-        var distinctNonLiveMatches = MatchHelper.GetDistinctNonLiveMatches(liveMatches, nonLiveMatches);
+        var distinctLiveMatches = MatchHelper.GetDistinctLiveMatches(liveMatches, nonLiveMatches).ToList();
+        var distinctNonLiveMatches = MatchHelper.GetDistinctNonLiveMatches(liveMatches, nonLiveMatches).ToList();
 
-        var synchronizedLiveMatchResult = await liveMatchApi.SetLiveMatches(infoSiteSettings.InfositeAPI, distinctLiveMatches);
-        var synchronizedNonLiveMatchResult = await liveMatchApi.SetNonLiveMatches(infoSiteSettings.InfositeAPI, distinctNonLiveMatches);
+        var synchronizedLiveMatchResult = await liveMatchApi.SetLiveMatches(infoSiteSettings.InfositeApi, distinctLiveMatches);
+        var synchronizedNonLiveMatchResult = await liveMatchApi.SetNonLiveMatches(infoSiteSettings.InfositeApi, distinctNonLiveMatches);
         var failedMatchesWithMinorBettypeId = synchronizedNonLiveMatchResult.FailedMatches
-            .Select(x => (x.Item1, MatchHelper.GetOWPMinorMatchIdFromSubtype(x.Item2)));
+            .Select(x => (x.Item1, MatchHelper.GetOwpMinorMatchIdFromSubtype(x.Item2)));
 
         var successfulNonLiveMatches = deletedMatches.Select(x => (x.MatchId, x.MinorBettypeId)).Except(failedMatchesWithMinorBettypeId).ToList();
         await cacheManipulator.SaveDeletedMatches(successfulNonLiveMatches);
 
         await logService.LogSynIsLive(
             unsynchronizedMatches,
-            deletedMatches.Select(x => (x.MatchId, x.MinorBettypeId)),
-            liveMatches.Select(x => (x.InfoSiteMatchId, x.MinorBettypeId)),
-            nonLiveMatches.Select(x => (x.InfoSiteMatchId, x.MinorBettypeId)),
+            deletedMatches.Select(x => (x.MatchId, x.MinorBettypeId)).ToList(),
+            liveMatches.Select(x => (x.InfoSiteMatchId, MinorBettypeId: x.MinorBetTypeId)).ToList(),
+            nonLiveMatches.Select(x => (x.InfoSiteMatchId, MinorBettypeId: x.MinorBetTypeId)).ToList(),
             synchronizedLiveMatchResult,
             synchronizedNonLiveMatchResult);
     }

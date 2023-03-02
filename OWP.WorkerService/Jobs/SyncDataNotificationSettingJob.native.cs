@@ -1,17 +1,17 @@
-﻿using Fanex.Logging;
-using ONEbook.UM.Services;
-using OWP.Infosite.Services;
-using Quartz;
+﻿namespace OWP.WorkerService.Jobs;
 
-namespace OWP.WorkerService.Jobs;
+using Fanex.Logging;
+using Infosite.Services;
+using ONEbook.UM.Services;
+using Quartz;
 
 [DisallowConcurrentExecution]
 public class SyncDataNotificationSettingJob : IJob
 {
-    private readonly NAPUserControlService napUserControlService;
+    private readonly NapUserControlService napUserControlService;
     private readonly IMaintenanceService maintenanceService;
 
-    public SyncDataNotificationSettingJob(NAPUserControlService napUserControlService, IMaintenanceService maintenanceService)
+    public SyncDataNotificationSettingJob(NapUserControlService napUserControlService, IMaintenanceService maintenanceService)
     {
         this.napUserControlService = napUserControlService;
         this.maintenanceService = maintenanceService;

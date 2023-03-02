@@ -1,8 +1,8 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.SumReport.LAReport.Criteria;
 
-namespace OWP.SumReport.LAReport.Criteria;
+using Fanex.Data.Repository;
 
-public class SumLAReportCommand : INonQueryCommand
+public class SumLaReportCommand : INonQueryCommand
 {
     public DateTime EventDate { get; set; }
 

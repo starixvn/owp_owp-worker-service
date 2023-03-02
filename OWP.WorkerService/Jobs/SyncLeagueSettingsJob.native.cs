@@ -1,9 +1,9 @@
-﻿using Fanex.Logging;
-using ONEbook.UM.Services;
-using OWP.SyncLeagueSettings.Services;
-using Quartz;
+﻿namespace OWP.WorkerService.Jobs;
 
-namespace OWP.WorkerService.Jobs;
+using Fanex.Logging;
+using ONEbook.UM.Services;
+using Quartz;
+using SyncLeagueSettings.Services;
 
 [DisallowConcurrentExecution]
 public class SyncLeagueSettingsJob : IJob

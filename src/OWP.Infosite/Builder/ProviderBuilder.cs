@@ -14,6 +14,6 @@ public static class ProviderBuilder
             .Split(',')
             .Where(a => !string.IsNullOrEmpty(a));
 
-        return (string.Join("/", providerFilter));
+        return string.Join("/", providerFilter);
     }
 }

@@ -1,7 +1,8 @@
-﻿using System.Collections.Immutable;
-using OWP.Infosite.Constants;
-using OWP.Infosite.Models;
-namespace OWP.Infosite.Builder;
+﻿namespace OWP.Infosite.Builder;
+
+using System.Collections.Immutable;
+using Constants;
+using Models;
 
 public static class WatchBetBuilder
 {
@@ -29,7 +30,7 @@ public static class WatchBetBuilder
     }
 
     public static string SelectTemplateWb(string wb, string stream)
-        => wb = !string.IsNullOrWhiteSpace(wb)
+        => !string.IsNullOrWhiteSpace(wb)
             ? $"{wb}/{stream}"
             : stream;
 
@@ -51,6 +52,6 @@ public static class WatchBetBuilder
 
         var existsValue = options.TryGetValue(src.Value, out var streamName);
 
-        return existsValue ? (streamName ?? "") : $"{src.Value}";
+        return existsValue ? streamName ?? "" : $"{src.Value}";
     }
 }

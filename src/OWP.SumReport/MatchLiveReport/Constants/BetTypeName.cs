@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace OWP.SumReport.MatchLiveReport.Constants;
+
+using System.ComponentModel.DataAnnotations;
 
 public enum BetTypeName
 {
@@ -44,7 +44,7 @@ public enum BetTypeName
     SpecialGoal,
 
     [Display(Name = "Single Team Home/Away (2 events)")]
-    SingleTeamOU,
+    SingleTeamOu,
 
     [Display(Name = "Fantasy Match")]
     Fantasy,
@@ -106,6 +106,6 @@ public enum BetTypeName
     [Display(Name = "SABA CLUB FRIENDLY Virtual FIFA 21 - 16 Mins Play")]
     SabaClubFriendlyVirtualFifa2116MinsPlay,
     
-    Other,
-    
+    Other
+
 }

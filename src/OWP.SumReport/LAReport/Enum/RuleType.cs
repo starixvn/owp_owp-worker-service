@@ -2,13 +2,13 @@
 
 public enum RuleType
 {
-    NOT_CORNER = 0,
-    CORNER = 1,
-    FANTASY = 2,
-    ESOCCER = 3,
-    MULTIPLE = 4,
-    SINGLE = 5,
-    FT_CORNER = 6,
-    FIVE_MAJOR_LEAGUE = 7,
-    FT_CORNER_FIVE_MAJOR_LEAGUE = 8
+    NotCorner = 0,
+    Corner = 1,
+    Fantasy = 2,
+    ESoccer = 3,
+    Multiple = 4,
+    Single = 5,
+    FtCorner = 6,
+    FiveMajorLeague = 7,
+    FtCornerFiveMajorLeague = 8
 }

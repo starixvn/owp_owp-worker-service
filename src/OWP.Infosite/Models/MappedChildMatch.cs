@@ -1,6 +1,6 @@
-using Newtonsoft.Json;
-
 namespace OWP.Infosite.Models;
+
+using Newtonsoft.Json;
 
 public class MappedChildMatch
 {

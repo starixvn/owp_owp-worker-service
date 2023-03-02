@@ -1,21 +1,21 @@
-﻿using Fanex.Data.Repository;
-using OWP.Infosite.Criteria;
-using OWP.Infosite.Models;
+﻿namespace OWP.Infosite.Services;
 
-namespace OWP.Infosite.Services;
+using Criteria;
+using Fanex.Data.Repository;
+using Models;
 
-public interface NAPUserControlService
+public interface NapUserControlService
 {
-    IEnumerable<UserFunctionModel> GetUserFunctionModels(string functionKey);
+    IList<UserFunctionModel> GetUserFunctionModels(string functionKey);
 
     Task SynDataFunctionPermissionAsync();
 }
 
-public class NAPUserControlServiceImp : NAPUserControlService
+public class NapUserControlServiceImp : NapUserControlService
 {
     private readonly IDynamicRepository repository;
 
-    public NAPUserControlServiceImp(IDynamicRepository repository)
+    public NapUserControlServiceImp(IDynamicRepository repository)
     {
         this.repository = repository;
     }
@@ -43,13 +43,13 @@ public class NAPUserControlServiceImp : NAPUserControlService
         }
     }
 
-    public IEnumerable<UserFunctionModel> GetUserFunctionModels(string functionKey)
+    public IList<UserFunctionModel> GetUserFunctionModels(string functionKey)
     {
         var criteria = new GetAllUserByFunctionKeyCriteria
         {
             FunctionKey = functionKey
         };
 
-        return repository.Fetch<UserFunctionModel>(criteria);
+        return repository.Fetch<UserFunctionModel>(criteria).ToList();
     }
 }

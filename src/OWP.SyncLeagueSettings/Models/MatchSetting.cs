@@ -2,7 +2,7 @@
 
 public class MatchSetting
 {
-    public int OWPMatchId { get; set; }
+    public int OwpMatchId { get; set; }
 
     public int Bettype { get; set; }
 

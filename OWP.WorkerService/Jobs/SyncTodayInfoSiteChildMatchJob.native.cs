@@ -1,9 +1,9 @@
-﻿using Fanex.Logging;
-using ONEbook.UM.Services;
-using OWP.Infosite.Services;
-using Quartz;
+﻿namespace OWP.WorkerService.Jobs;
 
-namespace OWP.WorkerService.Jobs;
+using Fanex.Logging;
+using Infosite.Services;
+using ONEbook.UM.Services;
+using Quartz;
 
 [DisallowConcurrentExecution]
 internal class SyncTodayInfoSiteChildMatchJob : IJob
@@ -36,7 +36,7 @@ internal class SyncTodayInfoSiteChildMatchJob : IJob
 
         if (!underMaintenanceTime.IsUnderMaintenanceTime)
         {
-            var today = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
+            var today = DateTime.Today;
             await todaySyncService.Sync(today).ConfigureAwait(false);
         }
     }

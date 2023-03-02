@@ -1,15 +1,15 @@
-﻿using OWP.Core.Attributes;
-using OWP.Core.Extensions;
+﻿namespace OWP.Infosite.Models;
 
-namespace OWP.Infosite.Models;
+using Extensions;
+using Olympus.Xml;
 
 [Serializable]
-[XmlName("Row")]
 public class MatchModelFor180Day
 {
     public int MatchId { get; set; }
-
-    public DateTime KOTime { get; set; }
+    
+    [XmlName("KOTime")]
+    public DateTime KoTime { get; set; }
 
     public string LeagueName { get; set; }
 
@@ -21,18 +21,18 @@ public class MatchModelFor180Day
 
     public bool IsNeutral { get; set; }
 
-    public DateTime UpdatedTime { get; set; } = new DateTime(Year, 1, 1);
+    public DateTime UpdatedTime { get; set; } = new(Year, 1, 1);
 
     private const int Year = 2000;
 
     public MatchModelFor180Day(MatchModelQuery180Day infositeMatch)
     {
         MatchId = infositeMatch.info_match_id;
-        KOTime = infositeMatch.global_datetime.ToUtc8();
+        KoTime = infositeMatch.global_datetime.ToUtc8();
         LeagueName = infositeMatch.league_name;
         HomeName = infositeMatch.team_home_name;
         AwayName = infositeMatch.team_away_name;
         AdminSiteId = infositeMatch.ibc_match_id;
-        IsNeutral = infositeMatch.is_neutral.HasValue && infositeMatch.is_neutral.Value == 1;
+        IsNeutral = infositeMatch.is_neutral is 1;
     }
 }

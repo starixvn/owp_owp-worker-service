@@ -1,19 +1,19 @@
-﻿using OWP.WorkerService.Constants;
-using OWP.WorkerService.Jobs;
-using OWP.WorkerService.Models;
+﻿namespace OWP.WorkerService.Scheduler;
+
+using Constants;
+using Jobs;
+using Models;
 using Quartz;
 using Quartz.Spi;
 
-namespace OWP.WorkerService.Scheduler;
-
-public class OWPScheduler : IHostedService
+public class OwpScheduler : IHostedService
 {
     private readonly ISchedulerFactory schedulerFactory;
     private readonly IJobFactory jobFactory;
 
     public IScheduler Scheduler { get; set; }
 
-    public OWPScheduler(ISchedulerFactory schedulerFactory, IJobFactory jobFactory)
+    public OwpScheduler(ISchedulerFactory schedulerFactory, IJobFactory jobFactory)
     {
         this.schedulerFactory = schedulerFactory;
         this.jobFactory = jobFactory;
@@ -47,7 +47,7 @@ public class OWPScheduler : IHostedService
 
         //Report
         await AddJobToSchedulerAsync(new JobInfo(typeof(SumTraderReportJob), CronExpressionJob.SumDataReport));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SumLAReportJob), CronExpressionJob.SumDataReport));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SumLaReportJob), CronExpressionJob.SumDataReport));
         await AddJobToSchedulerAsync(new JobInfo(typeof(SumOvertimeReportJob), CronExpressionJob.SumDataReport));
         await AddJobToSchedulerAsync(new JobInfo(typeof(SumPrematchReportJob), CronExpressionJob.SumDataReport));
         await AddJobToSchedulerAsync(new JobInfo(typeof(SumMatchLiveReportJob), CronExpressionJob.SumDataReport));

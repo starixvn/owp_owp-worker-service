@@ -1,7 +1,7 @@
-﻿using Fanex.Caching;
-using OWP.SumReport.Constants;
+﻿namespace OWP.SumReport.Services;
 
-namespace OWP.SumReport.Services;
+using Constants;
+using Fanex.Caching;
 
 public interface CacheManipulator
 {
@@ -21,13 +21,12 @@ public class CacheManipulatorImp : CacheManipulator
 
     public async Task<(bool, DateTime)> GetLastDateForRegenerateData(string cacheKey)
     {
-        var result = await cache.TryGetAsync<string>(cacheKey);
-        var isGenerateData = result.Item1;
-        var dateString = result.Item2 ?? string.Empty;
+        var (found, value) = await cache.TryGetAsync<string>(cacheKey);
+        var dateString = value ?? string.Empty;
 
-        bool isDate = DateTime.TryParse(dateString, out var date);
+        var isDate = DateTime.TryParse(dateString, out var date);
 
-        return (isGenerateData, isDate ? date : DateTime.Today);
+        return (found, isDate ? date : DateTime.Today);
     }
 
     public async Task RemoveLastDateOfSumData(string cacheKey)

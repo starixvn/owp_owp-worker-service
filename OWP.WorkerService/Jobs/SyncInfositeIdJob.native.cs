@@ -1,10 +1,10 @@
-﻿using Fanex.Logging;
-using ONEbook.UM.Services;
-using OWP.Infosite.Services;
-using OWP.InfositeIdSync.Services;
-using Quartz;
+﻿namespace OWP.WorkerService.Jobs;
 
-namespace OWP.WorkerService.Jobs;
+using Fanex.Logging;
+using Infosite.Services;
+using InfositeIdSync.Services;
+using ONEbook.UM.Services;
+using Quartz;
 
 [DisallowConcurrentExecution]
 public class SyncInfositeIdJob : IJob
@@ -43,7 +43,7 @@ public class SyncInfositeIdJob : IJob
 
     public async Task ExecuteJob()
     {
-        var underMaintenanceTime = (await maintenanceService.GetUnderMaintenanceTimeAsync());
+        var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
 
         if (underMaintenanceTime.IsUnderMaintenanceTime)
         {

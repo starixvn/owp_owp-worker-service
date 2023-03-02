@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿namespace OWP.Extensions;
 
-namespace OWP.Core.Extensions;
+using Newtonsoft.Json;
 
 public class TrimmingConverter : JsonConverter
 {

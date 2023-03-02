@@ -1,6 +1,6 @@
-﻿using OWP.Core.Constants;
+﻿namespace OWP.Mics;
 
-namespace OWP.Core.Mics;
+using Constants;
 
 public class RepresentativeSubTypeDetector
 {
@@ -13,7 +13,7 @@ public class RepresentativeSubTypeDetector
 public class Specific10MinsDetector : RepresentativeSubTypeDetector
 {
     public override int GetRepresentativeSubtype(int subType)
-        => (subType >= SubType.Specific10MinsFromSubType && subType <= SubType.Specific10MinsToSubType)
+        => subType is >= SubType.Specific10MinsFromSubType and <= SubType.Specific10MinsToSubType
         ? SubType.Specific10MinsFromSubType
         : base.GetRepresentativeSubtype(subType);
 }

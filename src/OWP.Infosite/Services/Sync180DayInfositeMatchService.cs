@@ -1,10 +1,9 @@
-﻿using System.Xml.Linq;
-using Fanex.Data.Repository;
-using Olympus.Xml;
-using OWP.Infosite.Criteria;
-using OWP.Infosite.Models;
+﻿namespace OWP.Infosite.Services;
 
-namespace OWP.Infosite.Services;
+using Criteria;
+using Fanex.Data.Repository;
+using Models;
+using Olympus.Xml;
 
 public interface Sync180DayInfositeMatchService
 {
@@ -24,8 +23,8 @@ public class Sync180DayInfositeMatchServiceImp : Sync180DayInfositeMatchService
 
     public async Task Sync()
     {
-        var infoSiteMatch = await apiService.QueryInfoSiteMatchFor180Day();
-        var matchInfo = infoSiteMatch.Select(m => new MatchModelFor180Day(m));
+        var infoSiteMatches = await apiService.QueryInfoSiteMatchFor180Day();
+        var matchInfo = infoSiteMatches.Select(m => new MatchModelFor180Day(m));
 
         var criteria = new SyncInfoMatchFor180DayCriteria
         {

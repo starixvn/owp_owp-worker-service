@@ -6,7 +6,7 @@ RUN dotnet tool install --tool-path /tools dotnet-counters
 
 WORKDIR /src
 
-COPY ./src/OWP.Core/. ./src/OWP.Core
+COPY ./src/OWP/. ./src/OWP
 COPY ./src/OWP.InforsiteIdSync/. ./src/OWP.InforsiteIdSync
 COPY ./src/OWP.Infosite/. ./src/OWP.Infosite
 COPY ./src/OWP.LinkLeagueAndTeam/. ./src/OWP.LinkLeagueAndTeam
@@ -26,7 +26,7 @@ COPY ./OWP.WorkerService .
 
 RUN dotnet publish -r linux-x64 --self-contained false -c Release -o /app 
 
-FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0-alpine AS base
+FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0 AS base
 
 WORKDIR /app
 COPY --from=builder /app .

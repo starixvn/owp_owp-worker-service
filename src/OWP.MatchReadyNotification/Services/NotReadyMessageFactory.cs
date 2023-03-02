@@ -1,7 +1,7 @@
-﻿using OWP.MatchReadyNotification.Models;
-using System.Globalization;
+﻿namespace OWP.MatchReadyNotification.Services;
 
-namespace OWP.MatchReadyNotification.Services;
+using System.Globalization;
+using Models;
 
 public interface NotReadyMessageFactory
 {
@@ -12,7 +12,7 @@ public class NotReadyMessageFactoryImp : NotReadyMessageFactory
 {
     private readonly ReceivedUserServices receivedUserServices;
 
-    private const string messageTemplate = "<UsernameList> are NOT READY for match <Match.No> - <League> - <Event> - K.O Time <KO Time>";
+    private const string MessageTemplate = "<UsernameList> are NOT READY for match <Match.No> - <League> - <Event> - K.O Time <KO Time>";
 
     public NotReadyMessageFactoryImp(ReceivedUserServices receivedUserServices)
     {
@@ -35,7 +35,7 @@ public class NotReadyMessageFactoryImp : NotReadyMessageFactory
                 MatchNo = match.MatchNo,
                 LeagueName = match.LeagueName,
                 Event = match.Home + " -vs- " + match.Away,
-                KOTime = match.KOTime,
+                KoTime = match.KoTime,
                 Assignees = assignees
             };
 
@@ -55,10 +55,10 @@ public class NotReadyMessageFactoryImp : NotReadyMessageFactory
 
     public static string Transform(NotReadyMatchInfo model)
     {
-        var content = messageTemplate.Replace("<Match.No>", GetFormattedMatchNo(model.MatchNo));
+        var content = MessageTemplate.Replace("<Match.No>", GetFormattedMatchNo(model.MatchNo));
         content = content.Replace("<League>", model.LeagueName);
         content = content.Replace("<Event>", model.Event);
-        content = content.Replace("<KO Time>", ToKOTime(model.KOTime));
+        content = content.Replace("<KO Time>", ToKoTime(model.KoTime));
         content = content.Replace("<UsernameList>", string.Join(", ", model.Assignees.Select(z => z.AssigneeName).ToList()));
 
         return content;
@@ -69,7 +69,7 @@ public class NotReadyMessageFactoryImp : NotReadyMessageFactory
         return !string.IsNullOrEmpty(matchNo) ? $"#{matchNo}" : string.Empty;
     }
 
-    private static string ToKOTime(TimeSpan koTime)
+    private static string ToKoTime(TimeSpan koTime)
     {
         var parsedTime = new DateTime(1, 1, 1, koTime.Hours, koTime.Minutes, 0);
 

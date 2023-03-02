@@ -1,8 +1,8 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.OtherSport.SyncAdminSiteId.Criteria;
 
-namespace OWP.OtherSport.SyncAdminSiteId.Criteria;
+using Fanex.Data.Repository;
 
-public class GetMatchesFromOWPCriteria : CriteriaBase
+public class GetMatchesFromOwpCriteria : CriteriaBase
 {
     public DateTime EventDate { get; set; }
 

@@ -2,9 +2,9 @@
 
 public enum ReportType
 {
-    ESOCCER_5MINS = 1,
-    ESOCCER_6MINS = 2,
-    ESOCCER_15MINS = 3,
-    ESOCCER_16MINS = 4,
-    ESOCCER_20MINS = 5
+    Esoccer5Mins = 1,
+    Esoccer6Mins = 2,
+    Esoccer15Mins = 3,
+    Esoccer16Mins = 4,
+    Esoccer20Mins = 5
 }

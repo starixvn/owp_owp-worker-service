@@ -1,16 +1,16 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.Infosite.Services;
+
+using Builder;
+using Criteria;
+using Extensions;
+using Fanex.Data.Repository;
+using Helper;
 using Microsoft.Extensions.Options;
+using Models;
 using Newtonsoft.Json;
 using Olympus.InfoSiteClient;
 using Olympus.InfoSiteClient.Models;
-using OWP.Core.Extensions;
-using OWP.Infosite.Builder;
-using OWP.Infosite.Criteria;
-using OWP.Infosite.Helper;
-using OWP.Infosite.Models;
-using OWP.Infosite.Settings;
-
-namespace OWP.Infosite.Services;
+using Settings;
 
 public interface SyncChildMatchService
 {
@@ -32,7 +32,7 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
 
     public async Task Sync(DateTime date)
     {
-        var childMatches = pullingChildMatch.Query(infoSiteSettings.InfositeAPI, date, date.AddDays(1));
+        var childMatches = pullingChildMatch.Query(infoSiteSettings.InfositeApi, date, date.AddDays(1));
         var mappedChildMatches = MapChildMatches(childMatches);
         mappedChildMatches = new SpecialMatchBuilder().ReduceSpecialMatch(mappedChildMatches);
 
@@ -44,8 +44,8 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
         childMatches = FilterMatch(childMatches);
         foreach (var childMatch in childMatches)
         {
-            var (representativeSubtype, minorBettypeId) = ChildMatchHelper.GetBettypeIdAndRepresentativeSubtype(childMatch.sub_type);
-            if (minorBettypeId < 0)
+            var (representativeSubtype, minorBetTypeId) = ChildMatchHelper.GetBetTypeIdAndRepresentativeSubtype(childMatch.sub_type);
+            if (minorBetTypeId < 0)
             {
                 yield return new MappedChildMatch
                 {
@@ -54,8 +54,8 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
                     LeagueName = childMatch.league_name,
                     HomeName = childMatch.home_name,
                     AwayName = childMatch.away_name,
-                    EventDateTime = ((DateTime)childMatch.game_date).ToUtc8(),
-                    MinorBettypeId = minorBettypeId,
+                    EventDateTime = (childMatch.game_date ?? new DateTime(2000, 1, 1)).ToUtc8(),
+                    MinorBettypeId = minorBetTypeId,
                     SubType = childMatch.sub_type,
                     RepresentativeSubtype = representativeSubtype,
                     UpdatedTime = childMatch.stamp.ToUtc8()
@@ -67,14 +67,14 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
     private static IEnumerable<ChildMatch> FilterMatch(IEnumerable<ChildMatch> childMatches)
         => childMatches.Where(x =>
             x.match_id > 0 &&
-            !IsETPKMatch(x.home_name) &&
+            !IsEtpkMatch(x.home_name) &&
             IsValidSubType(x.sub_type) &&
             x.main_type.HasValue);
 
-    private static bool IsETPKMatch(string homeName)
+    private static bool IsEtpkMatch(string homeName)
         => homeName.IsContainsIgnoreCase("(ET)") || homeName.IsContainsIgnoreCase("(PEN)");
 
-    private static bool IsValidSubType(int? subType) => subType.HasValue && subType > 0;
+    private static bool IsValidSubType(int? subType) => subType is > 0;
 
     public async Task SaveInfoSiteChildMatchCommand(IEnumerable<MappedChildMatch> childMatches)
     {

@@ -1,9 +1,9 @@
-﻿using Fanex.Data.Repository;
-using Olympus.Xml;
-using OWP.SumReport.OvertimeReport.Criteria;
-using OWP.SumReport.OvertimeReport.Models;
+﻿namespace OWP.SumReport.OvertimeReport;
 
-namespace OWP.SumReport.OvertimeReport;
+using Criteria;
+using Fanex.Data.Repository;
+using Models;
+using Olympus.Xml;
 
 public interface OvertimeRepository
 {
@@ -16,20 +16,20 @@ public interface OvertimeRepository
 
 public class OvertimeRepositoryImp : OvertimeRepository
 {
-    private readonly IDynamicRepository _repository;
+    private readonly IDynamicRepository repository;
 
     public OvertimeRepositoryImp(IDynamicRepository dynamicRepository)
     {
-        _repository = dynamicRepository;
+        repository = dynamicRepository;
     }
 
     public async Task<IEnumerable<EmployeeWorkingShift>> GetEmployeeWorkingShift(DateTime date, bool isGenerateData)
-        => await _repository.FetchAsync<EmployeeWorkingShift>(isGenerateData
+        => await repository.FetchAsync<EmployeeWorkingShift>(isGenerateData
             ? new GetOldAndNewEmployeeWorkingShiftCriteria { EventDate = date }
             : new GetEmployeeWorkingShiftCriteria { EventDate = date });
 
     public async Task<(IEnumerable<Assignment>, IEnumerable<MainMatch>)> GetTradersAssignments(DateTime date, IEnumerable<int> userIds, bool isGenerateData)
-        => await _repository.FetchMultipleAsync<Assignment, MainMatch>(isGenerateData
+        => await repository.FetchMultipleAsync<Assignment, MainMatch>(isGenerateData
         ? new GetGetOldAndNewTradersAssignmentsCriteria
         {
             EventDate = date,
@@ -43,7 +43,7 @@ public class OvertimeRepositoryImp : OvertimeRepository
 
     public async Task SaveData(DateTime date, IEnumerable<OvertimeData> data)
     {
-        await _repository.ExecuteAsync(new SaveOvertimeReportCriteria
+        await repository.ExecuteAsync(new SaveOvertimeReportCriteria
         {
             EventDate = date,
             Data = XmlConverter.Serialize(data)

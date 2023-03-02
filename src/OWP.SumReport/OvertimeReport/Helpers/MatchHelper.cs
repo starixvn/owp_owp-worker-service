@@ -1,36 +1,36 @@
-﻿using OWP.Core.Extensions;
-using OWP.SumReport.OvertimeReport.Constants;
-using OWP.SumReport.OvertimeReport.Models;
+﻿namespace OWP.SumReport.OvertimeReport.Helpers;
 
-namespace OWP.SumReport.OvertimeReport.Helpers;
+using Constants;
+using Extensions;
+using Models;
 
 public static class MatchHelper
 {
-    private static readonly Dictionary<string, Func<Assignment, int>> pesOperations =
-        new Dictionary<string, Func<Assignment, int>>(StringComparer.InvariantCultureIgnoreCase)
+    private static readonly Dictionary<string, Func<Assignment, int>> PesOperations =
+        new(StringComparer.InvariantCultureIgnoreCase)
         {
-            { "15 Mins ", CalculateSABAPES15And20MinsMatchDuration },
-            { "20 Mins ", CalculateSABAPES15And20MinsMatchDuration },
-            { "5 Mins ", CalculateSABAPES5MinsMatchDuration }
+            { "15 Mins ", CalculateSabaPes15And20MinsMatchDuration },
+            { "20 Mins ", CalculateSabaPes15And20MinsMatchDuration },
+            { "5 Mins ", CalculateSabaPes5MinsMatchDuration }
         };
 
     public static bool IsSabaMatch(string leagueName)
         => leagueName.IndexOf("SABA ", StringComparison.CurrentCultureIgnoreCase) >= 0;
 
-    public static int CalculateSABAPESMatchDuration(Assignment assignment)
+    public static int CalculateSabaPesMatchDuration(Assignment assignment)
     {
-        var method = pesOperations.LookupByKey<Func<Assignment, int>>(assignment.OWPLeagueName, null);
-        return method != null ? method(assignment) : 0;
+        var method = PesOperations.LookupByKey(assignment.OwpLeagueName, null);
+        return method?.Invoke(assignment) ?? 0;
     }
 
-    public static int CalculateSABAPES5MinsMatchDuration(Assignment assignment)
+    public static int CalculateSabaPes5MinsMatchDuration(Assignment assignment)
         => 60 - assignment.EventDateTime.Minute;
 
-    public static int CalculateSABAPES15And20MinsMatchDuration(Assignment assignment)
-        => IsHavingETPK(assignment.Remark) || IsHavingPKOnly(assignment.Remark) ? 45 : 30;
+    public static int CalculateSabaPes15And20MinsMatchDuration(Assignment assignment)
+        => IsHavingEtpk(assignment.Remark) || IsHavingPKOnly(assignment.Remark) ? 45 : 30;
 
-    public static int CalculateSABAFIFAMatchDuration(Assignment assignment)
-        => IsHavingETPK(assignment.Remark) || IsHavingPKOnly(assignment.Remark) ? 60 : 45;
+    public static int CalculateSabaFifaMatchDuration(Assignment assignment)
+        => IsHavingEtpk(assignment.Remark) || IsHavingPKOnly(assignment.Remark) ? 60 : 45;
 
     public static int CalculateNormalMatchDuration(Assignment assignment)
     {
@@ -51,7 +51,7 @@ public static class MatchHelper
 
     public static int CalculateNormalMatchDuration(string remark)
     {
-        if (IsHavingETPK(remark) || IsHavingETOnly(remark))
+        if (IsHavingEtpk(remark) || IsHavingETOnly(remark))
         {
             return 150;
         }
@@ -59,7 +59,7 @@ public static class MatchHelper
         return IsHavingPKOnly(remark) ? 135 : 120;
     }
 
-    public static bool IsHavingETPK(string remark)
+    public static bool IsHavingEtpk(string remark)
         => remark.IndexOf(" ET", StringComparison.CurrentCultureIgnoreCase) >= 0
            && remark.IndexOf("PK", StringComparison.CurrentCultureIgnoreCase) >= 0;
 

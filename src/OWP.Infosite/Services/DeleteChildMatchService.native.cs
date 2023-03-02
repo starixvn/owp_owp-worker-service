@@ -1,10 +1,10 @@
-﻿using Fanex.Data.Repository;
-using Newtonsoft.Json;
-using OWP.Infosite.Criteria;
-using OWP.Infosite.Helper;
-using OWP.Infosite.Models;
+﻿namespace OWP.Infosite.Services;
 
-namespace OWP.Infosite.Services;
+using Criteria;
+using Fanex.Data.Repository;
+using Helper;
+using Models;
+using Newtonsoft.Json;
 
 public interface SyncDeleteChildMatchService
 {
@@ -33,7 +33,7 @@ public class SyncDeleteChildMatchServiceImp : SyncDeleteChildMatchService
         var deletedMatch = await apiService.QueryDeletedChildMatch(dateFrom, dateTo);
         var mappedChildMatches = deletedMatch
             .Where(m => m.sub_type > 0)
-            .Select(m => BuildMappedDeletedChildMatch(m))
+            .Select(BuildMappedDeletedChildMatch)
             .GroupBy(x => new { x.AdminSiteMatchId, x.InfoSiteMatchId, x.SubType })
             .Select(x => x.First());
         await DeleteChildMatch(mappedChildMatches);
@@ -51,11 +51,11 @@ public class SyncDeleteChildMatchServiceImp : SyncDeleteChildMatchService
         await repository.ExecuteAsync(criteria);
     }
 
-    private MappedDeletedChildMatch BuildMappedDeletedChildMatch(DeleteChildMatch childMatch)
+    private static MappedDeletedChildMatch BuildMappedDeletedChildMatch(DeleteChildMatch childMatch)
     {
-        var (representativeSubtype, _) = ChildMatchHelper.GetBettypeIdAndRepresentativeSubtype(childMatch.sub_type);
+        var (representativeSubtype, _) = ChildMatchHelper.GetBetTypeIdAndRepresentativeSubtype(childMatch.sub_type);
 
-        return new()
+        return new MappedDeletedChildMatch
         {
             InfoSiteMatchId = childMatch.match_id,
             SubType = representativeSubtype,

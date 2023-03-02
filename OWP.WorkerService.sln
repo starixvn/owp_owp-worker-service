@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.InfositeIdSync", "src\O
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.Infosite", "src\OWP.Infosite\OWP.Infosite.csproj", "{7980FB91-2E91-4036-9A80-E0C8F9967209}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.Core", "src\OWP.Core\OWP.Core.csproj", "{5CB50B53-BD0F-4B71-BBA1-D098E6E3E50F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP", "src\OWP\OWP.csproj", "{5CB50B53-BD0F-4B71-BBA1-D098E6E3E50F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWP.MatchReadyNotification", "src\OWP.MatchReadyNotification\OWP.MatchReadyNotification.csproj", "{21C844A0-0A4D-4D07-9932-24A32E9D6D59}"
 EndProject

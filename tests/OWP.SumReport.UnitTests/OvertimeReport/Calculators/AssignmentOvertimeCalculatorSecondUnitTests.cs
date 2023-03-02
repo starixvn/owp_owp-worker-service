@@ -1,31 +1,31 @@
-﻿using OWP.SumReport.OvertimeReport.Calculators;
-using OWP.SumReport.OvertimeReport.Constants;
-using OWP.SumReport.OvertimeReport.Models;
-using Xunit;
+﻿namespace OWP.SumReport.UnitTests.OvertimeReport.Calculators;
 
-namespace OWP.SumReport.UnitTests.OvertimeReport.Calculators;
+using SumReport.OvertimeReport.Calculators;
+using SumReport.OvertimeReport.Constants;
+using SumReport.OvertimeReport.Models;
+using Xunit;
 
 public class AssignmentOvertimeCalculatorSecondUnitTests
 {
     [Fact]
     public void CalculateOvertimeData_ReturnTotalOvertime()
     {
-        var assignments = MockFTAssignmentsHavingETPK();
+        var assignments = MockFtAssignmentsHavingEtpk();
         var workingShift = new EmployeeWorkingShift
         {
             ShiftStartTime = new DateTime(2021, 10, 27, 2, 0, 0),
             ShiftEndTime = new DateTime(2021, 10, 27, 13, 0, 0)
         };
-        var mainMatchRemarks = new List<MainMatch>()
-            {
-                new MainMatch
+        var mainMatchRemarks = new List<MainMatch>
+        {
+                new()
                 {
-                    OWPMatchId = 2,
+                    OwpMatchId = 2,
                     Remark = " ET/PK"
                 }
             };
 
-        var actual = AssignmentOvertimeCalculator.CalculateOvertimeData(assignments, workingShift, mainMatchRemarks);
+        var actual = AssignmentOvertimeCalculator.CalculateOvertimeData(workingShift, assignments,  mainMatchRemarks);
 
         Assert.Equal(2.5m, actual);
     }
@@ -33,25 +33,25 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
     [Fact]
     public void GetLatestMatchEndTime_WithFTAssignments_ReturnMaxFTDuration()
     {
-        var assignments = MockFTAssignmentsHavingETPK();
+        var assignments = MockFtAssignmentsHavingEtpk();
         var workingShift = new EmployeeWorkingShift
         {
             ShiftStartTime = new DateTime(2021, 10, 27, 2, 0, 0),
             ShiftEndTime = new DateTime(2021, 10, 27, 13, 0, 0)
         };
-        var mainMatchRemarks = new List<MainMatch>()
-            {
-                new MainMatch
+        var mainMatchRemarks = new List<MainMatch>
+        {
+                new()
                 {
-                    OWPMatchId = 2,
+                    OwpMatchId = 2,
                     Remark = " ET/PK"
                 }
             };
         var expected = workingShift.ShiftEndTime.AddMinutes(150);
 
         var actual = AssignmentOvertimeCalculator.GetLatestMatchEndTime(
-            assignments,
             workingShift,
+            assignments,
             mainMatchRemarks);
 
         Assert.Equal(expected, actual);
@@ -66,11 +66,11 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
             ShiftStartTime = new DateTime(2021, 10, 27, 2, 0, 0),
             ShiftEndTime = new DateTime(2021, 10, 27, 13, 0, 0)
         };
-        var mainMatchRemarks = new List<MainMatch>()
-            {
-                new MainMatch
+        var mainMatchRemarks = new List<MainMatch>
+        {
+                new()
                 {
-                    OWPMatchId = 2,
+                    OwpMatchId = 2,
                     Remark = "ET/PK",
                     EventDateTime = new DateTime(2021, 10, 27, 13, 0, 0)
                 }
@@ -78,8 +78,8 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
         var expected = workingShift.ShiftEndTime.AddMinutes(60);
 
         var actual = AssignmentOvertimeCalculator.GetLatestMatchEndTime(
-            assignments,
             workingShift,
+            assignments,
             mainMatchRemarks);
 
         Assert.Equal(expected, actual);
@@ -88,17 +88,17 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
     [Fact]
     public void GetLatestMatchEndTime_WithCornerAssignments_ReturnMaxCornerDuration()
     {
-        var assignments = MockCornerAssignmentsWithETPKMainMatch();
+        var assignments = MockCornerAssignmentsWithEtpkMainMatch();
         var workingShift = new EmployeeWorkingShift
         {
             ShiftStartTime = new DateTime(2021, 10, 27, 2, 0, 0),
             ShiftEndTime = new DateTime(2021, 10, 27, 13, 0, 0)
         };
-        var mainMatchRemarks = new List<MainMatch>()
-            {
-                new MainMatch
+        var mainMatchRemarks = new List<MainMatch>
+        {
+                new()
                 {
-                    OWPMatchId = 2,
+                    OwpMatchId = 2,
                     Remark = " ET/PK",
                     EventDateTime = new DateTime(2021, 10, 27, 13, 0, 0)
                 }
@@ -106,8 +106,8 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
         var expected = workingShift.ShiftEndTime.AddMinutes(150);
 
         var actual = AssignmentOvertimeCalculator.GetLatestMatchEndTime(
-            assignments,
             workingShift,
+            assignments,
             mainMatchRemarks);
 
         Assert.Equal(expected, actual);
@@ -122,138 +122,138 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
             ShiftStartTime = new DateTime(2021, 10, 27, 2, 0, 0),
             ShiftEndTime = new DateTime(2021, 10, 27, 13, 0, 0)
         };
-        var mainMatchRemarks = new List<MainMatch>()
-            {
-                new MainMatch
+        var mainMatchRemarks = new List<MainMatch>
+        {
+                new()
                 {
-                    OWPMatchId = 2,
+                    OwpMatchId = 2,
                     Remark = "ET/PK"
                 }
             };
 
         var actual = AssignmentOvertimeCalculator.GetLatestMatchEndTime(
-            assignments,
             workingShift,
+            assignments,
             mainMatchRemarks);
 
         Assert.Equal(workingShift.ShiftEndTime, actual);
     }
 
-    private IEnumerable<Assignment> MockFTAssignmentsHavingETPK()
+    private static IList<Assignment> MockFtAssignmentsHavingEtpk()
         => new List<Assignment>
         {
-                new Assignment
+                new()
                 {
                     UserId = 1,
-                    OWPMatchId = 1,
+                    OwpMatchId = 1,
                     ParentMatchId = null,
                     MinorBettypeId = null,
                     Bettype = BetType.FullTimeBetType.Handicap,
                     EventDateTime = new DateTime(2021, 10, 27, 2, 0, 0),
-                    OWPLeagueName = "SABA",
+                    OwpLeagueName = "SABA",
                     Remark = " ET/PK"
                 },
-                new Assignment
+                new()
                 {
                     UserId = 1,
-                    OWPMatchId = 2,
+                    OwpMatchId = 2,
                     ParentMatchId = null,
                     MinorBettypeId = null,
                     Bettype = BetType.FullTimeBetType.Handicap,
                     EventDateTime = new DateTime(2021, 10, 27, 13, 0, 0),
-                    OWPLeagueName = "CLeague",
+                    OwpLeagueName = "CLeague",
                     Remark = " ET/PK"
                 },
-                new Assignment
+                new()
                 {
                     UserId = 1,
-                    OWPMatchId = 169368,
+                    OwpMatchId = 169368,
                     ParentMatchId = 2,
                     MinorBettypeId = -4,
                     Bettype = BetType.FirstHalfBettype.FirstHalfHandicap,
                     EventDateTime = new DateTime(2021, 10, 27, 13, 0, 0),
-                    OWPLeagueName = "CLeague",
+                    OwpLeagueName = "CLeague",
                     Remark = " ET/PK"
                 }
         };
 
-    private IEnumerable<Assignment> Mock1HAssignments()
+    private static IList<Assignment> Mock1HAssignments()
         => new List<Assignment>
         {
-                new Assignment
+                new()
                 {
                     UserId = 1,
-                    OWPMatchId = 1,
+                    OwpMatchId = 1,
                     ParentMatchId = null,
                     MinorBettypeId = null,
                     Bettype = BetType.FullTimeBetType.Handicap,
                     EventDateTime = new DateTime(2021, 10, 27, 2, 0, 0),
-                    OWPLeagueName = "SABA",
+                    OwpLeagueName = "SABA",
                     Remark = "ET/PK"
                 },
-                new Assignment
+                new()
                 {
                     UserId = 1,
-                    OWPMatchId = 169368,
+                    OwpMatchId = 169368,
                     ParentMatchId = 2,
                     MinorBettypeId = -4,
                     Bettype = BetType.FirstHalfBettype.FirstHalfHandicap,
                     EventDateTime = new DateTime(2021, 10, 27, 13, 0, 0),
-                    OWPLeagueName = "CLeague",
+                    OwpLeagueName = "CLeague",
                     Remark = ""
                 }
         };
 
-    private IEnumerable<Assignment> MockCornerAssignmentsWithETPKMainMatch()
+    private static IList<Assignment> MockCornerAssignmentsWithEtpkMainMatch()
         => new List<Assignment>
         {
-                new Assignment
+                new()
                 {
                     UserId = 1,
-                    OWPMatchId = 1,
+                    OwpMatchId = 1,
                     ParentMatchId = null,
                     MinorBettypeId = null,
                     Bettype = BetType.FullTimeBetType.Handicap,
                     EventDateTime = new DateTime(2021, 10, 27, 2, 0, 0),
-                    OWPLeagueName = "SABA",
+                    OwpLeagueName = "SABA",
                     Remark = "ET/PK"
                 },
-                new Assignment
+                new()
                 {
                     UserId = 1,
-                    OWPMatchId = 169368,
+                    OwpMatchId = 169368,
                     ParentMatchId = 2,
                     MinorBettypeId = BetType.CornerMinorBettype.Next,
                     Bettype = BetType.FullTimeBetType.Handicap,
                     EventDateTime = new DateTime(2021, 10, 27, 13, 0, 0),
-                    OWPLeagueName = "CLeague",
+                    OwpLeagueName = "CLeague",
                     Remark = ""
                 }
         };
 
-    private IEnumerable<Assignment> MockOutShiftAssignments()
+    private static IList<Assignment> MockOutShiftAssignments()
         => new List<Assignment>
         {
-                new Assignment
+                new()
                 {
                     UserId = 1,
-                    OWPMatchId = 1,
+                    OwpMatchId = 1,
                     ParentMatchId = null,
                     MinorBettypeId = null,
                     Bettype = BetType.FullTimeBetType.Handicap,
                     EventDateTime = new DateTime(2021, 10, 26, 2, 0, 0),
-                    OWPLeagueName = "SABA",
+                    OwpLeagueName = "SABA",
                     Remark = " ET/PK"
                 },
-                new Assignment
+                new()
                 {
                     UserId = 1,
-                    OWPMatchId = 169368,
+                    OwpMatchId = 169368,
                     ParentMatchId = 2,
                     MinorBettypeId = BetType.CornerMinorBettype.Next,
                     Bettype = BetType.FullTimeBetType.Handicap,
                     EventDateTime = new DateTime(2021, 10, 29, 13, 0, 0),
-                    OWPLeagueName = "CLeague",
+                    OwpLeagueName = "CLeague",
                     Remark = ""
                 }
         };

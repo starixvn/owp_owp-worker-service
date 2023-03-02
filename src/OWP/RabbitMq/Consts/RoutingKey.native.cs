@@ -1,4 +1,4 @@
-namespace OWP.Core.RabbitMq.Consts;
+namespace OWP.RabbitMq.Consts;
 
 internal static class RoutingKeys
 {

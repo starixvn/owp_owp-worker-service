@@ -9,16 +9,18 @@ using ONEbook.UM.Configurations;
 using ONEbook.UM.Helpers;
 using ONEbook.UM.Services;
 using ONEbook.UM.Transport;
+using OWP;
 using OWP.ArchiveData;
 using OWP.Command;
 using OWP.Command.Settings;
-using OWP.Core.RabbitMq;
-using OWP.Core.RabbitMq.Models;
 using OWP.Infosite;
+using OWP.Infosite.Services;
 using OWP.InfositeIdSync;
 using OWP.LinkLeagueAndTeam;
 using OWP.MatchReadyNotification;
 using OWP.OtherSport;
+using OWP.RabbitMq;
+using OWP.RabbitMq.Models;
 using OWP.SumReport;
 using OWP.SyncLeagueSettings;
 
@@ -26,7 +28,7 @@ using OWP.SyncLeagueSettings;
 
 var environment = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
 var configuration = new ConfigurationBuilder()
-    .AddJsonFile($"appsettings.json", true, true)
+    .AddJsonFile("appsettings.json", true, true)
     .AddJsonFile($"appsettings.{environment}.json", true, true)
     .Build();
 
@@ -71,16 +73,16 @@ services.AddSingleton<IUMRestClient, UMRestClient>();
 
 #region AddRabbitMQ
 
-var settings = new RabbitMQSetting
+var settings = new RabbitMqSetting
 {
     Hosting = "localhost",
     VirtualHost = "/",
     UserName = "guest",
     Password = "guest",
     Port = 5672,
-    RequestQueue = "OWP.Request.Queue",
+    RequestQueue = "OWP.Request.Queue"
 };
-IOptions<RabbitMQSetting> appSettingsOptions = Options.Create(settings);
+var appSettingsOptions = Options.Create(settings);
 var rabbitService = new RabbitMqClientImp(appSettingsOptions, new Logger());
 rabbitService.ConnectRabbitMq();
 
@@ -90,7 +92,7 @@ services.AddSingleton<RabbitMqClient>(rabbitService);
 
 #region AddDependenceInjection
 services.AddInfositeServices(configuration);
-services.AddOWPCoreServices();
+services.AddOwpCoreServices();
 services.AddInfositeIdSyncServices();
 services.AddLinkLeagueAndTeamServices();
 services.AddMatchReadyNotificationServices();
@@ -100,5 +102,8 @@ services.AddOtherSportServices();
 services.AddArchiveDataServices();
 #endregion
 
-var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.SyncChildMatchService>();
-await apiService.Sync(new DateTime(2022, 12, 05)).ConfigureAwait(false);
+var apiService = services.BuildServiceProvider().GetService<SyncChildMatchService>();
+if (apiService != null)
+{
+    await apiService.Sync(new DateTime(2022, 12, 05)).ConfigureAwait(false);
+}

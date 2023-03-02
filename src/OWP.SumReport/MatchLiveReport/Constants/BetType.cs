@@ -1,12 +1,4 @@
-using System.Collections.Immutable;
-
 namespace OWP.SumReport.MatchLiveReport.Constants;
-
-public static class Consts
-{
-    
-}
-
 
 public enum MinorBetType
 {
@@ -22,8 +14,8 @@ public enum MinorBetType
     LastBookings = -91,
     Winner = -14,
     SpecialGoal = -109,
-    HomeSingleTeamOU = -92,
-    AwaySingleTeamOU = -93,
+    HomeSingleTeamOu = -92,
+    AwaySingleTeamOu = -93,
     FirstPenaltyToScore = -96,
     FirstPenaltyAwarded = -97,
     FreeKick = -108,

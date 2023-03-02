@@ -1,6 +1,6 @@
 ﻿namespace OWP.InfositeIdSync.Models;
 
-public class OWPMatch
+public class OwpMatch
 {
     public string League { get; set; }
 
@@ -10,5 +10,5 @@ public class OWPMatch
 
     public DateTime EventDateTime { get; set; }
 
-    public int OWPMatchId { get; set; }
+    public int OwpMatchId { get; set; }
 }

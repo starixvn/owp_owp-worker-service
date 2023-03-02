@@ -1,12 +1,11 @@
-﻿using Fanex.Data.Repository;
-using Olympus.Xml;
-using OWP.OtherSport.SyncAdminSiteId.Criteria;
-using OWP.OtherSport.SyncAdminSiteId.Helpers;
-using OWP.OtherSport.SyncAdminSiteId.Models;
-using OWP.OtherSport.SyncLive;
-using OWP.OtherSport.SyncLive.Services;
+﻿namespace OWP.OtherSport.SyncAdminSiteId.Handlers;
 
-namespace OWP.OtherSport.SyncAdminSiteId.Handlers;
+using Criteria;
+using Fanex.Data.Repository;
+using Helpers;
+using Models;
+using Olympus.Xml;
+using SyncLive;
 
 public interface SyncAdminSiteMatchesHandler
 {
@@ -17,40 +16,38 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
 {
     private readonly IDynamicRepository dynamicRepository;
     private readonly SyncLiveToAdminSiteHandler syncLiveService;
-    private readonly CacheManipulator cacheManipulator;
 
-    public SyncAdminSiteMatchesHandlerImp(IDynamicRepository repository, SyncLiveToAdminSiteHandler syncLiveService, CacheManipulator cacheManipulator)
+    public SyncAdminSiteMatchesHandlerImp(IDynamicRepository repository, SyncLiveToAdminSiteHandler syncLiveService)
     {
         dynamicRepository = repository;
         this.syncLiveService = syncLiveService;
-        this.cacheManipulator = cacheManipulator;
     }
 
     public async Task Handle(DateTime eventDate)
     {
-        var owpMatches = await GetOWPMatches(eventDate);
+        var owpMatches = await GetOwpMatches(eventDate);
         var adminSiteMatches = await GetAdminSiteMatches(eventDate);
-        var unlinkedMatches = owpMatches.Where(x => !x.AdminSiteMatchId.HasValue);
-        var linkedMatches = owpMatches.Where(x => x.AdminSiteMatchId.HasValue);
+        var unlinkedMatches = owpMatches.Where(x => !x.AdminSiteMatchId.HasValue).ToList();
+        var linkedMatches = owpMatches.Where(x => x.AdminSiteMatchId.HasValue).ToList();
 
-        var newLinkedMatches = MatchHelper.GetNewLinkedMatches(unlinkedMatches, adminSiteMatches);
-        var updatedMatches = MatchHelper.GetRemovedMatches(linkedMatches, adminSiteMatches);
+        var newLinkedMatches = MatchHelper.GetNewLinkedMatches(unlinkedMatches, adminSiteMatches).ToList();
+        var updatedMatches = MatchHelper.GetRemovedMatches(linkedMatches, adminSiteMatches).ToList();
 
         await UpdateUnlinkedMatches(newLinkedMatches);
         await UpdateLinkedMatches(updatedMatches);
 
         // Sync live to infosite
-        var newOwpMatches = await GetOWPMatches(eventDate);
+        var newOwpMatches = await GetOwpMatches(eventDate);
         await syncLiveService.Handle(adminSiteMatches, newOwpMatches, eventDate);
     }
     
-    private async Task<IEnumerable<Match>> GetOWPMatches(DateTime eventDate)
-        => await dynamicRepository.FetchAsync<Match>(new GetMatchesFromOWPCriteria { EventDate = eventDate });
+    private async Task<IList<Match>> GetOwpMatches(DateTime eventDate)
+        => (await dynamicRepository.FetchAsync<Match>(new GetMatchesFromOwpCriteria { EventDate = eventDate })).ToList();
 
-    private async Task<IEnumerable<Match>> GetAdminSiteMatches(DateTime eventDate)
-        => await dynamicRepository.FetchAsync<Match>(new GetMatchesFromAdminSiteCriteria { EventDate = eventDate });
+    private async Task<IList<Match>> GetAdminSiteMatches(DateTime eventDate)
+        => (await dynamicRepository.FetchAsync<Match>(new GetMatchesFromAdminSiteCriteria { EventDate = eventDate })).ToList();
 
-    private async Task UpdateUnlinkedMatches(IEnumerable<LinkedMatch> matches)
+    private async Task UpdateUnlinkedMatches(IList<LinkedMatch> matches)
     {
         if (matches.Any())
         {
@@ -62,7 +59,7 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
         }
     }
 
-    private async Task UpdateLinkedMatches(IEnumerable<LinkedMatch> matches)
+    private async Task UpdateLinkedMatches(IList<LinkedMatch> matches)
     {
         if (matches.Any())
         {

@@ -1,8 +1,8 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.InfositeIdSync.Criteria;
 
-namespace OWP.InfositeIdSync.Criteria;
+using Fanex.Data.Repository;
 
-public class GetMatchesFromMainDBCriteria : CriteriaBase
+public class GetMatchesFromMainDbCriteria : CriteriaBase
 {
     public string AdminSiteIds { get; set; }
 

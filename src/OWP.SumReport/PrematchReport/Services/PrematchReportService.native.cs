@@ -1,7 +1,7 @@
-using OWP.SumReport.PrematchReport.Services.League;
-using OWP.SumReport.PrematchReport.Services.Match;
-
 namespace OWP.SumReport.PrematchReport.Services;
+
+using League;
+using Match;
 
 public interface PrematchReportService
 {

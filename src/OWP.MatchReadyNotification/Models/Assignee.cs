@@ -8,7 +8,7 @@ public class Assignee : IEqualityComparer<Assignee>
 
     public bool Equals(Assignee x, Assignee y)
     {
-        return x.AssigneeId == y.AssigneeId && x.AssigneeName == y.AssigneeName;
+        return x != null && y != null && x.AssigneeId == y.AssigneeId && x.AssigneeName == y.AssigneeName;
     }
 
     public int GetHashCode(Assignee obj)

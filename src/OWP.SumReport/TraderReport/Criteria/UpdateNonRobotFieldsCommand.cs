@@ -1,6 +1,6 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.SumReport.TraderReport.Criteria;
 
-namespace OWP.SumReport.TraderReport.Criteria;
+using Fanex.Data.Repository;
 
 public class UpdateNonRobotFieldsCommand : INonQueryCommand
 {

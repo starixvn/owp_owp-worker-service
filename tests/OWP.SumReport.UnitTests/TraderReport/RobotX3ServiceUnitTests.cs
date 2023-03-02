@@ -1,8 +1,8 @@
-﻿using OWP.SumReport.TraderReport.Models;
-using OWP.SumReport.TraderReport.Services;
-using Xunit;
+﻿namespace OWP.SumReport.UnitTests.TraderReport;
 
-namespace OWP.SumReport.UnitTests.TraderReport;
+using SumReport.TraderReport.Models;
+using SumReport.TraderReport.Services;
+using Xunit;
 
 public class RobotX3ServiceUnitTests
 {
@@ -14,40 +14,40 @@ public class RobotX3ServiceUnitTests
     }
 
     [Fact]
-    public void GroupConecutiveMatch_AssigmentEventDateTimeOver30_DifferentGroup()
+    public void GroupConsecutiveMatch_AssignmentEventDateTimeOver30_DifferentGroup()
     {
         var model1 = new RobotX3RawModel
         {
             EventDateTime = DateTime.Parse("03/16/2020 2:00:00 PM"),
-            OWPMatchId = 406897,
+            OwpMatchId = 406897,
             UserId = 8
         };
 
         var model2 = new RobotX3RawModel
         {
             EventDateTime = DateTime.Parse("03/17/2020 11:01:00 AM"),
-            OWPMatchId = 406913,
+            OwpMatchId = 406913,
             UserId = 8
         };
 
         var model3 = new RobotX3RawModel
         {
             EventDateTime = DateTime.Parse("03/17/2020 1:00:00 PM"),
-            OWPMatchId = 406934,
+            OwpMatchId = 406934,
             UserId = 8
         };
 
         var model4 = new RobotX3RawModel
         {
             EventDateTime = DateTime.Parse("03/18/2020 10:00:00 AM"),
-            OWPMatchId = 406950,
+            OwpMatchId = 406950,
             UserId = 8
         };
 
         var model5 = new RobotX3RawModel
         {
             EventDateTime = DateTime.Parse("03/27/2020 2:00:00 PM"),
-            OWPMatchId = 406987,
+            OwpMatchId = 406987,
             UserId = 8
         };
 
@@ -55,7 +55,7 @@ public class RobotX3ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/16/2020 2:00:00 PM"),
             MatchGroup = 1,
-            OWPMatchId = 406897,
+            OwpMatchId = 406897,
             UserId = 8
         };
 
@@ -63,7 +63,7 @@ public class RobotX3ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/17/2020 11:01:00 AM"),
             MatchGroup = 2,
-            OWPMatchId = 406913,
+            OwpMatchId = 406913,
             UserId = 8
         };
 
@@ -71,7 +71,7 @@ public class RobotX3ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/17/2020 1:00:00 PM"),
             MatchGroup = 3,
-            OWPMatchId = 406934,
+            OwpMatchId = 406934,
             UserId = 8
         };
 
@@ -79,7 +79,7 @@ public class RobotX3ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/18/2020 10:00:00 AM"),
             MatchGroup = 4,
-            OWPMatchId = 406950,
+            OwpMatchId = 406950,
             UserId = 8
         };
 
@@ -87,13 +87,13 @@ public class RobotX3ServiceUnitTests
         {
             EventDateTime = DateTime.Parse("03/27/2020 2:00:00 PM"),
             MatchGroup = 5,
-            OWPMatchId = 406987,
+            OwpMatchId = 406987,
             UserId = 8
         };
 
-        var assigmentList = new List<RobotX3RawModel> { model1, model2, model3, model4, model5 };
+        var assignmentList = new List<RobotX3RawModel> { model1, model2, model3, model4, model5 };
         var expected = new List<RobotX3RawGroupModel> { model6, model7, model8, model9, model10 };
-        var actual = robotX3Service.GroupConecutiveMatch(assigmentList);
+        var actual = robotX3Service.GroupConsecutiveMatch(assignmentList);
         for (var i = 0; i < actual.Count; i++)
         {
             Assert.True(actual[i].MatchGroup.Equals(expected[i].MatchGroup));
@@ -101,43 +101,43 @@ public class RobotX3ServiceUnitTests
     }
 
     [Fact]
-    public void GroupConecutiveMatch_AssigmentEventDateTimeWithin30_TogetherGroup()
+    public void GroupConsecutiveMatch_AssignmentEventDateTimeWithin30_TogetherGroup()
     {
         var assignmentList = new List<RobotX3RawModel>
             {
-                 new RobotX3RawModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:30:00 PM"),
-                      OWPMatchId = 347272,
+                      OwpMatchId = 347272,
                       UserId = 17013702
                  },
-                 new RobotX3RawModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:45:00 PM"),
-                      OWPMatchId = 347277,
+                      OwpMatchId = 347277,
                       UserId = 17013702
                  }
             };
 
         var expected = new List<RobotX3RawGroupModel>
             {
-                 new RobotX3RawGroupModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:30:00 PM"),
                       MatchGroup = 1,
-                      OWPMatchId = 347272,
+                      OwpMatchId = 347272,
                       UserId = 17013702
                  },
-                 new RobotX3RawGroupModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:45:00 PM"),
                       MatchGroup = 1,
-                      OWPMatchId = 347277,
+                      OwpMatchId = 347277,
                       UserId = 17013702
                  }
             };
 
-        var actual = robotX3Service.GroupConecutiveMatch(assignmentList);
+        var actual = robotX3Service.GroupConsecutiveMatch(assignmentList);
         for (var i = 0; i < actual.Count; i++)
         {
             Assert.True(actual[i].MatchGroup.Equals(expected[i].MatchGroup));
@@ -149,60 +149,60 @@ public class RobotX3ServiceUnitTests
     {
         var assignmentList = new List<RobotX3RawModel>
             {
-                 new RobotX3RawModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("03/16/2020 2:00:00 PM"),
-                      OWPMatchId = 406897,
+                      OwpMatchId = 406897,
                       UserId = 8
                  },
-                 new RobotX3RawModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("03/17/2020 11:01:00 AM"),
-                      OWPMatchId = 406913,
+                      OwpMatchId = 406913,
                       UserId = 8
                  },
-                 new RobotX3RawModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("03/17/2020 1:00:00 PM"),
-                      OWPMatchId = 406934,
+                      OwpMatchId = 406934,
                       UserId = 8
                  },
-                 new RobotX3RawModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("03/18/2020 10:00:00 AM"),
-                      OWPMatchId = 406950,
+                      OwpMatchId = 406950,
                       UserId = 8
                  },
-                  new RobotX3RawModel
-                 {
+                  new()
+                  {
                       EventDateTime = DateTime.Parse("03/27/2020 2:00:00 PM"),
-                      OWPMatchId = 406987,
+                      OwpMatchId = 406987,
                       UserId = 8
                  },
-                  new RobotX3RawModel
-                 {
+                  new()
+                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:30:00 PM"),
-                      OWPMatchId = 347272,
+                      OwpMatchId = 347272,
                       UserId = 17013702
                  },
-                 new RobotX3RawModel
+                 new()
                  {
                       EventDateTime = DateTime.Parse("04/02/2020 1:45:00 PM"),
-                      OWPMatchId = 347277,
+                      OwpMatchId = 347277,
                       UserId = 17013702
                  }
             };
 
         var expected = new List<RobotX3ByUser>
             {
-                new RobotX3ByUser
+                new()
                 {
                     UserId = 8,
                     X2 = 0,
                     X3 = 0,
                     X3Plus = 0
                 },
-                new RobotX3ByUser
+                new()
                 {
                     UserId = 17013702,
                     X2 = 1,

@@ -1,16 +1,22 @@
 ﻿namespace OWP.OtherSport.SyncAdminSiteId.Models;
 
+using Olympus.Xml;
+
 public class LinkedMatch
 {
-    public int OSMatchId { get; set; }
+    [XmlName("OSMatchId")]
+    public int OsMatchId { get; set; }
 
     public int? AdminSiteMatchId { get; set; }
 
-    public string OWPLeague { get; set; }
+    [XmlName("OWPLeague")]
+    public string OwpLeague { get; set; }
 
-    public string OWPHome { get; set; }
+    [XmlName("OWPHome")]
+    public string OwpHome { get; set; }
 
-    public string OWPAway { get; set; }
+    [XmlName("OWPAway")]
+    public string OwpAway { get; set; }
 
     public int? OldAdminSiteMatchId { get; set; }
 

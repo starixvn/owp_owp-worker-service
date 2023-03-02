@@ -2,7 +2,7 @@
 
 public class TotalDataMatch
 {
-    public int OWPLeagueId { get; set; }
+    public int OwpLeagueId { get; set; }
 
     public int Total { get; set; }
 

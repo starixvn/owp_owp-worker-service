@@ -1,15 +1,14 @@
-using Microsoft.Extensions.DependencyInjection;
-using OWP.ArchiveData.Services;
+namespace OWP.ArchiveData;
 
-namespace OWP.ArchiveData
+using Microsoft.Extensions.DependencyInjection;
+using Services;
+
+public static class DependenceInjection
 {
-  public static class DependenceInjection
-  {
     public static IServiceCollection AddArchiveDataServices(this IServiceCollection services)
     {
-      services.AddTransient<Repository, RepositoryImp>();
-      services.AddTransient<ArchiveDataService, ArchiveDataServiceImp>();
-      return services;
+        services.AddTransient<Repository, RepositoryImp>();
+        services.AddTransient<ArchiveDataService, ArchiveDataServiceImp>();
+        return services;
     }
-  }
 }

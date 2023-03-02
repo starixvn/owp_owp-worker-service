@@ -1,22 +1,15 @@
-﻿using Fanex.Caching;
-using Fanex.Data.Repository;
-using Fanex.Logging;
-using Newtonsoft.Json;
-using OWP.Core.RabbitMq;
-using OWP.Core.RabbitMq.Models;
-using OWP.Infosite.Constants;
-using OWP.Infosite.Criteria;
-using OWP.Infosite.Models;
-using System.Globalization;
+﻿namespace OWP.Infosite.Services;
 
-namespace OWP.Infosite.Services;
+using Fanex.Caching;
+using Fanex.Data.Repository;
+using RabbitMq;
 
 public interface TodaySyncService : SyncService
 {
 }
 
 public class TodaySyncServiceImp : SyncServiceImp, TodaySyncService
-{    
+{
     private readonly UpdateInfositeIdService updateInfositeIdService;
 
     public TodaySyncServiceImp(
@@ -33,7 +26,7 @@ public class TodaySyncServiceImp : SyncServiceImp, TodaySyncService
 
     public async Task Sync()
     {
-        var today = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
+        var today = DateTime.Today;
 
         await Sync(today, true);
         await Sync(today.AddDays(1), true);

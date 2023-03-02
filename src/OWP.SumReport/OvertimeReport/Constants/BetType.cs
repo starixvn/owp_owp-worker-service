@@ -1,6 +1,6 @@
-﻿using System.Collections.Immutable;
+﻿namespace OWP.SumReport.OvertimeReport.Constants;
 
-namespace OWP.SumReport.OvertimeReport.Constants;
+using System.Collections.Immutable;
 
 public static class BetType
 {
@@ -12,21 +12,21 @@ public static class BetType
             CornerMinorBettype.NumberOf,
             CornerMinorBettype.Next,
             CornerMinorBettype.Last,
-            CornerMinorBettype.HomeSingleTeamOU,
-            CornerMinorBettype.AwaySingleTeamOU
+            CornerMinorBettype.HomeSingleTeamOu,
+            CornerMinorBettype.AwaySingleTeamOu
         );
 
     public static readonly ImmutableList<int> FullTimeBetTypes =
         ImmutableList.Create(
             FullTimeBetType.Handicap,
             FullTimeBetType.OverUnder,
-            FullTimeBetType.FT1X2
+            FullTimeBetType.Ft1X2
         );
 
     public static readonly ImmutableList<int> FullTimeMinorBetTypes =
         ImmutableList.Create(
-            FullTimeBetType.FM,
-            FullTimeBetType.AIO
+            FullTimeBetType.Fm,
+            FullTimeBetType.Aio
         );
 
     public static readonly ImmutableList<int> FirstHalfBetTypes =
@@ -42,11 +42,11 @@ public static class BetType
 
         public const int OverUnder = 3;
 
-        public const int FT1X2 = 5;
+        public const int Ft1X2 = 5;
 
-        public const int FM = -88;
+        public const int Fm = -88;
 
-        public const int AIO = -89;
+        public const int Aio = -89;
 
         public bool Equals(FullTimeBetType other)
         {
@@ -90,9 +90,9 @@ public static class BetType
 
         public const int Last = -90;
 
-        public const int HomeSingleTeamOU = -94;
+        public const int HomeSingleTeamOu = -94;
 
-        public const int AwaySingleTeamOU = -95;
+        public const int AwaySingleTeamOu = -95;
 
         public bool Equals(CornerMinorBettype other)
         {

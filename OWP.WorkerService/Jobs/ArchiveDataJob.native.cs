@@ -1,9 +1,9 @@
-﻿using Fanex.Logging;
-using ONEbook.UM.Services;
-using OWP.ArchiveData.Services;
-using Quartz;
+﻿namespace OWP.WorkerService.Jobs;
 
-namespace OWP.WorkerService.Jobs;
+using ArchiveData.Services;
+using Fanex.Logging;
+using ONEbook.UM.Services;
+using Quartz;
 
 [DisallowConcurrentExecution]
 public class ArchiveDataJob : IJob
@@ -37,7 +37,7 @@ public class ArchiveDataJob : IJob
             return;
         }
 
-        await LogService.InfoAsync($"Job {this.GetType()} is starting at {DateTime.Now}");
+        await LogService.InfoAsync($"Job {GetType()} is starting at {DateTime.Now}");
         await archiveDataService.CopyDataToOldTable(DateTime.Today).ConfigureAwait(false);
         await archiveDataService.DeleteOldData(DateTime.Today).ConfigureAwait(false);
         await archiveDataService.DeleteOldNotify(DateTime.Today).ConfigureAwait(false);

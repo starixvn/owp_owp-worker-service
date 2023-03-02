@@ -1,23 +1,23 @@
-﻿using OWP.Core.Extensions;
-using OWP.SumReport.LAReport.Enum;
-using OWP.SumReport.LAReport.Factory;
-using OWP.SumReport.LAReport.Models;
+﻿namespace OWP.SumReport.LAReport.Services;
 
-namespace OWP.SumReport.LAReport.Services;
+using Enum;
+using Extensions;
+using Factory;
+using Models;
 
 public interface CalculationService
 {
-    Task<IEnumerable<LAReportModel>> Calculate(DateTime eventDate, bool isGenerateData);
+    Task<IEnumerable<LaReportModel>> Calculate(DateTime eventDate, bool isGenerateData);
 }
 
 public class CalculationServiceImp : CalculationService
 {
-    private readonly LARepository repository;
+    private readonly LaRepository repository;
     private readonly SpecialProductFactory specialProductFactory;
     private readonly MainMatchRuleFactory mainMatchRuleFactory;
     private readonly SingleMatchesFactory singleMatchesFactory;
 
-    public CalculationServiceImp(LARepository repository, SpecialProductFactory specialProductFactory,
+    public CalculationServiceImp(LaRepository repository, SpecialProductFactory specialProductFactory,
         MainMatchRuleFactory mainMatchRuleFactory, SingleMatchesFactory singleMatchesFactory)
     {
         this.repository = repository;
@@ -26,7 +26,7 @@ public class CalculationServiceImp : CalculationService
         this.singleMatchesFactory = singleMatchesFactory;
     }
 
-    public async Task<IEnumerable<LAReportModel>> Calculate(DateTime eventDate, bool isGenerateData)
+    public async Task<IEnumerable<LaReportModel>> Calculate(DateTime eventDate, bool isGenerateData)
     {
         var assignments = await GetAssignmentDict(eventDate, isGenerateData);
         var userSections = await repository.GetUserSection();
@@ -34,14 +34,14 @@ public class CalculationServiceImp : CalculationService
         return Calculate(assignments, userSections);
     }
 
-    private IEnumerable<LAReportModel> Calculate(IDictionary<int, List<Assignment>> assignments,
+    private IEnumerable<LaReportModel> Calculate(IDictionary<int, List<Assignment>> assignments,
         Dictionary<int, string> userSections)
     {
         var userIds = assignments.Select(x => x.Key);
         foreach (var id in userIds)
         {
-            var categoriedAssignment = CategorizeAssignments(assignments[id]);
-            var reportModel = SumUpAssignments(id, categoriedAssignment);
+            var categorizeAssignments = CategorizeAssignments(assignments[id]);
+            var reportModel = SumUpAssignments(id, categorizeAssignments);
             reportModel.Username = userSections.GetValue(id, string.Empty);
 
             yield return reportModel;
@@ -50,7 +50,7 @@ public class CalculationServiceImp : CalculationService
 
     private async Task<IDictionary<int, List<Assignment>>> GetAssignmentDict(DateTime eventDate, bool isGenerateData)
     {
-        var assignments = await repository.GetLAAssignment(eventDate, isGenerateData);
+        var assignments = await repository.GetLaAssignment(eventDate, isGenerateData);
 
         var assignmentsDict = assignments.GroupBy(x => x.UserId)
             .Where(x => x.Any())
@@ -63,37 +63,36 @@ public class CalculationServiceImp : CalculationService
     {
         var result = new List<Assignment>();
 
-        var notCornerRule = specialProductFactory.Create(RuleType.NOT_CORNER);
-        var cornerRule = specialProductFactory.Create(RuleType.CORNER);
+        var notCornerRule = specialProductFactory.Create(RuleType.NotCorner);
+        var cornerRule = specialProductFactory.Create(RuleType.Corner);
         notCornerRule.SetSuccessor(cornerRule);
 
-        var ftCorner5MLRule = mainMatchRuleFactory.Create(RuleType.FT_CORNER_FIVE_MAJOR_LEAGUE);
-        var ftCornerRule = mainMatchRuleFactory.Create(RuleType.FT_CORNER);
-        var fantasyRule = mainMatchRuleFactory.Create(RuleType.FANTASY);
-        var eSoccerRule = mainMatchRuleFactory.Create(RuleType.ESOCCER);
-        var fiveMajorLeagueRule = mainMatchRuleFactory.Create(RuleType.FIVE_MAJOR_LEAGUE);
+        var ftCorner5MlRule = mainMatchRuleFactory.Create(RuleType.FtCornerFiveMajorLeague);
+        var ftCornerRule = mainMatchRuleFactory.Create(RuleType.FtCorner);
+        var fantasyRule = mainMatchRuleFactory.Create(RuleType.Fantasy);
+        var eSoccerRule = mainMatchRuleFactory.Create(RuleType.ESoccer);
+        var fiveMajorLeagueRule = mainMatchRuleFactory.Create(RuleType.FiveMajorLeague);
 
-        ftCorner5MLRule.SetSuccessor(ftCornerRule);
+        ftCorner5MlRule.SetSuccessor(ftCornerRule);
         ftCornerRule.SetSuccessor(fantasyRule);
         fantasyRule.SetSuccessor(eSoccerRule);
         eSoccerRule.SetSuccessor(fiveMajorLeagueRule);
 
         foreach (var assignment in assignments)
         {
-            var report = assignment;
             assignment.ReportType = assignment.MinorBettypeId.HasValue
                 ? notCornerRule.Execute(assignment, assignments)
-                : ftCorner5MLRule.Execute(assignment, assignments);
+                : ftCorner5MlRule.Execute(assignment, assignments);
 
-            result.Add(report);
+            result.Add(assignment);
         }
 
         return result;
     }
 
-    private LAReportModel SumUpAssignments(int userId, IList<Assignment> assignments)
+    private LaReportModel SumUpAssignments(int userId, IList<Assignment> assignments)
     {
-        var sumUpResult = new LAReportModel { UserId = userId };
+        var sumUpResult = new LaReportModel { UserId = userId };
         SumUpSpecialAndMixedAndESoccer(assignments, sumUpResult);
         SumUpMultiple(assignments, sumUpResult);
         SumUpSingleAndOthers(assignments, sumUpResult);
@@ -101,35 +100,35 @@ public class CalculationServiceImp : CalculationService
         return sumUpResult;
     }
 
-    private static void SumUpSpecialAndMixedAndESoccer(IList<Assignment> assignments, LAReportModel sumUpResult)
+    private static void SumUpSpecialAndMixedAndESoccer(IList<Assignment> assignments, LaReportModel sumUpResult)
     {
         //SPECIAL PRODUCTS
-        var tbookingProducts = assignments.Where(x => x.ReportType == ReportType.TOTAL_BOOKING_PLUS)
+        var totalBookingProducts = assignments.Where(x => x.ReportType == ReportType.TotalBookingPlus)
             .GroupBy(x => x.ParentMatchId).Select(y => y.Key);
-        var cornerProducts = assignments.Where(x => x.ReportType == ReportType.CORNER_PLUS)
+        var cornerProducts = assignments.Where(x => x.ReportType == ReportType.CornerPlus)
             .GroupBy(x => x.ParentMatchId).Select(y => y.Key);
-        var fantasyProducts = assignments.Where(x => x.ReportType == ReportType.FANTASY);
-        var goalKickProducts = assignments.Where(x => x.ReportType == ReportType.GOAL_KICK)
+        var fantasyProducts = assignments.Where(x => x.ReportType == ReportType.Fantasy);
+        var goalKickProducts = assignments.Where(x => x.ReportType == ReportType.GoalKick)
             .GroupBy(x => x.ParentMatchId).Select(y => y.Key);
-        var otherProducts = assignments.Where(x => x.ReportType == ReportType.OTHER_SPECIAL_PRODUCTS);
+        var otherProducts = assignments.Where(x => x.ReportType == ReportType.OtherSpecialProducts);
 
         //MIXED PRODUCTS
-        var ftCornerProduct = assignments.Where(x => x.ReportType == ReportType.FT_CORNER && x.ParentMatchId.HasValue)
+        var ftCornerProduct = assignments.Where(x => x.ReportType == ReportType.FtCorner && x.ParentMatchId.HasValue)
             .GroupBy(x => x.ParentMatchId).Select(y => y.Key);
-        var ftCorner5MLProduct = assignments.Where(x => x.ReportType == ReportType.FT_CORNER_5ML && x.ParentMatchId.HasValue)
+        var ftCorner5MlProduct = assignments.Where(x => x.ReportType == ReportType.FtCorner5Ml && x.ParentMatchId.HasValue)
             .GroupBy(x => x.ParentMatchId).Select(y => y.Key);
 
         //ESOCCER
-        var esoccer5Mins = assignments.Where(x => x.ReportType == ReportType.ESOCCER_5MINS);
-        var esoccer6Mins = assignments.Where(x => x.ReportType == ReportType.ESOCCER_6MINS);
-        var esoccer15Mins = assignments.Where(x => x.ReportType == ReportType.ESOCCER_15MINS);
-        var esoccer16Mins = assignments.Where(x => x.ReportType == ReportType.ESOCCER_16MINS);
-        var esoccer20Mins = assignments.Where(x => x.ReportType == ReportType.ESOCCER_20MINS);
+        var esoccer5Mins = assignments.Where(x => x.ReportType == ReportType.Esoccer5Mins);
+        var esoccer6Mins = assignments.Where(x => x.ReportType == ReportType.Esoccer6Mins);
+        var esoccer15Mins = assignments.Where(x => x.ReportType == ReportType.Esoccer15Mins);
+        var esoccer16Mins = assignments.Where(x => x.ReportType == ReportType.Esoccer16Mins);
+        var esoccer20Mins = assignments.Where(x => x.ReportType == ReportType.Esoccer20Mins);
 
         //5ML
-        var fiveML = assignments.Where(x => x.ReportType == ReportType.MAJOR_LEAGUE);
+        var fiveMl = assignments.Where(x => x.ReportType == ReportType.MajorLeague);
 
-        sumUpResult.TBookingPlus = tbookingProducts.Count();
+        sumUpResult.BookingPlus = totalBookingProducts.Count();
         sumUpResult.CornerPlus = cornerProducts.Count();
         sumUpResult.Fantasy = fantasyProducts.Count();
         sumUpResult.GoalKick = goalKickProducts.Count();
@@ -139,40 +138,40 @@ public class CalculationServiceImp : CalculationService
         sumUpResult.ESoccer15Mins = esoccer15Mins.Count();
         sumUpResult.ESoccer16Mins = esoccer16Mins.Count();
         sumUpResult.ESoccer20Mins = esoccer20Mins.Count();
-        sumUpResult.FTCorner = ftCornerProduct.Count();
-        sumUpResult.FiveMajorLeague = fiveML.Count();
-        sumUpResult.FTCorner5ML = ftCorner5MLProduct.Count();
+        sumUpResult.FtCorner = ftCornerProduct.Count();
+        sumUpResult.FiveMajorLeague = fiveMl.Count();
+        sumUpResult.FtCorner5Ml = ftCorner5MlProduct.Count();
     }
 
-    private void SumUpMultiple(IList<Assignment> assignments, LAReportModel sumUpResult)
+    private static void SumUpMultiple(IList<Assignment> assignments, LaReportModel sumUpResult)
     {
-        var othersTypeAssignments = assignments.Where(x => x.ReportType == ReportType.OTHERS);
+        var othersTypeAssignments = assignments.Where(x => x.ReportType == ReportType.Others);
         var consecutiveMultipleMatchesAssignments = GroupMultipleMatches(othersTypeAssignments);
-        var matchGroupAsignments = consecutiveMultipleMatchesAssignments
+        var matchGroupAssignments = consecutiveMultipleMatchesAssignments
             .GroupBy(i => i.LinkGroup)
             .Select(i => new { LinkGroup = i, MatchCount = i.Count() })
             .ToArray();
-        var multipleMatchGroup = matchGroupAsignments.Where(x => x.MatchCount > 1).Select(x => x.LinkGroup).Select(x => x.Key);
+        var multipleMatchGroup = matchGroupAssignments.Where(x => x.MatchCount > 1).Select(x => x.LinkGroup).Select(x => x.Key);
         var multipleLinkAssignments = assignments.Where(x => multipleMatchGroup.Contains(x.LinkGroup)).ToList();
-        multipleLinkAssignments.ToList().ForEach(x => { x.ReportType = ReportType.MULTIPLE_MATCHES; });
+        multipleLinkAssignments.ToList().ForEach(x => { x.ReportType = ReportType.MultipleMatches; });
 
-        sumUpResult.Link2 = matchGroupAsignments.Count(x => x.MatchCount == 2);
-        sumUpResult.Link3 = matchGroupAsignments.Count(x => x.MatchCount == 3);
-        sumUpResult.Link4 = matchGroupAsignments.Count(x => x.MatchCount == 4);
-        sumUpResult.Link5 = matchGroupAsignments.Count(x => x.MatchCount == 5);
-        sumUpResult.Link6 = matchGroupAsignments.Count(x => x.MatchCount == 6);
-        sumUpResult.Link7 = matchGroupAsignments.Count(x => x.MatchCount == 7);
-        sumUpResult.Link8Plus = matchGroupAsignments.Count(x => x.MatchCount >= 8);
+        sumUpResult.Link2 = matchGroupAssignments.Count(x => x.MatchCount == 2);
+        sumUpResult.Link3 = matchGroupAssignments.Count(x => x.MatchCount == 3);
+        sumUpResult.Link4 = matchGroupAssignments.Count(x => x.MatchCount == 4);
+        sumUpResult.Link5 = matchGroupAssignments.Count(x => x.MatchCount == 5);
+        sumUpResult.Link6 = matchGroupAssignments.Count(x => x.MatchCount == 6);
+        sumUpResult.Link7 = matchGroupAssignments.Count(x => x.MatchCount == 7);
+        sumUpResult.Link8Plus = matchGroupAssignments.Count(x => x.MatchCount >= 8);
     }
 
-    private void SumUpSingleAndOthers(IEnumerable<Assignment> assignments, LAReportModel sumUpResult)
+    private void SumUpSingleAndOthers(IEnumerable<Assignment> assignments, LaReportModel sumUpResult)
     {
-        var singleMatchesRule = singleMatchesFactory.Create(RuleType.SINGLE);
-        var othersTypeAssignments = assignments.Where(x => x.ReportType == ReportType.OTHERS);
+        var singleMatchesRule = singleMatchesFactory.Create(RuleType.Single);
+        var othersTypeAssignments = assignments.Where(x => x.ReportType == ReportType.Others);
 
         var singleMatchesMixedProductCount = 0;
         var singleMatchesProviderCount = 0;
-        var singleMatchesTVCount = 0;
+        var singleMatchesTvCount = 0;
         var singleMatchesReporterCount = 0;
         var othersCounts = 0;
         var otherMatchIds = new List<int>();
@@ -182,38 +181,38 @@ public class CalculationServiceImp : CalculationService
             var reportType = singleMatchesRule.Execute(assignment);
             switch (reportType)
             {
-                case ReportType.MIXED_PROVIDER_TV_REPORTER:
+                case ReportType.MixedProviderTvReporter:
                     singleMatchesMixedProductCount += 1;
                     break;
 
-                case ReportType.ONLY_PROVIDER:
+                case ReportType.OnlyProvider:
                     singleMatchesProviderCount += 1;
                     break;
 
-                case ReportType.ONLY_TV:
-                    singleMatchesTVCount += 1;
+                case ReportType.OnlyTv:
+                    singleMatchesTvCount += 1;
                     break;
 
-                case ReportType.ONLY_REPORTER:
+                case ReportType.OnlyReporter:
                     singleMatchesReporterCount += 1;
                     break;
 
                 default:
                     othersCounts += 1;
-                    otherMatchIds.Add(assignment.OWPMatchId);
+                    otherMatchIds.Add(assignment.OwpMatchId);
                     break;
             }
         }
 
-        sumUpResult.MixedProviderTVReporter = singleMatchesMixedProductCount;
+        sumUpResult.MixedProviderTvReporter = singleMatchesMixedProductCount;
         sumUpResult.OnlyProvider = singleMatchesProviderCount;
-        sumUpResult.OnlyTV = singleMatchesTVCount;
+        sumUpResult.OnlyTv = singleMatchesTvCount;
         sumUpResult.OnlyReporter = singleMatchesReporterCount;
         sumUpResult.Others = othersCounts;
         sumUpResult.OtherProductMatchIds = string.Join(",", otherMatchIds.Distinct());
     }
 
-    private static List<Assignment> GroupMultipleMatches(IEnumerable<Assignment> assignments)
+    private static IEnumerable<Assignment> GroupMultipleMatches(IEnumerable<Assignment> assignments)
     {
         var result = new List<Assignment>();
         var group = 1;
@@ -229,9 +228,9 @@ public class CalculationServiceImp : CalculationService
             var key = dateAssignments.Key;
             groupedAssignments[key][0].LinkGroup = group;
 
-            for (int i = 1; i < groupedAssignments[key].Count; i++)
+            for (var i = 1; i < groupedAssignments[key].Count; i++)
             {
-                var isLinked = IsKOTimeDifferentWithin45Mins(groupedAssignments[key][i], groupedAssignments[key][i - 1]);
+                var isLinked = IsKoTimeDifferentWithin45Mins(groupedAssignments[key][i], groupedAssignments[key][i - 1]);
 
                 group = isLinked ? group : group + 1;
                 groupedAssignments[key][i].LinkGroup = group;
@@ -245,7 +244,7 @@ public class CalculationServiceImp : CalculationService
         return result;
     }
 
-    private static bool IsKOTimeDifferentWithin45Mins(Assignment assignmentA, Assignment assignmentB)
+    private static bool IsKoTimeDifferentWithin45Mins(Assignment assignmentA, Assignment assignmentB)
     {
         const int differenceInMinute = 45;
         return Math.Abs(assignmentA.EventDateTime.Subtract(assignmentB.EventDateTime).TotalMinutes) <= differenceInMinute;

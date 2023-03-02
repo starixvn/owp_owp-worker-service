@@ -1,15 +1,16 @@
-﻿using NSubstitute;
-using OWP.SumReport.PrematchReport.Models;
+﻿namespace OWP.SumReport.UnitTests.Prematch.Services.League;
+
+using NSubstitute;
+using OWP.SumReport.PrematchReport.Constants;
+using PrematchReport.Models;
 using OWP.SumReport.PrematchReport.Services;
 using OWP.SumReport.PrematchReport.Services.League;
 using Xunit;
 using Xunit.Asserts.Compare;
 
-namespace OWP.SumReport.PrematchReport.UnitTests.Services.League;
-
 public class DataReportServiceUnitTests
 {
-    private DbWriterService dbWriterService;
+    private readonly DbWriterService dbWriterService;
 
     public DataReportServiceUnitTests()
     {
@@ -24,7 +25,7 @@ public class DataReportServiceUnitTests
         var leagueInfos = MockLeagueInfo();
 
         //Act
-        var actual = service.BuildSingleLeagueGroupReport(leagueInfos, Constants.Constant.HDPID);
+        var actual = service.BuildSingleLeagueGroupReport(leagueInfos, Constant.HdpId);
 
         //Assert
         var expected = MockExpected();
@@ -34,47 +35,47 @@ public class DataReportServiceUnitTests
     public List<LeagueInfo> MockLeagueInfo()
       => new()
       {
-          new()
+          new LeagueInfo
           {
               EventDate = new DateTime(2020, 10, 2),
               GroupId = 0,
-              OWPLeagueId = 1,
-              UserId = 8,
+              OwpLeagueId = 1,
+              UserId = 8
           },
-          new()
+          new LeagueInfo
           {
               EventDate = new DateTime(2020, 10, 2),
               GroupId = 0,
-              OWPLeagueId = 1,
-              UserId = 12,
+              OwpLeagueId = 1,
+              UserId = 12
           },
-          new()
+          new LeagueInfo
           {
               EventDate = new DateTime(2020, 10, 2),
               GroupId = 0,
-              OWPLeagueId = 10,
-              UserId = 8,
+              OwpLeagueId = 10,
+              UserId = 8
           }
       };
 
     public List<DataReport> MockExpected()
       => new()
       {
-          new()
+          new DataReport
           {
               UserId = 8,
               Amount = 2,
               BetType = 1,
               EventDate = new DateTime(2020, 10, 2),
-              GroupId = 0,
+              GroupId = 0
           },
-          new()
+          new DataReport
           {
               UserId = 12,
               Amount = 1,
               BetType = 1,
               EventDate = new DateTime(2020, 10, 2),
-              GroupId = 0,
-          },
+              GroupId = 0
+          }
       };
 }

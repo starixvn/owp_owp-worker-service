@@ -1,8 +1,8 @@
-﻿using OWP.Core.Extensions;
-using OWP.SumReport.TraderReport.Enum;
-using OWP.SumReport.TraderReport.Models;
+﻿namespace OWP.SumReport.TraderReport.Services;
 
-namespace OWP.SumReport.TraderReport.Services;
+using Enum;
+using Extensions;
+using Models;
 
 public interface ESoccerService
 {
@@ -35,11 +35,11 @@ public class ESoccerServiceImp : ESoccerService
         foreach (var userId in saBaAssignmentDict.Keys)
         {
             var assignments = saBaAssignmentDict[userId];
-            var eSoccer5Mins = assignments.Where(x => x.ReportType == ReportType.ESOCCER_5MINS);
-            var eSoccer6Mins = assignments.Where(x => x.ReportType == ReportType.ESOCCER_6MINS);
-            var eSoccer15Mins = assignments.Where(x => x.ReportType == ReportType.ESOCCER_15MINS);
-            var eSoccer16Mins = assignments.Where(x => x.ReportType == ReportType.ESOCCER_16MINS);
-            var eSoccer20Mins = assignments.Where(x => x.ReportType == ReportType.ESOCCER_20MINS);
+            var eSoccer5Mins = assignments.Where(x => x.ReportType == ReportType.Esoccer5Mins);
+            var eSoccer6Mins = assignments.Where(x => x.ReportType == ReportType.Esoccer6Mins);
+            var eSoccer15Mins = assignments.Where(x => x.ReportType == ReportType.Esoccer15Mins);
+            var eSoccer16Mins = assignments.Where(x => x.ReportType == ReportType.Esoccer16Mins);
+            var eSoccer20Mins = assignments.Where(x => x.ReportType == ReportType.Esoccer20Mins);
 
             yield return new ESoccerByUser
             {
@@ -54,35 +54,32 @@ public class ESoccerServiceImp : ESoccerService
     }
 
     private static int CountESoccer(IEnumerable<Assignment> eSoccer5Mins)
-        => eSoccer5Mins.Select(x => x.OWPMatchId).Distinct().Count();
+        => eSoccer5Mins.Select(x => x.OwpMatchId).Distinct().Count();
 
     private static ReportType MapReportType(Assignment assignment)
     {
-        if (assignment.OWPLeagueName.IsContainsIgnoreCase("- 5 Mins Play"))
+        if (assignment.OwpLeagueName.IsContainsIgnoreCase("- 5 Mins Play"))
         {
-            return ReportType.ESOCCER_5MINS;
+            return ReportType.Esoccer5Mins;
         }
 
-        if (assignment.OWPLeagueName.IsContainsIgnoreCase("- 6 Mins Play"))
+        if (assignment.OwpLeagueName.IsContainsIgnoreCase("- 6 Mins Play"))
         {
-            return ReportType.ESOCCER_6MINS;
+            return ReportType.Esoccer6Mins;
         }
 
-        if (assignment.OWPLeagueName.IsContainsIgnoreCase("- 15 Mins Play"))
+        if (assignment.OwpLeagueName.IsContainsIgnoreCase("- 15 Mins Play"))
         {
-            return ReportType.ESOCCER_15MINS;
+            return ReportType.Esoccer15Mins;
         }
 
-        if (assignment.OWPLeagueName.IsContainsIgnoreCase("- 16 Mins Play"))
+        if (assignment.OwpLeagueName.IsContainsIgnoreCase("- 16 Mins Play"))
         {
-            return ReportType.ESOCCER_16MINS;
+            return ReportType.Esoccer16Mins;
         }
 
-        if (assignment.OWPLeagueName.IsContainsIgnoreCase("- 20 Mins Play"))
-        {
-            return ReportType.ESOCCER_20MINS;
-        }
-
-        return 0;
+        return assignment.OwpLeagueName.IsContainsIgnoreCase("- 20 Mins Play") 
+            ? ReportType.Esoccer20Mins 
+            : 0;
     }
 }

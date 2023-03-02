@@ -1,14 +1,15 @@
-﻿using OWP.Core.Extensions;
-using OWP.SyncLeagueSettings.Constants;
-using OWP.SyncLeagueSettings.Helpers;
-using OWP.SyncLeagueSettings.Models;
-namespace OWP.SyncLeagueSettings.Services;
+﻿namespace OWP.SyncLeagueSettings.Services;
+
+using Constants;
+using Extensions;
+using Helpers;
+using Models;
 
 public interface LeagueSettingsService
 {
     Task InsertNewLeagueSettings(DateTime date);
 
-    List<LeagueSetting> CreateNewLeaguesSettings(DateTime date, IEnumerable<Match> matches, IEnumerable<TvCondition> tvConditions);
+    List<LeagueSetting> CreateNewLeaguesSettings(DateTime date, IList<Match> matches, IList<TvCondition> tvConditions);
 }
 
 public class LeagueSettingsServiceImp : LeagueSettingsService
@@ -58,14 +59,14 @@ public class LeagueSettingsServiceImp : LeagueSettingsService
     public async Task InsertNewLeagueSettings(DateTime date)
     {
         var matchesAndSettings = await repository.GetMatchesAndSettings(date);
-        var matches = matchesAndSettings.Item1;
+        var matches = matchesAndSettings.Item1.ToList();
 
         foreach (var match in matches)
         {
-            match.MatchSettings = matchesAndSettings.Item2.Where(x => x.OWPMatchId == match.OWPMatchId).ToList();
+            match.MatchSettings = matchesAndSettings.Item2.Where(x => x.OwpMatchId == match.OwpMatchId).ToList();
         }
 
-        var tvConditions = await repository.GetAllTvConditions();
+        var tvConditions = (await repository.GetAllTvConditions()).ToList();
         var leagueSettings = CreateNewLeaguesSettings(date, matches, tvConditions);
 
         var insertLeagueSettingsResponses = await repository.InsertNewLeaguesSettings(leagueSettings);
@@ -74,24 +75,24 @@ public class LeagueSettingsServiceImp : LeagueSettingsService
         {
             var leagueSettingCondition = new LeagueSettingCondition
             {
-                HasTV = leagueSetting.HasTV,
-                LeagueSettingId = leagueSetting.LeagueSettingId,
+                HasTv = leagueSetting.HasTv,
+                LeagueSettingId = leagueSetting.LeagueSettingId
             };
 
             await repository.UpdateLeagueSettingFullCondition(leagueSettingCondition);
         }
     }
 
-    public List<LeagueSetting> CreateNewLeaguesSettings(DateTime date, IEnumerable<Match> matches, IEnumerable<TvCondition> tvConditions)
+    public List<LeagueSetting> CreateNewLeaguesSettings(DateTime date, IList<Match> matches, IList<TvCondition> tvConditions)
     {
-        var leagueIds = matches.Select(x => x.OWPLeagueId).Distinct();
+        var leagueIds = matches.Select(x => x.OwpLeagueId).Distinct();
         var monday = FindLastWeekDay(date, DayOfWeek.Monday); //12PM GMT+8
         var friday = FindLastWeekDay(date, DayOfWeek.Saturday).AddMinutes(-1); //11:59AM GMT+8
         var saturday = FindLastWeekDay(date, DayOfWeek.Saturday); //12PM GMT+8
         var sunday = FindLastWeekDay(date, DayOfWeek.Sunday).AddDays(1).AddMinutes(-1); //11:59AM GMT+8
 
-        var weekdayMatches = matches.Where(x => MatchHelpers.IsInRangeMatch(x, monday, friday));
-        var weekendMatches = matches.Where(x => MatchHelpers.IsInRangeMatch(x, saturday, sunday));
+        var weekdayMatches = matches.Where(x => MatchHelpers.IsInRangeMatch(x, monday, friday)).ToList();
+        var weekendMatches = matches.Where(x => MatchHelpers.IsInRangeMatch(x, saturday, sunday)).ToList();
 
         var result = new List<LeagueSetting>();
 
@@ -106,21 +107,21 @@ public class LeagueSettingsServiceImp : LeagueSettingsService
             var weekendFromDate = latestWeekend.AddDays(-1).AddHours(12);
             var weekendToDate = latestWeekend.AddHours(11).AddMinutes(59);
 
-            var weekdayMatchesWithTV =
+            var weekdayMatchesWithTv =
                 MatchHelpers.FindMatchesWithTv(weekdayMatches, leagueId, weekdayFromDate, weekdayToDate, tvConditions);
-            var weekendMatchesWithTV =
+            var weekendMatchesWithTv =
                 MatchHelpers.FindMatchesWithTv(weekendMatches, leagueId, weekendFromDate, weekendToDate, tvConditions);
 
-            var weekdayMatchesWithoutTV =
+            var weekdayMatchesWithoutTv =
                 MatchHelpers.FindMatchesWithoutTv(weekdayMatches, leagueId, weekdayFromDate, weekdayToDate, tvConditions);
-            var weekendMatchesWithoutTV =
+            var weekendMatchesWithoutTv =
                 MatchHelpers.FindMatchesWithoutTv(weekendMatches, leagueId, weekendFromDate, weekendToDate, tvConditions);
 
-            var largestMaxbetWeekdayMatchWithTv = MatchHelpers.GetMatchWithLargestMaxbet(weekdayMatchesWithTV);
-            var largestMaxbetWeekendMatchWithTv = MatchHelpers.GetMatchWithLargestMaxbet(weekendMatchesWithTV);
+            var largestMaxbetWeekdayMatchWithTv = MatchHelpers.GetMatchWithLargestMaxbet(weekdayMatchesWithTv);
+            var largestMaxbetWeekendMatchWithTv = MatchHelpers.GetMatchWithLargestMaxbet(weekendMatchesWithTv);
 
-            var largestMaxbetWeekdayMatchWithoutTv = MatchHelpers.GetMatchWithLargestMaxbet(weekdayMatchesWithoutTV);
-            var largestMaxbetWeekendMatchWithoutTv = MatchHelpers.GetMatchWithLargestMaxbet(weekendMatchesWithoutTV);
+            var largestMaxbetWeekdayMatchWithoutTv = MatchHelpers.GetMatchWithLargestMaxbet(weekdayMatchesWithoutTv);
+            var largestMaxbetWeekendMatchWithoutTv = MatchHelpers.GetMatchWithLargestMaxbet(weekendMatchesWithoutTv);
 
             if (largestMaxbetWeekdayMatchWithTv != null || largestMaxbetWeekendMatchWithTv != null)
             {
@@ -128,11 +129,13 @@ public class LeagueSettingsServiceImp : LeagueSettingsService
                 result.Add(withTvLeagueSettings);
             }
 
-            if (largestMaxbetWeekdayMatchWithoutTv != null || largestMaxbetWeekendMatchWithoutTv != null)
+            if (largestMaxbetWeekdayMatchWithoutTv == null && largestMaxbetWeekendMatchWithoutTv == null)
             {
-                var withoutTvLeagueSettings = CreateLeagueSetting(largestMaxbetWeekdayMatchWithoutTv, largestMaxbetWeekendMatchWithoutTv, false);
-                result.Add(withoutTvLeagueSettings);
+                continue;
             }
+
+            var withoutTvLeagueSettings = CreateLeagueSetting(largestMaxbetWeekdayMatchWithoutTv, largestMaxbetWeekendMatchWithoutTv, false);
+            result.Add(withoutTvLeagueSettings);
         }
 
         return result;
@@ -154,23 +157,23 @@ public class LeagueSettingsServiceImp : LeagueSettingsService
     {
         var latestMatch = GetLatestMatch(weekdayMatch, weekendMatch);
         var result = new LeagueSetting();
-        var hpd1HSpread = MatchHelpers.GetSpread(latestMatch, Bettype.HDP_1H);
-        var ou1HSpread = MatchHelpers.GetSpread(latestMatch, Bettype.OU_1H);
+        var hpd1HSpread = MatchHelpers.GetSpread(latestMatch, Bettype.Hdp1H);
+        var ou1HSpread = MatchHelpers.GetSpread(latestMatch, Bettype.Ou1H);
 
         result.HasTv = isWithTv;
-        result.OWPLeagueId = latestMatch.OWPLeagueId;
-        result.Spread_HDP = MatchHelpers.GetSpread(latestMatch, Bettype.HDP);
-        result.Spread_OU = MatchHelpers.GetSpread(latestMatch, Bettype.OU);
-        result.Spread_1HHDP = hpd1HSpread ?? Get1HSpread(result.Spread_HDP);
-        result.Spread_1HOU = ou1HSpread ?? Get1HSpread(result.Spread_OU);
+        result.OwpLeagueId = latestMatch.OwpLeagueId;
+        result.SpreadHdp = MatchHelpers.GetSpread(latestMatch, Bettype.Hdp);
+        result.SpreadOu = MatchHelpers.GetSpread(latestMatch, Bettype.Ou);
+        result.Spread1Hhdp = hpd1HSpread ?? Get1HSpread(result.SpreadHdp);
+        result.Spread1Hou = ou1HSpread ?? Get1HSpread(result.SpreadOu);
         //Weekday
-        result.MaxbetWD_HDP = MatchHelpers.GetMaxBet(weekdayMatch, Bettype.HDP);
-        result.MaxbetWD_OU = MatchHelpers.GetMaxBet(weekdayMatch, Bettype.OU);
-        result.MaxbetWD_1H = Get1HMaxbet(MatchHelpers.GetMaxBet(weekdayMatch, Bettype.HDP));
+        result.MaxbetWdHdp = MatchHelpers.GetMaxBet(weekdayMatch, Bettype.Hdp);
+        result.MaxbetWdOu = MatchHelpers.GetMaxBet(weekdayMatch, Bettype.Ou);
+        result.MaxbetWd1H = Get1HMaxbet(MatchHelpers.GetMaxBet(weekdayMatch, Bettype.Hdp));
         //Weekend
-        result.MaxbetWK_HDP = MatchHelpers.GetMaxBet(weekendMatch, Bettype.HDP);
-        result.MaxbetWK_OU = MatchHelpers.GetMaxBet(weekendMatch, Bettype.OU);
-        result.MaxbetWK_1H = Get1HMaxbet(MatchHelpers.GetMaxBet(weekendMatch, Bettype.HDP));
+        result.MaxbetWkHdp = MatchHelpers.GetMaxBet(weekendMatch, Bettype.Hdp);
+        result.MaxbetWkOu = MatchHelpers.GetMaxBet(weekendMatch, Bettype.Ou);
+        result.MaxbetWk1H = Get1HMaxbet(MatchHelpers.GetMaxBet(weekendMatch, Bettype.Hdp));
 
         return result;
     }
@@ -187,7 +190,7 @@ public class LeagueSettingsServiceImp : LeagueSettingsService
             return weekdayMatch;
         }
 
-        return weekendMatch?.EventDateTime >= weekdayMatch?.EventDateTime ? weekendMatch : weekdayMatch;
+        return weekendMatch.EventDateTime >= weekdayMatch.EventDateTime ? weekendMatch : weekdayMatch;
     }
 
     private static decimal? Get1HSpread(decimal? ftSpread)

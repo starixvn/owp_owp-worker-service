@@ -1,11 +1,11 @@
+namespace OWP.RabbitMq;
+
 using System.Text;
 using Fanex.Logging;
 using Microsoft.Extensions.Options;
+using Models;
 using Newtonsoft.Json;
-using OWP.Core.RabbitMq.Models;
 using RabbitMQ.Client;
-
-namespace OWP.Core.RabbitMq;
 
 public interface RabbitMqClient
 {
@@ -17,10 +17,10 @@ public interface RabbitMqClient
 public class RabbitMqClientImp : RabbitMqClient
 {
     private IModel channel;
-    private readonly RabbitMQSetting setting;
+    private readonly RabbitMqSetting setting;
     private readonly ILogger logger;
 
-    public RabbitMqClientImp(IOptions<RabbitMQSetting> options, ILogger logger)
+    public RabbitMqClientImp(IOptions<RabbitMqSetting> options, ILogger logger)
     {
         setting = options.Value;
         this.logger = logger;
@@ -30,7 +30,7 @@ public class RabbitMqClientImp : RabbitMqClient
     {
         try
         {
-            var factory = new ConnectionFactory()
+            var factory = new ConnectionFactory
             {
                 UserName = setting.UserName,
                 Password = setting.Password,

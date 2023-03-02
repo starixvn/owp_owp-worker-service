@@ -1,32 +1,33 @@
-﻿using Fanex.Caching;
+﻿namespace OWP.WorkerService.Extensions;
+
+using ArchiveData;
+using Fanex.Caching;
 using Fanex.Caching.Redis;
 using Fanex.Data;
 using Fanex.Data.Repository;
 using Fanex.Data.SqlServer;
 using Fanex.Logging;
 using Fanex.Logging.Sentry.RavenClient;
+using Infosite;
+using InfositeIdSync;
+using Jobs;
+using LinkLeagueAndTeam;
+using MatchReadyNotification;
 using ONEbook.UM.Configurations;
 using ONEbook.UM.Helpers;
 using ONEbook.UM.Services;
 using ONEbook.UM.Transport;
-using OWP.ArchiveData;
-using OWP.Core.RabbitMq;
-using OWP.Core.RabbitMq.Models;
-using OWP.Infosite;
-using OWP.InfositeIdSync;
-using OWP.LinkLeagueAndTeam;
-using OWP.MatchReadyNotification;
-using OWP.OtherSport;
-using OWP.SumReport;
-using OWP.SyncLeagueSettings;
-using OWP.WorkerService.Jobs;
-using OWP.WorkerService.Settings;
+using OtherSport;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
+using RabbitMq;
+using RabbitMq.Models;
+using Settings;
+using SharpRaven;
 using StackExchange.Redis;
-
-namespace OWP.WorkerService.Extensions;
+using SumReport;
+using SyncLeagueSettings;
 
 public static class ServiceCollectionExtensions
 {
@@ -35,7 +36,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IJobFactory, JobFactory>();
         services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
         services.AddSingleton<IDynamicRepository, DynamicRepository>();
-        services.AddSingleton<Fanex.Logging.ILogger, Logger>();
+        services.AddSingleton<ILogger, Logger>();
 
         return services;
     }
@@ -62,7 +63,7 @@ public static class ServiceCollectionExtensions
             {
                 new SentryLogging( new SentryEngineOptions
                 {
-                    Dsn = new SharpRaven.Dsn(configuration.GetSection("SentryToken").Value)
+                    Dsn = new Dsn(configuration.GetSection("SentryToken").Value)
                 })
             });
 
@@ -72,12 +73,14 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddRedisServices(this IServiceCollection services, IConfiguration configuration)
     {
         var redisSetting = configuration.GetSection(nameof(RedisSettings)).Get<RedisSettings>();
-        var redis = ConnectionMultiplexer.Connect(redisSetting.ConnectionString);
+        var connectionString = redisSetting?.ConnectionString ?? string.Empty;
+        var appName = redisSetting?.AppName ?? string.Empty;
+        var redis = ConnectionMultiplexer.Connect(connectionString);
         services.AddSingleton<IConnectionMultiplexer>(redis);
         services.AddSingleton<ICache>(new RedisCache(new RedisCacheOptions
         {
-            ConnectionString = redisSetting.ConnectionString,
-            ApplicationName = redisSetting.AppName
+            ConnectionString = connectionString,
+            ApplicationName = appName
         }));
 
         return services;
@@ -86,7 +89,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddOneBookUmServices(this IServiceCollection services, IConfiguration configuration)
     {
         var umConfig = configuration.GetSection(nameof(UMClientConfiguration)).Get<UMClientConfiguration>();
-        services.AddSingleton(umConfig);
+        services.AddSingleton(umConfig ?? new UMClientConfiguration());
         services.AddSingleton<IPHelper, IPHelperImpl>();
         services.AddSingleton<IMaintenanceService, MaintenanceService>();
         services.AddSingleton<IUMCacheService, UMCacheService>();
@@ -98,7 +101,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddInternalServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddInfositeServices(configuration);
-        services.AddOWPCoreServices();
+        services.AddOwpCoreServices();
         services.AddInfositeIdSyncServices();
         services.AddLinkLeagueAndTeamServices();
         services.AddMatchReadyNotificationServices();
@@ -117,7 +120,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<SyncDataNotificationSettingJob>();
         services.AddTransient<MatchReadyNotificationJob>();
         services.AddTransient<SumTraderReportJob>();
-        services.AddTransient<SumLAReportJob>();
+        services.AddTransient<SumLaReportJob>();
         services.AddTransient<SyncInfositeIdJob>();
         services.AddTransient<SyncPreMatchLeagueJob>();
         services.AddTransient<Sync180DayInfositeMatchJob>();
@@ -139,7 +142,7 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddRabbitMq(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<RabbitMQSetting>(configuration.GetSection(RabbitMQSetting.RabbitMQ));
+        services.Configure<RabbitMqSetting>(configuration.GetSection(RabbitMqSetting.RabbitMq));
         services.AddSingleton<RabbitMqClient, RabbitMqClientImp>();
 
         return services;

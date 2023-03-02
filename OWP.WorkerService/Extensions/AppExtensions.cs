@@ -1,16 +1,15 @@
-﻿using OWP.Core.RabbitMq;
+﻿namespace OWP.WorkerService.Extensions;
 
-namespace OWP.WorkerService.Extensions
+using RabbitMq;
+
+public static class AppExtensions
 {
-    public static class AppExtensions
+    public static IApplicationBuilder UseRabbitMq(this IApplicationBuilder app)
     {
-        public static IApplicationBuilder UseRabbitMQ(this IApplicationBuilder app)
-        {
-            var rabbitService = app.ApplicationServices.GetService<RabbitMqClient>();
-            var lifetime = app.ApplicationServices.GetService<IHostApplicationLifetime>();
-            lifetime!.ApplicationStarted.Register(() => rabbitService!.ConnectRabbitMq());
+        var rabbitService = app.ApplicationServices.GetService<RabbitMqClient>();
+        var lifetime = app.ApplicationServices.GetService<IHostApplicationLifetime>();
+        lifetime!.ApplicationStarted.Register(() => rabbitService!.ConnectRabbitMq());
 
-            return app;
-        }
+        return app;
     }
 }

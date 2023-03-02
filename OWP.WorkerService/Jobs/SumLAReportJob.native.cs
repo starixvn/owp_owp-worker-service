@@ -1,20 +1,20 @@
-﻿using Fanex.Logging;
-using ONEbook.UM.Services;
-using OWP.SumReport.Constants;
-using OWP.SumReport.LAReport;
-using OWP.SumReport.Services;
-using Quartz;
+﻿namespace OWP.WorkerService.Jobs;
 
-namespace OWP.WorkerService.Jobs;
+using Fanex.Logging;
+using ONEbook.UM.Services;
+using Quartz;
+using SumReport.Constants;
+using SumReport.LAReport;
+using SumReport.Services;
 
 [DisallowConcurrentExecution]
-public class SumLAReportJob : IJob
+public class SumLaReportJob : IJob
 {
     private readonly CacheManipulator cacheManipulator;
     private readonly IMaintenanceService maintenanceService;
     private readonly Handler handler;
 
-    public SumLAReportJob(CacheManipulator cacheManipulator, IMaintenanceService maintenanceService, Handler handler)
+    public SumLaReportJob(CacheManipulator cacheManipulator, IMaintenanceService maintenanceService, Handler handler)
     {
         this.cacheManipulator = cacheManipulator;
         this.maintenanceService = maintenanceService;
@@ -41,7 +41,7 @@ public class SumLAReportJob : IJob
             return;
         }
 
-        var (isGenerateData, lastDate) = await cacheManipulator.GetLastDateForRegenerateData(Constant.LALastDateCacheKey);
+        var (isGenerateData, lastDate) = await cacheManipulator.GetLastDateForRegenerateData(Constant.LaLastDateCacheKey);
         var startDate = isGenerateData ? lastDate : DateTime.Today.AddDays(-2);
 
         for (var date = startDate; date <= DateTime.Today; date = date.AddDays(1))
@@ -49,6 +49,6 @@ public class SumLAReportJob : IJob
             await handler.Handle(date, isGenerateData).ConfigureAwait(false);
         }
 
-        await cacheManipulator.RemoveLastDateOfSumData(Constant.LALastDateCacheKey);
+        await cacheManipulator.RemoveLastDateOfSumData(Constant.LaLastDateCacheKey);
     }
 }

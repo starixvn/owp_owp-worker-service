@@ -1,7 +1,7 @@
-﻿using Fanex.Caching;
-using OWP.LinkLeagueAndTeam.Constants;
+﻿namespace OWP.LinkLeagueAndTeam.Services;
 
-namespace OWP.LinkLeagueAndTeam.Services;
+using Constants;
+using Fanex.Caching;
 
 public interface CacheManipulator
 {

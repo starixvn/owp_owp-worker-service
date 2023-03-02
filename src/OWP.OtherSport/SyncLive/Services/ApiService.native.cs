@@ -1,79 +1,78 @@
-﻿using Fanex.Logging;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using OWP.Core.Services;
-using OWP.Infosite.Settings;
-using OWP.OtherSport.SyncLive.Model;
-using System.Text;
+﻿namespace OWP.OtherSport.SyncLive.Services;
 
-namespace OWP.OtherSport.SyncLive.Services
+using System.Text;
+using Fanex.Logging;
+using Infosite.Settings;
+using Microsoft.Extensions.Options;
+using Model;
+using Newtonsoft.Json;
+using OWP.Services;
+
+public interface ApiService
 {
-    public interface ApiService
+    Task PostSyncLiveAsync(BodyModel body);
+}
+
+public class ApiServiceImp : ApiService
+{
+    private readonly InfoSiteSettings infoSiteSettings;
+
+    private readonly HttpHandler httpHandler;
+
+    private readonly ILogger logger;
+
+    public ApiServiceImp(IOptions<InfoSiteSettings> infoSiteSettings, ILogger logger, HttpHandler httpHandler)
     {
-        Task PostSyncLiveAsync(BodyModel body);
+        this.infoSiteSettings = infoSiteSettings.Value;
+        this.httpHandler = httpHandler;
+        this.logger = logger;
     }
 
-    public class ApiServiceImp : ApiService
+    public async Task PostSyncLiveAsync(BodyModel body)
     {
-        private readonly InfoSiteSettings infoSiteSettings;
+        const string path = "api/EventSchedule/SetEventLiveByInHouseMatchId";
+        var infositeDomain = infoSiteSettings.InfositeOsApi;
+        if (string.IsNullOrEmpty(infositeDomain)) return;
 
-        private readonly HttpHandler httpHandler;
+        var requestUrl = $"{infositeDomain}{path}";
+        var json = JsonConvert.SerializeObject(body);
+        var bodyContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-        private readonly ILogger logger;
-
-        public ApiServiceImp(IOptions<InfoSiteSettings> infoSiteSettings, ILogger logger, HttpHandler httpHandler)
+        try
         {
-            this.infoSiteSettings = infoSiteSettings.Value;
-            this.httpHandler = httpHandler;
-            this.logger = logger;
+            var response = await httpHandler.PostAsync(requestUrl, bodyContent);
+            var responseText = await response.Content.ReadAsStringAsync();
+            await LogInfo(requestUrl, body, responseText);
         }
-
-        public async Task PostSyncLiveAsync(BodyModel body)
+        catch (Exception ex)
         {
-            var path = "api/EventSchedule/SetEventLiveByInHouseMatchId";
-            var infositeDomain = infoSiteSettings.InfositeOSAPI;
-            if (string.IsNullOrEmpty(infositeDomain)) return;
-
-            var requestUrl = $"{infositeDomain}{path}";
-            var json = JsonConvert.SerializeObject(body);
-            var bodyContent = new StringContent(json, Encoding.UTF8, "application/json");
-
-            try
-            {
-                var response = await httpHandler.PostAsync(requestUrl, bodyContent);
-                var responseText = await response.Content.ReadAsStringAsync();
-                await LogInfo(requestUrl, body, responseText);
-            }
-            catch (Exception ex)
-            {
-                await LogError(requestUrl, body, ex);
-            }
+            await LogError(requestUrl, body, ex);
         }
+    }
 
-        private async Task LogError(string requestUrl, BodyModel body, Exception ex)
+    private async Task LogError(string requestUrl, BodyModel body, Exception ex)
+    {
+        var logErrorString = JsonConvert.SerializeObject(new
         {
-            var logErrorString = JsonConvert.SerializeObject(new
-            {
-                DateTime = DateTime.UtcNow.AddHours(8),
-                RequestUri = requestUrl,
-                ex.Message,
-                BodyContent = body,
-            });
+            DateTime = DateTime.UtcNow.AddHours(8),
+            RequestUri = requestUrl,
+            ex.Message,
+            BodyContent = body
+        });
 
-            await logger.ErrorAsync($"OSSyncLiveToInfosite {logErrorString}");
-        }
+        await logger.ErrorAsync($"OSSyncLiveToInfosite {logErrorString}");
+    }
 
-        private async Task LogInfo(string requestUrl, BodyModel body, string reponse)
+    private async Task LogInfo(string requestUrl, BodyModel body, string response)
+    {
+        var logInfoString = JsonConvert.SerializeObject(new
         {
-            var logInfoString = JsonConvert.SerializeObject(new
-            {
-                DateTime = DateTime.UtcNow.AddHours(8),
-                RequestUri = requestUrl,
-                BodyContent = body,
-                Response = reponse
-            });
+            DateTime = DateTime.UtcNow.AddHours(8),
+            RequestUri = requestUrl,
+            BodyContent = body,
+            Response = response
+        });
 
-            await logger.InfoAsync($"OSSyncLiveToInfosite {logInfoString}");
-        }
+        await logger.InfoAsync($"OSSyncLiveToInfosite {logInfoString}");
     }
 }

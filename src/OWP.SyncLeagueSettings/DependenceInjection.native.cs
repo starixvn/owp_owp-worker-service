@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using OWP.SyncLeagueSettings.Services;
+﻿namespace OWP.SyncLeagueSettings;
 
-namespace OWP.SyncLeagueSettings;
+using Microsoft.Extensions.DependencyInjection;
+using Services;
 
 public static class DependenceInjection
 {

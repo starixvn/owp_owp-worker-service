@@ -1,10 +1,10 @@
+namespace OWP.LinkLeagueAndTeam.UnitTests;
+
+using Models;
 using NSubstitute;
-using OWP.LinkLeagueAndTeam.Models;
-using OWP.LinkLeagueAndTeam.Services;
+using Services;
 using Xunit;
 using Xunit.Asserts.Compare;
-
-namespace OWP.LinkLeagueAndTeam.UnitTests;
 
 public class LinkLeagueAndMatchUnitTests
 {
@@ -39,7 +39,7 @@ public class LinkLeagueAndMatchUnitTests
 
         var teamInfo = new List<TeamInfo>
             {
-                new TeamInfo
+                new()
                 {
                     TeamId = 123,
                     LeagueCategoryId = 5
@@ -58,7 +58,6 @@ public class LinkLeagueAndMatchUnitTests
     {
         // Arrange
         var linkLeagueAndMatch = new LinkLeagueAndTeamServiceImp(cache, repository);
-        var startTime = new DateTime(2021, 10, 21, 0, 0, 0);
 
         // Act
         await linkLeagueAndMatch.Execute();
@@ -99,7 +98,7 @@ public class LinkLeagueAndMatchUnitTests
         {
             new() { TeamId = 11, EventDateTime = new DateTime(2022, 10, 20)},
             new() { TeamId = 11, EventDateTime = new DateTime(2022, 10, 21)},
-            new() { TeamId = 22, EventDateTime = new DateTime(2022, 10, 20)},
+            new() { TeamId = 22, EventDateTime = new DateTime(2022, 10, 20)}
         };
         repository.GetTeamInfoInTimeRange(Arg.Any<DateTime>(), Arg.Any<DateTime>()).Returns(teamInfo);
         var timeRange = new TimeRange
@@ -130,12 +129,12 @@ public class LinkLeagueAndMatchUnitTests
             .GetTeamInfoInTimeRange(startTime, endTime)
             .Returns(new List<TeamInfo>
             {
-                    new TeamInfo
+                    new()
                     {
                         TeamId = 123,
                         LeagueCategoryId = 1
                     },
-                    new TeamInfo
+                    new()
                     {
                         TeamId = 123,
                         LeagueCategoryId = 1

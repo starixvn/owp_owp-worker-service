@@ -1,7 +1,7 @@
-﻿using OWP.SumReport.LAReport.Enum;
-using OWP.SumReport.LAReport.Misc;
+﻿namespace OWP.SumReport.LAReport.Factory;
 
-namespace OWP.SumReport.LAReport.Factory;
+using Enum;
+using Misc;
 
 public interface MainMatchRuleFactory
 {
@@ -12,11 +12,11 @@ public class MainMatchRuleFactoryImp : MainMatchRuleFactory
 {
     public MainMatchRule Create(RuleType type) => type switch
     {
-        RuleType.FANTASY => new IsFantasyRule(),
-        RuleType.ESOCCER => new ESoccerRule(),
-        RuleType.FIVE_MAJOR_LEAGUE => new FiveMajorLeagueRule(),
-        RuleType.FT_CORNER_FIVE_MAJOR_LEAGUE => new FTCorner5MLRule(),
-        _ => new FTCornerRule()
+        RuleType.Fantasy => new IsFantasyRule(),
+        RuleType.ESoccer => new ESoccerRule(),
+        RuleType.FiveMajorLeague => new FiveMajorLeagueRule(),
+        RuleType.FtCornerFiveMajorLeague => new FtCorner5MlRule(),
+        _ => new FtCornerRule()
     };
 }
 
@@ -29,7 +29,7 @@ public class SpecialProductFactoryImp : SpecialProductFactory
 {
     public SpecialProductRule Create(RuleType type)
     {
-        if (type == RuleType.NOT_CORNER)
+        if (type == RuleType.NotCorner)
         {
             return new NotCornerRule();
         }

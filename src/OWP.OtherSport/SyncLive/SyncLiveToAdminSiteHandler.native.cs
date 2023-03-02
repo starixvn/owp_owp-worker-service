@@ -1,50 +1,52 @@
-﻿using OWP.OtherSport.SyncAdminSiteId.Models;
-using OWP.OtherSport.SyncLive.Model;
-using OWP.OtherSport.SyncLive.Services;
+﻿namespace OWP.OtherSport.SyncLive;
 
-namespace OWP.OtherSport.SyncLive
+using Model;
+using Services;
+using SyncAdminSiteId.Models;
+
+public interface SyncLiveToAdminSiteHandler
 {
-    public interface SyncLiveToAdminSiteHandler
+    Task Handle(IList<Match> adminSiteMatches, IList<Match> owpMatches, DateTime eventDate);
+}
+
+public class SyncLiveToAdminSiteHandlerImp : SyncLiveToAdminSiteHandler
+{
+    private readonly EditEventGenerator editEventGenerator;
+
+    private readonly ApiService apiService;
+
+    private readonly CacheManipulator cacheManipulator;
+
+    public SyncLiveToAdminSiteHandlerImp(
+        EditEventGenerator editEventGenerator,
+        ApiService apiService,
+        CacheManipulator cacheManipulator)
     {
-        Task Handle(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> owpMatches, DateTime eventDate);
+        this.editEventGenerator = editEventGenerator;
+        this.apiService = apiService;
+        this.cacheManipulator = cacheManipulator;
     }
 
-    public class SyncLiveToAdminSiteHandlerImp: SyncLiveToAdminSiteHandler
+    public async Task Handle(IList<Match> adminSiteMatches, IList<Match> owpMatches, DateTime eventDate)
     {
-        private readonly EditEventGenerator editEventGenerator;
+        var deletedMatches = await cacheManipulator.GetDeletedMatches();
 
-        private readonly ApiService apiService;
+        var duplicateAdminSiteIdMatches = owpMatches.Where(x => CheckDuplicateAdminSiteId(owpMatches, x.AdminSiteMatchId));
+        var syncMatches = owpMatches.Except(duplicateAdminSiteIdMatches);
 
-        private readonly CacheManipulator cacheManipulator;
+        var editEventList = editEventGenerator.GetChangedOfferLiveMatches(adminSiteMatches, syncMatches.Union(deletedMatches)).ToList();
 
-        public SyncLiveToAdminSiteHandlerImp(
-            EditEventGenerator editEventGenerator, 
-            ApiService apiService, 
-            CacheManipulator cacheManipulator)
+        if (!editEventList.Any())
         {
-            this.editEventGenerator = editEventGenerator;
-            this.apiService = apiService;
-            this.cacheManipulator = cacheManipulator;
+            return;
         }
 
-        public async Task Handle(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> owpMatches, DateTime eventDate)
-        {
-            var deletedMatches = await cacheManipulator.GetDeletedMatches();
+        var model = new BodyModel { live_configs = editEventList };
 
-            var duplicateAdminSiteIdMatches = owpMatches.Where(x => CheckDuplicateAdminSiteId(owpMatches, x.AdminSiteMatchId));
-            var syncMatches = owpMatches.Except(duplicateAdminSiteIdMatches);
-            
-            var editEventList = editEventGenerator.GetChangedOfferLiveMatches(adminSiteMatches, syncMatches.Union(deletedMatches));
-
-            if (editEventList.Count() == 0) return;
-
-            var model = new BodyModel { live_configs = editEventList.ToList() };
-
-            await apiService.PostSyncLiveAsync(model);
-            await cacheManipulator.RemoveDeletedMatches();
-        }
-
-        private static bool CheckDuplicateAdminSiteId(IEnumerable<Match> match, int? id)
-            => match.Count(x => x.AdminSiteMatchId == id) > 1;
+        await apiService.PostSyncLiveAsync(model);
+        await cacheManipulator.RemoveDeletedMatches();
     }
+
+    private static bool CheckDuplicateAdminSiteId(IEnumerable<Match> match, int? id)
+        => match.Count(x => x.AdminSiteMatchId == id) > 1;
 }

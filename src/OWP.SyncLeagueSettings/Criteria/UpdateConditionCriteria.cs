@@ -1,6 +1,6 @@
-﻿using Fanex.Data.Repository;
+﻿namespace OWP.SyncLeagueSettings.Criteria;
 
-namespace OWP.SyncLeagueSettings.Criteria;
+using Fanex.Data.Repository;
 
 public class UpdateConditionCriteria : NonQueryCommand
 {
@@ -8,9 +8,9 @@ public class UpdateConditionCriteria : NonQueryCommand
 
     public int LeagueSettingId { get; set; }
 
-    public bool HasTV { get; set; }
+    public bool HasTv { get; set; }
 
-    public string TV { get; set; }
+    public string Tv { get; set; }
 
     public string Round { get; set; }
 

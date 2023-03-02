@@ -1,18 +1,18 @@
-﻿using OWP.SumReport.LAReport.Constants;
-using OWP.SumReport.LAReport.Enum;
-using OWP.SumReport.LAReport.Models;
+﻿namespace OWP.SumReport.LAReport.Misc;
 
-namespace OWP.SumReport.LAReport.Misc;
+using Constants;
+using Enum;
+using Models;
 
 public class SpecialProductRule
 {
     private SpecialProductRule nextRule;
 
-    public void SetSuccessor(SpecialProductRule nextRule) => this.nextRule = nextRule;
+    public void SetSuccessor(SpecialProductRule rule) => nextRule = rule;
 
     public virtual ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
     {
-        return nextRule?.Execute(assignment, userAssignments) ?? ReportType.OTHER_SPECIAL_PRODUCTS;
+        return nextRule?.Execute(assignment, userAssignments) ?? ReportType.OtherSpecialProducts;
     }
 }
 
@@ -20,48 +20,47 @@ public class NotCornerRule : SpecialProductRule
 {
     private readonly int[] cornerBettypeArray = { BettypeConst.NextCorner, BettypeConst.NoOfCorner, BettypeConst.NoOfCorner15Mins };
     private readonly int[] bookingBettypeArray = { BettypeConst.NextBooking, BettypeConst.TotalBooking, BettypeConst.TotalBooking15Mins };
-    private readonly int[] goalKickBettypeArray = { BettypeConst.LastGoalKick, BettypeConst.NextGoalKick, BettypeConst.SecondHaft1stGoalKick };
+    private readonly int[] goalKickBettypeArray = { BettypeConst.LastGoalKick, BettypeConst.NextGoalKick, BettypeConst.SecondHaft1StGoalKick };
 
     public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
     {
-        if (assignment.MinorBettypeId.HasValue && Array.IndexOf(cornerBettypeArray, assignment.MinorBettypeId.Value) < 0)
+        if (!assignment.MinorBettypeId.HasValue ||
+            Array.IndexOf(cornerBettypeArray, assignment.MinorBettypeId.Value) >= 0)
         {
-            if (Array.IndexOf(bookingBettypeArray, assignment.MinorBettypeId.Value) >= 0)
-            {
-                return ReportType.TOTAL_BOOKING_PLUS;
-            }
-
-            if (Array.IndexOf(goalKickBettypeArray, assignment.MinorBettypeId.Value) >= 0)
-            {
-                return ReportType.GOAL_KICK;
-            }
-
-            return ReportType.OTHER_SPECIAL_PRODUCTS;
+            return base.Execute(assignment, userAssignments);
         }
 
-        return base.Execute(assignment, userAssignments);
+        if (Array.IndexOf(bookingBettypeArray, assignment.MinorBettypeId.Value) >= 0)
+        {
+            return ReportType.TotalBookingPlus;
+        }
+
+        return Array.IndexOf(goalKickBettypeArray, assignment.MinorBettypeId.Value) >= 0 
+            ? ReportType.GoalKick 
+            : ReportType.OtherSpecialProducts;
     }
 }
 
 public class IsCornerRule : SpecialProductRule
 {
     private readonly int[] cornerBettypeArray = { BettypeConst.NextCorner, BettypeConst.NoOfCorner, BettypeConst.NoOfCorner15Mins };
-    private static bool isMajorCornerLeague(string leagueName)
-        => MajorLeague.majorLeagueCornerList.Any(x => x == leagueName);
+    private static bool IsMajorCornerLeague(string leagueName)
+        => MajorLeague.MajorLeagueCornerList.Any(x => x == leagueName);
     public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
     {
-        if (assignment.MinorBettypeId.HasValue && Array.IndexOf(cornerBettypeArray, assignment.MinorBettypeId.Value) >= 0)
+        if (!assignment.MinorBettypeId.HasValue ||
+            Array.IndexOf(cornerBettypeArray, assignment.MinorBettypeId.Value) < 0)
         {
-            var mainMatches = userAssignments.Where(x => !x.ParentMatchId.HasValue && x.OWPMatchId == assignment.ParentMatchId);
-
-            if(isMajorCornerLeague(assignment.OWPLeagueName))
-            {
-                return mainMatches.Any() ? ReportType.FT_CORNER_5ML : ReportType.CORNER_PLUS;
-            }
-
-            return mainMatches.Any() ? ReportType.FT_CORNER : ReportType.CORNER_PLUS;
-            
+            return base.Execute(assignment, userAssignments);
         }
-        return base.Execute(assignment, userAssignments);
+        
+        var mainMatches = userAssignments.Where(x => !x.ParentMatchId.HasValue && x.OwpMatchId == assignment.ParentMatchId);
+
+        if(IsMajorCornerLeague(assignment.OwpLeagueName))
+        {
+            return mainMatches.Any() ? ReportType.FtCorner5Ml : ReportType.CornerPlus;
+        }
+
+        return mainMatches.Any() ? ReportType.FtCorner : ReportType.CornerPlus;
     }
 }

@@ -1,10 +1,10 @@
-﻿using OWP.InfositeIdSync.Helpers;
-using OWP.Infosite.Services;
-using System.Globalization;
-using OWP.Core.RabbitMq;
-using OWP.Core.RabbitMq.Models;
+﻿namespace OWP.InfositeIdSync.Services;
 
-namespace OWP.InfositeIdSync.Services;
+using Helpers;
+using Infosite.Services;
+using RabbitMq;
+using RabbitMq.Models;
+using System.Globalization;
 
 public interface SyncInfositeIdService
 {
@@ -33,7 +33,7 @@ public class SynInfositeIdServiceImp : SyncInfositeIdService
 
     public async Task Sync()
     {
-        var owpMatches = await repository.QueryUnmappingOWPMatch();
+        var owpMatches = await repository.QueryUnmappingOwpMatch();
         var infositeMatches = await repository.QueryInfositeMatch();
         var mappingMatches = InfoSiteHelper.Map(owpMatches, infositeMatches);
 
@@ -55,7 +55,7 @@ public class SynInfositeIdServiceImp : SyncInfositeIdService
     {
         var notifyRequest = new LinkedMatchNotifyRequest
         {
-            EventDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified),
+            EventDate = DateTime.Today,
             SessionId = sessionId
         };
 

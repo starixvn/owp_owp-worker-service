@@ -1,8 +1,8 @@
-namespace OWP.Core.RabbitMq.Models;
+namespace OWP.RabbitMq.Models;
 
-public class RabbitMQSetting
+public class RabbitMqSetting
 {
-    public const string RabbitMQ = "RabbitMQ";
+    public const string RabbitMq = "RabbitMQ";
 
     public string Hosting { get; set; }
 

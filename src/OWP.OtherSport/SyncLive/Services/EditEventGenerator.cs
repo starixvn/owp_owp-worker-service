@@ -1,43 +1,43 @@
-﻿using OWP.OtherSport.SyncAdminSiteId.Models;
-using OWP.OtherSport.SyncLive.Model;
+﻿namespace OWP.OtherSport.SyncLive.Services;
 
-namespace OWP.OtherSport.SyncLive.Services
+using Model;
+using SyncAdminSiteId.Models;
+
+public interface EditEventGenerator
 {
-    public interface EditEventGenerator
+    IEnumerable<EditEvent> GetChangedOfferLiveMatches(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> owpMatches);
+}
+
+public class EditEventGeneratorImp : EditEventGenerator
+{
+    public IEnumerable<EditEvent> GetChangedOfferLiveMatches(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> owpMatches)
     {
-        IEnumerable<EditEvent> GetChangedOfferLiveMatches(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> owpMatches);
+        var owpBasketballMatch = FilterBasketballMatch(owpMatches).ToList();
+        var adminSiteBasketballMatch = FilterBasketballMatch(adminSiteMatches).ToList();
+        var changedAdminSites = GetChangedLiveAdminSites(adminSiteBasketballMatch, owpBasketballMatch);
+
+        return changedAdminSites;
     }
 
-    public class EditEventGeneratorImp : EditEventGenerator
+    public IEnumerable<EditEvent> GetChangedLiveAdminSites(IList<Match> adminSiteMatches, IList<Match> owpMatches)
     {
-        public IEnumerable<EditEvent> GetChangedOfferLiveMatches(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> owpMatches)
+        var owpMatchHasAdminSiteId = owpMatches.Where(x => x.AdminSiteMatchId.HasValue).Distinct();
+        foreach (var match in owpMatchHasAdminSiteId)
         {
-            var owpBasketballMatch = FilterBasketballMatch(owpMatches);
-            var adminSiteBasketballMatch = FilterBasketballMatch(adminSiteMatches);
-            var changedAdminSites = GetChangedLiveAdminSites(adminSiteBasketballMatch, owpBasketballMatch);
-
-            return changedAdminSites;
-        }
-
-        public IEnumerable<EditEvent> GetChangedLiveAdminSites(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> owpMatches)
-        {
-            var owpMatchHasAdminSiteId = owpMatches.Where(x => x.AdminSiteMatchId.HasValue).Distinct();
-            foreach (var match in owpMatchHasAdminSiteId)
+            var adminSiteMatch = adminSiteMatches.FirstOrDefault(x => x.AdminSiteMatchId == match.AdminSiteMatchId);
+            if (adminSiteMatch != null && adminSiteMatch.OfferLive != match.OfferLive)
             {
-                var adminsiteMatch = adminSiteMatches.FirstOrDefault(x => x.AdminSiteMatchId == match.AdminSiteMatchId);
-                if (adminsiteMatch != null && adminsiteMatch.OfferLive != match.OfferLive)
+                yield return new EditEvent
                 {
-                    yield return new EditEvent { 
-                        in_house_match_id = (int)match.AdminSiteMatchId, 
-                        is_live = match.OfferLive 
-                    };
-                }
+                    in_house_match_id = match.AdminSiteMatchId ?? 0,
+                    is_live = match.OfferLive
+                };
             }
         }
-
-        private static IEnumerable<Match> FilterBasketballMatch(IEnumerable<Match> matches)
-            => matches.Where(x => IsBasketball(x.Sport));
-
-        private static bool IsBasketball(string sport) => sport.Trim().Equals("basketball", StringComparison.OrdinalIgnoreCase);
     }
+
+    private static IEnumerable<Match> FilterBasketballMatch(IEnumerable<Match> matches)
+        => matches.Where(x => IsBasketball(x.Sport));
+
+    private static bool IsBasketball(string sport) => sport.Trim().Equals("basketball", StringComparison.OrdinalIgnoreCase);
 }

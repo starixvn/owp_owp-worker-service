@@ -1,15 +1,15 @@
-﻿using Fanex.Caching;
-using Newtonsoft.Json;
-using OWP.InfositeIdSync.Constants;
-using OWP.InfositeIdSync.Models;
+﻿namespace OWP.InfositeIdSync.Services;
 
-namespace OWP.InfositeIdSync.Services;
+using Constants;
+using Fanex.Caching;
+using Models;
+using Newtonsoft.Json;
 
 public interface CacheManipulator
 {
     Task<List<MatchKickoffDate>> GetDeletedMatches();
 
-    Task SaveDeletedMatches(List<ValueTuple<int, int?>> synchornizedMatches);
+    Task SaveDeletedMatches(List<ValueTuple<int, int?>> synchronizedMatches);
 
     Task SaveOldAssignmentSnapshot(string sessionId, AssignmentSnapshot assignmentSnapshot);
 }
@@ -30,14 +30,14 @@ internal class CacheManipulatorImp : CacheManipulator
         return matches.Where(m => m.MatchId > 0).ToList();
     }
 
-    public async Task SaveDeletedMatches(List<ValueTuple<int, int?>> synchornizedMatches)
+    public async Task SaveDeletedMatches(List<ValueTuple<int, int?>> synchronizedMatches)
     {
         var expiredDate = DateTime.Today;
         var cacheResult = await cache.TryGetAsync<List<MatchKickoffDate>>(CacheKey.KeyDeletedInfoSiteMatchId);
         var currentMatches = cacheResult.Item2 ?? new List<MatchKickoffDate>();
         var remainMatches = currentMatches
             .Where(m => m.KickoffDate >= expiredDate)
-            .Where(m => !synchornizedMatches.Select(x => (x.Item1, x.Item2)).Contains((m.MatchId, m.MinorBettypeId)))
+            .Where(m => !synchronizedMatches.Select(x => (x.Item1, x.Item2)).Contains((m.MatchId, m.MinorBettypeId)))
             .ToList();
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(DateTime.Today.AddYears(10));
 

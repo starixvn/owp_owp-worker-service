@@ -1,8 +1,7 @@
-﻿namespace OWP.Command.Settings
+﻿namespace OWP.Command.Settings;
+
+public class RedisSettings
 {
-    public class RedisSettings
-    {
-        public string ConnectionString { get; set; }
-        public string AppName { get; set; }
-    }
+    public string ConnectionString { get; set; }
+    public string AppName { get; set; }
 }

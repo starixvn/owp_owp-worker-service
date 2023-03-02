@@ -1,4 +1,4 @@
-﻿namespace OWP.Core.Extensions;
+﻿namespace OWP.Extensions;
 
 public static class DictionaryExtensions
 {
@@ -15,11 +15,6 @@ public static class DictionaryExtensions
     {
         var matchedKey = dict.Keys.FirstOrDefault(x => key.IndexOf(x, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
-        if (string.IsNullOrEmpty(matchedKey))
-        {
-            return defaultValue;
-        }
-
-        return dict[matchedKey];
+        return string.IsNullOrEmpty(matchedKey) ? defaultValue : dict[matchedKey];
     }
 }

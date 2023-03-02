@@ -1,17 +1,18 @@
+namespace OWP.Infosite.UnitTests;
+
+using System.Net;
+using Fanex.Caching;
 using Fanex.Logging;
 using Microsoft.Extensions.Options;
+using Models;
+using Newtonsoft.Json;
 using NSubstitute;
-using OWP.Infosite.Models;
-using OWP.Infosite.Services;
-using OWP.Infosite.Settings;
-using System.Net;
+using OWP.Services;
+using RabbitMq;
+using Services;
+using Settings;
 using Xunit;
 using Xunit.Asserts.Compare;
-using OWP.Core.RabbitMq;
-using OWP.Core.Services;
-using Fanex.Caching;
-
-namespace OWP.Infosite.UnitTests;
 
 public class ApiServiceUnitTests
 {
@@ -21,25 +22,21 @@ public class ApiServiceUnitTests
 
     private readonly ILogger logger;
 
-    private readonly RabbitMqClient rabbitMqClient;
+    private const int ExpectedNumberOfMatchesAllDays = 1;
 
-    private readonly ICache cacheService;
+    private readonly DateTime fromDate = new(2018, 1, 2);
 
-    private const int expectedNumberOfMatchsAllDays = 1;
+    private readonly DateTime toDate = new(2018, 1, 4);
 
-    private readonly DateTime fromDate = new DateTime(2018, 1, 2);
-
-    private readonly DateTime toDate = new DateTime(2018, 1, 4);
-
-    private readonly DateTime lastUpdatedTime = new DateTime(2018, 1, 1);
+    private readonly DateTime lastUpdatedTime = new(2018, 1, 1);
 
     public ApiServiceUnitTests()
     {
         appSettings = Options.Create(new InfoSiteSettings());
         httpHandler = Substitute.For<HttpHandler>();
         logger = Substitute.For<ILogger>();
-        rabbitMqClient = Substitute.For<RabbitMqClient>();
-        cacheService = Substitute.For<ICache>();
+        Substitute.For<RabbitMqClient>();
+        Substitute.For<ICache>();
     }
 
     [Fact]
@@ -75,7 +72,7 @@ public class ApiServiceUnitTests
             LastUpdatedTime = lastUpdatedTime
         };
 
-        var mockContent = Newtonsoft.Json.JsonConvert.SerializeObject(SampleDataTests.ListCommonMatches);
+        var mockContent = JsonConvert.SerializeObject(SampleDataTests.ListCommonMatches);
         var httpContent = new StringContent(mockContent);
 
         var httpResponseMessage = new HttpResponseMessage { Content = httpContent, StatusCode = HttpStatusCode.OK };
@@ -86,8 +83,8 @@ public class ApiServiceUnitTests
         var actualResult = await apiService.QueryAsync(param);
 
         // Assert
-        var actualNumberOfMatchs = actualResult.Count;
-        Assert.Equal(expectedNumberOfMatchsAllDays, actualNumberOfMatchs);
+        var actualNumberOfMatches = actualResult.Count;
+        Assert.Equal(ExpectedNumberOfMatchesAllDays, actualNumberOfMatches);
     }
 
     [Fact]
@@ -95,7 +92,7 @@ public class ApiServiceUnitTests
     {
         // Arrange
 
-        var mockContent = Newtonsoft.Json.JsonConvert.SerializeObject(new List<string> { "1423405-5-False" });
+        var mockContent = JsonConvert.SerializeObject(new List<string> { "1423405-5-False" });
         var httpContent = new StringContent(mockContent);
 
         var httpResponseMessage = new HttpResponseMessage { Content = httpContent, StatusCode = HttpStatusCode.OK };
@@ -107,8 +104,8 @@ public class ApiServiceUnitTests
 
         // Assert
         const int expectedResultNumberOfMatchIds = 1;
-        var actualNumberOfMatchs = actualResult.Count;
-        Assert.Equal(expectedResultNumberOfMatchIds, actualNumberOfMatchs);
+        var actualNumberOfMatches = actualResult.Count;
+        Assert.Equal(expectedResultNumberOfMatchIds, actualNumberOfMatches);
     }
 
     [Fact]
@@ -147,7 +144,7 @@ public class ApiServiceUnitTests
     public async Task QueryInfoSiteMatchFor180Day_HttpStatusOK_ListMatchModelQuery180Day()
     {
         // Arrange
-        var mockContent = Newtonsoft.Json.JsonConvert.SerializeObject(SampleDataTests.ListMatchModelQuery180Day);
+        var mockContent = JsonConvert.SerializeObject(SampleDataTests.ListMatchModelQuery180Day);
         var httpContent = new StringContent(mockContent);
 
         var httpResponseMessage = new HttpResponseMessage { Content = httpContent, StatusCode = HttpStatusCode.OK };
@@ -158,8 +155,8 @@ public class ApiServiceUnitTests
         var actualResult = await apiService.QueryInfoSiteMatchFor180Day();
 
         // Assert
-        var actualNumberOfMatchs = actualResult.Count;
-        Assert.Equal(expectedNumberOfMatchsAllDays, actualNumberOfMatchs);
+        var actualNumberOfMatches = actualResult.Count;
+        Assert.Equal(ExpectedNumberOfMatchesAllDays, actualNumberOfMatches);
     }
 
     [Fact]
@@ -171,7 +168,7 @@ public class ApiServiceUnitTests
             FromDate = fromDate,
             ToDate = toDate
         };
-        var mockContent = Newtonsoft.Json.JsonConvert.SerializeObject(SampleDataTests.ListMatchRelation);
+        var mockContent = JsonConvert.SerializeObject(SampleDataTests.ListMatchRelation);
         var httpContent = new StringContent(mockContent);
 
         var httpResponseMessage = new HttpResponseMessage { Content = httpContent, StatusCode = HttpStatusCode.OK };
