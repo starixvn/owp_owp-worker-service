@@ -29,7 +29,7 @@ public class RobotServiceImp : RobotService
 
         var aggregatedResult = Aggregate(robotX3ByUsers, robotX5ByUsers);
 
-        return aggregatedResult.ToList();
+        return aggregatedResult?.Where(x=>x.X2>0 || x.X3>0 || x.X3Plus>0 || x.X5>0)?.ToList();
     }
 
     private async Task<Dictionary<int, RobotX3ByUser>> GetX3Fields(DateTime eventDate, bool isGenerateData)
