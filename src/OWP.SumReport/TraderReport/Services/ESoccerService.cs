@@ -27,7 +27,8 @@ public class ESoccerServiceImp : ESoccerService
             .GroupBy(x => x.UserId)
             .ToDictionary(x => x.Key, x => x.ToList());
 
-        return SumESoccerByUser(saBaAssignmentDict);
+        var sumResult= SumESoccerByUser(saBaAssignmentDict);
+        return sumResult?.Where(x=>x.ESoccer15Mins>0 || x.ESoccer16Mins>0 ||x.ESoccer20Mins>0 || x.ESoccer5Mins>0 ||x.ESoccer6Mins>0);
     }
 
     private static IEnumerable<ESoccerByUser> SumESoccerByUser(Dictionary<int, List<Assignment>> saBaAssignmentDict)
