@@ -11,4 +11,6 @@ public class RobotX5RawModel
     public bool IsFullTime { get; set; }
 
     public bool Is35MinuteMatch { get; set; }
+
+    public string Username { get; set; }
 }

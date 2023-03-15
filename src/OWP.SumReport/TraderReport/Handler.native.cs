@@ -28,5 +28,6 @@ public class HandlerImp : Handler
         await repository.UpdateNoneRobotFields(eventDate);
         await repository.UpdateRobotFields(eventDate, robotByByUsers);
         await repository.UpdateESoccerFields(eventDate, eSoccerByUsers);
+        await repository.UpdateFTOtherFields(eventDate);
     }
 }

@@ -30,6 +30,7 @@
     <Setting Key="OWP_TraderReport_GetOldAndNewSaBaAssignments" SpName="OWP_TraderReport_GetOldAndNewSaBaAssignments" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
     <Setting Key="OWP_LSTReport_OldAndNewListTraderAssignmentsX3" SpName="OWP_LSTReport_OldAndNewListTraderAssigmmentsX3" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
     <Setting Key="OWP_LSTReport_OldAndNewListTraderAssignmentsX5" SpName="OWP_LSTReport_OldAndNewListTraderAssigmmentsX5" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
+		<Setting Key="OWP_TraderReport_UpdateFT_OtherFields" SpName="OWP_TraderReport_UpdateFT_OtherFields" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
   </Function>
   <Function Name="LAReport">
     <Setting Key="OWP_UserSectionsSel" SpName="OWP_UserSectionsSel" DbName="DBOWP.bodb_OWP.bodbOWPNet"></Setting>
