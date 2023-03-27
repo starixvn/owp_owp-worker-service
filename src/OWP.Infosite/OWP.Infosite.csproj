@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Fanex.Caching" Version="2.2.3" />
     <PackageReference Include="Fanex.Data.Repository" Version="4.2.2" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
     <PackageReference Include="Olympus.InfoSiteClient" Version="2.2.0.3" />
     <PackageReference Include="Olympus.OWP.Constants" Version="1.0.0.3" />
     <PackageReference Include="Olympus.Xml" Version="1.0.0.5" />  
