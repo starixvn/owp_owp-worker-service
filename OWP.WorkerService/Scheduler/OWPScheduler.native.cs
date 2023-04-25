@@ -63,6 +63,27 @@ public class OwpScheduler : IHostedService
         await AddJobToSchedulerAsync(new JobInfo(typeof(LinkLeagueAndTeamJob), CronExpressionJob.LinkLeagueAndMatch));
         await AddJobToSchedulerAsync(new JobInfo(typeof(DeleteOldMessageJob), CronExpressionJob.DeleteOldMessage));
         await AddJobToSchedulerAsync(new JobInfo(typeof(ArchiveDataJob), CronExpressionJob.ArchiveData));
+
+        // Debug Health Check
+        await AddHealthCheckJobToSchedulerAsync();
+
+    }
+
+    private async Task AddHealthCheckJobToSchedulerAsync()
+    {
+        var jobDetail = JobBuilder
+            .Create<HealthCheckLogJob>()
+            .WithIdentity($"debug-healthcheck", $"group-debug-healthcheck")
+            .Build(); ;
+
+        var trigger = TriggerBuilder
+            .Create()
+            .WithIdentity($"trigger-debug-healthcheck", $"group-debug-healthcheck")
+            .WithDescription("trigger-debug-healthcheck")
+            .StartNow()
+            .Build();
+
+        await Scheduler.ScheduleJob(jobDetail, trigger);
     }
 
     private async Task CreateScheduler()
