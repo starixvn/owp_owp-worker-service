@@ -1,17 +1,17 @@
 ﻿namespace OWP.InfositeIdSync.Models;
 
-using Olympus.InfoSiteClient.Extensions.XMLExtensions;
+using Olympus.Xml;
 
 [Serializable]
-[XMLName("MatchMappingWithInfosite")]
+[XmlName("MatchMappingWithInfosite")]
 public class MatchMappingWithInfosite
 {
-    [XMLName("OWPMatchId")]
+    [XmlName("OWPMatchId")]
     public int OwpMatchId { get; set; }
 
     public int InfositeMatchId { get; set; }
 
-    [XMLName("AdminsiteMatchId")]
+    [XmlName("AdminsiteMatchId")]
     public int AdminSiteMatchId { get; set; }
 
     public DateTime EventDateTime { get; set; }
