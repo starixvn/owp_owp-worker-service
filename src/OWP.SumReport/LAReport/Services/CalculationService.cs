@@ -28,7 +28,7 @@ public class CalculationServiceImp : CalculationService
 
     public async Task<IEnumerable<LaReportModel>> Calculate(DateTime eventDate, bool isGenerateData)
     {
-        var assignments = await GetAssignmentDict(eventDate, isGenerateData);
+        var assignments = await GetAssignmentPair(eventDate, isGenerateData);
         var userSections = await repository.GetUserSection();
 
         return Calculate(assignments, userSections);
@@ -48,7 +48,7 @@ public class CalculationServiceImp : CalculationService
         }
     }
 
-    private async Task<IDictionary<int, List<Assignment>>> GetAssignmentDict(DateTime eventDate, bool isGenerateData)
+    private async Task<IDictionary<int, List<Assignment>>> GetAssignmentPair(DateTime eventDate, bool isGenerateData)
     {
         var assignments = await repository.GetLaAssignment(eventDate, isGenerateData);
 
@@ -162,6 +162,17 @@ public class CalculationServiceImp : CalculationService
         sumUpResult.Link6 = matchGroupAssignments.Count(x => x.MatchCount == 6);
         sumUpResult.Link7 = matchGroupAssignments.Count(x => x.MatchCount == 7);
         sumUpResult.Link8Plus = matchGroupAssignments.Count(x => x.MatchCount >= 8);
+        var totalMatch=0;
+      
+        foreach (var assignment in matchGroupAssignments)
+        {
+            if (assignment.MatchCount > 1)
+            {
+                totalMatch+=assignment.MatchCount;
+            }
+        }
+
+        sumUpResult.TotalMatchInGroupMultiple = totalMatch;
     }
 
     private void SumUpSingleAndOthers(IEnumerable<Assignment> assignments, LaReportModel sumUpResult)

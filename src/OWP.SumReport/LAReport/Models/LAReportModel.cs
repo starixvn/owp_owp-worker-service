@@ -23,6 +23,9 @@ public class LaReportModel
 
     public int Link8Plus { get; set; }
 
+    public int TotalMatchInGroupMultiple { get; set; }
+
+
     public int OnlyProvider { get; set; }
 
     [XmlName("OnlyTV")]
