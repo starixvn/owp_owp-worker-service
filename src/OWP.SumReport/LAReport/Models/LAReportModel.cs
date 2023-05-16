@@ -69,30 +69,20 @@ public class LaReportModel
 
     public string OtherProductMatchIds { get; set; } = string.Empty;
 
+    public int TotalSingleMatches => OnlyProvider + OnlyTv + OnlyReporter + MixedProviderTvReporter;
+
+    public int TotalSpecialProducts => CornerPlus + BookingPlus + Fantasy + OtherProducts + GoalKick;
+
+    public int TotalMixedProduct => FtCorner + FtCorner5Ml;
+
+    public int TotalESoccer => ESoccer5Mins + ESoccer6Mins + ESoccer15Mins + ESoccer16Mins + ESoccer20Mins;
+
     public int TotalMatches =>
-        Link2 +
-        Link3 +
-        Link4 +
-        Link5 +
-        Link6 +
-        Link7 +
-        Link8Plus +
-        MixedProviderTvReporter +
-        OnlyProvider +
-        OnlyTv +
-        OnlyReporter +
-        CornerPlus +
-        BookingPlus +
-        Fantasy +
-        GoalKick +
-        OtherProducts +
-        FtCorner +
-        ESoccer5Mins +
-        ESoccer6Mins +
-        ESoccer15Mins +
-        ESoccer16Mins +
-        ESoccer20Mins +
-        Others +
-        FiveMajorLeague +
-        FtCorner5Ml;
+        TotalMatchInGroupMultiple +
+        TotalSingleMatches +
+        TotalSpecialProducts +
+        TotalMixedProduct +
+        TotalESoccer +
+        FiveMajorLeague+
+        Others;
 }
