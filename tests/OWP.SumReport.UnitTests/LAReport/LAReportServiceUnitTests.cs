@@ -628,7 +628,8 @@ public class LaReportServiceUnitTests
                     Others = 0,
                     FiveMajorLeague = 1,
                     FtCorner5Ml = 1,
-                    OtherProductMatchIds = ""
+                    OtherProductMatchIds = "",
+                    TotalMatchInGroupMultiple = 17
                 }
             };
     }
