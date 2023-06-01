@@ -118,7 +118,7 @@ public class SyncServiceImp
     private async Task SaveOldInfoSiteMatchSnapshot(string sessionId, DateTime today)
     {
         var oldInfoSiteMatches = await GetOldInfoSiteMatches(today);
-        var absoluteTimeSpan = TimeSpan.FromMinutes(Constant.CacheExpiredIn10Minutes);
+        var absoluteTimeSpan = TimeSpan.FromMinutes(Constant.CacheExpiredIn30Minutes);
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(absoluteTimeSpan);
         var cacheKey = $"{Constant.OldInfositeMatchesSnapshotKey}-{sessionId}";
 

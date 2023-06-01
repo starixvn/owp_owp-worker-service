@@ -1,11 +1,11 @@
 namespace OWP.RabbitMq;
 
-using System.Text;
 using Fanex.Logging;
 using Microsoft.Extensions.Options;
 using Models;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using System.Text;
 
 public interface RabbitMqClient
 {
@@ -53,11 +53,13 @@ public class RabbitMqClientImp : RabbitMqClient
 
     public void PublishRequestMessage(RequestBaseModel request)
     {
+        const int EXPIRATION_TIME = 1000 * 60 * 30;
         var json = JsonConvert.SerializeObject(request);
         var messageBytes = Encoding.UTF8.GetBytes(json);
 
         var props = channel.CreateBasicProperties();
         props.Type = request.RoutingKey;
+        props.Expiration = EXPIRATION_TIME.ToString();
 
         channel.BasicPublish(
             exchange: "",
