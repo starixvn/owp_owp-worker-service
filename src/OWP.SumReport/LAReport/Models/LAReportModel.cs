@@ -26,58 +26,58 @@ public class LaReportModel
     public int TotalMatchInGroupMultiple { get; set; }
 
 
-    public int OnlyProvider { get; set; }
+    public double OnlyProvider { get; set; }
 
     [XmlName("OnlyTV")]
-    public int OnlyTv { get; set; }
-
-    public int OnlyReporter { get; set; }
+    public double OnlyTv { get; set; }
+           
+    public double OnlyReporter { get; set; }
 
     [XmlName("MixedProviderTVReporter")]
-    public int MixedProviderTvReporter { get; set; }
+    public double MixedProviderTvReporter { get; set; }
 
-    public int CornerPlus { get; set; }
+    public double CornerPlus { get; set; }
 
     [XmlName("TBookingPlus")]
-    public int BookingPlus { get; set; }
+    public double BookingPlus { get; set; }
 
-    public int Fantasy { get; set; }
+    public double Fantasy { get; set; }
 
-    public int GoalKick { get; set; }
+    public double GoalKick { get; set; }
 
-    public int OtherProducts { get; set; }
+    public double OtherProducts { get; set; }
 
     [XmlName("FTCorner")]
-    public int FtCorner { get; set; }
+    public double FtCorner { get; set; }
 
-    public int ESoccer5Mins { get; set; }
+    public double ESoccer5Mins { get; set; }
 
-    public int ESoccer6Mins { get; set; }
-
-    public int ESoccer15Mins { get; set; }
-
-    public int ESoccer16Mins { get; set; }
-
-    public int ESoccer20Mins { get; set; }
-
-    public int Others { get; set; }
-
-    public int FiveMajorLeague { get; set; }
+    public double ESoccer6Mins { get; set; }
+           
+    public double ESoccer15Mins { get; set; }
+           
+    public double ESoccer16Mins { get; set; }
+           
+    public double ESoccer20Mins { get; set; }
+           
+    public double Others { get; set; }
+           
+    public double FiveMajorLeague { get; set; }
 
     [XmlName("FTCorner5ML")]
-    public int FtCorner5Ml { get; set; }
+    public double FtCorner5Ml { get; set; }
 
     public string OtherProductMatchIds { get; set; } = string.Empty;
 
-    public int TotalSingleMatches => OnlyProvider + OnlyTv + OnlyReporter + MixedProviderTvReporter;
+    public double TotalSingleMatches => OnlyProvider + OnlyTv + OnlyReporter + MixedProviderTvReporter;
 
-    public int TotalSpecialProducts => CornerPlus + BookingPlus + Fantasy + OtherProducts + GoalKick;
-
-    public int TotalMixedProduct => FtCorner + FtCorner5Ml;
-
-    public int TotalESoccer => ESoccer5Mins + ESoccer6Mins + ESoccer15Mins + ESoccer16Mins + ESoccer20Mins;
-
-    public int TotalMatches =>
+    public double TotalSpecialProducts => CornerPlus + BookingPlus + Fantasy + OtherProducts + GoalKick;
+           
+    public double TotalMixedProduct => FtCorner + FtCorner5Ml;
+           
+    public double TotalESoccer => ESoccer5Mins + ESoccer6Mins + ESoccer15Mins + ESoccer16Mins + ESoccer20Mins;
+           
+    public double TotalMatches =>
         TotalMatchInGroupMultiple +
         TotalSingleMatches +
         TotalSpecialProducts +
