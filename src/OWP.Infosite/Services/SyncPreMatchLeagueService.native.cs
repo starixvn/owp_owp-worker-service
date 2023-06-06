@@ -1,6 +1,5 @@
 ﻿namespace OWP.Infosite.Services;
 
-using System.Globalization;
 using Constants;
 using Criteria;
 using Fanex.Caching;
@@ -9,6 +8,7 @@ using Models;
 using Newtonsoft.Json;
 using RabbitMq;
 using RabbitMq.Models;
+using System.Globalization;
 
 public interface SyncPreMatchLeagueService
 {
@@ -66,7 +66,7 @@ public class SyncPreMatchLeagueServiceImp : SyncPreMatchLeagueService
 
     private async Task SaveOldPreMatchLeaguesSnapshot(string sessionId, IEnumerable<PreMatchLeague> preMatchLeagues)
     {
-        var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
+        var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(30));
         var cacheKey = $"{Constant.OldPreMatchLeaguesSnapshotKey}-{sessionId}";
         var leaguesJson = JsonConvert.SerializeObject(preMatchLeagues);
 
