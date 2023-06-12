@@ -36,20 +36,20 @@ public class CalculationServiceImp : CalculationService
         return Calculate(assignments, userSections);
     }
 
-    private IEnumerable<LaReportModel> Calculate(IDictionary<int, List<Assignment>> assignments,
+    private IEnumerable<LaReportModel> Calculate(IDictionary<int, List<Assignment>> userIdToAssignmentMap,
         Dictionary<int, string> userSections)
     {
-        var userIds = assignments.Select(x => x.Key);
+        var userIds = userIdToAssignmentMap.Select(x => x.Key);
 
-        var owpMatchId = assignments
+        var assignments = userIdToAssignmentMap
             .SelectMany(x => x.Value)
             .ToList();
 
-        var countOwpMatchIdMap = Utils.CountOwpMatchIdMap(owpMatchId);
+        var countOwpMatchIdMap = Utils.CountOwpMatchIdMap(assignments);
 
         foreach (var id in userIds)
         {
-            var categorizeAssignments = CategorizeAssignments(assignments[id]);
+            var categorizeAssignments = CategorizeAssignments(userIdToAssignmentMap[id]);
             var reportModel = SumUpAssignments(id, categorizeAssignments, countOwpMatchIdMap);
             reportModel.Username = userSections.GetValue(id, string.Empty);
 
@@ -101,17 +101,23 @@ public class CalculationServiceImp : CalculationService
         return result;
     }
 
-    private LaReportModel SumUpAssignments(int userId, IList<Assignment> assignments, ImmutableDictionary<int, int> countOwpMatchIdMap)
+    private LaReportModel SumUpAssignments(
+        int userId, 
+        IList<Assignment> assignments, 
+        ImmutableDictionary<int, int> countOwpMatchIdMap)
     {
         var sumUpResult = new LaReportModel { UserId = userId };
         SumUpSpecialAndMixedAndESoccer(assignments, sumUpResult, countOwpMatchIdMap);
-        SumUpMultiple(assignments, sumUpResult);
+        SumUpMultiple(assignments, sumUpResult, countOwpMatchIdMap);
         SumUpSingleAndOthers(assignments, sumUpResult, countOwpMatchIdMap);
 
         return sumUpResult;
     }
 
-    private static void SumUpSpecialAndMixedAndESoccer(IList<Assignment> assignments, LaReportModel sumUpResult, ImmutableDictionary<int, int> countOwpGameIdMap)
+    private static void SumUpSpecialAndMixedAndESoccer(
+        IList<Assignment> assignments, 
+        LaReportModel sumUpResult, 
+        ImmutableDictionary<int, int> countOwpGameIdMap)
     {
         //SPECIAL PRODUCTS
         var totalBookingProducts = assignments.Where(x => x.ReportType == ReportType.TotalBookingPlus)
@@ -159,29 +165,53 @@ public class CalculationServiceImp : CalculationService
         sumUpResult.FtCorner5Ml = Utils.SumSpecialProduct(ftCorner5MlProduct, countOwpGameIdMap);
     }
 
-    private static void SumUpMultiple(IList<Assignment> assignments, LaReportModel sumUpResult)
+    private static void SumUpMultiple(
+        IList<Assignment> assignments,
+        LaReportModel sumUpResult,
+        ImmutableDictionary<int, int> countOwpMatchIdMap)
     {
-        var othersTypeAssignments = assignments.Where(x => x.ReportType == ReportType.Others);
+        var othersTypeAssignments = assignments
+            .Where(x => x.ReportType == ReportType.Others)
+            .ToList();
+
         var consecutiveMultipleMatchesAssignments = GroupMultipleMatches(othersTypeAssignments);
+        
         var matchGroupAssignments = consecutiveMultipleMatchesAssignments
             .GroupBy(i => i.LinkGroup)
-            .Select(i => new { LinkGroup = i, MatchCount = i.Count() })
-            .ToArray();
-        var multipleMatchGroup = matchGroupAssignments.Where(x => x.MatchCount > 1).Select(x => x.LinkGroup).Select(x => x.Key);
-        var multipleLinkAssignments = assignments.Where(x => multipleMatchGroup.Contains(x.LinkGroup)).ToList();
-        multipleLinkAssignments.ToList().ForEach(x => { x.ReportType = ReportType.MultipleMatches; });
+            .Select(i => new GroupMatchInfo
+            {
+                LinkGroup = i,
+                MatchCount = i.Count(),
+                OwpMatchId = i.Select(x=>x.OwpMatchId).ToList()
+            })
+            .ToList();
 
-        sumUpResult.Link2 = matchGroupAssignments.Count(x => x.MatchCount == 2);
-        sumUpResult.Link3 = matchGroupAssignments.Count(x => x.MatchCount == 3);
-        sumUpResult.Link4 = matchGroupAssignments.Count(x => x.MatchCount == 4);
-        sumUpResult.Link5 = matchGroupAssignments.Count(x => x.MatchCount == 5);
-        sumUpResult.Link6 = matchGroupAssignments.Count(x => x.MatchCount == 6);
-        sumUpResult.Link7 = matchGroupAssignments.Count(x => x.MatchCount == 7);
-        sumUpResult.Link8Plus = matchGroupAssignments.Count(x => x.MatchCount >= 8);
-        
-        sumUpResult.TotalMatchInGroupMultiple = matchGroupAssignments
-            .Where(assignment => assignment.MatchCount > 1)
-            .Sum(assignment => assignment.MatchCount);
+        var multipleMatchGroup = matchGroupAssignments
+            .Where(x => x.MatchCount > 1)
+            .Select(x => x.LinkGroup)
+            .Select(x => x.Key)
+            .ToList();
+
+        Utils.UpdateReportType(assignments, multipleMatchGroup);
+
+        var link2= matchGroupAssignments.Where(x => x.MatchCount == 2).ToList();
+        var link3= matchGroupAssignments.Where(x => x.MatchCount == 3).ToList();
+        var link4= matchGroupAssignments.Where(x => x.MatchCount == 4).ToList();
+        var link5= matchGroupAssignments.Where(x => x.MatchCount == 5).ToList();
+        var link6= matchGroupAssignments.Where(x => x.MatchCount == 6).ToList();
+        var link7= matchGroupAssignments.Where(x => x.MatchCount == 7).ToList();
+        var link8Plus = matchGroupAssignments.Where(x => x.MatchCount >= 8).ToList();
+
+        sumUpResult.Link2 = Utils.CountMatchInEachGroup(link2, countOwpMatchIdMap, out var sumAssignmentLink2);
+        sumUpResult.Link3 = Utils.CountMatchInEachGroup(link3, countOwpMatchIdMap, out var sumAssignmentLink3);
+        sumUpResult.Link4 = Utils.CountMatchInEachGroup(link4, countOwpMatchIdMap, out var sumAssignmentLink4);
+        sumUpResult.Link5 = Utils.CountMatchInEachGroup(link5, countOwpMatchIdMap, out var sumAssignmentLink5);
+        sumUpResult.Link6 = Utils.CountMatchInEachGroup(link6, countOwpMatchIdMap, out var sumAssignmentLink6);
+        sumUpResult.Link7 = Utils.CountMatchInEachGroup(link7, countOwpMatchIdMap, out var sumAssignmentLink7); ;
+        sumUpResult.Link8Plus = Utils.CountMatchInEachGroup(link8Plus, countOwpMatchIdMap, out var sumAssignmentLink8);
+
+        sumUpResult.TotalMatchInGroupMultiple = sumAssignmentLink2+ sumAssignmentLink3 + sumAssignmentLink4 + sumAssignmentLink5
+                                                + sumAssignmentLink6 + sumAssignmentLink7 + sumAssignmentLink8;
     }
 
     private void SumUpSingleAndOthers(IEnumerable<Assignment> assignments, LaReportModel sumUpResult, ImmutableDictionary<int,int> countOwpMatchIdMap)
@@ -202,23 +232,23 @@ public class CalculationServiceImp : CalculationService
             switch (reportType)
             {
                 case ReportType.MixedProviderTvReporter:
-                    singleMatchesMixedProductCount += Utils.DecidedIncreaseSingleAndOthers(assignment.OwpMatchId, countOwpMatchIdMap);
+                    singleMatchesMixedProductCount += Utils.DecidedIncreaseFullOrHalfSingleAndOthers(assignment.OwpMatchId, countOwpMatchIdMap);
                     break;
 
                 case ReportType.OnlyProvider:
-                    singleMatchesProviderCount += Utils.DecidedIncreaseSingleAndOthers(assignment.OwpMatchId, countOwpMatchIdMap);
+                    singleMatchesProviderCount += Utils.DecidedIncreaseFullOrHalfSingleAndOthers(assignment.OwpMatchId, countOwpMatchIdMap);
                     break;
 
                 case ReportType.OnlyTv:
-                    singleMatchesTvCount += Utils.DecidedIncreaseSingleAndOthers(assignment.OwpMatchId, countOwpMatchIdMap);
+                    singleMatchesTvCount += Utils.DecidedIncreaseFullOrHalfSingleAndOthers(assignment.OwpMatchId, countOwpMatchIdMap);
                     break;
 
                 case ReportType.OnlyReporter:
-                    singleMatchesReporterCount += Utils.DecidedIncreaseSingleAndOthers(assignment.OwpMatchId, countOwpMatchIdMap);
+                    singleMatchesReporterCount += Utils.DecidedIncreaseFullOrHalfSingleAndOthers(assignment.OwpMatchId, countOwpMatchIdMap);
                     break;
 
                 default:
-                    othersCounts += Utils.DecidedIncreaseSingleAndOthers(assignment.OwpMatchId, countOwpMatchIdMap);
+                    othersCounts += Utils.DecidedIncreaseFullOrHalfSingleAndOthers(assignment.OwpMatchId, countOwpMatchIdMap);
                     otherMatchIds.Add(assignment.OwpMatchId);
                     break;
             }
@@ -238,6 +268,7 @@ public class CalculationServiceImp : CalculationService
         var group = 1;
 
         var groupedAssignments = assignments
+            .DistinctBy(x=>x.OwpMatchId)
             .OrderBy(x => x.EventDateTime)
             .GroupBy(x => x.EventDateTime.AddHours(-12).Date)
             .Where(x => x.Any())
