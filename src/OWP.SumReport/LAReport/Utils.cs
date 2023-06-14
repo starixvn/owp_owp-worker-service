@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using OWP.SumReport.LAReport.Constants;
 using OWP.SumReport.LAReport.Enum;
 using OWP.SumReport.LAReport.Models;
 
@@ -6,52 +7,31 @@ namespace OWP.SumReport.LAReport
 {
     public static class Utils
     {
-        private const double INCREASE_HALF = 0.5;
-        private const double INCREASE_FULL = 1;
-        private const int NUMBER_MATCH_DECIDED_INCREASE = 1;
-
         public static ImmutableDictionary<int, int> CountOwpMatchIdMap(IList<Assignment> assignments)
             => assignments.GroupBy(x => x.OwpMatchId)
                 .ToImmutableDictionary(x => x.Key, x => x.ToList().Count);
 
-        public static double SumSpecialProduct(IList<Assignment> assignments,
-            ImmutableDictionary<int, int> countOwpMatchIdMap)
-        {
-            return assignments.Sum(assignment => countOwpMatchIdMap[assignment.OwpMatchId] == NUMBER_MATCH_DECIDED_INCREASE
-                ? INCREASE_FULL
-                : INCREASE_HALF);
-        }
-        
-        public static double DecidedIncreaseFullOrHalfSingleAndOthers(int owpMatchId,
-            ImmutableDictionary<int, int> countOwpMatchIdMap)
-        => countOwpMatchIdMap[owpMatchId] == NUMBER_MATCH_DECIDED_INCREASE
-            ? INCREASE_FULL
-            : INCREASE_HALF;
-
         public static (double totalAssignmentGroup, double totalAssignment) CountMatchInEachGroup(
-            List<GroupMatchInfo> groupMatchInfo,
-            ImmutableDictionary<int, int> countOwpMatchIdMap)
+            List<GroupMatchInfo> groupMatchInfo)
         {
             var count = 0.0;
             var total = 0.0;
-            var owpMatchId= groupMatchInfo
-                .Select(g=>g.OwpMatchId);
+            var assignments= groupMatchInfo
+                .Select(g=>g.Assignments);
 
-            foreach (var ids in owpMatchId)
+            foreach (var assignment in assignments)
             {
-                count += DecidedIncreaseFullOrHalfInGroup(ids, countOwpMatchIdMap);
-                total += ids.Sum(id => DecidedIncreaseFullOrHalfSingleAndOthers(id, countOwpMatchIdMap));
+                count += DecidedIncreaseFullOrHalfInGroup(assignment);
+                total += assignment.Sum(a => a.Count);
             }
 
             return (count, total);
         }
 
-
-            public static double DecidedIncreaseFullOrHalfInGroup(IList<int> matchIdTarget,
-            ImmutableDictionary<int, int> countOwpMatchIdMap)
-            => matchIdTarget.All(id => countOwpMatchIdMap[id] == 2)
-                ? INCREASE_HALF
-                : INCREASE_FULL;
+        public static double DecidedIncreaseFullOrHalfInGroup(IList<Assignment> assignments)
+            => assignments.All(a => Math.Abs(a.Count - 0.5) <= .00001)
+                ? CountUnit.COUNT_HALF
+                : CountUnit.COUNT_FULL;
 
         public static void UpdateReportType(IList<Assignment> assignments, IList<int>multipleMatchGroup)
         {

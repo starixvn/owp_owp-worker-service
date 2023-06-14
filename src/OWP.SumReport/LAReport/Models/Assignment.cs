@@ -23,4 +23,6 @@ public class Assignment
     public ReportType ReportType { get; set; }
 
     public int LinkGroup { get; set; }
+
+    public double Count { get; set; }
 }

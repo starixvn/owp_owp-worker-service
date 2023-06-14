@@ -47,7 +47,7 @@ public class LaRepositoryImp : LaRepository
             ToDate = eventDate
         };
 
-        return await repository.FetchAsync<Assignment>(isGenerateData ? generatedCriteria : criteria);
+        return (await repository.FetchAsync<Assignment>(isGenerateData ? generatedCriteria : criteria)).ToList();
     }
 
     public async Task<Dictionary<int, string>> GetUserSection()

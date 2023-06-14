@@ -603,18 +603,18 @@ public class LaReportServiceUnitTests
                 {
                     UserId = 15477090,
                     Username = "sa",
-                    BookingPlus = 2,
-                    GoalKick = 1,
-                    OtherProducts = 2,
+                    BookingPlus = 3,
+                    GoalKick = 2,
+                    OtherProducts = 1,
                     FtCorner = 1,
                     CornerPlus = 2,
                     Fantasy = 2,
-                    ESoccer15Mins = 1,
+                    ESoccer15Mins = 0.5,
                     ESoccer5Mins = 1,
                     ESoccer6Mins = 2,
-                    ESoccer16Mins = 1,
-                    ESoccer20Mins = 1,
-                    Link2 = 3,
+                    ESoccer16Mins = 0.5,
+                    ESoccer20Mins = 0.5,
+                    Link2 = 2.5,
                     Link3 = 0,
                     Link4 = 0,
                     Link5 = 1,
@@ -629,7 +629,7 @@ public class LaReportServiceUnitTests
                     FiveMajorLeague = 1,
                     FtCorner5Ml = 1,
                     OtherProductMatchIds = "",
-                    TotalMatchInGroupMultiple = 17
+                    TotalMatchInGroupMultiple = 16
                 }
             };
     }

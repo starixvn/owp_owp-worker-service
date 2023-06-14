@@ -6,6 +6,6 @@
 
         public int MatchCount { get; set; }
 
-        public IList<int> OwpMatchId { get; set; }
+        public IList<Assignment> Assignments { get; set; }
     }
 }
