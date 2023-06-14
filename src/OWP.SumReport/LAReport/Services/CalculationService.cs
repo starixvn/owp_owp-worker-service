@@ -202,16 +202,29 @@ public class CalculationServiceImp : CalculationService
         var link7= matchGroupAssignments.Where(x => x.MatchCount == 7).ToList();
         var link8Plus = matchGroupAssignments.Where(x => x.MatchCount >= 8).ToList();
 
-        sumUpResult.Link2 = Utils.CountMatchInEachGroup(link2, countOwpMatchIdMap, out var sumAssignmentLink2);
-        sumUpResult.Link3 = Utils.CountMatchInEachGroup(link3, countOwpMatchIdMap, out var sumAssignmentLink3);
-        sumUpResult.Link4 = Utils.CountMatchInEachGroup(link4, countOwpMatchIdMap, out var sumAssignmentLink4);
-        sumUpResult.Link5 = Utils.CountMatchInEachGroup(link5, countOwpMatchIdMap, out var sumAssignmentLink5);
-        sumUpResult.Link6 = Utils.CountMatchInEachGroup(link6, countOwpMatchIdMap, out var sumAssignmentLink6);
-        sumUpResult.Link7 = Utils.CountMatchInEachGroup(link7, countOwpMatchIdMap, out var sumAssignmentLink7); ;
-        sumUpResult.Link8Plus = Utils.CountMatchInEachGroup(link8Plus, countOwpMatchIdMap, out var sumAssignmentLink8);
+        var countLink2 = Utils.CountMatchInEachGroup(link2, countOwpMatchIdMap);
+        var countLink3 = Utils.CountMatchInEachGroup(link3, countOwpMatchIdMap);
+        var countLink4 = Utils.CountMatchInEachGroup(link4, countOwpMatchIdMap);
+        var countLink5 = Utils.CountMatchInEachGroup(link5, countOwpMatchIdMap);
+        var countLink6 = Utils.CountMatchInEachGroup(link6, countOwpMatchIdMap);
+        var countLink7 = Utils.CountMatchInEachGroup(link7, countOwpMatchIdMap);
+        var countLink8 = Utils.CountMatchInEachGroup(link8Plus, countOwpMatchIdMap);
 
-        sumUpResult.TotalMatchInGroupMultiple = sumAssignmentLink2+ sumAssignmentLink3 + sumAssignmentLink4 + sumAssignmentLink5
-                                                + sumAssignmentLink6 + sumAssignmentLink7 + sumAssignmentLink8;
+        sumUpResult.Link2 = countLink2.totalAssignmentGroup;
+        sumUpResult.Link3 = countLink3.totalAssignmentGroup;
+        sumUpResult.Link4 = countLink4.totalAssignmentGroup;
+        sumUpResult.Link5 = countLink5.totalAssignmentGroup;
+        sumUpResult.Link6 = countLink6.totalAssignmentGroup;
+        sumUpResult.Link7 = countLink7.totalAssignmentGroup;
+        sumUpResult.Link8Plus = countLink8.totalAssignmentGroup;
+
+        sumUpResult.TotalMatchInGroupMultiple = countLink2.totalAssignment +
+                                                countLink3.totalAssignment +
+                                                countLink4.totalAssignment +
+                                                countLink5.totalAssignment +
+                                                countLink6.totalAssignment +
+                                                countLink7.totalAssignment +
+                                                countLink8.totalAssignment;
     }
 
     private void SumUpSingleAndOthers(IEnumerable<Assignment> assignments, LaReportModel sumUpResult, ImmutableDictionary<int,int> countOwpMatchIdMap)
