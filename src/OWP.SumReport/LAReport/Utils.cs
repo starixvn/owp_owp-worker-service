@@ -4,11 +4,10 @@ using OWP.SumReport.LAReport.Models;
 
 namespace OWP.SumReport.LAReport
 {
-    public class Utils
+    public static class Utils
     {
         private const double INCREASE_HALF = 0.5;
         private const double INCREASE_FULL = 1;
-        private const double INIT_TOTAL = 0;
         private const int NUMBER_MATCH_DECIDED_INCREASE = 1;
 
         public static ImmutableDictionary<int, int> CountOwpMatchIdMap(IList<Assignment> assignments)
@@ -29,23 +28,22 @@ namespace OWP.SumReport.LAReport
             ? INCREASE_FULL
             : INCREASE_HALF;
 
-        public static double CountMatchInEachGroup(
+        public static (double totalAssignmentGroup, double totalAssignment) CountMatchInEachGroup(
             List<GroupMatchInfo> groupMatchInfo,
-            ImmutableDictionary<int, int> countOwpMatchIdMap,
-            out double totalMatch)
+            ImmutableDictionary<int, int> countOwpMatchIdMap)
         {
             var count = 0.0;
-            totalMatch=0.0;
+            var total = 0.0;
             var owpMatchId= groupMatchInfo
                 .Select(g=>g.OwpMatchId);
 
             foreach (var ids in owpMatchId)
             {
                 count += DecidedIncreaseFullOrHalfInGroup(ids, countOwpMatchIdMap);
-                totalMatch += ids.Sum(id => DecidedIncreaseFullOrHalfSingleAndOthers(id, countOwpMatchIdMap));
+                total += ids.Sum(id => DecidedIncreaseFullOrHalfSingleAndOthers(id, countOwpMatchIdMap));
             }
 
-            return count;
+            return (count, total);
         }
 
 

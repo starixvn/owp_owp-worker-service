@@ -28,8 +28,16 @@ public class ESoccerServiceImp : ESoccerService
             .ToDictionary(x => x.Key, x => x.ToList());
 
         var sumResult= SumESoccerByUser(saBaAssignmentDict);
-        return sumResult?.Where(x=>x.ESoccer15Mins>0 || x.ESoccer16Mins>0 ||x.ESoccer20Mins>0 || x.ESoccer5Mins>0 ||x.ESoccer6Mins>0);
+        return sumResult?.Where(x=> ESoccer15MinsOrESoccer16MinsGreaterZero(x.ESoccer15Mins, x.ESoccer16Mins)
+                                    || x.ESoccer20Mins>0
+                                    || ESoccer5MinsOrESoccer6MinsGreaterZero(x.ESoccer5Mins,x.ESoccer6Mins));
     }
+
+    private static bool ESoccer15MinsOrESoccer16MinsGreaterZero(int eSoccer15Mins, int eSoccer16Mins)
+        => eSoccer15Mins > 0 || eSoccer16Mins > 0;
+    
+    private static bool ESoccer5MinsOrESoccer6MinsGreaterZero(int eSoccer5Mins, int eSoccer6Mins)
+        => eSoccer5Mins > 0 || eSoccer6Mins > 0;
 
     private static IEnumerable<ESoccerByUser> SumESoccerByUser(Dictionary<int, List<Assignment>> saBaAssignmentDict)
     {
