@@ -36,13 +36,14 @@ namespace OWP.SumReport.LAReport
         {
             var count = 0.0;
 
-            var assignmentSpecific = assignments.Where(x => x.ReportType == reportType && x.ParentMatchId.HasValue)
+            var assignmentSpecific = assignments
+                .Where(x => x.ReportType == reportType && x.ParentMatchId.HasValue)
                 .GroupBy(x => x.ParentMatchId)
                 .ToImmutableDictionary(x => x.Key, x => x.ToList());
 
             foreach (var (parentMatchId, assignment) in assignmentSpecific)
             {
-                var parentGame = assignment.First(a => a.OwpMatchId == parentMatchId);
+                var parentGame = assignments.First(a => a.OwpMatchId == parentMatchId);
                 count += parentGame.SingleAssignment && assignment.All(a => a.SingleAssignment) ? CountUnit.COUNT_FULL : CountUnit.COUNT_HALF;
             }
             return count;

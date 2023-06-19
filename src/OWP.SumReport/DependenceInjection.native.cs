@@ -39,7 +39,7 @@ public static class DependenceInjection
         services.AddTransient<SpecialProductFactory, SpecialProductFactoryImp>();
         services.AddTransient<CalculationService, CalculationServiceImp>();
         services.AddTransient<SumUpService, SumUpServiceImp>();
-        services.AddTransient<ESoccerService, ESoccerServiceImp>();
+        services.AddTransient<EsoccerProductService, EsoccerProductServiceImp>();
         services.AddTransient<MixedProductService, MixedProductServiceImp>();
         services.AddTransient<SpecialProductService, SpecialProductServiceImp>();
         services.AddTransient<FiveMlProductService, FiveMlProductServiceImp>();

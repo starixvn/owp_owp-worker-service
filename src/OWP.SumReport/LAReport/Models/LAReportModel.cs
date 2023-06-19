@@ -9,21 +9,21 @@ public class LaReportModel
 
     public string Username { get; set; }
 
-    public double Link2 { get; set; } = 0.0;
+    public double Link2 { get; set; }
            
-    public double Link3 { get; set; } = 0.0;
+    public double Link3 { get; set; }
                                      
-    public double Link4 { get; set; } = 0.0;
+    public double Link4 { get; set; }
                                      
-    public double Link5 { get; set; } = 0.0;
-                                      
-    public double Link6 { get; set; } = 0.0;
+    public double Link5 { get; set; }
                                      
-    public double Link7 { get; set; } = 0.0;
+    public double Link6 { get; set; }
+                                     
+    public double Link7 { get; set; }
 
-    public double Link8Plus { get; set; } = 0.0;
+    public double Link8Plus { get; set; }
 
-    public double TotalMatchInGroupMultiple { get; set; } = 0.0;
+    public double TotalMatchInGroupMultiple { get; set; }
 
 
     public double OnlyProvider { get; set; }

@@ -77,7 +77,7 @@ namespace OWP.SumReport.LAReport.Services
 
             sumUpResult.TotalMatchInGroupMultiple += totalMatch;
 
-            Execute(othersAssignments, sumUpResult);
+            Execute(assignments, sumUpResult);
         }
 
         private static bool StopSumUpFirstCondition(int link2, int link3, int link4, int link5)

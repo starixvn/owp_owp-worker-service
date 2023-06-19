@@ -25,8 +25,8 @@ namespace OWP.SumReport.LAReport.Services
         public void Execute(IList<Assignment> assignments, LaReportModel report)
         {
             specialAndMixedAndESoccerService.SumUp(assignments,report);
-            singleProductService.SumUp(assignments,report);
             multipleProductService.SumUp(assignments,report);
+            singleProductService.SumUp(assignments,report);
         }
     }
 }
