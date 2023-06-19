@@ -11,42 +11,80 @@ namespace OWP.SumReport.LAReport
             => assignments.GroupBy(x => x.OwpMatchId)
                 .ToImmutableDictionary(x => x.Key, x => x.ToList().Count);
 
-        public static (double totalAssignmentGroup, double totalAssignment) CountMatchInEachGroup(
-            List<GroupMatchInfo> groupMatchInfo)
+        public static double CountSingleMatch(IList<Assignment> assignments, ReportType reportType)
         {
-            var count = 0.0;
-            var total = 0.0;
-            var assignments= groupMatchInfo
-                .Select(g=>g.Assignments);
-
-            foreach (var assignment in assignments)
-            {
-                count += DecidedIncreaseFullOrHalfInGroup(assignment);
-                total += assignment.Sum(a => a.Count);
-            }
-
-            return (count, total);
+            var assignmentMapOwpId = assignments.Where(x => x.ReportType == reportType);
+            return assignmentMapOwpId.Sum(assignment => assignment.SingleAssignment ? CountUnit.COUNT_FULL : CountUnit.COUNT_HALF);
         }
 
-        public static double DecidedIncreaseFullOrHalfInGroup(IList<Assignment> assignments)
-            => assignments.All(a => Math.Abs(a.Count - 0.5) <= .00001)
-                ? CountUnit.COUNT_HALF
-                : CountUnit.COUNT_FULL;
-
-        public static void UpdateReportType(IList<Assignment> assignments, IList<int>multipleMatchGroup)
+        public static double CountGroupSpecialProduct(IList<Assignment> assignments, ReportType reportType)
         {
-            var multipleLinkMapOwpId = assignments
-                .Where(x => multipleMatchGroup
-                    .Contains(x.LinkGroup))
-                .Select(m => m.OwpMatchId)
-                .ToDictionary(x => x);
+            var count = 0.0;
 
-            var assignmentUpdated =
-                assignments.Where(assignment => multipleLinkMapOwpId.ContainsKey(assignment.OwpMatchId));
-            foreach (var assignment in assignmentUpdated)
+            var assignmentMapParentId=assignments.Where(x => x.ReportType == reportType)
+                .GroupBy(x => x.ParentMatchId)
+                .ToImmutableDictionary(x => x.Key, x => x.ToList());
+            
+            foreach (var (_, assignment) in assignmentMapParentId)
             {
-                assignment.ReportType = ReportType.MultipleMatches;
+                count+=assignment.All(a => a.SingleAssignment) ? CountUnit.COUNT_FULL : CountUnit.COUNT_HALF;
             }
+            return count;
+        }
+
+        public static double CountGroupMixedProduct(IList<Assignment> assignments, ReportType reportType)
+        {
+            var count = 0.0;
+
+            var assignmentSpecific = assignments.Where(x => x.ReportType == reportType && x.ParentMatchId.HasValue)
+                .GroupBy(x => x.ParentMatchId)
+                .ToImmutableDictionary(x => x.Key, x => x.ToList());
+
+            foreach (var (parentMatchId, assignment) in assignmentSpecific)
+            {
+                var parentGame = assignment.First(a => a.OwpMatchId == parentMatchId);
+                count += parentGame.SingleAssignment && assignment.All(a => a.SingleAssignment) ? CountUnit.COUNT_FULL : CountUnit.COUNT_HALF;
+            }
+            return count;
+        }
+
+        public static IList<Assignment> GroupMultipleMatches(IList<Assignment> assignments)
+        {
+            var result = new List<Assignment>();
+            var group = 1;
+
+            var groupedAssignments = assignments
+                .DistinctBy(x => x.OwpMatchId)
+                .OrderBy(x => x.EventDateTime)
+                .GroupBy(x => x.EventDateTime.AddHours(-12).Date)
+                .Where(x => x.Any())
+                .ToDictionary(x => x.Key, x => x.ToList());
+
+            var groupedAssignmentKey = groupedAssignments.Select(assignment => assignment.Key);
+            foreach (var key in groupedAssignmentKey)
+            {
+                groupedAssignments[key][0].LinkGroup = group;
+
+                for (var i = 1; i < groupedAssignments[key].Count; i++)
+                {
+                    var isLinked = IsKoTimeDifferentWithin45Mins(groupedAssignments[key][i], groupedAssignments[key][i - 1]);
+
+                    group = isLinked ? group : group + 1;
+                    groupedAssignments[key][i].LinkGroup = group;
+                }
+
+                group += 1;
+
+                result.AddRange(groupedAssignments[key]);
+            }
+
+            return result;
+        }
+
+        private static bool IsKoTimeDifferentWithin45Mins(Assignment assignmentA, Assignment assignmentB)
+        {
+            const int differenceInMinute = 45;
+            return Math.Abs(assignmentA.EventDateTime.Subtract(assignmentB.EventDateTime).TotalMinutes) <= differenceInMinute;
         }
 
     }

@@ -31,6 +31,7 @@ public class LaReportServiceUnitTests
         var assignments = CreateFakeAssignments();
         var sections = CreateFakeUserSections();
         var queryRepository = Substitute.For<LaRepository>();
+        var sumUpService = Substitute.For<SumUpService>();
         queryRepository.GetLaAssignment(Arg.Compat.Any<DateTime>(), false).Returns(assignments);
         queryRepository.GetUserSection().Returns(sections);
 
@@ -48,7 +49,11 @@ public class LaReportServiceUnitTests
         var multipleAndSingleMatchesFactory = Substitute.For<SingleMatchesFactory>();
         multipleAndSingleMatchesFactory.Create(RuleType.Single).Returns(new IsSingleMatchesRule());
 
-        var calculationService = new CalculationServiceImp(queryRepository, specialProductFactory, mainMatchRuleFactory, multipleAndSingleMatchesFactory);
+        var calculationService = new CalculationServiceImp(
+            queryRepository,
+            specialProductFactory, 
+            mainMatchRuleFactory,
+            sumUpService);
         return calculationService;
     }
 

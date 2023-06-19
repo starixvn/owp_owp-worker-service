@@ -25,4 +25,6 @@ public class Assignment
     public int LinkGroup { get; set; }
 
     public double Count { get; set; }
+
+    public bool SingleAssignment { get; set; }
 }

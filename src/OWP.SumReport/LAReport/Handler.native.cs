@@ -20,6 +20,7 @@ public class HandlerImp : Handler
 
     public async Task Handle(DateTime eventDate, bool isGenerateData = false)
     {
+        eventDate = DateTime.Parse("2023-06-19");
         var laReportModels = await calculationService.Calculate(eventDate, isGenerateData);
 
         await repository.Update(eventDate, laReportModels);
