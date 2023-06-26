@@ -1,5 +1,6 @@
 ﻿namespace OWP.SumReport;
 
+using AutoMapper;
 using LAReport;
 using LAReport.Factory;
 using LAReport.Services;
@@ -37,6 +38,14 @@ public static class DependenceInjection
                 SingleMatchesFactoryImp>();
         services.AddTransient<SpecialProductFactory, SpecialProductFactoryImp>();
         services.AddTransient<CalculationService, CalculationServiceImp>();
+        services.AddTransient<SumUpService, SumUpServiceImp>();
+        services.AddTransient<EsoccerProductService, EsoccerProductServiceImp>();
+        services.AddTransient<MixedProductService, MixedProductServiceImp>();
+        services.AddTransient<SpecialProductService, SpecialProductServiceImp>();
+        services.AddTransient<FiveMlProductService, FiveMlProductServiceImp>();
+        services.AddTransient<SpecialAndMixedAndESoccerService, SpecialAndMixedAndESoccerServiceImp>();
+        services.AddTransient<SingleProductService, SingleProductServiceImp>();
+        services.AddTransient<MultipleProductService, MultipleProductServiceImp>();
 
         services.AddTransient<OvertimeRepository, OvertimeRepositoryImp>();
         services
@@ -62,6 +71,21 @@ public static class DependenceInjection
         services.AddTransient<DbWriterService, DbWriterServiceImp>();
         services.AddTransient<PrematchReportService, PrematchReportServiceImp>();
 
+        //Auto mapper
+        services.AddAutoMapperServices();
+
         return services;
+    }
+
+    private static void AddAutoMapperServices(this IServiceCollection services)
+    {
+        var mapperConfig = new MapperConfiguration(mc =>
+        {
+            mc.AddProfile(new AutoMapperProfile());
+        });
+
+        var mapper = mapperConfig.CreateMapper();
+        services.AddSingleton(mapper);
+
     }
 }

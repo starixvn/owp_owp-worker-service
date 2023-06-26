@@ -31,6 +31,7 @@ public class LaReportServiceUnitTests
         var assignments = CreateFakeAssignments();
         var sections = CreateFakeUserSections();
         var queryRepository = Substitute.For<LaRepository>();
+        var sumUpService = Substitute.For<SumUpService>();
         queryRepository.GetLaAssignment(Arg.Compat.Any<DateTime>(), false).Returns(assignments);
         queryRepository.GetUserSection().Returns(sections);
 
@@ -48,7 +49,11 @@ public class LaReportServiceUnitTests
         var multipleAndSingleMatchesFactory = Substitute.For<SingleMatchesFactory>();
         multipleAndSingleMatchesFactory.Create(RuleType.Single).Returns(new IsSingleMatchesRule());
 
-        var calculationService = new CalculationServiceImp(queryRepository, specialProductFactory, mainMatchRuleFactory, multipleAndSingleMatchesFactory);
+        var calculationService = new CalculationServiceImp(
+            queryRepository,
+            specialProductFactory, 
+            mainMatchRuleFactory,
+            sumUpService);
         return calculationService;
     }
 
@@ -603,33 +608,33 @@ public class LaReportServiceUnitTests
                 {
                     UserId = 15477090,
                     Username = "sa",
-                    BookingPlus = 2,
-                    GoalKick = 1,
-                    OtherProducts = 2,
-                    FtCorner = 1,
-                    CornerPlus = 2,
-                    Fantasy = 2,
-                    ESoccer15Mins = 1,
-                    ESoccer5Mins = 1,
-                    ESoccer6Mins = 2,
-                    ESoccer16Mins = 1,
-                    ESoccer20Mins = 1,
-                    Link2 = 3,
+                    BookingPlus = 0,
+                    GoalKick = 0,
+                    OtherProducts = 0,
+                    FtCorner = 0,
+                    CornerPlus = 0,
+                    Fantasy = 0,
+                    ESoccer15Mins = 0,
+                    ESoccer5Mins = 0,
+                    ESoccer6Mins = 0,
+                    ESoccer16Mins = 0,
+                    ESoccer20Mins = 0,
+                    Link2 = 0,
                     Link3 = 0,
                     Link4 = 0,
-                    Link5 = 1,
-                    Link6 = 1,
+                    Link5 = 0,
+                    Link6 = 0,
                     Link7 = 0,
                     Link8Plus = 0,
-                    MixedProviderTvReporter = 1,
-                    OnlyProvider = 1,
-                    OnlyTv = 3,
-                    OnlyReporter = 1,
+                    MixedProviderTvReporter = 0,
+                    OnlyProvider = 0,
+                    OnlyTv = 0,
+                    OnlyReporter = 0,
                     Others = 0,
-                    FiveMajorLeague = 1,
-                    FtCorner5Ml = 1,
+                    FiveMajorLeague = 0,
+                    FtCorner5Ml = 0,
                     OtherProductMatchIds = "",
-                    TotalMatchInGroupMultiple = 17
+                    TotalMatchInGroupMultiple = 0
                 }
             };
     }
