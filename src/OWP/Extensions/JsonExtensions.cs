@@ -12,7 +12,7 @@ public class TrimmingConverter : JsonConverter
     public override object ReadJson(JsonReader reader, Type objectType,
                                     object existingValue, JsonSerializer serializer)
     {
-        return ((string)reader.Value)?.Trim();
+        return reader.Value?.ToString().Trim();
     }
 
     public override void WriteJson(JsonWriter writer, object value,
