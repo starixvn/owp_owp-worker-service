@@ -10,5 +10,7 @@
     <ProjectReference Include="..\OWP\OWP.csproj" />
     <ProjectReference Include="..\OWP.Infosite\OWP.Infosite.csproj" />
   </ItemGroup>
-
+	<ItemGroup>
+		<ProjectReference Include="..\OWP\OWP.csproj" />
+	</ItemGroup>
 </Project>
