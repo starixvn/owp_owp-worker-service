@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using OWP.SumReport.LAReport.Models;
 
-namespace OWP.SumReport
+namespace OWP.SumReport;
+
+public class AutoMapperProfile : Profile
 {
-    public class AutoMapperProfile: Profile
+    public AutoMapperProfile()
     {
-        public AutoMapperProfile()
-        {
-            CreateMap<Assignment, Assignment>();
-        }
+        CreateMap<Assignment, Assignment>();
     }
 }

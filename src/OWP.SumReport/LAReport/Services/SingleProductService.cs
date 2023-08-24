@@ -2,43 +2,42 @@
 using OWP.SumReport.LAReport.Factory;
 using OWP.SumReport.LAReport.Models;
 
-namespace OWP.SumReport.LAReport.Services
+namespace OWP.SumReport.LAReport.Services;
+
+public interface SingleProductService
 {
-    public interface SingleProductService
+    void SumUp(IList<Assignment> assignments,
+        LaReportModel sumUpResult);
+}
+
+public class SingleProductServiceImp : SingleProductService
+{
+    private readonly SingleMatchesFactory singleMatchesFactory;
+
+    public SingleProductServiceImp(SingleMatchesFactory singleMatchesFactory)
     {
-        void SumUp(IList<Assignment> assignments,
-            LaReportModel sumUpResult);
+        this.singleMatchesFactory = singleMatchesFactory;
     }
 
-    public class SingleProductServiceImp : SingleProductService
+    public void SumUp(IList<Assignment> assignments, LaReportModel sumUpResult)
     {
-        private readonly SingleMatchesFactory singleMatchesFactory;
-
-        public SingleProductServiceImp(SingleMatchesFactory singleMatchesFactory)
+        var singleMatchesRule = singleMatchesFactory.Create(RuleType.Single);
+        var othersAssignments = assignments.Where(x => x.ReportType == ReportType.Others).ToList();
+        foreach (var assignment in othersAssignments)
         {
-            this.singleMatchesFactory = singleMatchesFactory;
+            assignment.ReportType = singleMatchesRule.Execute(assignment);
         }
+        sumUpResult.MixedProviderTvReporter = Utils.CountSingleMatch(othersAssignments, ReportType.MixedProviderTvReporter);
+        sumUpResult.OnlyProvider = Utils.CountSingleMatch(othersAssignments, ReportType.OnlyProvider);
+        sumUpResult.OnlyTv = Utils.CountSingleMatch(othersAssignments, ReportType.OnlyTv);
+        sumUpResult.OnlyReporter = Utils.CountSingleMatch(othersAssignments, ReportType.OnlyReporter);
+        sumUpResult.Others = Utils.CountSingleMatch(othersAssignments, ReportType.Others);
 
-        public void SumUp(IList<Assignment> assignments, LaReportModel sumUpResult)
-        {
-            var singleMatchesRule = singleMatchesFactory.Create(RuleType.Single);
-            var othersAssignments = assignments.Where(x => x.ReportType == ReportType.Others).ToList();
-            foreach (var assignment in othersAssignments)
-            {
-                assignment.ReportType = singleMatchesRule.Execute(assignment);
-            }
-            sumUpResult.MixedProviderTvReporter = Utils.CountSingleMatch(othersAssignments, ReportType.MixedProviderTvReporter);
-            sumUpResult.OnlyProvider = Utils.CountSingleMatch(othersAssignments, ReportType.OnlyProvider);
-            sumUpResult.OnlyTv = Utils.CountSingleMatch(othersAssignments, ReportType.OnlyTv);
-            sumUpResult.OnlyReporter = Utils.CountSingleMatch(othersAssignments, ReportType.OnlyReporter);
-            sumUpResult.Others = Utils.CountSingleMatch(othersAssignments, ReportType.Others);
+        var otherMatchIds = othersAssignments
+            ?.Where(x => x.ReportType == ReportType.Others)
+            ?.Select(a => a.OwpMatchId)
+            .Distinct();
 
-            var otherMatchIds= othersAssignments
-                ?.Where(x => x.ReportType == ReportType.Others)
-                ?.Select(a=>a.OwpMatchId)
-                .Distinct();
-
-            sumUpResult.OtherProductMatchIds = string.Join(",", otherMatchIds);
-        }
+        sumUpResult.OtherProductMatchIds = string.Join(",", otherMatchIds);
     }
 }
