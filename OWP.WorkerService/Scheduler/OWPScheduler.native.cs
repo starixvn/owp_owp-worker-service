@@ -47,7 +47,7 @@ public class OwpScheduler : IHostedService
 
         //Report
         await AddJobToSchedulerAsync(new JobInfo(typeof(SumTraderReportJob), CronExpressionJob.SumDataReport));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SumLaReportJob), CronExpressionJob.SumDataReport));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SumLaReportJob), CronExpressionJob.SyncTodayInfoSiteMatch));
         await AddJobToSchedulerAsync(new JobInfo(typeof(SumOvertimeReportJob), CronExpressionJob.SumDataReport));
         await AddJobToSchedulerAsync(new JobInfo(typeof(SumPrematchReportJob), CronExpressionJob.SumDataReport));
         await AddJobToSchedulerAsync(new JobInfo(typeof(SumMatchLiveReportJob), CronExpressionJob.SumDataReport));

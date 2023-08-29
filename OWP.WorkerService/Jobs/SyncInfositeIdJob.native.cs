@@ -58,7 +58,7 @@ public class SyncInfositeIdJob : IJob
 
         var env = configuration.GetSection("Environment").Value;
 
-        if (string.Equals(env, "PROD"))
+        //if (string.Equals(env, "PROD"))
         {
             await syncIsLiveService.Sync(fromTime, toTime).ConfigureAwait(false);
             await todaySyncService.Sync().ConfigureAwait(false);
