@@ -88,4 +88,19 @@ public static class Utils
         return Math.Abs(assignmentA.EventDateTime.Subtract(assignmentB.EventDateTime).TotalMinutes) <= differenceInMinute;
     }
 
+    public static int GroupSaba5Mins(IList<Assignment> assignments, ReportType reportType)
+    {
+        var saba5Mins = assignments.Where(x => x.ReportType == reportType).ToList();
+
+        var groupedSaba5Mins = saba5Mins.GroupBy(
+                x => (
+                    x.OwpLeagueName,
+                    x.OwpHomeName,
+                    x.OwpAwayName,
+                    x.EventDateTime.AddMinutes(-x.EventDateTime.Minute)
+                ))
+            .Select(y => y.OrderBy(x => x.EventDateTime).First());
+
+        return groupedSaba5Mins.Count();
+    }
 }
