@@ -1,6 +1,7 @@
 ﻿namespace OWP.SumReport.LAReport.Models;
 
 using Olympus.Xml;
+using System.ComponentModel;
 
 [XmlName("LAReportModel")]
 public class LaReportModel
@@ -10,15 +11,15 @@ public class LaReportModel
     public string Username { get; set; }
 
     public double Link2 { get; set; }
-           
+
     public double Link3 { get; set; }
-                                     
+
     public double Link4 { get; set; }
-                                     
+
     public double Link5 { get; set; }
-                                     
+
     public double Link6 { get; set; }
-                                     
+
     public double Link7 { get; set; }
 
     public double Link8Plus { get; set; }
@@ -30,7 +31,7 @@ public class LaReportModel
 
     [XmlName("OnlyTV")]
     public double OnlyTv { get; set; }
-           
+
     public double OnlyReporter { get; set; }
 
     [XmlName("MixedProviderTVReporter")]
@@ -52,16 +53,19 @@ public class LaReportModel
 
     public double ESoccer5Mins { get; set; }
 
+    [Description("Number of 5 mins groups for LA KPI")]
+    public double ESoccer5MinsGroup { get; set; }
+
     public double ESoccer6Mins { get; set; }
-           
+
     public double ESoccer15Mins { get; set; }
-           
+
     public double ESoccer16Mins { get; set; }
-           
+
     public double ESoccer20Mins { get; set; }
-           
+
     public double Others { get; set; }
-           
+
     public double FiveMajorLeague { get; set; }
 
     [XmlName("FTCorner5ML")]
@@ -72,17 +76,17 @@ public class LaReportModel
     public double TotalSingleMatches => OnlyProvider + OnlyTv + OnlyReporter + MixedProviderTvReporter;
 
     public double TotalSpecialProducts => CornerPlus + BookingPlus + Fantasy + OtherProducts + GoalKick;
-           
+
     public double TotalMixedProduct => FtCorner + FtCorner5Ml;
-           
+
     public double TotalESoccer => ESoccer5Mins + ESoccer6Mins + ESoccer15Mins + ESoccer16Mins + ESoccer20Mins;
-           
+
     public double TotalMatches =>
         TotalMatchInGroupMultiple +
         TotalSingleMatches +
         TotalSpecialProducts +
         TotalMixedProduct +
         TotalESoccer +
-        FiveMajorLeague+
+        FiveMajorLeague +
         Others;
 }

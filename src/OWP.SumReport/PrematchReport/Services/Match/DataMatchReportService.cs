@@ -53,9 +53,9 @@ public class DataMatchReportServiceImp : DataMatchReportService
             var totalMatch = totalDataMatches.Where(x => x.OwpLeagueId == item).ToList();
             if (totalMatch.Any())
             {
-                totalAssignment += leagueInfoByLeagueId[item].Any(x => x.IsDay)
-                 ? totalMatch.FirstOrDefault(x => x.IsMatchDay, new TotalDataMatch()).Total
-                 : totalMatch.FirstOrDefault(x => !x.IsMatchDay, new TotalDataMatch()).Total;
+                totalAssignment += leagueInfoByLeagueId[item].Exists(x => x.IsDay)
+                    ? totalMatch.Find(x => x.IsMatchDay)?.Total ?? 0
+                    : totalMatch.Find(x => !x.IsMatchDay)?.Total ?? 0;
             }
         }
 
