@@ -14,6 +14,7 @@ using OWP.ArchiveData;
 using OWP.Command;
 using OWP.Command.Settings;
 using OWP.Infosite;
+using OWP.Infosite.Services;
 using OWP.InfositeIdSync;
 using OWP.LinkLeagueAndTeam;
 using OWP.MatchReadyNotification;
@@ -101,8 +102,8 @@ services.AddOtherSportServices();
 services.AddArchiveDataServices();
 #endregion
 
-var apiService = services.BuildServiceProvider().GetService<OWP.InfositeIdSync.Services.SyncIsLiveService>();
+var apiService = services.BuildServiceProvider().GetService<SyncChildMatchService>();
 if (apiService != null)
 {
-    await apiService.Sync(new DateTime(2023, 8, 28), new DateTime(2023, 8, 29)).ConfigureAwait(false);
+    await apiService.Sync(new DateTime(2022, 12, 05)).ConfigureAwait(false);
 }
