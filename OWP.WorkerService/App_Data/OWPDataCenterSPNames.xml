@@ -47,7 +47,8 @@
 	</Function>
 	<Function Name="InfositeIdSync">
 		<Setting Key="OWP_API_QueryInfositeMatch"  SpName="OWP_API_QueryInfositeMatch" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
-		<Setting Key="OWP_API_QueryUnmappingOWPMatch"  SpName="OWP_API_QueryUnmappingOWPMatch" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+    <Setting Key="OWP_API_GetInfoSiteMatchesByDate"  SpName="OWP_API_GetInfoSiteMatchesByDate" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+    <Setting Key="OWP_API_QueryUnmappingOWPMatch"  SpName="OWP_API_QueryUnmappingOWPMatch" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 		<Setting Key="OWP_API_UpdateInfositeId"  SpName="OWP_API_UpdateInfositeId" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 		<Setting Key="OWP_AssignmentUpload_AllMatchesByTimeRange"  SpName="OWP_AssignmentUpload_AllMatchesByTimeRange" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 	</Function>

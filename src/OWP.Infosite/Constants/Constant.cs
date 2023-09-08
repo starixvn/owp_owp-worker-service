@@ -20,6 +20,22 @@ public static class Constant
         {20, "LiveStreamer"}
     }.ToImmutableDictionary();
 
+    public static readonly IImmutableDictionary<int, string> ActionName = new Dictionary<int, string>
+    {
+        {0, "Add a new match" },
+        {1, "Delete the match"},
+        {2, "Update the <b>KO time</b>"},
+        {3, "Update the <b>League name</b>"},
+        {4, "Update the <b>Home name</b>"},
+        {5, "Update the <b>Away name</b>"},
+        {6, "Update the <b>TV</b>"},
+        {7, "Cancel the <b>TV</b>"},
+        {8, "Update the <b>IPTV</b>"},
+        {9, "Cancel the <b>IPTV</b>"},
+        {10, "Update the <b>Provider</b>"},
+        {11, "Cancel the <b>Provider</b>"}
+    }.ToImmutableDictionary();
+
     public static readonly IImmutableDictionary<int, string> StreamNameSrc2InfoSite = new Dictionary<int, string>
     {
         {0, string.Empty },
