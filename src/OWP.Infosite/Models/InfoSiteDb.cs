@@ -18,3 +18,8 @@ public class InfoSiteDb
 
     public string Provider { get; set; }
 }
+
+public class InfoSiteDbInfo : InfoSiteDb
+{
+   public  Boolean IsCheck { get; set; }
+}

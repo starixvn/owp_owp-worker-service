@@ -6,7 +6,9 @@ public class LoggedChangeModel
 
     public DateTime UpDateTime { get; set; }
 
-    public int Action { get; set; }
+    public int? UpdateTypeId { get; set; }
+
+    public string  Action { get; set; }
 
     public string NewValue { get; set; }
 

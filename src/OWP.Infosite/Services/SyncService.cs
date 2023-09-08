@@ -55,6 +55,7 @@ public class SyncServiceImp
 
         BuildLogForNewMatches(queriedResult, infoSiteEvents, loggedChanges);
         BuildLogForChangedMatchesLog(queriedResult, infoSiteEvents, loggedChanges);
+        await SaveLogChange(loggedChanges);
 
         if (matchInfoNotification)
         {
@@ -74,7 +75,7 @@ public class SyncServiceImp
         }
     }
 
-    private static void BuildLogForChangedMatchesLog(IEnumerable<Event> queriedResult, IList<InfoSiteDb> infoSiteEvents, List<LoggedChangeModel> loggedChanges)
+    private static void BuildLogForChangedMatchesLog(IEnumerable<Event> queriedResult, IList<InfoSiteDbInfo> infoSiteEvents, List<LoggedChangeModel> loggedChanges)
     {
         var existedEvents =
             queriedResult.IntersectBy(infoSiteEvents.Select(x => x.InfoSiteMatchId), x => x.InfoSiteMatchId).ToList();
@@ -88,6 +89,18 @@ public class SyncServiceImp
             var properties = type.GetProperties();
 
             var loggedChangeItem = BuildLoggedChanges(properties, infoSiteOld, infoSiteNew);
+            if (infoSiteOld is { IsCheck: true })
+            {
+                loggedChanges.Add(new LoggedChangeModel
+                {
+                    InfoSiteMatchId = infoSiteNew.InfoSiteMatchId,
+                    UpdateTypeId = null ,
+                    Action = "Update the <b>checking status</b>",
+                    NewValue = "Checked",
+                    OldValue = string.Empty,
+                    UpDateTime = DateNowGmt8
+                });
+            }
             loggedChanges.AddRange(loggedChangeItem);
         }
     }
@@ -104,23 +117,28 @@ public class SyncServiceImp
 
                 return !string.Equals(newValue, oldValue);
             })
-            .Select(property => new LoggedChangeModel
+            .Select(property =>
             {
-                InfoSiteMatchId = infoSiteNew.InfoSiteMatchId,
-                Action = InfoSiteSyncHelper.BuildActionId(property.Name, newValue, oldValue),
-                NewValue = newValue,
-                OldValue = oldValue,
-                UpDateTime = DateNowGmt8
+                var updateTypeId = InfoSiteSyncHelper.BuildActionId(property.Name, newValue, oldValue);
+                return new LoggedChangeModel
+                {
+                    InfoSiteMatchId = infoSiteNew.InfoSiteMatchId,
+                    UpdateTypeId = updateTypeId,
+                    Action = Constant.UpdateType.GetValueOrDefault(updateTypeId),
+                    NewValue = newValue,
+                    OldValue = oldValue,
+                    UpDateTime = DateNowGmt8
+                };
             });
     }
     
     private static void BuildLogForNewMatches(IEnumerable<Event> queriedResult, IEnumerable<InfoSiteDb> infoSiteEvents, List<LoggedChangeModel> loggedChanges)
     {
         var newEvents = queriedResult.ExceptBy(infoSiteEvents.Select(x => x.InfoSiteMatchId), x => x.InfoSiteMatchId);
-
         var newLoggedChanges = newEvents.Select(newEvent => new LoggedChangeModel
         {
-            Action = 0,
+            UpdateTypeId = 1,
+            Action = Constant.UpdateType.GetValueOrDefault(1),
             InfoSiteMatchId = newEvent.InfoSiteMatchId,
             UpDateTime = DateNowGmt8,
             NewValue = null,
@@ -130,20 +148,30 @@ public class SyncServiceImp
         loggedChanges.AddRange(newLoggedChanges);
     }
 
-    private async Task<List<InfoSiteDb>> GetInfoSiteByDate(DateTime date)
+    private async Task<List<InfoSiteDbInfo>> GetInfoSiteByDate(DateTime date)
     {
         var criteria = new GetInfoSiteMatchesByDateCriteria
         {
             EventDate = date
         };
 
-        return (await repository.FetchAsync<InfoSiteDb>(criteria).ConfigureAwait(false)).ToList();
+        return (await repository.FetchAsync<InfoSiteDbInfo>(criteria).ConfigureAwait(false)).ToList();
     }
 
     private async Task SaveEvents(IEnumerable<Event> events)
     {
         var xml = XmlConverter.Serialize(events);
         var criteria = new PushInfoSiteMatchCommand
+        {
+            Xml = xml
+        };
+        await repository.ExecuteAsync(criteria).ConfigureAwait(false);
+    }
+
+    private async Task SaveLogChange(IEnumerable<LoggedChangeModel> loggedChange)
+    {
+        var xml = XmlConverter.Serialize(loggedChange);
+        var criteria = new SaveLogsChangeCriteria
         {
             Xml = xml
         };
