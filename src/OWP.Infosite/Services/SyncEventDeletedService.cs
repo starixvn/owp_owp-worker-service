@@ -1,4 +1,7 @@
-﻿namespace OWP.Infosite.Services;
+﻿using OWP.Infosite.Constants;
+using OWP.Infosite.Models;
+
+namespace OWP.Infosite.Services;
 
 using Criteria;
 using Fanex.Data.Repository;
@@ -39,9 +42,20 @@ public class SyncEventDeletedServiceImp : SyncEventDeletedService
         var dateFrom = dateTimeService.Today;
         var dateTo = dateTimeService.Today.AddDays(7);
         var ids = await GetDeletedMatchIds(dateFrom, dateTo);
-
+        
         if (currentDeletedMatchIds != ids)
         {
+            var matchesDeletedLogEventPicking = ids.Split(",").Select(item => new LoggedChangeModel
+                {
+                    Action = Constant.UpdateType.GetValueOrDefault(2),
+                    UpdateTypeId = 2,
+                    InfoSiteMatchId = int.Parse(item),
+                    NewValue = string.Empty,
+                    OldValue = string.Empty,
+                    UpDateTime = dateTimeService.Now.AddHours(8)
+                })
+                .ToList();
+
             await WriteLogForDebug(ids, dateFrom, dateTo);
             await DeleteMatch(ids);
         }
