@@ -1,4 +1,5 @@
-﻿using OWP.Infosite.Constants;
+﻿using Olympus.Xml;
+using OWP.Infosite.Constants;
 using OWP.Infosite.Models;
 
 namespace OWP.Infosite.Services;
@@ -53,9 +54,8 @@ public class SyncEventDeletedServiceImp : SyncEventDeletedService
                     NewValue = string.Empty,
                     OldValue = string.Empty,
                     UpDateTime = dateTimeService.Now.AddHours(8)
-                })
-                .ToList();
-
+                });
+            await SaveDeletedMatchLogEventPicking(matchesDeletedLogEventPicking);
             await WriteLogForDebug(ids, dateFrom, dateTo);
             await DeleteMatch(ids);
         }
@@ -68,6 +68,18 @@ public class SyncEventDeletedServiceImp : SyncEventDeletedService
         var criteria = new SyncEventDeletedInfoSiteMatchCriteria
         {
             Ids = ids
+        };
+
+        await repository.ExecuteAsync(criteria).ConfigureAwait(false);
+    }
+
+
+    private async Task SaveDeletedMatchLogEventPicking(IEnumerable<LoggedChangeModel> logs)
+    {
+        var xml = XmlConverter.Serialize(logs);
+        var criteria = new SaveMatchDeleteLogsCriteria
+        {
+            Xml = xml
         };
 
         await repository.ExecuteAsync(criteria).ConfigureAwait(false);

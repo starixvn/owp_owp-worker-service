@@ -13,6 +13,7 @@
 		<Setting Key="OWP_API_PushInfoSiteChildMatches"  SpName="OWP_API_PushInfoSiteChildMatches" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
 		<Setting Key="OWP_API_DeletedChildMatch"  SpName="OWP_API_DeletedChildMatch" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
     <Setting Key="OWP_EventPicking_SaveLogs"  SpName="OWP_EventPicking_SaveLogs" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
+    <Setting Key="OWP_EventPicking_SaveMatchDeleteLogs"  SpName="OWP_EventPicking_SaveMatchDeleteLogs" DbName="DBOWP.bodb_OWP.bodbOWPNet" />
   </Function>
 	<Function Name="MatchReady">
 		<Setting Key="OWP_API_SyncNotificationSettingWatcher"  SpName="OWP_API_SyncNotificationSettingWatcher" DbName="DBOWP.bodb_OWP.bodbOWPNet" />

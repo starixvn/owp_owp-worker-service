@@ -96,8 +96,8 @@ public class SyncServiceImp
                     InfoSiteMatchId = infoSiteNew.InfoSiteMatchId,
                     UpdateTypeId = null ,
                     Action = "Update the <b>checking status</b>",
-                    NewValue = "Checked",
-                    OldValue = string.Empty,
+                    NewValue = "Unchecked",
+                    OldValue = "Checked",
                     UpDateTime = DateNowGmt8
                 });
             }

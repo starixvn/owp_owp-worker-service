@@ -10,18 +10,6 @@ public static class InfoSiteSyncHelper
             switch (propertyName)
             {
                 case "Tv":
-                    return 6;
-                case "IPTV":
-                    return 8;
-                case "Provider":
-                    return 10;
-            }
-        }
-        if (IsCancel(oldValue, newValue))
-        {
-            switch (propertyName)
-            {
-                case "Tv":
                     return 7;
                 case "IPTV":
                     return 9;
@@ -29,13 +17,25 @@ public static class InfoSiteSyncHelper
                     return 11;
             }
         }
+        if (IsCancel(oldValue, newValue))
+        {
+            switch (propertyName)
+            {
+                case "Tv":
+                    return 8;
+                case "IPTV":
+                    return 10;
+                case "Provider":
+                    return 12;
+            }
+        }
         return propertyName switch
         {
-            "DateTime" => 2,
-            "LeagueName" => 3,
-            "HomeName" => 4,
-            "AwayName" => 5,
-            _ => 0
+            "EventDateTime" => 3,
+            "LeagueName" => 4,
+            "HomeName" => 5,
+            "AwayName" => 6,
+            _ => 1
         };
     }
 
