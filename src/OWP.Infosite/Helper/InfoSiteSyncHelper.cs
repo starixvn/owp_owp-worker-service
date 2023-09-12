@@ -14,13 +14,13 @@ public static class InfoSiteSyncHelper
     {
         return propertyName switch
         {
-            "EventDateTime" => 3,
-            "LeagueName" => 4,
-            "HomeName" => 5,
-            "AwayName" => 6,
-            "Tv" => 7,
-            "IPTV" => 9,
-            "Provider" => 11,
+            "EventDateTime" => 2,
+            "LeagueName" => 3,
+            "HomeName" => 4,
+            "AwayName" => 4,
+            "Tv" => 5,
+            "IPTV" => 7,
+            "Provider" => 9,
             _ => 1
         };
     }
@@ -29,9 +29,9 @@ public static class InfoSiteSyncHelper
     {
         return propertyName switch
         {
-            "Tv" => 8,
-            "IPTV" => 10,
-            "Provider" => 12,
+            "Tv" => 6,
+            "IPTV" => 8,
+            "Provider" => 10,
             _ => 1
         };
     }
