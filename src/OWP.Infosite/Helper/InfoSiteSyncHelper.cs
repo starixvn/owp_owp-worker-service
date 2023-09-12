@@ -5,44 +5,35 @@ public static class InfoSiteSyncHelper
 {
     public static int BuildActionId(string propertyName, string newValue, string oldValue)
     {
-        if (IsUpDate(oldValue, newValue))
-        {
-            switch (propertyName)
-            {
-                case "Tv":
-                    return 7;
-                case "IPTV":
-                    return 9;
-                case "Provider":
-                    return 11;
-            }
-        }
-        if (IsCancel(oldValue, newValue))
-        {
-            switch (propertyName)
-            {
-                case "Tv":
-                    return 8;
-                case "IPTV":
-                    return 10;
-                case "Provider":
-                    return 12;
-            }
-        }
+        return IsCancel(oldValue, newValue)
+            ? BuildActionIdWithCancel(propertyName)
+            : BuildActionIdWithUpdate(propertyName);
+    }
+
+    private static int BuildActionIdWithUpdate(string propertyName)
+    {
         return propertyName switch
         {
             "EventDateTime" => 3,
             "LeagueName" => 4,
             "HomeName" => 5,
             "AwayName" => 6,
+            "Tv" => 7,
+            "IPTV" => 9,
+            "Provider" => 11,
             _ => 1
         };
     }
 
-    private static bool IsUpDate(string oldValue, string newValue)
+    private static int BuildActionIdWithCancel(string propertyName)
     {
-        return (oldValue == string.Empty && newValue != string.Empty) ||
-               (newValue != string.Empty && newValue != string.Empty);
+        return propertyName switch
+        {
+            "Tv" => 8,
+            "IPTV" => 10,
+            "Provider" => 12,
+            _ => 1
+        };
     }
 
     private static bool IsCancel(string oldValue, string newValue)
