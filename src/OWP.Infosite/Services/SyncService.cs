@@ -55,8 +55,10 @@ public class SyncServiceImp
 
         BuildLogForNewMatches(queriedResult, infoSiteEvents, loggedChanges);
         BuildLogForChangedMatchesLog(queriedResult, infoSiteEvents, loggedChanges);
-        await SaveLogChange(loggedChanges);
-
+        if (loggedChanges.Any())
+        {
+            await SaveLogChange(loggedChanges);
+        }
         if (matchInfoNotification)
         {
             var today = DateTime.Today;
@@ -88,8 +90,8 @@ public class SyncServiceImp
             var type = typeof(InfoSiteDb);
             var properties = type.GetProperties();
 
-            var loggedChangeItem = BuildLoggedChanges(properties, infoSiteOld, infoSiteNew);
-            if (infoSiteOld is { IsCheck: true })
+            var loggedChangeItem = BuildLoggedChanges(properties, infoSiteOld, infoSiteNew).ToList();
+            if (infoSiteOld is { IsCheck: true } && loggedChangeItem.Any())
             {
                 loggedChanges.Add(new LoggedChangeModel
                 {
