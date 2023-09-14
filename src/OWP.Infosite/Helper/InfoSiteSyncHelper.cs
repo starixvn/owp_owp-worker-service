@@ -41,6 +41,11 @@ public static class InfoSiteSyncHelper
         return oldValue != string.Empty && newValue == string.Empty;
     }
 
+    public static DateTime DateTimeNowGmt8()
+    {
+        return DateTime.Now.AddHours(12);
+    }
+
     public static InfoSiteDb CloneInfoSiteMatch(Event source)
     {
         return new InfoSiteDb

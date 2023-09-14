@@ -53,7 +53,7 @@ public class SyncEventDeletedServiceImp : SyncEventDeletedService
                     InfoSiteMatchId = int.Parse(item),
                     NewValue = string.Empty,
                     OldValue = string.Empty,
-                    UpDateTime = dateTimeService.Now.AddHours(8)
+                    UpDateTime = dateTimeService.Now.AddHours(12)
                 });
             await SaveDeletedMatchLogEventPicking(matchesDeletedLogEventPicking);
             await WriteLogForDebug(ids, dateFrom, dateTo);

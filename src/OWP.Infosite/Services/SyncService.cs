@@ -27,8 +27,7 @@ public class SyncServiceImp
     private readonly ICache cacheService;
 
     protected readonly DateTime MinDate = new(2000, 1, 1);
-
-    protected static readonly DateTime DateNowGmt8 = DateTime.Now.AddHours(8);
+    
     protected DateTimeService DateTimeService { get; }
 
     public SyncServiceImp(
@@ -47,6 +46,7 @@ public class SyncServiceImp
 
     public async Task Sync(DateTime fromDate, bool matchInfoNotification = false)
     {
+
         var queriedResult = await QueryEvents(fromDate);
 
         var infoSiteEvents = await GetInfoSiteByDate(fromDate);
@@ -55,6 +55,7 @@ public class SyncServiceImp
 
         BuildLogForNewMatches(queriedResult, infoSiteEvents, loggedChanges);
         BuildLogForChangedMatchesLog(queriedResult, infoSiteEvents, loggedChanges);
+
         if (loggedChanges.Any())
         {
             await SaveLogChange(loggedChanges);
@@ -100,7 +101,7 @@ public class SyncServiceImp
                     Action = "Update the <b>checking status</b>",
                     NewValue = "Unchecked",
                     OldValue = "Checked",
-                    UpDateTime = DateNowGmt8
+                    UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8()
                 });
             }
             loggedChanges.AddRange(loggedChangeItem);
@@ -129,7 +130,7 @@ public class SyncServiceImp
                     Action = Constant.UpdateType.GetValueOrDefault(updateTypeId),
                     NewValue = newValue,
                     OldValue = oldValue,
-                    UpDateTime = DateNowGmt8
+                    UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8()
                 };
             });
     }
@@ -142,7 +143,7 @@ public class SyncServiceImp
             UpdateTypeId = 1,
             Action = Constant.UpdateType.GetValueOrDefault(1),
             InfoSiteMatchId = newEvent.InfoSiteMatchId,
-            UpDateTime = DateNowGmt8,
+            UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
             NewValue = null,
             OldValue = "Initialize"
         });
