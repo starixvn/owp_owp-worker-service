@@ -1,4 +1,8 @@
-﻿namespace OWP.Infosite.Services;
+﻿using Olympus.Xml;
+using OWP.Infosite.Constants;
+using OWP.Infosite.Models;
+
+namespace OWP.Infosite.Services;
 
 using Criteria;
 using Fanex.Data.Repository;
@@ -39,9 +43,19 @@ public class SyncEventDeletedServiceImp : SyncEventDeletedService
         var dateFrom = dateTimeService.Today;
         var dateTo = dateTimeService.Today.AddDays(7);
         var ids = await GetDeletedMatchIds(dateFrom, dateTo);
-
+        
         if (currentDeletedMatchIds != ids)
         {
+            var matchesDeletedLogEventPicking = ids.Split(",").Select(item => new LoggedChangeModel
+                {
+                    Action = Constant.UpdateType.GetValueOrDefault(11),
+                    UpdateTypeId = 11,
+                    InfoSiteMatchId = int.Parse(item),
+                    NewValue = string.Empty,
+                    OldValue = string.Empty,
+                    UpDateTime = dateTimeService.Now.AddHours(12)
+                });
+            await SaveDeletedMatchLogEventPicking(matchesDeletedLogEventPicking);
             await WriteLogForDebug(ids, dateFrom, dateTo);
             await DeleteMatch(ids);
         }
@@ -54,6 +68,18 @@ public class SyncEventDeletedServiceImp : SyncEventDeletedService
         var criteria = new SyncEventDeletedInfoSiteMatchCriteria
         {
             Ids = ids
+        };
+
+        await repository.ExecuteAsync(criteria).ConfigureAwait(false);
+    }
+
+
+    private async Task SaveDeletedMatchLogEventPicking(IEnumerable<LoggedChangeModel> logs)
+    {
+        var xml = XmlConverter.Serialize(logs);
+        var criteria = new SaveMatchDeleteLogsCriteria
+        {
+            Xml = xml
         };
 
         await repository.ExecuteAsync(criteria).ConfigureAwait(false);

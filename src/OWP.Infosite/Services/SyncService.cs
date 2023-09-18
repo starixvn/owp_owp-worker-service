@@ -7,9 +7,12 @@ using Fanex.Data.Repository;
 using Models;
 using Newtonsoft.Json;
 using Olympus.Xml;
+using Helper;
 using RabbitMq;
 using RabbitMq.Models;
+using System;
 using System.Globalization;
+using System.Reflection;
 
 public interface SyncService
 {
@@ -24,6 +27,7 @@ public class SyncServiceImp
     private readonly ICache cacheService;
 
     protected readonly DateTime MinDate = new(2000, 1, 1);
+    
     protected DateTimeService DateTimeService { get; }
 
     public SyncServiceImp(
@@ -42,13 +46,26 @@ public class SyncServiceImp
 
     public async Task Sync(DateTime fromDate, bool matchInfoNotification = false)
     {
+
         var queriedResult = await QueryEvents(fromDate);
+
+        var infoSiteEvents = await GetInfoSiteByDate(fromDate);
+
+        var loggedChanges = new List<LoggedChangeModel>();
+
+        BuildLogForNewMatches(queriedResult, infoSiteEvents, loggedChanges);
+        BuildLogForChangedMatchesLog(queriedResult, infoSiteEvents, loggedChanges);
+
+        if (loggedChanges.Any())
+        {
+            await SaveLogChange(loggedChanges);
+        }
         if (matchInfoNotification)
         {
             var today = DateTime.Today;
             var sessionId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
-            await SaveOldInfoSiteMatchSnapshot(sessionId, today);
 
+            await SaveOldInfoSiteMatchSnapshot(sessionId, today);
             await SaveEvents(queriedResult);
             await UpdateSoloMatch();
 
@@ -61,10 +78,103 @@ public class SyncServiceImp
         }
     }
 
+    private static void BuildLogForChangedMatchesLog(IEnumerable<Event> queriedResult, IList<InfoSiteDbInfo> infoSiteEvents, List<LoggedChangeModel> loggedChanges)
+    {
+        var existedEvents =
+            queriedResult.IntersectBy(infoSiteEvents.Select(x => x.InfoSiteMatchId), x => x.InfoSiteMatchId).ToList();
+
+        foreach (var item in existedEvents)
+        {
+            var infoSiteOld = infoSiteEvents.FirstOrDefault(x => x.InfoSiteMatchId == item.InfoSiteMatchId);
+            var infoSiteNew = InfoSiteSyncHelper.CloneInfoSiteMatch(item);
+
+            var type = typeof(InfoSiteDb);
+            var properties = type.GetProperties();
+
+            var loggedChangeItem = BuildLoggedChanges(properties, infoSiteOld, infoSiteNew).ToList();
+            if (infoSiteOld is { IsCheck: true } && loggedChangeItem.Any())
+            {
+                loggedChanges.Add(new LoggedChangeModel
+                {
+                    InfoSiteMatchId = infoSiteNew.InfoSiteMatchId,
+                    UpdateTypeId = null ,
+                    Action = "Update the <b>checking status</b>",
+                    NewValue = "Unchecked",
+                    OldValue = "Checked",
+                    UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8()
+                });
+            }
+            loggedChanges.AddRange(loggedChangeItem);
+        }
+    }
+
+    private static IEnumerable<LoggedChangeModel> BuildLoggedChanges(IEnumerable<PropertyInfo> properties, InfoSiteDb infoSiteOld, InfoSiteDb infoSiteNew)
+    {
+        var newValue = string.Empty;
+        var oldValue = string.Empty;
+
+        return properties.Where(property =>
+            {
+                newValue = property.GetValue(infoSiteNew)?.ToString() ?? string.Empty;
+                oldValue = property.GetValue(infoSiteOld)?.ToString() ?? string.Empty;
+
+                return !string.Equals(newValue, oldValue);
+            })
+            .Select(property =>
+            {
+                var updateTypeId = InfoSiteSyncHelper.BuildActionId(property.Name, newValue, oldValue);
+                return new LoggedChangeModel
+                {
+                    InfoSiteMatchId = infoSiteNew.InfoSiteMatchId,
+                    UpdateTypeId = updateTypeId,
+                    Action = Constant.UpdateType.GetValueOrDefault(updateTypeId),
+                    NewValue = newValue,
+                    OldValue = oldValue,
+                    UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8()
+                };
+            });
+    }
+    
+    private static void BuildLogForNewMatches(IEnumerable<Event> queriedResult, IEnumerable<InfoSiteDb> infoSiteEvents, List<LoggedChangeModel> loggedChanges)
+    {
+        var newEvents = queriedResult.ExceptBy(infoSiteEvents.Select(x => x.InfoSiteMatchId), x => x.InfoSiteMatchId);
+        var newLoggedChanges = newEvents.Select(newEvent => new LoggedChangeModel
+        {
+            UpdateTypeId = 1,
+            Action = Constant.UpdateType.GetValueOrDefault(1),
+            InfoSiteMatchId = newEvent.InfoSiteMatchId,
+            UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
+            NewValue = null,
+            OldValue = "Initialize"
+        });
+
+        loggedChanges.AddRange(newLoggedChanges);
+    }
+
+    private async Task<List<InfoSiteDbInfo>> GetInfoSiteByDate(DateTime date)
+    {
+        var criteria = new GetInfoSiteMatchesByDateCriteria
+        {
+            EventDate = date
+        };
+
+        return (await repository.FetchAsync<InfoSiteDbInfo>(criteria).ConfigureAwait(false)).ToList();
+    }
+
     private async Task SaveEvents(IEnumerable<Event> events)
     {
         var xml = XmlConverter.Serialize(events);
         var criteria = new PushInfoSiteMatchCommand
+        {
+            Xml = xml
+        };
+        await repository.ExecuteAsync(criteria).ConfigureAwait(false);
+    }
+
+    private async Task SaveLogChange(IEnumerable<LoggedChangeModel> loggedChange)
+    {
+        var xml = XmlConverter.Serialize(loggedChange);
+        var criteria = new SaveLogsChangeCriteria
         {
             Xml = xml
         };

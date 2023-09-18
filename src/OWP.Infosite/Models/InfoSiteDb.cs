@@ -1,0 +1,25 @@
+﻿namespace OWP.Infosite.Models;
+
+public class InfoSiteDb
+{
+    public int InfoSiteMatchId { get; set; }
+
+    public DateTime EventDateTime { get; set; }
+
+    public string LeagueName { get; set; }
+
+    public string HomeName { get; set; }
+
+    public string AwayName { get; set; }
+
+    public string Tv { get; set; }
+
+    public string IPTV { get; set; }
+
+    public string Provider { get; set; }
+}
+
+public class InfoSiteDbInfo : InfoSiteDb
+{
+   public  Boolean IsCheck { get; set; }
+}
