@@ -130,6 +130,8 @@ public class SyncServiceImp
                     Action = Constant.UpdateType.GetValueOrDefault(updateTypeId),
                     NewValue = newValue,
                     OldValue = oldValue,
+                    HomeUpdated= string.Equals(property.Name, "HomeName", StringComparison.OrdinalIgnoreCase),
+                    AwayUpdated= string.Equals(property.Name, "AwayName", StringComparison.OrdinalIgnoreCase),
                     UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8()
                 };
             });
