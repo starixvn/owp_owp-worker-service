@@ -25,20 +25,6 @@ public class LinkLeagueAndTeamServiceImp : LinkLeagueAndTeamService
 
         await PostExecute(startTimeLatest);
     }
-
-    public async Task<TimeRange> PreExecute()
-    {
-        var startTime = await cache.GetStartTimeFromCache();
-        var endTime = BuildEndTime(startTime);
-
-        return new TimeRange
-        {
-            StartTime = startTime,
-            EndTime = endTime,
-            FinishRunTime = BuildFinishRunTime()
-        };
-    }
-
     public async Task<DateTime> Execute(TimeRange timeRange)
     {
         while (true)
@@ -63,6 +49,18 @@ public class LinkLeagueAndTeamServiceImp : LinkLeagueAndTeamService
             timeRange.StartTime = endTime;
             timeRange.EndTime = BuildEndTime(timeRange.StartTime);
         }
+    }
+    public async Task<TimeRange> PreExecute()
+    {
+        var startTime = await cache.GetStartTimeFromCache();
+        var endTime = BuildEndTime(startTime);
+
+        return new TimeRange
+        {
+            StartTime = startTime,
+            EndTime = endTime,
+            FinishRunTime = BuildFinishRunTime()
+        };
     }
 
     private async Task PostExecute(DateTime endTime)

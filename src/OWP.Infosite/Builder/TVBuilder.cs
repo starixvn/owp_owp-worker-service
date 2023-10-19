@@ -17,9 +17,9 @@ public static class TvBuilder
 
         var websiteIdValid = new[] { 17, 18, 19, 20 };
 
-        return websiteIdValid.Any(w => w == infositeMatch.website_id)
+        return Array.Exists(websiteIdValid, w => w == infositeMatch.website_id)
             && infositeMatch.coverage_id == 1
-            && condition.Any(c => !string.IsNullOrEmpty(c))
+            && Array.Exists(condition, c => !string.IsNullOrEmpty(c))
                 ? "TV"
                 : string.Empty;
     }
