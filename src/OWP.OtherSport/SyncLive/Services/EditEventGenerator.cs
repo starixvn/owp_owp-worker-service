@@ -12,11 +12,7 @@ public class EditEventGeneratorImp : EditEventGenerator
 {
     public IEnumerable<EditEvent> GetChangedOfferLiveMatches(IEnumerable<Match> adminSiteMatches, IEnumerable<Match> owpMatches)
     {
-        var owpBasketballMatch = FilterBasketballMatch(owpMatches).ToList();
-        var adminSiteBasketballMatch = FilterBasketballMatch(adminSiteMatches).ToList();
-        var changedAdminSites = GetChangedLiveAdminSites(adminSiteBasketballMatch, owpBasketballMatch);
-
-        return changedAdminSites;
+        return GetChangedLiveAdminSites(adminSiteMatches.ToList(), owpMatches.ToList());
     }
 
     public IEnumerable<EditEvent> GetChangedLiveAdminSites(IList<Match> adminSiteMatches, IList<Match> owpMatches)
@@ -35,9 +31,4 @@ public class EditEventGeneratorImp : EditEventGenerator
             }
         }
     }
-
-    private static IEnumerable<Match> FilterBasketballMatch(IEnumerable<Match> matches)
-        => matches.Where(x => IsBasketball(x.Sport));
-
-    private static bool IsBasketball(string sport) => sport.Trim().Equals("basketball", StringComparison.OrdinalIgnoreCase);
 }
