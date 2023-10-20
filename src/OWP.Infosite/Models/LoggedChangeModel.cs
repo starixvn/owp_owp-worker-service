@@ -13,5 +13,9 @@ public class LoggedChangeModel
     public string NewValue { get; set; }
 
     public string OldValue { get; set; }
+
+    public bool HomeUpdated { get; set; }
+
+    public bool AwayUpdated { get; set; }
 }
 
