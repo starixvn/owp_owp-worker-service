@@ -44,7 +44,7 @@ public class SumTraderReportJob : IJob
         var (isGenerateData, lastDate) = await cacheManipulator.GetLastDateForRegenerateData(Constant.TraderLastDateCacheKey);
         var startDate = isGenerateData ? lastDate : DateTime.Today.AddDays(-2);
 
-        for (var date = startDate; date <= DateTime.Today; date = date.AddDays(1))
+        for (var date = startDate; date < DateTime.Today; date = date.AddDays(1))
         {
             await handler.Handle(date, isGenerateData).ConfigureAwait(false);
         }
