@@ -22,6 +22,9 @@ public static class DependenceInjection
         services.AddTransient<FutureSyncService, FutureSyncServiceImp>();
         services.AddTransient<SyncChildMatchService, SyncChildMatchServiceImp>();
         services.AddTransient<SyncDeleteChildMatchService, SyncDeleteChildMatchServiceImp>();
+        services.AddTransient<SyncTeamRoundService, SyncTeamRoundServiceImp>();
+        services.AddTransient<TodaySyncTeamRoundService, TodaySyncTeamRoundServiceImp>();
+        services.AddTransient<FutureSyncRoundService, FutureSyncRoundServiceImp>();
 
         return services;
     }
