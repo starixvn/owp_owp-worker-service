@@ -1,38 +1,39 @@
-FROM hub.nexdev.net/base/dotnet/core/sdk:7.0-alpine AS builder
+FROM hub.nexdev.net/base/dotnet/core/sdk:7.0-alpine AS prepare-restore-files
+
+ENV PATH="${PATH}:/root/.dotnet/tools"
+
+
 # Install the tools
-RUN dotnet tool install --tool-path /tools dotnet-trace
-RUN dotnet tool install --tool-path /tools dotnet-dump
-RUN dotnet tool install --tool-path /tools dotnet-counters
+RUN dotnet tool install --global --no-cache dotnet-subset --version 0.3.1
 
 WORKDIR /src
+COPY . .
+RUN dotnet subset restore ./OWP.WorkerService/OWP.WorkerService.csproj --root-directory /src --output /src/restore_subset/
 
-COPY ./src/OWP/. ./src/OWP
-COPY ./src/OWP.InforsiteIdSync/. ./src/OWP.InforsiteIdSync
-COPY ./src/OWP.Infosite/. ./src/OWP.Infosite
-COPY ./src/OWP.LinkLeagueAndTeam/. ./src/OWP.LinkLeagueAndTeam
-COPY ./src/OWP.MatchReadyNotification/. ./src/OWP.MatchReadyNotification
-COPY ./src/OWP.OtherSport/. ./src/OWP.OtherSport
-COPY ./src/OWP.SumReport/. ./src/OWP.SumReport
-COPY ./src/OWP.SyncLeagueSettings/. ./src/OWP.SyncLeagueSettings
-COPY ./src/OWP.ArchiveData/. ./src/OWP.ArchiveData
-COPY ./OWP.WorkerService/OWP.WorkerService.csproj ./OWP.WorkerService/OWP.WorkerService.csproj
+FROM hub.nexdev.net/base/dotnet/core/sdk:7.0-alpine AS builder
 
+WORKDIR /src
+COPY --from=prepare-restore-files /src/restore_subset .
+RUN dotnet nuget add source https://nuget.nexdev.net/api/v2
+
+RUN --mount=type=cache,target=/root/.nuget/packages \
+    dotnet restore ./OWP.WorkerService/OWP.WorkerService.csproj
+
+COPY ./src/. ./src/
+COPY ./OWP.WorkerService ./OWP.WorkerService
 
 WORKDIR /src/OWP.WorkerService
-RUN dotnet nuget add source http://nuget.nexdev.net/api/v2
-RUN dotnet restore -v diag
-
-COPY ./OWP.WorkerService .
-
-RUN dotnet publish -r linux-x64 --self-contained false -c Release -o /app 
-
+RUN --mount=type=cache,target=/root/.nuget/packages \
+    dotnet publish -c release -o /app --no-restore
+	
 FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0-alpine AS base
 
 WORKDIR /app
 COPY --from=builder /app .
-COPY --from=builder /tools /tools
 
-ENV TZ="America/La_Paz" 
+
+ENV TZ="America/La_Paz"
+ENV COMPlus_EnableDiagnostics=0
 
 # Don’t run as root
 RUN adduser --disabled-password \
