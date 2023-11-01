@@ -68,8 +68,8 @@ public static class MatchHelpers
         {
             switch (condition.Label)
             {
-                case equalCondition when tvs.Any(x => x == condition.Value):
-                case containsCondition when tvs.Any(x => x.IsContainsIgnoreCase(condition.Value)):
+                case equalCondition when Array.Exists(tvs, x => x == condition.Value):
+                case containsCondition when Array.Exists(tvs, x => x.IsContainsIgnoreCase(condition.Value)):
                     return true;
                 default: continue;
             }

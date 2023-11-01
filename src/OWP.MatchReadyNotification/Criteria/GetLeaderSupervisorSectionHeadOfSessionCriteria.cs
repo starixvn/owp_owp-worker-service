@@ -2,7 +2,7 @@
 
 using Fanex.Data.Repository;
 
-internal class GetLeaderSupervisorSectionHeadOfSessionCriteria : CriteriaBase
+public class GetLeaderSupervisorSectionHeadOfSessionCriteria : CriteriaBase
 {
     public string UserIds { get; set; }
 

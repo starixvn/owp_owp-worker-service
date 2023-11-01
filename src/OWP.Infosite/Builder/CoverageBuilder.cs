@@ -36,7 +36,7 @@ public class CoverageBuilder
     public List<string> BuildCoverageMainMatch(CommonMatch infoSiteMatch)
     {
         var coverages = new List<string>();
-        var isExistsInWebsiteIdValid = validWebsiteId.Any(item => item == infoSiteMatch.website_id);
+        var isExistsInWebsiteIdValid = Array.Exists(validWebsiteId, item => item == infoSiteMatch.website_id);
         if (!isExistsInWebsiteIdValid)
         {
             return coverages;
@@ -52,9 +52,7 @@ public class CoverageBuilder
         var coverages = new List<string>();
         infoSiteMatch.ls_merge_match?.ForEach(match =>
         {
-            var isExistsInWebsiteIdValid = validWebsiteId.Any(
-                item => item == match.website_id
-            );
+            var isExistsInWebsiteIdValid = Array.Exists(validWebsiteId, item => item == match.website_id);
             if (!isExistsInWebsiteIdValid)
             {
                 return;

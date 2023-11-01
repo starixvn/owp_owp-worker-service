@@ -67,12 +67,12 @@ public class IsSingleMatchesRule : SingleMatchesRule
     }
 
     private static bool IsOnlyProduct(string[] matchProviders, string[] equals, string[] contains)
-        => matchProviders.Any(x => IsContainsExactElement(equals, x.Trim())) ||
-           matchProviders.Any(x => IsElementOfListContainText(contains, x.Trim()));
+        => Array.Exists(matchProviders, x => IsContainsExactElement(equals, x.Trim())) ||
+           Array.Exists(matchProviders, x => IsElementOfListContainText(contains, x.Trim()));
 
     private bool IsOnlyTV(string[] matchProviders, string leagueName)
         => IsOnlyProduct(matchProviders, onlyTvEqual, onlyTvContain) ||
-           matchProviders.Any(x => IsTextContainAllElementOfList(onlyTvTupleContain, x.Trim())) ||
+           Array.Exists(matchProviders, x => IsTextContainAllElementOfList(onlyTvTupleContain, x.Trim())) ||
            IsFutsalLeague(leagueName);
 
     private bool IsOnlyReporter(string[] matchProviders)
@@ -80,7 +80,7 @@ public class IsSingleMatchesRule : SingleMatchesRule
 
     private bool IsOnlyProvider(string[] matchProviders)
         => IsOnlyProduct(matchProviders, providersEqual, providersContain) ||
-           matchProviders.Any(x => IsElementContainBetProvider(x.Trim()));
+           Array.Exists(matchProviders, x => IsElementContainBetProvider(x.Trim()));
 
     private static bool IsFutsalLeague(string leagueName)
         => leagueName.IsContainsIgnoreCase(Futsal) &&

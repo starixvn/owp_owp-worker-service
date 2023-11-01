@@ -1,6 +1,6 @@
 ﻿namespace OWP.SumReport.LAReport.Constants;
 
-internal static class CountUnit
+public static class CountUnit
 {
     public const double COUNT_HALF = 0.5;
 

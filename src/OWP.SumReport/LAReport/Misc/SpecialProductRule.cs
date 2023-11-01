@@ -45,7 +45,7 @@ public class IsCornerRule : SpecialProductRule
 {
     private readonly int[] cornerBettypeArray = { BettypeConst.NextCorner, BettypeConst.NoOfCorner, BettypeConst.NoOfCorner15Mins };
     private static bool IsMajorCornerLeague(string leagueName)
-        => MajorLeague.MajorLeagueCornerList.Any(x => x == leagueName);
+        => MajorLeague.MajorLeagueCornerList.Exists(x => x == leagueName);
     public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
     {
         if (!assignment.MinorBettypeId.HasValue ||

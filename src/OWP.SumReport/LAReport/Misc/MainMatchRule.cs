@@ -49,7 +49,7 @@ public class FtCorner5MlRule : MainMatchRule
 
     private static bool IsMajorCornerLeague(string leagueName)
     {
-        return MajorLeague.MajorLeagueCornerList.Any(x => x == leagueName);
+        return MajorLeague.MajorLeagueCornerList.Exists(x => x == leagueName);
     }
 
     private bool IsContainCorner5Ml(Assignment assignment, IEnumerable<Assignment> assignments)
@@ -121,5 +121,5 @@ public class FiveMajorLeagueRule : MainMatchRule
     }
 
     private static bool IsMajorLeague(string leagueName)
-        => MajorLeague.MajorLeagueList.Any(x => x == leagueName);
+        => MajorLeague.MajorLeagueList.Exists(x => x == leagueName);
 }

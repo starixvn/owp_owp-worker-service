@@ -98,7 +98,7 @@ public class Specific15MinsRule : SpecialMatchGroupRule
     public override int GetMinorType(MappedChildMatch match)
     {
         if (match.MinorBettypeId != MinorBettypeId.Specific15Min ||
-            !Special15MinContain.Any(x => CheckContainHomeAway(match, x)))
+            !Special15MinContain.Exists(x => CheckContainHomeAway(match, x)))
         {
             return base.GetMinorType(match);
         }
