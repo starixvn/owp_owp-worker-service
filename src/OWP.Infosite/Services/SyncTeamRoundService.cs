@@ -33,7 +33,7 @@ public class SyncTeamRoundServiceImp : SyncTeamRoundService
         {
             Xml = XmlConverter.Serialize(roundInfo)
         };
-        await repository.ExecuteAsync(criteria).ConfigureAwait(false);
+        await repository.ExecuteAsync(criteria);
     }
 
     private static string NormalizeTeamRound(string teamRound)
