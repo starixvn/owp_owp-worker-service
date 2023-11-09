@@ -20,6 +20,8 @@ public interface ApiService
     Task<List<string>> GetInvalidEventKeysByDateAsync(DateTime date);
 
     Task<List<MatchModelQuery180Day>> QueryInfoSiteMatchFor180Day();
+
+    Task<RoundTwInfo> QueryRound(DateTime dateFrom, DateTime dateTo);
 }
 
 public class ApiServiceImp : ApiService
@@ -170,5 +172,29 @@ public class ApiServiceImp : ApiService
         await logger.ErrorAsync(logInfoString);
 
         return new List<MatchModelQuery180Day>();
+    }
+
+    public async Task<RoundTwInfo> QueryRound(DateTime dateFrom, DateTime dateTo)
+    {
+        var requestLink = $"{infoSiteSettings.InfositeApi}api/OWP/getEventInfoByDate?date_from={dateFrom.ToString(Constant.DateTimeFormat)}&date_to={dateTo.ToString(Constant.DateTimeFormat)}";
+        var response = await httpHandler.GetAsync(requestLink);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var jsonData = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<RoundTwInfo>(jsonData, new TrimmingConverter());
+        }
+
+        var logInfo = new
+        {
+            DateTime = DateTime.UtcNow,
+            RequestUri = requestLink,
+            StatusCode = (int)response.StatusCode,
+            response.RequestMessage
+        };
+        var logInfoString = JsonConvert.SerializeObject(logInfo);
+        await logger.ErrorAsync(logInfoString);
+
+        return new ();
     }
 }
