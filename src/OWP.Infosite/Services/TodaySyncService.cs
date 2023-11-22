@@ -1,6 +1,5 @@
 ﻿namespace OWP.Infosite.Services;
 
-using Fanex.Caching;
 using Fanex.Data.Repository;
 using RabbitMq;
 
@@ -17,9 +16,8 @@ public class TodaySyncServiceImp : SyncServiceImp, TodaySyncService
         RabbitMqClient rabbitMqClient,
         ApiService apiService,
         IDynamicRepository repository,
-        ICache cacheService,
         UpdateInfositeIdService updateInfositeIdService)
-        : base(dateTimeService, apiService, rabbitMqClient, cacheService, repository)
+        : base(dateTimeService, apiService, rabbitMqClient, repository)
     {
         this.updateInfositeIdService = updateInfositeIdService;
     }

@@ -2,12 +2,10 @@
 
 using Constants;
 using Criteria;
-using Fanex.Caching;
 using Fanex.Data.Repository;
-using Models;
-using Newtonsoft.Json;
-using Olympus.Xml;
 using Helper;
+using Models;
+using Olympus.Xml;
 using RabbitMq;
 using RabbitMq.Models;
 using System;
@@ -24,23 +22,20 @@ public class SyncServiceImp
     private readonly IDynamicRepository repository;
     private readonly ApiService apiService;
     private readonly RabbitMqClient rabbitMqClient;
-    private readonly ICache cacheService;
 
     protected readonly DateTime MinDate = new(2000, 1, 1);
-    
+
     protected DateTimeService DateTimeService { get; }
 
     public SyncServiceImp(
         DateTimeService dateTimeService,
         ApiService apiService,
         RabbitMqClient rabbitMqClient,
-        ICache cacheService,
         IDynamicRepository repository)
     {
         DateTimeService = dateTimeService;
         this.apiService = apiService;
         this.repository = repository;
-        this.cacheService = cacheService;
         this.rabbitMqClient = rabbitMqClient;
     }
 
@@ -65,7 +60,6 @@ public class SyncServiceImp
             var today = DateTime.Today;
             var sessionId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
 
-            await SaveOldInfoSiteMatchSnapshot(sessionId, today);
             await SaveEvents(queriedResult);
             await UpdateSoloMatch();
 
@@ -97,7 +91,7 @@ public class SyncServiceImp
                 loggedChanges.Add(new LoggedChangeModel
                 {
                     InfoSiteMatchId = infoSiteNew.InfoSiteMatchId,
-                    UpdateTypeId = null ,
+                    UpdateTypeId = null,
                     Action = "Update the <b>checking status</b>",
                     NewValue = "Unchecked",
                     OldValue = "Checked",
@@ -130,13 +124,13 @@ public class SyncServiceImp
                     Action = Constant.UpdateType.GetValueOrDefault(updateTypeId),
                     NewValue = newValue,
                     OldValue = oldValue,
-                    HomeUpdated= string.Equals(property.Name, "HomeName", StringComparison.OrdinalIgnoreCase),
-                    AwayUpdated= string.Equals(property.Name, "AwayName", StringComparison.OrdinalIgnoreCase),
+                    HomeUpdated = string.Equals(property.Name, "HomeName", StringComparison.OrdinalIgnoreCase),
+                    AwayUpdated = string.Equals(property.Name, "AwayName", StringComparison.OrdinalIgnoreCase),
                     UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8()
                 };
             });
     }
-    
+
     private static void BuildLogForNewMatches(IEnumerable<Event> queriedResult, IEnumerable<InfoSiteDb> infoSiteEvents, List<LoggedChangeModel> loggedChanges)
     {
         var newEvents = queriedResult.ExceptBy(infoSiteEvents.Select(x => x.InfoSiteMatchId), x => x.InfoSiteMatchId);
@@ -213,30 +207,6 @@ public class SyncServiceImp
     private static IEnumerable<Event> ToEvents(IEnumerable<CommonMatchModel> commonMatches)
     {
         return commonMatches.Select(evt => new Event(evt));
-    }
-
-    private async Task<IEnumerable<InfoSiteMatch>> GetOldInfoSiteMatches(DateTime today)
-    {
-        var criteria = new GetInfoSiteMatchesByDateRangeCriteria
-        {
-            FromDate = today.Date.AddHours(12),
-            ToDate = today.Date.AddDays(1).AddHours(11).AddMinutes(59)
-        };
-        var result = await repository.FetchAsync<InfoSiteMatch>(criteria).ConfigureAwait(false);
-
-        return result;
-    }
-
-    private async Task SaveOldInfoSiteMatchSnapshot(string sessionId, DateTime today)
-    {
-        var oldInfoSiteMatches = await GetOldInfoSiteMatches(today);
-        var absoluteTimeSpan = TimeSpan.FromMinutes(Constant.CacheExpiredIn30Minutes);
-        var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(absoluteTimeSpan);
-        var cacheKey = $"{Constant.OldInfositeMatchesSnapshotKey}-{sessionId}";
-
-        var assignmentsJson = JsonConvert.SerializeObject(oldInfoSiteMatches);
-
-        await cacheService.SetAsync(cacheKey, assignmentsJson, cachePolicy);
     }
 
     public void PublishMatchInfoNotification(string sessionId, DateTime fromDate, DateTime toDate)

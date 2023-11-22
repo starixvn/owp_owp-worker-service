@@ -1,6 +1,5 @@
 ﻿namespace OWP.Infosite.UnitTests;
 
-using Fanex.Caching;
 using Fanex.Data.Repository;
 using Models;
 using NSubstitute;
@@ -20,8 +19,6 @@ public class FutureSyncServiceUnitTests
 
     private readonly RabbitMqClient rabbitMqClient;
 
-    private readonly ICache cacheService;
-
     private readonly DateTime from = new(2018, 1, 1);
 
     public FutureSyncServiceUnitTests()
@@ -30,7 +27,6 @@ public class FutureSyncServiceUnitTests
         repository = Substitute.For<IDynamicRepository>();
         dateTimeService = Substitute.For<DateTimeService>();
         updateInfositeIdService = Substitute.For<UpdateInfositeIdService>();
-        cacheService = Substitute.For<ICache>();
         rabbitMqClient = Substitute.For<RabbitMqClient>();
 
         apiService.QueryAsync(Arg.Compat.Any<ParamsQueryModel>())
@@ -44,7 +40,7 @@ public class FutureSyncServiceUnitTests
     public async Task Sync_GetDataForSevenFutureDay()
     {
         // Arrange
-        var syncService = new FutureSyncServiceImp(dateTimeService, rabbitMqClient, apiService, repository, cacheService, updateInfositeIdService);
+        var syncService = new FutureSyncServiceImp(dateTimeService, rabbitMqClient, apiService, repository, updateInfositeIdService);
 
         // Act
         await syncService.Sync();

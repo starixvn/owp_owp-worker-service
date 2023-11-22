@@ -20,7 +20,7 @@ public static class Constant
         {20, "LiveStreamer"}
     }.ToImmutableDictionary();
 
-    public static readonly IImmutableDictionary< int, string > UpdateType = new Dictionary< int, string>
+    public static readonly IImmutableDictionary<int, string> UpdateType = new Dictionary<int, string>
     {
         { 1, "Add a new match"},
         { 2, "Update the <b>KO time</b>"},
@@ -44,8 +44,6 @@ public static class Constant
     public const string DateTimeFormat = "yyyy-MM-dd";
 
     public const string DateTimeWithHourFormat = "yyyy-MM-dd HH:mm:ss";
-
-    public const string OldInfositeMatchesSnapshotKey = "OWP-Old-InfoSiteMatches";
 
     public const string OldPreMatchLeaguesSnapshotKey = "OWP-Old-PreMatchLeagues";
 

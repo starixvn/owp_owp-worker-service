@@ -1,7 +1,6 @@
 ﻿namespace OWP.Infosite.UnitTests;
 
 using Criteria;
-using Fanex.Caching;
 using Fanex.Data.Repository;
 using Models;
 using NSubstitute;
@@ -19,8 +18,6 @@ public class TodaySyncServiceUnitTests
 
     private readonly UpdateInfositeIdService updateInfositeIdService;
 
-    private readonly ICache cacheService;
-
     private readonly RabbitMqClient rabbitMqClient;
 
     private readonly DateTime from = new(2018, 1, 1);
@@ -31,7 +28,6 @@ public class TodaySyncServiceUnitTests
         repository = Substitute.For<IDynamicRepository>();
         dateTimeService = Substitute.For<DateTimeService>();
         updateInfositeIdService = Substitute.For<UpdateInfositeIdService>();
-        cacheService = Substitute.For<ICache>();
         rabbitMqClient = Substitute.For<RabbitMqClient>();
 
         apiService.QueryAsync(Arg.Compat.Any<ParamsQueryModel>())
@@ -45,7 +41,7 @@ public class TodaySyncServiceUnitTests
     public async Task Sync_Always_UpdateMatchToRepository()
     {
         // Arrange
-        var syncService = new TodaySyncServiceImp(dateTimeService, rabbitMqClient, apiService, repository, cacheService, updateInfositeIdService);
+        var syncService = new TodaySyncServiceImp(dateTimeService, rabbitMqClient, apiService, repository, updateInfositeIdService);
 
         // Act
         await syncService.Sync();
