@@ -7,7 +7,6 @@ using Helper;
 using Models;
 using Olympus.Xml;
 using RabbitMq;
-using RabbitMq.Models;
 using System;
 using System.Globalization;
 using System.Reflection;
@@ -62,8 +61,6 @@ public class SyncServiceImp
 
             await SaveEvents(queriedResult);
             await UpdateSoloMatch();
-
-            PublishMatchInfoNotification(sessionId, today, today.AddDays(1));
         }
         else
         {
@@ -207,17 +204,5 @@ public class SyncServiceImp
     private static IEnumerable<Event> ToEvents(IEnumerable<CommonMatchModel> commonMatches)
     {
         return commonMatches.Select(evt => new Event(evt));
-    }
-
-    public void PublishMatchInfoNotification(string sessionId, DateTime fromDate, DateTime toDate)
-    {
-        var request = new InfoSiteMatchInfoNotifyRequest
-        {
-            SessionId = sessionId,
-            FromDate = fromDate,
-            ToDate = toDate
-        };
-
-        rabbitMqClient.PublishRequestMessage(request);
     }
 }
