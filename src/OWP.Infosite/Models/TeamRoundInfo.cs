@@ -1,5 +1,5 @@
-namespace OWP.Infosite.Models
-{
+namespace OWP.Infosite.Models;
+
     [Serializable]
     public record TeamRoundInfo
     {
@@ -7,4 +7,8 @@ namespace OWP.Infosite.Models
 
         public string TeamRound{get;init;}
     }
-}
+
+    public record TeamRoundInfoDb : TeamRoundInfo
+    {
+        public Boolean IsCheck { get; set; }
+    }

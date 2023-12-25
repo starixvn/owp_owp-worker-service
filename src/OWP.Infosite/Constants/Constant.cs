@@ -32,7 +32,20 @@ public static class Constant
         { 8, "Cancel the <b>IPTV</b>"},
         { 9, "Update the <b>Provider</b>" },
         { 10, "Cancel the <b>Provider</b>"},
-        { 11, "Delete the match"}
+        { 11, "Delete the match"},
+        { 12, "Update the <b>Round</b>"},
+        { 13,"Cancel the <b>Round</b>" },
+        { 14,"Update the <b>Round (H-A/T)</b>"},
+        { 15,"Cancel the <b>Round (H-A/T)</b>" },
+        { 16,"Update the <b>Remark</b>"},
+        { 17,"Cancel the <b>Remark</b>" },
+        { 18,"Update the <b>Home Remark</b>"},
+        { 19,"Cancel the <b>Home Remark</b>" },
+        { 20,"Update the <b>Away Remark</b>"},
+        { 21,"Cancel the <b>Away Remark</b>" },
+        { 22,"Update the <b>Division</b>"},
+        { 23,"Cancel the <b>Division</b>" },
+
     }.ToImmutableDictionary();
 
     public static readonly IImmutableDictionary<int, string> StreamNameSrc2InfoSite = new Dictionary<int, string>

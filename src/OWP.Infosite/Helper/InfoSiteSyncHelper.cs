@@ -21,6 +21,12 @@ public static class InfoSiteSyncHelper
             "Tv" => 5,
             "IPTV" => 7,
             "Provider" => 9,
+            "Round" => 12,
+            "TeamRound" => 14,
+            "Remark"=> 16,
+            "HomeRemark" => 18,
+            "AwayRemark" => 20,
+            "Division"=>22,
             _ => 1
         };
     }
@@ -32,6 +38,12 @@ public static class InfoSiteSyncHelper
             "Tv" => 6,
             "IPTV" => 8,
             "Provider" => 10,
+            "Round" => 13,
+            "TeamRound" => 15,
+            "Remark" => 17,
+            "HomeRemark" => 19,
+            "AwayRemark" => 21,
+            "Division" => 23,
             _ => 1
         };
     }
@@ -57,7 +69,12 @@ public static class InfoSiteSyncHelper
             EventDateTime = source.EventDateTime,
             IPTV = source.Iptv,
             Tv = source.LocalTv,
-            Provider = source.Provider
+            Provider = source.Provider,
+            AwayRemark = source.AwayRemark,
+            Division = source.Division,
+            HomeRemark = source.HomeRemark,
+            Remark = source.Remark,
+            Round = source.Round
         };
     }
 }
