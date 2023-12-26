@@ -62,7 +62,7 @@ public class SyncTeamRoundServiceImp : SyncTeamRoundService
 
             var teamRoundDb = teamRoundInfoDbs.FirstOrDefault(x => x.InfoSiteMatchId == item.InfoSiteMatchId);
             var newValue = item.TeamRound;
-            var oldValue = teamRoundDb?.TeamRound;
+            var oldValue = teamRoundDb?.TeamRound ?? string.Empty;
             if (!string.Equals(newValue, oldValue ))
             {
                 var updateTypeId = InfoSiteSyncHelper.BuildActionId("TeamRound", newValue, oldValue);
