@@ -31,5 +31,5 @@ public class InfoSiteDb
 
 public class InfoSiteDbInfo : InfoSiteDb
 {
-   public  Boolean IsCheck { get; set; }
+   public bool IsCheck { get; set; }
 }

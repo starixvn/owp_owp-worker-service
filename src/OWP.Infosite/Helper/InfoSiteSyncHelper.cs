@@ -1,4 +1,6 @@
-﻿using OWP.Infosite.Models;
+﻿using System.Reflection;
+using OWP.Infosite.Constants;
+using OWP.Infosite.Models;
 
 namespace OWP.Infosite.Helper;
 public static class InfoSiteSyncHelper
@@ -76,5 +78,34 @@ public static class InfoSiteSyncHelper
             Remark = source.Remark,
             Round = source.Round
         };
+    }
+
+    public static IEnumerable<LoggedChangeModel> BuildLoggedChanges(IEnumerable<PropertyInfo> properties, InfoSiteDb infoSiteOld, InfoSiteDb infoSiteNew)
+    {
+        var newValue = string.Empty;
+        var oldValue = string.Empty;
+
+        return properties.Where(property =>
+            {
+                newValue = property.GetValue(infoSiteNew)?.ToString() ?? string.Empty;
+                oldValue = property.GetValue(infoSiteOld)?.ToString() ?? string.Empty;
+
+                return !string.Equals(newValue, oldValue);
+            })
+            .Select(property =>
+            {
+                var updateTypeId = BuildActionId(property.Name, newValue, oldValue);
+                return new LoggedChangeModel
+                {
+                    InfoSiteMatchId = infoSiteNew.InfoSiteMatchId,
+                    UpdateTypeId = updateTypeId,
+                    Action = Constant.UpdateType.GetValueOrDefault(updateTypeId),
+                    NewValue = newValue,
+                    OldValue = oldValue,
+                    HomeUpdated = string.Equals(property.Name, "HomeName", StringComparison.OrdinalIgnoreCase),
+                    AwayUpdated = string.Equals(property.Name, "AwayName", StringComparison.OrdinalIgnoreCase),
+                    UpDateTime = DateTimeNowGmt8()
+                };
+            });
     }
 }
