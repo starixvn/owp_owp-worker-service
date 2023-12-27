@@ -14,6 +14,8 @@ public class Match
 
     public string Sport { get; set; }
 
+    public DateTime EventDate { get; set; }
+
     public DateTime EventDateTime { get; set; }
 
     public bool OfferLive { get; set; }
