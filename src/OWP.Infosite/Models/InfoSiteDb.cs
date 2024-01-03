@@ -17,9 +17,19 @@ public class InfoSiteDb
     public string IPTV { get; set; }
 
     public string Provider { get; set; }
+
+    public string Round { get;  set; }
+
+    public string Remark { get; set; }
+
+    public string HomeRemark { get; set; }
+
+    public string AwayRemark { get; set; }
+
+    public string Division { get;  set; }
 }
 
 public class InfoSiteDbInfo : InfoSiteDb
 {
-   public  Boolean IsCheck { get; set; }
+   public bool IsCheck { get; set; }
 }

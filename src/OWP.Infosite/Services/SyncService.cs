@@ -82,7 +82,7 @@ public class SyncServiceImp
             var type = typeof(InfoSiteDb);
             var properties = type.GetProperties();
 
-            var loggedChangeItem = BuildLoggedChanges(properties, infoSiteOld, infoSiteNew).ToList();
+            var loggedChangeItem = InfoSiteSyncHelper.BuildLoggedChanges(properties, infoSiteOld, infoSiteNew).ToList();
             if (infoSiteOld is { IsCheck: true } && loggedChangeItem.Any())
             {
                 loggedChanges.Add(new LoggedChangeModel
@@ -97,35 +97,6 @@ public class SyncServiceImp
             }
             loggedChanges.AddRange(loggedChangeItem);
         }
-    }
-
-    private static IEnumerable<LoggedChangeModel> BuildLoggedChanges(IEnumerable<PropertyInfo> properties, InfoSiteDb infoSiteOld, InfoSiteDb infoSiteNew)
-    {
-        var newValue = string.Empty;
-        var oldValue = string.Empty;
-
-        return properties.Where(property =>
-            {
-                newValue = property.GetValue(infoSiteNew)?.ToString() ?? string.Empty;
-                oldValue = property.GetValue(infoSiteOld)?.ToString() ?? string.Empty;
-
-                return !string.Equals(newValue, oldValue);
-            })
-            .Select(property =>
-            {
-                var updateTypeId = InfoSiteSyncHelper.BuildActionId(property.Name, newValue, oldValue);
-                return new LoggedChangeModel
-                {
-                    InfoSiteMatchId = infoSiteNew.InfoSiteMatchId,
-                    UpdateTypeId = updateTypeId,
-                    Action = Constant.UpdateType.GetValueOrDefault(updateTypeId),
-                    NewValue = newValue,
-                    OldValue = oldValue,
-                    HomeUpdated = string.Equals(property.Name, "HomeName", StringComparison.OrdinalIgnoreCase),
-                    AwayUpdated = string.Equals(property.Name, "AwayName", StringComparison.OrdinalIgnoreCase),
-                    UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8()
-                };
-            });
     }
 
     private static void BuildLogForNewMatches(IEnumerable<Event> queriedResult, IEnumerable<InfoSiteDb> infoSiteEvents, List<LoggedChangeModel> loggedChanges)
