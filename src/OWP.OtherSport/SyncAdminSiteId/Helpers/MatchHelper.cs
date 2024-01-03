@@ -41,7 +41,7 @@ public static class MatchHelper
         => IsSameEvent(owpMatch, adminSiteMatch) && !adminSiteMatch.IsSaba;
 
     private static bool IsSameEvent(Match owpMatch, Match adminSiteMatch)
-        => owpMatch.EventDate.Date == adminSiteMatch.EventDate.Date &&
+        => (owpMatch.EventDateTime.Date == adminSiteMatch.EventDateTime.Date || owpMatch.EventDate.Date == adminSiteMatch.EventDate.Date) &&
         CheckIsEqual(owpMatch.LeagueName, adminSiteMatch.LeagueName) &&
         CheckIsEqual(owpMatch.HomeName, adminSiteMatch.HomeName) &&
         CheckIsEqual(owpMatch.AwayName, adminSiteMatch.AwayName);
