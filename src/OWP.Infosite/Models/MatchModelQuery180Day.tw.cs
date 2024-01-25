@@ -16,5 +16,5 @@ public class MatchModelQuery180Day
 
     public int? is_neutral { get; set; }
 
-    public bool is_team_reverse { get; set; }
+    public bool? is_team_reverse { get; set; }
 }
