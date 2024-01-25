@@ -31,18 +31,15 @@ public class MatchModelFor180Day
         KoTime = infositeMatch.global_datetime.ToUtc8();
         LeagueName = infositeMatch.league_name;
         HomeName = GetHomeName(infositeMatch);
-        AwayName = GetHomeName(infositeMatch);
+        AwayName = GetAwayName(infositeMatch);
         AdminSiteId = infositeMatch.ibc_match_id;
         IsNeutral = infositeMatch.is_neutral is 1;
     }
 
     private string GetHomeName(MatchModelQuery180Day infositeMatch)
-    {
-        return infositeMatch.is_team_reverse ? infositeMatch.team_away_name : infositeMatch.team_home_name;
-    }
+    => infositeMatch.is_team_reverse.HasValue ? infositeMatch.team_away_name : infositeMatch.team_home_name;
 
     private string GetAwayName(MatchModelQuery180Day infositeMatch)
-    {
-        return infositeMatch.is_team_reverse ? infositeMatch.team_home_name : infositeMatch.team_away_name;
-    }
+    => infositeMatch.is_team_reverse.HasValue ? infositeMatch.team_home_name : infositeMatch.team_away_name;
+    
 }
