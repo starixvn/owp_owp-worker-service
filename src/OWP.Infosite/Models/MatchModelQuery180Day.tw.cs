@@ -15,4 +15,6 @@ public class MatchModelQuery180Day
     public int ibc_match_id { get; set; }
 
     public int? is_neutral { get; set; }
+
+    public bool is_team_reverse { get; set; }
 }
