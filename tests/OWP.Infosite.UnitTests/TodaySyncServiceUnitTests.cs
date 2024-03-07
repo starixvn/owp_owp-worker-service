@@ -4,7 +4,6 @@ using Criteria;
 using Fanex.Data.Repository;
 using Models;
 using NSubstitute;
-using RabbitMq;
 using Services;
 using Xunit;
 
@@ -18,8 +17,6 @@ public class TodaySyncServiceUnitTests
 
     private readonly UpdateInfositeIdService updateInfositeIdService;
 
-    private readonly RabbitMqClient rabbitMqClient;
-
     private readonly DateTime from = new(2018, 1, 1);
 
     public TodaySyncServiceUnitTests()
@@ -28,7 +25,6 @@ public class TodaySyncServiceUnitTests
         repository = Substitute.For<IDynamicRepository>();
         dateTimeService = Substitute.For<DateTimeService>();
         updateInfositeIdService = Substitute.For<UpdateInfositeIdService>();
-        rabbitMqClient = Substitute.For<RabbitMqClient>();
 
         apiService.QueryAsync(Arg.Compat.Any<ParamsQueryModel>())
            .Returns(SampleDataTests.ListCommonMatches);
@@ -41,7 +37,7 @@ public class TodaySyncServiceUnitTests
     public async Task Sync_Always_UpdateMatchToRepository()
     {
         // Arrange
-        var syncService = new TodaySyncServiceImp(dateTimeService, rabbitMqClient, apiService, repository, updateInfositeIdService);
+        var syncService = new TodaySyncServiceImp(dateTimeService, apiService, repository, updateInfositeIdService);
 
         // Act
         await syncService.Sync();

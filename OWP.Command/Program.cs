@@ -101,8 +101,8 @@ services.AddOtherSportServices();
 services.AddArchiveDataServices();
 #endregion
 
-var apiService = services.BuildServiceProvider().GetService<OWP.OtherSport.SyncAdminSiteId.Handlers.SyncAdminSiteMatchesHandler>();
+var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.TodaySyncService>();
 if (apiService != null)
 {
-    await apiService.Handle(new DateTime(2023, 12, 25)).ConfigureAwait(false);
+    await apiService.Sync().ConfigureAwait(false);
 }

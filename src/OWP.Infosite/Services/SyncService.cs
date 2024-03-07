@@ -6,10 +6,7 @@ using Fanex.Data.Repository;
 using Helper;
 using Models;
 using Olympus.Xml;
-using RabbitMq;
 using System;
-using System.Globalization;
-using System.Reflection;
 
 public interface SyncService
 {
@@ -20,8 +17,6 @@ public class SyncServiceImp
 {
     private readonly IDynamicRepository repository;
     private readonly ApiService apiService;
-    private readonly RabbitMqClient rabbitMqClient;
-
     protected readonly DateTime MinDate = new(2000, 1, 1);
 
     protected DateTimeService DateTimeService { get; }
@@ -29,18 +24,15 @@ public class SyncServiceImp
     public SyncServiceImp(
         DateTimeService dateTimeService,
         ApiService apiService,
-        RabbitMqClient rabbitMqClient,
         IDynamicRepository repository)
     {
         DateTimeService = dateTimeService;
         this.apiService = apiService;
         this.repository = repository;
-        this.rabbitMqClient = rabbitMqClient;
     }
 
-    public async Task Sync(DateTime fromDate, bool matchInfoNotification = false)
+    public async Task Sync(DateTime fromDate)
     {
-
         var queriedResult = await QueryEvents(fromDate);
 
         var infoSiteEvents = await GetInfoSiteByDate(fromDate);
@@ -54,19 +46,9 @@ public class SyncServiceImp
         {
             await SaveLogChange(loggedChanges);
         }
-        if (matchInfoNotification)
-        {
-            var today = DateTime.Today;
-            var sessionId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
 
-            await SaveEvents(queriedResult);
-            await UpdateSoloMatch();
-        }
-        else
-        {
-            await SaveEvents(queriedResult);
-            await UpdateSoloMatch();
-        }
+        await SaveEvents(queriedResult);
+        await UpdateSoloMatch();
     }
 
     private static void BuildLogForChangedMatchesLog(IEnumerable<Event> queriedResult, IList<InfoSiteDbInfo> infoSiteEvents, List<LoggedChangeModel> loggedChanges)
