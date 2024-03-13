@@ -20,5 +20,7 @@ public class Match
 
     public bool OfferLive { get; set; }
 
+    public bool IsLinked { get; set; }
+
     public bool IsSaba => LeagueName.Contains("SABA ", StringComparison.OrdinalIgnoreCase);
 }
