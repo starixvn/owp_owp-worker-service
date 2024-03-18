@@ -1,10 +1,10 @@
 ﻿namespace OWP.Infosite.Models;
 
-using System.Xml.Serialization;
 using Builder;
 using Extensions;
 using Newtonsoft.Json;
 using Olympus.Xml;
+using System.Xml.Serialization;
 
 [Serializable]
 public class Event
@@ -90,6 +90,8 @@ public class Event
 
     public string TotalRound { get; set; }
 
+    public bool IsBlackList { get; set; }
+
     public Event(CommonMatchModel infositeMatch)
     {
         this.infositeMatch = infositeMatch;
@@ -129,6 +131,7 @@ public class Event
         HomeRemark = extInfo.home_remark.ConvertNullToEmpty();
         AwayRemark = extInfo.away_remark.ConvertNullToEmpty();
         TotalRound = extInfo.round_total;
+        IsBlackList = GetIsBlackList(infositeMatch);
     }
 
     private string GetHomeName()
@@ -168,12 +171,15 @@ public class Event
         => IsValidExtInfoMatch() && IsConfirmMatch();
 
     private bool IsValidExtInfoMatch()
-        => infositeMatch.ext_info is { rd_checked: { } } 
-           && infositeMatch.ext_info.rd_checked.Value 
+        => infositeMatch.ext_info is { rd_checked: { } }
+           && infositeMatch.ext_info.rd_checked.Value
            && extInfo.sport_id == SoccerSportId;
 
     private bool IsConfirmMatch()
         => !(infositeMatch.ibc_league_id == null
             && infositeMatch.ibc_home_id == null
             && infositeMatch.ibc_away_id == null);
+
+    private static bool GetIsBlackList(CommonMatchModel infositeMatch)
+        => infositeMatch.is_league_black || infositeMatch.is_home_black || infositeMatch.is_away_black;
 }
