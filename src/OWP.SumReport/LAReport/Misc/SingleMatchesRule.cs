@@ -27,7 +27,7 @@ public class IsSingleMatchesRule : SingleMatchesRule
 
     private readonly string[] providersContain =
     {
-        "RB2", "RTS", "IPSD", "BG", "outside", "MRB", "follow", "FC", "365GV"
+        "RB2","RB3","IMG","RTS", "IPSD", "BG", "outside", "MRB", "follow", "FC", "365GV"
     };
     private readonly string[] providersEqual = { "SM", "VI" };
 
