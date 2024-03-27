@@ -6,5 +6,5 @@ public static class Constant
 
     public static readonly DateTime StartTimeDefault = new(2021, 1, 1, 0, 0, 0);
 
-    public const int CacheExpiredInDays = 30;
+    public const int CacheExpiredInDays = 10;
 }

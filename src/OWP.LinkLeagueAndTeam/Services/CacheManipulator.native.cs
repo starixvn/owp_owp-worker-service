@@ -21,8 +21,9 @@ public class CacheManipulatorImp : CacheManipulator
 
     public async Task SaveStartTimeQueryTeamInfo(DateTime startTime)
     {
-        var cachePolicy = new CacheItemOptions()
-            .SetAbsoluteExpiration(TimeSpan.FromMinutes(Constant.CacheExpiredInDays));
+        await cache.RemoveAsync(Constant.KeyLinkLeagueTeam);
+
+        var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromDays(Constant.CacheExpiredInDays));
         await cache.SetAsync(Constant.KeyLinkLeagueTeam, startTime.ToShortDateString(), cachePolicy);
     }
 
