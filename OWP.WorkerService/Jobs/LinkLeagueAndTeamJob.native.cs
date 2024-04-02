@@ -31,8 +31,6 @@ public class LinkLeagueAndTeamJob : IJob
 
     private async Task ExecuteJob()
     {
-        await LogService.InfoAsync($"Job {GetType()} started at {DateTime.Now}");
-
         var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
         if (underMaintenanceTime.IsUnderMaintenanceTime)
         {
@@ -42,6 +40,5 @@ public class LinkLeagueAndTeamJob : IJob
         await linkLeagueAndTeamService
             .Execute()
             .ConfigureAwait(false);
-        await LogService.InfoAsync($"Job {GetType()} finished at {DateTime.Now}");
     }
 }
