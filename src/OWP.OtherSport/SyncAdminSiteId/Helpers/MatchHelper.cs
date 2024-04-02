@@ -84,14 +84,18 @@ public static class MatchHelper
         => (CheckIsEqual(owpMatch.HomeName, adminSiteMatch.HomeName) ||
          CheckIsEqual(owpMatch.AwayName, adminSiteMatch.AwayName)) &&
          owpMatch.EventDateTime == adminSiteMatch.EventDateTime
-          && !adminSiteMatch.IsSaba && !owpMatch.IsSaba;
+          && !adminSiteMatch.IsSaba
+          && !owpMatch.IsSaba
+        && !owpMatch.IsMainMatch;
 
     private static bool CompareMatch_Rule_4(Match owpMatch, Match adminSiteMatch)
     => (CheckContains(adminSiteMatch.HomeName, owpMatch.HomeName) ||
     CheckContains(adminSiteMatch.AwayName, owpMatch.AwayName)) &&
     owpMatch.LeagueName.Equals(adminSiteMatch.LeagueName, StringComparison.OrdinalIgnoreCase) &&
        (owpMatch.EventDateTime.Date == adminSiteMatch.EventDateTime.Date || owpMatch.EventDate.Date == adminSiteMatch.EventDate.Date)
-       && !adminSiteMatch.IsSaba && !owpMatch.IsSaba;
+       && !adminSiteMatch.IsSaba
+       && !owpMatch.IsSaba
+       && !owpMatch.IsMainMatch;
 
     private static bool CompareMatch_Rule_5(Match owpMatch, Match adminSiteMatch)
      => (CheckEndWith(owpMatch.LeagueName, "Home")
