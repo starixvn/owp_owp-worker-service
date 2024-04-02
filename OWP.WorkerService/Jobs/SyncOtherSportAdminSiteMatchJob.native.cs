@@ -36,6 +36,7 @@ public class SyncOtherSportAdminSiteMatchJob : IJob
         {
             var eventDate = DateTime.Now.Date.AddHours(12);
             await syncAdminSiteMatchesHandler.Handle(eventDate).ConfigureAwait(false);
+            await LogService.InfoAsync("Log-Date-Sync-Adminsite", DateTime.Now, eventDate);
         }
     }
 }

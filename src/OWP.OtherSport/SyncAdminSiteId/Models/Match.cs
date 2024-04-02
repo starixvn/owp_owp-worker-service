@@ -10,6 +10,8 @@ public class Match
 
     public string HomeName { get; set; }
 
+    public bool IsMainMatch { get; set; }
+
     public string AwayName { get; set; }
 
     public string Sport { get; set; }
