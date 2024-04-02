@@ -1,6 +1,5 @@
 ﻿namespace OWP.OtherSport.SyncAdminSiteId.Helpers;
 
-using System.Text;
 using Models;
 
 public static class MatchHelper
@@ -84,7 +83,7 @@ public static class MatchHelper
     private static bool CompareMatch_Rule_3(Match owpMatch, Match adminSiteMatch)
         => (CheckIsEqual(owpMatch.HomeName, adminSiteMatch.HomeName) ||
          CheckIsEqual(owpMatch.AwayName, adminSiteMatch.AwayName)) &&
-          (owpMatch.EventDateTime.Date == adminSiteMatch.EventDateTime.Date || owpMatch.EventDate.Date == adminSiteMatch.EventDate.Date)
+         owpMatch.EventDateTime == adminSiteMatch.EventDateTime
           && !adminSiteMatch.IsSaba && !owpMatch.IsSaba;
 
     private static bool CompareMatch_Rule_4(Match owpMatch, Match adminSiteMatch)
