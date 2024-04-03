@@ -20,7 +20,6 @@ public static class MatchHelper
     public static IEnumerable<LinkedMatch> GetNewLinkedMatches(IList<Match> owpMatches, IList<Match> adminSiteMatches)
     {
         var linkedMatches = new List<LinkedMatch>();
-        adminSiteMatches = adminSiteMatches.Where(x => x.AdminSiteMatchId == 83120438 || x.AdminSiteMatchId == 831204246).ToList();
         NormalizeAdminSiteMatch(adminSiteMatches);
         linkedMatches.AddRange(GetNewLinkedMatches_Rule_1_2(owpMatches, adminSiteMatches));
         linkedMatches.AddRange(GetNewLinkedMatches_Rule_3(owpMatches, adminSiteMatches));
