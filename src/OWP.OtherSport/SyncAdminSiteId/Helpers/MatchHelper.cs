@@ -20,7 +20,7 @@ public static class MatchHelper
     public static IEnumerable<LinkedMatch> GetNewLinkedMatches(IList<Match> owpMatches, IList<Match> adminSiteMatches)
     {
         var linkedMatches = new List<LinkedMatch>();
-
+        adminSiteMatches = adminSiteMatches.Where(x => x.AdminSiteMatchId == 83120438 || x.AdminSiteMatchId == 831204246).ToList();
         NormalizeAdminSiteMatch(adminSiteMatches);
         linkedMatches.AddRange(GetNewLinkedMatches_Rule_1_2(owpMatches, adminSiteMatches));
         linkedMatches.AddRange(GetNewLinkedMatches_Rule_3(owpMatches, adminSiteMatches));
@@ -31,23 +31,14 @@ public static class MatchHelper
     }
 
     private static IList<LinkedMatch> GetNewLinkedMatches_Rule_1_2(IList<Match> owpMatches, IList<Match> adminSiteMatches)
-    => GetNewLinkedMatchesCommon(owpMatches, adminSiteMatches, CompareMatch_Rule_1_2);
+    => GetNewLinkedMatches_Rule_1_2_4(owpMatches, adminSiteMatches, CompareMatch_Rule_1_2);
 
     private static IList<LinkedMatch> GetNewLinkedMatches_Rule_3(IList<Match> owpMatches, IList<Match> adminSiteMatches)
     => GetNewLinkedMatchesCommon(owpMatches, adminSiteMatches, CompareMatch_Rule_3);
 
     private static IList<LinkedMatch> GetNewLinkedMatches_Rule_4(IList<Match> owpMatches, IList<Match> adminSiteMatches)
-    {
-        var linkedMatches = owpMatches?
-            .Where(owpMatch => !owpMatch.IsLinked && adminSiteMatches.Count(adminMatch => CompareMatch_Rule_4(owpMatch, adminMatch)) == 1)
-            .Select(owpMatch =>
-            {
-                var adminSiteMatch = adminSiteMatches.First(adminMatch => CompareMatch_Rule_4(owpMatch, adminMatch));
-                owpMatch.IsLinked = true;
-                return CreateLinkedMatchObject(owpMatch, adminSiteMatch);
-            }).ToList();
-        return linkedMatches ?? new List<LinkedMatch>();
-    }
+    => GetNewLinkedMatches_Rule_1_2_4(owpMatches, adminSiteMatches, CompareMatch_Rule_4);
+
     private static IList<LinkedMatch> GetNewLinkedMatches_Rule_5(IList<Match> owpMatches, IList<Match> adminSiteMatches)
     => GetNewLinkedMatchesCommon(owpMatches, adminSiteMatches, CompareMatch_Rule_5);
 
@@ -61,6 +52,22 @@ public static class MatchHelper
                 owpMatch.IsLinked = true;
                 return CreateLinkedMatchObject(owpMatch, adminSiteMatch);
             }).ToList();
+        return linkedMatches ?? new List<LinkedMatch>();
+    }
+    private static IList<LinkedMatch> GetNewLinkedMatches_Rule_1_2_4(IList<Match> owpMatches, IList<Match> adminSiteMatches, Func<Match, Match, bool> funcCondition)
+    {
+        var linkedMatches = owpMatches?
+           .Where(owpMatch => !owpMatch.IsLinked && adminSiteMatches.Any(adminMatch => funcCondition(owpMatch, adminMatch)))
+           .Select(owpMatch =>
+           {
+               var adminSiteValidMatch = adminSiteMatches
+               .Where(adminMatch => funcCondition(owpMatch, adminMatch))
+               .ToList();
+
+               var selectAdminSiteMatch = SelectMatch(owpMatch.EventDateTime, adminSiteValidMatch);
+               owpMatch.IsLinked = true;
+               return CreateLinkedMatchObject(owpMatch, selectAdminSiteMatch);
+           }).ToList();
         return linkedMatches ?? new List<LinkedMatch>();
     }
 
@@ -86,7 +93,7 @@ public static class MatchHelper
          owpMatch.EventDateTime == adminSiteMatch.EventDateTime
           && !adminSiteMatch.IsSaba
           && !owpMatch.IsSaba
-        && !owpMatch.IsMainMatch;
+        && adminSiteMatch.IsMainMatch;
 
     private static bool CompareMatch_Rule_4(Match owpMatch, Match adminSiteMatch)
     => (CheckContains(adminSiteMatch.HomeName, owpMatch.HomeName) ||
@@ -95,7 +102,7 @@ public static class MatchHelper
        (owpMatch.EventDateTime.Date == adminSiteMatch.EventDateTime.Date || owpMatch.EventDate.Date == adminSiteMatch.EventDate.Date)
        && !adminSiteMatch.IsSaba
        && !owpMatch.IsSaba
-       && !owpMatch.IsMainMatch;
+       && adminSiteMatch.IsMainMatch;
 
     private static bool CompareMatch_Rule_5(Match owpMatch, Match adminSiteMatch)
      => (CheckEndWith(owpMatch.LeagueName, "Home")
@@ -169,4 +176,25 @@ public static class MatchHelper
     => teamName
         .ReplaceSymbol_X()
         .RemoveSpace();
+
+    private static Match SelectMatch(DateTime owpDateTime, IList<Match> adminSiteMatch)
+    {
+        if (adminSiteMatch.Count == 1)
+        {
+            return adminSiteMatch[0];
+        }
+
+        var pivot = adminSiteMatch[0];
+        foreach (var match in adminSiteMatch)
+        {
+            var pivotTicks = Math.Abs((owpDateTime - pivot.EventDateTime).Ticks);
+            var adminSiteTicks = Math.Abs((owpDateTime - match.EventDateTime).Ticks);
+            if (pivotTicks > adminSiteTicks ||
+            (pivotTicks == adminSiteTicks && DateTime.Compare(pivot.EventDateTime, match.EventDateTime) > 0))
+            {
+                pivot = match;
+            }
+        }
+        return pivot;
+    }
 }
