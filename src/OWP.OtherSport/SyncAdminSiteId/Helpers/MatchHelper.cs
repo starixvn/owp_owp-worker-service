@@ -23,7 +23,6 @@ public static class MatchHelper
         NormalizeAdminSiteMatch(adminSiteMatches);
         linkedMatches.AddRange(GetNewLinkedMatches_Rule_1_2(owpMatches, adminSiteMatches));
         linkedMatches.AddRange(GetNewLinkedMatches_Rule_3(owpMatches, adminSiteMatches));
-        linkedMatches.AddRange(GetNewLinkedMatches_Rule_4(owpMatches, adminSiteMatches));
         linkedMatches.AddRange(GetNewLinkedMatches_Rule_5(owpMatches, adminSiteMatches));
 
         return linkedMatches;
@@ -34,10 +33,6 @@ public static class MatchHelper
 
     private static IList<LinkedMatch> GetNewLinkedMatches_Rule_3(IList<Match> owpMatches, IList<Match> adminSiteMatches)
     => GetNewLinkedMatchesCommon(owpMatches, adminSiteMatches, CompareMatch_Rule_3);
-
-    private static IList<LinkedMatch> GetNewLinkedMatches_Rule_4(IList<Match> owpMatches, IList<Match> adminSiteMatches)
-    => GetNewLinkedMatches_Rule_1_2_4(owpMatches, adminSiteMatches, CompareMatch_Rule_4);
-
     private static IList<LinkedMatch> GetNewLinkedMatches_Rule_5(IList<Match> owpMatches, IList<Match> adminSiteMatches)
     => GetNewLinkedMatchesCommon(owpMatches, adminSiteMatches, CompareMatch_Rule_5);
 
@@ -94,15 +89,6 @@ public static class MatchHelper
           && !owpMatch.IsSaba
         && adminSiteMatch.IsMainMatch;
 
-    private static bool CompareMatch_Rule_4(Match owpMatch, Match adminSiteMatch)
-    => (CheckContains(adminSiteMatch.HomeName, owpMatch.HomeName) ||
-    CheckContains(adminSiteMatch.AwayName, owpMatch.AwayName)) &&
-    owpMatch.LeagueName.Equals(adminSiteMatch.LeagueName, StringComparison.OrdinalIgnoreCase) &&
-       (owpMatch.EventDateTime.Date == adminSiteMatch.EventDateTime.Date || owpMatch.EventDate.Date == adminSiteMatch.EventDate.Date)
-       && !adminSiteMatch.IsSaba
-       && !owpMatch.IsSaba
-       && adminSiteMatch.IsMainMatch;
-
     private static bool CompareMatch_Rule_5(Match owpMatch, Match adminSiteMatch)
      => (CheckEndWith(owpMatch.LeagueName, "Home")
      && CheckContains(adminSiteMatch.HomeName, GetTargetValueInTeamName(owpMatch.HomeName))
@@ -118,7 +104,6 @@ public static class MatchHelper
      && CheckIsEqual(adminSiteMatch.LeagueName, "*NBA - Most Points Scored")
     && CheckIsEqual(owpMatch.LeagueName, "*NBA - Most Points Scored Away")
      && !adminSiteMatch.IsSaba && !owpMatch.IsSaba);
-
 
     private static bool CompareMatch_Rule_1_2(Match owpMatch, Match adminSiteMatch)
            => ConditionOfRealMatch(owpMatch, adminSiteMatch) || ConditionOfSabaMatch(owpMatch, adminSiteMatch);
