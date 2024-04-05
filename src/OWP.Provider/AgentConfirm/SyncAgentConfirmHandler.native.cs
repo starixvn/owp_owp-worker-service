@@ -1,0 +1,74 @@
+﻿namespace OWP.Provider.AgentConfirm;
+
+using Constants;
+using Model;
+using OWP.Constants;
+using OWP.Extensions;
+using Services;
+
+public interface SyncAgentConfirmHandler
+{
+    Task Handle(DateTime eventDate);
+}
+
+public class SyncAgentConfirmHandlerImp : SyncAgentConfirmHandler
+{
+    private readonly Repository repository;
+
+    public SyncAgentConfirmHandlerImp(Repository repository)
+    {
+        this.repository = repository;
+    }
+
+    public async Task Handle(DateTime eventDate)
+    {
+        var agentMatches = await repository.GetOwpMainMatchesByDate(eventDate);
+        var agentConfirms = agentMatches.SelectMany(CalculateProvider).ToList();
+        await repository.SaveAgentConfirm(agentConfirms);
+    }
+
+    private static IEnumerable<MatchAgentConfirm> CalculateProvider(AgentMatchInfo match)
+    {
+        if (match.IsSaba)
+        {
+            yield return CreateAgentConfirm(Agent.Streaming, match);
+        }
+        else if (match.MatchStatus is MatchStatus.Postponed or MatchStatus.Cancel or MatchStatus.Suspended)
+        {
+            yield return CreateAgentConfirm(Agent.Cancel, match);
+        }
+        else if (match.Provider.IsContainsIgnoreCase("BET365") || match.Provider.IsContainsIgnoreCase("TV"))
+        {
+            yield return CreateAgentConfirm(Agent.Streaming, match);
+        }
+        else
+        {
+            foreach (var provider in Agent.ProviderList.Where(match.Provider.IsContainsIgnoreCase))
+            {
+                yield return CreateAgentConfirm(provider, match);
+            }
+
+            if (match.Provider.IsContainsIgnoreCase("BET") && !match.Provider.IsContainsIgnoreCase("BET365"))
+            {
+                yield return CreateAgentConfirm(Agent.Betradar, match);
+            }
+        }
+    }
+
+    private static MatchAgentConfirm CreateAgentConfirm(string agent, AgentMatchInfo match)
+    {
+        return new MatchAgentConfirm
+        {
+            OWPMatchId = match.OWPMatchId,
+            Agent = agent
+        };
+    }
+}
+
+public class MatchAgentConfirm
+{
+    public int OWPMatchId { get; set; }
+
+    public string Agent { get; set; }
+}
+

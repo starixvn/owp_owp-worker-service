@@ -41,6 +41,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\src\OWP.Provider\OWP.Provider.csproj" />
 		<ProjectReference Include="..\src\OWP\OWP.csproj" />
 		<ProjectReference Include="..\src\OWP.InforsiteIdSync\OWP.InfositeIdSync.csproj" />
 		<ProjectReference Include="..\src\OWP.Infosite\OWP.Infosite.csproj" />

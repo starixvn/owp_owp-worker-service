@@ -132,6 +132,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<SyncFutureInfoSiteChildMatchJob>();
         services.AddTransient<SyncDeletedChildInfoSiteMatchJob>();
         services.AddTransient<SyncOtherSportAdminSiteMatchJob>();
+        services.AddTransient<SyncAgentConfirmJob>();
         services.AddTransient<SumPrematchReportJob>();
         services.AddTransient<SumMatchLiveReportJob>();
         services.AddTransient<DeleteOldMessageJob>();

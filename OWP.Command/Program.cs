@@ -98,11 +98,12 @@ services.AddMatchReadyNotificationServices();
 services.AddSumReportServices();
 services.AddSyncLeagueSettingsServices();
 services.AddOtherSportServices();
+services.AddProviderServices();
 services.AddArchiveDataServices();
 #endregion
 
-var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.TodaySyncService>();
+var apiService = services.BuildServiceProvider().GetService<OWP.Provider.AgentConfirm.SyncAgentConfirmHandler>();
 if (apiService != null)
 {
-    await apiService.Sync().ConfigureAwait(false);
+    await apiService.Handle(new DateTime(2024, 4, 6)).ConfigureAwait(false);
 }
