@@ -109,6 +109,7 @@ public static class ServiceCollectionExtensions
         services.AddSyncLeagueSettingsServices();
         services.AddOtherSportServices();
         services.AddArchiveDataServices();
+        services.AddProviderServices();
 
         return services;
     }

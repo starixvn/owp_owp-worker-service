@@ -23,7 +23,7 @@ public class SyncAgentConfirmHandlerImp : SyncAgentConfirmHandler
     public async Task Handle(DateTime eventDate)
     {
         var agentMatches = await repository.GetOwpMainMatchesByDate(eventDate);
-        var agentConfirms = agentMatches.SelectMany(CalculateProvider).ToList();
+        var agentConfirms = agentMatches.SelectMany(CalculateProvider).Distinct().ToList();
         await repository.SaveAgentConfirm(agentConfirms);
     }
 
@@ -37,11 +37,7 @@ public class SyncAgentConfirmHandlerImp : SyncAgentConfirmHandler
         {
             yield return CreateAgentConfirm(Agent.Cancel, match);
         }
-        else if (match.Provider.IsContainsIgnoreCase("BET365") || match.Provider.IsContainsIgnoreCase("TV"))
-        {
-            yield return CreateAgentConfirm(Agent.Streaming, match);
-        }
-        else
+        else if (Agent.ProviderList.Exists(match.Provider.IsContainsIgnoreCase))
         {
             foreach (var provider in Agent.ProviderList.Where(match.Provider.IsContainsIgnoreCase))
             {
@@ -52,6 +48,10 @@ public class SyncAgentConfirmHandlerImp : SyncAgentConfirmHandler
             {
                 yield return CreateAgentConfirm(Agent.Betradar, match);
             }
+        }
+        else if (match.Provider.IsContainsIgnoreCase("BET365") || match.Provider.IsContainsIgnoreCase("TV"))
+        {
+            yield return CreateAgentConfirm(Agent.Streaming, match);
         }
     }
 

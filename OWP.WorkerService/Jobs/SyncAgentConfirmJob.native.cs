@@ -34,7 +34,7 @@ public class SyncAgentConfirmJob : IJob
         var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
         if (!underMaintenanceTime.IsUnderMaintenanceTime)
         {
-            var eventDate = DateTime.Now.Date; // gmt-4 => yesterday
+            var eventDate = DateTime.Now.Date.AddDays(-1); // gmt-4 => yesterday
             await syncAgentConfirmHandler.Handle(eventDate).ConfigureAwait(false);
         }
     }

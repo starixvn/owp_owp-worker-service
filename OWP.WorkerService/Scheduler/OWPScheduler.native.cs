@@ -53,7 +53,7 @@ public class OwpScheduler : IHostedService
         await AddJobToSchedulerAsync(new JobInfo(typeof(SumMatchLiveReportJob), CronExpressionJob.SumDataReport));
 
         //OtherSport
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncAgentConfirmJob), CronExpressionJob.SyncOtherSportAdminSiteJob));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncOtherSportAdminSiteMatchJob), CronExpressionJob.SyncOtherSportAdminSiteJob));
 
         //Others
         await AddJobToSchedulerAsync(new JobInfo(typeof(SyncDataNotificationSettingJob), CronExpressionJob.SyncDataNotificationSetting));
@@ -64,7 +64,7 @@ public class OwpScheduler : IHostedService
         await AddJobToSchedulerAsync(new JobInfo(typeof(DeleteOldMessageJob), CronExpressionJob.DeleteOldMessage));
         await AddJobToSchedulerAsync(new JobInfo(typeof(ArchiveDataJob), CronExpressionJob.ArchiveData));
         //Provider
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncAgentConfirmJob), CronExpressionJob.SyncAgentConfirm));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncAgentConfirmJob), CronExpressionJob.SyncOtherSportAdminSiteJob));
     }
 
     private async Task CreateScheduler()
