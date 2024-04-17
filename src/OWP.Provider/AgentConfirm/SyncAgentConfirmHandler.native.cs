@@ -41,12 +41,17 @@ public class SyncAgentConfirmHandlerImp : SyncAgentConfirmHandler
         {
             foreach (var provider in Agent.ProviderList.Where(match.Provider.IsContainsIgnoreCase))
             {
-                yield return CreateAgentConfirm(provider, match);
-            }
-
-            if (match.Provider.IsContainsIgnoreCase("BET") && !match.Provider.IsContainsIgnoreCase("BET365"))
-            {
-                yield return CreateAgentConfirm(Agent.Betradar, match);
+                if (match.Provider.IsContainsIgnoreCase("BET"))
+                {
+                    if (!match.Provider.IsContainsIgnoreCase("BET365"))
+                    {
+                        yield return CreateAgentConfirm(Agent.Betradar, match);
+                    }
+                }
+                else
+                {
+                    yield return CreateAgentConfirm(provider, match);
+                }
             }
         }
         else if (match.Provider.IsContainsIgnoreCase("BET365") || match.Provider.IsContainsIgnoreCase("TV"))

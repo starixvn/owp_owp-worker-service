@@ -105,5 +105,5 @@ services.AddArchiveDataServices();
 var apiService = services.BuildServiceProvider().GetService<OWP.Provider.AgentConfirm.SyncAgentConfirmHandler>();
 if (apiService != null)
 {
-    await apiService.Handle(new DateTime(2024, 4, 14)).ConfigureAwait(false);
+    await apiService.Handle(new DateTime(2024, 4, 16)).ConfigureAwait(false);
 }
