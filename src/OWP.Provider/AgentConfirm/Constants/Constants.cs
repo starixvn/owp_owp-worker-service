@@ -16,7 +16,6 @@ public static class Agent
         "RB3",
         "RTS",
         "SLR",
-        "WOO",
-        "BET"
+        "WOO"
     }.ToImmutableList();
 }
