@@ -7,6 +7,7 @@ using Helper;
 using Models;
 using Olympus.Xml;
 using System;
+using System.Linq;
 
 public interface SyncService
 {
@@ -33,10 +34,59 @@ public class SyncServiceImp
 
     public async Task Sync(DateTime fromDate)
     {
-        var queriedResult = await QueryEvents(fromDate);
+        var queriedResultTask = QueryEvents(fromDate);
+        var infoSiteEventsTask = GetInfoSiteByDate(fromDate);
+        var teamRoundsTask = QueryTeamRound(fromDate);
 
-        var infoSiteEvents = await GetInfoSiteByDate(fromDate);
+        var queriedResult = await queriedResultTask;
+        await BuildServiceLog(queriedResult, await infoSiteEventsTask);
 
+        MapRoundToEvents(queriedResult, await teamRoundsTask);
+
+        await SaveEvents(queriedResult);
+        await UpdateSoloMatch();
+    }
+
+    #region QueryTeamRound
+    private async Task<Dictionary<int, string>> QueryTeamRound(DateTime fromDate)
+    {
+        var teamRounds = await apiService.QueryRound(fromDate, fromDate);
+        if (teamRounds == null || teamRounds.content == null)
+        {
+            return new Dictionary<int, string>();
+        }
+
+        var roundInfo = teamRounds.content.Distinct().ToDictionary(
+            r => r.match_id,
+            r => string.IsNullOrEmpty(r.round_home_away_total) || r.round_home_away_total == "/"
+                ? string.Empty
+                : r.round_home_away_total);
+
+        return roundInfo;
+    }
+
+    private static void MapRoundToEvents(IEnumerable<Event> events, Dictionary<int, string> teamRounds)
+    {
+        foreach (var match in events)
+        {
+            match.TeamRound = teamRounds.GetValueOrDefault(match.InfoSiteMatchId, string.Empty);
+        }
+    }
+    #endregion
+
+    private async Task SaveEvents(IEnumerable<Event> events)
+    {
+        var xml = XmlConverter.Serialize(events);
+        var criteria = new PushInfoSiteMatchCommand
+        {
+            Xml = xml
+        };
+        await repository.ExecuteAsync(criteria).ConfigureAwait(false);
+    }
+
+    #region BuildServiceLog
+    private async Task BuildServiceLog(List<Event> queriedResult, List<InfoSiteDbInfo> infoSiteEvents)
+    {
         var loggedChanges = new List<LoggedChangeModel>();
 
         BuildLogForNewMatches(queriedResult, infoSiteEvents, loggedChanges);
@@ -46,9 +96,6 @@ public class SyncServiceImp
         {
             await SaveLogChange(loggedChanges);
         }
-
-        await SaveEvents(queriedResult);
-        await UpdateSoloMatch();
     }
 
     private static void BuildLogForChangedMatchesLog(IEnumerable<Event> queriedResult, IList<InfoSiteDbInfo> infoSiteEvents, List<LoggedChangeModel> loggedChanges)
@@ -107,16 +154,6 @@ public class SyncServiceImp
         return (await repository.FetchAsync<InfoSiteDbInfo>(criteria).ConfigureAwait(false)).ToList();
     }
 
-    private async Task SaveEvents(IEnumerable<Event> events)
-    {
-        var xml = XmlConverter.Serialize(events);
-        var criteria = new PushInfoSiteMatchCommand
-        {
-            Xml = xml
-        };
-        await repository.ExecuteAsync(criteria).ConfigureAwait(false);
-    }
-
     private async Task SaveLogChange(IEnumerable<LoggedChangeModel> loggedChange)
     {
         var xml = XmlConverter.Serialize(loggedChange);
@@ -126,6 +163,7 @@ public class SyncServiceImp
         };
         await repository.ExecuteAsync(criteria).ConfigureAwait(false);
     }
+    #endregion
 
     private async Task UpdateSoloMatch()
     {

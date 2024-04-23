@@ -1,6 +1,6 @@
-﻿using System.Reflection;
-using OWP.Infosite.Constants;
+﻿using OWP.Infosite.Constants;
 using OWP.Infosite.Models;
+using System.Reflection;
 
 namespace OWP.Infosite.Helper;
 public static class InfoSiteSyncHelper
@@ -24,11 +24,10 @@ public static class InfoSiteSyncHelper
             "IPTV" => 7,
             "Provider" => 9,
             "Round" => 12,
-            "TeamRound" => 14,
-            "Remark"=> 16,
+            "Remark" => 16,
             "HomeRemark" => 18,
             "AwayRemark" => 20,
-            "Division"=>22,
+            "Division" => 22,
             _ => 1
         };
     }

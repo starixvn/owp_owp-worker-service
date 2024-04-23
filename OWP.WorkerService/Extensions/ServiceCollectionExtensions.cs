@@ -136,8 +136,6 @@ public static class ServiceCollectionExtensions
         services.AddTransient<SumMatchLiveReportJob>();
         services.AddTransient<DeleteOldMessageJob>();
         services.AddTransient<ArchiveDataJob>();
-        services.AddTransient<SyncTodayRoundJob>();
-        services.AddTransient<SyncFutureRoundJob>();
 
         return services;
     }
