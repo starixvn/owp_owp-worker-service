@@ -90,7 +90,11 @@ public class Event
 
     public string TotalRound { get; set; }
 
-    public bool IsBlackList { get; set; }
+    public bool IsLeagueBlackList { get; set; }
+
+    public bool IsHomeBlackList { get; set; }
+
+    public bool IsAwayBlackList { get; set; }
 
     public Event(CommonMatchModel infositeMatch)
     {
@@ -131,7 +135,9 @@ public class Event
         HomeRemark = extInfo.home_remark.ConvertNullToEmpty();
         AwayRemark = extInfo.away_remark.ConvertNullToEmpty();
         TotalRound = extInfo.round_total;
-        IsBlackList = GetIsBlackList(infositeMatch);
+        IsLeagueBlackList = infositeMatch.is_league_black;
+        IsHomeBlackList = infositeMatch.is_home_black;
+        IsAwayBlackList = infositeMatch.is_away_black;
     }
 
     private string GetHomeName()
@@ -179,7 +185,4 @@ public class Event
         => !(infositeMatch.ibc_league_id == null
             && infositeMatch.ibc_home_id == null
             && infositeMatch.ibc_away_id == null);
-
-    private static bool GetIsBlackList(CommonMatchModel infositeMatch)
-        => infositeMatch.is_league_black || infositeMatch.is_home_black || infositeMatch.is_away_black;
 }
