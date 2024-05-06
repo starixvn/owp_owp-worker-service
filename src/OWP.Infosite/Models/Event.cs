@@ -28,6 +28,8 @@ public class Event
 
     public string Round { get; private set; }
 
+    public string TeamRound { get; set; }
+
     public string Division { get; private set; }
 
     public string Agent { get; private set; }
