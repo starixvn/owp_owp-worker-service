@@ -1,16 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\OWP\OWP.csproj" />
     <ProjectReference Include="..\OWP.Infosite\OWP.Infosite.csproj" />
   </ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\OWP\OWP.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OWP\OWP.csproj" />
+  </ItemGroup>
 </Project>
