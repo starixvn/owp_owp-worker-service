@@ -8,6 +8,7 @@
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="Fanex.Data.Repository" Version="4.2.5.3" />
 		<PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="rabbitmq.client" Version="6.2.4" />

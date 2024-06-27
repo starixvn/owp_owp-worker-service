@@ -15,6 +15,7 @@ COPY ./src/OWP.OtherSport/. ./src/OWP.OtherSport
 COPY ./src/OWP.SumReport/. ./src/OWP.SumReport
 COPY ./src/OWP.SyncLeagueSettings/. ./src/OWP.SyncLeagueSettings
 COPY ./src/OWP.ArchiveData/. ./src/OWP.ArchiveData
+COPY ./src/OWP.Provider/. ./src/OWP.Provider
 COPY ./OWP.WorkerService/OWP.WorkerService.csproj ./OWP.WorkerService/OWP.WorkerService.csproj
 
 

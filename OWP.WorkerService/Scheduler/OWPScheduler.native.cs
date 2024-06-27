@@ -63,6 +63,8 @@ public class OwpScheduler : IHostedService
         await AddJobToSchedulerAsync(new JobInfo(typeof(LinkLeagueAndTeamJob), CronExpressionJob.LinkLeagueAndMatch));
         await AddJobToSchedulerAsync(new JobInfo(typeof(DeleteOldMessageJob), CronExpressionJob.DeleteOldMessage));
         await AddJobToSchedulerAsync(new JobInfo(typeof(ArchiveDataJob), CronExpressionJob.ArchiveData));
+        //Provider
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncAgentConfirmJob), CronExpressionJob.SyncOtherSportAdminSiteJob));
     }
 
     private async Task CreateScheduler()

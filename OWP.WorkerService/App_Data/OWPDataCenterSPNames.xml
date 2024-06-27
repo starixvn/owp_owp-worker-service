@@ -101,5 +101,9 @@
 		<Setting Key="OWP_MatchLiveReport_QueryMatchesByDate" SpName ="OWP_MatchLiveReport_QueryMatchesByDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
 		<Setting Key="OWP_MatchLiveReport_QueryOldMatchesByDate" SpName ="OWP_MatchLiveReport_QueryOldMatchesByDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
 		<Setting Key="OWP_MatchLiveReport_GetSabaFiveMinMatchId" SpName ="OWP_MatchLiveReport_GetSabaFiveMinMatchId" DbName="DBOWP.bodb_OWP.wsv_owp" />
+	</Function>	
+	<Function Name="Provider">
+		<Setting Key="OWP_ProviderVerification_GetMainMatchesByDate" SpName ="OWP_ProviderVerification_GetMainMatchesByDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
+		<Setting Key="OWP_ProviderVerification_SyncAgentConfirm" SpName ="OWP_ProviderVerification_SyncAgentConfirm" DbName="DBOWP.bodb_OWP.wsv_owp" />
 	</Function>
 </Functions>
