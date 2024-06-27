@@ -6,7 +6,6 @@
     <SonarQubeExclude>True</SonarQubeExclude>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Fanex.Data.Repository" Version="4.2.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
   </ItemGroup>
   <ItemGroup>

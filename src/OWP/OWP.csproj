@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>disable</Nullable>
@@ -8,7 +8,7 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-		<PackageReference Include="Fanex.Data.Repository" Version="4.2.5.3" />
+    <PackageReference Include="Fanex.Data.ProxyClient" Version="0.0.3" />
     <PackageReference Include="rabbitmq.client" Version="6.2.4" />
     <PackageReference Include="Fanex.Logging" Version="2.0.1" />
     <PackageReference Include="StackExchange.Redis" Version="2.5.61" />

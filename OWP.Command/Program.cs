@@ -1,5 +1,6 @@
 ﻿using Fanex.Caching;
 using Fanex.Caching.Redis;
+using Fanex.Data;
 using Fanex.Data.Repository;
 using Fanex.Logging;
 using Microsoft.Extensions.Configuration;
@@ -91,6 +92,7 @@ services.AddSingleton<RabbitMqClient>(rabbitService);
 
 #region AddDependenceInjection
 services.AddInfositeServices(configuration);
+services.AddFanexData(configuration);
 services.AddOwpCoreServices();
 services.AddInfositeIdSyncServices();
 services.AddLinkLeagueAndTeamServices();
