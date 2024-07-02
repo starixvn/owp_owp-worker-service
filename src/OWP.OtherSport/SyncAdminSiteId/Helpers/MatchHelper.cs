@@ -79,8 +79,6 @@ public static class MatchHelper
        NewEventDate = adminSiteMatch.EventDateTime
    };
 
-        => SameHomeOrAway(owpMatch, adminSiteMatch) &&
-          && NotSaba(owpMatch, adminSiteMatch)
 
     private static bool CompareMatch_Rule_5(Match owpMatch, Match adminSiteMatch)
      => CompareMatch_Rule_5_CheckEndWithHome(owpMatch, adminSiteMatch) ||
@@ -189,10 +187,6 @@ public static class MatchHelper
         }
         return pivot;
     }
-
-    private static bool SameHomeOrAway(Match owpMatch, Match adminSiteMatch)
-       => CheckIsEqual(owpMatch.HomeName, adminSiteMatch.HomeName) ||
-           CheckIsEqual(owpMatch.AwayName, adminSiteMatch.AwayName);
 
     private static bool NotSaba(Match owpMatch, Match adminSiteMatch)
     => !adminSiteMatch.IsSaba
