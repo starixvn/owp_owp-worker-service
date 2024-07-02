@@ -4,10 +4,9 @@ namespace OWP.Infosite.Services;
 
 using Criteria;
 using Fanex.Data.Repository;
+using Helper;
 using Models;
 using Olympus.Xml;
-using OWP.Infosite.Helper;
-using System.Reflection;
 
 public interface Sync180DayInfositeMatchService
 {
@@ -69,7 +68,7 @@ public class Sync180DayInfositeMatchServiceImp : Sync180DayInfositeMatchService
         foreach (var item in existedEvents)
         {
             var findInfoSiteExisted = infoSiteEvents.First(x => x.InfoSiteMatchId == item.MatchId);
-            var infoSiteOld = new InfoSiteDb()
+            var infoSiteOld = new InfoSiteDb
             {
                 InfoSiteMatchId = findInfoSiteExisted.InfoSiteMatchId,
                 AwayName = findInfoSiteExisted.AwayName,
@@ -77,7 +76,7 @@ public class Sync180DayInfositeMatchServiceImp : Sync180DayInfositeMatchService
                 LeagueName = findInfoSiteExisted.LeagueName,
                 EventDateTime = findInfoSiteExisted.EventDateTime
             };
-            var infoSiteNew = new InfoSiteDb()
+            var infoSiteNew = new InfoSiteDb
             {
                 InfoSiteMatchId = item.MatchId,
                 AwayName = item.AwayName,

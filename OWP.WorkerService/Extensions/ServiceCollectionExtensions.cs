@@ -3,7 +3,6 @@
 using ArchiveData;
 using Fanex.Caching;
 using Fanex.Caching.Redis;
-using Fanex.Data;
 using Fanex.Data.Repository;
 using Fanex.Logging;
 using Fanex.Logging.Sentry.RavenClient;

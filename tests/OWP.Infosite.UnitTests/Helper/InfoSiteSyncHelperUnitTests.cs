@@ -1,5 +1,4 @@
 ﻿using OWP.Infosite.Helper;
-using OWP.Infosite.Models;
 using Xunit;
 using Xunit.Asserts.Compare;
 
@@ -12,7 +11,7 @@ public class InfoSiteSyncHelperUnitTests
     {
         var result = InfoSiteSyncHelper.BuildActionId("LeagueName", "Home New", "Home Old");
 
-        DeepAssert.Equal(result,3);
+        DeepAssert.Equal(result, 3);
     }
 
     [Fact]
@@ -22,5 +21,5 @@ public class InfoSiteSyncHelperUnitTests
 
         DeepAssert.Equal(result, 10);
     }
-}   
+}
 

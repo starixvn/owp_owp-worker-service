@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace OWP.OtherSport.SyncAdminSiteId.Helpers
 {
@@ -29,7 +25,7 @@ namespace OWP.OtherSport.SyncAdminSiteId.Helpers
         {
             while (teamName.Contains("  ", StringComparison.CurrentCulture))
             {
-                teamName = teamName.Remove(teamName.IndexOf("  "), 1);
+                teamName = teamName.Remove(teamName.IndexOf("  ", StringComparison.CurrentCulture), 1);
             }
             return teamName;
         }
