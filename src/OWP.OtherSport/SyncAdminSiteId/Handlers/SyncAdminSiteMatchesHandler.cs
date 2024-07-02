@@ -42,8 +42,7 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
     }
     
     private async Task<IList<Match>> GetOwpMatches(DateTime eventDate)
-        => (await dynamicRepository.FetchAsync<Match>(new GetMatchesFromOwpCriteria { EventDate = eventDate }))
-            .Where(e => !e.LeagueName.Trim().EndsWith("Next 3-Point Made")).ToList();
+        => (await dynamicRepository.FetchAsync<Match>(new GetMatchesFromOwpCriteria { EventDate = eventDate })).ToList();
 
     private async Task<IList<Match>> GetAdminSiteMatches(DateTime eventDate)
         => (await dynamicRepository.FetchAsync<Match>(new GetMatchesFromAdminSiteCriteria { EventDate = eventDate })).ToList();
