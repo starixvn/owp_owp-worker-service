@@ -104,8 +104,8 @@ services.AddProviderServices();
 services.AddArchiveDataServices();
 #endregion
 
-var apiService = services.BuildServiceProvider().GetService<OWP.Provider.AgentConfirm.SyncAgentConfirmHandler>();
+var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.TodaySyncService>();
 if (apiService != null)
 {
-    await apiService.Handle(new DateTime(2024, 4, 18)).ConfigureAwait(false);
+    await apiService.Sync().ConfigureAwait(false);
 }
