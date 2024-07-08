@@ -34,16 +34,15 @@ public class SyncServiceImp
 
     public async Task Sync(DateTime fromDate)
     {
-        var queriedResultTask = QueryEvents(fromDate);
-        var infoSiteEventsTask = GetInfoSiteByDate(fromDate);
-        var teamRoundsTask = QueryTeamRound(fromDate);
+        var queriedResultTask = await QueryEvents(fromDate);
+        
+        var teamRoundsTask = await QueryTeamRound(fromDate);
 
-        var queriedResult = await queriedResultTask;
-        await BuildServiceLog(queriedResult, await infoSiteEventsTask);
+        await BuildServiceLog(queriedResultTask);
 
-        MapRoundToEvents(queriedResult, await teamRoundsTask);
+        MapRoundToEvents(queriedResultTask, teamRoundsTask);
 
-        await SaveEvents(queriedResult);
+        await SaveEvents(queriedResultTask);
         await UpdateSoloMatch();
     }
 
@@ -85,12 +84,19 @@ public class SyncServiceImp
     }
 
     #region BuildServiceLog
-    private async Task BuildServiceLog(List<Event> queriedResult, List<InfoSiteDbInfo> infoSiteEvents)
+    private async Task BuildServiceLog(List<Event> queriedResult)
     {
         var loggedChanges = new List<LoggedChangeModel>();
 
-        BuildLogForNewMatches(queriedResult, infoSiteEvents, loggedChanges);
-        BuildLogForChangedMatchesLog(queriedResult, infoSiteEvents, loggedChanges);
+        var ids = string.Join(",", queriedResult.Select(x => x.InfoSiteMatchId));
+
+        var existingInfoSiteEvent = await GetExistingInfoSite(ids);
+
+        var newInfoSiteIds = queriedResult.ExceptBy(existingInfoSiteEvent.Select(x => x.InfoSiteMatchId),
+            x => x.InfoSiteMatchId).Select(x=>x.InfoSiteMatchId);
+
+        BuildLogForNewMatches(newInfoSiteIds, loggedChanges);
+        BuildLogForChangedMatchesLog(queriedResult, existingInfoSiteEvent, loggedChanges);
 
         if (loggedChanges.Any())
         {
@@ -128,14 +134,14 @@ public class SyncServiceImp
         }
     }
 
-    private static void BuildLogForNewMatches(IEnumerable<Event> queriedResult, IEnumerable<InfoSiteDb> infoSiteEvents, List<LoggedChangeModel> loggedChanges)
+    private static void BuildLogForNewMatches(IEnumerable<int> newInfoSiteIds, List<LoggedChangeModel> loggedChanges)
     {
-        var newEvents = queriedResult.ExceptBy(infoSiteEvents.Select(x => x.InfoSiteMatchId), x => x.InfoSiteMatchId);
-        var newLoggedChanges = newEvents.Select(newEvent => new LoggedChangeModel
+        
+        var newLoggedChanges = newInfoSiteIds.Select(newInfoSiteId => new LoggedChangeModel
         {
             UpdateTypeId = 1,
             Action = Constant.UpdateType.GetValueOrDefault(1),
-            InfoSiteMatchId = newEvent.InfoSiteMatchId,
+            InfoSiteMatchId = newInfoSiteId,
             UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
             NewValue = null,
             OldValue = "Initialize"
@@ -144,11 +150,11 @@ public class SyncServiceImp
         loggedChanges.AddRange(newLoggedChanges);
     }
 
-    private async Task<List<InfoSiteDbInfo>> GetInfoSiteByDate(DateTime date)
+    private async Task<List<InfoSiteDbInfo>> GetExistingInfoSite(string ids)
     {
-        var criteria = new GetInfoSiteMatchesByDateCriteria
+        var criteria = new GetExistingInfoSiteMatchesCriteria
         {
-            EventDate = date
+            Ids = ids
         };
 
         return (await repository.FetchAsync<InfoSiteDbInfo>(criteria).ConfigureAwait(false)).ToList();
