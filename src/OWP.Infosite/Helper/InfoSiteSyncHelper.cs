@@ -82,7 +82,7 @@ public static class InfoSiteSyncHelper
         };
     }
 
-    public static IEnumerable<LoggedChangeModel> BuildLoggedChanges(IEnumerable<PropertyInfo> properties, InfoSiteDb infoSiteOld, InfoSiteDb infoSiteNew)
+    public static IEnumerable<LoggedChangeModel> BuildLoggedChanges(IEnumerable<PropertyInfo> properties, InfoSiteDb infoSiteOld, InfoSiteDb infoSiteNew, string fromService = "Today")
     {
         var newValue = string.Empty;
         var oldValue = string.Empty;
@@ -106,7 +106,8 @@ public static class InfoSiteSyncHelper
                     OldValue = oldValue,
                     HomeUpdated = string.Equals(property.Name, "HomeName", StringComparison.OrdinalIgnoreCase),
                     AwayUpdated = string.Equals(property.Name, "AwayName", StringComparison.OrdinalIgnoreCase),
-                    UpDateTime = DateTimeNowGmt8()
+                    UpDateTime = DateTimeNowGmt8(),
+                    FromService = fromService
                 };
             });
     }

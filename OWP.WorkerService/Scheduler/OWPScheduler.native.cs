@@ -34,11 +34,11 @@ public class OwpScheduler : IHostedService
     private async Task RunJobSchedulerAsync()
     {
         //InfositeMatch
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(SyncTodayInfoSiteMatchJob), CronExpressionJob.SyncTodayInfoSiteMatch));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(SyncFutureInfoSiteMatchJob), CronExpressionJob.SyncFutureInfoSiteMatch));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(SyncEventDeletedJob), CronExpressionJob.SyncEventDeleted));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(SyncInfositeIdJob), CronExpressionJob.SyncInfositeId));
-        //await AddJobToSchedulerAsync(new JobInfo(typeof(Sync180DayInfositeMatchJob), CronExpressionJob.Sync180DayInfoSiteMatch));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncTodayInfoSiteMatchJob), CronExpressionJob.SyncTodayInfoSiteMatch));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncFutureInfoSiteMatchJob), CronExpressionJob.SyncFutureInfoSiteMatch));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncEventDeletedJob), CronExpressionJob.SyncEventDeleted));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncInfositeIdJob), CronExpressionJob.SyncInfositeId));
+        await AddJobToSchedulerAsync(new JobInfo(typeof(Sync180DayInfositeMatchJob), CronExpressionJob.Sync180DayInfoSiteMatch));
 
         //InfositeChildMatch
         await AddJobToSchedulerAsync(new JobInfo(typeof(SyncTodayInfoSiteChildMatchJob), CronExpressionJob.SyncTodayInfoSiteMatch));

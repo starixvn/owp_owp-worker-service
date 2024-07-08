@@ -30,12 +30,17 @@ public class Sync180DayInfositeMatchServiceImp : Sync180DayInfositeMatchService
 
         var matchInfo = infoSiteMatches.Select(m => new MatchModelFor180Day(m));
 
-        var infoSiteEvents = await GetInfoSiteByDate();
+        var ids = string.Join(",", matchInfo.Select(x => x.MatchId));
+
+        var existingInfoSiteEvents = await GetExistingInfoSite(ids);
+
+        var newInfoSiteIds = matchInfo.ExceptBy(existingInfoSiteEvents.Select(x => x.InfoSiteMatchId),
+            x => x.MatchId).Select(x => x.MatchId);
 
         var loggedChanges = new List<LoggedChangeModel>();
 
-        BuildLogForNewMatches(matchInfo, infoSiteEvents, loggedChanges);
-        BuildLogForChangedMatchesLog(matchInfo, infoSiteEvents, loggedChanges);
+        BuildLogForNewMatches(newInfoSiteIds, loggedChanges);
+        BuildLogForChangedMatchesLog(matchInfo, existingInfoSiteEvents, loggedChanges);
 
         if (loggedChanges.Any())
         {
@@ -60,36 +65,33 @@ public class Sync180DayInfositeMatchServiceImp : Sync180DayInfositeMatchService
         await repository.ExecuteAsync(criteria).ConfigureAwait(false);
     }
 
-    private static void BuildLogForChangedMatchesLog(IEnumerable<MatchModelFor180Day> queriedResult, IList<MatchInfoSite> infoSiteEvents, List<LoggedChangeModel> loggedChanges)
+    private static void BuildLogForChangedMatchesLog(IEnumerable<MatchModelFor180Day> queriedResult, IList<MatchInfoSite> existedEvents, List<LoggedChangeModel> loggedChanges)
     {
-        var existedEvents =
-            queriedResult.IntersectBy(infoSiteEvents.Select(x => x.InfoSiteMatchId), x => x.MatchId).ToList();
-
         foreach (var item in existedEvents)
         {
-            var findInfoSiteExisted = infoSiteEvents.First(x => x.InfoSiteMatchId == item.MatchId);
+            var infoSiteFromQueried = queriedResult.First(x => x.MatchId == item.InfoSiteMatchId);
             var infoSiteOld = new InfoSiteDb
             {
-                InfoSiteMatchId = findInfoSiteExisted.InfoSiteMatchId,
-                AwayName = findInfoSiteExisted.AwayName,
-                HomeName = findInfoSiteExisted.HomeName,
-                LeagueName = findInfoSiteExisted.LeagueName,
-                EventDateTime = findInfoSiteExisted.EventDateTime
-            };
-            var infoSiteNew = new InfoSiteDb
-            {
-                InfoSiteMatchId = item.MatchId,
+                InfoSiteMatchId = item.InfoSiteMatchId,
                 AwayName = item.AwayName,
                 HomeName = item.HomeName,
                 LeagueName = item.LeagueName,
-                EventDateTime = item.KoTime
+                EventDateTime = item.EventDateTime
+            };
+            var infoSiteNew = new InfoSiteDb
+            {
+                InfoSiteMatchId = infoSiteFromQueried.MatchId,
+                AwayName = infoSiteFromQueried.AwayName,
+                HomeName = infoSiteFromQueried.HomeName,
+                LeagueName = infoSiteFromQueried.LeagueName,
+                EventDateTime = infoSiteFromQueried.KoTime
             };
 
             var type = typeof(InfoSiteDb);
             var properties = type.GetProperties();
 
-            var loggedChangeItem = InfoSiteSyncHelper.BuildLoggedChanges(properties, infoSiteOld, infoSiteNew).ToList();
-            if (findInfoSiteExisted is { IsCheck: true } && loggedChangeItem.Any())
+            var loggedChangeItem = InfoSiteSyncHelper.BuildLoggedChanges(properties, infoSiteOld, infoSiteNew, "180days").ToList();
+            if (item is { IsCheck: true } && loggedChangeItem.Any())
             {
                 loggedChanges.Add(new LoggedChangeModel
                 {
@@ -98,33 +100,37 @@ public class Sync180DayInfositeMatchServiceImp : Sync180DayInfositeMatchService
                     Action = "Update the <b>checking status</b>",
                     NewValue = "Unchecked",
                     OldValue = "Checked",
-                    UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8()
+                    UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
+                    FromService = "180days"
                 });
             }
             loggedChanges.AddRange(loggedChangeItem);
         }
     }
 
-    private static void BuildLogForNewMatches(IEnumerable<MatchModelFor180Day> queriedResult, IEnumerable<MatchInfoSite> infoSiteEvents, List<LoggedChangeModel> loggedChanges)
+    private static void BuildLogForNewMatches(IEnumerable<int> newInfoSiteIds, List<LoggedChangeModel> loggedChanges)
     {
-        var newEvents = queriedResult.ExceptBy(infoSiteEvents.Select(x => x.InfoSiteMatchId), x => x.MatchId);
-        var newLoggedChanges = newEvents.Select(newEvent => new LoggedChangeModel
+        var newLoggedChanges = newInfoSiteIds.Select(newInfoSiteId => new LoggedChangeModel
         {
             UpdateTypeId = 1,
             Action = Constant.UpdateType.GetValueOrDefault(1),
-            InfoSiteMatchId = newEvent.MatchId,
+            InfoSiteMatchId = newInfoSiteId,
             UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
             NewValue = null,
-            OldValue = "Initialize"
+            OldValue = "Initialize",
+            FromService = "180days"
         });
 
         loggedChanges.AddRange(newLoggedChanges);
     }
 
 
-    private async Task<List<MatchInfoSite>> GetInfoSiteByDate()
+    private async Task<List<MatchInfoSite>> GetExistingInfoSite(string ids)
     {
-        var criteria = new GetInfoSiteMatchesCriteria();
+        var criteria = new GetInfoSiteMatchesCriteria
+        {
+            Ids = ids
+        };
 
         return (await repository.FetchAsync<MatchInfoSite>(criteria).ConfigureAwait(false)).ToList();
     }
