@@ -37,9 +37,9 @@ public class MatchModelFor180Day
     }
 
     private string GetHomeName(MatchModelQuery180Day infositeMatch)
-    => infositeMatch.is_team_reverse.HasValue ? infositeMatch.team_away_name : infositeMatch.team_home_name;
+    => infositeMatch.is_team_reverse.HasValue && infositeMatch.is_team_reverse.Value ? infositeMatch.team_away_name : infositeMatch.team_home_name;
 
     private string GetAwayName(MatchModelQuery180Day infositeMatch)
-    => infositeMatch.is_team_reverse.HasValue ? infositeMatch.team_home_name : infositeMatch.team_away_name;
+    => infositeMatch.is_team_reverse.HasValue && infositeMatch.is_team_reverse.Value ? infositeMatch.team_home_name : infositeMatch.team_away_name;
     
 }
