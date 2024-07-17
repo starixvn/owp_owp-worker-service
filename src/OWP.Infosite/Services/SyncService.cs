@@ -56,7 +56,7 @@ public class SyncServiceImp
             return new Dictionary<int, string>();
         }
 
-        var roundInfo = teamRounds.content.Distinct().ToDictionary(
+        var roundInfo = teamRounds.content.DistinctBy(x => x.match_id).ToDictionary(
             r => r.match_id,
             r => string.IsNullOrEmpty(r.round_home_away_total) || r.round_home_away_total == "/"
                 ? string.Empty
