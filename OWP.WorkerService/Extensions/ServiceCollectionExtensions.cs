@@ -3,9 +3,7 @@
 using ArchiveData;
 using Fanex.Caching;
 using Fanex.Caching.Redis;
-using Fanex.Data;
 using Fanex.Data.Repository;
-using Fanex.Data.SqlServer;
 using Fanex.Logging;
 using Fanex.Logging.Sentry.RavenClient;
 using Infosite;
@@ -41,23 +39,8 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddFanexServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddFanexLogServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var connections = configuration.GetSection("ConnectionStrings")
-            .GetChildren()
-            .AsEnumerable()
-            .ToDictionary(
-                x => x.GetValue<string>("Name"),
-                y => new ConnectionConfiguration(y.GetValue<string>("Name"), y.GetValue<string>("ConnectionString"), y.GetValue<string>("ProviderName"))
-            );
-
-        DbSettingProviderManager
-            .StartNewSession()
-            .Use(connections)
-            .WithSqlServer()
-            .UseDefaultDbSettingProvider(resourcePath: "~/App_Data")
-            .Run();
-
         LogManager.SetDefaultLogCategory(configuration.GetSection("FanexLogCategory").Value)
             .Use(new List<ILogEngine>
             {

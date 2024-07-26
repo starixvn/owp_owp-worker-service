@@ -2,7 +2,7 @@
 
 using Fanex.Logging;
 using ONEbook.UM.Services;
-using OWP.Provider.AgentConfirm;
+using Provider.AgentConfirm;
 using Quartz;
 
 [DisallowConcurrentExecution]

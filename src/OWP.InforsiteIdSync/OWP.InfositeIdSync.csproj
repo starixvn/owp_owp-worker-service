@@ -1,18 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-	  <Nullable>disable</Nullable>
-	  <ImplicitUsings>enable</ImplicitUsings>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Olympus.OWP.Constants" Version="1.0.0.3" />
-    <PackageReference Include="Olympus.Xml" Version="1.0.0.5" />   
+    <PackageReference Include="Olympus.Xml" Version="1.0.0.5" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\OWP.Infosite\OWP.Infosite.csproj" />
   </ItemGroup>
-
 </Project>

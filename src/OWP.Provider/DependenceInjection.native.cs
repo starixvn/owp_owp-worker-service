@@ -1,8 +1,8 @@
 ﻿namespace OWP.OtherSport;
 
 using Microsoft.Extensions.DependencyInjection;
-using OWP.Provider.AgentConfirm;
 using OWP.Provider.AgentConfirm.Services;
+using Provider.AgentConfirm;
 
 public static class DependenceInjection
 {

@@ -17,5 +17,7 @@ public class LoggedChangeModel
     public bool HomeUpdated { get; set; }
 
     public bool AwayUpdated { get; set; }
+
+    public string FromService { get; set; }
 }
 

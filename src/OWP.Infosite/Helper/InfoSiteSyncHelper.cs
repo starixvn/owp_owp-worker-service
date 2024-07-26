@@ -1,4 +1,5 @@
-﻿using OWP.Infosite.Constants;
+﻿using OWP.Extensions;
+using OWP.Infosite.Constants;
 using OWP.Infosite.Models;
 using System.Reflection;
 
@@ -14,39 +15,41 @@ public static class InfoSiteSyncHelper
 
     private static int BuildActionIdWithUpdate(string propertyName)
     {
-        return propertyName switch
+        var propertyActionIds = new Dictionary<string, int>
         {
-            "EventDateTime" => 2,
-            "LeagueName" => 3,
-            "HomeName" => 4,
-            "AwayName" => 4,
-            "Tv" => 5,
-            "IPTV" => 7,
-            "Provider" => 9,
-            "Round" => 12,
-            "Remark" => 16,
-            "HomeRemark" => 18,
-            "AwayRemark" => 20,
-            "Division" => 22,
-            _ => 1
+            { "EventDateTime", 2 },
+            { "LeagueName", 3 },
+            { "HomeName", 4 },
+            { "AwayName", 4 },
+            { "Tv", 5 },
+            { "IPTV", 7 },
+            { "Provider", 9 },
+            { "Round", 12 },
+            { "Remark", 16 },
+            { "HomeRemark", 18 },
+            { "AwayRemark", 20 },
+            { "Division", 22 }
         };
+
+        return propertyActionIds.GetValue(propertyName, 1);
     }
 
     private static int BuildActionIdWithCancel(string propertyName)
     {
-        return propertyName switch
+        var propertyActionIds = new Dictionary<string, int>
         {
-            "Tv" => 6,
-            "IPTV" => 8,
-            "Provider" => 10,
-            "Round" => 13,
-            "TeamRound" => 15,
-            "Remark" => 17,
-            "HomeRemark" => 19,
-            "AwayRemark" => 21,
-            "Division" => 23,
-            _ => 1
+            { "Tv", 6 },
+            { "IPTV", 8 },
+            { "Provider", 10 },
+            { "Round", 13 },
+            { "TeamRound", 15 },
+            { "Remark", 17 },
+            { "HomeRemark", 19 },
+            { "AwayRemark", 21 },
+            { "Division", 23 }
         };
+
+        return propertyActionIds.GetValue(propertyName, 1);
     }
 
     private static bool IsCancel(string oldValue, string newValue)
@@ -79,7 +82,7 @@ public static class InfoSiteSyncHelper
         };
     }
 
-    public static IEnumerable<LoggedChangeModel> BuildLoggedChanges(IEnumerable<PropertyInfo> properties, InfoSiteDb infoSiteOld, InfoSiteDb infoSiteNew)
+    public static IEnumerable<LoggedChangeModel> BuildLoggedChanges(IEnumerable<PropertyInfo> properties, InfoSiteDb infoSiteOld, InfoSiteDb infoSiteNew, string fromService = "Today")
     {
         var newValue = string.Empty;
         var oldValue = string.Empty;
@@ -103,7 +106,8 @@ public static class InfoSiteSyncHelper
                     OldValue = oldValue,
                     HomeUpdated = string.Equals(property.Name, "HomeName", StringComparison.OrdinalIgnoreCase),
                     AwayUpdated = string.Equals(property.Name, "AwayName", StringComparison.OrdinalIgnoreCase),
-                    UpDateTime = DateTimeNowGmt8()
+                    UpDateTime = DateTimeNowGmt8(),
+                    FromService = fromService
                 };
             });
     }

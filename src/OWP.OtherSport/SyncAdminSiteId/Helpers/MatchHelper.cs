@@ -79,21 +79,34 @@ public static class MatchHelper
        NewEventDate = adminSiteMatch.EventDateTime
    };
 
+
     private static bool CompareMatch_Rule_5(Match owpMatch, Match adminSiteMatch)
-     => (CheckEndWith(owpMatch.LeagueName, "Home")
+     => CompareMatch_Rule_5_CheckEndWithHome(owpMatch, adminSiteMatch) ||
+        CompareMatch_Rule_5_CheckEndWithAway(owpMatch, adminSiteMatch);
+
+
+    private static bool CompareMatch_Rule_5_CheckEndWithHome(Match owpMatch, Match adminSiteMatch)
+    => CheckEndWith(owpMatch.LeagueName, "Home")
      && CheckContains(adminSiteMatch.HomeName, GetTargetValueInTeamName(owpMatch.HomeName))
      && CheckIsEqual("N/A", adminSiteMatch.AwayName)
-     && (owpMatch.EventDateTime.Date == adminSiteMatch.EventDateTime.Date || owpMatch.EventDate.Date == adminSiteMatch.EventDate.Date)
-     && CheckIsEqual("*NBA - Most Points Scored", adminSiteMatch.LeagueName)
-     && CheckIsEqual(owpMatch.LeagueName, "*NBA - Most Points Scored Home")
-     && !adminSiteMatch.IsSaba && !owpMatch.IsSaba) ||
-     (CheckEndWith(owpMatch.LeagueName, "Away")
+     && CompareMatch_Rule_5_CheckEquals(owpMatch, adminSiteMatch, "*NBA - Most Points Scored Home");
+
+    private static bool CompareMatch_Rule_5_CheckEndWithAway(Match owpMatch, Match adminSiteMatch)
+    => CheckEndWith(owpMatch.LeagueName, "Away")
      && CheckContains(adminSiteMatch.AwayName, GetTargetValueInTeamName(owpMatch.AwayName))
      && CheckIsEqual("N/A", adminSiteMatch.HomeName)
-     && (owpMatch.EventDateTime.Date == adminSiteMatch.EventDateTime.Date || owpMatch.EventDate.Date == adminSiteMatch.EventDate.Date)
-     && CheckIsEqual(adminSiteMatch.LeagueName, "*NBA - Most Points Scored")
-    && CheckIsEqual(owpMatch.LeagueName, "*NBA - Most Points Scored Away")
-     && !adminSiteMatch.IsSaba && !owpMatch.IsSaba);
+     && CompareMatch_Rule_5_CheckEquals(owpMatch, adminSiteMatch, "*NBA - Most Points Scored Away");
+
+    private static bool CompareMatch_Rule_5_CheckEquals(Match owpMatch, Match adminSiteMatch, string specificLeagueName)
+    {
+        return (owpMatch.EventDateTime.Date == adminSiteMatch.EventDateTime.Date || owpMatch.EventDate.Date == adminSiteMatch.EventDate.Date)
+        && CompareMatch_Rule_5_CheckEquals(owpMatch.LeagueName, adminSiteMatch.LeagueName, specificLeagueName)
+        && NotSaba(owpMatch, adminSiteMatch);
+    }
+
+    private static bool CompareMatch_Rule_5_CheckEquals(string owpLeague, string adminSiteLeague, string specificLeagueName)
+    => CheckIsEqual("*NBA - Most Points Scored", adminSiteLeague)
+    && CheckIsEqual(owpLeague, specificLeagueName);
 
     private static bool CompareMatch_Rule_1_2(Match owpMatch, Match adminSiteMatch)
            => ConditionOfRealMatch(owpMatch, adminSiteMatch) || ConditionOfSabaMatch(owpMatch, adminSiteMatch);
@@ -113,7 +126,10 @@ public static class MatchHelper
 
     private static bool IsSameEvent(Match owpMatch, Match adminSiteMatch)
         => (owpMatch.EventDateTime.Date == adminSiteMatch.EventDateTime.Date || owpMatch.EventDate.Date == adminSiteMatch.EventDate.Date) &&
-        CheckIsEqual(owpMatch.LeagueName, adminSiteMatch.LeagueName) &&
+        SameLeagueHomeAway(owpMatch, adminSiteMatch);
+
+    private static bool SameLeagueHomeAway(Match owpMatch, Match adminSiteMatch)
+    => CheckIsEqual(owpMatch.LeagueName, adminSiteMatch.LeagueName) &&
         CheckIsEqual(owpMatch.HomeName, adminSiteMatch.HomeName) &&
         CheckIsEqual(owpMatch.AwayName, adminSiteMatch.AwayName);
 
@@ -171,4 +187,8 @@ public static class MatchHelper
         }
         return pivot;
     }
+
+    private static bool NotSaba(Match owpMatch, Match adminSiteMatch)
+    => !adminSiteMatch.IsSaba
+          && !owpMatch.IsSaba;
 }

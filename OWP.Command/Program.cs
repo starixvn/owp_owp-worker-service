@@ -1,5 +1,6 @@
 ﻿using Fanex.Caching;
 using Fanex.Caching.Redis;
+using Fanex.Data;
 using Fanex.Data.Repository;
 using Fanex.Logging;
 using Microsoft.Extensions.Configuration;
@@ -91,6 +92,7 @@ services.AddSingleton<RabbitMqClient>(rabbitService);
 
 #region AddDependenceInjection
 services.AddInfositeServices(configuration);
+services.AddFanexData(configuration);
 services.AddOwpCoreServices();
 services.AddInfositeIdSyncServices();
 services.AddLinkLeagueAndTeamServices();
@@ -102,8 +104,8 @@ services.AddProviderServices();
 services.AddArchiveDataServices();
 #endregion
 
-var apiService = services.BuildServiceProvider().GetService<OWP.Provider.AgentConfirm.SyncAgentConfirmHandler>();
+var apiService = services.BuildServiceProvider().GetService<OWP.Infosite.Services.TodaySyncService>();
 if (apiService != null)
 {
-    await apiService.Handle(new DateTime(2024, 4, 18)).ConfigureAwait(false);
+    await apiService.Sync().ConfigureAwait(false);
 }
