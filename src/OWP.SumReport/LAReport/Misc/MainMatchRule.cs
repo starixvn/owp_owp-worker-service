@@ -88,7 +88,8 @@ public class ESoccerRule : MainMatchRule
         }
 
         if (assignment.OwpLeagueName.IsContainsIgnoreCase("- 6 Mins Play")
-        || assignment.OwpLeagueName.IsContainsIgnoreCase("SABA ELITE FRIENDLY Virtual PES 23 - PENALTY SHOOTOUTS"))
+        || (assignment.OwpLeagueName.IsContainsIgnoreCase("SABA")
+        && assignment.OwpLeagueName.IsContainsIgnoreCase("- PENALTY SHOOTOUTS")))
         {
             return ReportType.Esoccer6Mins;
         }
