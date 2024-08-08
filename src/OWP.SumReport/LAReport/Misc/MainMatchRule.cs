@@ -81,13 +81,15 @@ public class ESoccerRule : MainMatchRule
                 ? ReportType.Esoccer20Mins
                 : base.Execute(assignment, userAssignments);
         }
-            
+
         if (assignment.OwpLeagueName.IsContainsIgnoreCase("- 5 Mins Play"))
         {
             return ReportType.Esoccer5Mins;
         }
 
-        if (assignment.OwpLeagueName.IsContainsIgnoreCase("- 6 Mins Play"))
+        if (assignment.OwpLeagueName.IsContainsIgnoreCase("- 6 Mins Play")
+        || (assignment.OwpLeagueName.IsContainsIgnoreCase("SABA")
+        && assignment.OwpLeagueName.IsContainsIgnoreCase("- PENALTY SHOOTOUTS")))
         {
             return ReportType.Esoccer6Mins;
         }
@@ -103,7 +105,7 @@ public class ESoccerRule : MainMatchRule
         }
 
         return assignment.OwpLeagueName.IsContainsIgnoreCase("- 20 Mins Play")
-            ? ReportType.Esoccer20Mins 
+            ? ReportType.Esoccer20Mins
             : base.Execute(assignment, userAssignments);
     }
 
