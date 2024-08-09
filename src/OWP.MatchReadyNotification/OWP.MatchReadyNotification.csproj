@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Fanex.Caching" Version="2.2.3" />
+    <PackageReference Include="Fanex.Caching" Version="2.2.4" />
     <PackageReference Include="Olympus.Xml" Version="1.0.0.5" />
   </ItemGroup>
   <ItemGroup>
