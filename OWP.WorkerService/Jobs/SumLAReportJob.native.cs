@@ -35,6 +35,7 @@ public class SumLaReportJob : IJob
 
     private async Task ExecuteJob()
     {
+        await LogService.InfoAsync("[LAReport]=> Job start");
         var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
         if (underMaintenanceTime.IsUnderMaintenanceTime)
         {
@@ -42,6 +43,7 @@ public class SumLaReportJob : IJob
         }
 
         var (isGenerateData, lastDate) = await cacheManipulator.GetLastDateForRegenerateData(Constant.LaLastDateCacheKey);
+        
         var startDate = isGenerateData ? lastDate : DateTime.Today.AddDays(-2);
 
         for (var date = startDate; date < DateTime.Today; date = date.AddDays(1))
