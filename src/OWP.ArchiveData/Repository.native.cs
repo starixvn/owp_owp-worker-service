@@ -5,7 +5,7 @@ using Fanex.Data.Repository;
 
 public interface Repository
 {
-    Task DeleteOldMessage(DateTime date);
+    Task ArchiveOldMessage(DateTime date);
 
     Task CopyDataToOldTable(DateTime date);
 
@@ -46,9 +46,9 @@ public class RepositoryImp : Repository
         await repository.ExecuteAsync(criteria);
     }
 
-    public async Task DeleteOldMessage(DateTime date)
+    public async Task ArchiveOldMessage(DateTime date)
     {
-        var criteria = new DeleteOldMessageCriteria { Date = date };
+        var criteria = new ArchiveOldMessageCriteria { Date = date };
         await repository.ExecuteAsync(criteria);
     }
 

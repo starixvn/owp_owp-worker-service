@@ -28,7 +28,7 @@ public static class CronExpressionJob
 
     public const string SyncOtherSportAdminSiteJob = "0 0/2 * 1/1 * ? *"; //2mins
 
-    public const string DeleteOldMessage = "0 0 4 ? * * *"; //4AM everyday GMT-4;
+    public const string ArchiveOldMessage = "0 0 4 ? * * *"; //4AM everyday GMT-4;
 
     public const string ArchiveData = "0 10/59 0/12 ? * * *"; //at 12:10 am/pm everyday GMT-4
 
