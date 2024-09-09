@@ -54,13 +54,28 @@ public static class Constant
         {11, "Glive"}
     }.ToImmutableDictionary();
 
+    public static readonly IImmutableDictionary<int, string> WebsiteProvider = new Dictionary<int, string>
+    {
+        { 3, "365GV"},
+        { 15, "IMG"},
+        { 17, "RB2" },
+        { 18, "RTS" },
+        { 19, "BG" },
+        { 20, "BET" },
+    }.ToImmutableDictionary();
+
+
+    public static readonly IImmutableDictionary<int, string> CoveragePair = new Dictionary<int, string>
+    {
+        { 0, string.Empty },
+        { 1, "TV" }
+    }.ToImmutableDictionary();
+
     public const string DateTimeFormat = "yyyy-MM-dd";
 
     public const string DateTimeWithHourFormat = "yyyy-MM-dd HH:mm:ss";
 
     public const string OldPreMatchLeaguesSnapshotKey = "OWP-Old-PreMatchLeagues";
-
-    public const int CacheExpiredIn30Minutes = 30;
 }
 
 //ChildMatch

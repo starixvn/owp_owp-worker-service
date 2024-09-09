@@ -1,4 +1,6 @@
-﻿namespace OWP.Infosite.Builder;
+﻿using OWP.Infosite.Constants;
+
+namespace OWP.Infosite.Builder;
 
 using Models;
 
@@ -15,12 +17,10 @@ public static class TvBuilder
                 WatchBetBuilder.Build(extInfo)
         };
 
-        var websiteIdValid = new[] { 17, 18, 19, 20 };
-
-        return Array.Exists(websiteIdValid, w => w == infositeMatch.website_id)
-            && infositeMatch.coverage_id == 1
-            && Array.Exists(condition, c => !string.IsNullOrEmpty(c))
-                ? "TV"
-                : string.Empty;
+        return Constant.WebsiteProvider.ContainsKey(infositeMatch.website_id ?? 0)
+               && infositeMatch.coverage_id == 1
+               && Array.Exists(condition, c => !string.IsNullOrEmpty(c))
+            ? "TV"
+            : string.Empty;
     }
 }
