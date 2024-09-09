@@ -67,6 +67,6 @@ public class CoverageBuilderUnitTests
             }
         });
 
-        Assert.Equal("RB2TV", actual);
+        Assert.Equal("RB2TV/BETTV(L)", actual);
     }
 }

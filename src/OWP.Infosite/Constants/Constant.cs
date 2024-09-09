@@ -68,7 +68,8 @@ public static class Constant
     public static readonly IImmutableDictionary<int, string> CoveragePair = new Dictionary<int, string>
     {
         { 0, string.Empty },
-        { 1, "TV" }
+        { 1, "TV" },
+        { 2, "TV(L)" }
     }.ToImmutableDictionary();
 
     public const string DateTimeFormat = "yyyy-MM-dd";
