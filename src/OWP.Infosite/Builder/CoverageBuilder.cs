@@ -1,26 +1,13 @@
-﻿namespace OWP.Infosite.Builder;
+﻿using OWP.Infosite.Constants;
+
+namespace OWP.Infosite.Builder;
 
 using Extensions;
 using Models;
+using System.Collections.Immutable;
 
 public class CoverageBuilder
 {
-    private readonly int[] validWebsiteId = { 17, 18, 19, 20 };
-
-    private readonly Dictionary<int, string> websitePair = new()
-    {
-        { 17, "RB2" },
-        { 18, "RTS" },
-        { 19, "BG" },
-        { 20, "BET" }
-    };
-
-    private readonly Dictionary<int, string> coveragePair = new()
-    {
-        { 0, string.Empty },
-        { 1, "TV" }
-    };
-
     public string CoverageBuild(CommonMatchModel infoSiteMatch)
     {
         var coveragesMainMatch = BuildCoverageMainMatch(infoSiteMatch);
@@ -36,8 +23,7 @@ public class CoverageBuilder
     public List<string> BuildCoverageMainMatch(CommonMatch infoSiteMatch)
     {
         var coverages = new List<string>();
-        var isExistsInWebsiteIdValid = Array.Exists(validWebsiteId, item => item == infoSiteMatch.website_id);
-        if (!isExistsInWebsiteIdValid)
+        if (!Constant.WebsiteProvider.ContainsKey(infoSiteMatch.website_id ?? 0))
         {
             return coverages;
         }
@@ -52,8 +38,7 @@ public class CoverageBuilder
         var coverages = new List<string>();
         infoSiteMatch.ls_merge_match?.ForEach(match =>
         {
-            var isExistsInWebsiteIdValid = Array.Exists(validWebsiteId, item => item == match.website_id);
-            if (!isExistsInWebsiteIdValid)
+            if (!Constant.WebsiteProvider.ContainsKey(match.website_id ?? 0))
             {
                 return;
             }
@@ -68,19 +53,19 @@ public class CoverageBuilder
     {
         var website = string.Empty;
         var coveragePairHasCoverageId = coverageId.HasValue
-             && coveragePair.ContainsKey(coverageId.Value);
+             && Constant.CoveragePair.ContainsKey(coverageId.Value);
 
         if (coveragePairHasCoverageId)
         {
-            website = GetValueFromDict(websiteId, websitePair);
+            website = GetValueFromDict(websiteId, Constant.WebsiteProvider);
         }
-        var coverage = GetValueFromDict(coverageId, coveragePair);
+        var coverage = GetValueFromDict(coverageId, Constant.CoveragePair);
 
         return $"{website}{coverage}";
     }
 
-    public static string GetValueFromDict<T>(int? key, T dict) where T : Dictionary<int, string>
+    public static string GetValueFromDict(int? key, IImmutableDictionary<int, string> dict)
         => key.HasValue
-        ? dict.GetValue(key.Value, string.Empty)
+        ? dict.ToDictionary().GetValue(key.Value, string.Empty)
         : string.Empty;
 }
