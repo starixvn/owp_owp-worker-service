@@ -6,13 +6,13 @@ using ONEbook.UM.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]
-public class DeleteOldMessageJob : IJob
+public class ArchiveOldMessageJob : IJob
 {
     private readonly IMaintenanceService maintenanceService;
 
     private readonly ArchiveDataService archiveDataService;
 
-    public DeleteOldMessageJob(
+    public ArchiveOldMessageJob(
       IMaintenanceService maintenanceService,
       ArchiveDataService archiveDataService)
     {
@@ -40,6 +40,6 @@ public class DeleteOldMessageJob : IJob
             return;
         }
         await LogService.InfoAsync($"Job {GetType()} is starting at {DateTime.Now}");
-        await archiveDataService.DeleteOldMessage(DateTime.Now).ConfigureAwait(false);
+        await archiveDataService.ArchiveOldMessage(DateTime.Now).ConfigureAwait(false);
     }
 }
