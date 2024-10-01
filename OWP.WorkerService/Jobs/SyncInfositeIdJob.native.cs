@@ -3,7 +3,6 @@
 using Fanex.Logging;
 using Infosite.Services;
 using InfositeIdSync.Services;
-using ONEbook.UM.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]
@@ -12,18 +11,15 @@ public class SyncInfositeIdJob : IJob
     private readonly SyncInfositeIdService synInfositeIdService;
     private readonly TodaySyncService todaySyncService;
     private readonly SyncIsLiveService syncIsLiveService;
-    private readonly IMaintenanceService maintenanceService;
 
     private readonly IConfiguration configuration;
 
     public SyncInfositeIdJob(SyncInfositeIdService synInfositeIdService,
-        IMaintenanceService maintenanceService,
         TodaySyncService todaySyncService,
         SyncIsLiveService syncIsLiveService,
         IConfiguration configuration)
     {
         this.synInfositeIdService = synInfositeIdService;
-        this.maintenanceService = maintenanceService;
         this.todaySyncService = todaySyncService;
         this.syncIsLiveService = syncIsLiveService;
         this.configuration = configuration;
@@ -43,13 +39,6 @@ public class SyncInfositeIdJob : IJob
 
     public async Task ExecuteJob()
     {
-        var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
-
-        if (underMaintenanceTime.IsUnderMaintenanceTime)
-        {
-            return;
-        }
-
         var fromTime = DateTime.Now.AddHours(9);
         var nowGmt8 = DateTime.Now.AddHours(12);
         var toTime = nowGmt8.Date.AddHours(36);

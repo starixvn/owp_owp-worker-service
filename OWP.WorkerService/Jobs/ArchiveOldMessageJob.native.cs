@@ -2,21 +2,15 @@
 
 using ArchiveData.Services;
 using Fanex.Logging;
-using ONEbook.UM.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]
 public class ArchiveOldMessageJob : IJob
 {
-    private readonly IMaintenanceService maintenanceService;
-
     private readonly ArchiveDataService archiveDataService;
 
-    public ArchiveOldMessageJob(
-      IMaintenanceService maintenanceService,
-      ArchiveDataService archiveDataService)
+    public ArchiveOldMessageJob(ArchiveDataService archiveDataService)
     {
-        this.maintenanceService = maintenanceService;
         this.archiveDataService = archiveDataService;
     }
 
@@ -34,11 +28,6 @@ public class ArchiveOldMessageJob : IJob
 
     private async Task ExecuteJob()
     {
-        var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
-        if (underMaintenanceTime.IsUnderMaintenanceTime)
-        {
-            return;
-        }
         await LogService.InfoAsync($"Job {GetType()} is starting at {DateTime.Now}");
         await archiveDataService.ArchiveOldMessage(DateTime.Now).ConfigureAwait(false);
     }

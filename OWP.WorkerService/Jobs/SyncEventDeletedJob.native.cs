@@ -2,19 +2,16 @@
 
 using Fanex.Logging;
 using Infosite.Services;
-using ONEbook.UM.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]
 internal class SyncEventDeletedJob : IJob
 {
     private readonly SyncEventDeletedService syncEventDeletedService;
-    private readonly IMaintenanceService maintenanceService;
 
-    public SyncEventDeletedJob(SyncEventDeletedService syncService, IMaintenanceService maintenanceService)
+    public SyncEventDeletedJob(SyncEventDeletedService syncService)
     {
         syncEventDeletedService = syncService;
-        this.maintenanceService = maintenanceService;
     }
 
     public async Task Execute(IJobExecutionContext context)
@@ -31,10 +28,6 @@ internal class SyncEventDeletedJob : IJob
 
     private async Task ExecuteJob()
     {
-        var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
-        if (!underMaintenanceTime.IsUnderMaintenanceTime)
-        {
-            await syncEventDeletedService.Sync().ConfigureAwait(false);
-        }
+        await syncEventDeletedService.Sync().ConfigureAwait(false);
     }
 }

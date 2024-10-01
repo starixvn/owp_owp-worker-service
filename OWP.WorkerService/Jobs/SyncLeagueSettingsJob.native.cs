@@ -1,7 +1,6 @@
 ﻿namespace OWP.WorkerService.Jobs;
 
 using Fanex.Logging;
-using ONEbook.UM.Services;
 using Quartz;
 using SyncLeagueSettings.Services;
 
@@ -9,12 +8,10 @@ using SyncLeagueSettings.Services;
 public class SyncLeagueSettingsJob : IJob
 {
     private readonly LeagueSettingsService leagueSettingsService;
-    private readonly IMaintenanceService maintenanceService;
 
-    public SyncLeagueSettingsJob(LeagueSettingsService leagueSettingsService, IMaintenanceService maintenanceService)
+    public SyncLeagueSettingsJob(LeagueSettingsService leagueSettingsService)
     {
         this.leagueSettingsService = leagueSettingsService;
-        this.maintenanceService = maintenanceService;
     }
 
     public async Task Execute(IJobExecutionContext context)
@@ -31,10 +28,7 @@ public class SyncLeagueSettingsJob : IJob
 
     private async Task ExecuteJob()
     {
-        var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
-        if (!underMaintenanceTime.IsUnderMaintenanceTime)
-        {
-            await leagueSettingsService.InsertNewLeagueSettings(DateTime.Now).ConfigureAwait(false);
-        }
+        await leagueSettingsService.InsertNewLeagueSettings(DateTime.Now).ConfigureAwait(false);
+
     }
 }

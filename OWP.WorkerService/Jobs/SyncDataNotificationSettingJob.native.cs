@@ -2,19 +2,16 @@
 
 using Fanex.Logging;
 using Infosite.Services;
-using ONEbook.UM.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]
 public class SyncDataNotificationSettingJob : IJob
 {
     private readonly NapUserControlService napUserControlService;
-    private readonly IMaintenanceService maintenanceService;
 
-    public SyncDataNotificationSettingJob(NapUserControlService napUserControlService, IMaintenanceService maintenanceService)
+    public SyncDataNotificationSettingJob(NapUserControlService napUserControlService)
     {
         this.napUserControlService = napUserControlService;
-        this.maintenanceService = maintenanceService;
     }
 
     public async Task Execute(IJobExecutionContext context)
@@ -31,10 +28,7 @@ public class SyncDataNotificationSettingJob : IJob
 
     private async Task ExecuteJob()
     {
-        var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
-        if (!underMaintenanceTime.IsUnderMaintenanceTime)
-        {
-            await napUserControlService.SynDataFunctionPermissionAsync().ConfigureAwait(false);
-        }
+        await napUserControlService.SynDataFunctionPermissionAsync().ConfigureAwait(false);
+
     }
 }

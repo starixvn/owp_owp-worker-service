@@ -2,19 +2,16 @@
 
 using Fanex.Logging;
 using MatchReadyNotification;
-using ONEbook.UM.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]
 public class MatchReadyNotificationJob : IJob
 {
     private readonly Handler syncService;
-    private readonly IMaintenanceService maintenanceService;
 
-    public MatchReadyNotificationJob(Handler syncService, IMaintenanceService maintenanceService)
+    public MatchReadyNotificationJob(Handler syncService)
     {
         this.syncService = syncService;
-        this.maintenanceService = maintenanceService;
     }
 
     public async Task Execute(IJobExecutionContext context)
@@ -31,10 +28,6 @@ public class MatchReadyNotificationJob : IJob
 
     private async Task ExecuteJob()
     {
-        var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
-        if (!underMaintenanceTime.IsUnderMaintenanceTime)
-        {
-            await syncService.Handle().ConfigureAwait(false);
-        }
+        await syncService.Handle().ConfigureAwait(false);
     }
 }

@@ -1,7 +1,6 @@
 ﻿namespace OWP.WorkerService.Jobs;
 
 using Fanex.Logging;
-using ONEbook.UM.Services;
 using Provider.AgentConfirm;
 using Quartz;
 
@@ -9,12 +8,10 @@ using Quartz;
 public class SyncAgentConfirmJob : IJob
 {
     private readonly SyncAgentConfirmHandler syncAgentConfirmHandler;
-    private readonly IMaintenanceService maintenanceService;
 
-    public SyncAgentConfirmJob(SyncAgentConfirmHandler syncAgentConfirmHandler, IMaintenanceService maintenanceService)
+    public SyncAgentConfirmJob(SyncAgentConfirmHandler syncAgentConfirmHandler)
     {
         this.syncAgentConfirmHandler = syncAgentConfirmHandler;
-        this.maintenanceService = maintenanceService;
     }
 
     public async Task Execute(IJobExecutionContext context)
@@ -31,11 +28,7 @@ public class SyncAgentConfirmJob : IJob
 
     private async Task ExecuteJob()
     {
-        var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
-        if (!underMaintenanceTime.IsUnderMaintenanceTime)
-        {
-            var eventDate = DateTime.Now.Date.AddDays(-1); // gmt-4 => yesterday
-            await syncAgentConfirmHandler.Handle(eventDate).ConfigureAwait(false);
-        }
+        var eventDate = DateTime.Now.Date.AddDays(-1); // gmt-4 => yesterday
+        await syncAgentConfirmHandler.Handle(eventDate).ConfigureAwait(false);
     }
 }
