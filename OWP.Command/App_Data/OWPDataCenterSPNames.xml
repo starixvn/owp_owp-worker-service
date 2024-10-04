@@ -3,7 +3,6 @@
 	<Function Name="InfoSite">
 		<Setting Key="OWP_API_PushInfoSiteMatch"  SpName="OWP_API_PushInfoSiteMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
 		<Setting Key="OWP_API_SyncEventDeletedInfoSiteMatch"  SpName="OWP_API_SyncEventDeletedInfoSiteMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
-		<Setting Key="OWP_GetAllUserByFunctionKey"  SpName="OWP_GetAllUserByFunctionKey" DbName="DBPOL.NAP_UserControl.wsv_nap" />
 		<Setting Key="OWP_InfoSiteMatchDel"  SpName="OWP_InfoSiteMatchDel" DbName="DBOWP.bodb_OWP.wsv_owp" />
 		<Setting Key="OWP_PreMatchAssignment_SyncFromInfoSiteMatch"  SpName="OWP_PreMatchAssignment_SyncFromInfoSiteMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
 		<Setting Key="OWP_API_SyncFromInfoSiteMatch180Day"  SpName="OWP_API_SyncFromInfoSiteMatch180Day" DbName="DBOWP.bodb_OWP.wsv_owp" />

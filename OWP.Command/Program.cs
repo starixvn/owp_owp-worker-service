@@ -1,6 +1,7 @@
 ﻿using Fanex.Caching;
 using Fanex.Caching.Redis;
 using Fanex.Data.Repository;
+using Fanex.Data.SqlServer;
 using Fanex.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,6 +38,7 @@ var services = new ServiceCollection();
 
 #region AddFanexData
 
+services.AddFanexSql(configuration);
 FanexInitializer.Start(configuration);
 services.AddScoped<IDynamicRepository, DynamicRepository>();
 services.AddTransient<ILogger, Logger>();

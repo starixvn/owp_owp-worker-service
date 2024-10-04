@@ -39,20 +39,7 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddFanexServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var connections = configuration.GetSection("ConnectionStrings")
-            .GetChildren()
-            .AsEnumerable()
-            .ToDictionary(
-                x => x.GetValue<string>("Name"),
-                y => new ConnectionConfiguration(y.GetValue<string>("Name"), y.GetValue<string>("ConnectionString"), y.GetValue<string>("ProviderName"))
-            );
-
-        DbSettingProviderManager
-            .StartNewSession()
-            .Use(connections)
-            .WithSqlServer()
-            .UseDefaultDbSettingProvider(resourcePath: "~/App_Data")
-            .Run();
+        services.AddFanexSql(configuration);
 
         LogManager.SetDefaultLogCategory(configuration.GetSection("FanexLogCategory").Value)
             .Use(new List<ILogEngine>
