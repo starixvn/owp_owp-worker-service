@@ -58,10 +58,15 @@ public class SyncChildMatchServiceImp : SyncChildMatchService
                     MinorBettypeId = minorBetTypeId,
                     SubType = childMatch.sub_type,
                     RepresentativeSubtype = representativeSubtype,
-                    UpdatedTime = childMatch.stamp.ToUtc8()
+                    UpdatedTime = ChangeDateTimeKind(childMatch.stamp.ToUtc8())
                 };
             }
         }
+    }
+
+    private static DateTime ChangeDateTimeKind(DateTime stamp)
+    {
+        return DateTime.SpecifyKind(stamp, DateTimeKind.Unspecified);
     }
 
     private static IEnumerable<ChildMatch> FilterMatch(IEnumerable<ChildMatch> childMatches)
