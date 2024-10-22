@@ -5,7 +5,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCoreServices();
 builder.Services.AddFanexServices(builder.Configuration);
 builder.Services.AddRedisServices(builder.Configuration);
-builder.Services.AddOneBookUmServices(builder.Configuration);
 builder.Services.AddInternalServices(builder.Configuration);
 builder.Services.AddRabbitMq(builder.Configuration);
 builder.Services.AddJobsServices();

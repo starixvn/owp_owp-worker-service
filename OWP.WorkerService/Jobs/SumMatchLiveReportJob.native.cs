@@ -1,7 +1,6 @@
 ﻿namespace OWP.WorkerService.Jobs;
 
 using Fanex.Logging;
-using ONEbook.UM.Services;
 using Quartz;
 using SumReport.Constants;
 using SumReport.MatchLiveReport.Services;
@@ -12,13 +11,11 @@ public class SumMatchLiveReportJob : IJob
 {
     private readonly ReportService service;
     private readonly CacheManipulator cacheManipulator;
-    private readonly IMaintenanceService maintenanceService;
 
-    public SumMatchLiveReportJob(CacheManipulator cacheManipulator, ReportService service, IMaintenanceService maintenanceService)
+    public SumMatchLiveReportJob(CacheManipulator cacheManipulator, ReportService service)
     {
         this.cacheManipulator = cacheManipulator;
         this.service = service;
-        this.maintenanceService = maintenanceService;
     }
 
     public async Task Execute(IJobExecutionContext context)
@@ -35,12 +32,6 @@ public class SumMatchLiveReportJob : IJob
 
     private async Task ExecuteJob()
     {
-        var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
-        if (underMaintenanceTime.IsUnderMaintenanceTime)
-        {
-            return;
-        }
-
         var (isGenerateData, lastDate) = await cacheManipulator.GetLastDateForRegenerateData(Constant.MatchLiveLastDateCacheKey);
         var startDate = isGenerateData ? lastDate : DateTime.Today.AddDays(-3);
 

@@ -1,7 +1,6 @@
 ﻿namespace OWP.WorkerService.Jobs;
 
 using Fanex.Logging;
-using ONEbook.UM.Services;
 using Quartz;
 using SumReport.Constants;
 using SumReport.PrematchReport.Services;
@@ -9,18 +8,14 @@ using SumReport.Services;
 
 public class SumPrematchReportJob : IJob
 {
-    private readonly IMaintenanceService maintenanceService;
-
     private readonly PrematchReportService reportService;
 
     private readonly CacheManipulator cacheManipulator;
 
     public SumPrematchReportJob(
-        IMaintenanceService maintenanceService,
-        PrematchReportService reportService, 
+        PrematchReportService reportService,
         CacheManipulator cacheManipulator)
     {
-        this.maintenanceService = maintenanceService;
         this.reportService = reportService;
         this.cacheManipulator = cacheManipulator;
     }
@@ -39,12 +34,6 @@ public class SumPrematchReportJob : IJob
 
     private async Task ExecuteJob()
     {
-        var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
-        if (underMaintenanceTime.IsUnderMaintenanceTime)
-        {
-            return;
-        }
-
         var (isGenerateData, lastDate) = await cacheManipulator.GetLastDateForRegenerateData(Constant.PrematchLastDateCacheKey);
         var startDate = isGenerateData ? lastDate : DateTime.Today.AddDays(-3);
 
@@ -53,6 +42,6 @@ public class SumPrematchReportJob : IJob
             await reportService.CalculateDataReport(date).ConfigureAwait(false);
         }
 
-        await cacheManipulator.RemoveLastDateOfSumData(Constant.PrematchLastDateCacheKey);            
+        await cacheManipulator.RemoveLastDateOfSumData(Constant.PrematchLastDateCacheKey);
     }
 }

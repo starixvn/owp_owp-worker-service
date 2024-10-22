@@ -2,7 +2,6 @@
 
 using Fanex.Logging;
 using Infosite.Services;
-using ONEbook.UM.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]
@@ -10,12 +9,9 @@ internal class SyncTodayInfoSiteMatchJob : IJob
 {
     private readonly TodaySyncService todaySyncService;
 
-    private readonly IMaintenanceService maintenanceService;
-
-    public SyncTodayInfoSiteMatchJob(TodaySyncService todaySyncService, IMaintenanceService maintenanceService)
+    public SyncTodayInfoSiteMatchJob(TodaySyncService todaySyncService)
     {
         this.todaySyncService = todaySyncService;
-        this.maintenanceService = maintenanceService;
     }
 
     public async Task Execute(IJobExecutionContext context)
@@ -32,11 +28,6 @@ internal class SyncTodayInfoSiteMatchJob : IJob
 
     private async Task ExecuteJob()
     {
-        var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
-
-        if (!underMaintenanceTime.IsUnderMaintenanceTime)
-        {
-            await todaySyncService.Sync().ConfigureAwait(false);
-        }
+        await todaySyncService.Sync().ConfigureAwait(false);
     }
 }

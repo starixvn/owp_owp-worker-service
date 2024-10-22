@@ -2,19 +2,16 @@
 
 using Fanex.Logging;
 using Infosite.Services;
-using ONEbook.UM.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]
 internal class SyncPreMatchLeagueJob : IJob
 {
     private readonly SyncPreMatchLeagueService syncService;
-    private readonly IMaintenanceService maintenanceService;
 
-    public SyncPreMatchLeagueJob(SyncPreMatchLeagueService syncService, IMaintenanceService maintenanceService)
+    public SyncPreMatchLeagueJob(SyncPreMatchLeagueService syncService)
     {
         this.syncService = syncService;
-        this.maintenanceService = maintenanceService;
     }
 
     public async Task Execute(IJobExecutionContext context)
@@ -31,10 +28,6 @@ internal class SyncPreMatchLeagueJob : IJob
 
     private async Task ExecuteJob()
     {
-        var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
-        if (!underMaintenanceTime.IsUnderMaintenanceTime)
-        {
-            await syncService.Sync().ConfigureAwait(false);
-        }
+        await syncService.Sync().ConfigureAwait(false);
     }
 }

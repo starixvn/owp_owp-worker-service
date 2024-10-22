@@ -1,7 +1,6 @@
 ﻿namespace OWP.WorkerService.Jobs;
 
 using Fanex.Logging;
-using ONEbook.UM.Services;
 using Quartz;
 using SumReport.Constants;
 using SumReport.OvertimeReport.Services;
@@ -12,11 +11,9 @@ public class SumOvertimeReportJob : IJob
 {
     private readonly ReportCalculationService calculationService;
     private readonly CacheManipulator cacheManipulator;
-    private readonly IMaintenanceService maintenanceService;
 
-    public SumOvertimeReportJob(IMaintenanceService maintenanceService, ReportCalculationService calculationService, CacheManipulator cacheManipulator)
+    public SumOvertimeReportJob(ReportCalculationService calculationService, CacheManipulator cacheManipulator)
     {
-        this.maintenanceService = maintenanceService;
         this.calculationService = calculationService;
         this.cacheManipulator = cacheManipulator;
     }
@@ -35,12 +32,6 @@ public class SumOvertimeReportJob : IJob
 
     private async Task ExecuteJob()
     {
-        var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
-        if (underMaintenanceTime.IsUnderMaintenanceTime)
-        {
-            return;
-        }
-
         var (isGenerateData, lastDate) = await cacheManipulator.GetLastDateForRegenerateData(Constant.OvertimeLastDateCacheKey);
         var startDate = isGenerateData ? lastDate : DateTime.Today.AddDays(-3);
 

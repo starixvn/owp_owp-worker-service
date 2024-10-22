@@ -2,12 +2,11 @@
 
 using Criteria;
 using Fanex.Data.Repository;
-using Models;
+using Fanex.NAP.Client.Configuration;
+using Fanex.NAP.Client.Services;
 
 public interface NapUserControlService
 {
-    IList<UserFunctionModel> GetUserFunctionModels(string functionKey);
-
     Task SynDataFunctionPermissionAsync();
 }
 
@@ -15,15 +14,21 @@ public class NapUserControlServiceImp : NapUserControlService
 {
     private readonly IDynamicRepository repository;
 
-    public NapUserControlServiceImp(IDynamicRepository repository)
+    private readonly IUserService userService;
+
+    private readonly INapSettings napSettings;
+
+    public NapUserControlServiceImp(IDynamicRepository repository, IUserService userService, INapSettings napSettings)
     {
         this.repository = repository;
+        this.userService = userService;
+        this.napSettings = napSettings;
     }
 
     public async Task SynDataFunctionPermissionAsync()
     {
         const string functionKey = "NotificationSettingWatcher";
-        var data = GetUserFunctionModels(functionKey);
+        var data = (await userService.GetBySiteAndFunctionKeyAsync(napSettings.SiteId, functionKey)).ToList();
 
         if (!data.Any())
         {
@@ -41,15 +46,5 @@ public class NapUserControlServiceImp : NapUserControlService
 
             await repository.ExecuteAsync(criteria);
         }
-    }
-
-    public IList<UserFunctionModel> GetUserFunctionModels(string functionKey)
-    {
-        var criteria = new GetAllUserByFunctionKeyCriteria
-        {
-            FunctionKey = functionKey
-        };
-
-        return repository.Fetch<UserFunctionModel>(criteria).ToList();
     }
 }

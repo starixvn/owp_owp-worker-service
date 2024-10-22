@@ -3,7 +3,6 @@
 	<Function Name="InfoSite">
 		<Setting Key="OWP_API_PushInfoSiteMatch"  SpName="OWP_API_PushInfoSiteMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
 		<Setting Key="OWP_API_SyncEventDeletedInfoSiteMatch"  SpName="OWP_API_SyncEventDeletedInfoSiteMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
-		<Setting Key="OWP_GetAllUserByFunctionKey"  SpName="OWP_GetAllUserByFunctionKey" DbName="DBPOL.NAP_UserControl.wsv_nap" />
 		<Setting Key="OWP_InfoSiteMatchDel"  SpName="OWP_InfoSiteMatchDel" DbName="DBOWP.bodb_OWP.wsv_owp" />
 		<Setting Key="OWP_PreMatchAssignment_SyncFromInfoSiteMatch"  SpName="OWP_PreMatchAssignment_SyncFromInfoSiteMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
 		<Setting Key="OWP_API_SyncFromInfoSiteMatch180Day"  SpName="OWP_API_SyncFromInfoSiteMatch180Day" DbName="DBOWP.bodb_OWP.wsv_owp" />
@@ -58,7 +57,7 @@
 	</Function>
 	<Function Name="IsLiveStatus">
 		<Setting Key="OWP_SyncIsLiveSel" SpName="OWP_SyncIsLiveSel" DbName="DBOWP.bodb_OWP.wsv_owp" />
-		<Setting Key="OWP_LiveGameAssignment_GetMatchStatusFromMainDB" SpName ="OWP_LiveGameAssignment_GetMatchStatusFromMainDB" DbName="DBACC.bodb02.wsv_nap" />
+		<Setting Key="OWP_LiveGameAssignment_GetMatchStatusFromMainDB" SpName ="OWP_LiveGameAssignment_GetMatchStatusFromMainDB" DbName="DBOWP.bodb02.wsv_nap" />
 	</Function>
 	<Function Name="LeagueManagement">
 		<Setting Key="OWP_LeagueManagement_GetAllTVCondition" SpName="OWP_LeagueManagement_GetAllTVCondition" DbName="DBOWP.bodb_OWP.wsv_owp" />
@@ -86,7 +85,7 @@
 		<Setting Key="OWP_OtherSport_GetMatchesFromDate" SpName="OWP_OtherSport_GetMatchesFromDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
 		<Setting Key="OWP_OtherSport_UpdateUnlinkedMatches" SpName="OWP_OtherSport_UpdateUnlinkedMatches" DbName="DBOWP.bodb_OWP.wsv_owp" />
 		<Setting Key="OWP_OtherSport_UpdateLinkedMatches" SpName="OWP_OtherSport_UpdateLinkedMatches" DbName="DBOWP.bodb_OWP.wsv_owp" />
-		<Setting Key="OWP_OtherSport_GetAdminSiteMatchesFromDate" SpName ="OWP_OtherSport_GetAdminSiteMatchesFromDate" DbName="DBACC.bodb02.wsv_nap" />
+		<Setting Key="OWP_OtherSport_GetAdminSiteMatchesFromDate" SpName ="OWP_OtherSport_GetAdminSiteMatchesFromDate" DbName="DBOWP.bodb02.wsv_nap" />
 	</Function>
 	<Function Name="PrematchReport">
 		<Setting Key="OWP_PrematchReport_GetLeagueByDateAndBettype" SpName ="OWP_PrematchReport_GetLeagueByDateAndBettype" DbName="DBOWP.bodb_OWP.wsv_owp" />

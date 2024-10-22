@@ -1,14 +1,11 @@
 ﻿using Fanex.Caching;
 using Fanex.Caching.Redis;
 using Fanex.Data.Repository;
+using Fanex.Data.SqlServer;
 using Fanex.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using ONEbook.UM.Configurations;
-using ONEbook.UM.Helpers;
-using ONEbook.UM.Services;
-using ONEbook.UM.Transport;
 using OWP;
 using OWP.ArchiveData;
 using OWP.Command;
@@ -41,6 +38,7 @@ var services = new ServiceCollection();
 
 #region AddFanexData
 
+services.AddFanexSql(configuration);
 FanexInitializer.Start(configuration);
 services.AddScoped<IDynamicRepository, DynamicRepository>();
 services.AddTransient<ILogger, Logger>();
@@ -58,17 +56,6 @@ services.AddSingleton<ICache>(new RedisCache(new RedisCacheOptions
 }));
 
 #endregion AddRedis
-
-#region AddOneBookUM
-
-var umConfig = configuration.GetSection(nameof(UMClientConfiguration)).Get<UMClientConfiguration>();
-services.AddSingleton(umConfig);
-services.AddSingleton<IPHelper, IPHelperImpl>();
-services.AddSingleton<IMaintenanceService, MaintenanceService>();
-services.AddSingleton<IUMCacheService, UMCacheService>();
-services.AddSingleton<IUMRestClient, UMRestClient>();
-
-#endregion AddOneBookUM
 
 #region AddRabbitMQ
 

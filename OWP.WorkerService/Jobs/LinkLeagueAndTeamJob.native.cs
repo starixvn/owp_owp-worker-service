@@ -2,19 +2,16 @@
 
 using Fanex.Logging;
 using LinkLeagueAndTeam.Services;
-using ONEbook.UM.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]
 public class LinkLeagueAndTeamJob : IJob
 {
     private readonly LinkLeagueAndTeamService linkLeagueAndTeamService;
-    private readonly IMaintenanceService maintenanceService;
 
-    public LinkLeagueAndTeamJob(LinkLeagueAndTeamService handler, IMaintenanceService maintenanceService)
+    public LinkLeagueAndTeamJob(LinkLeagueAndTeamService handler)
     {
         linkLeagueAndTeamService = handler;
-        this.maintenanceService = maintenanceService;
     }
 
     public async Task Execute(IJobExecutionContext context)
@@ -31,12 +28,6 @@ public class LinkLeagueAndTeamJob : IJob
 
     private async Task ExecuteJob()
     {
-        var underMaintenanceTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
-        if (underMaintenanceTime.IsUnderMaintenanceTime)
-        {
-            return;
-        }
-
         await linkLeagueAndTeamService
             .Execute()
             .ConfigureAwait(false);
