@@ -35,7 +35,7 @@ public class SyncServiceImp
     public async Task Sync(DateTime fromDate)
     {
         var queriedResultTask = await QueryEvents(fromDate);
-        
+
         var teamRoundsTask = await QueryTeamRound(fromDate);
 
         await BuildServiceLog(queriedResultTask);
@@ -47,6 +47,7 @@ public class SyncServiceImp
     }
 
     #region QueryTeamRound
+
     private async Task<Dictionary<int, string>> QueryTeamRound(DateTime fromDate)
     {
         var teamRounds = await apiService.QueryRound(fromDate, fromDate);
@@ -71,7 +72,8 @@ public class SyncServiceImp
             match.TeamRound = teamRounds.GetValueOrDefault(match.InfoSiteMatchId, string.Empty);
         }
     }
-    #endregion
+
+    #endregion QueryTeamRound
 
     private async Task SaveEvents(IEnumerable<Event> events)
     {
@@ -84,6 +86,7 @@ public class SyncServiceImp
     }
 
     #region BuildServiceLog
+
     private async Task BuildServiceLog(List<Event> queriedResult)
     {
         var loggedChanges = new List<LoggedChangeModel>();
@@ -93,12 +96,12 @@ public class SyncServiceImp
         var existingInfoSiteEvent = await GetExistingInfoSite(ids);
 
         var newInfoSiteIds = queriedResult.ExceptBy(existingInfoSiteEvent.Select(x => x.InfoSiteMatchId),
-            x => x.InfoSiteMatchId).Select(x=>x.InfoSiteMatchId);
+            x => x.InfoSiteMatchId).Select(x => x.InfoSiteMatchId);
 
         BuildLogForNewMatches(newInfoSiteIds, loggedChanges);
         BuildLogForChangedMatchesLog(queriedResult, existingInfoSiteEvent, loggedChanges);
 
-        if (loggedChanges.Any())
+        if (loggedChanges.Count != 0)
         {
             await SaveLogChange(loggedChanges);
         }
@@ -124,6 +127,21 @@ public class SyncServiceImp
                     Action = "Update the <b>checking status</b>",
                     NewValue = "Unchecked",
                     OldValue = "Checked",
+                    UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
+                    FromService = "Today"
+                });
+            }
+
+            if (loggedChangeItem.Any(log => log.UpdateTypeId == 24))
+            {
+                var updateKODateLog = loggedChangeItem.FirstOrDefault(l => l.UpdateTypeId == 24);
+                loggedChanges.Add(new LoggedChangeModel
+                {
+                    InfoSiteMatchId = updateKODateLog.InfoSiteMatchId,
+                    UpdateTypeId = 25,
+                    Action = "Renew match",
+                    NewValue = updateKODateLog.NewValue,
+                    OldValue = updateKODateLog.OldValue,
                     UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
                     FromService = "Today"
                 });
@@ -167,7 +185,8 @@ public class SyncServiceImp
         };
         await repository.ExecuteAsync(criteria).ConfigureAwait(false);
     }
-    #endregion
+
+    #endregion BuildServiceLog
 
     private async Task UpdateSoloMatch()
     {

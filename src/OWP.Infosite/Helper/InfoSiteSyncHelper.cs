@@ -4,16 +4,17 @@ using OWP.Infosite.Models;
 using System.Reflection;
 
 namespace OWP.Infosite.Helper;
+
 public static class InfoSiteSyncHelper
 {
     public static int BuildActionId(string propertyName, string newValue, string oldValue)
     {
         return IsCancel(oldValue, newValue)
             ? BuildActionIdWithCancel(propertyName)
-            : BuildActionIdWithUpdate(propertyName);
+            : BuildActionIdWithUpdate(propertyName, newValue, oldValue);
     }
 
-    private static int BuildActionIdWithUpdate(string propertyName)
+    private static int BuildActionIdWithUpdate(string propertyName, string newValue, string oldValue)
     {
         var propertyActionIds = new Dictionary<string, int>
         {
@@ -30,8 +31,19 @@ public static class InfoSiteSyncHelper
             { "AwayRemark", 20 },
             { "Division", 22 }
         };
+        var actionId = propertyActionIds.GetValue(propertyName, 1);
+        if (actionId == 2 && IsUpdateKODate(newValue, oldValue))
+        {
+            actionId = 23;
+        }
+        return actionId;
+    }
 
-        return propertyActionIds.GetValue(propertyName, 1);
+    private static bool IsUpdateKODate(string newValue, string oldValue)
+    {
+        DateTime newKODate = DateTime.Parse(newValue);
+        DateTime oldKODate = DateTime.Parse(oldValue);
+        return newKODate.Date.Equals(oldKODate.Date);
     }
 
     private static int BuildActionIdWithCancel(string propertyName)
@@ -53,18 +65,13 @@ public static class InfoSiteSyncHelper
     }
 
     private static bool IsCancel(string oldValue, string newValue)
-    {
-        return oldValue != string.Empty && newValue == string.Empty;
-    }
+        => oldValue != string.Empty && newValue == string.Empty;
 
     public static DateTime DateTimeNowGmt8()
-    {
-        return DateTime.Now.AddHours(12);
-    }
+        => DateTime.Now.AddHours(12);
 
     public static InfoSiteDb CloneInfoSiteMatch(Event source)
-    {
-        return new InfoSiteDb
+        => new()
         {
             InfoSiteMatchId = source.InfoSiteMatchId,
             LeagueName = source.LeagueName,
@@ -80,7 +87,6 @@ public static class InfoSiteSyncHelper
             Remark = source.Remark,
             Round = source.Round
         };
-    }
 
     public static IEnumerable<LoggedChangeModel> BuildLoggedChanges(IEnumerable<PropertyInfo> properties, InfoSiteDb infoSiteOld, InfoSiteDb infoSiteNew, string fromService = "Today")
     {

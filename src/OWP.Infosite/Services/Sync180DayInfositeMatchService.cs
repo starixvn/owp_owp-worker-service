@@ -52,7 +52,6 @@ public class Sync180DayInfositeMatchServiceImp : Sync180DayInfositeMatchService
             InfoSiteMatchResultDoc = XmlConverter.Serialize(matchInfo)
         };
         await repository.ExecuteAsync(criteria).ConfigureAwait(false);
-
     }
 
     private async Task SaveLogChange(IEnumerable<LoggedChangeModel> loggedChange)
@@ -91,7 +90,7 @@ public class Sync180DayInfositeMatchServiceImp : Sync180DayInfositeMatchService
             var properties = type.GetProperties();
 
             var loggedChangeItem = InfoSiteSyncHelper.BuildLoggedChanges(properties, infoSiteOld, infoSiteNew, "180days").ToList();
-            if (item is { IsCheck: true } && loggedChangeItem.Any())
+            if (item is { IsCheck: true } && loggedChangeItem.Count > 0)
             {
                 loggedChanges.Add(new LoggedChangeModel
                 {
@@ -104,6 +103,22 @@ public class Sync180DayInfositeMatchServiceImp : Sync180DayInfositeMatchService
                     FromService = "180days"
                 });
             }
+
+            if (loggedChangeItem.Any(log => log.UpdateTypeId == 24))
+            {
+                var updateKODateLog = loggedChangeItem.FirstOrDefault(l => l.UpdateTypeId == 24);
+                loggedChanges.Add(new LoggedChangeModel
+                {
+                    InfoSiteMatchId = updateKODateLog.InfoSiteMatchId,
+                    UpdateTypeId = 25,
+                    Action = "Renew match",
+                    NewValue = updateKODateLog.NewValue,
+                    OldValue = updateKODateLog.OldValue,
+                    UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
+                    FromService = "180days"
+                });
+            }
+
             loggedChanges.AddRange(loggedChangeItem);
         }
     }
@@ -123,7 +138,6 @@ public class Sync180DayInfositeMatchServiceImp : Sync180DayInfositeMatchService
 
         loggedChanges.AddRange(newLoggedChanges);
     }
-
 
     private async Task<List<MatchInfoSite>> GetExistingInfoSite(string ids)
     {

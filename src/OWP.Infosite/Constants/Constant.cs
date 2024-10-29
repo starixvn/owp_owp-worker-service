@@ -45,7 +45,8 @@ public static class Constant
         { 21,"Cancel the <b>Away Remark</b>" },
         { 22,"Update the <b>Division</b>"},
         { 23,"Cancel the <b>Division</b>" },
-
+        { 24,"Update the <b>KO Date</b>" },
+        { 25,"Renew match" },
     }.ToImmutableDictionary();
 
     public static readonly IImmutableDictionary<int, string> StreamNameSrc2InfoSite = new Dictionary<int, string>
@@ -63,7 +64,6 @@ public static class Constant
         { 19, "BG" },
         { 20, "BET" },
     }.ToImmutableDictionary();
-
 
     public static readonly IImmutableDictionary<int, string> CoveragePair = new Dictionary<int, string>
     {
