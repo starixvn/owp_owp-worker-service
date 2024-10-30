@@ -42,7 +42,7 @@ public class Sync180DayInfositeMatchServiceImp : Sync180DayInfositeMatchService
         BuildLogForNewMatches(newInfoSiteIds, loggedChanges);
         BuildLogForChangedMatchesLog(matchInfo, existingInfoSiteEvents, loggedChanges);
 
-        if (loggedChanges.Any())
+        if (loggedChanges.Count != 0)
         {
             await SaveLogChange(loggedChanges);
         }

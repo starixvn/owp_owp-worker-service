@@ -34,7 +34,7 @@ public static class InfoSiteSyncHelper
         var actionId = propertyActionIds.GetValue(propertyName, 1);
         if (actionId == 2 && IsUpdateKODate(newValue, oldValue))
         {
-            actionId = 23;
+            actionId = 24;
         }
         return actionId;
     }
@@ -43,7 +43,7 @@ public static class InfoSiteSyncHelper
     {
         DateTime newKODate = DateTime.Parse(newValue);
         DateTime oldKODate = DateTime.Parse(oldValue);
-        return newKODate.Date.Equals(oldKODate.Date);
+        return !newKODate.Date.Equals(oldKODate.Date);
     }
 
     private static int BuildActionIdWithCancel(string propertyName)
