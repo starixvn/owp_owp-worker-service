@@ -53,7 +53,7 @@ public static class InfoSiteSyncHelper
     }
 
     private static bool IsKOTimeAfter12pm(DateTime koTime)
-        => koTime.TimeOfDay > new TimeSpan(12, 0, 0);
+        => koTime.TimeOfDay >= new TimeSpan(12, 0, 0);
 
     private static int BuildActionIdWithCancel(string propertyName)
     {
