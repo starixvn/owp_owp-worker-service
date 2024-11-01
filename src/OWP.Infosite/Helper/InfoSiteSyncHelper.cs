@@ -41,10 +41,19 @@ public static class InfoSiteSyncHelper
 
     private static bool IsUpdateKODate(string newValue, string oldValue)
     {
-        DateTime newKODate = DateTime.Parse(newValue);
-        DateTime oldKODate = DateTime.Parse(oldValue);
-        return !newKODate.Date.Equals(oldKODate.Date);
+        DateTime newKODateTime = DateTime.Parse(newValue);
+        DateTime oldKODateTime = DateTime.Parse(oldValue);
+
+        DateTime milestoneDate = IsKOTimeAfter12pm(oldKODateTime) ? oldKODateTime.Date : oldKODateTime.Date.AddDays(-1);
+
+        DateTime from = milestoneDate.AddHours(12);
+        DateTime to = milestoneDate.AddDays(1).AddHours(12).AddSeconds(-1);
+
+        return newKODateTime < from || newKODateTime > to;
     }
+
+    private static bool IsKOTimeAfter12pm(DateTime koTime)
+        => koTime.TimeOfDay > new TimeSpan(12, 0, 0);
 
     private static int BuildActionIdWithCancel(string propertyName)
     {
