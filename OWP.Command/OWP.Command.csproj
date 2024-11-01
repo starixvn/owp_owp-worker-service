@@ -30,7 +30,6 @@
   <ItemGroup>
     <PackageReference Include="Fanex.Caching.Redis" Version="2.2.4" />
     <PackageReference Include="Fanex.Logging.Sentry.RavenClient" Version="1.0.1.2" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
 		<ProjectReference Include="..\src\OWP.Provider\OWP.Provider.csproj" />
