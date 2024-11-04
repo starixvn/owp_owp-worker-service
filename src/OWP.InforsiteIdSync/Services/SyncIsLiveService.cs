@@ -1,9 +1,11 @@
 ﻿namespace OWP.InfositeIdSync.Services;
 
+using Fanex.Logging;
 using Helpers;
 using Infosite.Settings;
 using Microsoft.Extensions.Options;
 using Models;
+using Newtonsoft.Json;
 using Olympus.InfoSiteClient;
 
 public interface SyncIsLiveService
@@ -54,7 +56,9 @@ public class SyncIsLiveServiceImp : SyncIsLiveService
         var distinctLiveMatches = MatchHelper.GetDistinctLiveMatches(liveMatches, nonLiveMatches).ToList();
         var distinctNonLiveMatches = MatchHelper.GetDistinctNonLiveMatches(liveMatches, nonLiveMatches).ToList();
 
+        await LogService.InfoAsync($"begin sync live to infosite {JsonConvert.SerializeObject(distinctLiveMatches)}");
         var synchronizedLiveMatchResult = await liveMatchApi.SetLiveMatches(infoSiteSettings.InfositeApi, distinctLiveMatches);
+        await LogService.InfoAsync("end sync live to infosite");
         var synchronizedNonLiveMatchResult = await liveMatchApi.SetNonLiveMatches(infoSiteSettings.InfositeApi, distinctNonLiveMatches);
         var failedMatchesWithMinorBettypeId = synchronizedNonLiveMatchResult.FailedMatches
             .Select(x => (x.Item1, MatchHelper.GetOwpMinorMatchIdFromSubtype(x.Item2)));
