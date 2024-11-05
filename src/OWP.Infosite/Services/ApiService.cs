@@ -232,6 +232,8 @@ public class ApiServiceImp : ApiService
         var logInfo = new
         {
             Job = "Sync Is Live to Info Site",
+            isLive,
+            model,
             response.RequestMessage,
             StatusCode = (int)response.StatusCode,
             synchronizedResult
