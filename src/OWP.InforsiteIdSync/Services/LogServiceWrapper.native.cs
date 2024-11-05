@@ -2,9 +2,9 @@
 
 using System.Text;
 using Fanex.Logging;
-using Models;
 using Newtonsoft.Json;
-using Olympus.InfoSiteClient;
+using OWP.Infosite.Models;
+using OWP.InfositeIdSync.Models;
 
 public interface LogServiceWrapper
 {
@@ -13,10 +13,10 @@ public interface LogServiceWrapper
     Task Error(string header, params object[] parameters);
 
     Task LogSynIsLive(
-         List<SyncIsLiveModel> unsynchronizedMatches,
-         List<ValueTuple<int, int?>> deletedMatches,
-         List<ValueTuple<int, int?>> liveMatches,
-         List<ValueTuple<int, int?>> nonLiveMatches,
+        List<SyncIsLiveModel> unsynchronizedMatches,
+        List<ValueTuple<int, int?>> deletedMatches,
+        List<ValueTuple<int, int?>> liveMatches,
+        List<ValueTuple<int, int?>> nonLiveMatches,
         IsLiveSynchronizedResult synchronizedLiveMatchResult,
         IsLiveSynchronizedResult synchronizedNonLiveMatchResult);
 

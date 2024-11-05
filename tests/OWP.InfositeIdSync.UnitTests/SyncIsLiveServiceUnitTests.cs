@@ -1,11 +1,10 @@
 ﻿namespace OWP.InfositeIdSync.UnitTests;
 
-using Infosite.Settings;
 using KellermanSoftware.CompareNetObjects;
-using Microsoft.Extensions.Options;
 using Models;
 using NSubstitute;
-using Olympus.InfoSiteClient;
+using OWP.Infosite.Models;
+using OWP.Infosite.Services;
 using Services;
 using Xunit;
 
@@ -42,16 +41,15 @@ public class SyncIsLiveServiceUnitTests
             ErrorMessage = string.Empty,
             FailedMatches = new List<(int, int?)>()
         };
-        var infositeSettings = Options.Create(new InfoSiteSettings());
-        var liveMatchApi = Substitute.For<IsLiveMatchApi>();
-        liveMatchApi.SetLiveMatches(infositeSettings.Value.InfositeApi, Arg.Compat.Any<IEnumerable<(int, int?)>>())
+        var apiService = Substitute.For<ApiService>();
+        apiService.SetLiveMatches(Arg.Compat.Any<IEnumerable<(int, int?)>>())
                     .Returns(emptySynchronizedResult);
-        liveMatchApi.SetNonLiveMatches(infositeSettings.Value.InfositeApi, Arg.Compat.Any<IEnumerable<(int, int?)>>())
+        apiService.SetNonLiveMatches(Arg.Compat.Any<IEnumerable<(int, int?)>>())
                     .Returns(emptySynchronizedResult);
 
         var logService = Substitute.For<LogServiceWrapper>();
 
-        var syncIsLiveService = new SyncIsLiveServiceImp(repository, logService, cacheManipulator, liveMatchApi, infositeSettings);
+        var syncIsLiveService = new SyncIsLiveServiceImp(repository, logService, cacheManipulator, apiService);
 
         // Act
         await syncIsLiveService.Sync(DateTime.Today, DateTime.Today);
@@ -68,10 +66,8 @@ public class SyncIsLiveServiceUnitTests
         
         var compareLogic = new CompareLogic();
         // Assert
-        await liveMatchApi.Received().SetLiveMatches(infositeSettings.Value.InfositeApi, Arg.Compat.Is<IEnumerable<(int, int?)>>(
-            x => compareLogic.Compare(x, expectedLiveMatch).AreEqual));
-        await liveMatchApi.Received().SetNonLiveMatches(infositeSettings.Value.InfositeApi, Arg.Compat.Is<IEnumerable<(int, int?)>>(
-            x => compareLogic.Compare(x, expectedNoneLiveMatch).AreEqual));
+        await apiService.Received().SetLiveMatches(Arg.Compat.Is<IEnumerable<(int, int?)>>(x => compareLogic.Compare(x, expectedLiveMatch).AreEqual));
+        await apiService.Received().SetNonLiveMatches(Arg.Compat.Is<IEnumerable<(int, int?)>>(x => compareLogic.Compare(x, expectedNoneLiveMatch).AreEqual));
         await cacheManipulator.Received().SaveDeletedMatches(Arg.Compat.Any<List<(int, int?)>>());
     }
 }

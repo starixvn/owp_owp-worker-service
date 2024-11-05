@@ -1,11 +1,13 @@
 ﻿namespace OWP.Infosite.Services;
 
+using System.Text;
+using System.Text.RegularExpressions;
 using Constants;
 using Extensions;
 using Fanex.Logging;
 using Microsoft.Extensions.Options;
-using Models;
 using Newtonsoft.Json;
+using OWP.Infosite.Models;
 using OWP.Services;
 using Settings;
 
@@ -22,17 +24,21 @@ public interface ApiService
     Task<List<MatchModelQuery180Day>> QueryInfoSiteMatchFor180Day();
 
     Task<RoundTwInfo> QueryRound(DateTime dateFrom, DateTime dateTo);
+
+    Task<IsLiveSynchronizedResult> SetLiveMatches(IEnumerable<(int, int?)> liveMatches);
+
+    Task<IsLiveSynchronizedResult> SetNonLiveMatches(IEnumerable<(int, int?)> nonLiveMatches);
 }
 
 public class ApiServiceImp : ApiService
 {
+    private static Regex regex = new Regex(@"^(\d+)\:.+$");
     private readonly InfoSiteSettings infoSiteSettings;
-
     private readonly HttpHandler httpHandler;
-
     private readonly ILogger logger;
 
-    public ApiServiceImp(HttpHandler httpHandler,
+    public ApiServiceImp(
+        HttpHandler httpHandler,
         ILogger logger,
         IOptions<InfoSiteSettings> infoSiteSettings)
     {
@@ -196,5 +202,132 @@ public class ApiServiceImp : ApiService
         await logger.ErrorAsync(logInfoString);
 
         return new ();
+    }
+
+    public async Task<IsLiveSynchronizedResult> SetLiveMatches(IEnumerable<(int, int?)> liveMatches)
+    {
+        return await SyncMatches(liveMatches, isLive: true);
+    }
+
+    public async Task<IsLiveSynchronizedResult> SetNonLiveMatches(IEnumerable<(int, int?)> nonLiveMatches)
+    {
+        return await SyncMatches(nonLiveMatches, isLive: false);
+    }
+
+    private async Task<IsLiveSynchronizedResult> SyncMatches(IEnumerable<(int, int?)> matches, bool isLive)
+    {
+        var request = $"{infoSiteSettings.InfositeApi}api/EventSchedule/setEventsLive";
+
+        var model = GetKeyValuePairOfMatch(matches, isLive);
+        var content = new StringContent(model, Encoding.UTF8, "application/json");
+
+        var response = await httpHandler.PostAsync(request, content);
+        var responseText = await response.Content.ReadAsStringAsync();
+
+        var synchronizedResult = response.IsSuccessStatusCode ? responseText : "[]";
+        var errorMessage = (response.IsSuccessStatusCode && responseText == "[]") ? string.Empty : responseText;
+        var failedMatches = response.IsSuccessStatusCode ? GetFailedMatches(synchronizedResult) : matches.ToList();
+        var successfulMatches = matches.Except(failedMatches).ToList();
+
+        var logInfo = new
+        {
+            Job = "Sync Is Live to Info Site",
+            response.RequestMessage,
+            StatusCode = (int)response.StatusCode,
+            synchronizedResult
+        };
+        var logInfoString = JsonConvert.SerializeObject(logInfo);
+        await logger.InfoAsync(logInfoString);
+
+        return new IsLiveSynchronizedResult
+        {
+            FailedMatches = failedMatches,
+            SuccessfulMatches = successfulMatches,
+            ErrorMessage = errorMessage
+        };
+    }
+
+    private static string GetKeyValuePairOfMatch(IEnumerable<(int, int?)> matches, bool isLive)
+    {
+        var matchList = matches.GroupBy(x => x.Item1, x => x.Item2, (key, g) => (key, g.ToList()));
+        var syncMatches = new List<LiveConfig>();
+
+        foreach (var match in matchList)
+        {
+            (int mainMatchId, List<int?> subType) = match;
+
+            if (subType.Exists(x => !x.HasValue))
+            {
+                syncMatches.Add(new LiveConfig
+                {
+                    MatchId = mainMatchId,
+                    IsLive = isLive,
+                    Subtypes = new List<int>()
+                });
+            }
+
+            if (subType.Exists(x => x.HasValue))
+            {
+                syncMatches.Add(new LiveConfig
+                {
+                    MatchId = mainMatchId,
+                    IsLive = isLive,
+                    Subtypes = subType.Where(y => y.HasValue).Select(y => y.Value).ToList()
+                });
+            }
+        }
+
+        var result = new SyncIsLiveToInfoSite
+        {
+            Matches = syncMatches
+        };
+        return JsonConvert.SerializeObject(result);
+    }
+
+    private static List<(int, int?)> GetFailedMatches(string synchronizedResult)
+    {
+        var failedMessages = JsonConvert.DeserializeObject<List<string>>(synchronizedResult);
+        var matches = failedMessages?.Where(l => regex.IsMatch(l))
+            .Select(x => GetFailedMatch(x))
+            .ToList();
+
+        return matches;
+    }
+
+    private static (int, int?) GetFailedMatch(string synchronizedResult)
+    {
+        var elements = synchronizedResult.Split(':');
+
+        if (elements[1].Equals("FAILED_UPDATE_CHILD_MATCH"))
+        {
+            return (int.Parse(elements[0]), ParseSubtype(elements[2]));
+        }
+
+        return (int.Parse(elements[0]), null);
+    }
+
+    public static int? ParseSubtype(string result)
+    {
+        if (!string.IsNullOrEmpty(result))
+        {
+            var subtypeText = "subType ";
+            var fromText = " from";
+            var pFrom = result.IndexOf(subtypeText) + subtypeText.Length;
+            var pTo = result.IndexOf(fromText);
+            var subStringLength = pTo - pFrom;
+            if (subStringLength < 0)
+            {
+                return null;
+            }
+
+            var subType = result.Substring(pFrom, pTo - pFrom);
+
+            if (!string.IsNullOrWhiteSpace(subType))
+            {
+                return int.Parse(result.Substring(pFrom, pTo - pFrom));
+            }
+        }
+
+        return null;
     }
 }
