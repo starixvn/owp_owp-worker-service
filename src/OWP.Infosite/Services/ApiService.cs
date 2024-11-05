@@ -226,8 +226,6 @@ public class ApiServiceImp : ApiService
 
         var synchronizedResult = response.IsSuccessStatusCode ? responseText : "[]";
         var errorMessage = (response.IsSuccessStatusCode && responseText == "[]") ? string.Empty : responseText;
-        var failedMatches = response.IsSuccessStatusCode ? GetFailedMatches(synchronizedResult) : matches.ToList();
-        var successfulMatches = matches.Except(failedMatches).ToList();
 
         var logInfo = new
         {
@@ -240,6 +238,9 @@ public class ApiServiceImp : ApiService
         };
         var logInfoString = JsonConvert.SerializeObject(logInfo);
         await logger.InfoAsync(logInfoString);
+
+        var failedMatches = response.IsSuccessStatusCode ? GetFailedMatches(synchronizedResult) : matches.ToList();
+        var successfulMatches = matches.Except(failedMatches).ToList();
 
         return new IsLiveSynchronizedResult
         {
