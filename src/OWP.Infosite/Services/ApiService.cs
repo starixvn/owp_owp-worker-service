@@ -294,7 +294,7 @@ public class ApiServiceImp : ApiService
             .Select(x => GetFailedMatch(x))
             .ToList();
 
-        return matches;
+        return matches ?? new List<(int, int?)>();
     }
 
     private static (int, int?) GetFailedMatch(string synchronizedResult)
