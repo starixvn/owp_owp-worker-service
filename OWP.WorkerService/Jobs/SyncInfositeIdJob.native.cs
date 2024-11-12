@@ -39,16 +39,20 @@ public class SyncInfositeIdJob : IJob
 
     public async Task ExecuteJob()
     {
-        var fromTime = DateTime.Now.AddHours(9);
-        var nowGmt8 = DateTime.Now.AddHours(12);
-        var toTime = nowGmt8.Date.AddHours(36);
-
         await synInfositeIdService.Sync();
 
         var env = configuration.GetSection("Environment").Value;
 
         if (string.Equals(env, "PROD"))
         {
+            var fromTime = DateTime.Now.AddHours(9);
+            var nowGmt8 = DateTime.Now.AddHours(12);
+            if (nowGmt8.Hour < 10)
+            {
+                nowGmt8 = nowGmt8.AddDays(-1);
+            }
+            var toTime = nowGmt8.Date.AddHours(36);
+
             await syncIsLiveService.Sync(fromTime, toTime).ConfigureAwait(false);
             await todaySyncService.Sync().ConfigureAwait(false);
         }
