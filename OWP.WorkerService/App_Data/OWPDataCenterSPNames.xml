@@ -104,5 +104,6 @@
 	<Function Name="Provider">
 		<Setting Key="OWP_ProviderVerification_GetMainMatchesByDate" SpName ="OWP_ProviderVerification_GetMainMatchesByDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
 		<Setting Key="OWP_ProviderVerification_SyncAgentConfirm" SpName ="OWP_ProviderVerification_SyncAgentConfirm" DbName="DBOWP.bodb_OWP.wsv_owp" />
+		<Setting Key="OWP_ProviderArrangement_GetAllProvider" SpName ="OWP_ProviderArrangement_GetAllProvider" DbName="DBOWP.bodb_OWP.wsv_owp" />
 	</Function>
 </Functions>

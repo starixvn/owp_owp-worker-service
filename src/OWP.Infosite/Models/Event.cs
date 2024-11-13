@@ -120,7 +120,6 @@ public class Event
         Website2 = extInfo.website2.ConvertNullToEmpty();
         Website3 = extInfo.website3.ConvertNullToEmpty();
         Website4 = extInfo.website4.ConvertNullToEmpty();
-        Provider = extInfo.provider.FormatProviders();
         OtherProvider = OtherProviderBuilder.Build(infositeMatch);
         ProviderTv = infositeMatch.TvBuild();
         ProviderUsed = extInfo.provider_use.ConvertNullToEmpty();

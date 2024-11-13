@@ -6,6 +6,7 @@ using Fanex.Data.Repository;
 using Helper;
 using Models;
 using Olympus.Xml;
+using OWP.Infosite.Modelsl;
 using System;
 using System.Linq;
 
@@ -35,6 +36,12 @@ public class SyncServiceImp
     public async Task Sync(DateTime fromDate)
     {
         var queriedResultTask = await QueryEvents(fromDate);
+        var priorityProviders = await GetProviderArrangement();
+
+        foreach (var x in queriedResultTask)
+        {
+            x.Provider = ProviderHelper.BuildProviderByOtherProvider(priorityProviders, x.OtherProvider);
+        }
 
         var teamRoundsTask = await QueryTeamRound(fromDate);
 
@@ -218,5 +225,16 @@ public class SyncServiceImp
     private static IEnumerable<Event> ToEvents(IEnumerable<CommonMatchModel> commonMatches)
     {
         return commonMatches.Select(evt => new Event(evt));
+    }
+
+    private async Task<List<string>> GetProviderArrangement()
+    {
+        var criteria = new GetProviderCriteria();
+        var provider = (await repository.FetchAsync<ProviderInfo>(criteria))
+            .OrderBy(x => x.Order)
+            .Select(x => x.Value)
+            .ToList();
+
+        return provider;
     }
 }
