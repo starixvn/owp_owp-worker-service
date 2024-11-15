@@ -27,7 +27,20 @@ namespace OWP.OtherSport.SyncAdminSiteId.Helpers
             {
                 teamName = teamName.Remove(teamName.IndexOf("  ", StringComparison.CurrentCulture), 1);
             }
+
             return teamName;
+        }
+
+        public static string ReplaceHiddenCharacters(this string value)
+        {
+            var hiddenChars = " ";
+
+            while (value.Contains(hiddenChars, StringComparison.CurrentCulture))
+            {
+                value = value.Replace(hiddenChars, string.Empty);
+            }
+
+            return value;
         }
     }
 }
