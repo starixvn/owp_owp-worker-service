@@ -37,7 +37,7 @@ namespace OWP.OtherSport.SyncAdminSiteId.Helpers
 
             while (value.Contains(hiddenChars, StringComparison.CurrentCulture))
             {
-                value = value.Replace(hiddenChars, string.Empty);
+                value = value.Replace(hiddenChars, " ");
             }
 
             return value;
