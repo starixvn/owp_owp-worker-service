@@ -6,7 +6,7 @@ public static class CronExpressionJob
 {
     public const string SyncTodayInfoSiteMatch = "0 0/1 * 1/1 * ? *"; //1min
 
-    public const string SyncFutureInfoSiteMatch = "0 0/15 * 1/1 * ? *"; //15mins
+    public const string SyncFutureInfoSiteMatch = "0 0/1 * 1/1 * ? *"; //1mins
 
     public const string Sync180DayInfoSiteMatch = "0 0 * ? * *"; //1hour
 
