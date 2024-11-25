@@ -97,6 +97,13 @@ public class Event
     public bool IsHomeBlackList { get; set; }
 
     public bool IsAwayBlackList { get; set; }
+    public bool IsHomeBadRanking { get; set; }
+    public bool IsAwayBadRanking { get; set; }
+    public bool IsHomeDowngrade { get; set; }
+    public bool IsAwayDowngrade { get; set; }
+
+    public byte? MatchStatus { get; set; }
+    public string RoundConfirm { get; set; }
 
     public Event(CommonMatchModel infositeMatch)
     {
@@ -139,6 +146,12 @@ public class Event
         IsLeagueBlackList = infositeMatch.is_league_black;
         IsHomeBlackList = infositeMatch.is_home_black;
         IsAwayBlackList = infositeMatch.is_away_black;
+        IsHomeBadRanking = infositeMatch.is_home_bad_ranking;
+        IsAwayBadRanking = infositeMatch.is_away_bad_ranking;
+        IsHomeDowngrade = infositeMatch.is_home_downgrade;
+        IsAwayDowngrade = infositeMatch.is_away_downgrade;
+        MatchStatus = infositeMatch.match_status;
+        RoundConfirm = infositeMatch.round_confirm;
     }
 
     private string GetHomeName()

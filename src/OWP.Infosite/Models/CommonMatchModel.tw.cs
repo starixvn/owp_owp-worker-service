@@ -32,7 +32,7 @@ public class CommonSubMatch
     public bool? is_postponed { get; set; }
 
     // Null: Normal, 0: Normal, 1: Postponed, 2: Cancelled, 3: No kick off time
-    public int? match_status { get; set; }
+    public byte? match_status { get; set; }
 
     public int? coverage_id { get; set; }
 }
@@ -41,6 +41,7 @@ public class CommonMatch : CommonSubMatch
 {
     // testing match
     public bool is_test { get; set; }
+    public string round_confirm { get; set; }
 
     #region league team id/name info
 
