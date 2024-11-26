@@ -139,9 +139,9 @@ public class SyncServiceImp
                 });
             }
 
-            if (loggedChangeItem.Any(log => log.UpdateTypeId == 24))
+            if (loggedChangeItem.Exists(log => log.UpdateTypeId == 24))
             {
-                var updateKODateLog = loggedChangeItem.FirstOrDefault(l => l.UpdateTypeId == 24);
+                var updateKODateLog = loggedChangeItem.First(l => l.UpdateTypeId == 24);
                 loggedChanges.Add(new LoggedChangeModel
                 {
                     InfoSiteMatchId = updateKODateLog.InfoSiteMatchId,

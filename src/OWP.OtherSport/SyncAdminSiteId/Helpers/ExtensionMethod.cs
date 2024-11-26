@@ -33,11 +33,11 @@ namespace OWP.OtherSport.SyncAdminSiteId.Helpers
 
         public static string ReplaceHiddenCharacters(this string value)
         {
-            var hiddenChars = " ";
+            const string HiddenChars = " ";
 
-            while (value.Contains(hiddenChars, StringComparison.CurrentCulture))
+            while (value.Contains(HiddenChars, StringComparison.CurrentCulture))
             {
-                value = value.Replace(hiddenChars, " ");
+                value = value.Replace(HiddenChars, " ");
             }
 
             return value;

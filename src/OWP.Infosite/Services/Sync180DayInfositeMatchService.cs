@@ -89,7 +89,9 @@ public class Sync180DayInfositeMatchServiceImp : Sync180DayInfositeMatchService
             var type = typeof(InfoSiteDb);
             var properties = type.GetProperties();
 
-            var loggedChangeItem = InfoSiteSyncHelper.BuildLoggedChanges(properties, infoSiteOld, infoSiteNew, "180days").ToList();
+            const string FromService = "180days";
+
+            var loggedChangeItem = InfoSiteSyncHelper.BuildLoggedChanges(properties, infoSiteOld, infoSiteNew, FromService).ToList();
             if (item is { IsCheck: true } && loggedChangeItem.Count > 0)
             {
                 loggedChanges.Add(new LoggedChangeModel
@@ -100,13 +102,13 @@ public class Sync180DayInfositeMatchServiceImp : Sync180DayInfositeMatchService
                     NewValue = "Unchecked",
                     OldValue = "Checked",
                     UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
-                    FromService = "180days"
+                    FromService = FromService
                 });
             }
 
-            if (loggedChangeItem.Any(log => log.UpdateTypeId == 24))
+            if (loggedChangeItem.Exists(log => log.UpdateTypeId == 24))
             {
-                var updateKODateLog = loggedChangeItem.FirstOrDefault(l => l.UpdateTypeId == 24);
+                var updateKODateLog = loggedChangeItem.First(l => l.UpdateTypeId == 24);
                 loggedChanges.Add(new LoggedChangeModel
                 {
                     InfoSiteMatchId = updateKODateLog.InfoSiteMatchId,
@@ -115,7 +117,7 @@ public class Sync180DayInfositeMatchServiceImp : Sync180DayInfositeMatchService
                     NewValue = updateKODateLog.NewValue,
                     OldValue = updateKODateLog.OldValue,
                     UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
-                    FromService = "180days"
+                    FromService = FromService
                 });
             }
 

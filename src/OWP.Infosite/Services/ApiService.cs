@@ -313,10 +313,10 @@ public class ApiServiceImp : ApiService
     {
         if (!string.IsNullOrEmpty(result))
         {
-            var subtypeText = "subType ";
-            var fromText = " from";
-            var pFrom = result.IndexOf(subtypeText) + subtypeText.Length;
-            var pTo = result.IndexOf(fromText);
+            const string subtypeText = "subType ";
+            const string fromText = " from";
+            var pFrom = result.IndexOf(subtypeText, StringComparison.OrdinalIgnoreCase) + subtypeText.Length;
+            var pTo = result.IndexOf(fromText, StringComparison.OrdinalIgnoreCase);
             var subStringLength = pTo - pFrom;
             if (subStringLength < 0)
             {
