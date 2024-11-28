@@ -97,7 +97,11 @@ public static class InfoSiteSyncHelper
             Round = source.Round
         };
 
-    public static IEnumerable<LoggedChangeModel> BuildLoggedChanges(IEnumerable<PropertyInfo> properties, InfoSiteDb infoSiteOld, InfoSiteDb infoSiteNew, string fromService = "Today")
+    public static IEnumerable<LoggedChangeModel> BuildLoggedChanges(
+        IEnumerable<PropertyInfo> properties,
+        InfoSiteDb infoSiteOld,
+        InfoSiteDb infoSiteNew,
+        string fromService = "Today")
     {
         var newValue = string.Empty;
         var oldValue = string.Empty;
