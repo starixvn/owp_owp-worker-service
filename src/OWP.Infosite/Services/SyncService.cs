@@ -19,8 +19,8 @@ public class SyncServiceImp
 {
     private readonly IDynamicRepository repository;
     private readonly ApiService apiService;
-    protected readonly DateTime MinDate = new(2000, 1, 1);
-
+    protected readonly DateTime MinDate = new(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+    private const string FromService = "Today";
     protected DateTimeService DateTimeService { get; }
 
     public SyncServiceImp(
@@ -89,7 +89,7 @@ public class SyncServiceImp
         {
             Xml = xml
         };
-        await repository.ExecuteAsync(criteria).ConfigureAwait(false);
+        await repository.ExecuteAsync(criteria);
     }
 
     #region BuildServiceLog
@@ -116,26 +116,26 @@ public class SyncServiceImp
 
     private static void BuildLogForChangedMatchesLog(IList<Event> queriedResult, IList<InfoSiteDbInfo> existedEvents, List<LoggedChangeModel> loggedChanges)
     {
-        foreach (var item in existedEvents)
+        foreach (var infoSiteOld in existedEvents)
         {
-            var infoSiteOld = item;
-            var infoSiteNew = InfoSiteSyncHelper.CloneInfoSiteMatch(queriedResult.FirstOrDefault(x => x.InfoSiteMatchId == item.InfoSiteMatchId));
+            var infoSiteNew = queriedResult.First(x => x.InfoSiteMatchId == infoSiteOld.InfoSiteMatchId);
+            var infoSiteClone = InfoSiteSyncHelper.CloneInfoSiteMatch(infoSiteNew);
 
             var type = typeof(InfoSiteDb);
             var properties = type.GetProperties();
 
-            var loggedChangeItem = InfoSiteSyncHelper.BuildLoggedChanges(properties, infoSiteOld, infoSiteNew).ToList();
+            var loggedChangeItem = InfoSiteSyncHelper.BuildLoggedChanges(properties, infoSiteOld, infoSiteClone).ToList();
             if (infoSiteOld is { IsCheck: true } && loggedChangeItem.Any())
             {
                 loggedChanges.Add(new LoggedChangeModel
                 {
-                    InfoSiteMatchId = infoSiteNew.InfoSiteMatchId,
+                    InfoSiteMatchId = infoSiteClone.InfoSiteMatchId,
                     UpdateTypeId = null,
                     Action = "Update the <b>checking status</b>",
                     NewValue = "Unchecked",
                     OldValue = "Checked",
                     UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
-                    FromService = "Today"
+                    FromService = FromService
                 });
             }
 
@@ -150,9 +150,13 @@ public class SyncServiceImp
                     NewValue = updateKODateLog.NewValue,
                     OldValue = updateKODateLog.OldValue,
                     UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
-                    FromService = "Today"
+                    FromService = FromService
                 });
             }
+
+            BuildLogForMatchPostponed(infoSiteNew, infoSiteOld, loggedChanges);
+            BuildLogForMatchCancelled(infoSiteNew, infoSiteOld, loggedChanges);
+
             loggedChanges.AddRange(loggedChangeItem);
         }
     }
@@ -167,7 +171,7 @@ public class SyncServiceImp
             UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
             NewValue = null,
             OldValue = "Initialize",
-            FromService = "Today"
+            FromService = FromService
         });
 
         loggedChanges.AddRange(newLoggedChanges);
@@ -180,7 +184,7 @@ public class SyncServiceImp
             Ids = ids
         };
 
-        return (await repository.FetchAsync<InfoSiteDbInfo>(criteria).ConfigureAwait(false)).ToList();
+        return (await repository.FetchAsync<InfoSiteDbInfo>(criteria)).ToList();
     }
 
     private async Task SaveLogChange(IEnumerable<LoggedChangeModel> loggedChange)
@@ -190,7 +194,7 @@ public class SyncServiceImp
         {
             Xml = xml
         };
-        await repository.ExecuteAsync(criteria).ConfigureAwait(false);
+        await repository.ExecuteAsync(criteria);
     }
 
     #endregion BuildServiceLog
@@ -198,7 +202,7 @@ public class SyncServiceImp
     private async Task UpdateSoloMatch()
     {
         var criteria = new UpdateSoloMatchCriteria();
-        await repository.ExecuteAsync(criteria).ConfigureAwait(false);
+        await repository.ExecuteAsync(criteria);
     }
 
     protected async Task<List<Event>> QueryEvents(DateTime date)
@@ -236,5 +240,55 @@ public class SyncServiceImp
             .ToList();
 
         return provider;
+    }
+
+    private static void BuildLogForMatchPostponed(Event infoSiteNew, InfoSiteDbInfo infoSiteDb, List<LoggedChangeModel> loggedChanges)
+    {
+        if (!string.IsNullOrEmpty(infoSiteDb.Remark2)
+            && !infoSiteDb.Remark2.Contains("Postponed")
+            && infoSiteDb.MatchStatus != InfoSiteMatchStatus.Postponed)
+        {
+            return;
+        }
+
+        if (!string.IsNullOrEmpty(infoSiteNew.Remark2)
+            && infoSiteNew.Remark2.Contains("Postponed")
+            && infoSiteNew.MatchStatus == InfoSiteMatchStatus.Postponed)
+        {
+            loggedChanges.Add(new LoggedChangeModel
+            {
+                InfoSiteMatchId = infoSiteDb.InfoSiteMatchId,
+                UpdateTypeId = 26,
+                Action = Constant.UpdateType.GetValueOrDefault(26),
+                NewValue = "Postponed",
+                OldValue = string.Empty,
+                UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
+                FromService = FromService
+            });
+        }
+    }
+
+    private static void BuildLogForMatchCancelled(Event infoSiteNew, InfoSiteDbInfo infoSiteDb, List<LoggedChangeModel> loggedChanges)
+    {
+        if ((!string.IsNullOrEmpty(infoSiteDb.Remark2) && infoSiteDb.Remark2.Contains("Cancel", StringComparison.OrdinalIgnoreCase))
+            || infoSiteDb.MatchStatus == InfoSiteMatchStatus.Cancelled)
+        {
+            return;
+        }
+
+        if ((!string.IsNullOrEmpty(infoSiteNew.Remark2) && infoSiteNew.Remark2.Contains("Cancel", StringComparison.OrdinalIgnoreCase))
+            || infoSiteNew.MatchStatus == InfoSiteMatchStatus.Cancelled)
+        {
+            loggedChanges.Add(new LoggedChangeModel
+            {
+                InfoSiteMatchId = infoSiteDb.InfoSiteMatchId,
+                UpdateTypeId = 27,
+                Action = Constant.UpdateType.GetValueOrDefault(27),
+                NewValue = "Cancelled",
+                OldValue = string.Empty,
+                UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
+                FromService = FromService
+            });
+        }
     }
 }

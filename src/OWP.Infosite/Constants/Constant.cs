@@ -34,19 +34,21 @@ public static class Constant
         { 10, "Cancel the <b>Other Provider</b>"},
         { 11, "Delete the match"},
         { 12, "Update the <b>Round</b>"},
-        { 13,"Cancel the <b>Round</b>" },
-        { 14,"Update the <b>Round (H-A/T)</b>"},
-        { 15,"Cancel the <b>Round (H-A/T)</b>" },
-        { 16,"Update the <b>Remark</b>"},
-        { 17,"Cancel the <b>Remark</b>" },
-        { 18,"Update the <b>Home Remark</b>"},
-        { 19,"Cancel the <b>Home Remark</b>" },
-        { 20,"Update the <b>Away Remark</b>"},
-        { 21,"Cancel the <b>Away Remark</b>" },
-        { 22,"Update the <b>Division</b>"},
-        { 23,"Cancel the <b>Division</b>" },
-        { 24,"Move <b>KO Date</b>" },
-        { 25,"Renew Match" },
+        { 13, "Cancel the <b>Round</b>" },
+        { 14, "Update the <b>Round (H-A/T)</b>"},
+        { 15, "Cancel the <b>Round (H-A/T)</b>" },
+        { 16, "Update the <b>Remark</b>"},
+        { 17, "Cancel the <b>Remark</b>" },
+        { 18, "Update the <b>Home Remark</b>"},
+        { 19, "Cancel the <b>Home Remark</b>" },
+        { 20, "Update the <b>Away Remark</b>"},
+        { 21, "Cancel the <b>Away Remark</b>" },
+        { 22, "Update the <b>Division</b>"},
+        { 23, "Cancel the <b>Division</b>" },
+        { 24, "Move <b>KO Date</b>" },
+        { 25, "Renew Match" },
+        { 26, "Match Postponed" },
+        { 27, "Match Cancelled" },
     }.ToImmutableDictionary();
 
     public static readonly IImmutableDictionary<int, string> StreamNameSrc2InfoSite = new Dictionary<int, string>
@@ -88,4 +90,11 @@ public static class MinorBettypeId
     public const int PenaltyToScore = -96;
     public const int PenaltyAwarded = -97;
     public const int NextGoalKick = -100;
+}
+
+public static class InfoSiteMatchStatus
+{
+    public const byte Normal = 0;
+    public const byte Postponed = 1;
+    public const byte Cancelled = 2;
 }

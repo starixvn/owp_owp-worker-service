@@ -21,12 +21,14 @@ public class InfoSiteDb
     public string Round { get;  set; }
 
     public string Remark { get; set; }
+    public string Remark2 { get; set; }
 
     public string HomeRemark { get; set; }
 
     public string AwayRemark { get; set; }
 
     public string Division { get;  set; }
+    public byte? MatchStatus { get; set; }
 }
 
 public class InfoSiteDbInfo : InfoSiteDb
