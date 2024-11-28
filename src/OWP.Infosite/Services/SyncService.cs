@@ -244,16 +244,14 @@ public class SyncServiceImp
 
     private static void BuildLogForMatchPostponed(Event infoSiteNew, InfoSiteDbInfo infoSiteDb, List<LoggedChangeModel> loggedChanges)
     {
-        if (!string.IsNullOrEmpty(infoSiteDb.Remark2)
-            && !infoSiteDb.Remark2.Contains("Postponed")
-            && infoSiteDb.MatchStatus != InfoSiteMatchStatus.Postponed)
+        if ((!string.IsNullOrEmpty(infoSiteDb.Remark2) && !infoSiteDb.Remark2.Contains("Postponed", StringComparison.OrdinalIgnoreCase))
+            || infoSiteDb.MatchStatus != InfoSiteMatchStatus.Postponed)
         {
             return;
         }
 
-        if (!string.IsNullOrEmpty(infoSiteNew.Remark2)
-            && infoSiteNew.Remark2.Contains("Postponed")
-            && infoSiteNew.MatchStatus == InfoSiteMatchStatus.Postponed)
+        if ((!string.IsNullOrEmpty(infoSiteNew.Remark2) && infoSiteNew.Remark2.Contains("Postponed", StringComparison.OrdinalIgnoreCase))
+            || infoSiteNew.MatchStatus == InfoSiteMatchStatus.Postponed)
         {
             loggedChanges.Add(new LoggedChangeModel
             {
