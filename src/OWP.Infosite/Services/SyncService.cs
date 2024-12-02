@@ -246,7 +246,7 @@ public class SyncServiceImp
 
     private static void BuildLogForMatchPostponed(Event infoSiteNew, InfoSiteDbInfo infoSiteDb, List<LoggedChangeModel> loggedChanges)
     {
-        if ((!string.IsNullOrEmpty(infoSiteDb.Remark2) && !infoSiteDb.Remark2.Contains("Postponed", StringComparison.OrdinalIgnoreCase))
+        if ((!string.IsNullOrEmpty(infoSiteDb.Remark2) && infoSiteDb.Remark2.Contains("Postponed", StringComparison.OrdinalIgnoreCase))
             || infoSiteDb.MatchStatus == InfoSiteMatchStatus.Postponed)
         {
             return;
