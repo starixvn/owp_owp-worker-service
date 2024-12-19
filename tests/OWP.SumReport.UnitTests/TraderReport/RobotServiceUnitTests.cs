@@ -58,12 +58,12 @@ public class RobotServiceUnitTests
             X3Plus = 32
         };
 
-        return new List<RobotX3ByUser>
-            {
-                item1,
-                item2,
-                item3
-            };
+        return
+        [
+            item1,
+            item2,
+            item3
+        ];
     }
 
     private static List<RobotX5ByUser> CreateX5FakeData()
@@ -86,12 +86,12 @@ public class RobotServiceUnitTests
             X5 = 43
         };
 
-        return new List<RobotX5ByUser>
-            {
-                item1,
-                item2,
-                item3
-            };
+        return
+        [
+            item1,
+            item2,
+            item3
+        ];
     }
 
     private static List<RobotByByUser> CreateExpectedData()
@@ -132,12 +132,12 @@ public class RobotServiceUnitTests
             X5 = 43
         };
 
-        return new List<RobotByByUser>
-            {
-                item1,
-                item2,
-                item3,
-                item4
-            };
+        return
+        [
+            item1,
+            item2,
+            item3,
+            item4
+        ];
     }
 }

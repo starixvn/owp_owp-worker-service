@@ -14,17 +14,10 @@ public interface RabbitMqClient
     Task<bool> ConnectRabbitMq();
 }
 
-public class RabbitMqClientImp : RabbitMqClient
+public class RabbitMqClientImp(IOptions<RabbitMqSetting> options, ILogger logger) : RabbitMqClient
 {
     private IChannel channel;
-    private readonly RabbitMqSetting setting;
-    private readonly ILogger logger;
-
-    public RabbitMqClientImp(IOptions<RabbitMqSetting> options, ILogger logger)
-    {
-        setting = options.Value;
-        this.logger = logger;
-    }
+    private readonly RabbitMqSetting setting = options.Value;
 
     public async Task<bool> ConnectRabbitMq()
     {
@@ -36,7 +29,7 @@ public class RabbitMqClientImp : RabbitMqClient
                 Password = setting.Password,
                 HostName = setting.Hosting,
                 Port = setting.Port,
-                VirtualHost = setting.VirtualHost,
+                VirtualHost = setting.VirtualHost
             };
 
             var connection = await factory.CreateConnectionAsync();

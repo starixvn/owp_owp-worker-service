@@ -10,12 +10,7 @@ using Xunit.Asserts.Compare;
 
 public class LeagueSettingsServiceUnitTests
 {
-    private readonly LeagueSettingsRepository repository;
-
-    public LeagueSettingsServiceUnitTests()
-    {
-        repository = Substitute.For<LeagueSettingsRepository>();
-    }
+    private readonly LeagueSettingsRepository repository = Substitute.For<LeagueSettingsRepository>();
 
     [Fact]
     public void CreateNewLeaguesSettings_ShouldReturnData()

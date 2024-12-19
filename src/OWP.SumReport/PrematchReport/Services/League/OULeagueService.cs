@@ -7,20 +7,11 @@ public interface OuLeagueService
     Task BuildSingleOuLeagueReport(DateTime eventDate);
 }
 
-public class OuLeagueServiceImp : OuLeagueService
+public class OuLeagueServiceImp(
+    DataReportService dataReportService,
+    Repository repository)
+    : OuLeagueService
 {
-    private readonly DataReportService dataReportService;
-
-    private readonly Repository repository;
-
-    public OuLeagueServiceImp(
-        DataReportService dataReportService,
-        Repository repository)
-    {
-        this.dataReportService = dataReportService;
-        this.repository = repository;
-    }
-
     public async Task BuildSingleOuLeagueReport(DateTime eventDate)
     {
         var leagues = await repository.GetLeagueByDateAndBettype(eventDate, Constant.OuId);

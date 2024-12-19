@@ -6,12 +6,7 @@ using Xunit;
 
 public class RobotX3ServiceUnitTests
 {
-    private readonly RobotX3Service robotX3Service;
-
-    public RobotX3ServiceUnitTests()
-    {
-        robotX3Service = new RobotX3ServiceImp();
-    }
+    private readonly RobotX3Service robotX3Service = new RobotX3ServiceImp();
 
     [Fact]
     public void GroupConsecutiveMatch_AssignmentEventDateTimeOver30_DifferentGroup()

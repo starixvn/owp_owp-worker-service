@@ -2,24 +2,15 @@
 
 using Fanex.Data.Repository;
 
-public interface FutureSyncService : SyncService
+public interface FutureSyncService : SyncService;
+
+public class FutureSyncServiceImp(
+    DateTimeService dateTimeService,
+    ApiService apiService,
+    IDynamicRepository repository,
+    UpdateInfositeIdService updateInfositeIdService)
+    : SyncServiceImp(dateTimeService, apiService, repository), FutureSyncService
 {
-}
-
-public class FutureSyncServiceImp : SyncServiceImp, FutureSyncService
-{
-    private readonly UpdateInfositeIdService updateInfositeIdService;
-
-    public FutureSyncServiceImp(
-        DateTimeService dateTimeService,
-        ApiService apiService,
-        IDynamicRepository repository,
-        UpdateInfositeIdService updateInfositeIdService)
-        : base(dateTimeService, apiService, repository)
-    {
-        this.updateInfositeIdService = updateInfositeIdService;
-    }
-
     public async Task Sync()
     {
         var dateFrom = DateTimeService.Today.AddDays(1);

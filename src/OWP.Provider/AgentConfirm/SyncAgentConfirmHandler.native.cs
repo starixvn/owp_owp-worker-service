@@ -11,15 +11,8 @@ public interface SyncAgentConfirmHandler
     Task Handle(DateTime eventDate);
 }
 
-public class SyncAgentConfirmHandlerImp : SyncAgentConfirmHandler
+public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfirmHandler
 {
-    private readonly Repository repository;
-
-    public SyncAgentConfirmHandlerImp(Repository repository)
-    {
-        this.repository = repository;
-    }
-
     public async Task Handle(DateTime eventDate)
     {
         var agentMatches = await repository.GetOwpMainMatchesByDate(eventDate);
@@ -57,7 +50,7 @@ public class SyncAgentConfirmHandlerImp : SyncAgentConfirmHandler
 
     private static bool IsBetradar(AgentMatchInfo match)
     {
-        return (match.Provider.IsContainsIgnoreCase("BET") && !match.Provider.IsContainsIgnoreCase("BET365"));
+        return match.Provider.IsContainsIgnoreCase("BET") && !match.Provider.IsContainsIgnoreCase("BET365");
     }
 
     private static MatchAgentConfirm CreateAgentConfirm(string agent, AgentMatchInfo match)

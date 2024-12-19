@@ -34,17 +34,17 @@ public class SyncIsLiveServiceUnitTests
         repository.GetOfferLiveStatusFromMainDb(Arg.Any<string>()).Returns(mainDbMatches);
 
         var cacheManipulator = Substitute.For<CacheManipulator>();
-        cacheManipulator.GetDeletedMatches().Returns(new List<MatchKickoffDate> { new() { MatchId = 3, MinorBettypeId = 1 } });
+        cacheManipulator.GetDeletedMatches().Returns([new MatchKickoffDate { MatchId = 3, MinorBettypeId = 1 }]);
 
         var emptySynchronizedResult = new IsLiveSynchronizedResult
         {
             ErrorMessage = string.Empty,
-            FailedMatches = new List<(int, int?)>()
+            FailedMatches = []
         };
         var apiService = Substitute.For<ApiService>();
-        apiService.SetLiveMatches(Arg.Compat.Any<IEnumerable<(int, int?)>>())
+        apiService.SetLiveMatches(Arg.Compat.Any<List<(int, int?)>>())
                     .Returns(emptySynchronizedResult);
-        apiService.SetNonLiveMatches(Arg.Compat.Any<IEnumerable<(int, int?)>>())
+        apiService.SetNonLiveMatches(Arg.Compat.Any<List<(int, int?)>>())
                     .Returns(emptySynchronizedResult);
 
         var logService = Substitute.For<LogServiceWrapper>();
@@ -65,9 +65,10 @@ public class SyncIsLiveServiceUnitTests
         };
         
         var compareLogic = new CompareLogic();
+
         // Assert
-        await apiService.Received().SetLiveMatches(Arg.Compat.Is<IEnumerable<(int, int?)>>(x => compareLogic.Compare(x, expectedLiveMatch).AreEqual));
-        await apiService.Received().SetNonLiveMatches(Arg.Compat.Is<IEnumerable<(int, int?)>>(x => compareLogic.Compare(x, expectedNoneLiveMatch).AreEqual));
+        await apiService.Received().SetLiveMatches(Arg.Compat.Is<List<(int, int?)>>(x => compareLogic.Compare(x, expectedLiveMatch).AreEqual));
+        await apiService.Received().SetNonLiveMatches(Arg.Compat.Is<List<(int, int?)>>(x => compareLogic.Compare(x, expectedNoneLiveMatch).AreEqual));
         await cacheManipulator.Received().SaveDeletedMatches(Arg.Compat.Any<List<(int, int?)>>());
     }
 }

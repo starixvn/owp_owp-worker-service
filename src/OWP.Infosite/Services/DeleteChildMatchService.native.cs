@@ -11,21 +11,12 @@ public interface SyncDeleteChildMatchService
     Task Sync();
 }
 
-public class SyncDeleteChildMatchServiceImp : SyncDeleteChildMatchService
+public class SyncDeleteChildMatchServiceImp(
+    ApiService apiService,
+    IDynamicRepository repository,
+    DateTimeService dateTimeService)
+    : SyncDeleteChildMatchService
 {
-    private readonly ApiService apiService;
-
-    private readonly IDynamicRepository repository;
-
-    private readonly DateTimeService dateTimeService;
-
-    public SyncDeleteChildMatchServiceImp(ApiService apiService, IDynamicRepository repository, DateTimeService dateTimeService)
-    {
-        this.apiService = apiService;
-        this.repository = repository;
-        this.dateTimeService = dateTimeService;
-    }
-
     public async Task Sync()
     {
         var dateFrom = dateTimeService.Today;

@@ -9,14 +9,8 @@ public interface DataReportService
     Task InsertLeagueReport(IList<DataReport> dataReports);
 }
 
-public class DataReportBuilderServiceImp : DataReportService
+public class DataReportBuilderServiceImp(DbWriterService dbWriterService) : DataReportService
 {
-    private readonly DbWriterService dbWriterService;
-
-    public DataReportBuilderServiceImp(DbWriterService dbWriterService)
-    {
-        this.dbWriterService = dbWriterService;
-    }
     public IList<DataReport> BuildSingleLeagueGroupReport(IList<LeagueInfo> leagues, int bettype)
     {
         var dataReport = new List<DataReport>();

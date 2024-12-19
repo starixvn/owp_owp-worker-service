@@ -16,20 +16,20 @@ public class SingleMatchesRule
 
 public class IsSingleMatchesRule : SingleMatchesRule
 {
-    private readonly string[] reporterContain = { "Reporter", "AL" };
-    private readonly string[] reporterEqual = { "WOO", "SLR", "AL", "BC" };
+    private readonly string[] reporterContain = ["Reporter", "AL"];
+    private readonly string[] reporterEqual = ["WOO", "SLR", "AL", "BC"];
 
-    private readonly string[] onlyTvContain = { "Glive", "IPTV", "Inhouse", "WB" };
-    private readonly string[] onlyTvTupleContain = { "BET365", "TV" };
-    private readonly string[] onlyTvEqual = { "TV", "BET365" };
+    private readonly string[] onlyTvContain = ["Glive", "IPTV", "Inhouse", "WB"];
+    private readonly string[] onlyTvTupleContain = ["BET365", "TV"];
+    private readonly string[] onlyTvEqual = ["TV", "BET365"];
     private const string Futsal = "Futsal";
     private const string Saba = "SABA";
 
     private readonly string[] providersContain =
-    {
+    [
         "RB2","RB3","IMG","RTS", "IPSD", "BG", "outside", "MRB", "follow", "FC", "365GV"
-    };
-    private readonly string[] providersEqual = { "SM", "VI" };
+    ];
+    private readonly string[] providersEqual = ["SM", "VI"];
 
     private const string ProviderBet = "BET";
 

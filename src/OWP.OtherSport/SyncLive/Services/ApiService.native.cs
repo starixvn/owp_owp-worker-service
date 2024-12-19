@@ -13,20 +13,10 @@ public interface ApiService
     Task PostSyncLiveAsync(BodyModel body);
 }
 
-public class ApiServiceImp : ApiService
+public class ApiServiceImp(IOptions<InfoSiteSettings> infoSiteSettings, ILogger logger, HttpHandler httpHandler)
+    : ApiService
 {
-    private readonly InfoSiteSettings infoSiteSettings;
-
-    private readonly HttpHandler httpHandler;
-
-    private readonly ILogger logger;
-
-    public ApiServiceImp(IOptions<InfoSiteSettings> infoSiteSettings, ILogger logger, HttpHandler httpHandler)
-    {
-        this.infoSiteSettings = infoSiteSettings.Value;
-        this.httpHandler = httpHandler;
-        this.logger = logger;
-    }
+    private readonly InfoSiteSettings infoSiteSettings = infoSiteSettings.Value;
 
     public async Task PostSyncLiveAsync(BodyModel body)
     {

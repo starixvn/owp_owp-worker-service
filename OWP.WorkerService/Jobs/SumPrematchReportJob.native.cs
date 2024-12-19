@@ -6,20 +6,11 @@ using SumReport.Constants;
 using SumReport.PrematchReport.Services;
 using SumReport.Services;
 
-public class SumPrematchReportJob : IJob
+public class SumPrematchReportJob(
+    PrematchReportService reportService,
+    CacheManipulator cacheManipulator)
+    : IJob
 {
-    private readonly PrematchReportService reportService;
-
-    private readonly CacheManipulator cacheManipulator;
-
-    public SumPrematchReportJob(
-        PrematchReportService reportService,
-        CacheManipulator cacheManipulator)
-    {
-        this.reportService = reportService;
-        this.cacheManipulator = cacheManipulator;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
         try

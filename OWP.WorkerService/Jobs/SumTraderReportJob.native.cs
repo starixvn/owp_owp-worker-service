@@ -7,17 +7,8 @@ using SumReport.Services;
 using SumReport.TraderReport;
 
 [DisallowConcurrentExecution]
-public class SumTraderReportJob : IJob
+public class SumTraderReportJob(CacheManipulator cacheManipulator, Handler handler) : IJob
 {
-    private readonly Handler handler;
-    private readonly CacheManipulator cacheManipulator;
-
-    public SumTraderReportJob(CacheManipulator cacheManipulator, Handler handler)
-    {
-        this.cacheManipulator = cacheManipulator;
-        this.handler = handler;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
         try

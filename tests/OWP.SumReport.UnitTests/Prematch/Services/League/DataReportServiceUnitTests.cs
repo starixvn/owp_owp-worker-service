@@ -10,12 +10,7 @@ using Xunit.Asserts.Compare;
 
 public class DataReportServiceUnitTests
 {
-    private readonly DbWriterService dbWriterService;
-
-    public DataReportServiceUnitTests()
-    {
-        dbWriterService = Substitute.For<DbWriterService>();
-    }
+    private readonly DbWriterService dbWriterService = Substitute.For<DbWriterService>();
 
     [Fact]
     public void BuildLeagueReport_Always_ReturnDataReport()
@@ -33,35 +28,37 @@ public class DataReportServiceUnitTests
     }
 
     public List<LeagueInfo> MockLeagueInfo()
-      => new()
-      {
-          new LeagueInfo
+      =>
+      [
+          new()
           {
               EventDate = new DateTime(2020, 10, 2),
               GroupId = 0,
               OwpLeagueId = 1,
               UserId = 8
           },
-          new LeagueInfo
+
+          new()
           {
               EventDate = new DateTime(2020, 10, 2),
               GroupId = 0,
               OwpLeagueId = 1,
               UserId = 12
           },
-          new LeagueInfo
+
+          new()
           {
               EventDate = new DateTime(2020, 10, 2),
               GroupId = 0,
               OwpLeagueId = 10,
               UserId = 8
           }
-      };
+      ];
 
     public List<DataReport> MockExpected()
-      => new()
-      {
-          new DataReport
+      =>
+      [
+          new()
           {
               UserId = 8,
               Amount = 2,
@@ -69,7 +66,8 @@ public class DataReportServiceUnitTests
               EventDate = new DateTime(2020, 10, 2),
               GroupId = 0
           },
-          new DataReport
+
+          new()
           {
               UserId = 12,
               Amount = 1,
@@ -77,5 +75,5 @@ public class DataReportServiceUnitTests
               EventDate = new DateTime(2020, 10, 2),
               GroupId = 0
           }
-      };
+      ];
 }

@@ -19,15 +19,8 @@ public interface Repository
     Task<TimeSpan?> QueryExistedStartTime(DateTime eventDate);
 }
 
-public class RepositoryImp : Repository
+public class RepositoryImp(IDynamicRepository repository) : Repository
 {
-    private readonly IDynamicRepository repository;
-
-    public RepositoryImp(IDynamicRepository repository)
-    {
-        this.repository = repository;
-    }
-
     public async Task<IList<LeagueInfo>> GetLeagueByDateAndBettype(DateTime eventDate, int bettype)
     {
         var command = new GetLeagueCriteria

@@ -7,17 +7,8 @@ using SumReport.MatchLiveReport.Services;
 using SumReport.Services;
 
 [DisallowConcurrentExecution]
-public class SumMatchLiveReportJob : IJob
+public class SumMatchLiveReportJob(CacheManipulator cacheManipulator, ReportService service) : IJob
 {
-    private readonly ReportService service;
-    private readonly CacheManipulator cacheManipulator;
-
-    public SumMatchLiveReportJob(CacheManipulator cacheManipulator, ReportService service)
-    {
-        this.cacheManipulator = cacheManipulator;
-        this.service = service;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
         try

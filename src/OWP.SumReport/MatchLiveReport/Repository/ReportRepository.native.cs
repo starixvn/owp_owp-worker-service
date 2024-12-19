@@ -14,15 +14,8 @@ public interface ReportRepository
     Task<IEnumerable<int>> GetSaba5MinOwpMatchId(IList<int> ids);
 }
 
-public class ReportRepositoryImp : ReportRepository
+public class ReportRepositoryImp(IDynamicRepository dynamicRepository) : ReportRepository
 {
-    private readonly IDynamicRepository dynamicRepository;
-
-    public ReportRepositoryImp(IDynamicRepository dynamicRepository)
-    {
-        this.dynamicRepository = dynamicRepository;
-    }
-
     public async Task InsertData(IEnumerable<ReportModel> reportData, DateTime eventDate)
         => await dynamicRepository.ExecuteAsync(new InsertReportDataCriteria { Data = XmlConverter.Serialize(reportData), EventDate = eventDate });
 

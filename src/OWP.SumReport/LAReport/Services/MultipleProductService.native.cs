@@ -9,15 +9,8 @@ public interface MultipleProductService
     void SumUp(IList<Assignment> assignments, LaReportModel report);
 }
 
-public class MultipleProductServiceImp : MultipleProductService
+public class MultipleProductServiceImp(IMapper mapper) : MultipleProductService
 {
-    private readonly IMapper mapper;
-
-    public MultipleProductServiceImp(IMapper mapper)
-    {
-        this.mapper = mapper;
-    }
-
     public void SumUp(IList<Assignment> assignments, LaReportModel report)
     {
         SplitSingleAssignment(assignments);

@@ -11,15 +11,8 @@ public interface DbWriterService
     Task InsertMatch(IList<DataReport> dataReports);
 }
 
-public class DbWriterServiceImp : DbWriterService
+public class DbWriterServiceImp(Repository repository) : DbWriterService
 {
-    private readonly Repository repository;
-
-    public DbWriterServiceImp(Repository repository)
-    {
-        this.repository = repository;
-    }
-
     public async Task InsertLeague(IList<DataReport> dataReports)
     {
         var criteria = new InsertLeagueDataReportCriteria

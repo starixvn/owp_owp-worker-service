@@ -18,9 +18,12 @@ public class SpecialProductRule
 
 public class NotCornerRule : SpecialProductRule
 {
-    private readonly int[] cornerBettypeArray = { BettypeConst.NextCorner, BettypeConst.NoOfCorner, BettypeConst.NoOfCorner15Mins };
-    private readonly int[] bookingBettypeArray = { BettypeConst.NextBooking, BettypeConst.TotalBooking, BettypeConst.TotalBooking15Mins };
-    private readonly int[] goalKickBettypeArray = { BettypeConst.LastGoalKick, BettypeConst.NextGoalKick, BettypeConst.SecondHaft1StGoalKick };
+    private readonly int[] cornerBettypeArray = [BettypeConst.NextCorner, BettypeConst.NoOfCorner, BettypeConst.NoOfCorner15Mins
+    ];
+    private readonly int[] bookingBettypeArray = [BettypeConst.NextBooking, BettypeConst.TotalBooking, BettypeConst.TotalBooking15Mins
+    ];
+    private readonly int[] goalKickBettypeArray = [BettypeConst.LastGoalKick, BettypeConst.NextGoalKick, BettypeConst.SecondHaft1StGoalKick
+    ];
 
     public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
     {
@@ -43,7 +46,8 @@ public class NotCornerRule : SpecialProductRule
 
 public class IsCornerRule : SpecialProductRule
 {
-    private readonly int[] cornerBettypeArray = { BettypeConst.NextCorner, BettypeConst.NoOfCorner, BettypeConst.NoOfCorner15Mins };
+    private readonly int[] cornerBettypeArray = [BettypeConst.NextCorner, BettypeConst.NoOfCorner, BettypeConst.NoOfCorner15Mins
+    ];
     private static bool IsMajorCornerLeague(string leagueName)
         => MajorLeague.MajorLeagueCornerList.Exists(x => x == leagueName);
     public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)

@@ -13,15 +13,8 @@ public interface ArchiveDataService
     Task DeleteOldNoOfferMatch(DateTime today);
 }
 
-public class ArchiveDataServiceImp : ArchiveDataService
+public class ArchiveDataServiceImp(Repository repository) : ArchiveDataService
 {
-    private readonly Repository repository;
-
-    public ArchiveDataServiceImp(Repository repository)
-    {
-        this.repository = repository;
-    }
-
     public async Task CopyDataToOldTable(DateTime date)
     {
         var copyingDate = date.AddDays(-35);

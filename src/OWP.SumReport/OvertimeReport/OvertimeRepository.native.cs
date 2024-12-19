@@ -14,22 +14,15 @@ public interface OvertimeRepository
     Task SaveData(DateTime date, IEnumerable<OvertimeData> data);
 }
 
-public class OvertimeRepositoryImp : OvertimeRepository
+public class OvertimeRepositoryImp(IDynamicRepository dynamicRepository) : OvertimeRepository
 {
-    private readonly IDynamicRepository repository;
-
-    public OvertimeRepositoryImp(IDynamicRepository dynamicRepository)
-    {
-        repository = dynamicRepository;
-    }
-
     public async Task<IEnumerable<EmployeeWorkingShift>> GetEmployeeWorkingShift(DateTime date, bool isGenerateData)
-        => await repository.FetchAsync<EmployeeWorkingShift>(isGenerateData
+        => await dynamicRepository.FetchAsync<EmployeeWorkingShift>(isGenerateData
             ? new GetOldAndNewEmployeeWorkingShiftCriteria { EventDate = date }
             : new GetEmployeeWorkingShiftCriteria { EventDate = date });
 
     public async Task<(IEnumerable<Assignment>, IEnumerable<MainMatch>)> GetTradersAssignments(DateTime date, IEnumerable<int> userIds, bool isGenerateData)
-        => await repository.FetchMultipleAsync<Assignment, MainMatch>(isGenerateData
+        => await dynamicRepository.FetchMultipleAsync<Assignment, MainMatch>(isGenerateData
         ? new GetGetOldAndNewTradersAssignmentsCriteria
         {
             EventDate = date,
@@ -43,7 +36,7 @@ public class OvertimeRepositoryImp : OvertimeRepository
 
     public async Task SaveData(DateTime date, IEnumerable<OvertimeData> data)
     {
-        await repository.ExecuteAsync(new SaveOvertimeReportCriteria
+        await dynamicRepository.ExecuteAsync(new SaveOvertimeReportCriteria
         {
             EventDate = date,
             Data = XmlConverter.Serialize(data)

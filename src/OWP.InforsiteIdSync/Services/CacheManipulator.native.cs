@@ -14,19 +14,12 @@ public interface CacheManipulator
     Task SaveOldAssignmentSnapshot(string sessionId, AssignmentSnapshot assignmentSnapshot);
 }
 
-internal class CacheManipulatorImp : CacheManipulator
+internal class CacheManipulatorImp(ICache cache) : CacheManipulator
 {
-    private readonly ICache cache;
-
-    public CacheManipulatorImp(ICache cache)
-    {
-        this.cache = cache;
-    }
-
     public async Task<List<MatchKickoffDate>> GetDeletedMatches()
     {
         var cacheResult = await cache.TryGetAsync<List<MatchKickoffDate>>(CacheKey.KeyDeletedInfoSiteMatchId);
-        var matches = cacheResult.Item2 ?? new List<MatchKickoffDate>();
+        var matches = cacheResult.Item2 ?? [];
         return matches.Where(m => m.MatchId > 0).ToList();
     }
 
@@ -34,7 +27,7 @@ internal class CacheManipulatorImp : CacheManipulator
     {
         var expiredDate = DateTime.Today;
         var cacheResult = await cache.TryGetAsync<List<MatchKickoffDate>>(CacheKey.KeyDeletedInfoSiteMatchId);
-        var currentMatches = cacheResult.Item2 ?? new List<MatchKickoffDate>();
+        var currentMatches = cacheResult.Item2 ?? [];
         var remainMatches = currentMatches
             .Where(m => m.KickoffDate >= expiredDate)
             .Where(m => !synchronizedMatches.Select(x => (x.Item1, x.Item2)).Contains((m.MatchId, m.MinorBettypeId)))

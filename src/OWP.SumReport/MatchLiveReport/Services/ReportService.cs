@@ -14,15 +14,8 @@ public interface ReportService
     IEnumerable<ReportModel> Calculate(DateTime eventDate, IList<OwpMatch> minorMatches, IList<OwpMatch> mainMatches, IList<OwpMatch> sabaMatches);
 }
 
-public class ReportServiceImp : ReportService
+public class ReportServiceImp(ReportRepository reportRepository) : ReportService
 {
-    private readonly ReportRepository reportRepository;
-
-    public ReportServiceImp(ReportRepository reportRepository)
-    {
-        this.reportRepository = reportRepository;
-    }
-
     public async Task Calculate(DateTime eventDate, bool isGenerateData = false)
     {
         var matchesByDate = await reportRepository.QueryMatchesByDate(eventDate, isGenerateData);

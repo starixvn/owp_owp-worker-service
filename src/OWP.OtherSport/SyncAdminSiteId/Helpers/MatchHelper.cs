@@ -45,7 +45,7 @@ public static class MatchHelper
                 owpMatch.IsLinked = true;
                 return CreateLinkedMatchObject(owpMatch, adminSiteMatch);
             }).ToList();
-        return linkedMatches ?? new List<LinkedMatch>();
+        return linkedMatches ?? [];
     }
     private static IList<LinkedMatch> GetNewLinkedMatches_Rule_1_2_4(IList<Match> owpMatches, IList<Match> adminSiteMatches, Func<Match, Match, bool> funcCondition)
     {
@@ -61,7 +61,7 @@ public static class MatchHelper
                owpMatch.IsLinked = true;
                return CreateLinkedMatchObject(owpMatch, selectAdminSiteMatch);
            }).ToList();
-        return linkedMatches ?? new List<LinkedMatch>();
+        return linkedMatches ?? [];
     }
 
     private static LinkedMatch CreateLinkedMatchObject(Match owpMatch, Match adminSiteMatch)

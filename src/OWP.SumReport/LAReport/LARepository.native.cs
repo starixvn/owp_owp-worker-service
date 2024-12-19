@@ -14,15 +14,8 @@ public interface LaRepository
     Task<Dictionary<int, string>> GetUserSection();
 }
 
-public class LaRepositoryImp : LaRepository
+public class LaRepositoryImp(IDynamicRepository repository) : LaRepository
 {
-    private readonly IDynamicRepository repository;
-
-    public LaRepositoryImp(IDynamicRepository repository)
-    {
-        this.repository = repository;
-    }
-
     public async Task Update(DateTime eventDate, IEnumerable<LaReportModel> laReportModels)
     {
         var command = new SumLaReportCommand

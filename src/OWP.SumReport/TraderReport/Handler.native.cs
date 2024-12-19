@@ -7,19 +7,9 @@ public interface Handler
     Task Handle(DateTime eventDate, bool isGenerateData = false);
 }
 
-public class HandlerImp : Handler
+public class HandlerImp(TraderRepository repository, RobotService robotService, ESoccerService eSoccerService)
+    : Handler
 {
-    private readonly TraderRepository repository;
-    private readonly RobotService robotService;
-    private readonly ESoccerService eSoccerService;
-
-    public HandlerImp(TraderRepository repository, RobotService robotService, ESoccerService eSoccerService)
-    {
-        this.repository = repository;
-        this.robotService = robotService;
-        this.eSoccerService = eSoccerService;
-    }
-
     public async Task Handle(DateTime eventDate, bool isGenerateData = false)
     {
         var robotByByUsers = await robotService.SumRobotFields(eventDate, isGenerateData);

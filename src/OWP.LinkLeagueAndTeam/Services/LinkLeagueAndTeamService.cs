@@ -7,17 +7,9 @@ public interface LinkLeagueAndTeamService
     Task Execute();
 }
 
-public class LinkLeagueAndTeamServiceImp : LinkLeagueAndTeamService
+public class LinkLeagueAndTeamServiceImp(CacheManipulator cache, LinkLeagueAndTeamRepository repository)
+    : LinkLeagueAndTeamService
 {
-    private readonly CacheManipulator cache;
-    private readonly LinkLeagueAndTeamRepository repository;
-
-    public LinkLeagueAndTeamServiceImp(CacheManipulator cache, LinkLeagueAndTeamRepository repository)
-    {
-        this.cache = cache;
-        this.repository = repository;
-    }
-
     public async Task Execute()
     {
         var timeRange = await PreExecute();

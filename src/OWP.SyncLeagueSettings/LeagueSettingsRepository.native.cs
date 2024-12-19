@@ -17,15 +17,8 @@ public interface LeagueSettingsRepository
     Task UpdateLeagueSettingFullCondition(LeagueSettingCondition model);
 }
 
-public class LeagueSettingsRepositoryImp : LeagueSettingsRepository
+public class LeagueSettingsRepositoryImp(IDynamicRepository dynamicRepository) : LeagueSettingsRepository
 {
-    private readonly IDynamicRepository dynamicRepository;
-
-    public LeagueSettingsRepositoryImp(IDynamicRepository dynamicRepository)
-    {
-        this.dynamicRepository = dynamicRepository;
-    }
-
     public async Task<Tuple<IEnumerable<Match>, IEnumerable<MatchSetting>>> GetMatchesAndSettings(DateTime eventDate)
     {
         var criteria = new GetMatchesCriteria

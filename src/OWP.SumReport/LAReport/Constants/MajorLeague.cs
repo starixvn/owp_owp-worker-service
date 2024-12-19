@@ -11,7 +11,7 @@ public static class MajorLeague
         "*SPAIN PRIMERA LALIGA - CORNERS",
         "*UEFA CHAMPIONS LEAGUE - CORNERS",
         "*UEFA EURO 2024 (IN GERMANY) - CORNERS",
-        "*COPA AMERICA 2024 (IN USA) - CORNERS",
+        "*COPA AMERICA 2024 (IN USA) - CORNERS"
     }.ToImmutableList();
 
     public static readonly ImmutableList<string> MajorLeagueList = new List<string>{

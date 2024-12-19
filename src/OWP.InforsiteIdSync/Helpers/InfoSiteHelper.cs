@@ -33,7 +33,7 @@ public static class InfoSiteHelper
         var matchesWithSameLeagueKickoffTimeAndAnyTeam = MapMatchWithSameLeagueKickoffTimeAndSwapTeam(owpMatch, infositeMatches);
         return matchesWithSameLeagueKickoffTimeAndAnyTeam.Count == 1 
             ? matchesWithSameLeagueKickoffTimeAndAnyTeam 
-            : new List<MatchMappingWithInfosite>();
+            : [];
     }
 
     public static List<MatchMappingWithInfosite> MapMatchWithSameLeagueHomeAndAway(OwpMatch owpMatch, List<InfositeMatch> infositeMatches)

@@ -22,15 +22,8 @@ public interface TraderRepository
     Task UpdateFTOtherFields(DateTime eventDate);
 }
 
-public class TraderRepositoryImp : TraderRepository
+public class TraderRepositoryImp(IDynamicRepository repository) : TraderRepository
 {
-    private readonly IDynamicRepository repository;
-
-    public TraderRepositoryImp(IDynamicRepository repository)
-    {
-        this.repository = repository;
-    }
-
     public async Task UpdateNoneRobotFields(DateTime eventDate)
     {
         var command = new UpdateNonRobotFieldsCommand

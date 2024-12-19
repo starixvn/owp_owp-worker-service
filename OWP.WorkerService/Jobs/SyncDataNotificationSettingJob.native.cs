@@ -5,15 +5,8 @@ using Infosite.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]
-public class SyncDataNotificationSettingJob : IJob
+public class SyncDataNotificationSettingJob(NapUserControlService napUserControlService) : IJob
 {
-    private readonly NapUserControlService napUserControlService;
-
-    public SyncDataNotificationSettingJob(NapUserControlService napUserControlService)
-    {
-        this.napUserControlService = napUserControlService;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
         try

@@ -13,30 +13,14 @@ public interface SyncEventDeletedService
     Task Sync();
 }
 
-public class SyncEventDeletedServiceImp : SyncEventDeletedService
+public class SyncEventDeletedServiceImp(
+    DateTimeService dateTimeService,
+    ApiService apiService,
+    IDynamicRepository repository,
+    ILogger logger)
+    : SyncEventDeletedService
 {
-    private readonly ApiService apiService;
-
-    private readonly IDynamicRepository repository;
-
-    private readonly ILogger logger;
-
-    private readonly DateTimeService dateTimeService;
-
-    private string currentDeletedMatchIds;
-
-    public SyncEventDeletedServiceImp(
-      DateTimeService dateTimeService,
-      ApiService apiService,
-      IDynamicRepository repository,
-      ILogger logger)
-    {
-        this.dateTimeService = dateTimeService;
-        this.apiService = apiService;
-        this.repository = repository;
-        this.logger = logger;
-        currentDeletedMatchIds = string.Empty;
-    }
+    private string currentDeletedMatchIds = string.Empty;
 
     public async Task Sync()
     {

@@ -16,15 +16,8 @@ public interface Repository
     Task DeleteOldNoOfferMatch(DateTime date);
 }
 
-public class RepositoryImp : Repository
+public class RepositoryImp(IDynamicRepository repository) : Repository
 {
-    private readonly IDynamicRepository repository;
-
-    public RepositoryImp(IDynamicRepository repository)
-    {
-        this.repository = repository;
-    }
-
     public async Task CopyDataToOldTable(DateTime date)
     {
         var criteria = new CopyDataToOldTableCriteria

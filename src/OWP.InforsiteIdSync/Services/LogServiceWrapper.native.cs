@@ -4,7 +4,7 @@ using System.Text;
 using Fanex.Logging;
 using Newtonsoft.Json;
 using OWP.Infosite.Models;
-using OWP.InfositeIdSync.Models;
+using Models;
 
 public interface LogServiceWrapper
 {

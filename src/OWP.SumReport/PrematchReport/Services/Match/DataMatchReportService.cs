@@ -9,17 +9,8 @@ public interface DataMatchReportService
     Task InsertMatchReport(IList<DataReport> dataReports);
 }
 
-public class DataMatchReportServiceImp : DataMatchReportService
+public class DataMatchReportServiceImp(Repository repository, DbWriterService dbWriterService) : DataMatchReportService
 {
-    private readonly Repository repository;
-    private readonly DbWriterService dbWriterService;
-
-    public DataMatchReportServiceImp(Repository repository, DbWriterService dbWriterService)
-    {
-        this.repository = repository;
-        this.dbWriterService = dbWriterService;
-    }
-
     public async Task<IList<DataReport>> BuildMatchReport(IList<LeagueDetailInfo> leagueDetailInfos, DateTime eventDate, TimeSpan? startNightShift, int bettype)
     {
         var preMatchLeagueIds = leagueDetailInfos.Select(i => i.PreMatchLeagueId).ToList();

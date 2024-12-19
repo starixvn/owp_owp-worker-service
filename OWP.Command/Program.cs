@@ -15,6 +15,7 @@ using OWP.InfositeIdSync;
 using OWP.LinkLeagueAndTeam;
 using OWP.MatchReadyNotification;
 using OWP.OtherSport;
+using OWP.Provider;
 using OWP.RabbitMq;
 using OWP.RabbitMq.Models;
 using OWP.SumReport;

@@ -12,10 +12,8 @@ public interface LeagueSettingsService
     List<LeagueSetting> CreateNewLeaguesSettings(DateTime date, IList<Match> matches, IList<TvCondition> tvConditions);
 }
 
-public class LeagueSettingsServiceImp : LeagueSettingsService
+public class LeagueSettingsServiceImp(LeagueSettingsRepository repository) : LeagueSettingsService
 {
-    private readonly LeagueSettingsRepository repository;
-
     private static readonly Dictionary<decimal, decimal> MaxBetSetting =
         new()
         {
@@ -50,11 +48,6 @@ public class LeagueSettingsServiceImp : LeagueSettingsService
             { 3000, 2000 },
             { 2000, 2000 }
         };
-
-    public LeagueSettingsServiceImp(LeagueSettingsRepository repository)
-    {
-        this.repository = repository;
-    }
 
     public async Task InsertNewLeagueSettings(DateTime date)
     {

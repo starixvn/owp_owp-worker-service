@@ -5,15 +5,8 @@ using Fanex.Logging;
 using Quartz;
 
 [DisallowConcurrentExecution]
-public class ArchiveOldMessageJob : IJob
+public class ArchiveOldMessageJob(ArchiveDataService archiveDataService) : IJob
 {
-    private readonly ArchiveDataService archiveDataService;
-
-    public ArchiveOldMessageJob(ArchiveDataService archiveDataService)
-    {
-        this.archiveDataService = archiveDataService;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
         try

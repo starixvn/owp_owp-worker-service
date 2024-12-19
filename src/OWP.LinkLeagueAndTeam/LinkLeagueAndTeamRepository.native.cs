@@ -11,15 +11,8 @@ public interface LinkLeagueAndTeamRepository
     Task InsertOrUpdateTeamInfo(TeamInfo teamInfo);
 }
 
-public class LinkLeagueAndTeamRepositoryImp : LinkLeagueAndTeamRepository
+public class LinkLeagueAndTeamRepositoryImp(IDynamicRepository repository) : LinkLeagueAndTeamRepository
 {
-    private readonly IDynamicRepository repository;
-
-    public LinkLeagueAndTeamRepositoryImp(IDynamicRepository repository)
-    {
-        this.repository = repository;
-    }
-
     public async Task<IList<TeamInfo>> GetTeamInfoInTimeRange(DateTime from, DateTime to)
     {
         var command = new GetTeamInfoInTimeRangeCriteria

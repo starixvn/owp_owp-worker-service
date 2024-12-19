@@ -17,18 +17,11 @@ public interface SyncChildMatchService
     Task Sync(DateTime date);
 }
 
-public class SyncChildMatchServiceImp : SyncChildMatchService
+public class SyncChildMatchServiceImp(IOptions<InfoSiteSettings> infoSiteSettings, IDynamicRepository repository)
+    : SyncChildMatchService
 {
-    private readonly InfoSiteSettings infoSiteSettings;
-    private readonly PullingChildMatch pullingChildMatch;
-    private readonly IDynamicRepository repository;
-
-    public SyncChildMatchServiceImp(IOptions<InfoSiteSettings> infoSiteSettings, IDynamicRepository repository)
-    {
-        this.infoSiteSettings = infoSiteSettings.Value;
-        pullingChildMatch = new PullingChildMatch();
-        this.repository = repository;
-    }
+    private readonly InfoSiteSettings infoSiteSettings = infoSiteSettings.Value;
+    private readonly PullingChildMatch pullingChildMatch = new();
 
     public async Task Sync(DateTime date)
     {

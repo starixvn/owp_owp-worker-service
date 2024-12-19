@@ -1,15 +1,9 @@
 ﻿namespace OWP.Infosite.Models;
 
 [Serializable]
-public class MatchRelationEvent
+public class MatchRelationEvent(MatchRelation matchRelation)
 {
-    public MatchRelationEvent(MatchRelation matchRelation)
-    {
-        InfositeMatchId = matchRelation.match_id;
-        ParentMatchId = matchRelation.parent_match_id;
-    }
+    public int InfositeMatchId { get; set; } = matchRelation.match_id;
 
-    public int InfositeMatchId { get; set; }
-
-    public int ParentMatchId { get; set; }
+    public int ParentMatchId { get; set; } = matchRelation.parent_match_id;
 }

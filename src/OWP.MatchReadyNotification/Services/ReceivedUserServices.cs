@@ -14,15 +14,8 @@ public interface ReceivedUserServices
     List<Assignee> GetReceivedUsersOfMatch(List<Assignee> assignees, Dictionary<int, List<Assignee>> allReceivedUsers);
 }
 
-public class ReceivedUserServicesImp : ReceivedUserServices
+public class ReceivedUserServicesImp(MatchReadyRepository matchReadyRepository) : ReceivedUserServices
 {
-    private readonly MatchReadyRepository matchReadyRepository;
-
-    public ReceivedUserServicesImp(MatchReadyRepository matchReadyRepository)
-    {
-        this.matchReadyRepository = matchReadyRepository;
-    }
-
     public List<Assignee> GetAllAssignees(AssignmentSnapshot snapshot)
     {
         return snapshot.Assignments.SelectMany(o => o.Value).Select(x => new Assignee
@@ -66,7 +59,7 @@ public class ReceivedUserServicesImp : ReceivedUserServices
 
     public List<Assignee> GetReceivedUsersOfMatch(List<Assignee> assignees, Dictionary<int, List<Assignee>> allReceivedUsers)
     {
-        return assignees.Select(a => allReceivedUsers.GetValue(a.AssigneeId, new List<Assignee>()))
+        return assignees.Select(a => allReceivedUsers.GetValue(a.AssigneeId, []))
             .SelectMany(a => a)
             .Distinct(new Assignee())
             .ToList();

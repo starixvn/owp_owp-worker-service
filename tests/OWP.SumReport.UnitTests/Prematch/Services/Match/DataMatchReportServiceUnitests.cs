@@ -10,14 +10,8 @@ using Xunit.Asserts.Compare;
 
 public class DataMatchReportServiceUnitTests
 {
-    private readonly Repository repository;
-    private readonly DbWriterService dbWriterService;
-
-    public DataMatchReportServiceUnitTests()
-    {
-        repository = Substitute.For<Repository>();
-        dbWriterService = Substitute.For<DbWriterService>();
-    }
+    private readonly Repository repository = Substitute.For<Repository>();
+    private readonly DbWriterService dbWriterService = Substitute.For<DbWriterService>();
 
     [Fact]
     public async Task BuildMatchReport_Always_ReturnDataReport()
@@ -37,9 +31,9 @@ public class DataMatchReportServiceUnitTests
     }
 
     public List<LeagueDetailInfo> MockLeagueDetailInfo()
-        => new()
-        {
-            new LeagueDetailInfo
+        =>
+        [
+            new()
             {
                 EventDate = new DateTime(2020, 10, 2),
                 GroupId = 0,
@@ -48,7 +42,8 @@ public class DataMatchReportServiceUnitTests
                 PreMatchLeagueId = 1,
                 UserId = 8
             },
-            new LeagueDetailInfo
+
+            new()
             {
                 EventDate = new DateTime(2020, 10, 2),
                 GroupId = 0,
@@ -57,7 +52,8 @@ public class DataMatchReportServiceUnitTests
                 PreMatchLeagueId = 1,
                 UserId = 8
             },
-            new LeagueDetailInfo
+
+            new()
             {
                 EventDate = new DateTime(2020, 10, 2),
                 GroupId = 0,
@@ -66,7 +62,8 @@ public class DataMatchReportServiceUnitTests
                 PreMatchLeagueId = 1,
                 UserId = 8
             },
-            new LeagueDetailInfo
+
+            new()
             {
                 EventDate = new DateTime(2020, 10, 2),
                 GroupId = 0,
@@ -75,7 +72,8 @@ public class DataMatchReportServiceUnitTests
                 PreMatchLeagueId = 1,
                 UserId = 8
             },
-            new LeagueDetailInfo
+
+            new()
             {
                 EventDate = new DateTime(2020, 10, 2),
                 GroupId = 0,
@@ -84,7 +82,8 @@ public class DataMatchReportServiceUnitTests
                 PreMatchLeagueId = 1,
                 UserId = 12
             },
-            new LeagueDetailInfo
+
+            new()
             {
                 EventDate = new DateTime(2020, 10, 2),
                 GroupId = 1,
@@ -93,7 +92,8 @@ public class DataMatchReportServiceUnitTests
                 PreMatchLeagueId = 1,
                 UserId = 8
             },
-            new LeagueDetailInfo
+
+            new()
             {
                 EventDate = new DateTime(2020, 10, 2),
                 GroupId = 2,
@@ -102,77 +102,86 @@ public class DataMatchReportServiceUnitTests
                 PreMatchLeagueId = 3,
                 UserId = 8
             }
-        };
+        ];
 
     public List<TotalDataMatch> MockTotalDataMatch()
-         => new()
-         {
-             new TotalDataMatch
+         =>
+         [
+             new()
              {
                  OwpLeagueId = 1,
                  IsMatchDay = true,
                  Total = 1
              },
-             new TotalDataMatch
+
+             new()
              {
                  OwpLeagueId = 1,
                  IsMatchDay = false,
                  Total = 2
              },
-             new TotalDataMatch
+
+             new()
              {
                  OwpLeagueId = 10,
                  Total = 8,
                  IsMatchDay = true
              },
-             new TotalDataMatch
+
+             new()
              {
                  OwpLeagueId = 10,
                  Total = 9,
                  IsMatchDay = false
              },
-             new TotalDataMatch
+
+             new()
              {
                  OwpLeagueId = 2,
                  Total = 1,
                  IsMatchDay = true
              },
-             new TotalDataMatch
+
+             new()
              {
                  OwpLeagueId = 2,
                  Total = 5,
                  IsMatchDay = false
              },
-             new TotalDataMatch
+
+             new()
              {
                  OwpLeagueId = 3,
                  IsMatchDay = true,
                  Total = 2
              },
-             new TotalDataMatch
+
+             new()
              {
                  OwpLeagueId = 3,
                  IsMatchDay = false,
                  Total = 6
              },
-             new TotalDataMatch
+
+             new()
              {
                  OwpLeagueId = 4,
                  IsMatchDay = true,
                  Total = 3
              },
-             new TotalDataMatch
+
+             new()
              {
                  OwpLeagueId = 4,
                  IsMatchDay = false,
                  Total = 30
              }
-         };
+         ];
 
     public List<DataReport> MockExpected()
-     => new()
-     {
-         new DataReport
+     =>
+     [
+         new()
          {
              UserId = 8,
              Amount = 11,
@@ -180,7 +189,8 @@ public class DataMatchReportServiceUnitTests
              EventDate = new DateTime(2020, 10, 2),
              GroupId = 0
          },
-         new DataReport
+
+         new()
          {
              UserId = 12,
              Amount = 1,
@@ -188,7 +198,8 @@ public class DataMatchReportServiceUnitTests
              EventDate = new DateTime(2020, 10, 2),
              GroupId = 0
          },
-         new DataReport
+
+         new()
          {
              UserId = 8,
              Amount = 2,
@@ -196,7 +207,8 @@ public class DataMatchReportServiceUnitTests
              GroupId = 1,
              EventDate = new DateTime(2020, 10, 2)
          },
-         new DataReport
+
+         new()
          {
              UserId = 8,
              Amount = 30,
@@ -204,5 +216,5 @@ public class DataMatchReportServiceUnitTests
              GroupId = 2,
              EventDate = new DateTime(2020, 10, 2)
          }
-     };
+     ];
 }

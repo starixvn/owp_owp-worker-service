@@ -11,26 +11,13 @@ public interface SyncInfositeIdService
     Task Sync();
 }
 
-public class SynInfositeIdServiceImp : SyncInfositeIdService
+public class SynInfositeIdServiceImp(
+    InfositeIdMappingRepository repository,
+    DateTimeService dateTimeService,
+    CacheManipulator cacheManipulator,
+    RabbitMqClient rabbitMqClient)
+    : SyncInfositeIdService
 {
-    private readonly InfositeIdMappingRepository repository;
-    private readonly DateTimeService dateTimeService;
-    private readonly CacheManipulator cacheManipulator;
-
-    private readonly RabbitMqClient rabbitMqClient;
-
-    public SynInfositeIdServiceImp(
-        InfositeIdMappingRepository repository,
-        DateTimeService dateTimeService,
-        CacheManipulator cacheManipulator,
-        RabbitMqClient rabbitMqClient)
-    {
-        this.repository = repository;
-        this.dateTimeService = dateTimeService;
-        this.cacheManipulator = cacheManipulator;
-        this.rabbitMqClient = rabbitMqClient;
-    }
-
     public async Task Sync()
     {
         var owpMatches = await repository.QueryUnmappingOwpMatch();

@@ -10,21 +10,9 @@ public interface NapUserControlService
     Task SynDataFunctionPermissionAsync();
 }
 
-public class NapUserControlServiceImp : NapUserControlService
+public class NapUserControlServiceImp(IDynamicRepository repository, IUserService userService, INapSettings napSettings)
+    : NapUserControlService
 {
-    private readonly IDynamicRepository repository;
-
-    private readonly IUserService userService;
-
-    private readonly INapSettings napSettings;
-
-    public NapUserControlServiceImp(IDynamicRepository repository, IUserService userService, INapSettings napSettings)
-    {
-        this.repository = repository;
-        this.userService = userService;
-        this.napSettings = napSettings;
-    }
-
     public async Task SynDataFunctionPermissionAsync()
     {
         const string functionKey = "NotificationSettingWatcher";
