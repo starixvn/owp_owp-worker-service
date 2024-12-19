@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <SonarQubeExclude>True</SonarQubeExclude>
   </PropertyGroup>
@@ -28,8 +28,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Fanex.Caching.Redis" Version="2.2.4" />
-    <PackageReference Include="Fanex.Logging.Sentry.RavenClient" Version="1.0.1.2" />
+    <PackageReference Include="Fanex.Caching.Redis" Version="2.2.7" />
+    <PackageReference Include="Fanex.Logging.Sentry.RavenClient" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
 		<ProjectReference Include="..\src\OWP.Provider\OWP.Provider.csproj" />

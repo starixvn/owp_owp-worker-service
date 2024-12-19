@@ -17,7 +17,6 @@ public class HandlerIntegrationUnitTests
         cache = Substitute.For<ICache>();
     }
 
-    [Fact]
     private HandlerImp Create()
     {
         var matchReadyRepository = new MatchReadyRepositoryImp(repository);
