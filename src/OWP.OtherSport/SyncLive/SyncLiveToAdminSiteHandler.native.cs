@@ -9,24 +9,12 @@ public interface SyncLiveToAdminSiteHandler
     Task Handle(IList<Match> adminSiteMatches, IList<Match> owpMatches, DateTime eventDate);
 }
 
-public class SyncLiveToAdminSiteHandlerImp : SyncLiveToAdminSiteHandler
+public class SyncLiveToAdminSiteHandlerImp(
+    EditEventGenerator editEventGenerator,
+    ApiService apiService,
+    CacheManipulator cacheManipulator)
+    : SyncLiveToAdminSiteHandler
 {
-    private readonly EditEventGenerator editEventGenerator;
-
-    private readonly ApiService apiService;
-
-    private readonly CacheManipulator cacheManipulator;
-
-    public SyncLiveToAdminSiteHandlerImp(
-        EditEventGenerator editEventGenerator,
-        ApiService apiService,
-        CacheManipulator cacheManipulator)
-    {
-        this.editEventGenerator = editEventGenerator;
-        this.apiService = apiService;
-        this.cacheManipulator = cacheManipulator;
-    }
-
     public async Task Handle(IList<Match> adminSiteMatches, IList<Match> owpMatches, DateTime eventDate)
     {
         var deletedMatches = await cacheManipulator.GetDeletedMatches();

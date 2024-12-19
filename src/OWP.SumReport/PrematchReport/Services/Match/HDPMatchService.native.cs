@@ -7,18 +7,9 @@ public interface HdpMatchService
     Task BuildSingleHdpMatchReport(DateTime eventDate, TimeSpan? startNightShift);
 }
 
-public class HdpMatchServiceImp : HdpMatchService
+public class HdpMatchServiceImp(Repository repository, DataMatchReportService dataMatchReportService)
+    : HdpMatchService
 {
-    private readonly Repository repository;
-
-    private readonly DataMatchReportService dataMatchReportService;
-
-    public HdpMatchServiceImp(Repository repository, DataMatchReportService dataMatchReportService)
-    {
-        this.repository = repository;
-        this.dataMatchReportService = dataMatchReportService;
-    }
-
     public async Task BuildSingleHdpMatchReport(DateTime eventDate, TimeSpan? startNightShift)
     {
         var leagueDetails = await repository.GetLeagueDetailByDate(eventDate, Constant.HdpId);

@@ -12,17 +12,9 @@ public interface SyncAdminSiteMatchesHandler
     Task Handle(DateTime eventDate);
 }
 
-public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
+public class SyncAdminSiteMatchesHandlerImp(IDynamicRepository repository, SyncLiveToAdminSiteHandler syncLiveService)
+    : SyncAdminSiteMatchesHandler
 {
-    private readonly IDynamicRepository dynamicRepository;
-    private readonly SyncLiveToAdminSiteHandler syncLiveService;
-
-    public SyncAdminSiteMatchesHandlerImp(IDynamicRepository repository, SyncLiveToAdminSiteHandler syncLiveService)
-    {
-        dynamicRepository = repository;
-        this.syncLiveService = syncLiveService;
-    }
-
     public async Task Handle(DateTime eventDate)
     {
         var owpMatches = await GetOwpMatches(eventDate);
@@ -42,10 +34,10 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
     }
     
     private async Task<IList<Match>> GetOwpMatches(DateTime eventDate)
-        => (await dynamicRepository.FetchAsync<Match>(new GetMatchesFromOwpCriteria { EventDate = eventDate })).ToList();
+        => (await repository.FetchAsync<Match>(new GetMatchesFromOwpCriteria { EventDate = eventDate })).ToList();
 
     private async Task<IList<Match>> GetAdminSiteMatches(DateTime eventDate)
-        => (await dynamicRepository.FetchAsync<Match>(new GetMatchesFromAdminSiteCriteria { EventDate = eventDate })).ToList();
+        => (await repository.FetchAsync<Match>(new GetMatchesFromAdminSiteCriteria { EventDate = eventDate })).ToList();
 
     private async Task UpdateUnlinkedMatches(IList<LinkedMatch> matches)
     {
@@ -55,7 +47,7 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
             {
                 UnlinkedMatches = XmlConverter.Serialize(matches)
             };
-            await dynamicRepository.ExecuteAsync(criteria);
+            await repository.ExecuteAsync(criteria);
         }
     }
 
@@ -67,7 +59,7 @@ public class SyncAdminSiteMatchesHandlerImp : SyncAdminSiteMatchesHandler
             {
                 LinkedMatches = XmlConverter.Serialize(matches)
             };
-            await dynamicRepository.ExecuteAsync(criteria);
+            await repository.ExecuteAsync(criteria);
         }
     }
 }

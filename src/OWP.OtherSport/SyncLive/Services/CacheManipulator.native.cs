@@ -13,29 +13,22 @@ public interface CacheManipulator
     Task SaveMathIdsDuplicatedSnapshot(IEnumerable<int> matchIds);
 }
 
-internal class CacheManipulatorImp : CacheManipulator
+internal class CacheManipulatorImp(ICache cache) : CacheManipulator
 {
-    private readonly ICache cache;
-
     private const string DeletedMatchKey = "OS-DELETED-MATCH";
 
     private const string KeyOsSyncAdminSiteId = "OWP-OS-MatchesHaveTheSameAdminSiteId";
 
     private const int AssignmentCacheExpiredInMinute = 3;
 
-    public CacheManipulatorImp(ICache cache)
-    {
-        this.cache = cache;
-    }
-
     public async Task<List<Match>> GetDeletedMatches()
     {
         var cacheResult = await cache.TryGetAsync<string>(DeletedMatchKey);
         var matches = !string.IsNullOrEmpty(cacheResult.Item2)
             ? JsonConvert.DeserializeObject<List<Match>>(cacheResult.Item2)
-            : new List<Match>();
+            : [];
 
-        matches ??= new List<Match>();
+        matches ??= [];
 
         return matches.Where(m => m.OsMatchId > 0).ToList();
     }

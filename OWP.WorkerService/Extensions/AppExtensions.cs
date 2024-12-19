@@ -8,7 +8,7 @@ public static class AppExtensions
     {
         var rabbitService = app.ApplicationServices.GetService<RabbitMqClient>();
         var lifetime = app.ApplicationServices.GetService<IHostApplicationLifetime>();
-        lifetime!.ApplicationStarted.Register(() => rabbitService!.ConnectRabbitMq());
+        lifetime!.ApplicationStarted.Register(() => rabbitService!.ConnectRabbitMq().ConfigureAwait(false));
 
         return app;
     }

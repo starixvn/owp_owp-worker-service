@@ -1,4 +1,4 @@
-﻿namespace OWP.Infosite.Modelsl;
+﻿namespace OWP.Infosite.Models;
 
 public class ProviderInfo
 {

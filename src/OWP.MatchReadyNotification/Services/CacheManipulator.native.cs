@@ -10,15 +10,8 @@ public interface CacheManipulator
     Task SaveLastTimeNotification(string lastTimeNotification);
 }
 
-public class CacheManipulatorImp : CacheManipulator
+public class CacheManipulatorImp(ICache cache) : CacheManipulator
 {
-    private readonly ICache cache;
-
-    public CacheManipulatorImp(ICache cache)
-    {
-        this.cache = cache;
-    }
-
     public async Task SaveLastTimeNotification(string lastTimeNotification)
     {
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(Constant.CacheExpiredInDays));

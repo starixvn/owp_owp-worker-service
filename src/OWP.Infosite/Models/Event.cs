@@ -191,7 +191,7 @@ public class Event
         => IsValidExtInfoMatch() && IsConfirmMatch();
 
     private bool IsValidExtInfoMatch()
-        => infositeMatch.ext_info is { rd_checked: { } }
+        => infositeMatch.ext_info is { rd_checked: not null }
            && infositeMatch.ext_info.rd_checked.Value
            && extInfo.sport_id == SoccerSportId;
 

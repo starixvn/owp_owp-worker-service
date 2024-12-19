@@ -10,15 +10,8 @@ public interface CacheManipulator
     Task RemoveLastDateOfSumData(string cacheKey);
 }
 
-public class CacheManipulatorImp : CacheManipulator
+public class CacheManipulatorImp(ICache cache) : CacheManipulator
 {
-    private readonly ICache cache;
-
-    public CacheManipulatorImp(ICache cache)
-    {
-        this.cache = cache;
-    }
-
     public async Task<(bool, DateTime)> GetLastDateForRegenerateData(string cacheKey)
     {
         var (found, value) = await cache.TryGetAsync<string>(cacheKey);

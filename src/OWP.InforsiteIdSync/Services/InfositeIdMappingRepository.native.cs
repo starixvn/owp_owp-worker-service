@@ -21,19 +21,12 @@ public interface InfositeIdMappingRepository
     Task<AssignmentSnapshot> QueryMatchesByDate(DateTime eventDate);
 }
 
-public class InfositeIdMappingRepositoryImp : InfositeIdMappingRepository
+public class InfositeIdMappingRepositoryImp(
+    IDynamicRepository repository,
+    DateTimeService dateTimeService,
+    LogServiceWrapper logService)
+    : InfositeIdMappingRepository
 {
-    private readonly IDynamicRepository repository;
-    private readonly DateTimeService dateTimeService;
-    private readonly LogServiceWrapper logService;
-
-    public InfositeIdMappingRepositoryImp(IDynamicRepository repository, DateTimeService dateTimeService, LogServiceWrapper logService)
-    {
-        this.repository = repository;
-        this.dateTimeService = dateTimeService;
-        this.logService = logService;
-    }
-
     public async Task<List<SyncIsLiveModel>> GetInfositeMatchIsLive(DateTime fromTime, DateTime toTime)
     {
         var criteria = new GetInfoSiteMatchIsLiveCriteria { FromTime = fromTime, ToTime = toTime };

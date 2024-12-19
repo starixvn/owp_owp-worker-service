@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <SonarQubeTestProject>False</SonarQubeTestProject>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Fanex.Caching" Version="2.2.4" />
-    <PackageReference Include="NSubstitute" Version="5.0.0" />
+    <PackageReference Include="Fanex.Caching" Version="2.2.7" />
+    <PackageReference Include="NSubstitute" Version="5.3.0" />
     <PackageReference Include="Olympus.Xml" Version="1.0.0.5" />
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OWP\OWP.csproj" />

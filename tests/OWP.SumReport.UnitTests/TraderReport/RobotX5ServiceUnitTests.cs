@@ -6,12 +6,7 @@ using Xunit;
 
 public class RobotX5ServiceUnitTests
 {
-    private readonly RobotX5Service robotX5Service;
-
-    public RobotX5ServiceUnitTests()
-    {
-        robotX5Service = new RobotX5ServiceImp();
-    }
+    private readonly RobotX5Service robotX5Service = new RobotX5ServiceImp();
 
     [Fact]
     public void GroupByShiftAndMatchGroup_AssignmentEventDateTimeOver30AndOver300OfTwoShift_DifferentGroupAndDifferentShift()

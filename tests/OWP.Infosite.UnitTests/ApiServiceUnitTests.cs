@@ -58,7 +58,7 @@ public class ApiServiceUnitTests
         var actualResult = await apiService.QueryAsync(param);
 
         // Assert
-        Assert.Equal(new List<CommonMatchModel>(), actualResult);
+        Assert.Equal([], actualResult);
     }
 
     [Fact]
@@ -121,7 +121,7 @@ public class ApiServiceUnitTests
         // Assert
         var actualResult = await apiService.GetInvalidEventKeysByDateAsync(fromDate);
 
-        Assert.Equal(new List<string>(), actualResult);
+        Assert.Equal([], actualResult);
     }
 
     [Fact]
@@ -137,7 +137,7 @@ public class ApiServiceUnitTests
         // Assert
         var actualResult = await apiService.QueryInfoSiteMatchFor180Day();
 
-        Assert.Equal(new List<MatchModelQuery180Day>(), actualResult);
+        Assert.Equal([], actualResult);
     }
 
     [Fact]
@@ -200,6 +200,6 @@ public class ApiServiceUnitTests
         var actualResult = await apiService.QueryMatchesRelation(param);
 
         // Assert
-        DeepAssert.Equal(new List<MatchRelation>(), actualResult);
+        DeepAssert.Equal([], actualResult);
     }
 }

@@ -10,12 +10,7 @@ using Xunit.Asserts.Compare;
 
 public class EditEventGeneratorUnitTests
 {
-    private readonly EditEventGeneratorImp service;
-
-    public EditEventGeneratorUnitTests()
-    {
-        service = new EditEventGeneratorImp();
-    }
+    private readonly EditEventGeneratorImp service = new();
 
     [Fact]
     public void CreateModel_GetChangedOfferLiveMatches_ReturnExpectedResult()
@@ -44,7 +39,7 @@ public class EditEventGeneratorUnitTests
         {
             new() { in_house_match_id = 222,  is_live = true },
             new() { in_house_match_id = 555,  is_live = false },
-            new() { in_house_match_id = 666,  is_live = false },
+            new() { in_house_match_id = 666,  is_live = false }
         };
 
         var actual = service.GetChangedOfferLiveMatches(adminSiteMatches, owpMatches).ToList();

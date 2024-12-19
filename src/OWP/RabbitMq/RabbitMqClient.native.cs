@@ -9,24 +9,17 @@ using System.Text;
 
 public interface RabbitMqClient
 {
-    void PublishRequestMessage(RequestBaseModel request);
+    ValueTask<bool> PublishRequestMessage(RequestBaseModel request);
 
-    void ConnectRabbitMq();
+    Task<bool> ConnectRabbitMq();
 }
 
-public class RabbitMqClientImp : RabbitMqClient
+public class RabbitMqClientImp(IOptions<RabbitMqSetting> options, ILogger logger) : RabbitMqClient
 {
-    private IModel channel;
-    private readonly RabbitMqSetting setting;
-    private readonly ILogger logger;
+    private IChannel channel;
+    private readonly RabbitMqSetting setting = options.Value;
 
-    public RabbitMqClientImp(IOptions<RabbitMqSetting> options, ILogger logger)
-    {
-        setting = options.Value;
-        this.logger = logger;
-    }
-
-    public void ConnectRabbitMq()
+    public async Task<bool> ConnectRabbitMq()
     {
         try
         {
@@ -36,35 +29,42 @@ public class RabbitMqClientImp : RabbitMqClient
                 Password = setting.Password,
                 HostName = setting.Hosting,
                 Port = setting.Port,
-                VirtualHost = setting.VirtualHost,
-                DispatchConsumersAsync = true
+                VirtualHost = setting.VirtualHost
             };
 
-            var connection = factory.CreateConnection();
-            channel = connection.CreateModel();
+            var connection = await factory.CreateConnectionAsync();
+            channel = await connection.CreateChannelAsync();
 
-            channel.QueueDeclare(queue: setting.RequestQueue, durable: true, exclusive: false, autoDelete: false);
+            await channel.QueueDeclareAsync(queue: setting.RequestQueue, durable: true, exclusive: false, autoDelete: false);
         }
         catch (Exception ex)
         {
-            logger.Error($"Connect RabbitMQ failed, exception: {ex}");
+           await logger.ErrorAsync($"Connect RabbitMQ failed, exception: {ex}");
+           return false;
         }
+
+        return true;
     }
 
-    public void PublishRequestMessage(RequestBaseModel request)
+    public async ValueTask<bool> PublishRequestMessage(RequestBaseModel request)
     {
         const int EXPIRATION_TIME = 1000 * 60 * 30;
         var json = JsonConvert.SerializeObject(request);
         var messageBytes = Encoding.UTF8.GetBytes(json);
 
-        var props = channel.CreateBasicProperties();
-        props.Type = request.RoutingKey;
-        props.Expiration = EXPIRATION_TIME.ToString();
+        var props = new BasicProperties
+        {
+            Type = request.RoutingKey,
+            Expiration = EXPIRATION_TIME.ToString()
+        };
 
-        channel.BasicPublish(
+        await channel.BasicPublishAsync(
             exchange: "",
             routingKey: setting.RequestQueue,
             basicProperties: props,
-            body: messageBytes);
+            body: messageBytes,
+            mandatory: true);
+
+        return true;
     }
 }

@@ -11,26 +11,13 @@ public interface CalculationService
     Task<IEnumerable<LaReportModel>> Calculate(DateTime eventDate, bool isGenerateData);
 }
 
-public class CalculationServiceImp : CalculationService
+public class CalculationServiceImp(
+    LaRepository repository,
+    SpecialProductFactory specialProductFactory,
+    MainMatchRuleFactory mainMatchRuleFactory,
+    SumUpService sumUpService)
+    : CalculationService
 {
-    private readonly LaRepository repository;
-    private readonly SpecialProductFactory specialProductFactory;
-    private readonly MainMatchRuleFactory mainMatchRuleFactory;
-    private readonly SumUpService sumUpService;
-
-
-    public CalculationServiceImp(
-        LaRepository repository, 
-        SpecialProductFactory specialProductFactory,
-        MainMatchRuleFactory mainMatchRuleFactory,
-        SumUpService sumUpService)
-    {
-        this.repository = repository;
-        this.specialProductFactory = specialProductFactory;
-        this.mainMatchRuleFactory = mainMatchRuleFactory;
-        this.sumUpService = sumUpService;
-    }
-
     public async Task<IEnumerable<LaReportModel>> Calculate(DateTime eventDate, bool isGenerateData)
     {
         var assignments = await GetAssignment(eventDate, isGenerateData);

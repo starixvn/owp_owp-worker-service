@@ -1,14 +1,21 @@
 using OWP.WorkerService.Extensions;
+using OWP.WorkerService.Jobs;
 using OWP.WorkerService.Scheduler;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddCoreServices();
-builder.Services.AddFanexServices(builder.Configuration);
-builder.Services.AddRedisServices(builder.Configuration);
-builder.Services.AddInternalServices(builder.Configuration);
-builder.Services.AddRabbitMq(builder.Configuration);
-builder.Services.AddJobsServices();
-builder.Services.AddHostedService<OwpScheduler>();
+var services = builder.Services;
+var configuration = builder.Configuration;
+
+services.AddCoreServices();
+services.AddFanexServices(configuration);
+services.AddRedisServices(configuration);
+services.AddInternalServices(configuration);
+services.AddRabbitMq(configuration);
+services.AddJobsServices();
+
+services.AddSingleton<GarbageCollectorJob>();
+services.AddHostedService<OwpScheduler>();
+services.AddHostedService<GarbageCollectorJob>();
 
 var app = builder.Build();
 
@@ -17,15 +24,9 @@ app.UseRabbitMq();
 app.Run(async context =>
 {
     var request = context.Request.Path.HasValue
-    ? context.Request.Path.Value
-    : string.Empty;
-    if (request.Contains("Collect"))
-    {
-        await context.Response.WriteAsync($"OWP Worker Services. GC.Collected = {request}");
-    }
-    else
-    {
-        await context.Response.WriteAsync($"OWP Worker Services. Request Path = {request}");
-    }
+        ? context.Request.Path.Value
+        : string.Empty;
+    await context.Response.WriteAsync($"OWP Worker Services. Request Path = {request}");
 });
-app.Run();
+
+await app.RunAsync();

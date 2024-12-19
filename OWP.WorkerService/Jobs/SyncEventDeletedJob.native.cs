@@ -5,15 +5,8 @@ using Infosite.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]
-internal class SyncEventDeletedJob : IJob
+internal class SyncEventDeletedJob(SyncEventDeletedService syncService) : IJob
 {
-    private readonly SyncEventDeletedService syncEventDeletedService;
-
-    public SyncEventDeletedJob(SyncEventDeletedService syncService)
-    {
-        syncEventDeletedService = syncService;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
         try
@@ -28,6 +21,6 @@ internal class SyncEventDeletedJob : IJob
 
     private async Task ExecuteJob()
     {
-        await syncEventDeletedService.Sync().ConfigureAwait(false);
+        await syncService.Sync().ConfigureAwait(false);
     }
 }

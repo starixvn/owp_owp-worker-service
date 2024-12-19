@@ -6,12 +6,7 @@ using Xunit;
 
 public class CoverageBuilderUnitTests
 {
-    private readonly CoverageBuilder coverageBuilder;
-
-    public CoverageBuilderUnitTests()
-    {
-        coverageBuilder = new CoverageBuilder();
-    }
+    private readonly CoverageBuilder coverageBuilder = new();
 
     [Fact]
     public void BuildCoverage_ReturnCoverage()
@@ -26,11 +21,11 @@ public class CoverageBuilderUnitTests
     {
         var actual = coverageBuilder.BuildCoverageMergeMatch(new CommonMatchModel
         {
-            ls_merge_match = new List<CommonSubMatch>
-            {
-                new() {website_id = 17, coverage_id = 1},
-                new() {website_id = 2, coverage_id = 2}
-            }
+            ls_merge_match =
+            [
+                new CommonSubMatch { website_id = 17, coverage_id = 1 },
+                new CommonSubMatch { website_id = 2, coverage_id = 2 }
+            ]
         });
         var expected = new List<string> { "RB2TV" };
 
@@ -43,11 +38,11 @@ public class CoverageBuilderUnitTests
         var actual = coverageBuilder.BuildCoverageMainMatch(new CommonMatchModel
         {
             website_id = 17,
-            ls_merge_match = new List<CommonSubMatch>
-            {
-                new() {website_id = 17, coverage_id = 2},
-                new() {website_id = 20, coverage_id = 2}
-            }
+            ls_merge_match =
+            [
+                new CommonSubMatch { website_id = 17, coverage_id = 2 },
+                new CommonSubMatch { website_id = 20, coverage_id = 2 }
+            ]
         });
         var expected = new List<string> { "" };
 
@@ -60,11 +55,11 @@ public class CoverageBuilderUnitTests
         var actual = coverageBuilder.CoverageBuild(new CommonMatchModel
         {
             website_id = 17,
-            ls_merge_match = new List<CommonSubMatch>
-            {
-                new() {website_id = 17, coverage_id = 1},
-                new() {website_id = 20, coverage_id = 2}
-            }
+            ls_merge_match =
+            [
+                new CommonSubMatch { website_id = 17, coverage_id = 1 },
+                new CommonSubMatch { website_id = 20, coverage_id = 2 }
+            ]
         });
 
         Assert.Equal("RB2TV/BETTV(L)", actual);

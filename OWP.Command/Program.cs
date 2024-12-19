@@ -15,6 +15,7 @@ using OWP.InfositeIdSync;
 using OWP.LinkLeagueAndTeam;
 using OWP.MatchReadyNotification;
 using OWP.OtherSport;
+using OWP.Provider;
 using OWP.RabbitMq;
 using OWP.RabbitMq.Models;
 using OWP.SumReport;
@@ -70,7 +71,7 @@ var settings = new RabbitMqSetting
 };
 var appSettingsOptions = Options.Create(settings);
 var rabbitService = new RabbitMqClientImp(appSettingsOptions, new Logger());
-rabbitService.ConnectRabbitMq();
+await rabbitService.ConnectRabbitMq();
 
 services.AddSingleton<RabbitMqClient>(rabbitService);
 

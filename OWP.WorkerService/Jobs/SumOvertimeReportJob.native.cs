@@ -7,17 +7,9 @@ using SumReport.OvertimeReport.Services;
 using SumReport.Services;
 
 [DisallowConcurrentExecution]
-public class SumOvertimeReportJob : IJob
+public class SumOvertimeReportJob(ReportCalculationService calculationService, CacheManipulator cacheManipulator)
+    : IJob
 {
-    private readonly ReportCalculationService calculationService;
-    private readonly CacheManipulator cacheManipulator;
-
-    public SumOvertimeReportJob(ReportCalculationService calculationService, CacheManipulator cacheManipulator)
-    {
-        this.calculationService = calculationService;
-        this.cacheManipulator = cacheManipulator;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
         try

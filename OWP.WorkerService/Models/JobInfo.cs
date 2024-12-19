@@ -1,13 +1,7 @@
 ﻿namespace OWP.WorkerService.Models;
 
-public class JobInfo
+public class JobInfo(Type type, string cronExpression)
 {
-    public Type Type { get; set; }
-    public string CronExpression { get; set; }
-
-    public JobInfo(Type type, string cronExpression)
-    {
-        Type = type;
-        CronExpression = cronExpression;
-    }
+    public Type Type { get; set; } = type;
+    public string CronExpression { get; set; } = cronExpression;
 }

@@ -8,7 +8,7 @@ public static class DictionaryExtensions
         {
             throw new ArgumentNullException(nameof(dictionary));
         }
-        return dictionary.ContainsKey(key) ? dictionary[key] : defaultValue;
+        return dictionary.GetValueOrDefault(key, defaultValue);
     }
 
     public static TValue LookupByKey<TValue>(this Dictionary<string, TValue> dict, string key, TValue defaultValue)

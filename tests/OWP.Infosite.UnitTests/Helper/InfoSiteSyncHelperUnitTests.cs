@@ -17,7 +17,7 @@ public class InfoSiteSyncHelperUnitTests
     [Fact]
     public void ShouldReturnBuildActionIdForCancelCase()
     {
-        var result = InfoSiteSyncHelper.BuildActionId("Provider", "", "K+");
+        var result = InfoSiteSyncHelper.BuildActionId("OtherProvider", "", "K+");
 
         DeepAssert.Equal(result, 10);
     }

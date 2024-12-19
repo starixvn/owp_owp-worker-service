@@ -5,15 +5,8 @@ using LinkLeagueAndTeam.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]
-public class LinkLeagueAndTeamJob : IJob
+public class LinkLeagueAndTeamJob(LinkLeagueAndTeamService handler) : IJob
 {
-    private readonly LinkLeagueAndTeamService linkLeagueAndTeamService;
-
-    public LinkLeagueAndTeamJob(LinkLeagueAndTeamService handler)
-    {
-        linkLeagueAndTeamService = handler;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
         try
@@ -28,7 +21,7 @@ public class LinkLeagueAndTeamJob : IJob
 
     private async Task ExecuteJob()
     {
-        await linkLeagueAndTeamService
+        await handler
             .Execute()
             .ConfigureAwait(false);
     }

@@ -6,7 +6,6 @@ using Fanex.Data.Repository;
 using Helper;
 using Models;
 using Olympus.Xml;
-using OWP.Infosite.Modelsl;
 using System;
 using System.Linq;
 
@@ -15,23 +14,14 @@ public interface SyncService
     Task Sync();
 }
 
-public class SyncServiceImp
+public class SyncServiceImp(
+    DateTimeService dateTimeService,
+    ApiService apiService,
+    IDynamicRepository repository)
 {
-    private readonly IDynamicRepository repository;
-    private readonly ApiService apiService;
     protected readonly DateTime MinDate = new(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
     private const string FromService = "Today";
-    protected DateTimeService DateTimeService { get; }
-
-    public SyncServiceImp(
-        DateTimeService dateTimeService,
-        ApiService apiService,
-        IDynamicRepository repository)
-    {
-        DateTimeService = dateTimeService;
-        this.apiService = apiService;
-        this.repository = repository;
-    }
+    protected DateTimeService DateTimeService { get; } = dateTimeService;
 
     public async Task Sync(DateTime fromDate)
     {
@@ -58,7 +48,7 @@ public class SyncServiceImp
     private async Task<Dictionary<int, string>> QueryTeamRound(DateTime fromDate)
     {
         var teamRounds = await apiService.QueryRound(fromDate, fromDate);
-        if (teamRounds == null || teamRounds.content == null)
+        if (teamRounds?.content == null)
         {
             return new Dictionary<int, string>();
         }

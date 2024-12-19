@@ -6,25 +6,13 @@ using InfositeIdSync.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]
-public class SyncInfositeIdJob : IJob
+public class SyncInfositeIdJob(
+    SyncInfositeIdService synInfositeIdService,
+    TodaySyncService todaySyncService,
+    SyncIsLiveService syncIsLiveService,
+    IConfiguration configuration)
+    : IJob
 {
-    private readonly SyncInfositeIdService synInfositeIdService;
-    private readonly TodaySyncService todaySyncService;
-    private readonly SyncIsLiveService syncIsLiveService;
-
-    private readonly IConfiguration configuration;
-
-    public SyncInfositeIdJob(SyncInfositeIdService synInfositeIdService,
-        TodaySyncService todaySyncService,
-        SyncIsLiveService syncIsLiveService,
-        IConfiguration configuration)
-    {
-        this.synInfositeIdService = synInfositeIdService;
-        this.todaySyncService = todaySyncService;
-        this.syncIsLiveService = syncIsLiveService;
-        this.configuration = configuration;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
         try

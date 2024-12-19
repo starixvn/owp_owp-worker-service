@@ -7,18 +7,9 @@ public interface OuMatchService
     Task BuildSingleOuMatchReport(DateTime eventDate, TimeSpan? startNightShift);
 }
 
-public class OuMatchServiceImp : OuMatchService
+public class OuMatchServiceImp(Repository repository, DataMatchReportService dataMatchReportService)
+    : OuMatchService
 {
-    private readonly Repository repository;
-
-    private readonly DataMatchReportService dataMatchReportService;
-
-    public OuMatchServiceImp(Repository repository, DataMatchReportService dataMatchReportService)
-    {
-        this.repository = repository;
-        this.dataMatchReportService = dataMatchReportService;
-    }
-
     public async Task BuildSingleOuMatchReport(DateTime eventDate, TimeSpan? startNightShift)
     {
         var leagueDetails = await repository.GetLeagueDetailByDate(eventDate, Constant.OuId);

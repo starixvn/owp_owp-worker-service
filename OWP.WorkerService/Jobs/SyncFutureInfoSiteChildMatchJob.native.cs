@@ -5,15 +5,8 @@ using Infosite.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]
-internal class SyncFutureInfoSiteChildMatchJob : IJob
+internal class SyncFutureInfoSiteChildMatchJob(SyncChildMatchService todaySyncService) : IJob
 {
-    private readonly SyncChildMatchService todaySyncService;
-
-    public SyncFutureInfoSiteChildMatchJob(SyncChildMatchService todaySyncService)
-    {
-        this.todaySyncService = todaySyncService;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
         try

@@ -5,15 +5,9 @@ using Infosite.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]
-public class Sync180DayInfositeMatchJob : IJob
+public class Sync180DayInfositeMatchJob(Sync180DayInfositeMatchService sync180DayInfositeMatchService)
+    : IJob
 {
-    private readonly Sync180DayInfositeMatchService sync180DayInfositeMatchService;
-
-    public Sync180DayInfositeMatchJob(Sync180DayInfositeMatchService sync180DayInfositeMatchService)
-    {
-        this.sync180DayInfositeMatchService = sync180DayInfositeMatchService;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
         try

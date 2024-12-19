@@ -3,22 +3,23 @@
 using Quartz;
 using Quartz.Spi;
 
-public class JobFactory : IJobFactory
+public class JobFactory(IServiceProvider serviceProvider) : IJobFactory
 {
-    private readonly IServiceProvider serviceProvider;
-
-    public JobFactory(IServiceProvider serviceProvider)
-    {
-        this.serviceProvider = serviceProvider;
-    }
-
     public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
     {
         var jobDetail = bundle.JobDetail;
-        return serviceProvider.GetService(jobDetail.JobType) as IJob;
+        return (IJob)serviceProvider.GetService(jobDetail.JobType) ?? new EmptyJob();
     }
 
     public void ReturnJob(IJob job)
     {
+    }
+}
+
+public class EmptyJob : IJob
+{
+    public async Task Execute(IJobExecutionContext context)
+    {
+        await Task.CompletedTask;
     }
 }

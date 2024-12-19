@@ -9,15 +9,8 @@ public interface ReportCalculationService
     Task SumOvertimeReport(DateTime date, bool isGenerateData = false);
 }
 
-public class ReportCalculationServiceImp : ReportCalculationService
+public class ReportCalculationServiceImp(OvertimeRepository repository) : ReportCalculationService
 {
-    private readonly OvertimeRepository repository;
-
-    public ReportCalculationServiceImp(OvertimeRepository repository)
-    {
-        this.repository = repository;
-    }
-
     public async Task SumOvertimeReport(DateTime date, bool isGenerateData = false)
     {
         var reportData = await CalculateOvertimeReport(date, isGenerateData);

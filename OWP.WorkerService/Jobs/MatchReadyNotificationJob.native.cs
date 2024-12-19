@@ -5,15 +5,8 @@ using MatchReadyNotification;
 using Quartz;
 
 [DisallowConcurrentExecution]
-public class MatchReadyNotificationJob : IJob
+public class MatchReadyNotificationJob(Handler syncService) : IJob
 {
-    private readonly Handler syncService;
-
-    public MatchReadyNotificationJob(Handler syncService)
-    {
-        this.syncService = syncService;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
         try

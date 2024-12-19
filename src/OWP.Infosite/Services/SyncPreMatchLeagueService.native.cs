@@ -15,28 +15,13 @@ public interface SyncPreMatchLeagueService
     Task Sync();
 }
 
-public class SyncPreMatchLeagueServiceImp : SyncPreMatchLeagueService
+public class SyncPreMatchLeagueServiceImp(
+    DateTimeService dateTimeService,
+    IDynamicRepository dynamicRepository,
+    ICache cacheService,
+    RabbitMqClient rabbitMqClient)
+    : SyncPreMatchLeagueService
 {
-    private readonly DateTimeService dateTimeService;
-
-    private readonly IDynamicRepository dynamicRepository;
-
-    private readonly ICache cacheService;
-
-    private readonly RabbitMqClient rabbitMqClient;
-
-    public SyncPreMatchLeagueServiceImp(
-        DateTimeService dateTimeService,
-        IDynamicRepository dynamicRepository,
-        ICache cacheService,
-        RabbitMqClient rabbitMqClient)
-    {
-        this.dateTimeService = dateTimeService;
-        this.dynamicRepository = dynamicRepository;
-        this.cacheService = cacheService;
-        this.rabbitMqClient = rabbitMqClient;
-    }
-
     public async Task Sync()
     {
         var sessionId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);

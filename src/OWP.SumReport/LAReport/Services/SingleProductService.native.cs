@@ -10,15 +10,8 @@ public interface SingleProductService
         LaReportModel sumUpResult);
 }
 
-public class SingleProductServiceImp : SingleProductService
+public class SingleProductServiceImp(SingleMatchesFactory singleMatchesFactory) : SingleProductService
 {
-    private readonly SingleMatchesFactory singleMatchesFactory;
-
-    public SingleProductServiceImp(SingleMatchesFactory singleMatchesFactory)
-    {
-        this.singleMatchesFactory = singleMatchesFactory;
-    }
-
     public void SumUp(IList<Assignment> assignments, LaReportModel sumUpResult)
     {
         var singleMatchesRule = singleMatchesFactory.Create(RuleType.Single);
@@ -33,9 +26,8 @@ public class SingleProductServiceImp : SingleProductService
         sumUpResult.OnlyReporter = Utils.CountSingleMatch(othersAssignments, ReportType.OnlyReporter);
         sumUpResult.Others = Utils.CountSingleMatch(othersAssignments, ReportType.Others);
 
-        var otherMatchIds = othersAssignments
-            ?.Where(x => x.ReportType == ReportType.Others)
-            ?.Select(a => a.OwpMatchId)
+        var otherMatchIds = othersAssignments.Where(x => x.ReportType == ReportType.Others)
+            .Select(a => a.OwpMatchId)
             .Distinct();
 
         sumUpResult.OtherProductMatchIds = string.Join(",", otherMatchIds);

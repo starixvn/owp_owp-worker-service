@@ -8,16 +8,9 @@ public interface NotReadyMessageFactory
     Task<List<MessageModel>> Create(AssignmentSnapshot snapshot);
 }
 
-public class NotReadyMessageFactoryImp : NotReadyMessageFactory
+public class NotReadyMessageFactoryImp(ReceivedUserServices receivedUserServices) : NotReadyMessageFactory
 {
-    private readonly ReceivedUserServices receivedUserServices;
-
     private const string MessageTemplate = "<UsernameList> are NOT READY for match <Match.No> - <League> - <Event> - K.O Time <KO Time>";
-
-    public NotReadyMessageFactoryImp(ReceivedUserServices receivedUserServices)
-    {
-        this.receivedUserServices = receivedUserServices;
-    }
 
     public async Task<List<MessageModel>> Create(AssignmentSnapshot snapshot)
     {

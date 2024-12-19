@@ -15,15 +15,8 @@ public interface MatchReadyRepository
     Task InsertMessage(List<MessageModel> messages, string sessionId);
 }
 
-public class MatchReadyRepositoryImp : MatchReadyRepository
+public class MatchReadyRepositoryImp(IDynamicRepository repository) : MatchReadyRepository
 {
-    private readonly IDynamicRepository repository;
-
-    public MatchReadyRepositoryImp(IDynamicRepository repository)
-    {
-        this.repository = repository;
-    }
-
     public async Task<AssignmentSnapshot> GetNotReadyMatches(string lastTimeNotReadyNotification)
     {
         var getAllAssignmentsByXMinsCriteria = new GetAllAssignmentsByXMinsCriteria

@@ -3,7 +3,6 @@
 using ArchiveData;
 using Fanex.Caching;
 using Fanex.Caching.Redis;
-using Fanex.Data;
 using Fanex.Data.Repository;
 using Fanex.Data.SqlServer;
 using Fanex.Logging;
@@ -14,6 +13,7 @@ using Jobs;
 using LinkLeagueAndTeam;
 using MatchReadyNotification;
 using OtherSport;
+using Provider;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;

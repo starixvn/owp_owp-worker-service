@@ -6,18 +6,9 @@ using Models;
 using Quartz;
 using Quartz.Spi;
 
-public class OwpScheduler : IHostedService
+public class OwpScheduler(ISchedulerFactory schedulerFactory, IJobFactory jobFactory) : IHostedService
 {
-    private readonly ISchedulerFactory schedulerFactory;
-    private readonly IJobFactory jobFactory;
-
     public IScheduler Scheduler { get; set; }
-
-    public OwpScheduler(ISchedulerFactory schedulerFactory, IJobFactory jobFactory)
-    {
-        this.schedulerFactory = schedulerFactory;
-        this.jobFactory = jobFactory;
-    }
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {

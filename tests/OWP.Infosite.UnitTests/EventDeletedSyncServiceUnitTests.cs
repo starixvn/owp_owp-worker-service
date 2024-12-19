@@ -27,7 +27,7 @@ public class EventDeletedSyncServiceUnitTests
         logger = Substitute.For<ILogger>();
 
         apiService.GetInvalidEventKeysByDateAsync(Arg.Compat.Any<DateTime>())
-           .Returns(new List<string> { "1-1-True", "2-3-True", "3-3-False" });
+           .Returns(["1-1-True", "2-3-True", "3-3-False"]);
 
         dateTimeService.Today.Returns(from);
         dateTimeService.Now.Returns(from);

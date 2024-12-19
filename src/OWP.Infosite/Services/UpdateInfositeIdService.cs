@@ -10,17 +10,8 @@ public interface UpdateInfositeIdService
     Task UpdateInfositeId(DateTime fromDate);
 }
 
-public class UpdateInfositeIdServiceImp : UpdateInfositeIdService
+public class UpdateInfositeIdServiceImp(ApiService apiService, IDynamicRepository repository) : UpdateInfositeIdService
 {
-    private readonly ApiService apiService;
-    private readonly IDynamicRepository repository;
-
-    public UpdateInfositeIdServiceImp(ApiService apiService, IDynamicRepository repository)
-    {
-        this.apiService = apiService;
-        this.repository = repository;
-    }
-
     public async Task UpdateInfositeId(DateTime fromDate)
     {
         var queriedResult = await QueryMergedMatchEvents(fromDate);

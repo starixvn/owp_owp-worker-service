@@ -5,15 +5,8 @@ using Provider.AgentConfirm;
 using Quartz;
 
 [DisallowConcurrentExecution]
-public class SyncAgentConfirmJob : IJob
+public class SyncAgentConfirmJob(SyncAgentConfirmHandler syncAgentConfirmHandler) : IJob
 {
-    private readonly SyncAgentConfirmHandler syncAgentConfirmHandler;
-
-    public SyncAgentConfirmJob(SyncAgentConfirmHandler syncAgentConfirmHandler)
-    {
-        this.syncAgentConfirmHandler = syncAgentConfirmHandler;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
         try

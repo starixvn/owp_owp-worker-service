@@ -11,15 +11,8 @@ public interface Repository
     Task SaveAgentConfirm(List<MatchAgentConfirm> agentConfirms);
 }
 
-public class RepositoryImp : Repository
+public class RepositoryImp(IDynamicRepository dynamicRepository) : Repository
 {
-    private readonly IDynamicRepository dynamicRepository;
-
-    public RepositoryImp(IDynamicRepository dynamicRepository)
-    {
-        this.dynamicRepository = dynamicRepository;
-    }
-
     public async Task<List<AgentMatchInfo>> GetOwpMainMatchesByDate(DateTime eventDate)
         => (await dynamicRepository.FetchAsync<AgentMatchInfo>(new GetAgentMatchInfoCriteria { EventDate = eventDate })).ToList();
 

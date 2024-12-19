@@ -8,19 +8,12 @@ public interface Handler
     Task Handle();
 }
 
-public class HandlerImp : Handler
+public class HandlerImp(
+    MatchReadyRepository matchReadyRepository,
+    CacheManipulator cacheManipulator,
+    NotReadyMessageFactory messageFactory)
+    : Handler
 {
-    private readonly MatchReadyRepository matchReadyRepository;
-    private readonly CacheManipulator cacheManipulator;
-    private readonly NotReadyMessageFactory messageFactory;
-
-    public HandlerImp(MatchReadyRepository matchReadyRepository, CacheManipulator cacheManipulator, NotReadyMessageFactory messageFactory)
-    {
-        this.matchReadyRepository = matchReadyRepository;
-        this.cacheManipulator = cacheManipulator;
-        this.messageFactory = messageFactory;
-    }
-
     public async Task Handle()
     {
         var lastTimeNotReadyNotification = await cacheManipulator.GetLastTimeNotReadyNotification();

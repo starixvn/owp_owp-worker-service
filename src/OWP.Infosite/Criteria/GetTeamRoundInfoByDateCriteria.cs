@@ -1,13 +1,12 @@
 ﻿using Fanex.Data.Repository;
 
-namespace OWP.Infosite.Criteria
+namespace OWP.Infosite.Criteria;
+
+public class GetTeamRoundInfoByDateCriteria : CriteriaBase
 {
-    public class GetTeamRoundInfoByDateCriteria : CriteriaBase
-    {
-        public DateTime EventDate { get; set; }
+    public DateTime EventDate { get; set; }
 
-        public override string GetSettingKey() => "OWP_API_GetTeamRoundInfosByDate";
+    public override string GetSettingKey() => "OWP_API_GetTeamRoundInfosByDate";
 
-        public override bool IsValid() => true;
-    }
+    public override bool IsValid() => true;
 }

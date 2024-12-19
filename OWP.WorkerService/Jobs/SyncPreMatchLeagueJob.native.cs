@@ -5,15 +5,8 @@ using Infosite.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]
-internal class SyncPreMatchLeagueJob : IJob
+internal class SyncPreMatchLeagueJob(SyncPreMatchLeagueService syncService) : IJob
 {
-    private readonly SyncPreMatchLeagueService syncService;
-
-    public SyncPreMatchLeagueJob(SyncPreMatchLeagueService syncService)
-    {
-        this.syncService = syncService;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
         try

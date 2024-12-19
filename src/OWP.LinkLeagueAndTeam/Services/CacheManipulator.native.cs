@@ -10,15 +10,8 @@ public interface CacheManipulator
     Task SaveStartTimeQueryTeamInfo(DateTime startTime);
 }
 
-public class CacheManipulatorImp : CacheManipulator
+public class CacheManipulatorImp(ICache cache) : CacheManipulator
 {
-    private readonly ICache cache;
-
-    public CacheManipulatorImp(ICache cache)
-    {
-        this.cache = cache;
-    }
-
     public async Task SaveStartTimeQueryTeamInfo(DateTime startTime)
     {
         await cache.RemoveAsync(Constant.KeyLinkLeagueTeam);

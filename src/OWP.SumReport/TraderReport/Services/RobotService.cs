@@ -8,20 +8,12 @@ public interface RobotService
     Task<List<RobotByByUser>> SumRobotFields(DateTime eventDate, bool isGenerateData);
 }
 
-public class RobotServiceImp : RobotService
+public class RobotServiceImp(
+    TraderRepository repository,
+    RobotX3Service robotX3Service,
+    RobotX5Service robotX5Service = null)
+    : RobotService
 {
-    private readonly TraderRepository repository;
-    private readonly RobotX3Service robotX3Service;
-    private readonly RobotX5Service robotX5Service;
-
-    public RobotServiceImp(TraderRepository repository, RobotX3Service robotX3Service,
-        RobotX5Service robotX5Service = null)
-    {
-        this.repository = repository;
-        this.robotX3Service = robotX3Service;
-        this.robotX5Service = robotX5Service;
-    }
-
     public async Task<List<RobotByByUser>> SumRobotFields(DateTime eventDate, bool isGenerateData)
     {
         var robotX3ByUsers = await GetX3Fields(eventDate, isGenerateData);

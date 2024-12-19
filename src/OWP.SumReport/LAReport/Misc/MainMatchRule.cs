@@ -19,7 +19,8 @@ public class MainMatchRule
 
 public class FtCornerRule : MainMatchRule
 {
-    private readonly int[] cornerBettypeArray = { BettypeConst.NextCorner, BettypeConst.NoOfCorner, BettypeConst.NoOfCorner15Mins };
+    private readonly int[] cornerBettypeArray = [BettypeConst.NextCorner, BettypeConst.NoOfCorner, BettypeConst.NoOfCorner15Mins
+    ];
 
     public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
     {
@@ -38,7 +39,8 @@ public class FtCornerRule : MainMatchRule
 
 public class FtCorner5MlRule : MainMatchRule
 {
-    private readonly int[] cornerBettypeArray = { BettypeConst.NextCorner, BettypeConst.NoOfCorner, BettypeConst.NoOfCorner15Mins };
+    private readonly int[] cornerBettypeArray = [BettypeConst.NextCorner, BettypeConst.NoOfCorner, BettypeConst.NoOfCorner15Mins
+    ];
 
     public override ReportType Execute(Assignment assignment, IList<Assignment> userAssignments)
     {

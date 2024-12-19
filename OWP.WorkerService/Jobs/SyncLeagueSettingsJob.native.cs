@@ -5,15 +5,8 @@ using Quartz;
 using SyncLeagueSettings.Services;
 
 [DisallowConcurrentExecution]
-public class SyncLeagueSettingsJob : IJob
+public class SyncLeagueSettingsJob(LeagueSettingsService leagueSettingsService) : IJob
 {
-    private readonly LeagueSettingsService leagueSettingsService;
-
-    public SyncLeagueSettingsJob(LeagueSettingsService leagueSettingsService)
-    {
-        this.leagueSettingsService = leagueSettingsService;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
         try

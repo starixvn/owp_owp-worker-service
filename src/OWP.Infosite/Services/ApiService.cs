@@ -7,7 +7,7 @@ using Extensions;
 using Fanex.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using OWP.Infosite.Models;
+using Models;
 using OWP.Services;
 using Settings;
 
@@ -25,27 +25,19 @@ public interface ApiService
 
     Task<RoundTwInfo> QueryRound(DateTime dateFrom, DateTime dateTo);
 
-    Task<IsLiveSynchronizedResult> SetLiveMatches(IEnumerable<(int, int?)> liveMatches);
+    Task<IsLiveSynchronizedResult> SetLiveMatches(List<(int, int?)> liveMatches);
 
-    Task<IsLiveSynchronizedResult> SetNonLiveMatches(IEnumerable<(int, int?)> nonLiveMatches);
+    Task<IsLiveSynchronizedResult> SetNonLiveMatches(List<(int, int?)> nonLiveMatches);
 }
 
-public class ApiServiceImp : ApiService
+public class ApiServiceImp(
+    HttpHandler httpHandler,
+    ILogger logger,
+    IOptions<InfoSiteSettings> infoSiteSettings)
+    : ApiService
 {
-    private static Regex regex = new Regex(@"^(\d+)\:.+$");
-    private readonly InfoSiteSettings infoSiteSettings;
-    private readonly HttpHandler httpHandler;
-    private readonly ILogger logger;
-
-    public ApiServiceImp(
-        HttpHandler httpHandler,
-        ILogger logger,
-        IOptions<InfoSiteSettings> infoSiteSettings)
-    {
-        this.httpHandler = httpHandler;
-        this.logger = logger;
-        this.infoSiteSettings = infoSiteSettings.Value;
-    }
+    private static readonly Regex regex = new(@"^(\d+)\:.+$");
+    private readonly InfoSiteSettings infoSiteSettings = infoSiteSettings.Value;
 
     public async Task<List<DeleteChildMatch>> QueryDeletedChildMatch(DateTime fromDate, DateTime toDate)
     {
@@ -70,7 +62,7 @@ public class ApiServiceImp : ApiService
         var logInfoString = JsonConvert.SerializeObject(logInfo);
         await logger.ErrorAsync(logInfoString);
 
-        return new List<DeleteChildMatch>();
+        return [];
     }
 
     public async Task<List<CommonMatchModel>> QueryAsync(ParamsQueryModel param)
@@ -98,7 +90,7 @@ public class ApiServiceImp : ApiService
         var logInfoString = JsonConvert.SerializeObject(logInfo);
         await logger.ErrorAsync(logInfoString);
 
-        return new List<CommonMatchModel>();
+        return [];
     }
 
     public async Task<List<MatchRelation>> QueryMatchesRelation(ParamsQueryModel param)
@@ -127,7 +119,7 @@ public class ApiServiceImp : ApiService
         var logInfoString = JsonConvert.SerializeObject(logInfo);
         await logger.ErrorAsync(logInfoString);
 
-        return new List<MatchRelation>();
+        return [];
     }
 
     public async Task<List<string>> GetInvalidEventKeysByDateAsync(DateTime date)
@@ -153,7 +145,7 @@ public class ApiServiceImp : ApiService
         var logInfoString = JsonConvert.SerializeObject(logInfo);
         await logger.ErrorAsync(logInfoString);
 
-        return new List<string>();
+        return [];
     }
 
     public async Task<List<MatchModelQuery180Day>> QueryInfoSiteMatchFor180Day()
@@ -177,7 +169,7 @@ public class ApiServiceImp : ApiService
         var logInfoString = JsonConvert.SerializeObject(logInfo);
         await logger.ErrorAsync(logInfoString);
 
-        return new List<MatchModelQuery180Day>();
+        return [];
     }
 
     public async Task<RoundTwInfo> QueryRound(DateTime dateFrom, DateTime dateTo)
@@ -201,20 +193,20 @@ public class ApiServiceImp : ApiService
         var logInfoString = JsonConvert.SerializeObject(logInfo);
         await logger.ErrorAsync(logInfoString);
 
-        return new ();
+        return new RoundTwInfo();
     }
 
-    public async Task<IsLiveSynchronizedResult> SetLiveMatches(IEnumerable<(int, int?)> liveMatches)
+    public async Task<IsLiveSynchronizedResult> SetLiveMatches(List<(int, int?)> liveMatches)
     {
         return await SyncMatches(liveMatches, isLive: true);
     }
 
-    public async Task<IsLiveSynchronizedResult> SetNonLiveMatches(IEnumerable<(int, int?)> nonLiveMatches)
+    public async Task<IsLiveSynchronizedResult> SetNonLiveMatches(List<(int, int?)> nonLiveMatches)
     {
         return await SyncMatches(nonLiveMatches, isLive: false);
     }
 
-    private async Task<IsLiveSynchronizedResult> SyncMatches(IEnumerable<(int, int?)> matches, bool isLive)
+    private async Task<IsLiveSynchronizedResult> SyncMatches(List<(int, int?)> matches, bool isLive)
     {
         var request = $"{infoSiteSettings.InfositeApi}api/EventSchedule/setEventsLive";
 
@@ -225,7 +217,7 @@ public class ApiServiceImp : ApiService
         var responseText = await response.Content.ReadAsStringAsync();
 
         var synchronizedResult = response.IsSuccessStatusCode ? responseText : "[]";
-        var errorMessage = (response.IsSuccessStatusCode && responseText == "[]") ? string.Empty : responseText;
+        var errorMessage = response.IsSuccessStatusCode && responseText == "[]" ? string.Empty : responseText;
 
         var logInfo = new
         {
@@ -257,7 +249,7 @@ public class ApiServiceImp : ApiService
 
         foreach (var match in matchList)
         {
-            (int mainMatchId, List<int?> subType) = match;
+            var (mainMatchId, subType) = match;
 
             if (subType.Exists(x => !x.HasValue))
             {
@@ -291,44 +283,41 @@ public class ApiServiceImp : ApiService
     {
         var failedMessages = JsonConvert.DeserializeObject<List<string>>(synchronizedResult);
         var matches = failedMessages?.Where(l => regex.IsMatch(l))
-            .Select(x => GetFailedMatch(x))
+            .Select(GetFailedMatch)
             .ToList();
 
-        return matches ?? new List<(int, int?)>();
+        return matches ?? [];
     }
 
     private static (int, int?) GetFailedMatch(string synchronizedResult)
     {
         var elements = synchronizedResult.Split(':');
 
-        if (elements[1].Equals("FAILED_UPDATE_CHILD_MATCH"))
-        {
-            return (int.Parse(elements[0]), ParseSubtype(elements[2]));
-        }
-
-        return (int.Parse(elements[0]), null);
+        return elements[1].Equals("FAILED_UPDATE_CHILD_MATCH") ? (int.Parse(elements[0]), ParseSubtype(elements[2])) : (int.Parse(elements[0]), null);
     }
 
     public static int? ParseSubtype(string result)
     {
-        if (!string.IsNullOrEmpty(result))
+        if (string.IsNullOrEmpty(result))
         {
-            const string subtypeText = "subType ";
-            const string fromText = " from";
-            var pFrom = result.IndexOf(subtypeText, StringComparison.OrdinalIgnoreCase) + subtypeText.Length;
-            var pTo = result.IndexOf(fromText, StringComparison.OrdinalIgnoreCase);
-            var subStringLength = pTo - pFrom;
-            if (subStringLength < 0)
-            {
-                return null;
-            }
+            return null;
+        }
 
-            var subType = result.Substring(pFrom, pTo - pFrom);
+        const string subtypeText = "subType ";
+        const string fromText = " from";
+        var pFrom = result.IndexOf(subtypeText, StringComparison.OrdinalIgnoreCase) + subtypeText.Length;
+        var pTo = result.IndexOf(fromText, StringComparison.OrdinalIgnoreCase);
+        var subStringLength = pTo - pFrom;
+        if (subStringLength < 0)
+        {
+            return null;
+        }
 
-            if (!string.IsNullOrWhiteSpace(subType))
-            {
-                return int.Parse(result.Substring(pFrom, pTo - pFrom));
-            }
+        var subType = result.Substring(pFrom, pTo - pFrom);
+
+        if (!string.IsNullOrWhiteSpace(subType))
+        {
+            return int.Parse(result.Substring(pFrom, pTo - pFrom));
         }
 
         return null;

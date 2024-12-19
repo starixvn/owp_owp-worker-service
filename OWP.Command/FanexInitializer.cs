@@ -1,11 +1,8 @@
 ﻿namespace OWP.Command;
 
-using Fanex.Data;
-using Fanex.Data.SqlServer;
 using Fanex.Logging;
 using Fanex.Logging.Sentry.RavenClient;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using SharpRaven;
 
 internal static class FanexInitializer

@@ -306,127 +306,138 @@ public class InfoSiteHelperUnitTests
 
     private static List<OwpMatch> GetUnmappingOwpMatch()
     {
-        return new List<OwpMatch>
+        return
+        [
+            new OwpMatch
             {
-                new()
-                {
-                    OwpMatchId = 1,
-                    EventDateTime = new DateTime(2020,08,28),
-                    League = "SOUTH AFRICA PREMIERSHIP",
-                    Home = "Kaizer Chiefs",
-                    Away = "Mamelodi Sundowns"
-                },
-                new()
-                {
-                    OwpMatchId = 2,
-                    EventDateTime = new DateTime(2020,08,27,22,00,00),
-                    League = "UZBEKISTAN SUPER LEAGUE",
-                    Home = "Pakhtakor Tashkent",
-                    Away = "Pakhtakor Tashkent"
-                },
-                new()
-                {
-                    OwpMatchId = 3,
-                    EventDateTime = new DateTime(2020,08,27,23,20,00),
-                    League = "BULGARIA U19 LEAGUE",
-                    Home = "Levski Sofia U19",
-                    Away = "Pirin Blagoevgrad U19"
-                },
-                new()
-                {
-                    OwpMatchId = 4,
-                    EventDateTime = new DateTime(2020,08,27,02,20,00),
-                    League = "ABC",
-                    Home = "a",
-                    Away = "a"
-                },
-                new()
-                {
-                    OwpMatchId = 6,
-                    EventDateTime = new DateTime(2020,08,27,02,20,00),
-                    League = "LEAGUE Test Count 2",
-                    Away = "home Test Count 2",
-                    Home = "away Test Count 2"
-                }
-            };
+                OwpMatchId = 1,
+                EventDateTime = new DateTime(2020, 08, 28),
+                League = "SOUTH AFRICA PREMIERSHIP",
+                Home = "Kaizer Chiefs",
+                Away = "Mamelodi Sundowns"
+            },
+
+            new OwpMatch
+            {
+                OwpMatchId = 2,
+                EventDateTime = new DateTime(2020, 08, 27, 22, 00, 00),
+                League = "UZBEKISTAN SUPER LEAGUE",
+                Home = "Pakhtakor Tashkent",
+                Away = "Pakhtakor Tashkent"
+            },
+
+            new OwpMatch
+            {
+                OwpMatchId = 3,
+                EventDateTime = new DateTime(2020, 08, 27, 23, 20, 00),
+                League = "BULGARIA U19 LEAGUE",
+                Home = "Levski Sofia U19",
+                Away = "Pirin Blagoevgrad U19"
+            },
+
+            new OwpMatch
+            {
+                OwpMatchId = 4,
+                EventDateTime = new DateTime(2020, 08, 27, 02, 20, 00),
+                League = "ABC",
+                Home = "a",
+                Away = "a"
+            },
+
+            new OwpMatch
+            {
+                OwpMatchId = 6,
+                EventDateTime = new DateTime(2020, 08, 27, 02, 20, 00),
+                League = "LEAGUE Test Count 2",
+                Away = "home Test Count 2",
+                Home = "away Test Count 2"
+            }
+        ];
     }
 
     private static List<InfositeMatch> GetInfositeMatch()
     {
-        return new List<InfositeMatch>
+        return
+        [
+            new InfositeMatch
             {
-                new()
-                {
-                    InfoSiteMatchId = 123456,
-                    AdminSiteMatchId = 0,
-                    EventDateTime = new DateTime(2020,08,28),
-                    LeagueName = "SOUTH AFRICA PREMIERSHIP",
-                    HomeName = "Kaizer Chiefs",
-                    AwayName = "Mamelodi Sundowns"
-                },
-                new()
-                {
-                    InfoSiteMatchId = 2000,
-                    AdminSiteMatchId = 0,
-                    EventDateTime = new DateTime(2020,08,20,22,00,00),
-                    LeagueName = "UZBEKISTAN SUPER LEAGUE",
-                    HomeName = "Pakhtakor Tashkent",
-                    AwayName = "Pakhtakor Tashkent"
-                },
-                new()
-                {
-                    InfoSiteMatchId = 5000,
-                    AdminSiteMatchId = 0,
-                    EventDateTime = new DateTime(2020,08,27,23,20,00),
-                    LeagueName = "BULGARIA U19 LEAGUE",
-                    HomeName = "Levski Sofia U19",
-                    AwayName = "Pirin Blagoevgrad U19"
-                },
-                new()
-                {
-                    InfoSiteMatchId = 5555,
-                    AdminSiteMatchId = 0,
-                    EventDateTime = new DateTime(2020,08,27,11,20,00),
-                    LeagueName = "ABC",
-                    HomeName = "h",
-                    AwayName = "a"
-                },
-                new()
-                {
-                    InfoSiteMatchId = 2221,
-                    AdminSiteMatchId = 0,
-                    EventDateTime = new DateTime(2020,08,27,23,20,00),
-                    LeagueName = "LEAGUE Test Count 2",
-                    HomeName = "home Test Count 2",
-                    AwayName = "away Test Count 2"
-                },
-                new()
-                {
-                    InfoSiteMatchId = 2222,
-                    AdminSiteMatchId = 0,
-                    EventDateTime = new DateTime(2020,08,27,11,20,00),
-                    LeagueName = "LEAGUE Test Count 2",
-                    HomeName = "home Test Count 2",
-                    AwayName = "away Test Count 2"
-                },
-                new()
-                {
-                    InfoSiteMatchId = 2221,
-                    AdminSiteMatchId = 0,
-                    EventDateTime = new DateTime(2020,08,27,23,20,00),
-                    LeagueName = "MatchWithSameLeagueHomeAndAway",
-                    HomeName = "A",
-                    AwayName = "B"
-                },
-                new()
-                {
-                    InfoSiteMatchId = 2222,
-                    AdminSiteMatchId = 0,
-                    EventDateTime = new DateTime(2020,08,27,23,20,00),
-                    LeagueName = "MatchWithSameLeagueKickoffTimeAndSwapTeam",
-                    HomeName = "B",
-                    AwayName = "A"
-                }
-            };
+                InfoSiteMatchId = 123456,
+                AdminSiteMatchId = 0,
+                EventDateTime = new DateTime(2020, 08, 28),
+                LeagueName = "SOUTH AFRICA PREMIERSHIP",
+                HomeName = "Kaizer Chiefs",
+                AwayName = "Mamelodi Sundowns"
+            },
+
+            new InfositeMatch
+            {
+                InfoSiteMatchId = 2000,
+                AdminSiteMatchId = 0,
+                EventDateTime = new DateTime(2020, 08, 20, 22, 00, 00),
+                LeagueName = "UZBEKISTAN SUPER LEAGUE",
+                HomeName = "Pakhtakor Tashkent",
+                AwayName = "Pakhtakor Tashkent"
+            },
+
+            new InfositeMatch
+            {
+                InfoSiteMatchId = 5000,
+                AdminSiteMatchId = 0,
+                EventDateTime = new DateTime(2020, 08, 27, 23, 20, 00),
+                LeagueName = "BULGARIA U19 LEAGUE",
+                HomeName = "Levski Sofia U19",
+                AwayName = "Pirin Blagoevgrad U19"
+            },
+
+            new InfositeMatch
+            {
+                InfoSiteMatchId = 5555,
+                AdminSiteMatchId = 0,
+                EventDateTime = new DateTime(2020, 08, 27, 11, 20, 00),
+                LeagueName = "ABC",
+                HomeName = "h",
+                AwayName = "a"
+            },
+
+            new InfositeMatch
+            {
+                InfoSiteMatchId = 2221,
+                AdminSiteMatchId = 0,
+                EventDateTime = new DateTime(2020, 08, 27, 23, 20, 00),
+                LeagueName = "LEAGUE Test Count 2",
+                HomeName = "home Test Count 2",
+                AwayName = "away Test Count 2"
+            },
+
+            new InfositeMatch
+            {
+                InfoSiteMatchId = 2222,
+                AdminSiteMatchId = 0,
+                EventDateTime = new DateTime(2020, 08, 27, 11, 20, 00),
+                LeagueName = "LEAGUE Test Count 2",
+                HomeName = "home Test Count 2",
+                AwayName = "away Test Count 2"
+            },
+
+            new InfositeMatch
+            {
+                InfoSiteMatchId = 2221,
+                AdminSiteMatchId = 0,
+                EventDateTime = new DateTime(2020, 08, 27, 23, 20, 00),
+                LeagueName = "MatchWithSameLeagueHomeAndAway",
+                HomeName = "A",
+                AwayName = "B"
+            },
+
+            new InfositeMatch
+            {
+                InfoSiteMatchId = 2222,
+                AdminSiteMatchId = 0,
+                EventDateTime = new DateTime(2020, 08, 27, 23, 20, 00),
+                LeagueName = "MatchWithSameLeagueKickoffTimeAndSwapTeam",
+                HomeName = "B",
+                AwayName = "A"
+            }
+        ];
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace OWP.InfositeIdSync.Services;
 
-using OWP.InfositeIdSync.Helpers;
-using OWP.InfositeIdSync.Models;
+using Helpers;
+using Models;
 using OWP.Infosite.Services;
 
 public interface SyncIsLiveService

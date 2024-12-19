@@ -5,15 +5,8 @@ using OtherSport.SyncAdminSiteId.Handlers;
 using Quartz;
 
 [DisallowConcurrentExecution]
-public class SyncOtherSportAdminSiteMatchJob : IJob
+public class SyncOtherSportAdminSiteMatchJob(SyncAdminSiteMatchesHandler syncAdminSiteMatchesHandler) : IJob
 {
-    private readonly SyncAdminSiteMatchesHandler syncAdminSiteMatchesHandler;
-
-    public SyncOtherSportAdminSiteMatchJob(SyncAdminSiteMatchesHandler syncAdminSiteMatchesHandler)
-    {
-        this.syncAdminSiteMatchesHandler = syncAdminSiteMatchesHandler;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
         try
