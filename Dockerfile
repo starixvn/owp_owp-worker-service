@@ -33,9 +33,8 @@ FROM hub.nexdev.net/base/dotnet/core/aspnet:9.0-alpine AS base
 
 WORKDIR /app
 COPY --from=builder /app .
-COPY --from=builder /tools /tools
 
-ENV TZ="America/La_Paz" 
+ENV TZ="America/La_Paz"
 
 # Don’t run as root
 RUN adduser --disabled-password \
