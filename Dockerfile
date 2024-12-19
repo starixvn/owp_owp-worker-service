@@ -1,5 +1,5 @@
 ARG CI_REGISTRY_IMAGE
-FROM $CI_REGISTRY_IMAGE:builder as deps
+FROM $CI_REGISTRY_IMAGE:builder AS deps
 RUN mkdir -p /src/packages
 
 FROM hub.nexdev.net/base/dotnet/core/sdk:9.0-alpine AS builder
@@ -22,7 +22,7 @@ COPY ./src/OWP.Provider/. ./src/OWP.Provider
 COPY ./OWP.WorkerService/OWP.WorkerService.csproj ./OWP.WorkerService/OWP.WorkerService.csproj
 
 WORKDIR /src/OWP.WorkerService
-RUN dotnet nuget add source http://nuget.nexdev.net/api/v2
+RUN dotnet nuget add source https://nuget.nexdev.net/api/v2
 RUN dotnet restore -v n -r linux-x64
 
 COPY ./OWP.WorkerService .
