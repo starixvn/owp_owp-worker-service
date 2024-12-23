@@ -1,3 +1,5 @@
+using Fanex.Data.SqlServer;
+using Fanex.Logging.Sentry.RavenClient;
 using OWP.WorkerService.Extensions;
 using OWP.WorkerService.Jobs;
 using OWP.WorkerService.Scheduler;
@@ -7,7 +9,9 @@ var services = builder.Services;
 var configuration = builder.Configuration;
 
 services.AddCoreServices();
-services.AddFanexServices(configuration);
+services.AddNapClient(configuration);
+services.AddFanexSql(configuration);
+services.AddFanexLogSentry(configuration);
 services.AddRedisServices(configuration);
 services.AddInternalServices(configuration);
 services.AddRabbitMq(configuration);

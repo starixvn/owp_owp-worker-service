@@ -4,9 +4,7 @@ using ArchiveData;
 using Fanex.Caching;
 using Fanex.Caching.Redis;
 using Fanex.Data.Repository;
-using Fanex.Data.SqlServer;
 using Fanex.Logging;
-using Fanex.Logging.Sentry.RavenClient;
 using Infosite;
 using InfositeIdSync;
 using Jobs;
@@ -20,7 +18,6 @@ using Quartz.Spi;
 using RabbitMq;
 using RabbitMq.Models;
 using Settings;
-using SharpRaven;
 using StackExchange.Redis;
 using SumReport;
 using SyncLeagueSettings;
@@ -33,22 +30,6 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
         services.AddSingleton<IDynamicRepository, DynamicRepository>();
         services.AddSingleton<ILogger, Logger>();
-
-        return services;
-    }
-
-    public static IServiceCollection AddFanexServices(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddFanexSql(configuration);
-
-        LogManager.SetDefaultLogCategory(configuration.GetSection("FanexLogCategory").Value)
-            .Use(new List<ILogEngine>
-            {
-                new SentryLogging( new SentryEngineOptions
-                {
-                    Dsn = new Dsn(configuration.GetSection("SentryToken").Value)
-                })
-            });
 
         return services;
     }
