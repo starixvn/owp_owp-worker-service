@@ -9,6 +9,7 @@ var services = builder.Services;
 var configuration = builder.Configuration;
 
 services.AddCoreServices();
+services.AddNapClient(configuration);
 services.AddFanexSql(configuration);
 services.AddFanexLogSentry(configuration);
 services.AddRedisServices(configuration);
