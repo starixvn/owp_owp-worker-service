@@ -6,6 +6,8 @@ public class MatchModelQuery180Day
 
     public DateTime global_datetime { get; set; }
 
+    public DateTime game_date { get; set; }
+
     public string league_name { get; set; }
 
     public string team_home_name { get; set; }
