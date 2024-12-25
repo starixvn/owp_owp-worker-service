@@ -28,7 +28,7 @@ public class MatchModelFor180Day
     public MatchModelFor180Day(MatchModelQuery180Day infositeMatch)
     {
         MatchId = infositeMatch.info_match_id;
-        KoTime = infositeMatch.global_datetime.ToUtc8();
+        KoTime = infositeMatch.game_date.ToUtc8();
         LeagueName = infositeMatch.league_name;
         HomeName = GetHomeName(infositeMatch);
         AwayName = GetAwayName(infositeMatch);
