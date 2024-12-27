@@ -21,7 +21,7 @@ public static class TraderAssignmentBuilder
             }).ToList();
     }
 
-    public static void BuildTraderAssignmentSpecial(MatchInfo matchInfo, MatchInfoApiModel matchInfoApi, IEnumerable<Assignment> assignments)
+    public static void BuildTraderAssignmentSpecialProduct(MatchInfo matchInfo, MatchInfoApiModel matchInfoApi, IEnumerable<Assignment> assignments)
     {
         if (SpecialBettype.BettypeIdSpecificXMins.Any(id => id == matchInfo.MinorBettypeId))
         {

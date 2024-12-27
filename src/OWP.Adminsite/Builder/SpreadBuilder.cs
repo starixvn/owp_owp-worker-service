@@ -37,7 +37,7 @@ public static class SpreadBuilder
         }
     }
 
-    public static void BuildSpreadSpecial(MatchInfo matchInfo, MatchInfoApiModel matchInfoApi, IEnumerable<MatchSetting> matchSettings)
+    public static void BuildSpreadSpecialProduct(MatchInfo matchInfo, MatchInfoApiModel matchInfoApi, IEnumerable<MatchSetting> matchSettings)
     {
         if (SpecialBettype.BettypeIdSpecificXMins.Any(id => id == matchInfo.MinorBettypeId))
         {

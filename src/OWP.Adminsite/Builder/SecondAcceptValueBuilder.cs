@@ -23,6 +23,26 @@ public static class SecondAcceptValueBuilder
         };
     }
 
+    public static void BuildSecondAcceptValueSpecialProduct(
+        MatchInfo matchInfo,
+        MatchInfoApiModel matchInfoApi,
+        IEnumerable<MatchSetting> matchSettings,
+        IEnumerable<MatchOffer> matchOffers,
+        IEnumerable<DefaultSecondAcceptValue> secondAcceptValues)
+    {
+        var maxbetMainMatch = matchSettings.FirstOrDefault(m => m.OWPMatchId == matchInfo.ParentMatchId && m.BettypeId == (int)MajorBetType.Handicap);
+        if (!SpecialBettype.BettypeIdSpecificXMins.Any(id => id == matchInfo.MinorBettypeId))
+        {
+            var validOfferIds = matchOffers.Where(x => x.OWPMatchId == matchInfo.OWPMatchId && IsValidSecondAcceptValue(x.Value)).ToList();
+            matchInfoApi.SecondAcceptValue = validOfferIds.Count switch
+            {
+                0 => GetSecondAcceptValueDefault(matchInfo, maxbetMainMatch.Maxbet, secondAcceptValues),
+                1 => GetSecondAcceptValue(validOfferIds.FirstOrDefault()?.Value),
+                _ => null
+            };
+        }
+    }
+
     private static bool IsValidSecondAcceptValue(string matchOffer)
     {
         const string pattern = @"(?i)\d+(s)\s(Accept)";

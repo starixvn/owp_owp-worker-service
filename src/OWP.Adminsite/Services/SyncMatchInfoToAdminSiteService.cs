@@ -47,8 +47,11 @@ public class SyncMatchInfoToAdminSiteService(IMatchInfoRepository repository) : 
                 {
                     item.SubType = GetRepresentativeSubType(matchInfo.MinorBettypeId);
 
-                    TraderAssignmentBuilder.BuildTraderAssignmentSpecial(matchInfo, item, assignments);
-                    SpreadBuilder.BuildSpreadSpecial(matchInfo, item, matchSettings);
+                    TraderAssignmentBuilder.BuildTraderAssignmentSpecialProduct(matchInfo, item, assignments);
+                    MaxbetBuilder.BuildMaxbetSpecialProduct(matchInfo, item, matchSettings, defaultMaxbetSettings);
+                    SpreadBuilder.BuildSpreadSpecialProduct(matchInfo, item, matchSettings);
+                    SecondAcceptValueBuilder.BuildSecondAcceptValueSpecialProduct(matchInfo, item, matchSettings, matchOffers, secondAcceptValues);
+                    NumberOfLinesBuilder.BuildNumberOfLinesSpecialProduct(matchInfo, item);
                 }
                 else
                 {
