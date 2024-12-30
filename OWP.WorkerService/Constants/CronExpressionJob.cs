@@ -33,6 +33,8 @@ public static class CronExpressionJob
     public const string ArchiveData = "0 10/59 0/12 ? * * *"; // at 12:10 am/pm every day GMT-4
 
     public const string SyncAgentConfirm = "0 0 0 ? * * *"; // 00:00 everyday GMT-4;
+
+    public const string SyncMatchInfoToAdminSite = "0 0/1 * 1/1 * ? *"; // 1min
 }
 
 #pragma warning restore S125

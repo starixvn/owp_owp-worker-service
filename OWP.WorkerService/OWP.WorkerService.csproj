@@ -22,6 +22,7 @@
 		<ProjectReference Include="..\src\OWP.Provider\OWP.Provider.csproj" />
     <ProjectReference Include="..\src\OWP.SumReport\OWP.SumReport.csproj" />
     <ProjectReference Include="..\src\OWP.SyncLeagueSettings\OWP.SyncLeagueSettings.csproj" />
+    <ProjectReference Include="..\src\OWP.Adminsite\OWP.Adminsite.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="App_Data\OWPDataCenterSPNames.xml">

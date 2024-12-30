@@ -6,19 +6,16 @@ using OWP.Adminsite.Repository;
 
 namespace OWP.Adminsite.Services;
 
-public interface ISyncMatchInfoToAdminSiteService
+public interface IMatchInfoService
 {
-    Task Sync();
+    Task<IList<MatchInfoApiModel>> GetMatchInfoAsync(DateTime fromDate, DateTime toDate);
 }
 
-public class SyncMatchInfoToAdminSiteService(IMatchInfoRepository repository) : ISyncMatchInfoToAdminSiteService
+public class MatchInfoService(IMatchInfoRepository repository) : IMatchInfoService
 {
-    public async Task Sync()
+    public async Task<IList<MatchInfoApiModel>> GetMatchInfoAsync(DateTime fromDate, DateTime toDate)
     {
-        var nowGmt8 = DateTime.Now.AddHours(12);
-        var fromDate = nowGmt8.Date.AddHours(12);
-        var toDate = fromDate.AddDays(1).AddSeconds(-1);
-
+        var matchInfoApis = new List<MatchInfoApiModel>();
         var matchInfos = await repository.GetMatchInfoAsync(fromDate, toDate);
 
         if (matchInfos.Any())
@@ -30,8 +27,6 @@ public class SyncMatchInfoToAdminSiteService(IMatchInfoRepository repository) : 
             var matchOffers = await repository.GetMatchOfferAsync(matchIds);
             var secondAcceptValues = await repository.GetDefaultSecondAcceptValueAsync();
             var defaultMaxbetSettings = await repository.GetDefaultMaxbetSettingAsync();
-
-            var matchInfoApis = new List<MatchInfoApiModel>();
 
             foreach (var matchInfo in matchInfos)
             {
@@ -75,6 +70,8 @@ public class SyncMatchInfoToAdminSiteService(IMatchInfoRepository repository) : 
                 matchInfoApis.Add(item);
             }
         }
+
+        return matchInfoApis;
     }
 
     private static int? GetRepresentativeSubType(int? minorBettypeId)

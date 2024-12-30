@@ -6,10 +6,12 @@ namespace OWP.Adminsite;
 
 public static class DependenceInjection
 {
-    public static IServiceCollection AddSyncLeagueSettingsServices(this IServiceCollection services)
+    public static IServiceCollection AddAdminSiteSyncServices(this IServiceCollection services)
     {
         services.AddTransient<IMatchInfoRepository, MatchInfoRepository>();
-        services.AddTransient<ISyncMatchInfoToAdminSiteService, SyncMatchInfoToAdminSiteService>();
+        services.AddTransient<IApiService, ApiService>();
+        services.AddTransient<IMatchInfoService, MatchInfoService>();
+        services.AddTransient<ISyncDataService, SyncDataService>();
 
         return services;
     }

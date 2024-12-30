@@ -56,6 +56,9 @@ public class OwpScheduler(ISchedulerFactory schedulerFactory, IJobFactory jobFac
         await AddJobToSchedulerAsync(new JobInfo(typeof(ArchiveDataJob), CronExpressionJob.ArchiveData));
         //Provider
         await AddJobToSchedulerAsync(new JobInfo(typeof(SyncAgentConfirmJob), CronExpressionJob.SyncOtherSportAdminSiteJob));
+
+        //Adminsite
+        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncMatchInfoToAdminSiteJob), CronExpressionJob.SyncMatchInfoToAdminSite));
     }
 
     private async Task CreateScheduler()

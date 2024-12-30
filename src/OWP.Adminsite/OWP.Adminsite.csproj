@@ -5,6 +5,7 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Fanex.Caching" Version="2.2.7" />
     <PackageReference Include="Olympus.OWP.Constants" Version="1.0.0.4" />
   </ItemGroup>
   <ItemGroup>
