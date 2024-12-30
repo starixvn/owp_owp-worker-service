@@ -21,12 +21,13 @@ public class SyncMatchInfoToAdminSiteJob(ISyncDataService syncDataService) : IJo
 
     private async Task ExecuteJob()
     {
-        var fromTime = DateTime.Now.AddHours(9);
         var nowGmt8 = DateTime.Now.AddHours(12);
         if (nowGmt8.Hour < 10)
         {
             nowGmt8 = nowGmt8.AddDays(-1);
         }
+
+        var fromTime = nowGmt8.Date.AddHours(12);
         var toTime = nowGmt8.Date.AddHours(36);
         await syncDataService.PushMatchInfoAsync(fromTime, toTime);
     }

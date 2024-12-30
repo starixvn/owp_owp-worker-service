@@ -1,12 +1,14 @@
 ﻿namespace OWP.WorkerService.Scheduler;
 
-using Constants;
 using Jobs;
 using Models;
 using Quartz;
 using Quartz.Spi;
 
-public class OwpScheduler(ISchedulerFactory schedulerFactory, IJobFactory jobFactory) : IHostedService
+public class OwpScheduler(
+    ISchedulerFactory schedulerFactory,
+    IJobFactory jobFactory,
+    List<JobSettings> jobSettings) : IHostedService
 {
     public IScheduler Scheduler { get; set; }
 
@@ -25,40 +27,40 @@ public class OwpScheduler(ISchedulerFactory schedulerFactory, IJobFactory jobFac
     private async Task RunJobSchedulerAsync()
     {
         //InfositeMatch
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncTodayInfoSiteMatchJob), CronExpressionJob.SyncTodayInfoSiteMatch));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncFutureInfoSiteMatchJob), CronExpressionJob.SyncFutureInfoSiteMatch));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncEventDeletedJob), CronExpressionJob.SyncEventDeleted));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncInfositeIdJob), CronExpressionJob.SyncInfositeId));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(Sync180DayInfositeMatchJob), CronExpressionJob.Sync180DayInfoSiteMatch));
+        await AddJobToSchedulerAsync(typeof(SyncTodayInfoSiteMatchJob));
+        await AddJobToSchedulerAsync(typeof(SyncFutureInfoSiteMatchJob));
+        await AddJobToSchedulerAsync(typeof(SyncEventDeletedJob));
+        await AddJobToSchedulerAsync(typeof(SyncInfositeIdJob));
+        await AddJobToSchedulerAsync(typeof(Sync180DayInfositeMatchJob));
 
         //InfositeChildMatch
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncTodayInfoSiteChildMatchJob), CronExpressionJob.SyncTodayInfoSiteMatch));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncFutureInfoSiteChildMatchJob), CronExpressionJob.SyncFutureInfoSiteMatch));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncDeletedChildInfoSiteMatchJob), CronExpressionJob.SyncEventDeleted));
+        await AddJobToSchedulerAsync(typeof(SyncTodayInfoSiteChildMatchJob));
+        await AddJobToSchedulerAsync(typeof(SyncFutureInfoSiteChildMatchJob));
+        await AddJobToSchedulerAsync(typeof(SyncDeletedChildInfoSiteMatchJob));
 
         //Report
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SumTraderReportJob), CronExpressionJob.SumDataReport));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SumLaReportJob), CronExpressionJob.SumDataReport));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SumOvertimeReportJob), CronExpressionJob.SumDataReport));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SumPrematchReportJob), CronExpressionJob.SumDataReport));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SumMatchLiveReportJob), CronExpressionJob.SumDataReport));
+        await AddJobToSchedulerAsync(typeof(SumTraderReportJob));
+        await AddJobToSchedulerAsync(typeof(SumLaReportJob));
+        await AddJobToSchedulerAsync(typeof(SumOvertimeReportJob));
+        await AddJobToSchedulerAsync(typeof(SumPrematchReportJob));
+        await AddJobToSchedulerAsync(typeof(SumMatchLiveReportJob));
 
         //OtherSport
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncOtherSportAdminSiteMatchJob), CronExpressionJob.SyncOtherSportAdminSiteJob));
+        await AddJobToSchedulerAsync(typeof(SyncOtherSportAdminSiteMatchJob));
 
         //Others
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncDataNotificationSettingJob), CronExpressionJob.SyncDataNotificationSetting));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(MatchReadyNotificationJob), CronExpressionJob.MatchReadyNotification));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncPreMatchLeagueJob), CronExpressionJob.SyncPreMatchLeague));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncLeagueSettingsJob), CronExpressionJob.SyncLeagueSetting));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(LinkLeagueAndTeamJob), CronExpressionJob.LinkLeagueAndMatch));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(ArchiveOldMessageJob), CronExpressionJob.ArchiveOldMessage));
-        await AddJobToSchedulerAsync(new JobInfo(typeof(ArchiveDataJob), CronExpressionJob.ArchiveData));
+        await AddJobToSchedulerAsync(typeof(SyncDataNotificationSettingJob));
+        await AddJobToSchedulerAsync(typeof(MatchReadyNotificationJob));
+        await AddJobToSchedulerAsync(typeof(SyncPreMatchLeagueJob));
+        await AddJobToSchedulerAsync(typeof(SyncLeagueSettingsJob));
+        await AddJobToSchedulerAsync(typeof(LinkLeagueAndTeamJob));
+        await AddJobToSchedulerAsync(typeof(ArchiveOldMessageJob));
+        await AddJobToSchedulerAsync(typeof(ArchiveDataJob));
         //Provider
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncAgentConfirmJob), CronExpressionJob.SyncOtherSportAdminSiteJob));
+        await AddJobToSchedulerAsync(typeof(SyncAgentConfirmJob));
 
         //Adminsite
-        await AddJobToSchedulerAsync(new JobInfo(typeof(SyncMatchInfoToAdminSiteJob), CronExpressionJob.SyncMatchInfoToAdminSite));
+        await AddJobToSchedulerAsync(typeof(SyncMatchInfoToAdminSiteJob));
     }
 
     private async Task CreateScheduler()
@@ -67,13 +69,17 @@ public class OwpScheduler(ISchedulerFactory schedulerFactory, IJobFactory jobFac
         Scheduler.JobFactory = jobFactory;
     }
 
-    private async Task AddJobToSchedulerAsync(JobInfo jobInfo)
+    private async Task AddJobToSchedulerAsync(Type jobInfo)
     {
-        var jobDetail = CreateJob(jobInfo);
+        var jobSetting = jobSettings.FirstOrDefault(job => job.Name.Equals(jobInfo.Name));
+        if (jobSetting != null && jobSetting.Enable)
+        {
+            var jobDetail = CreateJob(jobInfo);
 
-        var trigger = CreateTrigger(jobInfo);
+            var trigger = CreateTrigger(jobInfo, jobSetting.CronExpression);
 
-        await Scheduler.ScheduleJob(jobDetail, trigger);
+            await Scheduler.ScheduleJob(jobDetail, trigger);
+        }
     }
 
     private async Task StartScheduler(CancellationToken cancellationToken)
@@ -81,17 +87,17 @@ public class OwpScheduler(ISchedulerFactory schedulerFactory, IJobFactory jobFac
         await Scheduler.Start(cancellationToken);
     }
 
-    private static ITrigger CreateTrigger(JobInfo jobInfo)
+    private static ITrigger CreateTrigger(Type jobInfo, string cronExpression)
         => TriggerBuilder
             .Create()
-            .WithIdentity($"trigger{jobInfo.Type.Name}", $"group{jobInfo.Type.Name}")
-            .WithDescription(jobInfo.Type.Name)
-            .WithCronSchedule(jobInfo.CronExpression)
+            .WithIdentity($"trigger{jobInfo.Name}", $"group{jobInfo.Name}")
+            .WithDescription(jobInfo.Name)
+            .WithCronSchedule(cronExpression)
             .Build();
 
-    private static IJobDetail CreateJob(JobInfo jobInfo)
+    private static IJobDetail CreateJob(Type jobInfo)
         => JobBuilder
-            .Create(jobInfo.Type)
-            .WithIdentity($"sync{jobInfo.Type.Name}", $"group{jobInfo.Type.Name}")
+            .Create(jobInfo)
+            .WithIdentity($"sync{jobInfo.Name}", $"group{jobInfo.Name}")
             .Build();
 }

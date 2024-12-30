@@ -13,13 +13,14 @@ public interface IApiService
 }
 
 public class ApiService(
+    AdminSiteSettings apiSetting,
     HttpHandler httpHandler,
     IConfiguration configuration,
     ILogger logger) : IApiService
 {
     public async Task<IEnumerable<MatchInfoApiModel>> PushMatchInfoAsync(DateTime fromDate, DateTime toDate, IEnumerable<MatchInfoApiModel> matchInfos)
     {
-        var request = $"api/EventSchedule/setEventsLive";
+        var requestUri = apiSetting.PushMatchInfoAPI;
         var content = new StringContent(JsonConvert.SerializeObject(matchInfos), Encoding.UTF8, "application/json");
 
         var env = configuration.GetSection("Environment").Value;
@@ -30,7 +31,7 @@ public class ApiService(
                 Job = "Sync match info to AdminSite",
                 fromDate,
                 toDate,
-                RequestUri = request,
+                RequestUri = requestUri,
                 matchInfos
             };
             await logger.InfoAsync(JsonConvert.SerializeObject(logInfo));
@@ -38,7 +39,7 @@ public class ApiService(
             return [];
         }
 
-        var response = await httpHandler.PostAsync(request, content);
+        var response = await httpHandler.PostAsync(requestUri, content);
 
         if (response.IsSuccessStatusCode)
         {
@@ -48,7 +49,7 @@ public class ApiService(
                 Job = "Sync match info to AdminSite",
                 fromDate,
                 toDate,
-                RequestUri = request,
+                RequestUri = requestUri,
                 matchInfos,
                 result = jsonData
             };
@@ -62,7 +63,7 @@ public class ApiService(
             Job = "Sync match info to AdminSite",
             fromDate,
             toDate,
-            RequestUri = request,
+            RequestUri = requestUri,
             matchInfos,
             StatusCode = (int)response.StatusCode,
             response.RequestMessage
