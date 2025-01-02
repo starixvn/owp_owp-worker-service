@@ -27,7 +27,7 @@ public class MatchInfoApiModel : IEqualityComparer<MatchInfoApiModel>
             && string.Equals(x.OtherProvider, y.OtherProvider, StringComparison.OrdinalIgnoreCase)
             && string.Equals(x.WatchBet, y.WatchBet, StringComparison.OrdinalIgnoreCase)
             && x.SecondAcceptValue == y.SecondAcceptValue
-            && EqualNomberOfLines(x, y)
+            && EqualNumberOfLines(x, y)
             && EqualSuspender(x, y)
             && EqualTraders(x, y)
             && EqualMatchSettings(x, y);
@@ -36,7 +36,7 @@ public class MatchInfoApiModel : IEqualityComparer<MatchInfoApiModel>
     public int GetHashCode(MatchInfoApiModel obj)
         => obj.SubType.HasValue ? obj.MatchId * obj.SubType.Value : obj.MatchId;
 
-    private static bool EqualNomberOfLines(MatchInfoApiModel x, MatchInfoApiModel y)
+    private static bool EqualNumberOfLines(MatchInfoApiModel x, MatchInfoApiModel y)
         => x.CreditFtLines == y.CreditFtLines
             && x.CreditFirstHalfLines == y.CreditFirstHalfLines
             && x.LicenseeFtLines == y.LicenseeFtLines
