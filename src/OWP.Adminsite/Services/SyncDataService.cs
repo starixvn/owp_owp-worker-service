@@ -1,4 +1,5 @@
 using Fanex.Caching;
+using Newtonsoft.Json;
 using OWP.Adminsite.Models;
 
 namespace OWP.Adminsite.Services;
@@ -17,8 +18,10 @@ public class SyncDataService(
     {
         const byte BatchSize = 50;
         const string CacheKey = "OWP-PushMatchInfoToAdminSite";
-        (_, var oldMatchInfos) = await cache.TryGetAsync<IEnumerable<MatchInfoApiModel>>(CacheKey);
-        oldMatchInfos ??= [];
+        (_, var oldCacheMatchInfos) = await cache.TryGetAsync<string>(CacheKey);
+        var oldMatchInfos = !string.IsNullOrEmpty(oldCacheMatchInfos)
+            ? JsonConvert.DeserializeObject<List<MatchInfoApiModel>>(oldCacheMatchInfos)
+            : [];
 
         var matchInfos = await matchInfoService.GetMatchInfoAsync(fromDate, toDate);
         var unsyncedMatchInfos = matchInfos.Except(oldMatchInfos, new MatchInfoApiModel()).ToList();
@@ -32,8 +35,8 @@ public class SyncDataService(
             failedMatchInfos.AddRange(result);
         }
 
-        var cacheMatchInfos = unsyncedMatchInfos.Except(failedMatchInfos);
+        var cacheMatchInfos = matchInfos.Except(failedMatchInfos, new MatchInfoApiModel());
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(DateTime.Today.AddDays(2));
-        await cache.SetAsync(CacheKey, cacheMatchInfos, cachePolicy);
+        await cache.SetAsync(CacheKey, JsonConvert.SerializeObject(cacheMatchInfos), cachePolicy);
     }
 }

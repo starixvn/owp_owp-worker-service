@@ -1,7 +1,7 @@
 namespace OWP.Adminsite.Models;
 
 [Serializable]
-public class MatchSettingApiModel  : IEqualityComparer<MatchSettingApiModel>
+public class MatchSettingApiModel : IEqualityComparer<MatchSettingApiModel>
 {
     public int BettypeId { get; set; }
     public decimal? Maxbet { get; set; }

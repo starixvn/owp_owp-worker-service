@@ -63,7 +63,7 @@ public static class ServiceCollectionExtensions
         services.AddOtherSportServices();
         services.AddArchiveDataServices();
         services.AddProviderServices();
-        services.AddAdminSiteSyncServices();
+        services.AddAdminSiteSyncServices(configuration);
 
         return services;
     }

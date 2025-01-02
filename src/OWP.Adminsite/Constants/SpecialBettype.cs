@@ -6,7 +6,6 @@ public static class SpecialBettype
     public const int BETTYPE_ID_SPECIFIC15MINS = -2;
     public const int BETTYPE_ID_SPECIFIC15MINS_NUMBER_OF_CORNERS = -5;
     public const int BETTYPE_ID_SPECIFIC15MINS_TOTAL_BOOKINGS = -8;
-    public const int NUMBER_FULL_BETTYPE = 4;
 
     public static readonly int[] BettypeIdSpecificXMins =
     [

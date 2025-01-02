@@ -9,31 +9,16 @@ public static class SpreadBuilder
     private const decimal SPREAD_BASE_COMPARER = (decimal)0.1;
     private const int LEAGUE_GROUP_MJ = 1;
 
-    public static void BuildSpread(MatchInfo matchInfo, MatchInfoApiModel matchInfoApi)
+    public static void BuildSpread(MatchInfo matchInfo, MatchInfoApiModel matchInfoApi, IEnumerable<MatchSetting> matchSettings)
     {
-        if (!matchInfoApi.MatchSettings.Any(x => x.BettypeId == (int)MajorBetType.Handicap1St))
-        {
-            matchInfoApi.MatchSettings.Add(new MatchSettingApiModel
-            {
-                BettypeId = (int)MajorBetType.Handicap1St
-            });
-        }
-
-        if (!matchInfoApi.MatchSettings.Any(x => x.BettypeId == (int)MajorBetType.OverUnder1St))
-        {
-            matchInfoApi.MatchSettings.Add(new MatchSettingApiModel
-            {
-                BettypeId = (int)MajorBetType.OverUnder1St
-            });
-        }
-
+        var spreads = matchSettings.Where(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Spread.HasValue).ToList();
         if (matchInfo.LeagueGroupId == LEAGUE_GROUP_MJ)
         {
-            BuildSpreadForLeagueGroupMJ(matchInfoApi.MatchSettings);
+            BuildSpreadForLeagueGroupMJ(matchInfoApi, spreads);
         }
         else
         {
-            BuildSpreadForLeagueGroupNotMJ(matchInfoApi.MatchSettings);
+            BuildSpreadForLeagueGroupNotMJ(matchInfoApi, spreads);
         }
     }
 
@@ -41,57 +26,53 @@ public static class SpreadBuilder
     {
         if (SpecialBettype.BettypeIdSpecificXMins.Any(id => id == matchInfo.MinorBettypeId))
         {
-            var spreadHandicap = matchSettings.FirstOrDefault(x => x.OWPMatchId == matchInfo.OWPMatchId);
+            var spreadHandicap = matchSettings.FirstOrDefault(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Spread.HasValue);
             if (spreadHandicap != null)
             {
-                matchInfoApi.MatchSettings =
-                [
-                    new MatchSettingApiModel { BettypeId = (int)MajorBetType.Handicap, Spread = spreadHandicap.Spread },
-                    new MatchSettingApiModel { BettypeId = (int)MajorBetType.OverUnder, Spread = spreadHandicap.Spread }
-                ];
+                var spreads = new List<MatchSetting>
+                {
+                    new() { BettypeId = (int)MajorBetType.Handicap, Spread = spreadHandicap.Spread },
+                    new() { BettypeId = (int)MajorBetType.OverUnder, Spread = spreadHandicap.Spread }
+                };
+                BuilSpread(matchInfoApi, spreads);
             }
         }
         else
         {
-            matchInfoApi.MatchSettings = matchSettings.Where(x => x.OWPMatchId == matchInfo.OWPMatchId)
-                .Select(x => new MatchSettingApiModel
-                {
-                    BettypeId = x.BettypeId,
-                    Maxbet = x.Maxbet,
-                    Spread = x.Spread
-                }).ToList();
-            BuildSpread(matchInfo, matchInfoApi);
+            BuildSpread(matchInfo, matchInfoApi, matchSettings);
         }
     }
 
-    private static void BuildSpreadForLeagueGroupMJ(IList<MatchSettingApiModel> spreads)
+    private static void BuildSpreadForLeagueGroupMJ(MatchInfoApiModel matchInfoApi, List<MatchSetting> spreads)
     {
-        var firstHalfHdp = spreads.First(s => s.BettypeId == (int)MajorBetType.Handicap1St);
-        var firstHalfOu = spreads.First(s => s.BettypeId == (int)MajorBetType.OverUnder1St);
+        var firstHalfHdp = spreads.FirstOrDefault(s => s.BettypeId == (int)MajorBetType.Handicap1St);
+        var firstHalfOu = spreads.FirstOrDefault(s => s.BettypeId == (int)MajorBetType.OverUnder1St);
 
-        var handicap = spreads.FirstOrDefault(x => x.BettypeId == (int)MajorBetType.Handicap && x.Spread.HasValue) ?? new MatchSettingApiModel();
-        var overUnder = spreads.FirstOrDefault(x => x.BettypeId == (int)MajorBetType.OverUnder && x.Spread.HasValue) ?? new MatchSettingApiModel();
+        var handicap = spreads.FirstOrDefault(x => x.BettypeId == (int)MajorBetType.Handicap) ?? new MatchSetting();
+        var overUnder = spreads.FirstOrDefault(x => x.BettypeId == (int)MajorBetType.OverUnder) ?? new MatchSetting();
 
-        if (!firstHalfHdp.Spread.HasValue)
+        if (firstHalfHdp == null)
         {
-            firstHalfHdp.Spread = handicap.Spread;
+            spreads.Add(new MatchSetting { BettypeId = (int)MajorBetType.Handicap1St, Spread = handicap.Spread });
         }
 
-        if (!firstHalfOu.Spread.HasValue)
+        if (firstHalfOu == null)
         {
-            firstHalfOu.Spread = overUnder.Spread;
+            spreads.Add(new MatchSetting { BettypeId = (int)MajorBetType.OverUnder1St, Spread = overUnder.Spread });
         }
+
+        BuilSpread(matchInfoApi, spreads);
     }
 
-    private static void BuildSpreadForLeagueGroupNotMJ(IList<MatchSettingApiModel> spreads)
+    private static void BuildSpreadForLeagueGroupNotMJ(MatchInfoApiModel matchInfoApi, List<MatchSetting> spreads)
     {
-        var firstHalfHdp = spreads.First(s => s.BettypeId == (int)MajorBetType.Handicap1St);
-        var firstHalfOu = spreads.First(s => s.BettypeId == (int)MajorBetType.OverUnder1St);
+        var firstHalfHdp = spreads.FirstOrDefault(s => s.BettypeId == (int)MajorBetType.Handicap1St);
+        var firstHalfOu = spreads.FirstOrDefault(s => s.BettypeId == (int)MajorBetType.OverUnder1St);
 
-        var handicap = spreads.FirstOrDefault(x => x.BettypeId == (int)MajorBetType.Handicap && x.Spread.HasValue) ?? new MatchSettingApiModel();
-        var overUnder = spreads.FirstOrDefault(x => x.BettypeId == (int)MajorBetType.OverUnder && x.Spread.HasValue) ?? new MatchSettingApiModel();
+        var handicap = spreads.FirstOrDefault(x => x.BettypeId == (int)MajorBetType.Handicap) ?? new MatchSetting();
+        var overUnder = spreads.FirstOrDefault(x => x.BettypeId == (int)MajorBetType.OverUnder) ?? new MatchSetting();
 
-        if (!firstHalfHdp.Spread.HasValue)
+        if (firstHalfHdp == null)
         {
             decimal? spread1H = null;
             decimal? pivot = (decimal)0.09;
@@ -111,12 +92,38 @@ public static class SpreadBuilder
                 spread1H = (decimal)0.11;
             }
 
-            firstHalfHdp.Spread = spread1H;
+            spreads.Add(new MatchSetting { BettypeId = (int)MajorBetType.Handicap1St, Spread = spread1H });
         }
 
-        if (!firstHalfOu.Spread.HasValue)
+        if (firstHalfOu == null)
         {
-            firstHalfOu.Spread = overUnder.Spread < SPREAD_BASE_COMPARER ? SPREAD_BASE_COMPARER : overUnder.Spread;
+            spreads.Add(new MatchSetting
+                {
+                    BettypeId = (int)MajorBetType.OverUnder1St,
+                    Spread = overUnder.Spread < SPREAD_BASE_COMPARER ? SPREAD_BASE_COMPARER : overUnder.Spread
+                });
+        }
+
+        BuilSpread(matchInfoApi, spreads);
+    }
+
+    private static void BuilSpread(MatchInfoApiModel matchInfoApi, IList<MatchSetting> spreads)
+    {
+        foreach (var spread in spreads)
+        {
+            var setting = matchInfoApi.MatchSettings.FirstOrDefault(x => x.BettypeId == spread.BettypeId);
+            if (setting != null)
+            {
+                setting.Spread = spread.Spread;
+            }
+            else
+            {
+                matchInfoApi.MatchSettings.Add(new MatchSettingApiModel
+                {
+                    BettypeId = spread.BettypeId,
+                    Spread = spread.Spread
+                });
+            }
         }
     }
 }

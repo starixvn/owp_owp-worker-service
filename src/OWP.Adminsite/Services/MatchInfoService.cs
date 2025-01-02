@@ -51,17 +51,10 @@ public class MatchInfoService(IMatchInfoRepository repository) : IMatchInfoServi
                 else
                 {
                     matchInfo.MinorBettypeId = SpecialBettype.BETTYPE_ID_MAIN_MATCH;
-                    item.MatchSettings = matchSettings.Where(x => x.OWPMatchId == matchInfo.OWPMatchId)
-                        .Select(x => new MatchSettingApiModel
-                        {
-                            BettypeId = x.BettypeId,
-                            Maxbet = x.Maxbet,
-                            Spread = x.Spread
-                        }).ToList();
 
                     TraderAssignmentBuilder.BuildTraderAssignment(matchInfo, item, assignments);
-                    MaxbetBuilder.BuildMaxbet(item, defaultMaxbetSettings);
-                    SpreadBuilder.BuildSpread(matchInfo, item);
+                    MaxbetBuilder.BuildMaxbet(matchInfo, item, matchSettings, defaultMaxbetSettings);
+                    SpreadBuilder.BuildSpread(matchInfo, item, matchSettings);
                     SecondAcceptValueBuilder.BuildSecondAcceptValue(matchInfo, item, matchOffers, secondAcceptValues);
                     OddBuilder.BuildOdd(matchInfo, item, recommendOdds, recommendOddsDetails);
                     NumberOfLinesBuilder.BuildNumberOfLines(matchInfo, item);
