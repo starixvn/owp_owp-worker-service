@@ -8,12 +8,12 @@ namespace OWP.Adminsite.Services;
 
 public interface IMatchInfoService
 {
-    Task<IList<MatchInfoApiModel>> GetMatchInfoAsync(DateTime fromDate, DateTime toDate);
+    Task<List<MatchInfoApiModel>> GetMatchInfoAsync(DateTime fromDate, DateTime toDate);
 }
 
 public class MatchInfoService(IMatchInfoRepository repository) : IMatchInfoService
 {
-    public async Task<IList<MatchInfoApiModel>> GetMatchInfoAsync(DateTime fromDate, DateTime toDate)
+    public async Task<List<MatchInfoApiModel>> GetMatchInfoAsync(DateTime fromDate, DateTime toDate)
     {
         var matchInfoApis = new List<MatchInfoApiModel>();
         var matchInfos = await repository.GetMatchInfoAsync(fromDate, toDate);

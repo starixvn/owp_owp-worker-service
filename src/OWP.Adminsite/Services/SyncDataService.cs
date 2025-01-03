@@ -27,13 +27,7 @@ public class SyncDataService(
 
         var matchInfos = await matchInfoService.GetMatchInfoAsync(fromDate, toDate);
         var unsyncedMatchInfos = matchInfos.Except(oldMatchInfos, new MatchInfoApiModel()).ToList();
-        var deletedMatches = oldMatchInfos.Where(x => !matchInfos.Any(y => y.MatchId == x.MatchId && y.SubType == x.SubType))
-            .Select(x => new MatchInfoApiModel
-            {
-                MatchId = x.MatchId,
-                SubType = x.SubType,
-                MatchSettings = x.MatchSettings.Select(s => new MatchSettingApiModel { BettypeId = s.BettypeId }).ToList()
-            }).ToList();
+        var deletedMatches = GetDeletedMatch(matchInfos, oldMatchInfos);
 
         unsyncedMatchInfos = [.. unsyncedMatchInfos, .. deletedMatches];
         int totalBatch = (int)Math.Ceiling((double)unsyncedMatchInfos.Count / BatchSize);
@@ -48,5 +42,16 @@ public class SyncDataService(
         var cacheMatchInfos = matchInfos.Except(failedMatchInfos, new MatchInfoApiModel());
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(DateTime.Today.AddDays(2));
         await cache.SetAsync(cacheKey, JsonConvert.SerializeObject(cacheMatchInfos), cachePolicy);
+    }
+
+    private static List<MatchInfoApiModel> GetDeletedMatch(List<MatchInfoApiModel> matchInfos, List<MatchInfoApiModel> oldMatchInfos)
+    {
+        return oldMatchInfos.Where(x => !matchInfos.Exists(y => y.MatchId == x.MatchId && y.SubType == x.SubType))
+            .Select(x => new MatchInfoApiModel
+            {
+                MatchId = x.MatchId,
+                SubType = x.SubType,
+                MatchSettings = x.MatchSettings.Select(s => new MatchSettingApiModel { BettypeId = s.BettypeId }).ToList()
+            }).ToList();
     }
 }
