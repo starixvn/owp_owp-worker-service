@@ -24,7 +24,7 @@ public static class SpreadBuilder
 
     public static void BuildSpreadSpecialProduct(MatchInfo matchInfo, MatchInfoApiModel matchInfoApi, IEnumerable<MatchSetting> matchSettings)
     {
-        if (SpecialBettype.BettypeIdSpecificXMins.Any(id => id == matchInfo.MinorBettypeId))
+        if (Array.Exists(SpecialBettype.BettypeIdSpecificXMins, id => id == matchInfo.MinorBettypeId))
         {
             var spreadHandicap = matchSettings.FirstOrDefault(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Spread.HasValue);
             if (spreadHandicap != null)
@@ -45,11 +45,11 @@ public static class SpreadBuilder
 
     private static void BuildSpreadForLeagueGroupMJ(MatchInfoApiModel matchInfoApi, List<MatchSetting> spreads)
     {
-        var firstHalfHdp = spreads.FirstOrDefault(s => s.BettypeId == (int)MajorBetType.Handicap1St);
-        var firstHalfOu = spreads.FirstOrDefault(s => s.BettypeId == (int)MajorBetType.OverUnder1St);
+        var firstHalfHdp = spreads.Find(s => s.BettypeId == (int)MajorBetType.Handicap1St);
+        var firstHalfOu = spreads.Find(s => s.BettypeId == (int)MajorBetType.OverUnder1St);
 
-        var handicap = spreads.FirstOrDefault(x => x.BettypeId == (int)MajorBetType.Handicap) ?? new MatchSetting();
-        var overUnder = spreads.FirstOrDefault(x => x.BettypeId == (int)MajorBetType.OverUnder) ?? new MatchSetting();
+        var handicap = spreads.Find(x => x.BettypeId == (int)MajorBetType.Handicap) ?? new MatchSetting();
+        var overUnder = spreads.Find(x => x.BettypeId == (int)MajorBetType.OverUnder) ?? new MatchSetting();
 
         if (firstHalfHdp == null)
         {
@@ -66,11 +66,11 @@ public static class SpreadBuilder
 
     private static void BuildSpreadForLeagueGroupNotMJ(MatchInfoApiModel matchInfoApi, List<MatchSetting> spreads)
     {
-        var firstHalfHdp = spreads.FirstOrDefault(s => s.BettypeId == (int)MajorBetType.Handicap1St);
-        var firstHalfOu = spreads.FirstOrDefault(s => s.BettypeId == (int)MajorBetType.OverUnder1St);
+        var firstHalfHdp = spreads.Find(s => s.BettypeId == (int)MajorBetType.Handicap1St);
+        var firstHalfOu = spreads.Find(s => s.BettypeId == (int)MajorBetType.OverUnder1St);
 
-        var handicap = spreads.FirstOrDefault(x => x.BettypeId == (int)MajorBetType.Handicap) ?? new MatchSetting();
-        var overUnder = spreads.FirstOrDefault(x => x.BettypeId == (int)MajorBetType.OverUnder) ?? new MatchSetting();
+        var handicap = spreads.Find(x => x.BettypeId == (int)MajorBetType.Handicap) ?? new MatchSetting();
+        var overUnder = spreads.Find(x => x.BettypeId == (int)MajorBetType.OverUnder) ?? new MatchSetting();
 
         if (firstHalfHdp == null)
         {

@@ -44,7 +44,7 @@ public static class NumberOfLinesBuilder
 
     public static void BuildNumberOfLinesSpecialProduct(MatchInfo matchInfo, MatchInfoApiModel matchInfoApi)
     {
-        if (!SpecialBettype.BettypeIdSpecificXMins.Any(id => id == matchInfo.MinorBettypeId))
+        if (!Array.Exists(SpecialBettype.BettypeIdSpecificXMins, id => id == matchInfo.MinorBettypeId))
         {
             var numberOfLines = GetNumberOfLinesSpecialProduct(matchInfo.NoOfHDPId);
             matchInfoApi.CreditFtLines = numberOfLines.CreditFt;

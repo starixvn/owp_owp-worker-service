@@ -24,17 +24,17 @@ public static class MaxbetBuilder
             return;
         }
 
-        if (!maxbets.Any(s => s.BettypeId == (int)MajorBetType.OverUnder))
+        if (!maxbets.Exists(s => s.BettypeId == (int)MajorBetType.OverUnder))
         {
             BuildMaxbetOverUnder(maxbets, defaultMaxbetSettings);
         }
 
-        if (!maxbets.Any(s => s.BettypeId == (int)MajorBetType.Handicap1St))
+        if (!maxbets.Exists(s => s.BettypeId == (int)MajorBetType.Handicap1St))
         {
             BuildMaxbetHandicap1st(maxbets, defaultMaxbetSettings);
         }
 
-        if (!maxbets.Any(s => s.BettypeId == (int)MajorBetType.OverUnder1St))
+        if (!maxbets.Exists(s => s.BettypeId == (int)MajorBetType.OverUnder1St))
         {
             BuildMaxbetOverUnder1st(maxbets, defaultMaxbetSettings);
         }
@@ -48,7 +48,7 @@ public static class MaxbetBuilder
         IEnumerable<MatchSetting> matchSettings,
         IEnumerable<MaxbetSetting> defaultMaxbetSettings)
     {
-        if (SpecialBettype.BettypeIdSpecificXMins.Any(id => id == matchInfo.MinorBettypeId))
+        if (Array.Exists(SpecialBettype.BettypeIdSpecificXMins, id => id == matchInfo.MinorBettypeId))
         {
             var maxbetHandicap = matchSettings.FirstOrDefault(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Maxbet.HasValue) ?? new MatchSetting();
             var maxbets = new List<MatchSetting>
@@ -58,7 +58,7 @@ public static class MaxbetBuilder
             };
             BuildMaxbet(matchInfoApi, maxbets);
         }
-        else if (SpecialBettype.BettypeIdSpecialProducts.Any(id => id == matchInfo.MinorBettypeId))
+        else if (Array.Exists(SpecialBettype.BettypeIdSpecialProducts, id => id == matchInfo.MinorBettypeId))
         {
             var maxbets = matchSettings.Where(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Maxbet.HasValue).ToList();
             var maxbetsMainMatch = matchSettings.Where(x => x.OWPMatchId == matchInfo.ParentMatchId).ToList();
@@ -89,7 +89,7 @@ public static class MaxbetBuilder
 
     private static void BuildMaxbetOverUnder(List<MatchSetting> maxbets, IEnumerable<MaxbetSetting> defaultMaxbetSettings)
     {
-        var handicap = maxbets.FirstOrDefault(m => m.BettypeId == (int)MajorBetType.Handicap) ?? new MatchSetting();
+        var handicap = maxbets.Find(m => m.BettypeId == (int)MajorBetType.Handicap) ?? new MatchSetting();
         var maxbetFtOu = defaultMaxbetSettings.FirstOrDefault(x => x.FT_HDP == handicap.Maxbet)?.FT_OU;
 
         maxbets.Add(new MatchSetting { BettypeId = (int)MajorBetType.OverUnder, Maxbet = GetMaxbet(maxbetFtOu, handicap.Maxbet) });
@@ -97,7 +97,7 @@ public static class MaxbetBuilder
 
     private static void BuildMaxbetHandicap1st(List<MatchSetting> maxbets, IEnumerable<MaxbetSetting> defaultMaxbetSettings)
     {
-        var handicap = maxbets.FirstOrDefault(m => m.BettypeId == (int)MajorBetType.Handicap) ?? new MatchSetting();
+        var handicap = maxbets.Find(m => m.BettypeId == (int)MajorBetType.Handicap) ?? new MatchSetting();
         var maxbetHDP1st = defaultMaxbetSettings.FirstOrDefault(x => x.FT_HDP == handicap.Maxbet)?.FirstHalf_HDP;
 
         maxbets.Add(new MatchSetting { BettypeId = (int)MajorBetType.Handicap1St, Maxbet = GetMaxbet(maxbetHDP1st, handicap.Maxbet) });
@@ -105,7 +105,7 @@ public static class MaxbetBuilder
 
     private static void BuildMaxbetOverUnder1st(List<MatchSetting> maxbets, IEnumerable<MaxbetSetting> defaultMaxbetSettings)
     {
-        var handicap = maxbets.FirstOrDefault(m => m.BettypeId == (int)MajorBetType.Handicap) ?? new MatchSetting();
+        var handicap = maxbets.Find(m => m.BettypeId == (int)MajorBetType.Handicap) ?? new MatchSetting();
         var maxbetOU1st = defaultMaxbetSettings.FirstOrDefault(x => x.FT_HDP == handicap.Maxbet)?.FirstHalf_OU;
 
         maxbets.Add(new MatchSetting { BettypeId = (int)MajorBetType.OverUnder1St, Maxbet = GetMaxbet(maxbetOU1st, handicap.Maxbet) });
@@ -119,22 +119,22 @@ public static class MaxbetBuilder
     {
         var handicapMainMatch = GetMaxbetHandicapMainMatch(maxbetsMainMatch);
         var valueBettype = defaultMaxbetSettings.FirstOrDefault(x => x.FT_HDP == handicapMainMatch.Maxbet);
-        if (!maxbets.Any(s => s.BettypeId == (int)MajorBetType.Handicap))
+        if (!maxbets.Exists(s => s.BettypeId == (int)MajorBetType.Handicap))
         {
             maxbets.Add(new MatchSetting { BettypeId = (int)MajorBetType.Handicap, Maxbet = GetMaxbet(valueBettype?.NoOfCorner_FT_HDP, handicapMainMatch.Maxbet) });
         }
 
-        if (!maxbets.Any(s => s.BettypeId == (int)MajorBetType.OverUnder))
+        if (!maxbets.Exists(s => s.BettypeId == (int)MajorBetType.OverUnder))
         {
             maxbets.Add(new MatchSetting { BettypeId = (int)MajorBetType.OverUnder, Maxbet = GetMaxbet(valueBettype?.NoOfCorner_FT_OU, handicapMainMatch.Maxbet) });
         }
 
-        if (!maxbets.Any(s => s.BettypeId == (int)MajorBetType.Handicap1St))
+        if (!maxbets.Exists(s => s.BettypeId == (int)MajorBetType.Handicap1St))
         {
             maxbets.Add(new MatchSetting { BettypeId = (int)MajorBetType.Handicap1St, Maxbet = GetMaxbet(valueBettype?.NoOfCorner_1H_HDP, handicapMainMatch.Maxbet) });
         }
 
-        if (!maxbets.Any(s => s.BettypeId == (int)MajorBetType.OverUnder1St))
+        if (!maxbets.Exists(s => s.BettypeId == (int)MajorBetType.OverUnder1St))
         {
             maxbets.Add(new MatchSetting { BettypeId = (int)MajorBetType.OverUnder1St, Maxbet = GetMaxbet(valueBettype?.NoOfCorner_1H_OU, handicapMainMatch.Maxbet) });
         }
@@ -148,7 +148,7 @@ public static class MaxbetBuilder
         IList<MatchSetting> maxbetsMainMatch,
         IEnumerable<MaxbetSetting> defaultMaxbetSettings)
     {
-        if (!maxbets.Any(s => s.BettypeId == (int)MajorBetType.Handicap))
+        if (!maxbets.Exists(s => s.BettypeId == (int)MajorBetType.Handicap))
         {
             var handicapMainMatch = GetMaxbetHandicapMainMatch(maxbetsMainMatch);
             var valueBettype = defaultMaxbetSettings.FirstOrDefault(x => x.FT_HDP == handicapMainMatch.Maxbet);
@@ -164,7 +164,7 @@ public static class MaxbetBuilder
         IList<MatchSetting> maxbetsMainMatch,
         IEnumerable<MaxbetSetting> defaultMaxbetSettings)
     {
-        if (!maxbets.Any(s => s.BettypeId == (int)MajorBetType.Handicap))
+        if (!maxbets.Exists(s => s.BettypeId == (int)MajorBetType.Handicap))
         {
             var handicapMainMatch = GetMaxbetHandicapMainMatch(maxbetsMainMatch);
             var valueBettype = defaultMaxbetSettings.FirstOrDefault(x => x.FT_HDP == handicapMainMatch.Maxbet);
@@ -182,22 +182,22 @@ public static class MaxbetBuilder
     {
         var handicapMainMatch = GetMaxbetHandicapMainMatch(maxbetsMainMatch);
         var valueBettype = defaultMaxbetSettings.FirstOrDefault(x => x.FT_HDP == handicapMainMatch.Maxbet);
-        if (!maxbets.Any(s => s.BettypeId == (int)MajorBetType.Handicap))
+        if (!maxbets.Exists(s => s.BettypeId == (int)MajorBetType.Handicap))
         {
             maxbets.Add(new MatchSetting { BettypeId = (int)MajorBetType.Handicap, Maxbet = GetMaxbet(valueBettype?.TotalBooking_FT_HDP, handicapMainMatch.Maxbet) });
         }
 
-        if (!maxbets.Any(s => s.BettypeId == (int)MajorBetType.OverUnder))
+        if (!maxbets.Exists(s => s.BettypeId == (int)MajorBetType.OverUnder))
         {
             maxbets.Add(new MatchSetting { BettypeId = (int)MajorBetType.OverUnder, Maxbet = GetMaxbet(valueBettype?.TotalBooking_FT_OU, handicapMainMatch.Maxbet) });
         }
 
-        if (!maxbets.Any(s => s.BettypeId == (int)MajorBetType.Handicap1St))
+        if (!maxbets.Exists(s => s.BettypeId == (int)MajorBetType.Handicap1St))
         {
             maxbets.Add(new MatchSetting { BettypeId = (int)MajorBetType.Handicap1St, Maxbet = GetMaxbet(valueBettype?.TotalBooking_1H_HDP, handicapMainMatch.Maxbet) });
         }
 
-        if (!maxbets.Any(s => s.BettypeId == (int)MajorBetType.OverUnder1St))
+        if (!maxbets.Exists(s => s.BettypeId == (int)MajorBetType.OverUnder1St))
         {
             maxbets.Add(new MatchSetting { BettypeId = (int)MajorBetType.OverUnder1St, Maxbet = GetMaxbet(valueBettype?.TotalBooking_1H_OU, handicapMainMatch.Maxbet) });
         }

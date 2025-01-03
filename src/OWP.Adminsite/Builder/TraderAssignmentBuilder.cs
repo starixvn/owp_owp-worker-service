@@ -23,12 +23,12 @@ public static class TraderAssignmentBuilder
 
     public static void BuildTraderAssignmentSpecialProduct(MatchInfo matchInfo, MatchInfoApiModel matchInfoApi, IEnumerable<Assignment> assignments)
     {
-        if (SpecialBettype.BettypeIdSpecificXMins.Any(id => id == matchInfo.MinorBettypeId))
+        if (Array.Exists(SpecialBettype.BettypeIdSpecificXMins, id => id == matchInfo.MinorBettypeId))
         {
             var traders = assignments.Where(x => x.OWPMatchId == matchInfo.OWPMatchId).ToList();
             GetSuspenderTrader(matchInfoApi, traders);
 
-            var traderHandicap = traders.FirstOrDefault(x => x.OWPMatchId == matchInfo.OWPMatchId);
+            var traderHandicap = traders.Find(x => x.OWPMatchId == matchInfo.OWPMatchId);
             if (traderHandicap != null)
             {
                 matchInfoApi.Traders =

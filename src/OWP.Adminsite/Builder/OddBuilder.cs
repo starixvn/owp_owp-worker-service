@@ -72,6 +72,7 @@ public static class OddBuilder
                     break;
 
                 default:
+                    // nothing
                     break;
             }
         }
@@ -86,12 +87,12 @@ public static class OddBuilder
         var overUnder = matchInfoApi.MatchSettings.First(x => x.BettypeId == (int)MajorBetType.OverUnder);
         var odds = recommendOdds.Where(x => x.OWPMatchId == matchInfo.OWPMatchId).ToList();
 
-        var hdpOdd = odds.FirstOrDefault(x => x.BettypeId == (int)MajorBetType.Handicap)?.HDP;
-        var ouOdd = odds.FirstOrDefault(x => x.BettypeId == (int)MajorBetType.OverUnder)?.HDP;
+        var hdpOdd = odds.Find(x => x.BettypeId == (int)MajorBetType.Handicap)?.HDP;
+        var ouOdd = odds.Find(x => x.BettypeId == (int)MajorBetType.OverUnder)?.HDP;
 
         decimal? odd_hdp_hdp1 = 0;
         decimal? odd_hdp_hdp2 = 0;
-        if (odds.Any(x => x.TeamChoice == AwayChoice))
+        if (odds.Exists(x => x.TeamChoice == AwayChoice))
         {
             if (hdpOdd.HasValue && hdpOdd.Value < 0)
             {
