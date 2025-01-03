@@ -6,7 +6,7 @@ namespace OWP.Adminsite.Services;
 
 public interface ISyncDataService
 {
-    Task PushMatchInfoAsync(DateTime fromDate, DateTime toDate);
+    Task PushMatchInfoAsync(DateTime eventDate);
 }
 
 public class SyncDataService(
@@ -14,18 +14,28 @@ public class SyncDataService(
     ,IApiService apiService
     ,IMatchInfoService matchInfoService) : ISyncDataService
 {
-    public async Task PushMatchInfoAsync(DateTime fromDate, DateTime toDate)
+    public async Task PushMatchInfoAsync(DateTime eventDate)
     {
+        var fromDate = eventDate.Date.AddHours(12);
+        var toDate = fromDate.AddDays(1).AddMilliseconds(-1);
         const byte BatchSize = 50;
-        const string CacheKey = "OWP-PushMatchInfoToAdminSite";
-        (_, var oldCacheMatchInfos) = await cache.TryGetAsync<string>(CacheKey);
+        var cacheKey = $"OWP-PushMatchInfoToAdminSite-{eventDate:yyyyMMdd}";
+        (_, var oldCacheMatchInfos) = await cache.TryGetAsync<string>(cacheKey);
         var oldMatchInfos = !string.IsNullOrEmpty(oldCacheMatchInfos)
             ? JsonConvert.DeserializeObject<List<MatchInfoApiModel>>(oldCacheMatchInfos)
             : [];
 
         var matchInfos = await matchInfoService.GetMatchInfoAsync(fromDate, toDate);
         var unsyncedMatchInfos = matchInfos.Except(oldMatchInfos, new MatchInfoApiModel()).ToList();
+        var deletedMatches = oldMatchInfos.Except(matchInfos, new MatchInfoApiModel())
+            .Select(x => new MatchInfoApiModel
+            {
+                MatchId = x.MatchId,
+                SubType = x.SubType,
+                MatchSettings = x.MatchSettings.Select(s => new MatchSettingApiModel { BettypeId = s.BettypeId}).ToList()
+            }).ToList();
 
+        unsyncedMatchInfos = [.. unsyncedMatchInfos, .. deletedMatches];
         int totalBatch = (int)Math.Ceiling((double)unsyncedMatchInfos.Count / BatchSize);
         var failedMatchInfos = new List<MatchInfoApiModel>();
         for (int i = 0; i < totalBatch; i++)
@@ -37,6 +47,6 @@ public class SyncDataService(
 
         var cacheMatchInfos = matchInfos.Except(failedMatchInfos, new MatchInfoApiModel());
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(DateTime.Today.AddDays(2));
-        await cache.SetAsync(CacheKey, JsonConvert.SerializeObject(cacheMatchInfos), cachePolicy);
+        await cache.SetAsync(cacheKey, JsonConvert.SerializeObject(cacheMatchInfos), cachePolicy);
     }
 }
