@@ -27,12 +27,12 @@ public class SyncDataService(
 
         var matchInfos = await matchInfoService.GetMatchInfoAsync(fromDate, toDate);
         var unsyncedMatchInfos = matchInfos.Except(oldMatchInfos, new MatchInfoApiModel()).ToList();
-        var deletedMatches = oldMatchInfos.Except(matchInfos, new MatchInfoApiModel())
+        var deletedMatches = oldMatchInfos.Where(x => !matchInfos.Any(y => y.MatchId == x.MatchId && y.SubType == x.SubType))
             .Select(x => new MatchInfoApiModel
             {
                 MatchId = x.MatchId,
                 SubType = x.SubType,
-                MatchSettings = x.MatchSettings.Select(s => new MatchSettingApiModel { BettypeId = s.BettypeId}).ToList()
+                MatchSettings = x.MatchSettings.Select(s => new MatchSettingApiModel { BettypeId = s.BettypeId }).ToList()
             }).ToList();
 
         unsyncedMatchInfos = [.. unsyncedMatchInfos, .. deletedMatches];
