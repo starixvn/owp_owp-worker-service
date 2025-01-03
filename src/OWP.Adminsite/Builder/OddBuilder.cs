@@ -12,7 +12,7 @@ public static class OddBuilder
         MatchInfo matchInfo,
         MatchInfoApiModel matchInfoApi,
         IEnumerable<MatchRecommendOdd> recommendOdds,
-        IEnumerable<MatchRecommendOddDetail> recommendOddsDetails)
+        IEnumerable<MatchRecommendOddDetail> recommendOddDetails)
     {
         if (!matchInfoApi.MatchSettings.Any(x => x.BettypeId == (int)MajorBetType.Handicap))
         {
@@ -30,18 +30,18 @@ public static class OddBuilder
             });
         }
 
-        GetOdds12(matchInfo, matchInfoApi, recommendOddsDetails);
+        GetOdds12(matchInfo, matchInfoApi, recommendOddDetails);
         GetHdp12(matchInfo, matchInfoApi, recommendOdds);
     }
 
     private static void GetOdds12(
         MatchInfo matchInfo,
         MatchInfoApiModel matchInfoApi,
-        IEnumerable<MatchRecommendOddDetail> recommendOddsDetails)
+        IEnumerable<MatchRecommendOddDetail> recommendOddDetails)
     {
         var handicap = matchInfoApi.MatchSettings.First(x => x.BettypeId == (int)MajorBetType.Handicap);
         var overUnder = matchInfoApi.MatchSettings.First(x => x.BettypeId == (int)MajorBetType.OverUnder);
-        var details = recommendOddsDetails.Where(x => x.OWPMatchId == matchInfo.OWPMatchId).ToList();
+        var details = recommendOddDetails.Where(x => x.OWPMatchId == matchInfo.OWPMatchId).ToList();
 
         foreach (var detail in details)
         {
