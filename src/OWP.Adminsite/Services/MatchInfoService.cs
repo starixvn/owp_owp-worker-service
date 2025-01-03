@@ -42,11 +42,16 @@ public class MatchInfoService(IMatchInfoRepository repository) : IMatchInfoServi
                 {
                     item.SubType = GetRepresentativeSubType(matchInfo.MinorBettypeId);
 
-                    TraderAssignmentBuilder.BuildTraderAssignmentSpecialProduct(matchInfo, item, assignments);
-                    MaxbetBuilder.BuildMaxbetSpecialProduct(matchInfo, item, matchSettings, defaultMaxbetSettings);
-                    SpreadBuilder.BuildSpreadSpecialProduct(matchInfo, item, matchSettings);
-                    SecondAcceptValueBuilder.BuildSecondAcceptValueSpecialProduct(matchInfo, item, matchSettings, matchOffers, secondAcceptValues);
-                    NumberOfLinesBuilder.BuildNumberOfLinesSpecialProduct(matchInfo, item);
+                    if (item.SubType.HasValue && item.SubType.Value > 0)
+                    {
+                        TraderAssignmentBuilder.BuildTraderAssignmentSpecialProduct(matchInfo, item, assignments);
+                        MaxbetBuilder.BuildMaxbetSpecialProduct(matchInfo, item, matchSettings, defaultMaxbetSettings);
+                        SpreadBuilder.BuildSpreadSpecialProduct(matchInfo, item, matchSettings);
+                        SecondAcceptValueBuilder.BuildSecondAcceptValueSpecialProduct(matchInfo, item, matchSettings, matchOffers, secondAcceptValues);
+                        NumberOfLinesBuilder.BuildNumberOfLinesSpecialProduct(matchInfo, item);
+
+                        matchInfoApis.Add(item);
+                    }
                 }
                 else
                 {
@@ -58,9 +63,9 @@ public class MatchInfoService(IMatchInfoRepository repository) : IMatchInfoServi
                     SecondAcceptValueBuilder.BuildSecondAcceptValue(matchInfo, item, matchOffers, secondAcceptValues);
                     OddBuilder.BuildOdd(matchInfo, item, recommendOdds, recommendOddsDetails);
                     NumberOfLinesBuilder.BuildNumberOfLines(matchInfo, item);
-                }
 
-                matchInfoApis.Add(item);
+                    matchInfoApis.Add(item);
+                }
             }
         }
 
