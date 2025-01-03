@@ -90,6 +90,16 @@ public static class OddBuilder
         var hdpOdd = odds.Find(x => x.BettypeId == (int)MajorBetType.Handicap)?.HDP;
         var ouOdd = odds.Find(x => x.BettypeId == (int)MajorBetType.OverUnder)?.HDP;
 
+        var (odd_hdp_hdp1, odd_hdp_hdp2) = GetHdp12ByTeamChoice(odds, hdpOdd);
+
+        handicap.Hdp1 = odd_hdp_hdp1;
+        handicap.Hdp2 = odd_hdp_hdp2;
+        overUnder.Hdp1 = ouOdd;
+        overUnder.Hdp2 = ouOdd.HasValue ? 0 : ouOdd;
+    }
+
+    private static (decimal?, decimal?) GetHdp12ByTeamChoice(List<MatchRecommendOdd> odds, decimal? hdpOdd)
+    {
         decimal? odd_hdp_hdp1 = 0;
         decimal? odd_hdp_hdp2 = 0;
         if (odds.Exists(x => x.TeamChoice == AwayChoice))
@@ -117,9 +127,6 @@ public static class OddBuilder
             }
         }
 
-        handicap.Hdp1 = odd_hdp_hdp1;
-        handicap.Hdp2 = odd_hdp_hdp2;
-        overUnder.Hdp1 = ouOdd;
-        overUnder.Hdp2 = ouOdd.HasValue ? 0 : ouOdd;
+        return (odd_hdp_hdp1, odd_hdp_hdp2);
     }
 }

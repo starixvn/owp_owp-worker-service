@@ -50,40 +50,61 @@ public static class MaxbetBuilder
     {
         if (Array.Exists(SpecialBettype.BettypeIdSpecificXMins, id => id == matchInfo.MinorBettypeId))
         {
-            var maxbetHandicap = matchSettings.FirstOrDefault(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Maxbet.HasValue) ?? new MatchSetting();
-            var maxbets = new List<MatchSetting>
-            {
-                new() { BettypeId = (int)MajorBetType.Handicap, Maxbet = maxbetHandicap.Maxbet },
-                new() { BettypeId = (int)MajorBetType.OverUnder, Maxbet = maxbetHandicap.Maxbet }
-            };
-            BuildMaxbet(matchInfoApi, maxbets);
+            BuildMaxbetXMins(matchInfo, matchInfoApi, matchSettings);
         }
         else if (Array.Exists(SpecialBettype.BettypeIdSpecialProducts, id => id == matchInfo.MinorBettypeId))
         {
-            var maxbets = matchSettings.Where(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Maxbet.HasValue).ToList();
-            var maxbetsMainMatch = matchSettings.Where(x => x.OWPMatchId == matchInfo.ParentMatchId).ToList();
-            switch (matchInfo.MinorBettypeId)
-            {
-                case SpecialBettype.BETTYPE_ID_NO_OF_CORNERS:
-                    BuildMaxbetNoOfCorner(matchInfoApi, maxbets, maxbetsMainMatch, defaultMaxbetSettings);
-                    break;
-                case SpecialBettype.BETTYPE_ID_NEXT_CORNERS:
-                    BuildMaxbetNextCorner(matchInfoApi, maxbets, maxbetsMainMatch, defaultMaxbetSettings);
-                    break;
-                case SpecialBettype.BETTYPE_ID_NEXT_BOOKINGS:
-                    BuildMaxbetNextBooking(matchInfoApi, maxbets, maxbetsMainMatch, defaultMaxbetSettings);
-                    break;
-                case SpecialBettype.BETTYPE_ID_TOTAL_BOOKINGS:
-                    BuildMaxbetTotalBooking(matchInfoApi, maxbets, maxbetsMainMatch, defaultMaxbetSettings);
-                    break;
-                default:
-                    BuildMaxbet(matchInfoApi, maxbets);
-                    break;
-            }
+            BuildMaxbetSpecialProducts(matchInfo, matchInfoApi, matchSettings, defaultMaxbetSettings);
         }
         else
         {
-            BuildMaxbet(matchInfo, matchInfoApi, matchSettings, defaultMaxbetSettings);
+            var maxbets = matchSettings.Where(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Maxbet.HasValue).ToList();
+            if (maxbets.Count > 0)
+            {
+                BuildMaxbet(matchInfo, matchInfoApi, matchSettings, defaultMaxbetSettings);
+            }
+        }
+    }
+
+    private static void BuildMaxbetXMins(
+        MatchInfo matchInfo,
+        MatchInfoApiModel matchInfoApi,
+        IEnumerable<MatchSetting> matchSettings)
+    {
+        var maxbetHandicap = matchSettings.FirstOrDefault(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Maxbet.HasValue) ?? new MatchSetting();
+        var maxbets = new List<MatchSetting>
+        {
+            new() { BettypeId = (int)MajorBetType.Handicap, Maxbet = maxbetHandicap.Maxbet },
+            new() { BettypeId = (int)MajorBetType.OverUnder, Maxbet = maxbetHandicap.Maxbet }
+        };
+        BuildMaxbet(matchInfoApi, maxbets);
+    }
+
+    private static void BuildMaxbetSpecialProducts(
+        MatchInfo matchInfo,
+        MatchInfoApiModel matchInfoApi,
+        IEnumerable<MatchSetting> matchSettings,
+        IEnumerable<MaxbetSetting> defaultMaxbetSettings)
+    {
+        var maxbets = matchSettings.Where(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Maxbet.HasValue).ToList();
+        var maxbetsMainMatch = matchSettings.Where(x => x.OWPMatchId == matchInfo.ParentMatchId).ToList();
+        switch (matchInfo.MinorBettypeId)
+        {
+            case SpecialBettype.BETTYPE_ID_NO_OF_CORNERS:
+                BuildMaxbetNoOfCorner(matchInfoApi, maxbets, maxbetsMainMatch, defaultMaxbetSettings);
+                break;
+            case SpecialBettype.BETTYPE_ID_NEXT_CORNERS:
+                BuildMaxbetNextCorner(matchInfoApi, maxbets, maxbetsMainMatch, defaultMaxbetSettings);
+                break;
+            case SpecialBettype.BETTYPE_ID_NEXT_BOOKINGS:
+                BuildMaxbetNextBooking(matchInfoApi, maxbets, maxbetsMainMatch, defaultMaxbetSettings);
+                break;
+            case SpecialBettype.BETTYPE_ID_TOTAL_BOOKINGS:
+                BuildMaxbetTotalBooking(matchInfoApi, maxbets, maxbetsMainMatch, defaultMaxbetSettings);
+                break;
+            default:
+                BuildMaxbet(matchInfoApi, maxbets);
+                break;
         }
     }
 
