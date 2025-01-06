@@ -61,7 +61,7 @@ public static class MaxbetBuilder
             var maxbets = matchSettings.Where(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Maxbet.HasValue).ToList();
             if (maxbets.Count > 0)
             {
-                BuildMaxbet(matchInfo, matchInfoApi, matchSettings, defaultMaxbetSettings);
+                BuildMaxbet(matchInfoApi, maxbets);
             }
         }
     }
