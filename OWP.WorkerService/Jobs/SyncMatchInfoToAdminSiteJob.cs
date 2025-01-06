@@ -29,8 +29,8 @@ public class SyncMatchInfoToAdminSiteJob(ISyncDataService syncDataService) : IJo
 
         if (nowGmt8.Hour >= 10 && nowGmt8.Hour < 12)
         {
+            await syncDataService.PushMatchInfoAsync(nowGmt8.AddDays(-1));
             await syncDataService.PushMatchInfoAsync(nowGmt8);
-            await syncDataService.PushMatchInfoAsync(nowGmt8.AddDays(1));
         }
         else
         {
