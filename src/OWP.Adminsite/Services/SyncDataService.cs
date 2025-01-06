@@ -16,9 +16,9 @@ public class SyncDataService(
 {
     public async Task PushMatchInfoAsync(DateTime eventDate)
     {
+        const byte BatchSize = 50;
         var fromDate = eventDate.Date.AddHours(12);
         var toDate = fromDate.AddDays(1).AddMilliseconds(-1);
-        const byte BatchSize = 50;
         var cacheKey = $"OWP-PushMatchInfoToAdminSite-{eventDate:yyyyMMdd}";
         (_, var oldCacheMatchInfos) = await cache.TryGetAsync<string>(cacheKey);
         var oldMatchInfos = !string.IsNullOrEmpty(oldCacheMatchInfos)
@@ -30,7 +30,7 @@ public class SyncDataService(
         var deletedMatches = GetDeletedMatch(matchInfos, oldMatchInfos);
 
         unsyncedMatchInfos = [.. unsyncedMatchInfos, .. deletedMatches];
-        int totalBatch = (int)Math.Ceiling((double)unsyncedMatchInfos.Count / BatchSize);
+        var totalBatch = (int)Math.Ceiling((double)unsyncedMatchInfos.Count / BatchSize);
         var failedMatchInfos = new List<MatchInfoApiModel>();
         for (int i = 0; i < totalBatch; i++)
         {
@@ -39,7 +39,9 @@ public class SyncDataService(
             failedMatchInfos.AddRange(result);
         }
 
-        var cacheMatchInfos = matchInfos.Except(failedMatchInfos, new MatchInfoApiModel());
+        var failedDeletedMatches = failedMatchInfos.Where(x => deletedMatches.Exists(y => x.MatchId == y.MatchId && x.SubType == y.SubType)).ToList();
+
+        var cacheMatchInfos = matchInfos.Except(failedMatchInfos, new MatchInfoApiModel()).Concat(failedDeletedMatches);
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(DateTime.Today.AddDays(2));
         await cache.SetAsync(cacheKey, JsonConvert.SerializeObject(cacheMatchInfos), cachePolicy);
     }
