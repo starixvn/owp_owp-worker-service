@@ -16,8 +16,8 @@ public static class TraderAssignmentBuilder
             .Select(x => new AssignmentApiModel
             {
                 Bettype = x.BettypeId,
-                UserId = x.UserId,
-                Username = x.Username
+                TraderId = x.UserId,
+                TraderName = x.Username
             }).ToList();
     }
 
@@ -33,8 +33,8 @@ public static class TraderAssignmentBuilder
             {
                 matchInfoApi.Traders =
                 [
-                    new AssignmentApiModel { Bettype = (int)MajorBetType.Handicap, UserId = traderHandicap.UserId, Username = traderHandicap.Username },
-                    new AssignmentApiModel { Bettype = (int)MajorBetType.OverUnder, UserId = traderHandicap.UserId, Username = traderHandicap.Username }
+                    new AssignmentApiModel { Bettype = (int)MajorBetType.Handicap, TraderId = traderHandicap.UserId, TraderName = traderHandicap.Username },
+                    new AssignmentApiModel { Bettype = (int)MajorBetType.OverUnder, TraderId = traderHandicap.UserId, TraderName = traderHandicap.Username }
                 ];
             }
         }
