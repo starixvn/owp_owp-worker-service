@@ -14,19 +14,19 @@ public static class OddBuilder
         IEnumerable<MatchRecommendOdd> recommendOdds,
         IEnumerable<MatchRecommendOddDetail> recommendOddDetails)
     {
-        if (!matchInfoApi.MatchSettings.Any(x => x.BettypeId == (int)MajorBetType.Handicap))
+        if (!matchInfoApi.MatchSettings.Any(x => x.Bettype == (int)MajorBetType.Handicap))
         {
             matchInfoApi.MatchSettings.Add(new MatchSettingApiModel
             {
-                BettypeId = (int)MajorBetType.Handicap
+                Bettype = (int)MajorBetType.Handicap
             });
         }
 
-        if (!matchInfoApi.MatchSettings.Any(x => x.BettypeId == (int)MajorBetType.OverUnder))
+        if (!matchInfoApi.MatchSettings.Any(x => x.Bettype == (int)MajorBetType.OverUnder))
         {
             matchInfoApi.MatchSettings.Add(new MatchSettingApiModel
             {
-                BettypeId = (int)MajorBetType.OverUnder
+                Bettype = (int)MajorBetType.OverUnder
             });
         }
 
@@ -39,8 +39,8 @@ public static class OddBuilder
         MatchInfoApiModel matchInfoApi,
         IEnumerable<MatchRecommendOddDetail> recommendOddDetails)
     {
-        var handicap = matchInfoApi.MatchSettings.First(x => x.BettypeId == (int)MajorBetType.Handicap);
-        var overUnder = matchInfoApi.MatchSettings.First(x => x.BettypeId == (int)MajorBetType.OverUnder);
+        var handicap = matchInfoApi.MatchSettings.First(x => x.Bettype == (int)MajorBetType.Handicap);
+        var overUnder = matchInfoApi.MatchSettings.First(x => x.Bettype == (int)MajorBetType.OverUnder);
         var details = recommendOddDetails.Where(x => x.OWPMatchId == matchInfo.OWPMatchId).ToList();
 
         foreach (var detail in details)
@@ -83,8 +83,8 @@ public static class OddBuilder
         MatchInfoApiModel matchInfoApi,
         IEnumerable<MatchRecommendOdd> recommendOdds)
     {
-        var handicap = matchInfoApi.MatchSettings.First(x => x.BettypeId == (int)MajorBetType.Handicap);
-        var overUnder = matchInfoApi.MatchSettings.First(x => x.BettypeId == (int)MajorBetType.OverUnder);
+        var handicap = matchInfoApi.MatchSettings.First(x => x.Bettype == (int)MajorBetType.Handicap);
+        var overUnder = matchInfoApi.MatchSettings.First(x => x.Bettype == (int)MajorBetType.OverUnder);
         var odds = recommendOdds.Where(x => x.OWPMatchId == matchInfo.OWPMatchId).ToList();
 
         var hdpOdd = odds.Find(x => x.BettypeId == (int)MajorBetType.Handicap)?.HDP;

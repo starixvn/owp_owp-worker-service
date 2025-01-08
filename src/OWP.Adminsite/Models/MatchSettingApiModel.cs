@@ -3,7 +3,7 @@ namespace OWP.Adminsite.Models;
 [Serializable]
 public class MatchSettingApiModel : IEqualityComparer<MatchSettingApiModel>
 {
-    public int BettypeId { get; set; }
+    public int Bettype { get; set; }
     public decimal? Maxbet { get; set; }
     public decimal? Spread { get; set; }
     public decimal? Hdp1 { get; set; }
@@ -12,7 +12,7 @@ public class MatchSettingApiModel : IEqualityComparer<MatchSettingApiModel>
     public decimal? Odds2 { get; set; }
 
     public bool Equals(MatchSettingApiModel x, MatchSettingApiModel y)
-        => x.BettypeId == y.BettypeId
+        => x.Bettype == y.Bettype
             && x.Maxbet == y.Maxbet
             && x.Spread == y.Spread
             && x.Hdp1 == y.Hdp1
@@ -20,5 +20,5 @@ public class MatchSettingApiModel : IEqualityComparer<MatchSettingApiModel>
             && x.Odds1 == y.Odds1
             && x.Odds2 == y.Odds2;
 
-    public int GetHashCode(MatchSettingApiModel obj) => obj.BettypeId;
+    public int GetHashCode(MatchSettingApiModel obj) => obj.Bettype;
 }

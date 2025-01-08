@@ -53,7 +53,7 @@ public class SyncDataService(
             {
                 MatchId = x.MatchId,
                 SubType = x.SubType,
-                MatchSettings = x.MatchSettings.Select(s => new MatchSettingApiModel { BettypeId = s.BettypeId }).ToList()
+                MatchSettings = x.MatchSettings.Select(s => new MatchSettingApiModel { Bettype = s.Bettype }).ToList()
             }).ToList();
     }
 }

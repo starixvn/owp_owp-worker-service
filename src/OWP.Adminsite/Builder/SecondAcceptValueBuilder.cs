@@ -14,7 +14,7 @@ public static class SecondAcceptValueBuilder
         IEnumerable<DefaultSecondAcceptValue> secondAcceptValues)
     {
         var validOfferIds = matchOffers.Where(x => x.OWPMatchId == matchInfo.OWPMatchId && IsValidSecondAcceptValue(x.Value)).ToList();
-        var maxbetHdp = matchInfoApi.MatchSettings.FirstOrDefault(x => x.BettypeId == (int)MajorBetType.Handicap)?.Maxbet;
+        var maxbetHdp = matchInfoApi.MatchSettings.FirstOrDefault(x => x.Bettype == (int)MajorBetType.Handicap)?.Maxbet;
         matchInfoApi.SecondAcceptValue = validOfferIds.Count switch
         {
             0 => GetSecondAcceptValueDefault(matchInfo, maxbetHdp, secondAcceptValues),

@@ -230,7 +230,7 @@ public static class MaxbetBuilder
     {
         foreach (var maxbet in maxbets)
         {
-            var setting = matchInfoApi.MatchSettings.FirstOrDefault(x => x.BettypeId == maxbet.BettypeId);
+            var setting = matchInfoApi.MatchSettings.FirstOrDefault(x => x.Bettype == maxbet.BettypeId);
             if (setting != null)
             {
                 setting.Maxbet = maxbet.Maxbet;
@@ -239,7 +239,7 @@ public static class MaxbetBuilder
             {
                 matchInfoApi.MatchSettings.Add(new MatchSettingApiModel
                 {
-                    BettypeId = maxbet.BettypeId,
+                    Bettype = maxbet.BettypeId,
                     Maxbet = maxbet.Maxbet
                 });
             }

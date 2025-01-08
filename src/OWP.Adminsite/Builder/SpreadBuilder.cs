@@ -111,7 +111,7 @@ public static class SpreadBuilder
     {
         foreach (var spread in spreads)
         {
-            var setting = matchInfoApi.MatchSettings.FirstOrDefault(x => x.BettypeId == spread.BettypeId);
+            var setting = matchInfoApi.MatchSettings.FirstOrDefault(x => x.Bettype == spread.BettypeId);
             if (setting != null)
             {
                 setting.Spread = spread.Spread;
@@ -120,7 +120,7 @@ public static class SpreadBuilder
             {
                 matchInfoApi.MatchSettings.Add(new MatchSettingApiModel
                 {
-                    BettypeId = spread.BettypeId,
+                    Bettype = spread.BettypeId,
                     Spread = spread.Spread
                 });
             }
