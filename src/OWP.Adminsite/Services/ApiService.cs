@@ -24,7 +24,7 @@ public class ApiService(
         var content = new StringContent(JsonConvert.SerializeObject(matchInfos), Encoding.UTF8, "application/json");
 
         var env = configuration.GetSection("Environment").Value;
-        if (!string.Equals(env, "UAT") && !string.Equals(env, "PROD"))
+        if (string.Equals(env, "DEV") || string.Equals(env, "LOCAL"))
         {
             var logInfo = new
             {
