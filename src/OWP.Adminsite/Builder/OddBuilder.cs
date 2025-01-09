@@ -100,8 +100,8 @@ public static class OddBuilder
 
     private static (decimal?, decimal?) GetHdp12ByTeamChoice(List<MatchRecommendOdd> odds, decimal? hdpOdd)
     {
-        decimal? odd_hdp_hdp1 = 0;
-        decimal? odd_hdp_hdp2 = 0;
+        decimal? odd_hdp_hdp1 = null;
+        decimal? odd_hdp_hdp2 = null;
         if (odds.Exists(x => x.TeamChoice == AwayChoice))
         {
             if (hdpOdd.HasValue && hdpOdd.Value < 0)
