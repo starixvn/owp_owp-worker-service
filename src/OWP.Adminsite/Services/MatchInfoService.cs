@@ -41,6 +41,7 @@ public class MatchInfoService(IMatchInfoRepository repository) : IMatchInfoServi
                     var item = new MatchInfoApiModel
                     {
                         MatchId = matchInfo.AdminSiteMatchId,
+                        SubType = 0,
                         Provider = matchInfo.Provider,
                         OtherProvider = matchInfo.OtherProvider,
                         WatchBet = matchInfo.WatchBet

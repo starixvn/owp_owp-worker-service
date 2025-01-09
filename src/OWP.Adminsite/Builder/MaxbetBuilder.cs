@@ -233,14 +233,14 @@ public static class MaxbetBuilder
             var setting = matchInfoApi.MatchSettings.FirstOrDefault(x => x.Bettype == maxbet.BettypeId);
             if (setting != null)
             {
-                setting.Maxbet = maxbet.Maxbet;
+                setting.Maxbet = GetMaxbet(maxbet.Maxbet);
             }
             else
             {
                 matchInfoApi.MatchSettings.Add(new MatchSettingApiModel
                 {
                     Bettype = maxbet.BettypeId,
-                    Maxbet = maxbet.Maxbet
+                    Maxbet = GetMaxbet(maxbet.Maxbet)
                 });
             }
         }
@@ -251,4 +251,6 @@ public static class MaxbetBuilder
 
     private static decimal? GetMaxbet(decimal? valueBettype, decimal? defaultValue)
         => valueBettype.HasValue && valueBettype.Value != MaxBetSetting.FOLLOW_MAIN_MATCH ? valueBettype : defaultValue;
+
+    private static int? GetMaxbet(decimal? maxbet) => maxbet.HasValue ? (int)Math.Round(maxbet.Value, 0) : null;
 }

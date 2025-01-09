@@ -4,7 +4,7 @@ namespace OWP.Adminsite.Models;
 public class MatchSettingApiModel : IEqualityComparer<MatchSettingApiModel>
 {
     public int Bettype { get; set; }
-    public decimal? Maxbet { get; set; }
+    public int? Maxbet { get; set; }
     public decimal? Spread { get; set; }
     public decimal? Hdp1 { get; set; }
     public decimal? Hdp2 { get; set; }
