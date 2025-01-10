@@ -104,26 +104,42 @@ public static class OddBuilder
         decimal? odd_hdp_hdp2 = null;
         if (odds.Exists(x => x.TeamChoice == AwayChoice))
         {
-            if (hdpOdd.HasValue && hdpOdd.Value < 0)
+            if (hdpOdd < 0)
             {
+                odd_hdp_hdp1 = 0;
                 odd_hdp_hdp2 = Math.Abs(hdpOdd.Value);
             }
 
-            if (hdpOdd.HasValue && hdpOdd.Value > 0)
+            if (hdpOdd == 0)
             {
-                odd_hdp_hdp1 = hdpOdd.Value;
+                odd_hdp_hdp1 = 0;
+                odd_hdp_hdp2 = 0;
+            }
+
+            if (hdpOdd > 0)
+            {
+                odd_hdp_hdp1 = hdpOdd;
+                odd_hdp_hdp2 = 0;
             }
         }
         else
         {
-            if (hdpOdd.HasValue && hdpOdd.Value < 0)
+            if (hdpOdd < 0)
             {
                 odd_hdp_hdp1 = Math.Abs(hdpOdd.Value);
+                odd_hdp_hdp2 = 0;
             }
 
-            if (hdpOdd.HasValue && hdpOdd.Value > 0)
+            if (hdpOdd == 0)
             {
-                odd_hdp_hdp2 = hdpOdd.Value;
+                odd_hdp_hdp1 = 0;
+                odd_hdp_hdp2 = 0;
+            }
+
+            if (hdpOdd > 0)
+            {
+                odd_hdp_hdp1 = 0;
+                odd_hdp_hdp2 = hdpOdd;
             }
         }
 
