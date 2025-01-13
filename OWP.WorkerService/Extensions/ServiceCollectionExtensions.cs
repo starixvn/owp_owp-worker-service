@@ -11,6 +11,7 @@ using Jobs;
 using LinkLeagueAndTeam;
 using MatchReadyNotification;
 using OtherSport;
+using OWP.Adminsite;
 using Provider;
 using Quartz;
 using Quartz.Impl;
@@ -62,6 +63,7 @@ public static class ServiceCollectionExtensions
         services.AddOtherSportServices();
         services.AddArchiveDataServices();
         services.AddProviderServices();
+        services.AddAdminSiteSyncServices(configuration);
 
         return services;
     }
@@ -90,6 +92,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<SumMatchLiveReportJob>();
         services.AddTransient<ArchiveOldMessageJob>();
         services.AddTransient<ArchiveDataJob>();
+        services.AddTransient<SyncMatchInfoToAdminSiteJob>();
 
         return services;
     }

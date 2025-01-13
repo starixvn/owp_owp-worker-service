@@ -2,11 +2,15 @@ using Fanex.Data.SqlServer;
 using Fanex.Logging.Sentry.RavenClient;
 using OWP.WorkerService.Extensions;
 using OWP.WorkerService.Jobs;
+using OWP.WorkerService.Models;
 using OWP.WorkerService.Scheduler;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
+
+var jobSettings = configuration.GetSection("JobSettings").Get<List<JobSettings>>();
+services.AddSingleton(jobSettings);
 
 services.AddCoreServices();
 services.AddNapClient(configuration);
