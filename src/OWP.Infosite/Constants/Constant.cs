@@ -48,7 +48,31 @@ public static class Constant
         { 24, "Move <b>KO Date</b>" },
         { 25, "Renew Match" },
         { 26, "Match Postponed" },
-        { 27, "Match Cancelled" }
+        { 27, "Match Cancelled" },
+        { 28, "Update the <b>Round Confirm</b>"},
+        { 29, "Cancel the <b>Round Confirm</b>" },
+        { 30, "Update the <b>AdminSiteID</b>"},
+        { 31, "Cancel the <b>AdminSiteID</b>" },
+        { 32, "Update the <b>Web1</b>"},
+        { 33, "Cancel the <b>Web1</b>" },
+        { 34, "Update the <b>Web2</b>"},
+        { 35, "Cancel the <b>Web2</b>" },
+        { 36, "Update the <b>Web3</b>"},
+        { 37, "Cancel the <b>Web3</b>" },
+        { 38, "Update the <b>Web4</b>"},
+        { 39, "Cancel the <b>Web4</b>" },
+        { 40, "Update the <b>Link</b>"},
+        { 41, "Cancel the <b>Link</b>" },
+        { 42, "Update the <b>Channel</b>"},
+        { 43, "Cancel the <b>Channel</b>" },
+        { 44, "Update the <b>Agent</b>"},
+        { 45, "Cancel the <b>Agent</b>" },
+        { 46, "Update the <b>Venue</b>"},
+        { 47, "Cancel the <b>Venue</b>" },
+        { 48, "Update the <b>ETPK</b>"},
+        { 49, "Cancel the <b>ETPK</b>" },
+        { 50, "Update the <b>Neutral</b>"},
+        { 51, "Cancel the <b>Neutral</b>" }
     }.ToImmutableDictionary();
 
     public static readonly IImmutableDictionary<int, string> StreamNameSrc2InfoSite = new Dictionary<int, string>
