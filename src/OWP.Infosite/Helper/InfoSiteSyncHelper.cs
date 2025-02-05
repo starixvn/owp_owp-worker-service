@@ -29,7 +29,19 @@ public static class InfoSiteSyncHelper
             { "Remark", 16 },
             { "HomeRemark", 18 },
             { "AwayRemark", 20 },
-            { "Division", 22 }
+            { "Division", 22 },
+            { "RoundConfirm", 28 },
+            { "AdminSiteId", 30 },
+            { "Website1", 32 },
+            { "Website2", 34 },
+            { "Website3", 36 },
+            { "Website4", 38 },
+            { "WatchBet", 40 },
+            { "Channel", 42 },
+            { "Agent", 44 },
+            { "Venue", 46 },
+            { "Etpk", 48 },
+            { "IsNeutral", 50 }
         };
         var actionId = propertyActionIds.GetValue(propertyName, 1);
         if (actionId == 2 && IsUpdateKODate(newValue, oldValue))
@@ -67,7 +79,19 @@ public static class InfoSiteSyncHelper
             { "Remark", 17 },
             { "HomeRemark", 19 },
             { "AwayRemark", 21 },
-            { "Division", 23 }
+            { "Division", 23 },
+            { "RoundConfirm", 29 },
+            { "AdminSiteId", 31 },
+            { "Website1", 33 },
+            { "Website2", 35 },
+            { "Website3", 37 },
+            { "Website4", 39 },
+            { "WatchBet", 41 },
+            { "Channel", 43 },
+            { "Agent", 45 },
+            { "Venue", 47 },
+            { "Etpk", 49 },
+            { "IsNeutral", 51 }
         };
 
         return propertyActionIds.GetValue(propertyName, 1);
@@ -94,7 +118,19 @@ public static class InfoSiteSyncHelper
             Division = source.Division,
             HomeRemark = source.HomeRemark,
             Remark = source.Remark,
-            Round = source.Round
+            Round = source.Round,
+            RoundConfirm = source.RoundConfirm,
+            AdminSiteId = source.AdminSiteMatchId,
+            Website1 = source.Website1,
+            Website2 = source.Website2, 
+            Website3 = source.Website3, 
+            Website4 = source.Website4,
+            WatchBet = source.WatchBet,
+            Channel = source.LiveTv,
+            Agent = source.Agent,
+            Venue = source.Venue,
+            Etpk = source.Etpk,
+            IsNeutral = source.IsNeutral,
         };
 
     public static IEnumerable<LoggedChangeModel> BuildLoggedChanges(
@@ -103,19 +139,18 @@ public static class InfoSiteSyncHelper
         InfoSiteDb infoSiteNew,
         string fromService = "Today")
     {
-        var newValue = string.Empty;
-        var oldValue = string.Empty;
-
-        return properties.Where(property =>
+        return properties.Select(property =>
             {
-                newValue = property.GetValue(infoSiteNew)?.ToString() ?? string.Empty;
-                oldValue = property.GetValue(infoSiteOld)?.ToString() ?? string.Empty;
+                var newValue = property.GetValue(infoSiteNew)?.ToString() ?? string.Empty;
+                var oldValue = property.GetValue(infoSiteOld)?.ToString() ?? string.Empty;
 
-                return !string.Equals(newValue, oldValue);
-            })
-            .Select(property =>
-            {
+                if (string.Equals(newValue, oldValue))
+                {
+                    return null;
+                }
+
                 var updateTypeId = BuildActionId(property.Name, newValue, oldValue);
+
                 return new LoggedChangeModel
                 {
                     InfoSiteMatchId = infoSiteNew.InfoSiteMatchId,
@@ -128,6 +163,7 @@ public static class InfoSiteSyncHelper
                     UpDateTime = DateTimeNowGmt8(),
                     FromService = fromService
                 };
-            });
+            })
+            .Where(log => log != null);
     }
 }

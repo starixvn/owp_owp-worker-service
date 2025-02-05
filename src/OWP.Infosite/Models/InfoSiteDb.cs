@@ -28,7 +28,32 @@ public class InfoSiteDb
     public string AwayRemark { get; set; }
 
     public string Division { get;  set; }
+
     public byte? MatchStatus { get; set; }
+
+    public string RoundConfirm { get; set; }
+
+    public int AdminSiteId { get; set; }
+
+    public string Website1 { get; set; }
+
+    public string Website2 { get; set; }
+
+    public string Website3 { get; set; }
+
+    public string Website4 { get; set; }
+
+    public string WatchBet { get; set; }
+
+    public string Channel { get; set; }
+
+    public string Agent { get; set; }
+
+    public string Venue { get; set; }
+
+    public string Etpk { get; set; }
+
+    public bool IsNeutral { get; set; }
 }
 
 public class InfoSiteDbInfo : InfoSiteDb
