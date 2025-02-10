@@ -113,7 +113,7 @@ public class SyncServiceImp(
 
             var type = typeof(InfoSiteDb);
             var properties = type.GetProperties()
-                .Where(x => !x.Name.Equals("Remark2") && !x.Name.Equals("MatchStatus")).ToList();
+                .Where(x => !x.Name.Equals("Remark2") && !x.Name.Equals("MatchStatus") && !x.Name.Equals("IsPostponed")).ToList();
 
             var loggedChangeItems = InfoSiteSyncHelper.BuildLoggedChanges(properties, infoSiteOld, infoSiteClone).ToList();
 
