@@ -101,6 +101,7 @@ public class Event
     public bool IsAwayBadRanking { get; set; }
     public bool IsHomeDowngrade { get; set; }
     public bool IsAwayDowngrade { get; set; }
+    public bool IsPostponed { get; set; }
 
     public byte? MatchStatus { get; set; }
     public string RoundConfirm { get; set; }
@@ -150,6 +151,7 @@ public class Event
         IsAwayBadRanking = infositeMatch.is_away_bad_ranking;
         IsHomeDowngrade = infositeMatch.is_home_downgrade;
         IsAwayDowngrade = infositeMatch.is_away_downgrade;
+        IsPostponed = infositeMatch.is_postponed ?? false;
         MatchStatus = infositeMatch.match_status;
         RoundConfirm = infositeMatch.round_confirm;
     }

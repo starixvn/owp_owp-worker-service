@@ -237,13 +237,13 @@ public class SyncServiceImp(
     private static void BuildLogForMatchPostponed(Event infoSiteNew, InfoSiteDbInfo infoSiteDb, List<LoggedChangeModel> loggedChanges)
     {
         if ((!string.IsNullOrEmpty(infoSiteDb.Remark2) && infoSiteDb.Remark2.Contains("Postponed", StringComparison.OrdinalIgnoreCase))
-            || infoSiteDb.MatchStatus == InfoSiteMatchStatus.Postponed)
+            || infoSiteDb.IsPostponed)
         {
             return;
         }
 
         if ((!string.IsNullOrEmpty(infoSiteNew.Remark2) && infoSiteNew.Remark2.Contains("Postponed", StringComparison.OrdinalIgnoreCase))
-            || infoSiteNew.MatchStatus == InfoSiteMatchStatus.Postponed)
+            || infoSiteNew.IsPostponed)
         {
             loggedChanges.Add(new LoggedChangeModel
             {

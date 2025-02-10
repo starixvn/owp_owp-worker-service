@@ -54,6 +54,7 @@ public class InfoSiteDb
     public string Etpk { get; set; }
 
     public bool IsNeutral { get; set; }
+    public bool IsPostponed { get; set; }
 }
 
 public class InfoSiteDbInfo : InfoSiteDb
