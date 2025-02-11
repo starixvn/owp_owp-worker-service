@@ -61,6 +61,7 @@ public class OwpScheduler(
 
         //Adminsite
         await AddJobToSchedulerAsync(typeof(SyncMatchInfoToAdminSiteJob));
+        await AddJobToSchedulerAsync(typeof(SyncProviderMatchIdJob));
     }
 
     private async Task CreateScheduler()

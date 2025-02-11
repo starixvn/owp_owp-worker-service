@@ -1,121 +1,125 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
-    <Function Name="InfoSite">
-        <Setting Key="OWP_API_PushInfoSiteMatch"  SpName="OWP_API_PushInfoSiteMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_API_SyncEventDeletedInfoSiteMatch"  SpName="OWP_API_SyncEventDeletedInfoSiteMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_InfoSiteMatchDel"  SpName="OWP_InfoSiteMatchDel" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_PreMatchAssignment_SyncFromInfoSiteMatch"  SpName="OWP_PreMatchAssignment_SyncFromInfoSiteMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_API_SyncFromInfoSiteMatch180Day"  SpName="OWP_API_SyncFromInfoSiteMatch180Day" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_PreMatchAssignment_DeleteUnSavedIssueMessage"  SpName="OWP_PreMatchAssignment_DeleteUnSavedIssueMessage" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_API_UpdateInfositeIdForMergedMatch"  SpName="OWP_API_UpdateInfositeIdForMergedMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_InfoSiteMatch_DetectSoloMatch"  SpName="OWP_InfoSiteMatch_DetectSoloMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_API_PushInfoSiteChildMatches"  SpName="OWP_API_PushInfoSiteChildMatches" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_API_DeletedChildMatch"  SpName="OWP_API_DeletedChildMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_EventPicking_SaveLogs"  SpName="OWP_EventPicking_SaveLogs" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_EventPicking_SaveMatchDeleteLogs"  SpName="OWP_EventPicking_SaveMatchDeleteLogs" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_API_GetTeamRoundInfosByDate"  SpName="OWP_API_GetTeamRoundInfosByDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
+  <Function Name="InfoSite">
+    <Setting Key="OWP_API_PushInfoSiteMatch"  SpName="OWP_API_PushInfoSiteMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_API_SyncEventDeletedInfoSiteMatch"  SpName="OWP_API_SyncEventDeletedInfoSiteMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_InfoSiteMatchDel"  SpName="OWP_InfoSiteMatchDel" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_PreMatchAssignment_SyncFromInfoSiteMatch"  SpName="OWP_PreMatchAssignment_SyncFromInfoSiteMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_API_SyncFromInfoSiteMatch180Day"  SpName="OWP_API_SyncFromInfoSiteMatch180Day" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_PreMatchAssignment_DeleteUnSavedIssueMessage"  SpName="OWP_PreMatchAssignment_DeleteUnSavedIssueMessage" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_API_UpdateInfositeIdForMergedMatch"  SpName="OWP_API_UpdateInfositeIdForMergedMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_InfoSiteMatch_DetectSoloMatch"  SpName="OWP_InfoSiteMatch_DetectSoloMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_API_PushInfoSiteChildMatches"  SpName="OWP_API_PushInfoSiteChildMatches" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_API_DeletedChildMatch"  SpName="OWP_API_DeletedChildMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_EventPicking_SaveLogs"  SpName="OWP_EventPicking_SaveLogs" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_EventPicking_SaveMatchDeleteLogs"  SpName="OWP_EventPicking_SaveMatchDeleteLogs" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_API_GetTeamRoundInfosByDate"  SpName="OWP_API_GetTeamRoundInfosByDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
         <Setting Key="OWP_InfoSite_DetectEventChangeKo"  SpName="OWP_InfoSite_DetectEventChangeKo" DbName="DBOWP.bodb_OWP.wsv_owp" />
   </Function>
-    <Function Name="MatchReady">
-        <Setting Key="OWP_API_SyncNotificationSettingWatcher"  SpName="OWP_API_SyncNotificationSettingWatcher" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_GetAllMatchesByXMins"  SpName="OWP_GetAllMatchesByXMins" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_GetAllAssignmentsByXMins"  SpName="OWP_GetAllAssignmentsByXMins" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_GetLeaderSupervisorSectionHeadOfSession"  SpName="OWP_GetLeaderSupervisorSectionHeadOfSession" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_SyncNotification_MessageInsert"  SpName="OWP_SyncNotification_MessageInsert" DbName="DBOWP.bodb_OWP.wsv_owp" />
-    </Function>
-    <Function Name="TraderReport">
-        <Setting Key="OWP_LSTReport_ListTraderAssignmentsX3" SpName="OWP_LSTReport_ListTraderAssigmmentsX3" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
-        <Setting Key="OWP_LSTReport_ListTraderAssignmentsX5" SpName="OWP_LSTReport_ListTraderAssigmmentsX5" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
-        <Setting Key="OWP_TraderReportUpdateNonRobotFields" SpName="OWP_TraderReportUpdateNonRobotFields" DbName="DBOWP.bodb_OWP.wsv_owp" TimeOut="600"></Setting>
-        <Setting Key="OWP_TraderReportUpdateRobotFields" SpName="OWP_TraderReportUpdateRobotFields" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
-        <Setting Key="OWP_TraderReport_GetSaBaAssignments" SpName="OWP_TraderReport_GetSaBaAssignments" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
-        <Setting Key="OWP_TraderReport_UpdateESoccerFields" SpName="OWP_TraderReport_UpdateESoccerFields" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
-        <Setting Key="OWP_TraderReport_GetOldAndNewSaBaAssignments" SpName="OWP_TraderReport_GetOldAndNewSaBaAssignments" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
-        <Setting Key="OWP_LSTReport_OldAndNewListTraderAssignmentsX3" SpName="OWP_LSTReport_OldAndNewListTraderAssigmmentsX3" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
-        <Setting Key="OWP_LSTReport_OldAndNewListTraderAssignmentsX5" SpName="OWP_LSTReport_OldAndNewListTraderAssigmmentsX5" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
-        <Setting Key="OWP_TraderReport_UpdateFT_OtherFields" SpName="OWP_TraderReport_UpdateFT_OtherFields" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
-    </Function>
-    <Function Name="LAReport">
-        <Setting Key="OWP_UserSectionsSel" SpName="OWP_UserSectionsSel" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
-        <Setting Key="OWP_LAAssignmentsSel" SpName="OWP_LAAssignmentsSel" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
-        <Setting Key="OWP_LAAssignmentsOldSel" SpName="OWP_LAAssignmentsOldSel" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
-        <Setting Key="OWP_LAReportUpdate" SpName="OWP_LAReportUpdate" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>        
-    </Function>
-    <Function Name="ArchiveData">
-        <Setting Key="OWP_CopyDataToOldTable" SpName="OWP_CopyDataToOldTable" DbName="DBOWP.bodb_OWP.wsv_owp" TimeOut="600"></Setting>
-        <Setting Key="OWP_DeleteOldData" SpName="OWP_DeleteOldData" DbName="DBOWP.bodb_OWP.wsv_owp" TimeOut="600"></Setting>
-        <Setting Key="OWP_DeleteOldData_Message" SpName="OWP_DeleteOldData_Message" DbName="DBOWP.bodb_OWP.wsv_owp" TimeOut="600"></Setting>
-        <Setting Key="OWP_DeleteOldData_NoOfferMatch" SpName="OWP_DeleteOldData_NoOfferMatch" DbName="DBOWP.bodb_OWP.wsv_owp" TimeOut="600"></Setting>
-        <Setting Key="OWP_ArchiveOldMessage" SpName="OWP_ArchiveOldMessage" DbName="DBOWP.bodb_OWP.wsv_owp" TimeOut="600"></Setting>
-    </Function>
-    <Function Name="InfositeIdSync">
-        <Setting Key="OWP_API_QueryInfositeMatch"  SpName="OWP_API_QueryInfositeMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
+  <Function Name="MatchReady">
+    <Setting Key="OWP_API_SyncNotificationSettingWatcher"  SpName="OWP_API_SyncNotificationSettingWatcher" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_GetAllMatchesByXMins"  SpName="OWP_GetAllMatchesByXMins" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_GetAllAssignmentsByXMins"  SpName="OWP_GetAllAssignmentsByXMins" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_GetLeaderSupervisorSectionHeadOfSession"  SpName="OWP_GetLeaderSupervisorSectionHeadOfSession" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_SyncNotification_MessageInsert"  SpName="OWP_SyncNotification_MessageInsert" DbName="DBOWP.bodb_OWP.wsv_owp" />
+  </Function>
+  <Function Name="TraderReport">
+    <Setting Key="OWP_LSTReport_ListTraderAssignmentsX3" SpName="OWP_LSTReport_ListTraderAssigmmentsX3" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
+    <Setting Key="OWP_LSTReport_ListTraderAssignmentsX5" SpName="OWP_LSTReport_ListTraderAssigmmentsX5" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
+    <Setting Key="OWP_TraderReportUpdateNonRobotFields" SpName="OWP_TraderReportUpdateNonRobotFields" DbName="DBOWP.bodb_OWP.wsv_owp" TimeOut="600"></Setting>
+    <Setting Key="OWP_TraderReportUpdateRobotFields" SpName="OWP_TraderReportUpdateRobotFields" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
+    <Setting Key="OWP_TraderReport_GetSaBaAssignments" SpName="OWP_TraderReport_GetSaBaAssignments" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
+    <Setting Key="OWP_TraderReport_UpdateESoccerFields" SpName="OWP_TraderReport_UpdateESoccerFields" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
+    <Setting Key="OWP_TraderReport_GetOldAndNewSaBaAssignments" SpName="OWP_TraderReport_GetOldAndNewSaBaAssignments" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
+    <Setting Key="OWP_LSTReport_OldAndNewListTraderAssignmentsX3" SpName="OWP_LSTReport_OldAndNewListTraderAssigmmentsX3" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
+    <Setting Key="OWP_LSTReport_OldAndNewListTraderAssignmentsX5" SpName="OWP_LSTReport_OldAndNewListTraderAssigmmentsX5" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
+    <Setting Key="OWP_TraderReport_UpdateFT_OtherFields" SpName="OWP_TraderReport_UpdateFT_OtherFields" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
+  </Function>
+  <Function Name="LAReport">
+    <Setting Key="OWP_UserSectionsSel" SpName="OWP_UserSectionsSel" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
+    <Setting Key="OWP_LAAssignmentsSel" SpName="OWP_LAAssignmentsSel" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
+    <Setting Key="OWP_LAAssignmentsOldSel" SpName="OWP_LAAssignmentsOldSel" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
+    <Setting Key="OWP_LAReportUpdate" SpName="OWP_LAReportUpdate" DbName="DBOWP.bodb_OWP.wsv_owp"></Setting>
+  </Function>
+  <Function Name="ArchiveData">
+    <Setting Key="OWP_CopyDataToOldTable" SpName="OWP_CopyDataToOldTable" DbName="DBOWP.bodb_OWP.wsv_owp" TimeOut="600"></Setting>
+    <Setting Key="OWP_DeleteOldData" SpName="OWP_DeleteOldData" DbName="DBOWP.bodb_OWP.wsv_owp" TimeOut="600"></Setting>
+    <Setting Key="OWP_DeleteOldData_Message" SpName="OWP_DeleteOldData_Message" DbName="DBOWP.bodb_OWP.wsv_owp" TimeOut="600"></Setting>
+    <Setting Key="OWP_DeleteOldData_NoOfferMatch" SpName="OWP_DeleteOldData_NoOfferMatch" DbName="DBOWP.bodb_OWP.wsv_owp" TimeOut="600"></Setting>
+    <Setting Key="OWP_ArchiveOldMessage" SpName="OWP_ArchiveOldMessage" DbName="DBOWP.bodb_OWP.wsv_owp" TimeOut="600"></Setting>
+  </Function>
+  <Function Name="InfositeIdSync">
+    <Setting Key="OWP_API_QueryInfositeMatch"  SpName="OWP_API_QueryInfositeMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
     <Setting Key="OWP_API_GetInfoSiteMatches"  SpName="OWP_API_GetInfoSiteMatches" DbName="DBOWP.bodb_OWP.wsv_owp" />
     <Setting Key="OWP_API_GetExistingInfoSiteMatches"  SpName="OWP_API_GetExistingInfoSiteMatches" DbName="DBOWP.bodb_OWP.wsv_owp" />
     <Setting Key="OWP_API_QueryUnmappingOWPMatch"  SpName="OWP_API_QueryUnmappingOWPMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_API_UpdateInfositeId"  SpName="OWP_API_UpdateInfositeId" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_AssignmentUpload_AllMatchesByTimeRange"  SpName="OWP_AssignmentUpload_AllMatchesByTimeRange" DbName="DBOWP.bodb_OWP.wsv_owp" />
-    </Function>
-    <Function Name="IsLiveStatus">
-        <Setting Key="OWP_SyncIsLiveSel" SpName="OWP_SyncIsLiveSel" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_LiveGameAssignment_GetMatchStatusFromMainDB" SpName ="OWP_LiveGameAssignment_GetMatchStatusFromMainDB" DbName="DBOWP.bodb02.wsv_nap" />
-    </Function>
-    <Function Name="LeagueManagement">
-        <Setting Key="OWP_LeagueManagement_GetAllTVCondition" SpName="OWP_LeagueManagement_GetAllTVCondition" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_LeagueManagement_LeagueSettingInsert" SpName="OWP_LeagueManagement_LeagueSettingInsert" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_LeagueManagement_GetNoSettingsMatches" SpName="OWP_LeagueManagement_GetNoSettingsMatches" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_LeagueManagement_UpdateCondition" SpName="OWP_LeagueManagement_UpdateCondition" DbName="DBOWP.bodb_OWP.wsv_owp" />
-    </Function>
-    <Function Name="PreMatchNotification">
-        <Setting Key="OWP_PreMatchNotification_QueryLeague"  SpName="OWP_PreMatchNotification_QueryLeague" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_PreMatchNotification_QueryInfoSiteMatchesByDate"  SpName="OWP_PreMatchNotification_QueryInfoSiteMatchesByDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_PreMatchNotification_QueryInfoSiteMatchesByDateRange"  SpName="OWP_PreMatchNotification_QueryInfoSiteMatchesByDateRange" DbName="DBOWP.bodb_OWP.wsv_owp" />
-    </Function>
-    <Function Name="LinkLeagueAndTeam">
-        <Setting Key="OWP_LinkLeagueAndTeam_GetTeamInfo_InTimeRange"  SpName="OWP_LinkLeagueAndTeam_GetTeamInfo_InTimeRange" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_LinkLeagueAndTeam_InsertOrUpdate"  SpName="OWP_LinkLeagueAndTeam_InsertOrUpdate" DbName="DBOWP.bodb_OWP.wsv_owp" />
-    </Function>
-    <Function Name="OvertimeReport">
-        <Setting Key="OWP_OvertimeReport_SaveOvertimeReport"  SpName="OWP_OvertimeReport_SaveOvertimeReport" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_OvertimeReport_GetTradersAssignments"  SpName="OWP_OvertimeReport_GetTradersAssignments" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_OvertimeReport_GetOldAndNewTradersAssignments"  SpName="OWP_OvertimeReport_GetOldAndNewTradersAssignments" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_OvertimeReport_GetEmployeeWorkingShift"  SpName="OWP_OvertimeReport_GetEmployeeWorkingShift" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_OvertimeReport_GetOldAndNewEmployeeWorkingShift"  SpName="OWP_OvertimeReport_GetOldAndNewEmployeeWorkingShift" DbName="DBOWP.bodb_OWP.wsv_owp" />        
-    </Function>
-    <Function Name="OtherSport">
-        <Setting Key="OWP_OtherSport_GetMatchesFromDate" SpName="OWP_OtherSport_GetMatchesFromDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_OtherSport_UpdateUnlinkedMatches" SpName="OWP_OtherSport_UpdateUnlinkedMatches" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_OtherSport_UpdateLinkedMatches" SpName="OWP_OtherSport_UpdateLinkedMatches" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_OtherSport_GetAdminSiteMatchesFromDate" SpName ="OWP_OtherSport_GetAdminSiteMatchesFromDate" DbName="DBOWP.bodb02.wsv_nap" />
-    </Function>
-    <Function Name="PrematchReport">
-        <Setting Key="OWP_PrematchReport_GetLeagueByDateAndBettype" SpName ="OWP_PrematchReport_GetLeagueByDateAndBettype" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_PrematchReport_InsertLeague" SpName ="OWP_PrematchReport_InsertLeague" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_PrematchReport_InsertMatch" SpName ="OWP_PrematchReport_InsertMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_PrematchReport_GetLeagueDetailByDateAndBettype" SpName ="OWP_PrematchReport_GetLeagueDetailByDateAndBettype" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_PreMatchAssignment_GetStartTimeForNightShift" SpName ="OWP_PreMatchAssignment_GetStartTimeForNightShift" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_PreMatchReport_GetTotalMatchByLeagueIdsAndTimeRange" SpName ="OWP_PreMatchReport_GetTotalMatchByLeagueIdsAndTimeRange" DbName="DBOWP.bodb_OWP.wsv_owp" />
-    </Function>
-    <Function Name="MatchLiveReport">
-        <Setting Key="OWP_MatchLiveReport_InsertReportData" SpName ="OWP_MatchLiveReport_InsertReportData" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_MatchLiveReport_QueryMatchesByDate" SpName ="OWP_MatchLiveReport_QueryMatchesByDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_MatchLiveReport_QueryOldMatchesByDate" SpName ="OWP_MatchLiveReport_QueryOldMatchesByDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_MatchLiveReport_GetSabaFiveMinMatchId" SpName ="OWP_MatchLiveReport_GetSabaFiveMinMatchId" DbName="DBOWP.bodb_OWP.wsv_owp" />
-    </Function>
-    <Function Name="Provider">
-        <Setting Key="OWP_ProviderVerification_GetMainMatchesByDate" SpName ="OWP_ProviderVerification_GetMainMatchesByDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_ProviderVerification_SyncAgentConfirm" SpName ="OWP_ProviderVerification_SyncAgentConfirm" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_ProviderArrangement_GetAllProvider" SpName ="OWP_ProviderArrangement_GetAllProvider" DbName="DBOWP.bodb_OWP.wsv_owp" />
-    </Function>
-    <Function Name="AdminSite">
-        <Setting Key="OWP_SyncMatchInfoToAdminSite_GetAssignment" SpName ="OWP_SyncMatchInfoToAdminSite_GetAssignment" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_SyncMatchInfoToAdminSite_GetDefaultSecondAcceptValue" SpName ="OWP_SyncMatchInfoToAdminSite_GetDefaultSecondAcceptValue" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_SyncMatchInfoToAdminSite_GetMatchInfo" SpName ="OWP_SyncMatchInfoToAdminSite_GetMatchInfo" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_SyncMatchInfoToAdminSite_GetMatchOdd" SpName ="OWP_SyncMatchInfoToAdminSite_GetMatchOdd" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_SyncMatchInfoToAdminSite_GetMatchOffer" SpName ="OWP_SyncMatchInfoToAdminSite_GetMatchOffer" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_SyncMatchInfoToAdminSite_GetMatchSetting" SpName ="OWP_SyncMatchInfoToAdminSite_GetMatchSetting" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_MaxbetSetting_Get" SpName ="OWP_MaxbetSetting_Get" DbName="DBOWP.bodb_OWP.wsv_owp" />
-    </Function>
+    <Setting Key="OWP_API_UpdateInfositeId"  SpName="OWP_API_UpdateInfositeId" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_AssignmentUpload_AllMatchesByTimeRange"  SpName="OWP_AssignmentUpload_AllMatchesByTimeRange" DbName="DBOWP.bodb_OWP.wsv_owp" />
+  </Function>
+  <Function Name="IsLiveStatus">
+    <Setting Key="OWP_SyncIsLiveSel" SpName="OWP_SyncIsLiveSel" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_LiveGameAssignment_GetMatchStatusFromMainDB" SpName ="OWP_LiveGameAssignment_GetMatchStatusFromMainDB" DbName="DBOWP.bodb02.wsv_nap" />
+  </Function>
+  <Function Name="LeagueManagement">
+    <Setting Key="OWP_LeagueManagement_GetAllTVCondition" SpName="OWP_LeagueManagement_GetAllTVCondition" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_LeagueManagement_LeagueSettingInsert" SpName="OWP_LeagueManagement_LeagueSettingInsert" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_LeagueManagement_GetNoSettingsMatches" SpName="OWP_LeagueManagement_GetNoSettingsMatches" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_LeagueManagement_UpdateCondition" SpName="OWP_LeagueManagement_UpdateCondition" DbName="DBOWP.bodb_OWP.wsv_owp" />
+  </Function>
+  <Function Name="PreMatchNotification">
+    <Setting Key="OWP_PreMatchNotification_QueryLeague"  SpName="OWP_PreMatchNotification_QueryLeague" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_PreMatchNotification_QueryInfoSiteMatchesByDate"  SpName="OWP_PreMatchNotification_QueryInfoSiteMatchesByDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_PreMatchNotification_QueryInfoSiteMatchesByDateRange"  SpName="OWP_PreMatchNotification_QueryInfoSiteMatchesByDateRange" DbName="DBOWP.bodb_OWP.wsv_owp" />
+  </Function>
+  <Function Name="LinkLeagueAndTeam">
+    <Setting Key="OWP_LinkLeagueAndTeam_GetTeamInfo_InTimeRange"  SpName="OWP_LinkLeagueAndTeam_GetTeamInfo_InTimeRange" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_LinkLeagueAndTeam_InsertOrUpdate"  SpName="OWP_LinkLeagueAndTeam_InsertOrUpdate" DbName="DBOWP.bodb_OWP.wsv_owp" />
+  </Function>
+  <Function Name="OvertimeReport">
+    <Setting Key="OWP_OvertimeReport_SaveOvertimeReport"  SpName="OWP_OvertimeReport_SaveOvertimeReport" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_OvertimeReport_GetTradersAssignments"  SpName="OWP_OvertimeReport_GetTradersAssignments" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_OvertimeReport_GetOldAndNewTradersAssignments"  SpName="OWP_OvertimeReport_GetOldAndNewTradersAssignments" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_OvertimeReport_GetEmployeeWorkingShift"  SpName="OWP_OvertimeReport_GetEmployeeWorkingShift" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_OvertimeReport_GetOldAndNewEmployeeWorkingShift"  SpName="OWP_OvertimeReport_GetOldAndNewEmployeeWorkingShift" DbName="DBOWP.bodb_OWP.wsv_owp" />
+  </Function>
+  <Function Name="OtherSport">
+    <Setting Key="OWP_OtherSport_GetMatchesFromDate" SpName="OWP_OtherSport_GetMatchesFromDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_OtherSport_UpdateUnlinkedMatches" SpName="OWP_OtherSport_UpdateUnlinkedMatches" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_OtherSport_UpdateLinkedMatches" SpName="OWP_OtherSport_UpdateLinkedMatches" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_OtherSport_GetAdminSiteMatchesFromDate" SpName ="OWP_OtherSport_GetAdminSiteMatchesFromDate" DbName="DBOWP.bodb02.wsv_nap" />
+  </Function>
+  <Function Name="PrematchReport">
+    <Setting Key="OWP_PrematchReport_GetLeagueByDateAndBettype" SpName ="OWP_PrematchReport_GetLeagueByDateAndBettype" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_PrematchReport_InsertLeague" SpName ="OWP_PrematchReport_InsertLeague" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_PrematchReport_InsertMatch" SpName ="OWP_PrematchReport_InsertMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_PrematchReport_GetLeagueDetailByDateAndBettype" SpName ="OWP_PrematchReport_GetLeagueDetailByDateAndBettype" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_PreMatchAssignment_GetStartTimeForNightShift" SpName ="OWP_PreMatchAssignment_GetStartTimeForNightShift" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_PreMatchReport_GetTotalMatchByLeagueIdsAndTimeRange" SpName ="OWP_PreMatchReport_GetTotalMatchByLeagueIdsAndTimeRange" DbName="DBOWP.bodb_OWP.wsv_owp" />
+  </Function>
+  <Function Name="MatchLiveReport">
+    <Setting Key="OWP_MatchLiveReport_InsertReportData" SpName ="OWP_MatchLiveReport_InsertReportData" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_MatchLiveReport_QueryMatchesByDate" SpName ="OWP_MatchLiveReport_QueryMatchesByDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_MatchLiveReport_QueryOldMatchesByDate" SpName ="OWP_MatchLiveReport_QueryOldMatchesByDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_MatchLiveReport_GetSabaFiveMinMatchId" SpName ="OWP_MatchLiveReport_GetSabaFiveMinMatchId" DbName="DBOWP.bodb_OWP.wsv_owp" />
+  </Function>
+  <Function Name="Provider">
+    <Setting Key="OWP_ProviderVerification_GetMainMatchesByDate" SpName ="OWP_ProviderVerification_GetMainMatchesByDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_ProviderVerification_SyncAgentConfirm" SpName ="OWP_ProviderVerification_SyncAgentConfirm" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_ProviderArrangement_GetAllProvider" SpName ="OWP_ProviderArrangement_GetAllProvider" DbName="DBOWP.bodb_OWP.wsv_owp" />
+  </Function>
+  <Function Name="AdminSite">
+    <Setting Key="OWP_SyncMatchInfoToAdminSite_GetAssignment" SpName ="OWP_SyncMatchInfoToAdminSite_GetAssignment" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_SyncMatchInfoToAdminSite_GetDefaultSecondAcceptValue" SpName ="OWP_SyncMatchInfoToAdminSite_GetDefaultSecondAcceptValue" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_SyncMatchInfoToAdminSite_GetMatchInfo" SpName ="OWP_SyncMatchInfoToAdminSite_GetMatchInfo" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_SyncMatchInfoToAdminSite_GetMatchOdd" SpName ="OWP_SyncMatchInfoToAdminSite_GetMatchOdd" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_SyncMatchInfoToAdminSite_GetMatchOffer" SpName ="OWP_SyncMatchInfoToAdminSite_GetMatchOffer" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_SyncMatchInfoToAdminSite_GetMatchSetting" SpName ="OWP_SyncMatchInfoToAdminSite_GetMatchSetting" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_MaxbetSetting_Get" SpName ="OWP_MaxbetSetting_Get" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="Adminsite_ProviderMatchId_Insert" SpName ="Adminsite_ProviderMatchId_Insert" DbName="DBOWP.bodb_OWP.wsv_owp" />
+  </Function>
+  <Function Name="LogMonitoring">
+    <Setting Key="OWP_LogMonitoring_Insert" SpName ="OWP_LogMonitoring_Insert" DbName="DBOWP.bodb_OWP.wsv_owp" />
+  </Function>
   <Function Name="Log">
     <Setting Key="OWP_InternalSystem_WriteLog" SpName ="OWP_InternalSystem_WriteLog" DbName="DBOWP.bodb_OWP.wsv_owp" />
   </Function>

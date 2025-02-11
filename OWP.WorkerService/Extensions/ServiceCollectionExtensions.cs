@@ -93,6 +93,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<ArchiveOldMessageJob>();
         services.AddTransient<ArchiveDataJob>();
         services.AddTransient<SyncMatchInfoToAdminSiteJob>();
+        services.AddTransient<SyncProviderMatchIdJob>();
 
         return services;
     }

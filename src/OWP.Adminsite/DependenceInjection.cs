@@ -4,6 +4,7 @@ using Olympus.OWP.Log.Data.Repository.Services;
 using OWP.Adminsite.Models;
 using OWP.Adminsite.Repository;
 using OWP.Adminsite.Services;
+using OWP.Services;
 
 namespace OWP.Adminsite;
 
@@ -14,10 +15,12 @@ public static class DependenceInjection
         var apiSettings = configuration.GetSection("AdminSiteSettings").Get<AdminSiteSettings>();
         services.AddSingleton(apiSettings);
 
+        services.AddTransient<LogMonitoringService, LogMonitoringServiceImp>();
         services.AddTransient<IMatchInfoRepository, MatchInfoRepository>();
         services.AddTransient<IApiService, ApiService>();
         services.AddTransient<IMatchInfoService, MatchInfoService>();
         services.AddTransient<ISyncDataService, SyncDataService>();
+        services.AddTransient<SyncMatchProviderIdService, SyncMatchProviderIdImp>();
         services.AddTransient<LogWriterService, LogWriterServiceImp>();
 
         return services;
