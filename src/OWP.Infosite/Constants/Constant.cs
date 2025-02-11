@@ -72,7 +72,8 @@ public static class Constant
         { 48, "Update the <b>ETPK</b>"},
         { 49, "Cancel the <b>ETPK</b>" },
         { 50, "Update the <b>Neutral</b>"},
-        { 51, "Cancel the <b>Neutral</b>" }
+        { 51, "Cancel the <b>Neutral</b>" },
+        { 52, "Match Suspended" }
     }.ToImmutableDictionary();
 
     public static readonly IImmutableDictionary<int, string> StreamNameSrc2InfoSite = new Dictionary<int, string>
@@ -121,4 +122,5 @@ public static class InfoSiteMatchStatus
     public const byte Normal = 0;
     public const byte Postponed = 1;
     public const byte Cancelled = 2;
+    public const byte Suspended = 4;
 }

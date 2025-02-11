@@ -119,6 +119,7 @@ public class SyncServiceImp(
 
             BuildLogForMatchPostponed(infoSiteNew, infoSiteOld, loggedChangeItems);
             BuildLogForMatchCancelled(infoSiteNew, infoSiteOld, loggedChangeItems);
+            BuildLogForMatchSuspended(infoSiteNew, infoSiteOld, loggedChangeItems);
 
             if (infoSiteOld is { IsCheck: true } && loggedChangeItems.Any())
             {
@@ -275,6 +276,28 @@ public class SyncServiceImp(
                 UpdateTypeId = 27,
                 Action = Constant.UpdateType.GetValueOrDefault(27),
                 NewValue = "Cancelled",
+                OldValue = string.Empty,
+                UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
+                FromService = FromService
+            });
+        }
+    }
+
+    private static void BuildLogForMatchSuspended(Event infoSiteNew, InfoSiteDbInfo infoSiteDb, List<LoggedChangeModel> loggedChanges)
+    {
+        if (infoSiteDb.MatchStatus == InfoSiteMatchStatus.Suspended)
+        {
+            return;
+        }
+
+        if (infoSiteNew.MatchStatus == InfoSiteMatchStatus.Suspended)
+        {
+            loggedChanges.Add(new LoggedChangeModel
+            {
+                InfoSiteMatchId = infoSiteDb.InfoSiteMatchId,
+                UpdateTypeId = 52,
+                Action = Constant.UpdateType.GetValueOrDefault(52),
+                NewValue = "Suspended",
                 OldValue = string.Empty,
                 UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
                 FromService = FromService
