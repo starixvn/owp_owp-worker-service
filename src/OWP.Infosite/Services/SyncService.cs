@@ -113,12 +113,13 @@ public class SyncServiceImp(
 
             var type = typeof(InfoSiteDb);
             var properties = type.GetProperties()
-                .Where(x => !x.Name.Equals("Remark2") && !x.Name.Equals("MatchStatus")).ToList();
+                .Where(x => !x.Name.Equals("Remark2") && !x.Name.Equals("MatchStatus") && !x.Name.Equals("IsPostponed")).ToList();
 
             var loggedChangeItems = InfoSiteSyncHelper.BuildLoggedChanges(properties, infoSiteOld, infoSiteClone).ToList();
 
             BuildLogForMatchPostponed(infoSiteNew, infoSiteOld, loggedChangeItems);
             BuildLogForMatchCancelled(infoSiteNew, infoSiteOld, loggedChangeItems);
+            BuildLogForMatchSuspended(infoSiteNew, infoSiteOld, loggedChangeItems);
 
             if (infoSiteOld is { IsCheck: true } && loggedChangeItems.Any())
             {
@@ -237,13 +238,13 @@ public class SyncServiceImp(
     private static void BuildLogForMatchPostponed(Event infoSiteNew, InfoSiteDbInfo infoSiteDb, List<LoggedChangeModel> loggedChanges)
     {
         if ((!string.IsNullOrEmpty(infoSiteDb.Remark2) && infoSiteDb.Remark2.Contains("Postponed", StringComparison.OrdinalIgnoreCase))
-            || infoSiteDb.MatchStatus == InfoSiteMatchStatus.Postponed)
+            || infoSiteDb.IsPostponed)
         {
             return;
         }
 
         if ((!string.IsNullOrEmpty(infoSiteNew.Remark2) && infoSiteNew.Remark2.Contains("Postponed", StringComparison.OrdinalIgnoreCase))
-            || infoSiteNew.MatchStatus == InfoSiteMatchStatus.Postponed)
+            || infoSiteNew.IsPostponed)
         {
             loggedChanges.Add(new LoggedChangeModel
             {
@@ -275,6 +276,28 @@ public class SyncServiceImp(
                 UpdateTypeId = 27,
                 Action = Constant.UpdateType.GetValueOrDefault(27),
                 NewValue = "Cancelled",
+                OldValue = string.Empty,
+                UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
+                FromService = FromService
+            });
+        }
+    }
+
+    private static void BuildLogForMatchSuspended(Event infoSiteNew, InfoSiteDbInfo infoSiteDb, List<LoggedChangeModel> loggedChanges)
+    {
+        if (infoSiteDb.MatchStatus == InfoSiteMatchStatus.Suspended)
+        {
+            return;
+        }
+
+        if (infoSiteNew.MatchStatus == InfoSiteMatchStatus.Suspended)
+        {
+            loggedChanges.Add(new LoggedChangeModel
+            {
+                InfoSiteMatchId = infoSiteDb.InfoSiteMatchId,
+                UpdateTypeId = 52,
+                Action = Constant.UpdateType.GetValueOrDefault(52),
+                NewValue = "Suspended",
                 OldValue = string.Empty,
                 UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
                 FromService = FromService
