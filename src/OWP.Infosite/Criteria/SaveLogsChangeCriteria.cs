@@ -3,7 +3,7 @@ using Fanex.Data.Repository;
 
 namespace OWP.Infosite.Criteria;
 
-public class SaveLogsChangeCriteria :NonQueryCommand
+public class SaveLogsChangeCriteria : NonQueryCommand
 {
     public string Xml { get; set; }
 
@@ -11,5 +11,5 @@ public class SaveLogsChangeCriteria :NonQueryCommand
 
     public override bool IsValid() => true;
 }
-       
+
 

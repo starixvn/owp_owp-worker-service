@@ -1,10 +1,10 @@
 ﻿namespace OWP.MatchReadyNotification;
 
-using System.Globalization;
 using Criteria;
 using Fanex.Data.Repository;
 using Models;
 using Olympus.Xml;
+using System.Globalization;
 
 public interface MatchReadyRepository
 {

@@ -14,7 +14,7 @@ public static class OddBuilder
         IEnumerable<MatchRecommendOdd> recommendOdds,
         IEnumerable<MatchRecommendOddDetail> recommendOddDetails)
     {
-        if (!matchInfoApi.MatchSettings.Any(x => x.Bettype == (int)MajorBetType.Handicap))
+        if (matchInfoApi.MatchSettings.All(x => x.Bettype != (int)MajorBetType.Handicap))
         {
             matchInfoApi.MatchSettings.Add(new MatchSettingApiModel
             {
@@ -22,7 +22,7 @@ public static class OddBuilder
             });
         }
 
-        if (!matchInfoApi.MatchSettings.Any(x => x.Bettype == (int)MajorBetType.OverUnder))
+        if (matchInfoApi.MatchSettings.All(x => x.Bettype != (int)MajorBetType.OverUnder))
         {
             matchInfoApi.MatchSettings.Add(new MatchSettingApiModel
             {

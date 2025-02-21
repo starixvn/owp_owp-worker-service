@@ -2,9 +2,9 @@ namespace OWP.SyncLeagueSetting.UnitTests;
 
 using NSubstitute;
 using OWP.SyncLeagueSettings.Constants;
-using SyncLeagueSettings.Models;
 using OWP.SyncLeagueSettings.Services;
 using SyncLeagueSettings;
+using SyncLeagueSettings.Models;
 using Xunit;
 using Xunit.Asserts.Compare;
 

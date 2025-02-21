@@ -1,10 +1,10 @@
 ﻿namespace OWP.Infosite.Helper;
 
-using System.Collections.Immutable;
-using System.Text.RegularExpressions;
 using Constants;
 using Extensions;
 using Models;
+using System.Collections.Immutable;
+using System.Text.RegularExpressions;
 
 public class SpecialMatchGroupRule
 {
@@ -102,7 +102,7 @@ public class Specific15MinsRule : SpecialMatchGroupRule
         {
             return base.GetMinorType(match);
         }
-        
+
         match.FirstMatch = ChildMatchHelper.IsFirstMatch(match.AwayName);
         return MinorBettypeId.Specific15Min;
     }
@@ -132,7 +132,7 @@ public class GoalKickRule : SpecialMatchGroupRule
         {
             return base.GetMinorType(match);
         }
-        
+
         match.FirstMatch = ChildMatchHelper.IsFirstMatch(match.AwayName);
         return MinorBettypeId.NextGoalKick;
     }
@@ -162,7 +162,7 @@ public class PenaltyToScoreRule : SpecialMatchGroupRule
         {
             return base.GetMinorType(match);
         }
-        
+
         match.FirstMatch = ChildMatchHelper.IsFirstMatch(match.AwayName);
         return MinorBettypeId.PenaltyToScore;
     }
@@ -195,7 +195,7 @@ public class PenaltyAwardedRule : SpecialMatchGroupRule
         {
             return base.GetMinorType(match);
         }
-        
+
         match.FirstMatch = ChildMatchHelper.IsFirstMatch(match.AwayName);
         return MinorBettypeId.PenaltyAwarded;
     }

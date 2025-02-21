@@ -32,7 +32,7 @@ public class SyncAdminSiteMatchesHandlerImp(IDynamicRepository repository, SyncL
         var newOwpMatches = await GetOwpMatches(eventDate);
         await syncLiveService.Handle(adminSiteMatches, newOwpMatches, eventDate);
     }
-    
+
     private async Task<IList<Match>> GetOwpMatches(DateTime eventDate)
         => (await repository.FetchAsync<Match>(new GetMatchesFromOwpCriteria { EventDate = eventDate })).ToList();
 

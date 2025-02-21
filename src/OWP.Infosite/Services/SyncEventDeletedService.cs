@@ -28,18 +28,18 @@ public class SyncEventDeletedServiceImp(
         var dateFrom = dateTimeService.Today;
         var dateTo = dateTimeService.Today.AddDays(7);
         var ids = await GetDeletedMatchIds(dateFrom, dateTo);
-        
+
         if (currentDeletedMatchIds != ids)
         {
             var matchesDeletedLogEventPicking = ids.Split(",").Select(item => new LoggedChangeModel
-                {
-                    Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.DELETE_MATCH),
-                    UpdateTypeId = UpdateTypeConstant.DELETE_MATCH,
-                    InfoSiteMatchId = int.Parse(item),
-                    NewValue = string.Empty,
-                    OldValue = string.Empty,
-                    UpDateTime = dateTimeService.Now.AddHours(12)
-                });
+            {
+                Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.DELETE_MATCH),
+                UpdateTypeId = UpdateTypeConstant.DELETE_MATCH,
+                InfoSiteMatchId = int.Parse(item),
+                NewValue = string.Empty,
+                OldValue = string.Empty,
+                UpDateTime = dateTimeService.Now.AddHours(12)
+            });
             await SaveDeletedMatchLogEventPicking(matchesDeletedLogEventPicking);
             await WriteLogForDebug(ids, dateFrom, dateTo);
             await DeleteMatch(ids);

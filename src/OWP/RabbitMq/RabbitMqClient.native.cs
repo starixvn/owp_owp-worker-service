@@ -39,8 +39,8 @@ public class RabbitMqClientImp(IOptions<RabbitMqSetting> options, ILogger logger
         }
         catch (Exception ex)
         {
-           await logger.ErrorAsync($"Connect RabbitMQ failed, exception: {ex}");
-           return false;
+            await logger.ErrorAsync($"Connect RabbitMQ failed, exception: {ex}");
+            return false;
         }
 
         return true;

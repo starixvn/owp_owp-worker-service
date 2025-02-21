@@ -1,12 +1,12 @@
 ﻿namespace OWP.OtherSport.SyncLive.Services;
 
-using System.Text;
 using Fanex.Logging;
 using Infosite.Settings;
 using Microsoft.Extensions.Options;
 using Model;
 using Newtonsoft.Json;
 using OWP.Services;
+using System.Text;
 
 public interface ApiService
 {

@@ -18,7 +18,7 @@ public class InfoSiteDb
 
     public string OtherProvider { get; set; }
 
-    public string Round { get;  set; }
+    public string Round { get; set; }
 
     public string Remark { get; set; }
     public string Remark2 { get; set; }
@@ -27,7 +27,7 @@ public class InfoSiteDb
 
     public string AwayRemark { get; set; }
 
-    public string Division { get;  set; }
+    public string Division { get; set; }
 
     public byte? MatchStatus { get; set; }
 
@@ -59,5 +59,5 @@ public class InfoSiteDb
 
 public class InfoSiteDbInfo : InfoSiteDb
 {
-   public bool IsCheck { get; set; }
+    public bool IsCheck { get; set; }
 }

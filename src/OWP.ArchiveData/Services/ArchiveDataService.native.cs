@@ -9,7 +9,7 @@ public interface ArchiveDataService
     Task DeleteOldData(DateTime date);
 
     Task DeleteOldNotify(DateTime date);
-        
+
     Task DeleteOldNoOfferMatch(DateTime today);
 }
 

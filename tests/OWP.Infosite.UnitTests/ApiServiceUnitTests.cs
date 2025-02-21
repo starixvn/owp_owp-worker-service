@@ -1,6 +1,5 @@
 namespace OWP.Infosite.UnitTests;
 
-using System.Net;
 using Fanex.Caching;
 using Fanex.Logging;
 using Microsoft.Extensions.Options;
@@ -11,6 +10,7 @@ using OWP.Services;
 using RabbitMq;
 using Services;
 using Settings;
+using System.Net;
 using Xunit;
 using Xunit.Asserts.Compare;
 

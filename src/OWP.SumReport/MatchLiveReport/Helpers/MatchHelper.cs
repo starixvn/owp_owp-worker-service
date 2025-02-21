@@ -1,10 +1,10 @@
 namespace OWP.SumReport.MatchLiveReport.Helpers;
 
-using System.Collections.Immutable;
-using System.ComponentModel.DataAnnotations;
 using Constants;
 using Extensions;
 using Models;
+using System.Collections.Immutable;
+using System.ComponentModel.DataAnnotations;
 
 public static class MatchHelper
 {
@@ -101,8 +101,8 @@ public static class MatchHelper
             return BetTypeName.Fantasy;
         }
 
-        return owpLeagueName.Contains("WHICH TEAM TO KICK OFF", StringComparison.InvariantCultureIgnoreCase) 
-            ? BetTypeName.WhichTeamToKickOff 
+        return owpLeagueName.Contains("WHICH TEAM TO KICK OFF", StringComparison.InvariantCultureIgnoreCase)
+            ? BetTypeName.WhichTeamToKickOff
             : BetTypeName.Main;
     }
 
@@ -136,7 +136,7 @@ public static class MatchHelper
             return BetTypeName.SabaClubFriendlyVirtualPes2115MinsPlay;
         }
 
-        return owpLeagueName.Contains("20 Mins ", StringComparison.InvariantCultureIgnoreCase) 
+        return owpLeagueName.Contains("20 Mins ", StringComparison.InvariantCultureIgnoreCase)
             ? BetTypeName.SabaInternationalFriendlyVirtualPes2120MinsPlay
             : BetTypeName.SabaEliteFriendlyVirtualPes215MinsPlay;
     }
@@ -150,7 +150,7 @@ public static class MatchHelper
         }
 
         return owpLeagueName.Contains("16 Mins ", StringComparison.InvariantCultureIgnoreCase)
-            ? BetTypeName.SabaClubFriendlyVirtualFifa2116MinsPlay 
+            ? BetTypeName.SabaClubFriendlyVirtualFifa2116MinsPlay
             : BetTypeName.SabaClubFriendlyVirtualFifa20Futsal6MinsPlay;
     }
 }

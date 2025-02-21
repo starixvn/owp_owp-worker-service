@@ -1,8 +1,5 @@
 ﻿namespace OWP.OtherSport.UnitTests.SyncAdminSiteId;
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Fanex.Data.Repository;
 using NSubstitute;
 using Olympus.Xml;
@@ -11,6 +8,9 @@ using OtherSport.SyncAdminSiteId.Handlers;
 using OtherSport.SyncAdminSiteId.Models;
 using OtherSport.SyncLive;
 using OtherSport.SyncLive.Services;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 public class SyncAdminSiteMatchesHandlerUnitTests

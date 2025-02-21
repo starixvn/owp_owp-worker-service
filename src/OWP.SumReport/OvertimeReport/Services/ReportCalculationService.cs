@@ -82,7 +82,7 @@ public class ReportCalculationServiceImp(OvertimeRepository repository) : Report
 
             var shiftOt = ShiftOvertimeCalculator.CalculateOffShiftOvertimeData(shift);
             var assignmentOt =
-                AssignmentOvertimeCalculator.CalculateOvertimeData(shift, userAssignments,  mainMatchRemarks);
+                AssignmentOvertimeCalculator.CalculateOvertimeData(shift, userAssignments, mainMatchRemarks);
             var otTime = WorkingShiftHelper.RoundUpOvertime(shiftOt + assignmentOt);
 
             if (otTime > 0)

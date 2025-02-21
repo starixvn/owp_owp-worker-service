@@ -51,7 +51,7 @@ public class LaReportServiceUnitTests
 
         var calculationService = new CalculationServiceImp(
             queryRepository,
-            specialProductFactory, 
+            specialProductFactory,
             mainMatchRuleFactory,
             sumUpService);
         return calculationService;

@@ -11,8 +11,8 @@ public interface ISyncDataService
 
 public class SyncDataService(
     ICache cache
-    ,IApiService apiService
-    ,IMatchInfoService matchInfoService) : ISyncDataService
+    , IApiService apiService
+    , IMatchInfoService matchInfoService) : ISyncDataService
 {
     public async Task PushMatchInfoAsync(DateTime eventDate)
     {

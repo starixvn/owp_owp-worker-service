@@ -2,7 +2,8 @@ namespace OWP.SumReport.MatchLiveReport.Models;
 
 using Constants;
 
-public class OwpMatch {
+public class OwpMatch
+{
     public int OwpMatchId { get; set; }
 
     public int? MinorBettypeId { get; set; }

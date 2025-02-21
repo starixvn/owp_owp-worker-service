@@ -275,7 +275,7 @@ public class SyncServiceImp(
             {
                 InfoSiteMatchId = infoSiteDb.InfoSiteMatchId,
                 UpdateTypeId = UpdateTypeConstant.MATCH_CANCELLED,
-                Action = Constant.UpdateType.GetValueOrDefault( UpdateTypeConstant.MATCH_CANCELLED),
+                Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.MATCH_CANCELLED),
                 NewValue = "Cancelled",
                 OldValue = string.Empty,
                 UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),

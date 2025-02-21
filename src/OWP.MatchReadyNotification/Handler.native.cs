@@ -1,7 +1,7 @@
 ﻿namespace OWP.MatchReadyNotification;
 
-using System.Globalization;
 using Services;
+using System.Globalization;
 
 public interface Handler
 {

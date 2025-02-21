@@ -1,11 +1,11 @@
 namespace OWP.SumReport.MatchLiveReport.Services;
 
-using System.ComponentModel.DataAnnotations;
 using Constants;
 using Extensions;
 using Helpers;
 using Models;
 using Repository;
+using System.ComponentModel.DataAnnotations;
 
 public interface ReportService
 {
@@ -19,7 +19,7 @@ public class ReportServiceImp(ReportRepository reportRepository) : ReportService
     public async Task Calculate(DateTime eventDate, bool isGenerateData = false)
     {
         var matchesByDate = await reportRepository.QueryMatchesByDate(eventDate, isGenerateData);
-        var (totalMatches, mainMatches) = (matchesByDate.Item1.ToList(),matchesByDate.Item2.ToList());
+        var (totalMatches, mainMatches) = (matchesByDate.Item1.ToList(), matchesByDate.Item2.ToList());
 
         var minorMatchesCategorized = MatchHelper.CategorizeMinorMatches(totalMatches, mainMatches).ToList();
         var mainMatchesCategorized = MatchHelper.CategorizeMainMatches(totalMatches).ToList();

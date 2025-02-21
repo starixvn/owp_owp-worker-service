@@ -1,8 +1,8 @@
 ﻿namespace OWP.InfositeIdSync.Helpers;
 
-using System.Globalization;
 using Extensions;
 using Models;
+using System.Globalization;
 
 public static class InfoSiteHelper
 {
@@ -31,8 +31,8 @@ public static class InfoSiteHelper
         }
 
         var matchesWithSameLeagueKickoffTimeAndAnyTeam = MapMatchWithSameLeagueKickoffTimeAndSwapTeam(owpMatch, infositeMatches);
-        return matchesWithSameLeagueKickoffTimeAndAnyTeam.Count == 1 
-            ? matchesWithSameLeagueKickoffTimeAndAnyTeam 
+        return matchesWithSameLeagueKickoffTimeAndAnyTeam.Count == 1
+            ? matchesWithSameLeagueKickoffTimeAndAnyTeam
             : [];
     }
 
