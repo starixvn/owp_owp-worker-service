@@ -5,6 +5,7 @@ using Criteria;
 using Fanex.Data.Repository;
 using Helper;
 using Models;
+using Olympus.OWP.Constants;
 using Olympus.Xml;
 using System;
 using System.Linq;
@@ -249,8 +250,8 @@ public class SyncServiceImp(
             loggedChanges.Add(new LoggedChangeModel
             {
                 InfoSiteMatchId = infoSiteDb.InfoSiteMatchId,
-                UpdateTypeId = 26,
-                Action = Constant.UpdateType.GetValueOrDefault(26),
+                UpdateTypeId = UpdateTypeConstant.MATCH_POSTPONED,
+                Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.MATCH_POSTPONED),
                 NewValue = "Postponed",
                 OldValue = string.Empty,
                 UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
@@ -273,8 +274,8 @@ public class SyncServiceImp(
             loggedChanges.Add(new LoggedChangeModel
             {
                 InfoSiteMatchId = infoSiteDb.InfoSiteMatchId,
-                UpdateTypeId = 27,
-                Action = Constant.UpdateType.GetValueOrDefault(27),
+                UpdateTypeId = UpdateTypeConstant.MATCH_CANCELLED,
+                Action = Constant.UpdateType.GetValueOrDefault( UpdateTypeConstant.MATCH_CANCELLED),
                 NewValue = "Cancelled",
                 OldValue = string.Empty,
                 UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
@@ -295,8 +296,8 @@ public class SyncServiceImp(
             loggedChanges.Add(new LoggedChangeModel
             {
                 InfoSiteMatchId = infoSiteDb.InfoSiteMatchId,
-                UpdateTypeId = 52,
-                Action = Constant.UpdateType.GetValueOrDefault(52),
+                UpdateTypeId = UpdateTypeConstant.MATCH_SUSPENDED,
+                Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.MATCH_SUSPENDED),
                 NewValue = "Suspended",
                 OldValue = string.Empty,
                 UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),

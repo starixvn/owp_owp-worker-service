@@ -8,9 +8,9 @@
     <PackageReference Include="Fanex.NAP.Client" Version="2.0.2" />
     <PackageReference Include="Fanex.Caching" Version="2.2.7" />
     <PackageReference Include="Olympus.InfoSiteClient" Version="2.2.0.7" />
-    <PackageReference Include="Olympus.OWP.Constants" Version="1.0.0.4" />
     <PackageReference Include="Olympus.Xml" Version="1.0.0.5" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.0" />
+    <PackageReference Include="olympus.OWP.Constants" Version="9.0.0.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OWP\OWP.csproj" />

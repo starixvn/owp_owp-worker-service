@@ -1,4 +1,5 @@
-﻿using OWP.Extensions;
+﻿using Olympus.OWP.Constants;
+using OWP.Extensions;
 using OWP.Infosite.Constants;
 using OWP.Infosite.Models;
 using System.Reflection;
@@ -18,30 +19,30 @@ public static class InfoSiteSyncHelper
     {
         var propertyActionIds = new Dictionary<string, int>
         {
-            { "EventDateTime", 2 },
-            { "LeagueName", 3 },
-            { "HomeName", 4 },
-            { "AwayName", 4 },
-            { "Tv", 5 },
-            { "IPTV", 7 },
-            { "OtherProvider", 9 },
-            { "Round", 12 },
-            { "Remark", 16 },
-            { "HomeRemark", 18 },
-            { "AwayRemark", 20 },
-            { "Division", 22 },
-            { "RoundConfirm", 28 },
-            { "AdminSiteId", 30 },
-            { "Website1", 32 },
-            { "Website2", 34 },
-            { "Website3", 36 },
-            { "Website4", 38 },
-            { "WatchBet", 40 },
-            { "Channel", 42 },
-            { "Agent", 44 },
-            { "Venue", 46 },
-            { "Etpk", 48 },
-            { "IsNeutral", 50 }
+            { "EventDateTime", UpdateTypeConstant.UPDATE_KO_TIME},
+            { "LeagueName", UpdateTypeConstant.UPDATE_LEAGUE },
+            { "HomeName", UpdateTypeConstant.UPDATE_TEAM },
+            { "AwayName", UpdateTypeConstant.UPDATE_TEAM },
+            { "Tv", UpdateTypeConstant.UPDATE_TV },
+            { "IPTV", UpdateTypeConstant.UPDATE_IPTV },
+            { "OtherProvider", UpdateTypeConstant.UPDATE_OTHER_PROVIDER },
+            { "Round", UpdateTypeConstant.UPDATE_ROUND },
+            { "Remark", UpdateTypeConstant.UPDATE_REMARK },
+            { "HomeRemark", UpdateTypeConstant.UPDATE_HOME_REMARK },
+            { "AwayRemark", UpdateTypeConstant.UPDATE_AWAY_REMARK },
+            { "Division", UpdateTypeConstant.UPDATE_DIVISION },
+            { "RoundConfirm", UpdateTypeConstant.UPDATE_ROUND_CONFIRM },
+            { "AdminSiteId", UpdateTypeConstant.UPDATE_ADMINSITEID },
+            { "Website1", UpdateTypeConstant.UPDATE_WEB1 },
+            { "Website2", UpdateTypeConstant.UPDATE_WEB2 },
+            { "Website3", UpdateTypeConstant.UPDATE_WEB3 },
+            { "Website4", UpdateTypeConstant.UPDATE_WEB4 },
+            { "WatchBet", UpdateTypeConstant.UPDATE_LINK },
+            { "Channel", UpdateTypeConstant.UPDATE_CHANNEL },
+            { "Agent", UpdateTypeConstant.UPDATE_AGENT },
+            { "Venue", UpdateTypeConstant.UPDATE_VENUE },
+            { "Etpk", UpdateTypeConstant.UPDATE_ETPK },
+            { "IsNeutral", UpdateTypeConstant.UPDATE_NEUTRAL }
         };
         var actionId = propertyActionIds.GetValue(propertyName, 1);
         if (actionId == 2 && IsUpdateKODate(newValue, oldValue))
@@ -71,27 +72,27 @@ public static class InfoSiteSyncHelper
     {
         var propertyActionIds = new Dictionary<string, int>
         {
-            { "Tv", 6 },
-            { "IPTV", 8 },
-            { "OtherProvider", 10 },
-            { "Round", 13 },
-            { "TeamRound", 15 },
-            { "Remark", 17 },
-            { "HomeRemark", 19 },
-            { "AwayRemark", 21 },
-            { "Division", 23 },
-            { "RoundConfirm", 29 },
-            { "AdminSiteId", 31 },
-            { "Website1", 33 },
-            { "Website2", 35 },
-            { "Website3", 37 },
-            { "Website4", 39 },
-            { "WatchBet", 41 },
-            { "Channel", 43 },
-            { "Agent", 45 },
-            { "Venue", 47 },
-            { "Etpk", 49 },
-            { "IsNeutral", 51 }
+            { "Tv", UpdateTypeConstant.CANCEL_TV },
+            { "IPTV", UpdateTypeConstant.CANCEL_IPTV},
+            { "OtherProvider", UpdateTypeConstant.CANCEL_OTHER_PROVIDER },
+            { "Round", UpdateTypeConstant.CANCEL_ROUND },
+            { "TeamRound", UpdateTypeConstant.CANCEL_ROUND_HAT },
+            { "Remark", UpdateTypeConstant.CANCEL_REMARK },
+            { "HomeRemark", UpdateTypeConstant.CANCEL_HOME_REMARK },
+            { "AwayRemark", UpdateTypeConstant.CANCEL_AWAY_REMARK },
+            { "Division", UpdateTypeConstant.CANCEL_DIVISION },
+            { "RoundConfirm", UpdateTypeConstant.CANCEL_ROUND_CONFIRM },
+            { "AdminSiteId", UpdateTypeConstant.CANCEL_ADMINSITEID },
+            { "Website1", UpdateTypeConstant.CANCEL_WEB1 },
+            { "Website2", UpdateTypeConstant.CANCEL_WEB2 },
+            { "Website3", UpdateTypeConstant.CANCEL_WEB3 },
+            { "Website4", UpdateTypeConstant.CANCEL_WEB4 },
+            { "WatchBet", UpdateTypeConstant.CANCEL_LINK },
+            { "Channel", UpdateTypeConstant.CANCEL_CHANNEL },
+            { "Agent", UpdateTypeConstant.CANCEL_AGENT },
+            { "Venue", UpdateTypeConstant.CANCEL_VENUE },
+            { "Etpk", UpdateTypeConstant.CANCEL_ETPK },
+            { "IsNeutral", UpdateTypeConstant.CANCEL_NEUTRAL }
         };
 
         return propertyActionIds.GetValue(propertyName, 1);
