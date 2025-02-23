@@ -1,4 +1,5 @@
-﻿using Olympus.Xml;
+﻿using Olympus.OWP.Constants;
+using Olympus.Xml;
 using OWP.Infosite.Constants;
 using OWP.Infosite.Models;
 
@@ -32,8 +33,8 @@ public class SyncEventDeletedServiceImp(
         {
             var matchesDeletedLogEventPicking = ids.Split(",").Select(item => new LoggedChangeModel
                 {
-                    Action = Constant.UpdateType.GetValueOrDefault(11),
-                    UpdateTypeId = 11,
+                    Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.DELETE_MATCH),
+                    UpdateTypeId = UpdateTypeConstant.DELETE_MATCH,
                     InfoSiteMatchId = int.Parse(item),
                     NewValue = string.Empty,
                     OldValue = string.Empty,

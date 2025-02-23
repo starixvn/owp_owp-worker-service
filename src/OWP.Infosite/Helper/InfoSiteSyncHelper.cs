@@ -42,12 +42,13 @@ public static class InfoSiteSyncHelper
             { "Agent", UpdateTypeConstant.UPDATE_AGENT },
             { "Venue", UpdateTypeConstant.UPDATE_VENUE },
             { "Etpk", UpdateTypeConstant.UPDATE_ETPK },
-            { "IsNeutral", UpdateTypeConstant.UPDATE_NEUTRAL }
+            { "IsNeutral", UpdateTypeConstant.UPDATE_NEUTRAL },
+            {"Remark2", UpdateTypeConstant.UPDATE_REMARK2}
         };
         var actionId = propertyActionIds.GetValue(propertyName, 1);
-        if (actionId == 2 && IsUpdateKODate(newValue, oldValue))
+        if (actionId == UpdateTypeConstant.UPDATE_KO_TIME && IsUpdateKODate(newValue, oldValue))
         {
-            actionId = 24;
+            actionId = UpdateTypeConstant.MOVE_KICKOFF_DATE;
         }
         return actionId;
     }
@@ -92,7 +93,8 @@ public static class InfoSiteSyncHelper
             { "Agent", UpdateTypeConstant.CANCEL_AGENT },
             { "Venue", UpdateTypeConstant.CANCEL_VENUE },
             { "Etpk", UpdateTypeConstant.CANCEL_ETPK },
-            { "IsNeutral", UpdateTypeConstant.CANCEL_NEUTRAL }
+            { "IsNeutral", UpdateTypeConstant.CANCEL_NEUTRAL },
+            {"Remark2", UpdateTypeConstant.CANCEL_REMARK2}
         };
 
         return propertyActionIds.GetValue(propertyName, 1);
@@ -132,6 +134,7 @@ public static class InfoSiteSyncHelper
             Venue = source.Venue,
             Etpk = source.Etpk,
             IsNeutral = source.IsNeutral,
+            Remark2 = source.Remark2
         };
 
     public static IEnumerable<LoggedChangeModel> BuildLoggedChanges(

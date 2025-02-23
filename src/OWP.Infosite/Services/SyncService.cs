@@ -114,7 +114,7 @@ public class SyncServiceImp(
 
             var type = typeof(InfoSiteDb);
             var properties = type.GetProperties()
-                .Where(x => !x.Name.Equals("Remark2") && !x.Name.Equals("MatchStatus") && !x.Name.Equals("IsPostponed")).ToList();
+                .Where(x => !x.Name.Equals("MatchStatus") && !x.Name.Equals("IsPostponed")).ToList();
 
             var loggedChangeItems = InfoSiteSyncHelper.BuildLoggedChanges(properties, infoSiteOld, infoSiteClone).ToList();
 
@@ -136,13 +136,13 @@ public class SyncServiceImp(
                 });
             }
 
-            if (loggedChangeItems.Exists(log => log.UpdateTypeId == 24))
+            if (loggedChangeItems.Exists(log => log.UpdateTypeId == UpdateTypeConstant.MOVE_KICKOFF_DATE))
             {
-                var updateKODateLog = loggedChangeItems.First(l => l.UpdateTypeId == 24);
+                var updateKODateLog = loggedChangeItems.First(l => l.UpdateTypeId == UpdateTypeConstant.MOVE_KICKOFF_DATE);
                 loggedChanges.Add(new LoggedChangeModel
                 {
                     InfoSiteMatchId = updateKODateLog.InfoSiteMatchId,
-                    UpdateTypeId = 25,
+                    UpdateTypeId = UpdateTypeConstant.RENEW_MATCH,
                     Action = "Renew match",
                     NewValue = updateKODateLog.NewValue,
                     OldValue = updateKODateLog.OldValue,
@@ -159,8 +159,8 @@ public class SyncServiceImp(
     {
         var newLoggedChanges = newInfoSiteIds.Select(newInfoSiteId => new LoggedChangeModel
         {
-            UpdateTypeId = 1,
-            Action = Constant.UpdateType.GetValueOrDefault(1),
+            UpdateTypeId = UpdateTypeConstant.NEW_MATCH,
+            Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.NEW_MATCH),
             InfoSiteMatchId = newInfoSiteId,
             UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
             NewValue = null,

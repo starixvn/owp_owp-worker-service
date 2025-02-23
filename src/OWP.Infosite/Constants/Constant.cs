@@ -25,13 +25,13 @@ public static class Constant
     public static readonly IImmutableDictionary<int, string> UpdateType = new Dictionary<int, string>
     {
         { UpdateTypeConstant.NEW_MATCH,"Add a new match"},
-        { UpdateTypeConstant.UPDATE_KO_TIME,     "Update the <b>KO time</b>"},
-        { UpdateTypeConstant.UPDATE_LEAGUE,      "Update the <b>League name</b>"},
-        { UpdateTypeConstant.UPDATE_TEAM,        "Update the <b>Team name</b>"},
-        { UpdateTypeConstant.UPDATE_TV ,         "Update the <b>TV</b>"},
-        { UpdateTypeConstant.CANCEL_TV,          "Cancel the <b>TV</b>"},
-        { UpdateTypeConstant.UPDATE_IPTV ,       "Update the <b>IPTV</b>" },
-        { UpdateTypeConstant.CANCEL_IPTV ,        "Cancel the <b>IPTV</b>"},
+        { UpdateTypeConstant.UPDATE_KO_TIME,"Update the <b>KO time</b>"},
+        { UpdateTypeConstant.UPDATE_LEAGUE,"Update the <b>League name</b>"},
+        { UpdateTypeConstant.UPDATE_TEAM,"Update the <b>Team name</b>"},
+        { UpdateTypeConstant.UPDATE_TV,"Update the <b>TV</b>"},
+        { UpdateTypeConstant.CANCEL_TV,"Cancel the <b>TV</b>"},
+        { UpdateTypeConstant.UPDATE_IPTV , "Update the <b>IPTV</b>" },
+        { UpdateTypeConstant.CANCEL_IPTV , "Cancel the <b>IPTV</b>"},
         { UpdateTypeConstant.UPDATE_OTHER_PROVIDER, "Update the <b>Other Provider</b>" },
         { UpdateTypeConstant.CANCEL_OTHER_PROVIDER, "Cancel the <b>Other Provider</b>"},
         { UpdateTypeConstant.DELETE_MATCH, "Delete the match"},
@@ -75,7 +75,9 @@ public static class Constant
         { UpdateTypeConstant.CANCEL_ETPK   , "Cancel the <b>ETPK</b>" },
         { UpdateTypeConstant.UPDATE_NEUTRAL   , "Update the <b>Neutral</b>"},
         { UpdateTypeConstant.CANCEL_NEUTRAL   , "Cancel the <b>Neutral</b>" },
-        { UpdateTypeConstant.MATCH_SUSPENDED    , "Match Suspended" }
+        { UpdateTypeConstant.MATCH_SUSPENDED    , "Match Suspended" },
+        { UpdateTypeConstant.UPDATE_REMARK2, "Update the <b>Remark2</b>" },
+        { UpdateTypeConstant.CANCEL_REMARK2, "Cancel the <b>Remark2</b>" }
     }.ToImmutableDictionary();
 
     public static readonly IImmutableDictionary<int, string> StreamNameSrc2InfoSite = new Dictionary<int, string>
