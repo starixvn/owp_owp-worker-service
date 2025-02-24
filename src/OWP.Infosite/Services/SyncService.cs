@@ -238,25 +238,16 @@ public class SyncServiceImp(
 
     private static void BuildLogForMatchPostponed(Event infoSiteNew, InfoSiteDbInfo infoSiteDb, List<LoggedChangeModel> loggedChanges)
     {
-        if ((!string.IsNullOrEmpty(infoSiteDb.Remark2) && infoSiteDb.Remark2.Contains("Postponed", StringComparison.OrdinalIgnoreCase))
-            || infoSiteDb.IsPostponed)
+        if (infoSiteDb.IsPostponed != infoSiteNew.IsPostponed)
         {
-            return;
-        }
+            var updateTypeId = infoSiteNew.IsPostponed ? UpdateTypeConstant.MATCH_POSTPONED : UpdateTypeConstant.RENEW_MATCH;
+            var action = Constant.UpdateType.GetValueOrDefault(updateTypeId);
+            var newValue = infoSiteNew.IsPostponed ? "Postponed" : string.Empty;
+            var oldValue = infoSiteNew.IsPostponed ? string.Empty : "Postponed";
 
-        if ((!string.IsNullOrEmpty(infoSiteNew.Remark2) && infoSiteNew.Remark2.Contains("Postponed", StringComparison.OrdinalIgnoreCase))
-            || infoSiteNew.IsPostponed)
-        {
-            loggedChanges.Add(new LoggedChangeModel
-            {
-                InfoSiteMatchId = infoSiteDb.InfoSiteMatchId,
-                UpdateTypeId = UpdateTypeConstant.MATCH_POSTPONED,
-                Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.MATCH_POSTPONED),
-                NewValue = "Postponed",
-                OldValue = string.Empty,
-                UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
-                FromService = FromService
-            });
+            var loggedChange = CreateLoggedChangeModel(infoSiteDb.InfoSiteMatchId, InfoSiteSyncHelper.DateTimeNowGmt8(),
+                updateTypeId, action, newValue, oldValue, FromService);
+            loggedChanges.Add(loggedChange);
         }
     }
 
@@ -304,5 +295,26 @@ public class SyncServiceImp(
                 FromService = FromService
             });
         }
+    }
+
+    private static LoggedChangeModel CreateLoggedChangeModel(
+        int infoSiteMatchId,
+        DateTime upDateTime,
+        int? updateTypeId,
+        string action,
+        string newValue,
+        string oldValue,
+        string fromService)
+    {
+        return new LoggedChangeModel
+        {
+            InfoSiteMatchId = infoSiteMatchId,
+            UpDateTime = upDateTime,
+            UpdateTypeId = updateTypeId,
+            Action = action,
+            NewValue = newValue,
+            OldValue = oldValue,
+            FromService = fromService
+        };
     }
 }

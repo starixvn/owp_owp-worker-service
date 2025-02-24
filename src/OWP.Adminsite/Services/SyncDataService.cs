@@ -26,15 +26,15 @@ public class SyncDataService(
             : [];
 
         var matchInfos = await matchInfoService.GetMatchInfoAsync(fromDate, toDate);
-        var unsyncedMatchInfos = matchInfos.Except(oldMatchInfos, new MatchInfoApiModel()).ToList();
+        var unsynchronizedMatches = matchInfos.Except(oldMatchInfos, new MatchInfoApiModel()).ToList();
         var deletedMatches = GetDeletedMatch(matchInfos, oldMatchInfos);
 
-        unsyncedMatchInfos = [.. unsyncedMatchInfos, .. deletedMatches];
-        var totalBatch = (int)Math.Ceiling((double)unsyncedMatchInfos.Count / BatchSize);
+        unsynchronizedMatches = [.. unsynchronizedMatches, .. deletedMatches];
+        var totalBatch = (int)Math.Ceiling((double)unsynchronizedMatches.Count / BatchSize);
         var failedMatchInfos = new List<MatchInfoApiModel>();
-        for (int i = 0; i < totalBatch; i++)
+        for (var i = 0; i < totalBatch; i++)
         {
-            var data = unsyncedMatchInfos.Skip(i * BatchSize).Take(BatchSize).ToList();
+            var data = unsynchronizedMatches.Skip(i * BatchSize).Take(BatchSize).ToList();
             var result = await apiService.PushMatchInfoAsync(fromDate, toDate, data);
             failedMatchInfos.AddRange(result);
         }
