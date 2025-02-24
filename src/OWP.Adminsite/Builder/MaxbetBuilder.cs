@@ -55,10 +55,10 @@ public static class MaxbetBuilder
         }
         else
         {
-            var maxbets = matchSettings.Where(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Maxbet.HasValue).ToList();
-            if (maxbets.Count > 0)
+            var maxbetSetting = matchSettings.Where(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Maxbet.HasValue).ToList();
+            if (maxbetSetting.Count > 0)
             {
-                BuildMaxbet(matchInfoApi, maxbets);
+                BuildMaxbet(matchInfoApi, maxbetSetting);
             }
         }
     }

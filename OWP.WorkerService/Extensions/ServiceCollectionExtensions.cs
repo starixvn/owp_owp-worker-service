@@ -11,7 +11,7 @@ using Jobs;
 using LinkLeagueAndTeam;
 using MatchReadyNotification;
 using OtherSport;
-using OWP.Adminsite;
+using Adminsite;
 using Provider;
 using Quartz;
 using Quartz.Impl;

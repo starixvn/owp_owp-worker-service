@@ -70,10 +70,6 @@ public static class OddBuilder
                         overUnder.Odds2 = detail.Odds;
                     }
                     break;
-
-                default:
-                    // nothing
-                    break;
             }
         }
     }
@@ -95,7 +91,7 @@ public static class OddBuilder
         handicap.Hdp1 = odd_hdp_hdp1;
         handicap.Hdp2 = odd_hdp_hdp2;
         overUnder.Hdp1 = ouOdd;
-        overUnder.Hdp2 = ouOdd.HasValue ? 0 : ouOdd;
+        overUnder.Hdp2 = ouOdd.HasValue ? 0 : null;
     }
 
     private static (decimal?, decimal?) GetHdp12ByTeamChoice(List<MatchRecommendOdd> odds, decimal? hdpOdd)

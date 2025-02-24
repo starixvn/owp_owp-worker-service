@@ -20,7 +20,7 @@ public class SyncDataService(
         var fromDate = eventDate.Date.AddHours(12);
         var toDate = fromDate.AddDays(1).AddMilliseconds(-1);
         var cacheKey = $"OWP-SyncMatchInfoToAdminSite-{eventDate:yyyyMMdd}";
-        (_, var oldCacheMatchInfos) = await cache.TryGetAsync<string>(cacheKey);
+        var (_, oldCacheMatchInfos) = await cache.TryGetAsync<string>(cacheKey);
         var oldMatchInfos = !string.IsNullOrEmpty(oldCacheMatchInfos)
             ? JsonConvert.DeserializeObject<List<MatchInfoApiModel>>(oldCacheMatchInfos)
             : [];
