@@ -1,10 +1,10 @@
 ﻿namespace OWP.SumReport.LAReport.Services;
 
+using Constants;
 using Enum;
 using Extensions;
 using Factory;
 using Models;
-using Constants;
 
 public interface CalculationService
 {
@@ -41,7 +41,7 @@ public class CalculationServiceImp(
             };
             reportModel.Username = userSections.GetValue(id, string.Empty);
             sumUpService.Execute(categorizeAssignments, reportModel);
-           
+
 
             yield return reportModel;
         }

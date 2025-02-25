@@ -1,10 +1,10 @@
 ﻿namespace OWP.OtherSport.UnitTests.SyncAdminSiteId.Helpers;
 
+using OtherSport.SyncAdminSiteId.Helpers;
+using OtherSport.SyncAdminSiteId.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OtherSport.SyncAdminSiteId.Helpers;
-using OtherSport.SyncAdminSiteId.Models;
 using Xunit;
 using Xunit.Asserts.Compare;
 

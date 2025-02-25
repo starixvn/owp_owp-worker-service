@@ -5,6 +5,7 @@ using Criteria;
 using Fanex.Data.Repository;
 using Helper;
 using Models;
+using Olympus.OWP.Constants;
 using Olympus.Xml;
 using System;
 using System.Linq;
@@ -113,7 +114,7 @@ public class SyncServiceImp(
 
             var type = typeof(InfoSiteDb);
             var properties = type.GetProperties()
-                .Where(x => !x.Name.Equals("Remark2") && !x.Name.Equals("MatchStatus") && !x.Name.Equals("IsPostponed")).ToList();
+                .Where(x => !x.Name.Equals("MatchStatus") && !x.Name.Equals("IsPostponed")).ToList();
 
             var loggedChangeItems = InfoSiteSyncHelper.BuildLoggedChanges(properties, infoSiteOld, infoSiteClone).ToList();
 
@@ -135,13 +136,13 @@ public class SyncServiceImp(
                 });
             }
 
-            if (loggedChangeItems.Exists(log => log.UpdateTypeId == 24))
+            if (loggedChangeItems.Exists(log => log.UpdateTypeId == UpdateTypeConstant.MOVE_KICKOFF_DATE))
             {
-                var updateKODateLog = loggedChangeItems.First(l => l.UpdateTypeId == 24);
+                var updateKODateLog = loggedChangeItems.First(l => l.UpdateTypeId == UpdateTypeConstant.MOVE_KICKOFF_DATE);
                 loggedChanges.Add(new LoggedChangeModel
                 {
                     InfoSiteMatchId = updateKODateLog.InfoSiteMatchId,
-                    UpdateTypeId = 25,
+                    UpdateTypeId = UpdateTypeConstant.RENEW_MATCH,
                     Action = "Renew match",
                     NewValue = updateKODateLog.NewValue,
                     OldValue = updateKODateLog.OldValue,
@@ -158,8 +159,8 @@ public class SyncServiceImp(
     {
         var newLoggedChanges = newInfoSiteIds.Select(newInfoSiteId => new LoggedChangeModel
         {
-            UpdateTypeId = 1,
-            Action = Constant.UpdateType.GetValueOrDefault(1),
+            UpdateTypeId = UpdateTypeConstant.NEW_MATCH,
+            Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.NEW_MATCH),
             InfoSiteMatchId = newInfoSiteId,
             UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
             NewValue = null,
@@ -237,25 +238,16 @@ public class SyncServiceImp(
 
     private static void BuildLogForMatchPostponed(Event infoSiteNew, InfoSiteDbInfo infoSiteDb, List<LoggedChangeModel> loggedChanges)
     {
-        if ((!string.IsNullOrEmpty(infoSiteDb.Remark2) && infoSiteDb.Remark2.Contains("Postponed", StringComparison.OrdinalIgnoreCase))
-            || infoSiteDb.IsPostponed)
+        if (infoSiteDb.IsPostponed != infoSiteNew.IsPostponed)
         {
-            return;
-        }
+            var updateTypeId = infoSiteNew.IsPostponed ? UpdateTypeConstant.MATCH_POSTPONED : UpdateTypeConstant.RENEW_MATCH;
+            var action = Constant.UpdateType.GetValueOrDefault(updateTypeId);
+            var newValue = infoSiteNew.IsPostponed ? "Postponed" : string.Empty;
+            var oldValue = infoSiteNew.IsPostponed ? string.Empty : "Postponed";
 
-        if ((!string.IsNullOrEmpty(infoSiteNew.Remark2) && infoSiteNew.Remark2.Contains("Postponed", StringComparison.OrdinalIgnoreCase))
-            || infoSiteNew.IsPostponed)
-        {
-            loggedChanges.Add(new LoggedChangeModel
-            {
-                InfoSiteMatchId = infoSiteDb.InfoSiteMatchId,
-                UpdateTypeId = 26,
-                Action = Constant.UpdateType.GetValueOrDefault(26),
-                NewValue = "Postponed",
-                OldValue = string.Empty,
-                UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
-                FromService = FromService
-            });
+            var loggedChange = CreateLoggedChangeModel(infoSiteDb.InfoSiteMatchId, InfoSiteSyncHelper.DateTimeNowGmt8(),
+                updateTypeId, action, newValue, oldValue, FromService);
+            loggedChanges.Add(loggedChange);
         }
     }
 
@@ -273,8 +265,8 @@ public class SyncServiceImp(
             loggedChanges.Add(new LoggedChangeModel
             {
                 InfoSiteMatchId = infoSiteDb.InfoSiteMatchId,
-                UpdateTypeId = 27,
-                Action = Constant.UpdateType.GetValueOrDefault(27),
+                UpdateTypeId = UpdateTypeConstant.MATCH_CANCELLED,
+                Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.MATCH_CANCELLED),
                 NewValue = "Cancelled",
                 OldValue = string.Empty,
                 UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
@@ -295,13 +287,34 @@ public class SyncServiceImp(
             loggedChanges.Add(new LoggedChangeModel
             {
                 InfoSiteMatchId = infoSiteDb.InfoSiteMatchId,
-                UpdateTypeId = 52,
-                Action = Constant.UpdateType.GetValueOrDefault(52),
+                UpdateTypeId = UpdateTypeConstant.MATCH_SUSPENDED,
+                Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.MATCH_SUSPENDED),
                 NewValue = "Suspended",
                 OldValue = string.Empty,
                 UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
                 FromService = FromService
             });
         }
+    }
+
+    private static LoggedChangeModel CreateLoggedChangeModel(
+        int infoSiteMatchId,
+        DateTime upDateTime,
+        int? updateTypeId,
+        string action,
+        string newValue,
+        string oldValue,
+        string fromService)
+    {
+        return new LoggedChangeModel
+        {
+            InfoSiteMatchId = infoSiteMatchId,
+            UpDateTime = upDateTime,
+            UpdateTypeId = updateTypeId,
+            Action = action,
+            NewValue = newValue,
+            OldValue = oldValue,
+            FromService = fromService
+        };
     }
 }

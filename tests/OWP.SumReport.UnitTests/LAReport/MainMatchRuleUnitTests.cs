@@ -125,7 +125,7 @@ public class MainMatchRuleUnitTests
     public void Execute_MainMatchRule_ShouldReturn5ML()
     {
         // Arrange
-        var firstRule = new FiveMajorLeagueRule(); 
+        var firstRule = new FiveMajorLeagueRule();
         var secondRule = new IsFantasyRule();
         var thirdRule = new FtCornerRule();
         firstRule.SetSuccessor(secondRule);
@@ -143,7 +143,7 @@ public class MainMatchRuleUnitTests
     public void Execute_MainMatchRule_ShouldReturnFTCorner5ML()
     {
         // Arrange
-        var firstRule = new FtCorner5MlRule(); 
+        var firstRule = new FtCorner5MlRule();
         var secondRule = new IsFantasyRule();
         var thirdRule = new FtCornerRule();
         firstRule.SetSuccessor(secondRule);

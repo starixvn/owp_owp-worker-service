@@ -84,13 +84,13 @@ public enum BetTypeName
 
     [Display(Name = "Which team to take the first penalty")]
     WhichTeamToTakeTheFirstPenalty,
-    
+
     [Display(Name = "Which team to kick off (ET)")]
     WhichTeamToKickOff,
 
     [Display(Name = "SABA CLUB FRIENDLY Virtual PES 21 - 15 Mins Play")]
     SabaClubFriendlyVirtualPes2115MinsPlay,
-    
+
     [Display(Name = "SABA INTERNATIONAL FRIENDLY Virtual PES 21 - 20 Mins Play")]
     SabaInternationalFriendlyVirtualPes2120MinsPlay,
 
@@ -105,7 +105,7 @@ public enum BetTypeName
 
     [Display(Name = "SABA CLUB FRIENDLY Virtual FIFA 21 - 16 Mins Play")]
     SabaClubFriendlyVirtualFifa2116MinsPlay,
-    
+
     Other
 
 }

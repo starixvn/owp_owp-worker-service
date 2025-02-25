@@ -25,7 +25,7 @@ public class AssignmentOvertimeCalculatorSecondUnitTests
                 }
             };
 
-        var actual = AssignmentOvertimeCalculator.CalculateOvertimeData(workingShift, assignments,  mainMatchRemarks);
+        var actual = AssignmentOvertimeCalculator.CalculateOvertimeData(workingShift, assignments, mainMatchRemarks);
 
         Assert.Equal(2.5m, actual);
     }

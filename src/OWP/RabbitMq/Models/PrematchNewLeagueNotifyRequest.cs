@@ -2,7 +2,7 @@ namespace OWP.RabbitMq.Models;
 
 using Consts;
 
-public class PrematchNewLeagueNotifyRequest: RequestBaseModel
+public class PrematchNewLeagueNotifyRequest : RequestBaseModel
 {
     public string SessionId { get; set; }
 

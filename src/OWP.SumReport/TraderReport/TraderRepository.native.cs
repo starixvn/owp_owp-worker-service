@@ -34,7 +34,7 @@ public class TraderRepositoryImp(IDynamicRepository repository) : TraderReposito
         await repository.ExecuteAsync(command);
     }
 
-    
+
     public async Task UpdateFTOtherFields(DateTime eventDate)
     {
         var command = new UpdateFTOtherFieldsCommand

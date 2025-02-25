@@ -11,8 +11,8 @@ public interface ISyncDataService
 
 public class SyncDataService(
     ICache cache
-    ,IApiService apiService
-    ,IMatchInfoService matchInfoService) : ISyncDataService
+    , IApiService apiService
+    , IMatchInfoService matchInfoService) : ISyncDataService
 {
     public async Task PushMatchInfoAsync(DateTime eventDate)
     {
@@ -20,21 +20,21 @@ public class SyncDataService(
         var fromDate = eventDate.Date.AddHours(12);
         var toDate = fromDate.AddDays(1).AddMilliseconds(-1);
         var cacheKey = $"OWP-SyncMatchInfoToAdminSite-{eventDate:yyyyMMdd}";
-        (_, var oldCacheMatchInfos) = await cache.TryGetAsync<string>(cacheKey);
+        var (_, oldCacheMatchInfos) = await cache.TryGetAsync<string>(cacheKey);
         var oldMatchInfos = !string.IsNullOrEmpty(oldCacheMatchInfos)
             ? JsonConvert.DeserializeObject<List<MatchInfoApiModel>>(oldCacheMatchInfos)
             : [];
 
         var matchInfos = await matchInfoService.GetMatchInfoAsync(fromDate, toDate);
-        var unsyncedMatchInfos = matchInfos.Except(oldMatchInfos, new MatchInfoApiModel()).ToList();
+        var unsynchronizedMatches = matchInfos.Except(oldMatchInfos, new MatchInfoApiModel()).ToList();
         var deletedMatches = GetDeletedMatch(matchInfos, oldMatchInfos);
 
-        unsyncedMatchInfos = [.. unsyncedMatchInfos, .. deletedMatches];
-        var totalBatch = (int)Math.Ceiling((double)unsyncedMatchInfos.Count / BatchSize);
+        unsynchronizedMatches = [.. unsynchronizedMatches, .. deletedMatches];
+        var totalBatch = (int)Math.Ceiling((double)unsynchronizedMatches.Count / BatchSize);
         var failedMatchInfos = new List<MatchInfoApiModel>();
-        for (int i = 0; i < totalBatch; i++)
+        for (var i = 0; i < totalBatch; i++)
         {
-            var data = unsyncedMatchInfos.Skip(i * BatchSize).Take(BatchSize).ToList();
+            var data = unsynchronizedMatches.Skip(i * BatchSize).Take(BatchSize).ToList();
             var result = await apiService.PushMatchInfoAsync(fromDate, toDate, data);
             failedMatchInfos.AddRange(result);
         }

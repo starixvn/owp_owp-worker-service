@@ -73,7 +73,7 @@ public class MatchInfoService(IMatchInfoRepository repository) : IMatchInfoServi
     {
         var subType = GetRepresentativeSubType(matchInfo.MinorBettypeId);
 
-        if (subType.HasValue && subType.Value > 0)
+        if (subType is > 0)
         {
             var item = new MatchInfoApiModel
             {

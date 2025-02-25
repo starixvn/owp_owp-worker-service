@@ -38,8 +38,8 @@ public class NotCornerRule : SpecialProductRule
             return ReportType.TotalBookingPlus;
         }
 
-        return Array.IndexOf(goalKickBettypeArray, assignment.MinorBettypeId.Value) >= 0 
-            ? ReportType.GoalKick 
+        return Array.IndexOf(goalKickBettypeArray, assignment.MinorBettypeId.Value) >= 0
+            ? ReportType.GoalKick
             : ReportType.OtherSpecialProducts;
     }
 }
@@ -57,10 +57,10 @@ public class IsCornerRule : SpecialProductRule
         {
             return base.Execute(assignment, userAssignments);
         }
-        
+
         var mainMatches = userAssignments.Where(x => !x.ParentMatchId.HasValue && x.OwpMatchId == assignment.ParentMatchId);
 
-        if(IsMajorCornerLeague(assignment.OwpLeagueName))
+        if (IsMajorCornerLeague(assignment.OwpLeagueName))
         {
             return mainMatches.Any() ? ReportType.FtCorner5Ml : ReportType.CornerPlus;
         }

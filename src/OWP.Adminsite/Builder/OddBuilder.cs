@@ -14,7 +14,7 @@ public static class OddBuilder
         IEnumerable<MatchRecommendOdd> recommendOdds,
         IEnumerable<MatchRecommendOddDetail> recommendOddDetails)
     {
-        if (!matchInfoApi.MatchSettings.Any(x => x.Bettype == (int)MajorBetType.Handicap))
+        if (matchInfoApi.MatchSettings.All(x => x.Bettype != (int)MajorBetType.Handicap))
         {
             matchInfoApi.MatchSettings.Add(new MatchSettingApiModel
             {
@@ -22,7 +22,7 @@ public static class OddBuilder
             });
         }
 
-        if (!matchInfoApi.MatchSettings.Any(x => x.Bettype == (int)MajorBetType.OverUnder))
+        if (matchInfoApi.MatchSettings.All(x => x.Bettype != (int)MajorBetType.OverUnder))
         {
             matchInfoApi.MatchSettings.Add(new MatchSettingApiModel
             {
@@ -70,10 +70,6 @@ public static class OddBuilder
                         overUnder.Odds2 = detail.Odds;
                     }
                     break;
-
-                default:
-                    // nothing
-                    break;
             }
         }
     }
@@ -95,7 +91,7 @@ public static class OddBuilder
         handicap.Hdp1 = odd_hdp_hdp1;
         handicap.Hdp2 = odd_hdp_hdp2;
         overUnder.Hdp1 = ouOdd;
-        overUnder.Hdp2 = ouOdd.HasValue ? 0 : ouOdd;
+        overUnder.Hdp2 = ouOdd.HasValue ? 0 : null;
     }
 
     private static (decimal?, decimal?) GetHdp12ByTeamChoice(List<MatchRecommendOdd> odds, decimal? hdpOdd)

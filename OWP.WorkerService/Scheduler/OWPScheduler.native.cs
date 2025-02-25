@@ -72,7 +72,7 @@ public class OwpScheduler(
     private async Task AddJobToSchedulerAsync(Type jobInfo)
     {
         var jobSetting = jobSettings.FirstOrDefault(job => job.Name.Equals(jobInfo.Name));
-        if (jobSetting != null && jobSetting.Enable)
+        if (jobSetting is { Enable: true })
         {
             var jobDetail = CreateJob(jobInfo);
 

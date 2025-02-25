@@ -184,7 +184,7 @@ public class MatchHelperUnitTests
         var mainMatches = new List<OwpMatch>
         {
             new()
-            {   
+            {
                 OwpMatchId = 1,
                 LeagueCategory = "MJ"
             },

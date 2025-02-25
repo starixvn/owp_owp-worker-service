@@ -98,10 +98,10 @@ public static class SpreadBuilder
         if (firstHalfOu == null)
         {
             spreads.Add(new MatchSetting
-                {
-                    BettypeId = (int)MajorBetType.OverUnder1St,
-                    Spread = overUnder.Spread < SPREAD_BASE_COMPARER ? SPREAD_BASE_COMPARER : overUnder.Spread
-                });
+            {
+                BettypeId = (int)MajorBetType.OverUnder1St,
+                Spread = overUnder.Spread < SPREAD_BASE_COMPARER ? SPREAD_BASE_COMPARER : overUnder.Spread
+            });
         }
 
         BuilSpread(matchInfoApi, spreads);

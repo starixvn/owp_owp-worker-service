@@ -1,10 +1,10 @@
 ﻿namespace OWP.InfositeIdSync.Services;
 
-using System.Text;
 using Fanex.Logging;
+using Models;
 using Newtonsoft.Json;
 using OWP.Infosite.Models;
-using Models;
+using System.Text;
 
 public interface LogServiceWrapper
 {

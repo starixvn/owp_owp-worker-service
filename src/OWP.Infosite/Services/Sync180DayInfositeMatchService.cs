@@ -1,4 +1,5 @@
-﻿using OWP.Infosite.Constants;
+﻿using Olympus.OWP.Constants;
+using OWP.Infosite.Constants;
 
 namespace OWP.Infosite.Services;
 
@@ -121,8 +122,8 @@ public class Sync180DayInfositeMatchServiceImp(ApiService apiService, IDynamicRe
     {
         var newLoggedChanges = newInfoSiteIds.Select(newInfoSiteId => new LoggedChangeModel
         {
-            UpdateTypeId = 1,
-            Action = Constant.UpdateType.GetValueOrDefault(1),
+            UpdateTypeId = UpdateTypeConstant.NEW_MATCH,
+            Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.NEW_MATCH),
             InfoSiteMatchId = newInfoSiteId,
             UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
             NewValue = null,

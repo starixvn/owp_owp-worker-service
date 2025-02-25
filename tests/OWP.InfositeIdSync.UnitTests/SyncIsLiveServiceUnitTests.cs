@@ -63,7 +63,7 @@ public class SyncIsLiveServiceUnitTests
             new(2, null),
             new(3, 0)
         };
-        
+
         var compareLogic = new CompareLogic();
 
         // Assert

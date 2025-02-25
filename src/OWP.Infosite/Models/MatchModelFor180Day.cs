@@ -7,7 +7,7 @@ using Olympus.Xml;
 public class MatchModelFor180Day
 {
     public int MatchId { get; set; }
-    
+
     [XmlName("KOTime")]
     public DateTime KoTime { get; set; }
 
@@ -41,5 +41,5 @@ public class MatchModelFor180Day
 
     private string GetAwayName(MatchModelQuery180Day infositeMatch)
     => infositeMatch.is_team_reverse.HasValue && infositeMatch.is_team_reverse.Value ? infositeMatch.team_home_name : infositeMatch.team_away_name;
-    
+
 }

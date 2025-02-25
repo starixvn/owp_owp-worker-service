@@ -1,7 +1,7 @@
 ﻿namespace OWP.Provider;
 
-using Microsoft.Extensions.DependencyInjection;
 using AgentConfirm;
+using Microsoft.Extensions.DependencyInjection;
 using OWP.Provider.AgentConfirm.Services;
 
 public static class DependenceInjection

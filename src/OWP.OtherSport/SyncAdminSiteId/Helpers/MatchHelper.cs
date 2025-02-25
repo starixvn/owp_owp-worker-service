@@ -31,7 +31,7 @@ public static class MatchHelper
     private static IList<LinkedMatch> GetNewLinkedMatches_Rule_1_2(IList<Match> owpMatches, IList<Match> adminSiteMatches)
         => GetNewLinkedMatches_Rule_1_2_4(owpMatches, adminSiteMatches, CompareMatch_Rule_1_2);
 
-   
+
     private static IList<LinkedMatch> GetNewLinkedMatches_Rule_5(IList<Match> owpMatches, IList<Match> adminSiteMatches)
         => GetNewLinkedMatchesCommon(owpMatches, adminSiteMatches, CompareMatch_Rule_5);
 

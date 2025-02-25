@@ -2,9 +2,9 @@
 
 using NSubstitute;
 using OWP.SumReport.PrematchReport.Constants;
-using PrematchReport.Models;
 using OWP.SumReport.PrematchReport.Services;
 using OWP.SumReport.PrematchReport.Services.League;
+using PrematchReport.Models;
 using Xunit;
 using Xunit.Asserts.Compare;
 

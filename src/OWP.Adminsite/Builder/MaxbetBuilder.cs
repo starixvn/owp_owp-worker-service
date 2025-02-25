@@ -12,34 +12,31 @@ public static class MaxbetBuilder
         IEnumerable<MatchSetting> matchSettings,
         IEnumerable<MaxbetSetting> defaultMaxbetSettings)
     {
-        var maxbets = matchSettings.Where(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Maxbet.HasValue).ToList();
+        var maxbet = matchSettings.Where(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Maxbet.HasValue).ToList();
 
         const byte NUMBER_FULL_BETTYPE = 4;
-        if (maxbets.Count == 0 || maxbets.Count(x => x.BettypeId == (int)MajorBetType.Handicap
-            || x.BettypeId == (int)MajorBetType.Handicap1St
-            || x.BettypeId == (int)MajorBetType.OverUnder
-            || x.BettypeId == (int)MajorBetType.OverUnder1St) == NUMBER_FULL_BETTYPE)
+        if (maxbet.Count == 0 || maxbet.Count(x => x.BettypeId is (int)MajorBetType.Handicap or (int)MajorBetType.Handicap1St or (int)MajorBetType.OverUnder or (int)MajorBetType.OverUnder1St) == NUMBER_FULL_BETTYPE)
         {
-            BuildMaxbet(matchInfoApi, maxbets);
+            BuildMaxbet(matchInfoApi, maxbet);
             return;
         }
 
-        if (!maxbets.Exists(s => s.BettypeId == (int)MajorBetType.OverUnder))
+        if (!maxbet.Exists(s => s.BettypeId == (int)MajorBetType.OverUnder))
         {
-            BuildMaxbetOverUnder(maxbets, defaultMaxbetSettings);
+            BuildMaxbetOverUnder(maxbet, defaultMaxbetSettings);
         }
 
-        if (!maxbets.Exists(s => s.BettypeId == (int)MajorBetType.Handicap1St))
+        if (!maxbet.Exists(s => s.BettypeId == (int)MajorBetType.Handicap1St))
         {
-            BuildMaxbetHandicap1st(maxbets, defaultMaxbetSettings);
+            BuildMaxbetHandicap1st(maxbet, defaultMaxbetSettings);
         }
 
-        if (!maxbets.Exists(s => s.BettypeId == (int)MajorBetType.OverUnder1St))
+        if (!maxbet.Exists(s => s.BettypeId == (int)MajorBetType.OverUnder1St))
         {
-            BuildMaxbetOverUnder1st(maxbets, defaultMaxbetSettings);
+            BuildMaxbetOverUnder1st(maxbet, defaultMaxbetSettings);
         }
 
-        BuildMaxbet(matchInfoApi, maxbets);
+        BuildMaxbet(matchInfoApi, maxbet);
     }
 
     public static void BuildMaxbetSpecialProduct(
@@ -58,10 +55,10 @@ public static class MaxbetBuilder
         }
         else
         {
-            var maxbets = matchSettings.Where(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Maxbet.HasValue).ToList();
-            if (maxbets.Count > 0)
+            var maxbetSetting = matchSettings.Where(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Maxbet.HasValue).ToList();
+            if (maxbetSetting.Count > 0)
             {
-                BuildMaxbet(matchInfoApi, maxbets);
+                BuildMaxbet(matchInfoApi, maxbetSetting);
             }
         }
     }
@@ -226,9 +223,9 @@ public static class MaxbetBuilder
         BuildMaxbet(matchInfoApi, maxbets);
     }
 
-    private static void BuildMaxbet(MatchInfoApiModel matchInfoApi, List<MatchSetting> maxbets)
+    private static void BuildMaxbet(MatchInfoApiModel matchInfoApi, List<MatchSetting> maxbetSetting)
     {
-        foreach (var maxbet in maxbets)
+        foreach (var maxbet in maxbetSetting)
         {
             var setting = matchInfoApi.MatchSettings.FirstOrDefault(x => x.Bettype == maxbet.BettypeId);
             if (setting != null)

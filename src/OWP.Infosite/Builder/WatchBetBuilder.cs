@@ -1,8 +1,8 @@
 ﻿namespace OWP.Infosite.Builder;
 
-using System.Collections.Immutable;
 using Constants;
 using Models;
+using System.Collections.Immutable;
 
 public static class WatchBetBuilder
 {
