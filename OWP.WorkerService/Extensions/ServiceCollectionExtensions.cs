@@ -1,5 +1,6 @@
 ﻿namespace OWP.WorkerService.Extensions;
 
+using Adminsite;
 using ArchiveData;
 using Fanex.Caching;
 using Fanex.Caching.Redis;
@@ -11,7 +12,6 @@ using Jobs;
 using LinkLeagueAndTeam;
 using MatchReadyNotification;
 using OtherSport;
-using Adminsite;
 using Provider;
 using Quartz;
 using Quartz.Impl;
