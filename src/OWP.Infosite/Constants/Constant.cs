@@ -49,8 +49,8 @@ public static class Constant
         { UpdateTypeConstant.CANCEL_DIVISION   , "Cancel the <b>Division</b>" },
         { UpdateTypeConstant.MOVE_KICKOFF_DATE  , "Move <b>KO Date</b>" },
         { UpdateTypeConstant.RENEW_MATCH    , "Renew Match" },
-        { UpdateTypeConstant.MATCH_POSTPONED   , "Match Postponed" },
-        { UpdateTypeConstant.MATCH_CANCELLED   , "Match Cancelled" },
+        { UpdateTypeConstant.MATCH_POSTPONED   , "Match <b>Postponed</b>" },
+        { UpdateTypeConstant.MATCH_CANCELLED   , "Match <b>Cancelled</b>" },
         { UpdateTypeConstant.UPDATE_ROUND_CONFIRM, "Update the <b>Round Confirm</b>"},
         { UpdateTypeConstant.CANCEL_ROUND_CONFIRM, "Cancel the <b>Round Confirm</b>" },
         { UpdateTypeConstant.UPDATE_ADMINSITEID , "Update the <b>AdminSiteID</b>"},
@@ -75,7 +75,7 @@ public static class Constant
         { UpdateTypeConstant.CANCEL_ETPK   , "Cancel the <b>ETPK</b>" },
         { UpdateTypeConstant.UPDATE_NEUTRAL   , "Update the <b>Neutral</b>"},
         { UpdateTypeConstant.CANCEL_NEUTRAL   , "Cancel the <b>Neutral</b>" },
-        { UpdateTypeConstant.MATCH_SUSPENDED    , "Match Suspended" },
+        { UpdateTypeConstant.MATCH_SUSPENDED    , "Match <b>Suspended</b>" },
         { UpdateTypeConstant.UPDATE_REMARK2, "Update the <b>Remark2</b>" },
         { UpdateTypeConstant.CANCEL_REMARK2, "Cancel the <b>Remark2</b>" }
     }.ToImmutableDictionary();

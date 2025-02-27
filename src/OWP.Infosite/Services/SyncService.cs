@@ -143,7 +143,7 @@ public class SyncServiceImp(
                 {
                     InfoSiteMatchId = updateKODateLog.InfoSiteMatchId,
                     UpdateTypeId = UpdateTypeConstant.RENEW_MATCH,
-                    Action = "Renew match",
+                    Action = "Renew Match",
                     NewValue = updateKODateLog.NewValue,
                     OldValue = updateKODateLog.OldValue,
                     UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),

@@ -106,7 +106,7 @@ public class Sync180DayInfositeMatchServiceImp(ApiService apiService, IDynamicRe
                 {
                     InfoSiteMatchId = updateKODateLog.InfoSiteMatchId,
                     UpdateTypeId = 25,
-                    Action = "Renew match",
+                    Action = "Renew Match",
                     NewValue = updateKODateLog.NewValue,
                     OldValue = updateKODateLog.OldValue,
                     UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
