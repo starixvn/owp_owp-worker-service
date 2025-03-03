@@ -16,6 +16,8 @@ public class InfoSiteDb
 
     public string IPTV { get; set; }
 
+    public string Provider { get; set; }
+
     public string OtherProvider { get; set; }
 
     public string Round { get; set; }

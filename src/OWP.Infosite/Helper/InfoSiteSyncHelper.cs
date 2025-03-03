@@ -43,7 +43,8 @@ public static class InfoSiteSyncHelper
             { "Venue", UpdateTypeConstant.UPDATE_VENUE },
             { "Etpk", UpdateTypeConstant.UPDATE_ETPK },
             { "IsNeutral", UpdateTypeConstant.UPDATE_NEUTRAL },
-            {"Remark2", UpdateTypeConstant.UPDATE_REMARK2}
+            { "Remark2", UpdateTypeConstant.UPDATE_REMARK2},
+            { "Provider", 55},
         };
         var actionId = propertyActionIds.GetValue(propertyName, 1);
         if (actionId == UpdateTypeConstant.UPDATE_KO_TIME && IsUpdateKODate(newValue, oldValue))
@@ -94,7 +95,8 @@ public static class InfoSiteSyncHelper
             { "Venue", UpdateTypeConstant.CANCEL_VENUE },
             { "Etpk", UpdateTypeConstant.CANCEL_ETPK },
             { "IsNeutral", UpdateTypeConstant.CANCEL_NEUTRAL },
-            {"Remark2", UpdateTypeConstant.CANCEL_REMARK2}
+            { "Remark2", UpdateTypeConstant.CANCEL_REMARK2},
+            { "Provider", 56},
         };
 
         return propertyActionIds.GetValue(propertyName, 1);
@@ -116,6 +118,7 @@ public static class InfoSiteSyncHelper
             EventDateTime = source.EventDateTime,
             IPTV = source.Iptv,
             Tv = source.LocalTv,
+            Provider = source.Provider,
             OtherProvider = source.OtherProvider,
             AwayRemark = source.AwayRemark,
             Division = source.Division,
