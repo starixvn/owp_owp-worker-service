@@ -22,6 +22,8 @@ public class InfoSiteDb
 
     public string Round { get; set; }
 
+    public string TotalRound { get; set; }
+
     public string Remark { get; set; }
     public string Remark2 { get; set; }
 

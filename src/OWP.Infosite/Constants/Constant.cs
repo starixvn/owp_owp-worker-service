@@ -79,7 +79,9 @@ public static class Constant
         { UpdateTypeConstant.UPDATE_REMARK2, "Update the <b>Remark2</b>" },
         { UpdateTypeConstant.CANCEL_REMARK2, "Cancel the <b>Remark2</b>" },
         { 55, "Update the <b>Provider</b>" },
-        { 56, "Cancel the <b>Provider</b>" }
+        { 56, "Cancel the <b>Provider</b>" },
+        { 57, "Update the <b>Total Round</b>" },
+        { 58, "Cancel the <b>Total Round</b>" }
     }.ToImmutableDictionary();
 
     public static readonly IImmutableDictionary<int, string> StreamNameSrc2InfoSite = new Dictionary<int, string>
