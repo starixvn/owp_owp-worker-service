@@ -45,7 +45,7 @@ public static class InfoSiteSyncHelper
             { "IsNeutral", UpdateTypeConstant.UPDATE_NEUTRAL },
             { "Remark2", UpdateTypeConstant.UPDATE_REMARK2},
             { "Provider", 55},
-            { "Total Round", 57},
+            { "TotalRound", 57},
         };
         var actionId = propertyActionIds.GetValue(propertyName, 1);
         if (actionId == UpdateTypeConstant.UPDATE_KO_TIME && IsUpdateKODate(newValue, oldValue))
@@ -98,7 +98,7 @@ public static class InfoSiteSyncHelper
             { "IsNeutral", UpdateTypeConstant.CANCEL_NEUTRAL },
             { "Remark2", UpdateTypeConstant.CANCEL_REMARK2},
             { "Provider", 56},
-            { "Total Round", 58},
+            { "TotalRound", 58},
         };
 
         return propertyActionIds.GetValue(propertyName, 1);
