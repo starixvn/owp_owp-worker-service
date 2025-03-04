@@ -44,8 +44,8 @@ public static class InfoSiteSyncHelper
             { "Etpk", UpdateTypeConstant.UPDATE_ETPK },
             { "IsNeutral", UpdateTypeConstant.UPDATE_NEUTRAL },
             { "Remark2", UpdateTypeConstant.UPDATE_REMARK2},
-            { "Provider", 55},
-            { "TotalRound", 57},
+            { "Provider", UpdateTypeConstant.UPDATE_PROVIDER},
+            { "TotalRound", UpdateTypeConstant.UPDATE_TOTAL_ROUND},
         };
         var actionId = propertyActionIds.GetValue(propertyName, 1);
         if (actionId == UpdateTypeConstant.UPDATE_KO_TIME && IsUpdateKODate(newValue, oldValue))
@@ -97,8 +97,8 @@ public static class InfoSiteSyncHelper
             { "Etpk", UpdateTypeConstant.CANCEL_ETPK },
             { "IsNeutral", UpdateTypeConstant.CANCEL_NEUTRAL },
             { "Remark2", UpdateTypeConstant.CANCEL_REMARK2},
-            { "Provider", 56},
-            { "TotalRound", 58},
+            { "Provider", UpdateTypeConstant.CANCEL_PROVIDER},
+            { "TotalRound", UpdateTypeConstant.CANCEL_TOTAL_ROUND},
         };
 
         return propertyActionIds.GetValue(propertyName, 1);
@@ -165,7 +165,7 @@ public static class InfoSiteSyncHelper
                 {
                     InfoSiteMatchId = infoSiteNew.InfoSiteMatchId,
                     UpdateTypeId = updateTypeId,
-                    Action = Constant.UpdateType.GetValueOrDefault(updateTypeId),
+                    Action = UpdateTypeConstant.UpdateType.GetValueOrDefault(updateTypeId),
                     NewValue = newValue,
                     OldValue = oldValue,
                     HomeUpdated = string.Equals(property.Name, "HomeName", StringComparison.OrdinalIgnoreCase),

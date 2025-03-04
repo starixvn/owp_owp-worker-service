@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Olympus.OWP.Constants" Version="9.0.0.5" />
+    <PackageReference Include="Olympus.OWP.Constants" Version="9.0.0.7" />
     <PackageReference Include="Olympus.Xml" Version="1.0.0.5" />
   </ItemGroup>
   <ItemGroup>

@@ -178,7 +178,7 @@ public class SyncServiceImp(
         var newLoggedChanges = newInfoSiteIds.Select(newInfoSiteId => new LoggedChangeModel
         {
             UpdateTypeId = UpdateTypeConstant.NEW_MATCH,
-            Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.NEW_MATCH),
+            Action = UpdateTypeConstant.UpdateType.GetValueOrDefault(UpdateTypeConstant.NEW_MATCH),
             InfoSiteMatchId = newInfoSiteId,
             UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
             NewValue = null,
@@ -259,7 +259,7 @@ public class SyncServiceImp(
         if (infoSiteDb.IsPostponed != infoSiteNew.IsPostponed)
         {
             var updateTypeId = infoSiteNew.IsPostponed ? UpdateTypeConstant.MATCH_POSTPONED : UpdateTypeConstant.RENEW_MATCH;
-            var action = Constant.UpdateType.GetValueOrDefault(updateTypeId);
+            var action = UpdateTypeConstant.UpdateType.GetValueOrDefault(updateTypeId);
             var newValue = infoSiteNew.IsPostponed ? "Postponed" : string.Empty;
             var oldValue = infoSiteNew.IsPostponed ? string.Empty : "Postponed";
 
@@ -284,7 +284,7 @@ public class SyncServiceImp(
             {
                 InfoSiteMatchId = infoSiteDb.InfoSiteMatchId,
                 UpdateTypeId = UpdateTypeConstant.MATCH_CANCELLED,
-                Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.MATCH_CANCELLED),
+                Action = UpdateTypeConstant.UpdateType.GetValueOrDefault(UpdateTypeConstant.MATCH_CANCELLED),
                 NewValue = "Cancelled",
                 OldValue = string.Empty,
                 UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
@@ -306,7 +306,7 @@ public class SyncServiceImp(
             {
                 InfoSiteMatchId = infoSiteDb.InfoSiteMatchId,
                 UpdateTypeId = UpdateTypeConstant.MATCH_SUSPENDED,
-                Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.MATCH_SUSPENDED),
+                Action = UpdateTypeConstant.UpdateType.GetValueOrDefault(UpdateTypeConstant.MATCH_SUSPENDED),
                 NewValue = "Suspended",
                 OldValue = string.Empty,
                 UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),

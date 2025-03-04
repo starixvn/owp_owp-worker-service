@@ -33,7 +33,7 @@ public class SyncEventDeletedServiceImp(
         {
             var matchesDeletedLogEventPicking = ids.Split(",").Select(item => new LoggedChangeModel
             {
-                Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.DELETE_MATCH),
+                Action = UpdateTypeConstant.UpdateType.GetValueOrDefault(UpdateTypeConstant.DELETE_MATCH),
                 UpdateTypeId = UpdateTypeConstant.DELETE_MATCH,
                 InfoSiteMatchId = int.Parse(item),
                 NewValue = string.Empty,
