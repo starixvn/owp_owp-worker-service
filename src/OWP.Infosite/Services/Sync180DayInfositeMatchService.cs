@@ -123,7 +123,7 @@ public class Sync180DayInfositeMatchServiceImp(ApiService apiService, IDynamicRe
         var newLoggedChanges = newInfoSiteIds.Select(newInfoSiteId => new LoggedChangeModel
         {
             UpdateTypeId = UpdateTypeConstant.NEW_MATCH,
-            Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.NEW_MATCH),
+            Action = UpdateTypeConstant.UpdateType.GetValueOrDefault(UpdateTypeConstant.NEW_MATCH),
             InfoSiteMatchId = newInfoSiteId,
             UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
             NewValue = null,

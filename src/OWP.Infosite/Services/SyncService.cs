@@ -1,5 +1,7 @@
 ﻿namespace OWP.Infosite.Services;
 
+using System;
+using System.Linq;
 using Constants;
 using Criteria;
 using Fanex.Data.Repository;
@@ -7,8 +9,6 @@ using Helper;
 using Models;
 using Olympus.OWP.Constants;
 using Olympus.Xml;
-using System;
-using System.Linq;
 
 public interface SyncService
 {
@@ -26,22 +26,39 @@ public class SyncServiceImp(
 
     public async Task Sync(DateTime fromDate)
     {
-        var queriedResultTask = await QueryEvents(fromDate);
         var priorityProviders = await GetProviderArrangement();
+        var queriedResult = await QueryEvents(fromDate);
+        var infoSiteDbInfos = await GetExistingInfoSite(string.Join(",", queriedResult.Select(x => x.InfoSiteMatchId)));
+        UpdateProviders(queriedResult, priorityProviders, infoSiteDbInfos);
 
-        foreach (var x in queriedResultTask)
-        {
-            x.Provider = ProviderHelper.BuildProviderByOtherProvider(priorityProviders, x.OtherProvider);
-        }
+        await BuildServiceLog(queriedResult, infoSiteDbInfos);
 
         var teamRoundsTask = await QueryTeamRound(fromDate);
+        MapRoundToEvents(queriedResult, teamRoundsTask);
 
-        await BuildServiceLog(queriedResultTask);
+        await SaveEvents(queriedResult);
 
-        MapRoundToEvents(queriedResultTask, teamRoundsTask);
-
-        await SaveEvents(queriedResultTask);
         await UpdateSoloMatch();
+    }
+
+    private static void UpdateProviders(List<Event> queriedResult, List<string> priorityProviders, List<InfoSiteDbInfo> infoSiteDbInfos)
+    {
+        foreach (var x in queriedResult)
+        {
+            var currentTime = DateTime.UtcNow.AddHours(8);
+            if (currentTime < x.EventDateTime.AddDays(-2))
+            {
+                x.Provider = ProviderHelper.BuildProviderByOtherProvider(priorityProviders, x.OtherProvider);
+            }
+            else
+            {
+                var matchingEvent = infoSiteDbInfos.FirstOrDefault(e => e.InfoSiteMatchId == x.InfoSiteMatchId);
+                if (matchingEvent != null && !string.IsNullOrEmpty(matchingEvent.Provider))
+                {
+                    x.Provider = matchingEvent.Provider;
+                }
+            }
+        }
     }
 
     #region QueryTeamRound
@@ -85,19 +102,13 @@ public class SyncServiceImp(
 
     #region BuildServiceLog
 
-    private async Task BuildServiceLog(List<Event> queriedResult)
+    private async Task BuildServiceLog(List<Event> queriedResult, List<InfoSiteDbInfo> infoSiteDbInfos)
     {
         var loggedChanges = new List<LoggedChangeModel>();
-
-        var ids = string.Join(",", queriedResult.Select(x => x.InfoSiteMatchId));
-
-        var existingInfoSiteEvent = await GetExistingInfoSite(ids);
-
-        var newInfoSiteIds = queriedResult.ExceptBy(existingInfoSiteEvent.Select(x => x.InfoSiteMatchId),
-            x => x.InfoSiteMatchId).Select(x => x.InfoSiteMatchId);
+        var newInfoSiteIds = GetNewInfoSiteIds(queriedResult, infoSiteDbInfos);
 
         BuildLogForNewMatches(newInfoSiteIds, loggedChanges);
-        BuildLogForChangedMatchesLog(queriedResult, existingInfoSiteEvent, loggedChanges);
+        BuildLogForChangedMatchesLog(queriedResult, infoSiteDbInfos, loggedChanges);
 
         if (loggedChanges.Count != 0)
         {
@@ -105,9 +116,16 @@ public class SyncServiceImp(
         }
     }
 
-    private static void BuildLogForChangedMatchesLog(IList<Event> queriedResult, IList<InfoSiteDbInfo> existedEvents, List<LoggedChangeModel> loggedChanges)
+    private static IEnumerable<int> GetNewInfoSiteIds(List<Event> queriedResult, List<InfoSiteDbInfo> infoSiteDbInfos)
     {
-        foreach (var infoSiteOld in existedEvents)
+        return queriedResult
+            .ExceptBy(infoSiteDbInfos.Select(x => x.InfoSiteMatchId), x => x.InfoSiteMatchId)
+            .Select(x => x.InfoSiteMatchId);
+    }
+
+    private static void BuildLogForChangedMatchesLog(IList<Event> queriedResult, IList<InfoSiteDbInfo> infoSiteDbInfos, List<LoggedChangeModel> loggedChanges)
+    {
+        foreach (var infoSiteOld in infoSiteDbInfos)
         {
             var infoSiteNew = queriedResult.First(x => x.InfoSiteMatchId == infoSiteOld.InfoSiteMatchId);
             var infoSiteClone = InfoSiteSyncHelper.CloneInfoSiteMatch(infoSiteNew);
@@ -160,7 +178,7 @@ public class SyncServiceImp(
         var newLoggedChanges = newInfoSiteIds.Select(newInfoSiteId => new LoggedChangeModel
         {
             UpdateTypeId = UpdateTypeConstant.NEW_MATCH,
-            Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.NEW_MATCH),
+            Action = UpdateTypeConstant.UpdateType.GetValueOrDefault(UpdateTypeConstant.NEW_MATCH),
             InfoSiteMatchId = newInfoSiteId,
             UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
             NewValue = null,
@@ -241,7 +259,7 @@ public class SyncServiceImp(
         if (infoSiteDb.IsPostponed != infoSiteNew.IsPostponed)
         {
             var updateTypeId = infoSiteNew.IsPostponed ? UpdateTypeConstant.MATCH_POSTPONED : UpdateTypeConstant.RENEW_MATCH;
-            var action = Constant.UpdateType.GetValueOrDefault(updateTypeId);
+            var action = UpdateTypeConstant.UpdateType.GetValueOrDefault(updateTypeId);
             var newValue = infoSiteNew.IsPostponed ? "Postponed" : string.Empty;
             var oldValue = infoSiteNew.IsPostponed ? string.Empty : "Postponed";
 
@@ -266,7 +284,7 @@ public class SyncServiceImp(
             {
                 InfoSiteMatchId = infoSiteDb.InfoSiteMatchId,
                 UpdateTypeId = UpdateTypeConstant.MATCH_CANCELLED,
-                Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.MATCH_CANCELLED),
+                Action = UpdateTypeConstant.UpdateType.GetValueOrDefault(UpdateTypeConstant.MATCH_CANCELLED),
                 NewValue = "Cancelled",
                 OldValue = string.Empty,
                 UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
@@ -288,7 +306,7 @@ public class SyncServiceImp(
             {
                 InfoSiteMatchId = infoSiteDb.InfoSiteMatchId,
                 UpdateTypeId = UpdateTypeConstant.MATCH_SUSPENDED,
-                Action = Constant.UpdateType.GetValueOrDefault(UpdateTypeConstant.MATCH_SUSPENDED),
+                Action = UpdateTypeConstant.UpdateType.GetValueOrDefault(UpdateTypeConstant.MATCH_SUSPENDED),
                 NewValue = "Suspended",
                 OldValue = string.Empty,
                 UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),

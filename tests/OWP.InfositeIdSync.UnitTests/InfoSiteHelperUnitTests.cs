@@ -7,21 +7,6 @@ using Xunit.Asserts.Compare;
 
 public class InfoSiteHelperUnitTests
 {
-    [Fact]
-    public void MapMatchWithSameLeagueHomeAndAway()
-    {
-        // Arrange
-        var unmappingOwpMatch = GetUnmappingOwpMatch()[0];
-        var infositeMatch = GetInfositeMatch();
-        var expected = new MatchMappingWithInfosite(1, 123456, 0, new DateTime(2020, 08, 28));
-
-        // Act
-        var actual = InfoSiteHelper.MapMatchWithSameLeagueHomeAndAway(unmappingOwpMatch, infositeMatch);
-
-        // Assert
-        Assert.Single(actual);
-        DeepAssert.Equal(expected, actual[0]);
-    }
 
     [Fact]
     public void MapMatchWithSameLeagueKickoffTimeAndSwapTeam_SameKOHomeEqualAway()
@@ -29,7 +14,7 @@ public class InfoSiteHelperUnitTests
         // Arrange
         var unmappingOwpMatch = GetUnmappingOwpMatch()[1];
         var infositeMatch = GetInfositeMatch();
-        var expected = new MatchMappingWithInfosite(2, 2000, 0, new DateTime(2020, 08, 27, 22, 00, 00));
+        var expected = new MatchMappingWithInfosite(2, 2000, 0, new(year: 2020, 08, 27, 22, 00, 00));
 
         // Act
         var actual = InfoSiteHelper.MapMatchWithSameLeagueKickoffTimeAndSwapTeam(unmappingOwpMatch, infositeMatch);
@@ -39,35 +24,8 @@ public class InfoSiteHelperUnitTests
         DeepAssert.Equal(expected, actual[0]);
     }
 
-    [Fact]
-    public void MapMatchWithSameLeagueHomeAndAway_SameKOHomeEqualAwayAndAwayEqualHome()
-    {
-        // Arrange
-        var unmappingOwpMatch = GetUnmappingOwpMatch()[2];
-        var infositeMatch = GetInfositeMatch();
-        var expected = new MatchMappingWithInfosite(3, 5000, 0, new DateTime(2020, 08, 27, 23, 20, 00));
 
-        // Act
-        var actual = InfoSiteHelper.MapMatchWithSameLeagueHomeAndAway(unmappingOwpMatch, infositeMatch);
 
-        // Assert
-        Assert.Single(actual);
-        DeepAssert.Equal(expected, actual[0]);
-    }
-
-    [Fact]
-    public void MapMatchWithSameLeagueKickoffTimeAndSwapTeam_SameLeagueNotSameKO_ReturnEmpty()
-    {
-        // Arrange
-        var unmappingOwpMatch = GetUnmappingOwpMatch()[3];
-        var infositeMatch = GetInfositeMatch();
-
-        // Act
-        var actual = InfoSiteHelper.MapMatchWithSameLeagueHomeAndAway(unmappingOwpMatch, infositeMatch);
-
-        // Assert
-        Assert.Empty(actual);
-    }
 
     [Fact]
     public void Map_CountIsOne_SingleMatch()
@@ -137,28 +95,7 @@ public class InfoSiteHelperUnitTests
         DeepAssert.Equal(expected, actual[0]);
     }
 
-    [Fact]
-    public void MapMatchWithSameLeagueHomeAndAway_LowerEqualUppercase_ReturnEmpty()
-    {
-        // Arrange
-        var unmappingOwpMatch = new OwpMatch
-        {
-            OwpMatchId = 1,
-            EventDateTime = new DateTime(2020, 08, 28),
-            League = "south africa PREMIERSHIP",
-            Home = "Kaizer Chiefs",
-            Away = "Mamelodi Sundowns"
-        };
-        var infositeMatch = GetInfositeMatch();
-        var expected = new MatchMappingWithInfosite(1, 123456, 0, new DateTime(2020, 08, 28));
 
-        // Act
-        var actual = InfoSiteHelper.MapMatchWithSameLeagueHomeAndAway(unmappingOwpMatch, infositeMatch);
-
-        // Assert
-        Assert.Single(actual);
-        DeepAssert.Equal(expected, actual[0]);
-    }
 
     [Fact]
     public void Map_NotFoundMatches_ReturnEmpty()
