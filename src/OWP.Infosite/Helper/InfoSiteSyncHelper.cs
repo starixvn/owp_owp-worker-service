@@ -176,4 +176,26 @@ public static class InfoSiteSyncHelper
             })
             .Where(log => log != null);
     }
+
+    public static bool IsMatchHasStatus(this object match, string noteInRemark, byte status)
+    {
+        var remark2Property = match.GetType().GetProperty("Remark2");
+        var matchStatusProperty = match.GetType().GetProperty("MatchStatus");
+
+        if (remark2Property == null || matchStatusProperty == null)
+        {
+            throw new InvalidOperationException("The object does not have the required properties.");
+        }
+
+        var remark2 = remark2Property.GetValue(match) as string;
+        var matchStatus = matchStatusProperty.GetValue(match) as byte?;
+
+        if (matchStatus == InfoSiteMatchStatus.Suspended)
+        {
+            return matchStatus == status;
+        }
+
+        return (!string.IsNullOrEmpty(remark2) && remark2.Contains(noteInRemark, StringComparison.OrdinalIgnoreCase))
+               || matchStatus == status;
+    }
 }
