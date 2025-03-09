@@ -16,13 +16,14 @@ public class Sync180DayInfositeMatchServiceUnitTests
         var apiService = Substitute.For<ApiService>();
         var repository = Substitute.For<IDynamicRepository>();
         var dateTimeService = Substitute.For<DateTimeService>();
+        var eventPickingLogsService = Substitute.For<EventPickingLogsService>();
 
         apiService.QueryInfoSiteMatchFor180Day()
            .Returns(SampleDataTests.ListMatchModelQuery180Day);
 
         dateTimeService.Today.Returns(from);
         dateTimeService.Now.Returns(from);
-        var syncService = new Sync180DayInfositeMatchServiceImp(apiService, repository);
+        var syncService = new Sync180DayInfositeMatchServiceImp(apiService, repository, eventPickingLogsService);
 
         // Act
         await syncService.Sync();

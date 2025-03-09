@@ -8,8 +8,10 @@ public class TodaySyncServiceImp(
     DateTimeService dateTimeService,
     ApiService apiService,
     IDynamicRepository repository,
-    UpdateInfositeIdService updateInfositeIdService)
-    : SyncServiceImp(dateTimeService, apiService, repository), TodaySyncService
+    UpdateInfositeIdService updateInfositeIdService,
+    EventPickingLogsService eventPickingLogsService,
+    ProviderService providerService)
+    : SyncServiceImp(dateTimeService, apiService, repository,eventPickingLogsService, providerService), TodaySyncService
 {
     public async Task Sync()
     {

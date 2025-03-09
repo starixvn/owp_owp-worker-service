@@ -154,20 +154,20 @@ public class SyncServiceImp(
                 });
             }
 
-            //if (loggedChangeItems.Exists(log => log.UpdateTypeId == UpdateTypeConstant.MOVE_KICKOFF_DATE))
-            //{
-            //    var updateKODateLog = loggedChangeItems.First(l => l.UpdateTypeId == UpdateTypeConstant.MOVE_KICKOFF_DATE);
-            //    loggedChanges.Add(new LoggedChangeModel
-            //    {
-            //        InfoSiteMatchId = updateKODateLog.InfoSiteMatchId,
-            //        UpdateTypeId = UpdateTypeConstant.RENEW_MATCH,
-            //        Action = "Renew Match",
-            //        NewValue = updateKODateLog.NewValue,
-            //        OldValue = updateKODateLog.OldValue,
-            //        UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
-            //        FromService = FromService
-            //    });
-            //}
+            if (loggedChangeItems.Exists(log => log.UpdateTypeId == UpdateTypeConstant.MOVE_KICKOFF_DATE))
+            {
+                var updateKODateLog = loggedChangeItems.First(l => l.UpdateTypeId == UpdateTypeConstant.MOVE_KICKOFF_DATE);
+                loggedChanges.Add(new LoggedChangeModel
+                {
+                    InfoSiteMatchId = updateKODateLog.InfoSiteMatchId,
+                    UpdateTypeId = UpdateTypeConstant.RENEW_MATCH,
+                    Action = "Renew Match",
+                    NewValue = updateKODateLog.NewValue,
+                    OldValue = updateKODateLog.OldValue,
+                    UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
+                    FromService = FromService
+                });
+            }
 
             loggedChanges.AddRange(loggedChangeItems);
         }

@@ -16,6 +16,8 @@ public class TodaySyncServiceUnitTests
     private readonly IDynamicRepository repository;
 
     private readonly UpdateInfositeIdService updateInfositeIdService;
+    private readonly EventPickingLogsService eventPickingLogsService;
+    private readonly ProviderService providerService;
 
     private readonly DateTime from = new(2018, 1, 1);
 
@@ -25,6 +27,8 @@ public class TodaySyncServiceUnitTests
         repository = Substitute.For<IDynamicRepository>();
         dateTimeService = Substitute.For<DateTimeService>();
         updateInfositeIdService = Substitute.For<UpdateInfositeIdService>();
+        eventPickingLogsService = Substitute.For<EventPickingLogsService>();
+        providerService = Substitute.For<ProviderService>();
 
         apiService.QueryAsync(Arg.Compat.Any<ParamsQueryModel>())
            .Returns(SampleDataTests.ListCommonMatches);
@@ -37,7 +41,7 @@ public class TodaySyncServiceUnitTests
     public async Task Sync_Always_UpdateMatchToRepository()
     {
         // Arrange
-        var syncService = new TodaySyncServiceImp(dateTimeService, apiService, repository, updateInfositeIdService);
+        var syncService = new TodaySyncServiceImp(dateTimeService, apiService, repository, updateInfositeIdService, eventPickingLogsService, providerService);
 
         // Act
         await syncService.Sync();
