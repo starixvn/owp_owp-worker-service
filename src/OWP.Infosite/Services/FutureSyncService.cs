@@ -8,8 +8,11 @@ public class FutureSyncServiceImp(
     DateTimeService dateTimeService,
     ApiService apiService,
     IDynamicRepository repository,
-    UpdateInfositeIdService updateInfositeIdService)
-    : SyncServiceImp(dateTimeService, apiService, repository), FutureSyncService
+    UpdateInfositeIdService updateInfositeIdService,
+    EventPickingLogsService eventPickingLogsService,
+    ProviderService providerService)
+    : SyncServiceImp(dateTimeService, apiService, repository,eventPickingLogsService,
+        providerService), FutureSyncService
 {
     public async Task Sync()
     {

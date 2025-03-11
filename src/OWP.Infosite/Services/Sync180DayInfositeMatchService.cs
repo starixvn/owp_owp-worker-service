@@ -1,8 +1,6 @@
-﻿using Olympus.OWP.Constants;
-using OWP.Infosite.Constants;
+﻿namespace OWP.Infosite.Services;
 
-namespace OWP.Infosite.Services;
-
+using Olympus.OWP.Constants;
 using Criteria;
 using Fanex.Data.Repository;
 using Helper;
@@ -14,11 +12,15 @@ public interface Sync180DayInfositeMatchService
     Task Sync();
 }
 
-public class Sync180DayInfositeMatchServiceImp(ApiService apiService, IDynamicRepository repository)
+public class Sync180DayInfositeMatchServiceImp(
+    ApiService apiService,
+    IDynamicRepository repository,
+    EventPickingLogsService eventPickingLogsService)
     : Sync180DayInfositeMatchService
 {
     public async Task Sync()
     {
+       
         var infoSiteMatches = await apiService.QueryInfoSiteMatchFor180Day();
 
         var matchInfo = infoSiteMatches.Select(m => new MatchModelFor180Day(m)).ToList();
@@ -57,7 +59,7 @@ public class Sync180DayInfositeMatchServiceImp(ApiService apiService, IDynamicRe
         await repository.ExecuteAsync(criteria).ConfigureAwait(false);
     }
 
-    private static void BuildLogForChangedMatchesLog(List<MatchModelFor180Day> queriedResult, IList<MatchInfoSite> existedEvents, List<LoggedChangeModel> loggedChanges)
+    private void BuildLogForChangedMatchesLog(List<MatchModelFor180Day> queriedResult, IList<MatchInfoSite> existedEvents, List<LoggedChangeModel> loggedChanges)
     {
         foreach (var item in existedEvents)
         {
@@ -87,31 +89,7 @@ public class Sync180DayInfositeMatchServiceImp(ApiService apiService, IDynamicRe
             var loggedChangeItem = InfoSiteSyncHelper.BuildLoggedChanges(properties, infoSiteOld, infoSiteNew, FromService).ToList();
             if (item is { IsCheck: true } && loggedChangeItem.Count > 0)
             {
-                loggedChanges.Add(new LoggedChangeModel
-                {
-                    InfoSiteMatchId = infoSiteNew.InfoSiteMatchId,
-                    UpdateTypeId = null,
-                    Action = "Update the <b>checking status</b>",
-                    NewValue = "Unchecked",
-                    OldValue = "Checked",
-                    UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
-                    FromService = FromService
-                });
-            }
-
-            if (loggedChangeItem.Exists(log => log.UpdateTypeId == 24))
-            {
-                var updateKODateLog = loggedChangeItem.First(l => l.UpdateTypeId == 24);
-                loggedChanges.Add(new LoggedChangeModel
-                {
-                    InfoSiteMatchId = updateKODateLog.InfoSiteMatchId,
-                    UpdateTypeId = 25,
-                    Action = "Renew Match",
-                    NewValue = updateKODateLog.NewValue,
-                    OldValue = updateKODateLog.OldValue,
-                    UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
-                    FromService = FromService
-                });
+                eventPickingLogsService.AddLogUpdateCheckingStatus(infoSiteNew.InfoSiteMatchId, loggedChanges, FromService);
             }
 
             loggedChanges.AddRange(loggedChangeItem);
