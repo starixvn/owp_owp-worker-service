@@ -71,3 +71,11 @@ public static class InfoSiteMatchStatus
     public const byte Cancelled = 2;
     public const byte Suspended = 4;
 }
+
+public static class MatchStatus
+{
+    public const string Normal = "Normal";
+    public const string Postponed = "Postponed";
+    public const string Cancelled = "Cancelled";
+    public const string Suspended = "Suspended";
+}

@@ -198,4 +198,11 @@ public static class InfoSiteSyncHelper
         return (!string.IsNullOrEmpty(remark2) && remark2.Contains(noteInRemark, StringComparison.OrdinalIgnoreCase))
                || matchStatus == status;
     }
+
+    public static string GetMatchStatus(this string input)
+    {
+        string[] statuses = [MatchStatus.Postponed, MatchStatus.Cancelled];
+
+        return statuses.FirstOrDefault(status => input.Contains(status, StringComparison.OrdinalIgnoreCase));
+    }
 }
