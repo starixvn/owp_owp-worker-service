@@ -1,16 +1,19 @@
 using Fanex.Logging;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Olympus.OWP.Log.Data.Repository.Criteria;
 using OWP.Adminsite.Models;
 using OWP.Extensions;
 using OWP.Services;
 using System.Text;
+using Olympus.OWP.Log.Data.Repository.Services;
 
 namespace OWP.Adminsite.Services;
 
 public interface IApiService
 {
     Task<ProviderMatchIdTw> QueryProviderMatchId(DateTime date);
+
     Task<IEnumerable<MatchInfoApiModel>> PushMatchInfoAsync(DateTime fromDate, DateTime toDate, IEnumerable<MatchInfoApiModel> matchInfos);
 }
 
@@ -18,7 +21,7 @@ public class ApiService(
     AdminSiteSettings apiSetting,
     HttpHandler httpHandler,
     IConfiguration configuration,
-    LogMonitoringService logMonitoringService,
+    LogWriterService logWriterService,
     ILogger logger) : IApiService
 {
     public const string DateTimeFormat = "yyyy-MM-dd";
@@ -80,26 +83,46 @@ public class ApiService(
 
     public async Task<ProviderMatchIdTw> QueryProviderMatchId(DateTime date)
     {
-        var requestLink = $"{apiSetting.InfositeAPI}api/OWP/GetSportsTickerMapping?sportType=1&date={date.ToString(DateTimeFormat)}";
-        var response = await httpHandler.GetAsync(requestLink);
-        if (response.IsSuccessStatusCode)
+        var jsonData = string.Empty;
+        try
         {
-            var jsonData = await response.Content.ReadAsStringAsync();
-            await logMonitoringService.LogDetailedPayload(date, "QueryProviderMatchId", jsonData);
-            return JsonConvert.DeserializeObject<ProviderMatchIdTw>(jsonData, new TrimmingConverter());
+            var requestLink = $"{apiSetting.InfositeAPI}api/OWP/GetSportsTickerMapping?sportType=1&date={date.ToString(DateTimeFormat)}";
+            var response = await httpHandler.GetAsync(requestLink);
+            if (response.IsSuccessStatusCode)
+            {
+                jsonData = await response.Content.ReadAsStringAsync();
+               
+                return JsonConvert.DeserializeObject<ProviderMatchIdTw>(jsonData, new TrimmingConverter());
+            }
+
+            var logInfo = new
+            {
+                DateTime = date,
+                RequestUri = requestLink,
+                StatusCode = (int)response.StatusCode,
+                response.RequestMessage,
+                Action = "QueryProviderMatchId"
+            };
+            var logInfoString = JsonConvert.SerializeObject(logInfo);
+            await logger.ErrorAsync(logInfoString);
+            await logWriterService.Execute(new AdminSiteLogCriteria
+            {
+                CreatedDate = DateTime.Now.AddHours(12),
+                Action = "SyncProviderMatchId",
+                Payload = JsonConvert.SerializeObject(logInfoString)
+            });
+
+            return new ProviderMatchIdTw();
         }
-
-        var logInfo = new
+        finally
         {
-            DateTime = date,
-            RequestUri = requestLink,
-            StatusCode = (int)response.StatusCode,
-            response.RequestMessage,
-            Action = "QueryProviderMatchId"
-        };
-        var logInfoString = JsonConvert.SerializeObject(logInfo);
-        await logger.ErrorAsync(logInfoString);
-
-        return new ProviderMatchIdTw();
+            await logWriterService.Execute(new AdminSiteLogCriteria
+            {
+                CreatedDate = DateTime.Now.AddHours(12),
+                Action = "SyncProviderMatchId",
+                Payload = JsonConvert.SerializeObject(jsonData)
+            });
+        }
+        
     }
 }

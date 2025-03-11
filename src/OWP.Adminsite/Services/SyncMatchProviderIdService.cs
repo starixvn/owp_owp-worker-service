@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using OWP.Adminsite.Criteria;
 using OWP.Constants;
 
+
 namespace OWP.Adminsite.Services
 {
     public interface SyncMatchProviderIdService
@@ -10,18 +11,11 @@ namespace OWP.Adminsite.Services
         public Task Execute(DateTime date);
     }
 
-    public class SyncMatchProviderIdImp: SyncMatchProviderIdService
+    public class SyncMatchProviderIdImp(
+        IApiService apiService, 
+        IDynamicRepository dynamicRepository)
+        : SyncMatchProviderIdService
     {
-        private readonly IApiService apiService;
-
-        private readonly IDynamicRepository dynamicRepository;
-
-        public SyncMatchProviderIdImp(IApiService apiService, IDynamicRepository dynamicRepository)
-        {
-            this.apiService = apiService;
-            this.dynamicRepository = dynamicRepository;
-        }
-
         public async Task Execute(DateTime date)
         {
             var providerMatchIdTw=await apiService.QueryProviderMatchId(date);
@@ -35,6 +29,7 @@ namespace OWP.Adminsite.Services
                     Provider = ProviderConst.Provider.GetValueOrDefault(x.ProviderId,string.Empty)
                 });
 
+           
             await dynamicRepository.ExecuteAsync(new InsertProviderMatchIdCriteria()
             {
                 ProviderMatchIdJson = JsonConvert.SerializeObject(providerMatchIdInfo)

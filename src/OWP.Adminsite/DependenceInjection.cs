@@ -15,7 +15,7 @@ public static class DependenceInjection
         var apiSettings = configuration.GetSection("AdminSiteSettings").Get<AdminSiteSettings>();
         services.AddSingleton(apiSettings);
 
-        services.AddTransient<LogMonitoringService, LogMonitoringServiceImp>();
+        services.AddTransient<LogWriterService, LogWriterServiceImp>();
         services.AddTransient<IMatchInfoRepository, MatchInfoRepository>();
         services.AddTransient<IApiService, ApiService>();
         services.AddTransient<IMatchInfoService, MatchInfoService>();

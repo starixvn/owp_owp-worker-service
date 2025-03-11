@@ -14,7 +14,6 @@
     <Setting Key="OWP_EventPicking_SaveLogs"  SpName="OWP_EventPicking_SaveLogs" DbName="DBOWP.bodb_OWP.wsv_owp" />
     <Setting Key="OWP_EventPicking_SaveMatchDeleteLogs"  SpName="OWP_EventPicking_SaveMatchDeleteLogs" DbName="DBOWP.bodb_OWP.wsv_owp" />
     <Setting Key="OWP_API_GetTeamRoundInfosByDate"  SpName="OWP_API_GetTeamRoundInfosByDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
-        <Setting Key="OWP_InfoSite_DetectEventChangeKo"  SpName="OWP_InfoSite_DetectEventChangeKo" DbName="DBOWP.bodb_OWP.wsv_owp" />
   </Function>
   <Function Name="MatchReady">
     <Setting Key="OWP_API_SyncNotificationSettingWatcher"  SpName="OWP_API_SyncNotificationSettingWatcher" DbName="DBOWP.bodb_OWP.wsv_owp" />
@@ -116,6 +115,7 @@
     <Setting Key="OWP_SyncMatchInfoToAdminSite_GetMatchSetting" SpName ="OWP_SyncMatchInfoToAdminSite_GetMatchSetting" DbName="DBOWP.bodb_OWP.wsv_owp" />
     <Setting Key="OWP_MaxbetSetting_Get" SpName ="OWP_MaxbetSetting_Get" DbName="DBOWP.bodb_OWP.wsv_owp" />
     <Setting Key="Adminsite_ProviderMatchId_Insert" SpName ="Adminsite_ProviderMatchId_Insert" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_AdminSite_WriteLog" SpName ="OWP_AdminSite_WriteLog" DbName="DBOWP.bodb_OWP.wsv_owp" />
   </Function>
   <Function Name="LogMonitoring">
     <Setting Key="OWP_LogMonitoring_Insert" SpName ="OWP_LogMonitoring_Insert" DbName="DBOWP.bodb_OWP.wsv_owp" />
