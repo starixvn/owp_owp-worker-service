@@ -201,8 +201,12 @@ public static class InfoSiteSyncHelper
 
     public static string GetMatchStatus(this string input)
     {
-        string[] statuses = [MatchStatus.Postponed, MatchStatus.Cancelled];
+        var statuses = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            { MatchStatusInRemark2.Postponed, MatchStatusInRemark2.Postponed },
+            { MatchStatusInRemark2.Cancel, "Cancelled" }
+        };
 
-        return statuses.FirstOrDefault(status => input.Contains(status, StringComparison.OrdinalIgnoreCase));
+        return statuses.FirstOrDefault(status => input.Contains(status.Key, StringComparison.OrdinalIgnoreCase)).Value;
     }
 }
