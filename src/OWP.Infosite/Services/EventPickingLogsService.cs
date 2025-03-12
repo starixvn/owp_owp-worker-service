@@ -2,7 +2,6 @@
 using Fanex.Data.Repository;
 using Olympus.OWP.Constants;
 using Olympus.Xml;
-using OWP.Infosite.Constants;
 using OWP.Infosite.Criteria;
 using OWP.Infosite.Helper;
 using OWP.Infosite.Models;
@@ -49,7 +48,7 @@ namespace OWP.Infosite.Services
 
         private static IList<PropertyInfo> GetPropertyInfo()
             => typeof(InfoSiteDb).GetProperties()
-                .Where(x => !x.Name.Equals("MatchStatus") && !x.Name.Equals("IsPostponed")).ToList();
+                .Where(x => !x.Name.Equals("MatchStatus") && !x.Name.Equals("LastStatus")).ToList();
 
         public void AddLogUpdateCheckingStatus(int infoSiteMatchId, IList<LoggedChangeModel> loggedChanges, string fromService)
         {
@@ -71,63 +70,61 @@ namespace OWP.Infosite.Services
                 var infoSiteNew = queriedResult.First(x => x.InfoSiteMatchId == infoSiteOld.InfoSiteMatchId);
                 var infoSiteClone = InfoSiteSyncHelper.CloneInfoSiteMatch(infoSiteNew);
                 var loggedChangeItems = InfoSiteSyncHelper.BuildLoggedChanges(GetPropertyInfo(), infoSiteOld, infoSiteClone).ToList();
-
-                BuildLogForMatchPostponed(infoSiteNew, infoSiteOld, loggedChangeItems, fromService);
-                BuildLogForMatchCancelled(infoSiteNew, infoSiteOld, loggedChangeItems, fromService);
-                BuildLogForMatchSuspended(infoSiteNew, infoSiteOld, loggedChangeItems, fromService);
+                
+                BuildLogWhenMatchStatusChanged(infoSiteNew, infoSiteOld, loggedChangeItems, fromService);
 
                 if (infoSiteOld is { IsCheck: true } && loggedChangeItems.Count != 0)
                 {
                     AddLogUpdateCheckingStatus(infoSiteClone.InfoSiteMatchId, loggedChanges, fromService);
                 }
 
+                if (loggedChangeItems.Exists(log => log.UpdateTypeId == UpdateTypeConstant.MOVE_KICKOFF_DATE))
+                {
+                    var updateKODateLog = loggedChangeItems.First(l => l.UpdateTypeId == UpdateTypeConstant.MOVE_KICKOFF_DATE);
+                    loggedChanges.Add(new LoggedChangeModel
+                    {
+                        InfoSiteMatchId = updateKODateLog.InfoSiteMatchId,
+                        UpdateTypeId = UpdateTypeConstant.RENEW_MATCH,
+                        Action = "Renew Match",
+                        NewValue = updateKODateLog.NewValue,
+                        OldValue = updateKODateLog.OldValue,
+                        UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
+                        FromService = fromService
+                    });
+                }
+
                 loggedChanges.AddRange(loggedChangeItems);
             }
         }
 
-        private static void BuildLogForMatchPostponed(Event infoSiteNew, InfoSiteDbInfo infoSiteDb, List<LoggedChangeModel> loggedChanges, string fromService)
+        private static void BuildLogWhenMatchStatusChanged(Event infoSiteNew, InfoSiteDbInfo infoSiteOld, List<LoggedChangeModel> loggedChangeItems, string fromService)
         {
-            BuildLogForMatchStatus(infoSiteNew, infoSiteDb, loggedChanges,
-                "Postponed", "Postponed", InfoSiteMatchStatus.Postponed,
-                UpdateTypeConstant.RENEW_MATCH, UpdateTypeConstant.MATCH_POSTPONED, fromService);
-        }
+            var isChangeRemark2 = infoSiteNew.Remark2 != infoSiteOld.Remark2;
+            var isChangeMatchStatus = infoSiteNew.MatchStatus != infoSiteOld.MatchStatus;
+            var oldStatus = infoSiteOld.LastStatus ?? "";
+            var newStatusFromRemark2 = infoSiteNew.Remark2.GetStatusFromRemark2();
+            var newStatusFromMatchStatus = infoSiteNew.MatchStatus.GetStatusFromMatchStatus();
 
-        private static void BuildLogForMatchCancelled(Event infoSiteNew, InfoSiteDbInfo infoSiteDb, List<LoggedChangeModel> loggedChanges, string fromService)
-        {
-            BuildLogForMatchStatus(infoSiteNew, infoSiteDb, loggedChanges,
-                "Cancel", "Cancelled", InfoSiteMatchStatus.Cancelled,
-                UpdateTypeConstant.RENEW_MATCH, UpdateTypeConstant.MATCH_CANCELLED, fromService);
-        }
-
-        private static void BuildLogForMatchSuspended(Event infoSiteNew, InfoSiteDbInfo infoSiteDb, List<LoggedChangeModel> loggedChanges, string fromService)
-        {
-            BuildLogForMatchStatus(infoSiteNew, infoSiteDb, loggedChanges,
-                "", "Suspended", InfoSiteMatchStatus.Suspended,
-                UpdateTypeConstant.RENEW_MATCH, UpdateTypeConstant.MATCH_SUSPENDED, fromService);
-        }
-
-        private static void BuildLogForMatchStatus(
-            Event infoSiteNew,
-            InfoSiteDbInfo infoSiteDb,
-            List<LoggedChangeModel> loggedChanges,
-            string statusString,
-            string loggedStatus,
-            byte matchStatus,
-            int updateTypeRenew,
-            int updateTypeChanged,
-            string fromService)
-        {
-            if (infoSiteDb.IsMatchHasStatus(statusString, matchStatus)
-                && !infoSiteNew.IsMatchHasStatus(statusString, matchStatus))
+            if (isChangeRemark2 && UpdateStatusIfChanged(loggedChangeItems, infoSiteOld.InfoSiteMatchId, oldStatus, newStatusFromRemark2, fromService))
             {
-                AddLoggedChange(loggedChanges, infoSiteDb.InfoSiteMatchId, updateTypeRenew, string.Empty, loggedStatus, fromService);
+                infoSiteNew.LastStatus = newStatusFromRemark2;
             }
-
-            if (!infoSiteDb.IsMatchHasStatus(statusString, matchStatus)
-                && infoSiteNew.IsMatchHasStatus(statusString, matchStatus))
+            else if (isChangeMatchStatus && UpdateStatusIfChanged(loggedChangeItems, infoSiteOld.InfoSiteMatchId, oldStatus, newStatusFromMatchStatus, fromService))
             {
-                AddLoggedChange(loggedChanges, infoSiteDb.InfoSiteMatchId, updateTypeChanged, loggedStatus, string.Empty, fromService);
+                infoSiteNew.LastStatus = newStatusFromMatchStatus;
             }
+            else
+            {
+                infoSiteNew.LastStatus = oldStatus;
+            }
+        }
+
+        private static bool UpdateStatusIfChanged(List<LoggedChangeModel> loggedChangeItems, int matchId, string oldStatus, string newStatus, string fromService)
+        {
+            if (oldStatus == newStatus) return false;
+            var updateTypeId = newStatus.GetUpdateTypeIdFromStatus();
+            AddLoggedChange(loggedChangeItems, matchId, updateTypeId, newStatus, oldStatus, fromService);
+            return true;
         }
 
         private static IEnumerable<int> GetNewInfoSiteIds(List<Event> queriedResult, List<InfoSiteDbInfo> infoSiteDbInfos)

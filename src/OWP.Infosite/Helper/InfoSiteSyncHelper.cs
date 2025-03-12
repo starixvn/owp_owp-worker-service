@@ -48,28 +48,28 @@ public static class InfoSiteSyncHelper
             { "TotalRound", UpdateTypeConstant.UPDATE_TOTAL_ROUND},
         };
         var actionId = propertyActionIds.GetValue(propertyName, 1);
-        //if (actionId == UpdateTypeConstant.UPDATE_KO_TIME && IsUpdateKODate(newValue, oldValue))
-        //{
-        //    actionId = UpdateTypeConstant.MOVE_KICKOFF_DATE;
-        //}
+        if (actionId == UpdateTypeConstant.UPDATE_KO_TIME && IsUpdateKODate(newValue, oldValue))
+        {
+            actionId = UpdateTypeConstant.MOVE_KICKOFF_DATE;
+        }
         return actionId;
     }
 
-    //private static bool IsUpdateKODate(string newValue, string oldValue)
-    //{
-    //    var newKODateTime = DateTime.Parse(newValue);
-    //    var oldKODateTime = DateTime.Parse(oldValue);
+    private static bool IsUpdateKODate(string newValue, string oldValue)
+    {
+        var newKODateTime = DateTime.Parse(newValue);
+        var oldKODateTime = DateTime.Parse(oldValue);
 
-    //    var milestoneDate = IsKOTimeAfter12pm(oldKODateTime) ? oldKODateTime.Date : oldKODateTime.Date.AddDays(-1);
+        var milestoneDate = IsKOTimeAfter12pm(oldKODateTime) ? oldKODateTime.Date : oldKODateTime.Date.AddDays(-1);
 
-    //    var from = milestoneDate.AddHours(12);
-    //    var to = milestoneDate.AddDays(1).AddHours(12).AddSeconds(-1);
+        var from = milestoneDate.AddHours(12);
+        var to = milestoneDate.AddDays(1).AddHours(12).AddSeconds(-1);
 
-    //    return newKODateTime < from || newKODateTime > to;
-    //}
+        return newKODateTime < from || newKODateTime > to;
+    }
 
-    //private static bool IsKOTimeAfter12pm(DateTime koTime)
-    //    => koTime.TimeOfDay >= new TimeSpan(12, 0, 0);
+    private static bool IsKOTimeAfter12pm(DateTime koTime)
+        => koTime.TimeOfDay >= new TimeSpan(12, 0, 0);
 
     private static int BuildActionIdWithCancel(string propertyName)
     {
@@ -177,25 +177,47 @@ public static class InfoSiteSyncHelper
             .Where(log => log != null);
     }
 
-    public static bool IsMatchHasStatus(this object match, string noteInRemark, byte status)
+    public static string GetStatusFromRemark2(this string input)
     {
-        var remark2Property = match.GetType().GetProperty("Remark2");
-        var matchStatusProperty = match.GetType().GetProperty("MatchStatus");
-
-        if (remark2Property == null || matchStatusProperty == null)
+        var statuses = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
-            throw new InvalidOperationException("The object does not have the required properties.");
+            { MatchStatusInRemark2.Postponed, MatchStatusInRemark2.Postponed },
+            { MatchStatusInRemark2.Cancel, "Cancelled" }
+        };
+
+        foreach (var status in statuses)
+        {
+            if (input.Contains(status.Key, StringComparison.OrdinalIgnoreCase))
+            {
+                return status.Value;
+            }
         }
 
-        var remark2 = remark2Property.GetValue(match) as string;
-        var matchStatus = matchStatusProperty.GetValue(match) as byte?;
+        return string.Empty;
+    }
 
-        if (matchStatus == InfoSiteMatchStatus.Suspended)
+    public static string GetStatusFromMatchStatus(this byte? input)
+    {
+        var statuses = new Dictionary<byte, string>()
         {
-            return matchStatus == status;
-        }
+            { InfoSiteMatchStatus.Postponed, "Postponed" },
+            { InfoSiteMatchStatus.Cancelled, "Cancelled" },
+            { InfoSiteMatchStatus.Suspended, "Suspended" }
+        };
 
-        return (!string.IsNullOrEmpty(remark2) && remark2.Contains(noteInRemark, StringComparison.OrdinalIgnoreCase))
-               || matchStatus == status;
+        return input.HasValue ? statuses.GetValueOrDefault(input.Value, "") : "";
+    }
+
+    public static short GetUpdateTypeIdFromStatus(this string input)
+    {
+        var statuses = new Dictionary<string, short>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "Postponed", UpdateTypeConstant.MATCH_POSTPONED },
+            { "Cancelled", UpdateTypeConstant.MATCH_CANCELLED },
+            { "Suspended", UpdateTypeConstant.MATCH_SUSPENDED },
+            { "", UpdateTypeConstant.RENEW_MATCH }
+        };
+
+        return statuses.GetValueOrDefault<string, short>(input, 0);
     }
 }

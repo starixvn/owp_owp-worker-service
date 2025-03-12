@@ -104,6 +104,7 @@ public class Event
     public bool IsPostponed { get; set; }
 
     public byte? MatchStatus { get; set; }
+    public string LastStatus { get; set; }
     public string RoundConfirm { get; set; }
 
     public Event(CommonMatchModel infositeMatch)
