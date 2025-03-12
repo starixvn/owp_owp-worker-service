@@ -199,7 +199,7 @@ public static class InfoSiteSyncHelper
                || matchStatus == status;
     }
 
-    public static string GetMatchStatus(this string input)
+    public static string GetStatusFromRemark2(this string input)
     {
         var statuses = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
@@ -207,6 +207,39 @@ public static class InfoSiteSyncHelper
             { MatchStatusInRemark2.Cancel, "Cancelled" }
         };
 
-        return statuses.FirstOrDefault(status => input.Contains(status.Key, StringComparison.OrdinalIgnoreCase)).Value;
+        foreach (var status in statuses)
+        {
+            if (input.Contains(status.Key, StringComparison.OrdinalIgnoreCase))
+            {
+                return status.Value;
+            }
+        }
+
+        return string.Empty;
+    }
+
+    public static string GetStatusFromMatchStatus(this byte? input)
+    {
+        var statuses = new Dictionary<byte, string>()
+        {
+            { InfoSiteMatchStatus.Postponed, "Postponed" },
+            { InfoSiteMatchStatus.Cancelled, "Cancelled" },
+            { InfoSiteMatchStatus.Suspended, "Suspended" }
+        };
+
+        return input.HasValue ? statuses.GetValueOrDefault(input.Value, "") : "";
+    }
+
+    public static short GetUpdateTypeIdFromStatus(this string input)
+    {
+        var statuses = new Dictionary<string, short>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "Postponed", UpdateTypeConstant.MATCH_POSTPONED },
+            { "Cancelled", UpdateTypeConstant.MATCH_CANCELLED },
+            { "Suspended", UpdateTypeConstant.MATCH_SUSPENDED },
+            { "", UpdateTypeConstant.RENEW_MATCH }
+        };
+
+        return statuses.GetValueOrDefault<string, short>(input, 0);
     }
 }
