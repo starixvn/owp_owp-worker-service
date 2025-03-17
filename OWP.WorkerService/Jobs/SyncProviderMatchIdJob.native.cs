@@ -24,6 +24,6 @@ public class SyncProviderMatchIdJob(SyncMatchProviderIdService handler) : IJob
     private async Task ExecuteJob(){
         await LogService.InfoAsync($"[SyncProviderMatchIdJob]=> Job start at: {DateTimeOffset.Now} GMT-4" );
 
-        await handler.Execute(DateTime.Today).ConfigureAwait(false);
+        await handler.Execute(DateTime.Today.AddDays(-1)).ConfigureAwait(false);
     }
 }
