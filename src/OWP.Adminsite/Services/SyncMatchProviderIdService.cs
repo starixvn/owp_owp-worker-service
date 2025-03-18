@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using OWP.Adminsite.Criteria;
 using OWP.Constants;
+using OWP.Extensions;
 
 
 namespace OWP.Adminsite.Services
@@ -22,7 +23,7 @@ namespace OWP.Adminsite.Services
             var providerMatchIdInfo = providerMatchIdTw.content
                 .Select(x => new 
                 {   
-                    CreatedDate=date,
+                    CreatedDate= date.AddHours(12),
                     MatchId = x.IbcMatchId,
                     x.ProviderMatchId,
                     x.ProviderId,
