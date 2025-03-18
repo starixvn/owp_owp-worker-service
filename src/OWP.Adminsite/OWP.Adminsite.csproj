@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Fanex.Caching" Version="2.2.7" />
     <PackageReference Include="Olympus.OWP.Constants" Version="1.0.0.4" />
+    <PackageReference Include="Olympus.OWP.Log.Data.Repository" Version="9.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OWP\OWP.csproj" />

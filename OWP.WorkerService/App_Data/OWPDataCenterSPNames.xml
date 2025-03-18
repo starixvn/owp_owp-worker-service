@@ -116,4 +116,7 @@
         <Setting Key="OWP_SyncMatchInfoToAdminSite_GetMatchSetting" SpName ="OWP_SyncMatchInfoToAdminSite_GetMatchSetting" DbName="DBOWP.bodb_OWP.wsv_owp" />
         <Setting Key="OWP_MaxbetSetting_Get" SpName ="OWP_MaxbetSetting_Get" DbName="DBOWP.bodb_OWP.wsv_owp" />
     </Function>
+  <Function Name="Log">
+    <Setting Key="OWP_InternalSystem_WriteLog" SpName ="OWP_InternalSystem_WriteLog" DbName="DBOWP.bodb_OWP.wsv_owp" />
+  </Function>
 </Functions>
