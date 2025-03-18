@@ -21,6 +21,8 @@ public class SyncAgentConfirmJob(SyncAgentConfirmHandler syncAgentConfirmHandler
 
     private async Task ExecuteJob()
     {
+        await LogService.InfoAsync($"[SyncAgentConfirmJob]=> Job start at: {DateTimeOffset.Now} GMT-4");
+
         var eventDate = DateTime.Now.Date.AddDays(-1); // gmt-4 => yesterday
         await syncAgentConfirmHandler.Handle(eventDate).ConfigureAwait(false);
     }
