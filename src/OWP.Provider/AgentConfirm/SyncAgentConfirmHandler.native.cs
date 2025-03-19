@@ -58,6 +58,7 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
         return new MatchAgentConfirm
         {
             OWPMatchId = match.OWPMatchId,
+            MatchId = match.MatchId,
             Agent = agent
         };
     }
@@ -66,6 +67,8 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
 public class MatchAgentConfirm
 {
     public int OWPMatchId { get; set; }
+
+    public int MatchId { get; set; }
 
     public string Agent { get; set; }
 }
