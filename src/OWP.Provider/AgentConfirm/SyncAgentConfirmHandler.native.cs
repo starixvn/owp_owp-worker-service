@@ -25,32 +25,58 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
         if (match.IsSaba)
         {
             yield return CreateAgentConfirm(Agent.Streaming, match);
+            yield break;
         }
-        else if (match.MatchStatus is MatchStatus.Postponed or MatchStatus.Cancel or MatchStatus.Suspended)
+
+        if (match.MatchStatus is MatchStatus.Postponed or MatchStatus.Cancel or MatchStatus.Suspended)
         {
             yield return CreateAgentConfirm(Agent.Cancel, match);
+            yield break;
         }
-        else if (Agent.ProviderList.Exists(match.Provider.IsContainsIgnoreCase) || IsBetradar(match))
+
+        if (!string.IsNullOrEmpty(match.Provider))
         {
-            if (IsBetradar(match))
+            bool isBetradar = IsBetradar(match);
+            var matchingProviders = Agent.ProviderList.Where(provider => match.Provider.IsContainsIgnoreCase(provider));
+
+            if (matchingProviders.Any() || isBetradar)
             {
-                yield return CreateAgentConfirm(Agent.Betradar, match);
+                if (isBetradar)
+                {
+                    yield return CreateAgentConfirm(Agent.Betradar, match);
+                }
+
+                foreach (var provider in matchingProviders)
+                {
+                    yield return CreateAgentConfirm(provider, match);
+                }
+
+                yield break;
             }
 
-            foreach (var provider in Agent.ProviderList.Where(match.Provider.IsContainsIgnoreCase))
+            if (IsStreamingProvider(match.Provider))
             {
-                yield return CreateAgentConfirm(provider, match);
+                yield return CreateAgentConfirm(Agent.Streaming, match);
             }
         }
-        else if (match.Provider.IsContainsIgnoreCase("BET365") || match.Provider.IsContainsIgnoreCase("TV"))
+
+        if (string.IsNullOrEmpty(match.Provider))
         {
-            yield return CreateAgentConfirm(Agent.Streaming, match);
+            yield return CreateAgentConfirm(null, match);
         }
     }
 
     private static bool IsBetradar(AgentMatchInfo match)
     {
-        return match.Provider.IsContainsIgnoreCase("BET") && !match.Provider.IsContainsIgnoreCase("BET365");
+        return !string.IsNullOrEmpty(match.Provider) &&
+               match.Provider.IsContainsIgnoreCase("BET") &&
+               !match.Provider.IsContainsIgnoreCase("BET365");
+    }
+
+    private static bool IsStreamingProvider(string provider)
+    {
+        return !string.IsNullOrEmpty(provider) &&
+               (provider.IsContainsIgnoreCase("BET365") || provider.IsContainsIgnoreCase("TV"));
     }
 
     private static MatchAgentConfirm CreateAgentConfirm(string agent, AgentMatchInfo match)
