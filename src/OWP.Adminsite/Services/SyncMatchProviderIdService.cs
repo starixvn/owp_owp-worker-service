@@ -23,7 +23,7 @@ namespace OWP.Adminsite.Services
             var providerMatchIdInfo = providerMatchIdTw.content
                 .Select(x => new 
                 {   
-                    CreatedDate= date.AddHours(12),
+                    CreatedDate= DateTime.Now.AddHours(12),
                     MatchId = x.IbcMatchId,
                     x.ProviderMatchId,
                     x.ProviderId,
