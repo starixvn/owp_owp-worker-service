@@ -83,46 +83,41 @@ public class ApiService(
 
     public async Task<ProviderMatchIdTw> QueryProviderMatchId(DateTime date)
     {
-        var jsonData = string.Empty;
-        try
+        while (true)
         {
-            var requestLink = $"{apiSetting.InfositeAPI}api/OWP/GetSportsTickerMapping?sportType=1&date={date.ToString(DateTimeFormat)}";
-            var response = await httpHandler.GetAsync(requestLink);
-            if (response.IsSuccessStatusCode)
-            {
-                jsonData = await response.Content.ReadAsStringAsync();
-               
-                return JsonConvert.DeserializeObject<ProviderMatchIdTw>(jsonData, new TrimmingConverter());
-            }
+           
+            
+                var requestLink = $"{apiSetting.InfositeAPI}api/OWP/GetSportsTickerMapping?sportType=1&date={date.ToString(DateTimeFormat)}";
+                var response = await httpHandler.GetAsync(requestLink);
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonData = await response.Content.ReadAsStringAsync();
+                    await logWriterService.Execute(new AdminSiteLogCriteria
+                    {
+                        CreatedDate = DateTime.Now.AddHours(12),
+                        Action = "SyncProviderMatchId",
+                        Payload = JsonConvert.SerializeObject(jsonData)
+                    });
+                    return JsonConvert.DeserializeObject<ProviderMatchIdTw>(jsonData, new TrimmingConverter());
+                }
 
-            var logInfo = new
-            {
-                DateTime = date,
-                RequestUri = requestLink,
-                StatusCode = (int)response.StatusCode,
-                response.RequestMessage,
-                Action = "QueryProviderMatchId"
-            };
-            var logInfoString = JsonConvert.SerializeObject(logInfo);
-            await logger.ErrorAsync(logInfoString);
-            await logWriterService.Execute(new AdminSiteLogCriteria
-            {
-                CreatedDate = DateTime.Now.AddHours(12),
-                Action = "SyncProviderMatchId",
-                Payload = JsonConvert.SerializeObject(logInfoString)
-            });
-
-            return new ProviderMatchIdTw();
+                var logInfo = new
+                {
+                    DateTime = date,
+                    RequestUri = requestLink,
+                    StatusCode = (int)response.StatusCode,
+                    response.RequestMessage,
+                    Action = "QueryProviderMatchId"
+                };
+                var logInfoString = JsonConvert.SerializeObject(logInfo);
+                await logger.ErrorAsync(logInfoString);
+                await logWriterService.Execute(new AdminSiteLogCriteria
+                {
+                    CreatedDate = DateTime.Now.AddHours(12),
+                    Action = "SyncProviderMatchId",
+                    Payload = JsonConvert.SerializeObject(logInfoString)
+                });
+                await Task.Delay(TimeSpan.FromMinutes(60));
         }
-        finally
-        {
-            await logWriterService.Execute(new AdminSiteLogCriteria
-            {
-                CreatedDate = DateTime.Now.AddHours(12),
-                Action = "SyncProviderMatchId",
-                Payload = JsonConvert.SerializeObject(jsonData)
-            });
-        }
-        
     }
 }
