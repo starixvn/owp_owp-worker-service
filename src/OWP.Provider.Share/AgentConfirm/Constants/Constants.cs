@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 
-namespace OWP.Provider.AgentConfirm.Constants;
+namespace OWP.Provider.Share.AgentConfirm.Constants;
 
 public static class Agent
 {

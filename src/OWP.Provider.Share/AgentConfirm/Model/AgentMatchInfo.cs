@@ -1,4 +1,4 @@
-﻿namespace OWP.Provider.AgentConfirm.Model;
+﻿namespace OWP.Provider.Share.AgentConfirm.Model;
 
 public class AgentMatchInfo
 {

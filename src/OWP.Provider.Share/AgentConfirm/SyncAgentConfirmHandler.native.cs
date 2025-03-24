@@ -1,9 +1,12 @@
-﻿namespace OWP.Provider.AgentConfirm;
+﻿namespace OWP.Provider.Share.AgentConfirm;
 
 using Constants;
 using Extensions;
 using Model;
 using OWP.Constants;
+using OWP.Provider.Share.AgentConfirm.Constants;
+using OWP.Provider.Share.AgentConfirm.Model;
+using OWP.Provider.Share.AgentConfirm.Services;
 using Services;
 
 public interface SyncAgentConfirmHandler

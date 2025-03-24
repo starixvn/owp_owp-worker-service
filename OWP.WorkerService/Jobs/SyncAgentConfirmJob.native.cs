@@ -1,7 +1,7 @@
 ﻿namespace OWP.WorkerService.Jobs;
 
 using Fanex.Logging;
-using Provider.AgentConfirm;
+using OWP.Provider.Share.AgentConfirm;
 using Quartz;
 
 [DisallowConcurrentExecution]

@@ -10,6 +10,7 @@
     <PackageReference Include="Olympus.OWP.Log.Data.Repository" Version="9.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OWP.Provider.Share\OWP.Provider.Share.csproj" />
     <ProjectReference Include="..\OWP\OWP.csproj" />
   </ItemGroup>
 </Project>
