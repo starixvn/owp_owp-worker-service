@@ -48,7 +48,9 @@ namespace OWP.Infosite.Services
 
         private static IList<PropertyInfo> GetPropertyInfo()
             => typeof(InfoSiteDb).GetProperties()
-                .Where(x => !x.Name.Equals("MatchStatus") && !x.Name.Equals("LastStatus")).ToList();
+                .Where(x => !x.Name.Equals("MatchStatus") 
+                            && !x.Name.Equals("LastStatus")
+                            && !x.Name.Equals("EventDateTime")).ToList();
 
         public void AddLogUpdateCheckingStatus(int infoSiteMatchId, IList<LoggedChangeModel> loggedChanges, string fromService)
         {
@@ -78,20 +80,6 @@ namespace OWP.Infosite.Services
                     AddLogUpdateCheckingStatus(infoSiteClone.InfoSiteMatchId, loggedChanges, fromService);
                 }
 
-                if (loggedChangeItems.Exists(log => log.UpdateTypeId == UpdateTypeConstant.MOVE_KICKOFF_DATE))
-                {
-                    var updateKODateLog = loggedChangeItems.First(l => l.UpdateTypeId == UpdateTypeConstant.MOVE_KICKOFF_DATE);
-                    loggedChanges.Add(new LoggedChangeModel
-                    {
-                        InfoSiteMatchId = updateKODateLog.InfoSiteMatchId,
-                        UpdateTypeId = UpdateTypeConstant.RENEW_MATCH,
-                        Action = "Renew Match",
-                        NewValue = updateKODateLog.NewValue,
-                        OldValue = updateKODateLog.OldValue,
-                        UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
-                        FromService = fromService
-                    });
-                }
 
                 loggedChanges.AddRange(loggedChangeItems);
             }
