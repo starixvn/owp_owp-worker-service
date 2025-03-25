@@ -1,8 +1,8 @@
 ﻿using Fanex.Data.Repository;
 using Newtonsoft.Json;
-using OWP.Provider.AgentConfirm.Model;
+using OWP.Provider.Share.AgentConfirm.Model;
 
-namespace OWP.Provider.AgentConfirm.Services;
+namespace OWP.Provider.Share.AgentConfirm.Services;
 
 public interface Repository
 {

@@ -1,7 +1,7 @@
 ﻿namespace OWP.WorkerService.Jobs;
 
 using Fanex.Logging;
-using Provider.AgentConfirm;
+using OWP.Provider.Share.AgentConfirm;
 using Quartz;
 
 [DisallowConcurrentExecution]
@@ -21,6 +21,8 @@ public class SyncAgentConfirmJob(SyncAgentConfirmHandler syncAgentConfirmHandler
 
     private async Task ExecuteJob()
     {
+        await LogService.InfoAsync($"[SyncAgentConfirmJob]=> Job start at: {DateTimeOffset.Now} GMT-4");
+
         var eventDate = DateTime.Now.Date.AddDays(-1); // gmt-4 => yesterday
         await syncAgentConfirmHandler.Handle(eventDate).ConfigureAwait(false);
     }

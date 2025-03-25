@@ -12,6 +12,7 @@ using Jobs;
 using LinkLeagueAndTeam;
 using MatchReadyNotification;
 using OtherSport;
+using OWP.Provider.Share;
 using Provider;
 using Quartz;
 using Quartz.Impl;
@@ -93,6 +94,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<ArchiveOldMessageJob>();
         services.AddTransient<ArchiveDataJob>();
         services.AddTransient<SyncMatchInfoToAdminSiteJob>();
+        services.AddTransient<SyncProviderMatchIdJob>();
 
         return services;
     }

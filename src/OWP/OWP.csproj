@@ -8,14 +8,16 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Fanex.Data" Version="4.3.2" />
-    <PackageReference Include="Fanex.Data.Repository" Version="4.3.2" />
+    <PackageReference Include="Fanex.Data" Version="4.3.3" />
+    <PackageReference Include="Fanex.Data.Repository" Version="4.3.3" />
     <PackageReference Include="Fanex.Data.SqlServer" Version="4.3.2" />
+    <PackageReference Include="Polly" Version="8.5.2" />
     <PackageReference Include="rabbitmq.client" Version="7.0.0" />
     <PackageReference Include="Fanex.Logging" Version="2.0.2" />
     <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Olympus.OWP.Log.Data.Repository" Version="9.0.0" />
   </ItemGroup>
 </Project>
