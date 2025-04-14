@@ -123,4 +123,7 @@
   <Function Name="Log">
     <Setting Key="OWP_InternalSystem_WriteLog" SpName ="OWP_InternalSystem_WriteLog" DbName="DBOWP.bodb_OWP.wsv_owp" />
   </Function>
+  <Function Name="Chat">
+    <Setting Key="OWP_GetNewUser" SpName ="OWP_GetNewUser" DbName="DBOWP.bodb_OWP.wsv_owp" />
+  </Function>
 </Functions>
