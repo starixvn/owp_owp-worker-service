@@ -125,5 +125,6 @@
   </Function>
   <Function Name="Chat">
     <Setting Key="OWP_GetNewUser" SpName ="OWP_GetNewUser" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_UpdateChatUserId" SpName ="OWP_UpdateChatUserId" DbName="DBOWP.bodb_OWP.wsv_owp" />
   </Function>
 </Functions>
