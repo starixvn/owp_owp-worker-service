@@ -17,7 +17,7 @@ public class RepositoryImp(IDynamicRepository repository) : Repository
     public async Task<IList<UserInfo>> GetNewUser()
     {
         var newUser=await repository.FetchAsync<UserInfo>(new GetNewUserCriteria());
-        return newUser.ToList();
+        return newUser.Where(n=>n.UserName is not null && !n.UserName.Trim().Contains(' ')).ToList();
     }
 
     public async Task UpdateChatUserId(string UserJson)

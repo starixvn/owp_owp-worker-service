@@ -34,7 +34,10 @@ namespace OWP.Chat.Service
                 await Task.Delay(DELAY);
             }
             await repository.UpdateChatUserId(System.Text.Json.JsonSerializer.Serialize(userCreatedSuccess));
-            await WriteLog(userCreatedFail, "InsertNewUser_Fail");
+            if (userCreatedFail.Any())
+            {
+                await WriteLog(userCreatedFail, "InsertNewUser_Fail");
+            }
         }
 
         private async Task HandleResponse(
