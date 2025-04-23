@@ -1,4 +1,6 @@
-﻿namespace OWP.WorkerService.Extensions;
+﻿using OWP.Chat;
+
+namespace OWP.WorkerService.Extensions;
 
 using Adminsite;
 using ArchiveData;
@@ -23,6 +25,7 @@ using Settings;
 using StackExchange.Redis;
 using SumReport;
 using SyncLeagueSettings;
+ 
 
 public static class ServiceCollectionExtensions
 {
@@ -65,6 +68,7 @@ public static class ServiceCollectionExtensions
         services.AddArchiveDataServices();
         services.AddProviderServices();
         services.AddAdminSiteSyncServices(configuration);
+        services.AddChatServices();
 
         return services;
     }
@@ -95,6 +99,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<ArchiveDataJob>();
         services.AddTransient<SyncMatchInfoToAdminSiteJob>();
         services.AddTransient<SyncProviderMatchIdJob>();
+        services.AddTransient<ChatJob>();
 
         return services;
     }
