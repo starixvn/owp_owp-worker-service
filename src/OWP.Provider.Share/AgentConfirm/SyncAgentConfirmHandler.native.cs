@@ -25,15 +25,15 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
 
     private static IEnumerable<MatchAgentConfirm> CalculateProvider(AgentMatchInfo match)
     {
-        if (match.IsSaba)
-        {
-            yield return CreateAgentConfirm(Agent.Streaming, match);
-            yield break;
-        }
-
         if (match.MatchStatus is MatchStatus.Postponed or MatchStatus.Cancel or MatchStatus.Suspended)
         {
             yield return CreateAgentConfirm(Agent.Cancel, match);
+            yield break;
+        }
+
+        if (match.IsSaba)
+        {
+            yield return CreateAgentConfirm(Agent.Streaming, match);
             yield break;
         }
 
