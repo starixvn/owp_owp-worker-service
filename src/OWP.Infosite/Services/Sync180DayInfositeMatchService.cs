@@ -69,16 +69,14 @@ public class Sync180DayInfositeMatchServiceImp(
                 InfoSiteMatchId = item.InfoSiteMatchId,
                 AwayName = item.AwayName,
                 HomeName = item.HomeName,
-                LeagueName = item.LeagueName,
-                EventDateTime = item.EventDateTime
+                LeagueName = item.LeagueName
             };
             var infoSiteNew = new InfoSiteDb
             {
                 InfoSiteMatchId = infoSiteFromQueried.MatchId,
                 AwayName = infoSiteFromQueried.AwayName,
                 HomeName = infoSiteFromQueried.HomeName,
-                LeagueName = infoSiteFromQueried.LeagueName,
-                EventDateTime = infoSiteFromQueried.KoTime
+                LeagueName = infoSiteFromQueried.LeagueName
             };
 
             var type = typeof(InfoSiteDb);
