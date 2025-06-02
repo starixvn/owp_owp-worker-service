@@ -19,7 +19,8 @@ public static class Constant
         {17, "LSports"},
         {18, "Weverdat"},
         {19, "CloundRock"},
-        {20, "LiveStreamer"}
+        {20, "LiveStreamer"},
+        {32, "Vocal"}
     }.ToImmutableDictionary();
 
    
