@@ -24,7 +24,7 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
     {
         if (match.IsSaba)
         {
-            if (string.Equals(match.Provider, "cancel", StringComparison.OrdinalIgnoreCase))
+            if (IsProviderCancelled(match.Provider))
             {
                 yield return CreateAgentConfirm(Agent.Cancel, match);
                 yield break;
@@ -70,6 +70,11 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
         {
             yield return CreateAgentConfirm(null, match);
         }
+    }
+
+    private static bool IsProviderCancelled(string provider)
+    {
+        return provider?.Contains("cancel", StringComparison.OrdinalIgnoreCase) == true;
     }
 
     private static bool IsBetradar(AgentMatchInfo match)
