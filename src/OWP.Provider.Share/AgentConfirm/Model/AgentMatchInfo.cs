@@ -11,6 +11,4 @@ public class AgentMatchInfo
     public string Provider { get; set; }
 
     public bool IsSaba { get; set; }
-
-    public string LstBookProvider { get; set; }
 }

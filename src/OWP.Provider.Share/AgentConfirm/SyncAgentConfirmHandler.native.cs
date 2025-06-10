@@ -4,9 +4,6 @@ using Constants;
 using Extensions;
 using Model;
 using OWP.Constants;
-using OWP.Provider.Share.AgentConfirm.Constants;
-using OWP.Provider.Share.AgentConfirm.Model;
-using OWP.Provider.Share.AgentConfirm.Services;
 using Services;
 
 public interface SyncAgentConfirmHandler
@@ -27,7 +24,7 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
     {
         if (match.IsSaba)
         {
-            if (string.Equals(match.LstBookProvider, "cancel", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(match.Provider, "cancel", StringComparison.OrdinalIgnoreCase))
             {
                 yield return CreateAgentConfirm(Agent.Cancel, match);
                 yield break;
@@ -46,7 +43,7 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
         if (!string.IsNullOrEmpty(match.Provider))
         {
             bool isBetradar = IsBetradar(match);
-            var matchingProviders = Agent.ProviderList.Where(provider => match.Provider.IsContainsIgnoreCase(provider));
+            var matchingProviders = Agent.ProviderList.Where(provider => match.Provider.IsContainsIgnoreCase(provider)).ToList();
 
             if (matchingProviders.Any() || isBetradar)
             {
