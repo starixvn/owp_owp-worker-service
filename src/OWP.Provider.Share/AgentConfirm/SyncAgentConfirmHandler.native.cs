@@ -34,15 +34,36 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
             yield break;
         }
 
-        if (match.MatchStatus is MatchStatus.Cancel or MatchStatus.Postponed or MatchStatus.Suspended)
+        if (match.MatchStatus is MatchStatus.Cancel)
         {
+            yield return CreateAgentConfirm(Agent.Cancel, match);
+            yield break;
+        }
+
+        if (match.MatchStatus is MatchStatus.Postponed or MatchStatus.Suspended)
+        {
+            if (HasInhouseProvider(match.InhouseProvider))
+            {
+                var matchingInhouseProviders = Agent.ProviderList.Where(provider => match.InhouseProvider.IsContainsIgnoreCase(provider)).ToList();
+
+                if (matchingInhouseProviders.Any())
+                {
+                    foreach (var provider in matchingInhouseProviders)
+                    {
+                        yield return CreateAgentConfirm(provider, match);
+                    }
+
+                    yield break;
+                }
+            }
+
             yield return CreateAgentConfirm(Agent.Cancel, match);
             yield break;
         }
 
         if (!string.IsNullOrEmpty(match.Provider))
         {
-            bool isBetradar = IsBetradar(match);
+            var isBetradar = IsBetradar(match);
             var matchingProviders = Agent.ProviderList.Where(provider => match.Provider.IsContainsIgnoreCase(provider)).ToList();
 
             if (matchingProviders.Any() || isBetradar)
@@ -70,6 +91,11 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
         {
             yield return CreateAgentConfirm(null, match);
         }
+    }
+
+    private static bool HasInhouseProvider(string inhouseProvider)
+    {
+        return !string.IsNullOrWhiteSpace(inhouseProvider);
     }
 
     private static bool IsProviderCancelled(string provider)
