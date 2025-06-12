@@ -4,9 +4,6 @@ using Constants;
 using Extensions;
 using Model;
 using OWP.Constants;
-using OWP.Provider.Share.AgentConfirm.Constants;
-using OWP.Provider.Share.AgentConfirm.Model;
-using OWP.Provider.Share.AgentConfirm.Services;
 using Services;
 
 public interface SyncAgentConfirmHandler
@@ -25,22 +22,49 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
 
     private static IEnumerable<MatchAgentConfirm> CalculateProvider(AgentMatchInfo match)
     {
-        if (match.MatchStatus is MatchStatus.Postponed or MatchStatus.Cancel or MatchStatus.Suspended)
+        if (match.IsSaba)
+        {
+            if (IsProviderCancelled(match.Provider))
+            {
+                yield return CreateAgentConfirm(Agent.Cancel, match);
+                yield break;
+            }
+
+            yield return CreateAgentConfirm(Agent.Streaming, match);
+            yield break;
+        }
+
+        if (match.MatchStatus is MatchStatus.Cancel)
         {
             yield return CreateAgentConfirm(Agent.Cancel, match);
             yield break;
         }
 
-        if (match.IsSaba)
+        if (match.MatchStatus is MatchStatus.Postponed or MatchStatus.Suspended)
         {
-            yield return CreateAgentConfirm(Agent.Streaming, match);
+            if (HasInhouseProvider(match.InhouseProvider))
+            {
+                var matchingInhouseProviders = Agent.ProviderList.Where(provider => match.InhouseProvider.IsContainsIgnoreCase(provider)).ToList();
+
+                if (matchingInhouseProviders.Any())
+                {
+                    foreach (var provider in matchingInhouseProviders)
+                    {
+                        yield return CreateAgentConfirm(provider, match);
+                    }
+
+                    yield break;
+                }
+            }
+
+            yield return CreateAgentConfirm(Agent.Cancel, match);
             yield break;
         }
 
         if (!string.IsNullOrEmpty(match.Provider))
         {
-            bool isBetradar = IsBetradar(match);
-            var matchingProviders = Agent.ProviderList.Where(provider => match.Provider.IsContainsIgnoreCase(provider));
+            var isBetradar = IsBetradar(match);
+            var matchingProviders = Agent.ProviderList.Where(provider => match.Provider.IsContainsIgnoreCase(provider)).ToList();
 
             if (matchingProviders.Any() || isBetradar)
             {
@@ -67,6 +91,16 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
         {
             yield return CreateAgentConfirm(null, match);
         }
+    }
+
+    private static bool HasInhouseProvider(string inhouseProvider)
+    {
+        return !string.IsNullOrWhiteSpace(inhouseProvider);
+    }
+
+    private static bool IsProviderCancelled(string provider)
+    {
+        return provider?.Contains("cancel", StringComparison.OrdinalIgnoreCase) == true;
     }
 
     private static bool IsBetradar(AgentMatchInfo match)
