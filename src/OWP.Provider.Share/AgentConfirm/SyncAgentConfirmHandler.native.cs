@@ -44,7 +44,7 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
         {
             if (HasInhouseProvider(match.InhouseProvider))
             {
-                var matchingInhouseProviders = Agent.ProviderList.Where(provider => match.InhouseProvider.IsContainsIgnoreCase(provider)).ToList();
+                var matchingInhouseProviders = Agent.InhouseProviderList.Where(provider => match.InhouseProvider.IsContainsIgnoreCase(provider)).ToList();
 
                 if (matchingInhouseProviders.Any())
                 {
