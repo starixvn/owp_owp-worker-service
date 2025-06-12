@@ -18,4 +18,7 @@ public static class Agent
         "SLR",
         "WOO"
     }.ToImmutableList();
+
+    public static readonly ImmutableList<string> InhouseProviderList = ProviderList
+        .Add(Betradar);
 }
