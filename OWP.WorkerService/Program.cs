@@ -29,6 +29,9 @@ var app = builder.Build();
 
 app.UseRabbitMq();
 
+var logger = app.Services.GetRequiredService<Fanex.Logging.ILogger>();
+await logger.InfoAsync("Environment: " + configuration["Environment"]);
+
 app.Run(async context =>
 {
     var request = context.Request.Path.HasValue
