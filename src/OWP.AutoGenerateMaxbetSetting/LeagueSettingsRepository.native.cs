@@ -3,14 +3,13 @@
 using Criteria;
 using Fanex.Data.Repository;
 using Models;
-using Newtonsoft.Json;
 using Olympus.Xml;
 
 public interface LeagueSettingsRepository
 {
     Task<Tuple<IEnumerable<Match>, IEnumerable<MatchSetting>>> GetMatchesAndSettings(DateTime eventDate);
 
-    Task<IEnumerable<InsertLeagueSettingsResponse>> InsertNewLeaguesSettings(List<LeagueSetting> leaguesSettings);
+    Task InsertNewLeaguesSettings(List<LeagueSetting> leaguesSettings);
 
 }
 
@@ -29,13 +28,13 @@ public class LeagueSettingsRepositoryImp(IDynamicRepository dynamicRepository) :
     }
 
 
-    public async Task<IEnumerable<InsertLeagueSettingsResponse>> InsertNewLeaguesSettings(List<LeagueSetting> leaguesSettings)
+    public async Task InsertNewLeaguesSettings(List<LeagueSetting> leaguesSettings)
     {
         var criteria = new InsertNewLeagueSettingsCriteria
         {
             LeagueSettings = XmlConverter.Serialize(leaguesSettings)
         };
 
-        return await dynamicRepository.FetchAsync<InsertLeagueSettingsResponse>(criteria);
+        await dynamicRepository.ExecuteAsync(criteria);
     }
 }

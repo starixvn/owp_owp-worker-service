@@ -4,13 +4,16 @@ using Constants;
 using Helpers;
 using Models;
 using AutoGenerateMaxbetSetting;
+using Newtonsoft.Json;
+using Olympus.OWP.Log.Data.Repository.Criteria;
+using Olympus.OWP.Log.Data.Repository.Services;
 
 public interface GeneratorService
 {
     Task GenerateNewLeagueSetting(DateTime date);
 }
 
-public class GeneratorServiceImp(LeagueSettingsRepository repository) : GeneratorService
+public class GeneratorServiceImp(LeagueSettingsRepository repository, LogWriterService logger) : GeneratorService
 {
     public async Task GenerateNewLeagueSetting(DateTime date)
     {
@@ -26,6 +29,26 @@ public class GeneratorServiceImp(LeagueSettingsRepository repository) : Generato
 
         await repository.InsertNewLeaguesSettings(leagueSettings);
 
+        var logInfo = new
+        {
+            dateFrom = date.Date.AddDays(-7).AddHours(12),
+            dateTo = date.Date.AddHours(12).AddMinutes(-1),
+            leagueSettingsCount = leagueSettings.Count,
+            createBy="system",
+            leagueSettings
+        };
+        await WriteLogForMonitor(logInfo, "Generator");
+
+    }
+
+    private async Task WriteLogForMonitor(object request, string action)
+    {
+        await logger.Execute(new OwpLogCriteria
+        {
+            CreatedDate = DateTime.Now.AddHours(12),
+            Action = action,
+            Payload = JsonConvert.SerializeObject(request)
+        });
     }
 
     private static List<LeagueSetting> CreateNewLeaguesSettings(DateTime date, IList<Match> matches)

@@ -2,7 +2,7 @@
 
 using Fanex.Data.Repository;
 
-public class InsertNewLeagueSettingsCriteria : CriteriaBase
+public class InsertNewLeagueSettingsCriteria : NonQueryCommand
 {
     public string LeagueSettings { get; set; }
 
