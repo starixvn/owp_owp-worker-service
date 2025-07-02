@@ -21,7 +21,7 @@ public class AutoGenerateMaxbetSettingJob(GeneratorService generatorService) : I
 
     private async Task ExecuteJob()
     {
-        await generatorService.GenerateMaxbetSetting().ConfigureAwait(false);
+        await generatorService.GenerateNewLeagueSetting(DateTime.Now).ConfigureAwait(false);
 
     }
 }

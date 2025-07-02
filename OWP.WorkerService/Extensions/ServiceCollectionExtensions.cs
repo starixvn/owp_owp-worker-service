@@ -26,7 +26,7 @@ using Settings;
 using StackExchange.Redis;
 using SumReport;
 using SyncLeagueSettings;
- 
+
 
 public static class ServiceCollectionExtensions
 {
@@ -70,7 +70,7 @@ public static class ServiceCollectionExtensions
         services.AddProviderServices();
         services.AddAdminSiteSyncServices(configuration);
         services.AddChatServices();
-        services.AddAutoGenerateMaxbetSettingServices();
+        services.AddAutoGenerateNewLeagueSettingServices();
 
         return services;
     }

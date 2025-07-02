@@ -65,6 +65,12 @@
     <Setting Key="OWP_LeagueManagement_GetNoSettingsMatches" SpName="OWP_LeagueManagement_GetNoSettingsMatches" DbName="DBOWP.bodb_OWP.wsv_owp" />
     <Setting Key="OWP_LeagueManagement_UpdateCondition" SpName="OWP_LeagueManagement_UpdateCondition" DbName="DBOWP.bodb_OWP.wsv_owp" />
   </Function>
+  <Function Name="LeagueManagement">
+    <Setting Key="OWP_NewLeagueSetting_GetAllTVCondition" SpName="OWP_LeagueManagement_GetAllTVCondition" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_NewLeagueSetting_LeagueSettingInsert" SpName="OWP_LeagueManagement_LeagueSettingInsert" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_NewLeagueSetting_GetNoSettingsMatches" SpName="OWP_LeagueManagement_GetNoSettingsMatches" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    <Setting Key="OWP_NewLeagueSetting_UpdateCondition" SpName="OWP_LeagueManagement_UpdateCondition" DbName="DBOWP.bodb_OWP.wsv_owp" />
+  </Function>
   <Function Name="PreMatchNotification">
     <Setting Key="OWP_PreMatchNotification_QueryLeague"  SpName="OWP_PreMatchNotification_QueryLeague" DbName="DBOWP.bodb_OWP.wsv_owp" />
     <Setting Key="OWP_PreMatchNotification_QueryInfoSiteMatchesByDate"  SpName="OWP_PreMatchNotification_QueryInfoSiteMatchesByDate" DbName="DBOWP.bodb_OWP.wsv_owp" />
