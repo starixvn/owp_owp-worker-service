@@ -81,6 +81,11 @@ public class GeneratorServiceImp(LeagueSettingsRepository repository, LogWriterS
             var largestMaxbetWeekend = MatchHelpers.GetMatchWithLargestMaxbet(
                 MatchHelpers.FindMatches(weekendMatches, leagueId, weekendFromDate, weekendToDate));
 
+            if (largestMaxbetWeekday is null && largestMaxbetWeekend is null)
+            {
+                continue;
+            }
+
             var leagueSetting = CreateLeagueSetting(largestMaxbetWeekday, largestMaxbetWeekend);
             result.Add(leagueSetting);
         }
