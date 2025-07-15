@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Olympus.OWP.Constants" Version="9.0.0.7" />
     <PackageReference Include="Olympus.Xml" Version="1.0.0.5" />
+    <PackageReference Include="Olympus.OWP.Log.Data.Repository" Version="9.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OWP.Infosite\OWP.Infosite.csproj" />

@@ -1,9 +1,14 @@
 ﻿namespace OWP.InfositeIdSync.Services;
 
+using Azure.Core;
 using Fanex.Logging;
+using Microsoft.Extensions.Logging;
 using Models;
 using Newtonsoft.Json;
+using Olympus.OWP.Log.Data.Repository.Criteria;
+using Olympus.OWP.Log.Data.Repository.Services;
 using OWP.Infosite.Models;
+using System;
 using System.Text;
 
 public interface LogServiceWrapper
@@ -23,7 +28,7 @@ public interface LogServiceWrapper
     Task ErrorDuplicatedMatch(IEnumerable<int> liveMatches, IEnumerable<int> nonLiveMatches);
 }
 
-public class LogServiceWrapperImp : LogServiceWrapper
+public class LogServiceWrapperImp(LogWriterService logger) : LogServiceWrapper
 {
     public async Task Error(string header, params object[] parameters)
     {
@@ -68,6 +73,12 @@ public class LogServiceWrapperImp : LogServiceWrapper
             !liveMatches.Any() &&
             !nonLiveMatches.Any())
         {
+            await logger.Execute(new OwpLogCriteria
+            {
+                CreatedDate = DateTime.Now.AddHours(12),
+                Action = "SyncIsLiveToInfoSite",
+                Payload = "No matches to synchronize."
+            });
             return;
         }
 
@@ -85,6 +96,14 @@ public class LogServiceWrapperImp : LogServiceWrapper
 
         var json = JsonConvert.SerializeObject(logObject);
         var logMessage = $"===Sync Is Live to Info Site===\r\n{json}";
+
+        await logger.Execute(new OwpLogCriteria
+        {
+            CreatedDate = DateTime.Now.AddHours(12),
+            Action = "SyncIsLiveToInfoSite",
+            Payload = json
+        });
+
         await Logger.Log.InfoAsync(logMessage).ConfigureAwait(false);
     }
 

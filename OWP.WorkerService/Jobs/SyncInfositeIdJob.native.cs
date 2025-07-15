@@ -31,7 +31,7 @@ public class SyncInfositeIdJob(
 
         var env = configuration.GetSection("Environment").Value;
 
-        if (string.Equals(env, "PROD"))
+        if (string.Equals(env, "PROD") || string.Equals(env, "KLPROD"))
         {
             var fromTime = DateTime.Now.AddHours(9);
             var nowGmt8 = DateTime.Now.AddHours(12);
