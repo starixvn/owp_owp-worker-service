@@ -21,7 +21,7 @@ COPY ./src/OWP.ArchiveData/. ./src/OWP.ArchiveData
 COPY ./src/OWP.Provider.Share/. ./src/OWP.Provider.Share
 COPY ./src/OWP.Adminsite/. ./src/OWP.Adminsite
 COPY ./src/OWP.Chat/. ./src/OWP.Chat
-COPY ./src/AutoGenerateMaxbetSetting/. ./src/AutoGenerateMaxbetSetting
+COPY ./src/OWP.AutoGenerateMaxbetSetting/. ./src/OWP.AutoGenerateMaxbetSetting
 COPY ./OWP.WorkerService/OWP.WorkerService.csproj ./OWP.WorkerService/OWP.WorkerService.csproj
 
 WORKDIR /src/OWP.WorkerService
