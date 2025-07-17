@@ -1,4 +1,5 @@
-﻿using OWP.Chat;
+﻿using OWP.AutoGenerateMaxbetSetting;
+using OWP.Chat;
 
 namespace OWP.WorkerService.Extensions;
 
@@ -25,7 +26,7 @@ using Settings;
 using StackExchange.Redis;
 using SumReport;
 using SyncLeagueSettings;
- 
+
 
 public static class ServiceCollectionExtensions
 {
@@ -69,6 +70,7 @@ public static class ServiceCollectionExtensions
         services.AddProviderServices();
         services.AddAdminSiteSyncServices(configuration);
         services.AddChatServices();
+        services.AddAutoGenerateNewLeagueSettingServices();
 
         return services;
     }
@@ -100,6 +102,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<SyncMatchInfoToAdminSiteJob>();
         services.AddTransient<SyncProviderMatchIdJob>();
         services.AddTransient<ChatJob>();
+        services.AddTransient<AutoGenerateMaxbetSettingJob>();
 
         return services;
     }

@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\OWP.ArchiveData\OWP.ArchiveData.csproj" />
+    <ProjectReference Include="..\src\OWP.AutoGenerateMaxbetSetting\OWP.AutoGenerateMaxbetSetting.csproj" />
     <ProjectReference Include="..\src\OWP.Chat\OWP.Chat.csproj" />
     <ProjectReference Include="..\src\OWP.InforsiteIdSync\OWP.InfositeIdSync.csproj" />
     <ProjectReference Include="..\src\OWP.Infosite\OWP.Infosite.csproj" />
