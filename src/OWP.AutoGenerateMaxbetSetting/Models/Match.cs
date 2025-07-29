@@ -10,5 +10,7 @@ public class Match
 
     public string Tv { get; set; }
 
+    public string NoOfHDP { get; set; }
+
     public IList<MatchSetting> MatchSettings { get; set; }
 }

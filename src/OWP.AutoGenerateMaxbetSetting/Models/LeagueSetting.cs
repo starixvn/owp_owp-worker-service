@@ -26,4 +26,8 @@ public class LeagueSetting
     [XmlName("Spread_HDP")] public decimal? SpreadHdp { get; set; }
 
     [XmlName("Spread_OU")] public decimal? SpreadOu { get; set; }
+    
+    [XmlName("WD_NoOfHDP")] public string WDNoOfHDP { get; set; }
+
+    [XmlName("WK_NoOfHDP")] public string WKNoOfHDP { get; set; }
 }
