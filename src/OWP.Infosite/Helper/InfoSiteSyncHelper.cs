@@ -46,15 +46,15 @@ public static class InfoSiteSyncHelper
             { "Remark2", UpdateTypeConstant.UPDATE_REMARK2},
             { "Provider", UpdateTypeConstant.UPDATE_PROVIDER},
             { "TotalRound", UpdateTypeConstant.UPDATE_TOTAL_ROUND},
+            { "IsHomeBadRanking", UpdateTypeConstant.UPDATE_HOME_BAD_RANKING},
+            { "IsAwayBadRanking", UpdateTypeConstant.UPDATE_AWAY_BAD_RANKING},
+            { "IsHomeDowngrade", UpdateTypeConstant.UPDATE_HOME_RELEGATION},
+            { "IsAwayDowngrade", UpdateTypeConstant.UPDATE_AWAY_RELEGATION},
         };
-        var actionId = propertyActionIds.GetValue(propertyName, 1);
+        var actionId = propertyActionIds.GetValue(propertyName, 1); 
         
         return actionId;
     }
-
-   
-
-   
 
     private static int BuildActionIdWithCancel(string propertyName)
     {
@@ -125,6 +125,10 @@ public static class InfoSiteSyncHelper
             Venue = source.Venue,
             Etpk = source.Etpk,
             IsNeutral = source.IsNeutral,
+            IsHomeBadRanking = source.IsHomeBadRanking,
+            IsAwayBadRanking = source.IsAwayBadRanking,
+            IsHomeDowngrade = source.IsHomeDowngrade,
+            IsAwayDowngrade = source.IsAwayDowngrade,
             Remark2 = source.Remark2
         };
 

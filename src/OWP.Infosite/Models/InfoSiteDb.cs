@@ -58,6 +58,10 @@ public class InfoSiteDb
     public string Etpk { get; set; }
 
     public bool IsNeutral { get; set; }
+    public bool IsHomeBadRanking { get; set; }
+    public bool IsAwayBadRanking { get; set; }
+    public bool IsHomeDowngrade { get; set; }
+    public bool IsAwayDowngrade { get; set; }
     public string LastStatus { get; set; }
 }
 
