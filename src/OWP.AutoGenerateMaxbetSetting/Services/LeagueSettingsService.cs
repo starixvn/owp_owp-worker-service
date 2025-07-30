@@ -115,8 +115,10 @@ public class GeneratorServiceImp(LeagueSettingsRepository repository, LogWriterS
             SpreadOu = MatchHelpers.GetSpread(latestMatch, Bettype.Ou),
             //Weekday
             MaxbetWdHdp = MatchHelpers.GetMaxBet(weekdayMatch, Bettype.Hdp),
+            WDNoOfHDP = weekdayMatch.NoOfHDP,
             //Weekend
-            MaxbetWkHdp = MatchHelpers.GetMaxBet(weekendMatch, Bettype.Hdp)
+            MaxbetWkHdp = MatchHelpers.GetMaxBet(weekendMatch, Bettype.Hdp),
+            WKNoOfHDP = weekendMatch.NoOfHDP
         };
 
         return result;
