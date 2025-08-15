@@ -3,7 +3,6 @@
 using Constants;
 using Helpers;
 using Models;
-using AutoGenerateMaxbetSetting;
 using Newtonsoft.Json;
 using Olympus.OWP.Log.Data.Repository.Criteria;
 using Olympus.OWP.Log.Data.Repository.Services;

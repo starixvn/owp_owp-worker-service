@@ -12,10 +12,10 @@ public static class InfoSiteSyncHelper
     {
         return IsCancel(oldValue, newValue)
             ? BuildActionIdWithCancel(propertyName)
-            : BuildActionIdWithUpdate(propertyName, newValue, oldValue);
+            : BuildActionIdWithUpdate(propertyName);
     }
 
-    private static int BuildActionIdWithUpdate(string propertyName, string newValue, string oldValue)
+    private static int BuildActionIdWithUpdate(string propertyName)
     {
         var propertyActionIds = new Dictionary<string, int>
         {
@@ -168,26 +168,18 @@ public static class InfoSiteSyncHelper
 
     public static string GetStatusFromRemark2(this string input)
     {
-        var statuses = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        
+        if (input.Contains(MatchStatusInRemark2.Postponed, StringComparison.OrdinalIgnoreCase))
         {
-            { MatchStatusInRemark2.Postponed, MatchStatusInRemark2.Postponed },
-            { MatchStatusInRemark2.Cancel, "Cancelled" }
-        };
-
-        foreach (var status in statuses)
-        {
-            if (input.Contains(status.Key, StringComparison.OrdinalIgnoreCase))
-            {
-                return status.Value;
-            }
+            return MatchStatusInRemark2.Postponed;
         }
 
-        return string.Empty;
+        return input.Contains(MatchStatusInRemark2.Cancel, StringComparison.OrdinalIgnoreCase) ? "Cancelled" : string.Empty;
     }
 
     public static string GetStatusFromMatchStatus(this byte? input)
     {
-        var statuses = new Dictionary<byte, string>()
+        var statuses = new Dictionary<byte, string>
         {
             { InfoSiteMatchStatus.Postponed, "Postponed" },
             { InfoSiteMatchStatus.Cancelled, "Cancelled" },

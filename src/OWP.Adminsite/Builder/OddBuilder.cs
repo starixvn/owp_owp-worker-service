@@ -45,7 +45,7 @@ public static class OddBuilder
 
         foreach (var detail in details)
         {
-            switch (detail.Choice)
+            switch (detail.Choice) // NOSONAR
             {
                 case HomeChoice:
                     if (detail.BettypeId == (int)MajorBetType.Handicap)

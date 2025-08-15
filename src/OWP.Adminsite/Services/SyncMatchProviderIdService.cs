@@ -1,14 +1,9 @@
 ﻿using Fanex.Data.Repository;
 using Fanex.Logging;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Olympus.OWP.Log.Data.Repository.Criteria;
-using Olympus.OWP.Log.Data.Repository.Services;
 using OWP.Adminsite.Criteria;
 using OWP.Constants;
 using OWP.Provider.Share.AgentConfirm;
-using OWP.Services;
-using Polly;
 
 
 namespace OWP.Adminsite.Services

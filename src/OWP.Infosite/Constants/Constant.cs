@@ -1,6 +1,4 @@
-﻿using Olympus.OWP.Constants;
-
-namespace OWP.Infosite.Constants;
+﻿namespace OWP.Infosite.Constants;
 
 using System.Collections.Immutable;
 
