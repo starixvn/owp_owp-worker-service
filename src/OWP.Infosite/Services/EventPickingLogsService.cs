@@ -109,7 +109,10 @@ namespace OWP.Infosite.Services
 
         private static bool UpdateStatusIfChanged(List<LoggedChangeModel> loggedChangeItems, int matchId, string oldStatus, string newStatus, string fromService)
         {
-            if (oldStatus == newStatus) return false;
+            if (oldStatus == newStatus)
+            {
+                return false;
+            }
             var updateTypeId = newStatus.GetUpdateTypeIdFromStatus();
             AddLoggedChange(loggedChangeItems, matchId, updateTypeId, newStatus, oldStatus, fromService);
             return true;

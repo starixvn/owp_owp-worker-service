@@ -15,7 +15,11 @@ public static class MaxbetBuilder
         var maxbet = matchSettings.Where(x => x.OWPMatchId == matchInfo.OWPMatchId && x.Maxbet.HasValue).ToList();
 
         const byte NUMBER_FULL_BETTYPE = 4;
-        if (maxbet.Count == 0 || maxbet.Count(x => x.BettypeId is (int)MajorBetType.Handicap or (int)MajorBetType.Handicap1St or (int)MajorBetType.OverUnder or (int)MajorBetType.OverUnder1St) == NUMBER_FULL_BETTYPE)
+        if (maxbet.Count == 0 ||
+            maxbet.Count(x => x.BettypeId is (int)MajorBetType.Handicap
+                or (int)MajorBetType.Handicap1St
+                or (int)MajorBetType.OverUnder
+                or (int)MajorBetType.OverUnder1St) == NUMBER_FULL_BETTYPE)
         {
             BuildMaxbet(matchInfoApi, maxbet);
             return;

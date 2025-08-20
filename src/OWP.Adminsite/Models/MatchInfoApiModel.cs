@@ -20,17 +20,44 @@ public class MatchInfoApiModel : IEqualityComparer<MatchInfoApiModel>
 
     public bool Equals(MatchInfoApiModel x, MatchInfoApiModel y)
     {
-        return x != null && y != null
-            && x.MatchId == y.MatchId
-            && x.SubType == y.SubType
-            && string.Equals(x.Provider, y.Provider, StringComparison.OrdinalIgnoreCase)
+        if (x == null || y == null)
+        {
+            return false;
+        }
+
+        if (!EqualBasicProperties(x, y))
+        {
+            return false;
+        }
+
+        if (!EqualStringProperties(x, y))
+        {
+            return false;
+        }
+
+        if (x.SecondAcceptValue != y.SecondAcceptValue)
+        {
+            return false;
+        }
+
+        return EqualComplexProperties(x, y);
+    }
+
+    private static bool EqualBasicProperties(MatchInfoApiModel x, MatchInfoApiModel y)
+    {
+        return x.MatchId == y.MatchId && x.SubType == y.SubType;
+    }
+
+    private static bool EqualStringProperties(MatchInfoApiModel x, MatchInfoApiModel y)
+    {
+        return string.Equals(x.Provider, y.Provider, StringComparison.OrdinalIgnoreCase)
             && string.Equals(x.OtherProvider, y.OtherProvider, StringComparison.OrdinalIgnoreCase)
-            && string.Equals(x.WatchBet, y.WatchBet, StringComparison.OrdinalIgnoreCase)
-            && x.SecondAcceptValue == y.SecondAcceptValue
-            && EqualNumberOfLines(x, y)
-            && EqualSuspender(x, y)
-            && EqualTraders(x, y)
-            && EqualMatchSettings(x, y);
+            && string.Equals(x.WatchBet, y.WatchBet, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool EqualComplexProperties(MatchInfoApiModel x, MatchInfoApiModel y)
+    {
+        return EqualNumberOfLines(x, y) && EqualSuspender(x, y) && EqualTraders(x, y) && EqualMatchSettings(x, y);
     }
 
     public int GetHashCode(MatchInfoApiModel obj)

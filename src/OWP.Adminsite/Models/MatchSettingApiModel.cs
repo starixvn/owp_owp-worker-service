@@ -12,13 +12,16 @@ public class MatchSettingApiModel : IEqualityComparer<MatchSettingApiModel>
     public decimal? Odds2 { get; set; }
 
     public bool Equals(MatchSettingApiModel x, MatchSettingApiModel y)
-        => x.Bettype == y.Bettype
-            && x.Maxbet == y.Maxbet
-            && x.Spread == y.Spread
-            && x.Hdp1 == y.Hdp1
-            && x.Hdp2 == y.Hdp2
-            && x.Odds1 == y.Odds1
-            && x.Odds2 == y.Odds2;
+    {
+        var basicMatch = x.Bettype == y.Bettype && x.Maxbet == y.Maxbet && x.Spread == y.Spread;
+        if (!basicMatch)
+        {
+            return false;
+        }
+
+        var oddsMatch = x.Hdp1 == y.Hdp1 && x.Hdp2 == y.Hdp2 && x.Odds1 == y.Odds1 && x.Odds2 == y.Odds2;
+        return oddsMatch;
+    }
 
     public int GetHashCode(MatchSettingApiModel obj) => obj.Bettype;
 }

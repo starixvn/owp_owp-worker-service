@@ -36,7 +36,7 @@ public static class SecondAcceptValueBuilder
             var validOfferIds = matchOffers.Where(x => x.OWPMatchId == matchInfo.OWPMatchId && IsValidSecondAcceptValue(x.Value)).ToList();
             matchInfoApi.SecondAcceptValue = validOfferIds.Count switch
             {
-                0 => GetSecondAcceptValueDefault(matchInfo, maxbetMainMatch.Maxbet, secondAcceptValues),
+                0 => GetSecondAcceptValueDefault(matchInfo, maxbetMainMatch?.Maxbet, secondAcceptValues),
                 1 => GetSecondAcceptValue(validOfferIds.FirstOrDefault()?.Value),
                 _ => null
             };
@@ -69,7 +69,7 @@ public static class SecondAcceptValueBuilder
         secondAcceptValue ??= secondAcceptValues.FirstOrDefault(x => x.FT_HDP == DefaultMaxbetHDP);
 
         return matchInfo.League.Contains("FANTASY", StringComparison.OrdinalIgnoreCase)
-            ? GetSecondAcceptValue(secondAcceptValue.Fantasy)
+            ? GetSecondAcceptValue(secondAcceptValue?.Fantasy)
             : BuildSecondAcceptValueSpecialDefault(matchInfo.MinorBettypeId, secondAcceptValue);
     }
 
