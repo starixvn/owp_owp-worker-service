@@ -26,6 +26,6 @@ public class HandlerImp(
 
         var sessionId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
 
-        await matchReadyRepository.InsertMessage(messageModels, sessionId);
+        //await matchReadyRepository.InsertMessage(messageModels, sessionId);
     }
 }
