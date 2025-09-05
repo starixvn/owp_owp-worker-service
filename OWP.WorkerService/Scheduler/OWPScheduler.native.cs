@@ -68,6 +68,9 @@ public class OwpScheduler(
 
         // Auto generate maxbet setting
         await AddJobToSchedulerAsync(typeof(AutoGenerateMaxbetSettingJob));
+
+        // Push info to settlement
+        await AddJobToSchedulerAsync(typeof(PushInfoToSettlementJob));
     }
 
     private async Task CreateScheduler()

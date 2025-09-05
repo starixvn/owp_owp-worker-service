@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWP.Chat", "src\OWP.Chat\OW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWP.AutoGenerateMaxbetSetting", "src\OWP.AutoGenerateMaxbetSetting\OWP.AutoGenerateMaxbetSetting.csproj", "{1623D86F-F2A5-4F41-AFBB-5BE03C49E80D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWP.PushInfoToSettlement", "src\OWP.PushInfoToSettlement\OWP.PushInfoToSettlement.csproj", "{D227CD62-7EFA-4530-BD00-EB16AD7218D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -311,6 +313,18 @@ Global
 		{1623D86F-F2A5-4F41-AFBB-5BE03C49E80D}.Release|x64.Build.0 = Release|Any CPU
 		{1623D86F-F2A5-4F41-AFBB-5BE03C49E80D}.Release|x86.ActiveCfg = Release|Any CPU
 		{1623D86F-F2A5-4F41-AFBB-5BE03C49E80D}.Release|x86.Build.0 = Release|Any CPU
+		{D227CD62-7EFA-4530-BD00-EB16AD7218D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D227CD62-7EFA-4530-BD00-EB16AD7218D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D227CD62-7EFA-4530-BD00-EB16AD7218D3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D227CD62-7EFA-4530-BD00-EB16AD7218D3}.Debug|x64.Build.0 = Debug|Any CPU
+		{D227CD62-7EFA-4530-BD00-EB16AD7218D3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D227CD62-7EFA-4530-BD00-EB16AD7218D3}.Debug|x86.Build.0 = Debug|Any CPU
+		{D227CD62-7EFA-4530-BD00-EB16AD7218D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D227CD62-7EFA-4530-BD00-EB16AD7218D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D227CD62-7EFA-4530-BD00-EB16AD7218D3}.Release|x64.ActiveCfg = Release|Any CPU
+		{D227CD62-7EFA-4530-BD00-EB16AD7218D3}.Release|x64.Build.0 = Release|Any CPU
+		{D227CD62-7EFA-4530-BD00-EB16AD7218D3}.Release|x86.ActiveCfg = Release|Any CPU
+		{D227CD62-7EFA-4530-BD00-EB16AD7218D3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -336,6 +350,7 @@ Global
 		{5A4AA844-5074-4021-89C4-7B1E9473EDD9} = {1803BCBE-FD2C-417B-9403-52C461D04055}
 		{577051C7-5F6C-43FA-96C5-DF6BBC071679} = {1803BCBE-FD2C-417B-9403-52C461D04055}
 		{1623D86F-F2A5-4F41-AFBB-5BE03C49E80D} = {1803BCBE-FD2C-417B-9403-52C461D04055}
+		{D227CD62-7EFA-4530-BD00-EB16AD7218D3} = {1803BCBE-FD2C-417B-9403-52C461D04055}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {81911395-BE5B-4D12-A64F-8866A738A60B}
