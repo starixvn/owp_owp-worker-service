@@ -1,4 +1,7 @@
-﻿using OWP.PushInfoToSettlement.Model;
+﻿using Newtonsoft.Json;
+using Olympus.OWP.Log.Data.Repository.Criteria;
+using Olympus.OWP.Log.Data.Repository.Services;
+using OWP.PushInfoToSettlement.Model;
 
 namespace OWP.PushInfoToSettlement.Services;
 
@@ -7,7 +10,7 @@ public interface PushService
     Task Execute();
 }
 
-public class PushServiceImp(CacheManipulator cache, EventService eventService, ISettlementApiService settlementApiService) : PushService
+public class PushServiceImp(CacheManipulator cache, EventService eventService, ISettlementApiService settlementApiService, LogWriterService logger) : PushService
 {
     public async Task Execute()
     {
@@ -33,17 +36,16 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
             if (success)
             {
                 await UpdateCacheAfterSuccess(processedDates, currentEvents);
-                Console.WriteLine($"Successfully sent {eventsToProcess.Count} events to settlement system");
+                await WriteLog(eventsToProcess, "PushMatchInfoForSettlement_Successfully").ConfigureAwait(false);
             }
             else
             {
-                Console.WriteLine($"Failed to send {eventsToProcess.Count} events to settlement system - cache not updated");
+                await WriteLog(eventsToProcess, "PushMatchInfoForSettlement_Failed").ConfigureAwait(false);
             }
         }
         else
         {
             await UpdateCacheAfterSuccess(processedDates, currentEvents);
-            Console.WriteLine("No events to process");
         }
     }
 
@@ -98,5 +100,15 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
             await cache.SaveMatchSnapshot(currentEvents, date);
         }
         // await cache.SaveLastProcessedDate(DateTime.Today);
+    }
+
+    private async Task WriteLog(object request, string action)
+    {
+        await logger.Execute(new OwpLogCriteria
+        {
+            CreatedDate = DateTime.Now.AddHours(12),
+            Action = action,
+            Payload = JsonConvert.SerializeObject(request)
+        });
     }
 }

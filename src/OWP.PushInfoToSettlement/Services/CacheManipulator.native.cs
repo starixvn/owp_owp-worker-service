@@ -28,8 +28,8 @@ internal class CacheManipulatorImp(ICache cache) : CacheManipulator
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(absoluteTimeSpan);
         var cacheKey = $"{KeyMatchSendToSettlement}-{eventDate:d}";
 
-        var matchsJson = JsonConvert.SerializeObject(matches);
-        await cache.SetAsync(cacheKey, matchsJson, cachePolicy);
+        var matchesJson = JsonConvert.SerializeObject(matches);
+        await cache.SetAsync(cacheKey, matchesJson, cachePolicy);
     }
 
     public async Task<List<EventData>> GetMatchesByDate(DateTime eventDate)
