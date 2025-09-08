@@ -16,7 +16,7 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService) :
         
         var eventsToProcess = new List<EventData>();
         
-         var currentEvents = await eventService.GetEventsAsync();
+        var currentEvents = await eventService.GetEventsAsync();
         
         for (var currentDate = lastProcessedDate; currentDate <= todayPlusOne; currentDate = currentDate.AddDays(1))
         {

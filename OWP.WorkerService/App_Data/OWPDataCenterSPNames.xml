@@ -133,4 +133,7 @@
     <Setting Key="OWP_GetNewUser" SpName ="OWP_GetNewUser" DbName="DBOWP.bodb_OWP.wsv_owp" />
     <Setting Key="OWP_UpdateChatUserId" SpName ="OWP_UpdateChatUserId" DbName="DBOWP.bodb_OWP.wsv_owp" />
   </Function>
+    <Function Name="Settlement">
+        <Setting Key="OWP_API_PushMatchRemarkForSettlement" SpName ="OWP_API_PushMatchRemarkForSettlement" DbName="DBOWP.bodb_OWP.wsv_owp" />
+    </Function>
 </Functions>
