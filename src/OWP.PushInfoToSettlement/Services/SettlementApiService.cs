@@ -23,7 +23,8 @@ namespace OWP.PushInfoToSettlement.Services
             try
             {
                 var requestUri = $"{apiSetting.Url}/api/match/change-instant-setting";
-                var content = new StringContent(JsonConvert.SerializeObject(matchItems), Encoding.UTF8, "application/json");
+                var requestBody = new { matchItems };
+                var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
 
                 var env = configuration.GetSection("Environment").Value;
                 if (string.Equals(env, "DEV") || string.Equals(env, "LOCAL"))

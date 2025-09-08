@@ -16,15 +16,15 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
     {
         var nowGmt8 = DateTime.Now.AddHours(12);
         var selectedDate = nowGmt8.Hour >= 12 ? nowGmt8.Date : nowGmt8.AddDays(-1).Date;
-        var lastDate = selectedDate.AddDays(-1);
-        var todayPlusOne = selectedDate.AddDays(1);
+        var fromDate = selectedDate.AddDays(-1);
+        var toDate = selectedDate.AddDays(1);
         
         var eventsToProcess = new List<EventData>();
         var currentEvents = await eventService.GetEventsAsync();
         
         var processedDates = new List<DateTime>();
         
-        for (var currentDate = lastDate; currentDate <= todayPlusOne; currentDate = currentDate.AddDays(1))
+        for (var currentDate = fromDate; currentDate <= toDate; currentDate = currentDate.AddDays(1))
         {
             var changedEvents = await ProcessEventDate(currentDate, currentEvents);
             eventsToProcess.AddRange(changedEvents);
