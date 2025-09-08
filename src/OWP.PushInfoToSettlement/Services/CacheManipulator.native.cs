@@ -22,7 +22,7 @@ internal class CacheManipulatorImp(ICache cache) : CacheManipulator
 
     private const int AssignmentCacheExpiredInMinute = 3;
 
-    public async Task SaveMatchSnapshot(IEnumerable<Model.EventData> matches, DateTime eventDate)
+    public async Task SaveMatchSnapshot(IEnumerable<EventData> matches, DateTime eventDate)
     {
         var absoluteTimeSpan = TimeSpan.FromDays(AssignmentCacheExpiredInMinute);
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(absoluteTimeSpan);
@@ -37,7 +37,7 @@ internal class CacheManipulatorImp(ICache cache) : CacheManipulator
         var cacheKey = $"{KeyMatchSendToSettlement}-{eventDate:d}";
         var (_, value) = await cache.TryGetAsync<string>(cacheKey);
 
-        return string.IsNullOrWhiteSpace(value) ? [] : JsonConvert.DeserializeObject<List<Model.EventData>>(value);
+        return string.IsNullOrWhiteSpace(value) ? [] : JsonConvert.DeserializeObject<List<EventData>>(value);
     }
 
     public async Task<DateTime?> GetLastProcessedDate()
