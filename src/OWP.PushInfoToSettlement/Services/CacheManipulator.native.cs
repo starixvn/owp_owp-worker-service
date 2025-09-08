@@ -48,7 +48,7 @@ internal class CacheManipulatorImp(ICache cache) : CacheManipulator
 
     public async Task SaveLastProcessedDate(DateTime date)
     {
-        var absoluteTimeSpan = TimeSpan.FromDays(30); // Keep last processed date for 30 days
+        var absoluteTimeSpan = TimeSpan.FromDays(30); 
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(absoluteTimeSpan);
         await cache.SetAsync(KeyLastProcessedDate, date.ToString("yyyy-MM-dd"), cachePolicy);
     }
