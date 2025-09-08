@@ -37,7 +37,7 @@ internal class CacheManipulatorImp(ICache cache) : CacheManipulator
         var cacheKey = $"{KeyMatchSendToSettlement}-{eventDate:d}";
         var (_, value) = await cache.TryGetAsync<string>(cacheKey);
 
-        return string.IsNullOrWhiteSpace(value) ? [] : JsonConvert.DeserializeObject<List<EventData>>(value);
+        return string.IsNullOrWhiteSpace(value) ? [] : JsonConvert.DeserializeObject<List<EventData>>(value) ?? [];
     }
 
     public async Task<DateTime?> GetLastProcessedDate()

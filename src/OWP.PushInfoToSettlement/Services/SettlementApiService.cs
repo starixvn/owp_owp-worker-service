@@ -15,7 +15,6 @@ namespace OWP.PushInfoToSettlement.Services
     public class SettlementApiService(
         HttpHandler httpHandler, 
         SettlementApiSetting apiSetting,
-        IConfiguration configuration,
         ILogger logger) : ISettlementApiService
     {
         public async Task<bool> ChangeInstantSettingAsync(IEnumerable<ChangeInstantSettingRequest> matchItems, DateTime fromDate, DateTime toDate)

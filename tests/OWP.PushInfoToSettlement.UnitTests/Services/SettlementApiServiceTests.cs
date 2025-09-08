@@ -25,7 +25,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             _mockConfiguration = new Mock<IConfiguration>();
             _mockLogger = new Mock<ILogger>();
             _apiSetting = new SettlementApiSetting { Url = "https://api.test.com" };
-            _service = new SettlementApiService(_mockHttpHandler.Object, _apiSetting, _mockConfiguration.Object, _mockLogger.Object);
+            _service = new SettlementApiService(_mockHttpHandler.Object, _apiSetting, _mockLogger.Object);
         }
 
         [Fact]
