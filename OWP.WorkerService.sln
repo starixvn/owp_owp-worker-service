@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWP.AutoGenerateMaxbetSetti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWP.PushInfoToSettlement", "src\OWP.PushInfoToSettlement\OWP.PushInfoToSettlement.csproj", "{D227CD62-7EFA-4530-BD00-EB16AD7218D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWP.PushInfoToSettlement.UnitTests", "tests\OWP.PushInfoToSettlement.UnitTests\OWP.PushInfoToSettlement.UnitTests.csproj", "{02AA96E2-6697-4590-BB45-54CA2C3D1ED0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -325,6 +327,18 @@ Global
 		{D227CD62-7EFA-4530-BD00-EB16AD7218D3}.Release|x64.Build.0 = Release|Any CPU
 		{D227CD62-7EFA-4530-BD00-EB16AD7218D3}.Release|x86.ActiveCfg = Release|Any CPU
 		{D227CD62-7EFA-4530-BD00-EB16AD7218D3}.Release|x86.Build.0 = Release|Any CPU
+		{02AA96E2-6697-4590-BB45-54CA2C3D1ED0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02AA96E2-6697-4590-BB45-54CA2C3D1ED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02AA96E2-6697-4590-BB45-54CA2C3D1ED0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{02AA96E2-6697-4590-BB45-54CA2C3D1ED0}.Debug|x64.Build.0 = Debug|Any CPU
+		{02AA96E2-6697-4590-BB45-54CA2C3D1ED0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{02AA96E2-6697-4590-BB45-54CA2C3D1ED0}.Debug|x86.Build.0 = Debug|Any CPU
+		{02AA96E2-6697-4590-BB45-54CA2C3D1ED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02AA96E2-6697-4590-BB45-54CA2C3D1ED0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02AA96E2-6697-4590-BB45-54CA2C3D1ED0}.Release|x64.ActiveCfg = Release|Any CPU
+		{02AA96E2-6697-4590-BB45-54CA2C3D1ED0}.Release|x64.Build.0 = Release|Any CPU
+		{02AA96E2-6697-4590-BB45-54CA2C3D1ED0}.Release|x86.ActiveCfg = Release|Any CPU
+		{02AA96E2-6697-4590-BB45-54CA2C3D1ED0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
