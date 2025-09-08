@@ -11,7 +11,7 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
 {
     public async Task Execute()
     {
-        var lastProcessedDate = await cache.GetLastProcessedDate() ?? DateTime.Today.AddDays(-5);
+        var lastDate =  DateTime.Today.AddDays(-1);
         var todayPlusOne = DateTime.Today.AddDays(1);
         
         var eventsToProcess = new List<EventData>();
@@ -19,7 +19,7 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
         
         var processedDates = new List<DateTime>();
         
-        for (var currentDate = lastProcessedDate; currentDate <= todayPlusOne; currentDate = currentDate.AddDays(1))
+        for (var currentDate = lastDate; currentDate <= todayPlusOne; currentDate = currentDate.AddDays(1))
         {
             var changedEvents = await ProcessEventDate(currentDate, currentEvents);
             eventsToProcess.AddRange(changedEvents);
@@ -97,6 +97,6 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
         {
             await cache.SaveMatchSnapshot(currentEvents, date);
         }
-        await cache.SaveLastProcessedDate(DateTime.Today);
+        // await cache.SaveLastProcessedDate(DateTime.Today);
     }
 }
