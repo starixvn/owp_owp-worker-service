@@ -3,7 +3,6 @@
 namespace OWP.WorkerService.Jobs;
 
 using Fanex.Logging;
-using OWP.AutoGenerateMaxbetSetting.Services;
 using Quartz;
 
 [DisallowConcurrentExecution]

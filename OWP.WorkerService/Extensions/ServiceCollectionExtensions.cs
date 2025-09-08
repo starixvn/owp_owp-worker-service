@@ -72,7 +72,7 @@ public static class ServiceCollectionExtensions
         services.AddAdminSiteSyncServices(configuration);
         services.AddChatServices();
         services.AddAutoGenerateNewLeagueSettingServices();
-        services.AddPúhInfoToSettlementServices();
+        services.AddPushhInfoToSettlementServices();
 
         return services;
     }
