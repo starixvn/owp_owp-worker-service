@@ -164,7 +164,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
 
             // Assert
             _mockLogger.Verify(x => x.InfoAsync(It.Is<string>(log => 
-                log.Contains("Change Instant Setting to Settlement fromDate:") && 
+                log.Contains("Push MatchInfo To Settlement fromDate:") && 
                 log.Contains("toDate:"))), Times.Once);
         }
     }
