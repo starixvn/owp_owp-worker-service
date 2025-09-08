@@ -14,8 +14,10 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
 {
     public async Task Execute()
     {
-        var lastDate =  DateTime.Today.AddDays(-1);
-        var todayPlusOne = DateTime.Today.AddDays(1);
+        var nowGmt8 = DateTime.Now.AddHours(12);
+        var selectedDate = nowGmt8.Hour >= 12 ? nowGmt8.Date : nowGmt8.AddDays(-1).Date;
+        var lastDate = selectedDate.AddDays(-1);
+        var todayPlusOne = selectedDate.AddDays(1);
         
         var eventsToProcess = new List<EventData>();
         var currentEvents = await eventService.GetEventsAsync();
@@ -51,14 +53,15 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
 
     private async Task<List<EventData>> ProcessEventDate(DateTime eventDate, IList<EventData> currentEvents)
     {
-        var cachedEvents = await cache.GetMatchesByDate(eventDate);
+        var (fromDate, toDate) = NormalizeTimeRange(eventDate, eventDate);
+        var eventsForDate = currentEvents.Where(e => e.EventDateTime >= fromDate && e.EventDateTime <= toDate).ToList();
         var changedEvents = new List<EventData>();
-
-        foreach (var currentEvent in currentEvents)
+        
+        foreach (var currentEvent in eventsForDate)
         {
             var hasChanged = false;
 
-            var cachedEvent = cachedEvents.FirstOrDefault(e => e.OWPMatchId == currentEvent.OWPMatchId);
+            var cachedEvent = eventsForDate.FirstOrDefault(e => e.OWPMatchId == currentEvent.OWPMatchId);
             
             if (cachedEvent != null)
             {
@@ -97,10 +100,14 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
     {
         foreach (var date in processedDates)
         {
-            await cache.SaveMatchSnapshot(currentEvents, date);
+            var (fromDate, toDate) = NormalizeTimeRange(date, date);
+            var eventsForDate = currentEvents.Where(e => e.EventDateTime >= fromDate && e.EventDateTime <= toDate).ToList();
+            await cache.SaveMatchSnapshot(eventsForDate, date);
         }
-        // await cache.SaveLastProcessedDate(DateTime.Today);
     }
+
+    private (DateTime fromDate, DateTime toDate) NormalizeTimeRange(DateTime dayStart, DateTime dayEnd)
+        => (dayStart.Date.AddHours(12), dayEnd.Date.AddDays(1).AddHours(11).AddMinutes(59));
 
     private async Task WriteLog(object request, string action)
     {
