@@ -68,7 +68,7 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
         {
             var hasChanged = false;
 
-            var cachedEvent = cachedEvents.FirstOrDefault(e => e.OWPMatchId == currentEvent.OWPMatchId);
+            var cachedEvent = cachedEvents.Find(e => e.OWPMatchId == currentEvent.OWPMatchId);
             
             if (cachedEvent != null)
             {
