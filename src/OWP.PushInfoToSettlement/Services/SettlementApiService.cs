@@ -31,7 +31,7 @@ namespace OWP.PushInfoToSettlement.Services
                     var jsonData = await response.Content.ReadAsStringAsync();
                     var logInfo = new
                     {
-                        Job = "Change Instant Setting to Settlement fromDate: " + fromDate + " toDate: " + toDate,
+                        Job = "Push MatchInfo To Settlement fromDate: " + fromDate + " toDate: " + toDate,
                         RequestUri = requestUri,
                         matchItems,
                         result = jsonData
@@ -43,7 +43,7 @@ namespace OWP.PushInfoToSettlement.Services
 
                 var logError = new
                 {
-                    Job = "Change Instant Setting to Settlement fromDate: " + fromDate + " toDate: " + toDate,
+                    Job = "Push MatchInfo To Settlement fromDate: " + fromDate + " toDate: " + toDate,
                     RequestUri = requestUri,
                     matchItems,
                     StatusCode = (int)response.StatusCode,
@@ -57,7 +57,7 @@ namespace OWP.PushInfoToSettlement.Services
             {
                 var logError = new
                 {
-                    Job = "Change Instant Setting to Settlement fromDate: " + fromDate + " toDate: " + toDate,
+                    Job = "Push MatchInfo To Settlement fromDate: " + fromDate + " toDate: " + toDate,
                     Error = "UnexpectedException",
                     Message = ex.Message,
                     matchItems,
