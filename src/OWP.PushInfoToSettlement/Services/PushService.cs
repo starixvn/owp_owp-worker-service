@@ -30,25 +30,31 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
             eventsToProcess.AddRange(changedEvents);
             processedDates.Add(currentDate);
         }
-        
+
         if (eventsToProcess.Any())
         {
             var success = await ProcessApiCall(eventsToProcess);
-            
+
             if (success)
             {
                 await UpdateCacheAfterSuccess(processedDates, currentEvents);
-                await WriteLog(eventsToProcess, "PushMatchInfoForSettlement_Successfully").ConfigureAwait(false);
             }
-            else
+
+            var logInfo = new
             {
-                await WriteLog(eventsToProcess, "PushMatchInfoForSettlement_Failed").ConfigureAwait(false);
-            }
+                processedDates,
+                numberOfEvents = eventsToProcess.Count,
+                status = success,
+                eventsToProcess
+            };
+
+            await WriteLog(logInfo, "PushMatchInfoForSettlement").ConfigureAwait(false);
         }
         else
         {
             await UpdateCacheAfterSuccess(processedDates, currentEvents);
         }
+
     }
 
     private async Task<List<EventData>> ProcessEventDate(DateTime eventDate, IList<EventData> currentEvents)
