@@ -1,5 +1,4 @@
 ﻿using Fanex.Logging;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using OWP.PushInfoToSettlement.Model;
 using OWP.Services;
