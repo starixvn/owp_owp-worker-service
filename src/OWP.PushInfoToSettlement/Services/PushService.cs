@@ -33,7 +33,7 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
 
         if (eventsToProcess.Any())
         {
-            var success = await ProcessApiCall(eventsToProcess);
+            var success = await ProcessApiCall(eventsToProcess, fromDate, toDate);
 
             if (success)
             {
@@ -61,13 +61,14 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
     {
         var (fromDate, toDate) = NormalizeTimeRange(eventDate, eventDate);
         var eventsForDate = currentEvents.Where(e => e.EventDateTime >= fromDate && e.EventDateTime <= toDate).ToList();
+        var cachedEvents = await cache.GetMatchesByDate(eventDate);
         var changedEvents = new List<EventData>();
         
         foreach (var currentEvent in eventsForDate)
         {
             var hasChanged = false;
 
-            var cachedEvent = eventsForDate.FirstOrDefault(e => e.OWPMatchId == currentEvent.OWPMatchId);
+            var cachedEvent = cachedEvents.FirstOrDefault(e => e.OWPMatchId == currentEvent.OWPMatchId);
             
             if (cachedEvent != null)
             {
@@ -91,7 +92,7 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
         return changedEvents;
     }
 
-    private async Task<bool> ProcessApiCall(List<EventData> eventsToProcess)
+    private async Task<bool> ProcessApiCall(List<EventData> eventsToProcess, DateTime fromDate, DateTime toDate)
     {
         var changeInstantSettingRequests = eventsToProcess.Select(e => new ChangeInstantSettingRequest
         {
@@ -99,7 +100,7 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
             Remark = e.Remark
         }).ToList();
 
-        return await settlementApiService.ChangeInstantSettingAsync(changeInstantSettingRequests);
+        return await settlementApiService.ChangeInstantSettingAsync(changeInstantSettingRequests, fromDate, toDate);
     }
 
     private async Task UpdateCacheAfterSuccess(List<DateTime> processedDates, IList<EventData> currentEvents)
