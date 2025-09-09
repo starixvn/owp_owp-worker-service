@@ -41,7 +41,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
 
             var mockResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent("{\"success\": true}", Encoding.UTF8, "application/json")
+                Content = new StringContent("{\"errorCode\": 0, \"errorMsg\": \"Success\", \"isFail\": false}", Encoding.UTF8, "application/json")
             };
 
             _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
@@ -52,6 +52,66 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
 
             // Assert
             Assert.True(result);
+            _mockHttpHandler.Verify(x => x.PostAsync(
+                "https://api.test.com/api/match/change-instant-setting", 
+                It.IsAny<HttpContent>()), Times.Once);
+            _mockLogger.Verify(x => x.InfoAsync(It.IsAny<string>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task ChangeInstantSettingAsync_WhenApiReturnsIsFailTrue_ReturnsFalse()
+        {
+            // Arrange
+            var matchItems = new List<ChangeInstantSettingRequest>
+            {
+                new() { MatchId = 1, Remark = "NO instant settlement" }
+            };
+            var fromDate = DateTime.Today.AddDays(-1);
+            var toDate = DateTime.Today.AddDays(1);
+
+            var mockResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{\"errorCode\": 1, \"errorMsg\": \"Error\", \"isFail\": true}", Encoding.UTF8, "application/json")
+            };
+
+            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
+                .ReturnsAsync(mockResponse);
+
+            // Act
+            var result = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
+
+            // Assert
+            Assert.False(result);
+            _mockHttpHandler.Verify(x => x.PostAsync(
+                "https://api.test.com/api/match/change-instant-setting", 
+                It.IsAny<HttpContent>()), Times.Once);
+            _mockLogger.Verify(x => x.InfoAsync(It.IsAny<string>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task ChangeInstantSettingAsync_WhenInvalidJsonResponse_ReturnsFalse()
+        {
+            // Arrange
+            var matchItems = new List<ChangeInstantSettingRequest>
+            {
+                new() { MatchId = 1, Remark = "NO instant settlement" }
+            };
+            var fromDate = DateTime.Today.AddDays(-1);
+            var toDate = DateTime.Today.AddDays(1);
+
+            var mockResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("invalid json", Encoding.UTF8, "application/json")
+            };
+
+            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
+                .ReturnsAsync(mockResponse);
+
+            // Act
+            var result = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
+
+            // Assert
+            Assert.False(result);
             _mockHttpHandler.Verify(x => x.PostAsync(
                 "https://api.test.com/api/match/change-instant-setting", 
                 It.IsAny<HttpContent>()), Times.Once);
@@ -121,7 +181,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
 
             var mockResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent("{\"success\": true}", Encoding.UTF8, "application/json")
+                Content = new StringContent("{\"errorCode\": 0, \"errorMsg\": \"Success\", \"isFail\": false}", Encoding.UTF8, "application/json")
             };
 
             HttpContent? capturedContent = null;
@@ -153,7 +213,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
 
             var mockResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent("{\"success\": true}", Encoding.UTF8, "application/json")
+                Content = new StringContent("{\"errorCode\": 0, \"errorMsg\": \"Success\", \"isFail\": false}", Encoding.UTF8, "application/json")
             };
 
             _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))

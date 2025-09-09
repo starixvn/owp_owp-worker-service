@@ -20,7 +20,7 @@ internal class CacheManipulatorImp(ICache cache) : CacheManipulator
     private const string KeyMatchSendToSettlement = "Match-OldSnapshot-SendToSettlement";
     private const string KeyLastProcessedDate = "LastProcessedDate-SendToSettlement";
 
-    private const int AssignmentCacheExpiredInMinute = 3;
+    private const int AssignmentCacheExpiredInMinute = 5;
 
     public async Task SaveMatchSnapshot(IEnumerable<EventData> matches, DateTime eventDate)
     {

@@ -29,6 +29,18 @@ namespace OWP.PushInfoToSettlement.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonData = await response.Content.ReadAsStringAsync();
+                    
+                    var isFail = true;
+                    try
+                    {
+                        var responseObj = JsonConvert.DeserializeObject<dynamic>(jsonData);
+                        isFail = responseObj?.isFail ?? true;
+                    }
+                    catch (JsonException)
+                    {
+                        isFail = true;
+                    }
+                    
                     var logInfo = new
                     {
                         Job = "Push MatchInfo To Settlement fromDate: " + fromDate + " toDate: " + toDate,
@@ -38,7 +50,7 @@ namespace OWP.PushInfoToSettlement.Services
                     };
                     await logger.InfoAsync(JsonConvert.SerializeObject(logInfo));
 
-                    return true;
+                    return !isFail; // Return true only if isFail is false
                 }
 
                 var logError = new
