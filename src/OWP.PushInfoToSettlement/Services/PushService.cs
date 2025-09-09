@@ -15,8 +15,7 @@ public class PushServiceImp(
     CacheManipulator cache, 
     EventService eventService, 
     ISettlementApiService settlementApiService, 
-    LogWriterService logger,
-    ILogger sentryLog) : PushService
+    LogWriterService logger) : PushService
 {
     public async Task Execute()
     {
@@ -43,7 +42,7 @@ public class PushServiceImp(
 
             if (success)
             {
-                await UpdateCacheAfterSuccess(processedDates, currentEvents);
+                await UpdateCacheAfterSuccess(processedDates, currentEvents, eventsToProcess);
             }
 
             var logInfo = new
@@ -59,7 +58,7 @@ public class PushServiceImp(
         }
         else
         {
-            await UpdateCacheAfterSuccess(processedDates, currentEvents);
+            await UpdateCacheAfterSuccess(processedDates, currentEvents, eventsToProcess);
         }
 
     }
@@ -110,20 +109,36 @@ public class PushServiceImp(
         return await settlementApiService.ChangeInstantSettingAsync(changeInstantSettingRequests, fromDate, toDate);
     }
 
-    private async Task UpdateCacheAfterSuccess(List<DateTime> processedDates, IList<EventData> currentEvents)
+    private async Task UpdateCacheAfterSuccess(List<DateTime> processedDates, IList<EventData> currentEvents, List<EventData> eventsToProcess)
     {
-        var logInfo = new
-        {
-            Cache = "Cache MatchInfo To Settlement",
-            processedDates,
-            currentEvents
-        };
-        await sentryLog.InfoAsync(JsonConvert.SerializeObject(logInfo));
+        var hasCountChanges = false;
+        
         foreach (var date in processedDates)
         {
             var (fromDate, toDate) = NormalizeTimeRange(date, date);
             var eventsForDate = currentEvents.Where(e => e.EventDateTime >= fromDate && e.EventDateTime <= toDate).ToList();
+            
+            var currentCachedEvents = await cache.GetMatchesByDate(date);
+            var currentCachedCount = currentCachedEvents?.Count ?? 0;
+            var newEventsCount = eventsForDate.Count;
+            if (currentCachedCount != newEventsCount)
+            {
+                hasCountChanges = true;
+            }
             await cache.SaveMatchSnapshot(eventsForDate, date);
+        }
+        
+        if (eventsToProcess.Any() || hasCountChanges)
+        {
+            var cacheLogInfo = new
+            {
+                processedDates = processedDates.Select(d => d.ToString("yyyy-MM-dd")).ToList(),
+                hasEventsToProcess = eventsToProcess.Count != 0,
+                hasCountChanges,
+                eventsToProcess,
+            };
+            
+            await WriteLog(cacheLogInfo, "PushMatchInfoForSettlement Cache").ConfigureAwait(false);
         }
     }
 

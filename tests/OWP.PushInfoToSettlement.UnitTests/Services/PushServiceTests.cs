@@ -3,8 +3,8 @@ using OWP.PushInfoToSettlement.Model;
 using OWP.PushInfoToSettlement.Services;
 using Olympus.OWP.Log.Data.Repository.Services;
 using Olympus.OWP.Log.Data.Repository.Criteria;
-using Fanex.Logging;
 using Xunit;
+using Newtonsoft.Json;
 
 namespace OWP.PushInfoToSettlement.UnitTests.Services
 {
@@ -14,7 +14,6 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
         private readonly Mock<EventService> _mockEventService;
         private readonly Mock<ISettlementApiService> _mockSettlementApiService;
         private readonly Mock<LogWriterService> _mockLogger;
-        private readonly Mock<ILogger> _mockSentryLogger;
         private readonly PushServiceImp _service;
 
         public PushServiceTests()
@@ -23,8 +22,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             _mockEventService = new Mock<EventService>();
             _mockSettlementApiService = new Mock<ISettlementApiService>();
             _mockLogger = new Mock<LogWriterService>();
-            _mockSentryLogger = new Mock<ILogger>();
-            _service = new PushServiceImp(_mockCache.Object, _mockEventService.Object, _mockSettlementApiService.Object, _mockLogger.Object, _mockSentryLogger.Object);
+            _service = new PushServiceImp(_mockCache.Object, _mockEventService.Object, _mockSettlementApiService.Object, _mockLogger.Object);
         }
 
         private List<EventData> CreateSampleEvents()
@@ -73,7 +71,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             // Assert
             _mockCache.Verify(x => x.SaveMatchSnapshot(It.IsAny<IEnumerable<EventData>>(), It.IsAny<DateTime>()), Times.Exactly(3));
             _mockSettlementApiService.Verify(x => x.ChangeInstantSettingAsync(It.IsAny<IEnumerable<ChangeInstantSettingRequest>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Once);
-            _mockLogger.Verify(x => x.Execute(It.IsAny<OwpLogCriteria>()), Times.Once);
+            _mockLogger.Verify(x => x.Execute(It.IsAny<OwpLogCriteria>()), Times.Exactly(2)); // Main log + cache log
         }
 
         [Fact]
@@ -94,9 +92,9 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             await _service.Execute();
 
             // Assert
-            _mockCache.Verify(x => x.SaveMatchSnapshot(It.IsAny<IEnumerable<EventData>>(), It.IsAny<DateTime>()), Times.Never);
+            _mockCache.Verify(x => x.SaveMatchSnapshot(It.IsAny<IEnumerable<EventData>>(), It.IsAny<DateTime>()), Times.Never); // No cache update on API failure
             _mockSettlementApiService.Verify(x => x.ChangeInstantSettingAsync(It.IsAny<IEnumerable<ChangeInstantSettingRequest>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Once);
-            _mockLogger.Verify(x => x.Execute(It.IsAny<OwpLogCriteria>()), Times.Once);
+            _mockLogger.Verify(x => x.Execute(It.IsAny<OwpLogCriteria>()), Times.Once); // Only main log
         }
 
         [Fact]
@@ -167,6 +165,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             // Assert
             _mockSettlementApiService.Verify(x => x.ChangeInstantSettingAsync(It.IsAny<IEnumerable<ChangeInstantSettingRequest>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Never);
             _mockCache.Verify(x => x.SaveMatchSnapshot(It.IsAny<IEnumerable<EventData>>(), It.IsAny<DateTime>()), Times.Exactly(3)); // Still updates cache
+            _mockLogger.Verify(x => x.Execute(It.IsAny<OwpLogCriteria>()), Times.Once); // Cache log via WriteLog
         }
 
         [Fact]
@@ -181,7 +180,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             await _service.Execute();
 
             // Assert - Should process 3 days: yesterday, today, tomorrow
-            _mockCache.Verify(x => x.GetMatchesByDate(It.IsAny<DateTime>()), Times.Exactly(3));
+            _mockCache.Verify(x => x.GetMatchesByDate(It.IsAny<DateTime>()), Times.Exactly(6)); // 3 in main logic + 3 in UpdateCacheAfterSuccess
             _mockCache.Verify(x => x.SaveMatchSnapshot(It.IsAny<IEnumerable<EventData>>(), It.IsAny<DateTime>()), Times.Exactly(3));
         }
 
@@ -237,7 +236,50 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             await _service.Execute();
 
             // Assert
-            _mockCache.Verify(x => x.GetMatchesByDate(It.IsAny<DateTime>()), Times.Exactly(3));
+            _mockCache.Verify(x => x.GetMatchesByDate(It.IsAny<DateTime>()), Times.Exactly(6)); // 3 in main logic + 3 in UpdateCacheAfterSuccess
+        }
+
+        [Fact]
+        public async Task Execute_WhenApiSucceeds_LogsCacheUpdateInformation()
+        {
+            // Arrange
+            var currentEvents = CreateSampleEvents();
+            _mockEventService.Setup(x => x.GetEventsAsync()).ReturnsAsync(currentEvents);
+            _mockCache.Setup(x => x.GetMatchesByDate(It.IsAny<DateTime>())).ReturnsAsync(new List<EventData>());
+            _mockSettlementApiService.Setup(x => x.ChangeInstantSettingAsync(It.IsAny<IEnumerable<ChangeInstantSettingRequest>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult((true, "Success")));
+
+            // Act
+            await _service.Execute();
+
+            // Assert - Should log because there are events to process (hasEventsToProcess = true)
+            _mockLogger.Verify(x => x.Execute(It.Is<OwpLogCriteria>(criteria =>
+                criteria.Action == "PushMatchInfoForSettlement Cache" &&
+                !string.IsNullOrEmpty(criteria.Payload))), Times.Once);
+        }
+
+        [Fact]
+        public async Task Execute_WhenNoEventsToProcessAndNoCountChanges_DoesNotLogCacheUpdate()
+        {
+            // Arrange - No events at all, and cache is also empty
+            var currentEvents = new List<EventData>(); // No events
+            var cachedEvents = new List<EventData>(); // Empty cache
+
+            _mockEventService.Setup(x => x.GetEventsAsync()).ReturnsAsync(currentEvents);
+            
+            // Setup cache to return empty events (no count change, no events to process)
+            _mockCache.Setup(x => x.GetMatchesByDate(It.IsAny<DateTime>()))
+                .ReturnsAsync(cachedEvents);
+            
+            _mockSettlementApiService.Setup(x => x.ChangeInstantSettingAsync(It.IsAny<IEnumerable<ChangeInstantSettingRequest>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult((true, "Success")));
+
+            // Act
+            await _service.Execute();
+
+            // Assert - Should not log cache update because no events to process and no count changes
+            _mockLogger.Verify(x => x.Execute(It.Is<OwpLogCriteria>(criteria =>
+                criteria.Action == "PushMatchInfoForSettlement Cache")), Times.Never);
         }
     }
 }
