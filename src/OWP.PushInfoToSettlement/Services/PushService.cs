@@ -1,5 +1,4 @@
-﻿using Fanex.Logging;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Olympus.OWP.Log.Data.Repository.Criteria;
 using Olympus.OWP.Log.Data.Repository.Services;
 using OWP.PushInfoToSettlement.Model;
