@@ -45,7 +45,7 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
                 processedDates,
                 numberOfEvents = eventsToProcess.Count,
                 status = success,
-                message = message,
+                message,
                 eventsToProcess
             };
 
