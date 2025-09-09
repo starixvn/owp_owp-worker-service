@@ -114,7 +114,8 @@ public class PushServiceImp(
     {
         var logInfo = new
         {
-            Cache = "Cache MatchInfo To Settlement",
+            Cache = "Cache MatchInfo To Settlement from",
+            processedDates,
             currentEvents
         };
         await sentryLog.InfoAsync(JsonConvert.SerializeObject(logInfo));
