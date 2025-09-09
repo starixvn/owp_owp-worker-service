@@ -62,7 +62,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             _mockEventService.Setup(x => x.GetEventsAsync()).ReturnsAsync(currentEvents);
             _mockCache.Setup(x => x.GetMatchesByDate(It.IsAny<DateTime>())).ReturnsAsync(new List<EventData>());
             _mockSettlementApiService.Setup(x => x.ChangeInstantSettingAsync(It.IsAny<IEnumerable<ChangeInstantSettingRequest>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .ReturnsAsync((true, "Success"));
+                .Returns(Task.FromResult((true, "Success")));
 
             // Act
             await _service.Execute();
@@ -85,7 +85,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             _mockEventService.Setup(x => x.GetEventsAsync()).ReturnsAsync(currentEvents);
             _mockCache.Setup(x => x.GetMatchesByDate(It.IsAny<DateTime>())).ReturnsAsync(new List<EventData>());
             _mockSettlementApiService.Setup(x => x.ChangeInstantSettingAsync(It.IsAny<IEnumerable<ChangeInstantSettingRequest>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .ReturnsAsync((false, "API Error"));
+                .Returns(Task.FromResult((false, "API Error")));
 
             // Act
             await _service.Execute();
