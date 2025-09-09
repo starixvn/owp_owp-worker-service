@@ -114,7 +114,7 @@ public class PushServiceImp(
     {
         var logInfo = new
         {
-            Cache = "Cache MatchInfo To Settlement from",
+            Cache = "Cache MatchInfo To Settlement",
             processedDates,
             currentEvents
         };
