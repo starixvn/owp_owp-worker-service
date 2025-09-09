@@ -114,7 +114,7 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
         }
     }
 
-    private (DateTime fromDate, DateTime toDate) NormalizeTimeRange(DateTime dayStart, DateTime dayEnd)
+    private static (DateTime fromDate, DateTime toDate) NormalizeTimeRange(DateTime dayStart, DateTime dayEnd)
         => (dayStart.Date.AddHours(12), dayEnd.Date.AddDays(1).AddHours(11).AddMinutes(59));
 
     private async Task WriteLog(object request, string action)

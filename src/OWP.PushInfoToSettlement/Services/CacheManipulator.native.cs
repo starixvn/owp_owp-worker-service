@@ -15,7 +15,7 @@ public interface CacheManipulator
     Task SaveLastProcessedDate(DateTime date);
 
 }
-internal class CacheManipulatorImp(ICache cache) : CacheManipulator
+public class CacheManipulatorImp(ICache cache) : CacheManipulator
 {
     private const string KeyMatchSendToSettlement = "Match-OldSnapshot-SendToSettlement";
     private const string KeyLastProcessedDate = "LastProcessedDate-SendToSettlement";
@@ -48,7 +48,7 @@ internal class CacheManipulatorImp(ICache cache) : CacheManipulator
 
     public async Task SaveLastProcessedDate(DateTime date)
     {
-        var absoluteTimeSpan = TimeSpan.FromDays(30); 
+        var absoluteTimeSpan = TimeSpan.FromDays(30);
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(absoluteTimeSpan);
         await cache.SetAsync(KeyLastProcessedDate, date.ToString("yyyy-MM-dd"), cachePolicy);
     }

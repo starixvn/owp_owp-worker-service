@@ -116,7 +116,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             Assert.False(success);
             Assert.Contains("Unexpected character encountered while parsing value", message);
             _mockHttpHandler.Verify(x => x.PostAsync(
-                "https://api.test.com/api/match/change-instant-setting", 
+                "https://api.test.com/api/match/change-instant-setting",
                 It.IsAny<HttpContent>()), Times.Once);
             _mockLogger.Verify(x => x.InfoAsync(It.IsAny<string>()), Times.Once);
         }
@@ -189,7 +189,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
                 Content = new StringContent("{\"errorCode\": 0, \"errorMsg\": \"Success\", \"isFail\": false}", Encoding.UTF8, "application/json")
             };
 
-            HttpContent? capturedContent = null;
+            HttpContent capturedContent = null;
             _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
                 .Callback<string, HttpContent>((uri, content) => capturedContent = content)
                 .ReturnsAsync(mockResponse);
@@ -201,7 +201,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             Assert.True(success);
             Assert.Equal("Success", message);
             _mockHttpHandler.Verify(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()), Times.Once);
-            
+
             Assert.NotNull(capturedContent);
             var contentString = await capturedContent.ReadAsStringAsync();
             var deserialized = JsonConvert.DeserializeObject<dynamic>(contentString);
@@ -232,8 +232,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             // Assert
             Assert.True(success);
             Assert.Equal("Success", message);
-            _mockLogger.Verify(x => x.InfoAsync(It.Is<string>(log => 
-                log.Contains("Push MatchInfo To Settlement fromDate:") && 
+            _mockLogger.Verify(x => x.InfoAsync(It.Is<string>(log =>
+                log.Contains("Push MatchInfo To Settlement fromDate:") &&
                 log.Contains("toDate:"))), Times.Once);
         }
     }
