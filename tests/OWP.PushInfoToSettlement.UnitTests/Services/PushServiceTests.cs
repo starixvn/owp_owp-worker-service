@@ -3,6 +3,7 @@ using OWP.PushInfoToSettlement.Model;
 using OWP.PushInfoToSettlement.Services;
 using Olympus.OWP.Log.Data.Repository.Services;
 using Olympus.OWP.Log.Data.Repository.Criteria;
+using Fanex.Logging;
 using Xunit;
 
 namespace OWP.PushInfoToSettlement.UnitTests.Services
@@ -13,6 +14,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
         private readonly Mock<EventService> _mockEventService;
         private readonly Mock<ISettlementApiService> _mockSettlementApiService;
         private readonly Mock<LogWriterService> _mockLogger;
+        private readonly Mock<ILogger> _mockSentryLogger;
         private readonly PushServiceImp _service;
 
         public PushServiceTests()
@@ -21,7 +23,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             _mockEventService = new Mock<EventService>();
             _mockSettlementApiService = new Mock<ISettlementApiService>();
             _mockLogger = new Mock<LogWriterService>();
-            _service = new PushServiceImp(_mockCache.Object, _mockEventService.Object, _mockSettlementApiService.Object, _mockLogger.Object);
+            _mockSentryLogger = new Mock<ILogger>();
+            _service = new PushServiceImp(_mockCache.Object, _mockEventService.Object, _mockSettlementApiService.Object, _mockLogger.Object, _mockSentryLogger.Object);
         }
 
         private List<EventData> CreateSampleEvents()
@@ -111,7 +114,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             _mockEventService.Setup(x => x.GetEventsAsync()).ReturnsAsync(currentEvents);
             _mockCache.Setup(x => x.GetMatchesByDate(It.IsAny<DateTime>())).ReturnsAsync(cachedEvents);
             _mockSettlementApiService.Setup(x => x.ChangeInstantSettingAsync(It.IsAny<IEnumerable<ChangeInstantSettingRequest>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .ReturnsAsync((true, "Success"));
+                .Returns(Task.FromResult((true, "Success")));
 
             // Act
             await _service.Execute();
@@ -136,7 +139,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             _mockEventService.Setup(x => x.GetEventsAsync()).ReturnsAsync(currentEvents);
             _mockCache.Setup(x => x.GetMatchesByDate(It.IsAny<DateTime>())).ReturnsAsync(cachedEvents);
             _mockSettlementApiService.Setup(x => x.ChangeInstantSettingAsync(It.IsAny<IEnumerable<ChangeInstantSettingRequest>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .ReturnsAsync((true, "Success"));
+                .Returns(Task.FromResult((true, "Success")));
 
             // Act
             await _service.Execute();
@@ -190,7 +193,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             _mockEventService.Setup(x => x.GetEventsAsync()).ReturnsAsync(currentEvents);
             _mockCache.Setup(x => x.GetMatchesByDate(It.IsAny<DateTime>())).ReturnsAsync(new List<EventData>());
             _mockSettlementApiService.Setup(x => x.ChangeInstantSettingAsync(It.IsAny<IEnumerable<ChangeInstantSettingRequest>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .ReturnsAsync((true, "Success"));
+                .Returns(Task.FromResult((true, "Success")));
 
             // Act
             await _service.Execute();
@@ -209,7 +212,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             _mockEventService.Setup(x => x.GetEventsAsync()).ReturnsAsync(currentEvents);
             _mockCache.Setup(x => x.GetMatchesByDate(It.IsAny<DateTime>())).ReturnsAsync(new List<EventData>());
             _mockSettlementApiService.Setup(x => x.ChangeInstantSettingAsync(It.IsAny<IEnumerable<ChangeInstantSettingRequest>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .ReturnsAsync((true, "Success"));
+                .Returns(Task.FromResult((true, "Success")));
 
             // Act
             await _service.Execute();

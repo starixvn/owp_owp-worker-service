@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Fanex.Logging;
+using Newtonsoft.Json;
 using Olympus.OWP.Log.Data.Repository.Criteria;
 using Olympus.OWP.Log.Data.Repository.Services;
 using OWP.PushInfoToSettlement.Model;
@@ -10,7 +11,12 @@ public interface PushService
     Task Execute();
 }
 
-public class PushServiceImp(CacheManipulator cache, EventService eventService, ISettlementApiService settlementApiService, LogWriterService logger) : PushService
+public class PushServiceImp(
+    CacheManipulator cache, 
+    EventService eventService, 
+    ISettlementApiService settlementApiService, 
+    LogWriterService logger,
+    ILogger sentryLog) : PushService
 {
     public async Task Execute()
     {
@@ -106,6 +112,12 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
 
     private async Task UpdateCacheAfterSuccess(List<DateTime> processedDates, IList<EventData> currentEvents)
     {
+        var logInfo = new
+        {
+            Cache = "Cache MatchInfo To Settlement",
+            currentEvents
+        };
+        await sentryLog.InfoAsync(JsonConvert.SerializeObject(logInfo));
         foreach (var date in processedDates)
         {
             var (fromDate, toDate) = NormalizeTimeRange(date, date);
