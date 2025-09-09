@@ -83,7 +83,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
 
             // Assert
             Assert.False(success);
-            Assert.Equal("API returned isFail: true", message);
+            Assert.Equal("Error", message);
             _mockHttpHandler.Verify(x => x.PostAsync(
                 "https://api.test.com/api/match/change-instant-setting", 
                 It.IsAny<HttpContent>()), Times.Once);
@@ -114,7 +114,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
 
             // Assert
             Assert.False(success);
-            Assert.Equal("API returned isFail: true", message);
+            Assert.Contains("Unexpected character encountered while parsing value", message);
             _mockHttpHandler.Verify(x => x.PostAsync(
                 "https://api.test.com/api/match/change-instant-setting", 
                 It.IsAny<HttpContent>()), Times.Once);

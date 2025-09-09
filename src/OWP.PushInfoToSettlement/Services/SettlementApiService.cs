@@ -51,7 +51,7 @@ namespace OWP.PushInfoToSettlement.Services
                     };
                     await logger.InfoAsync(JsonConvert.SerializeObject(logInfo));
 
-                    return (!isFail, isFail ? "API returned successfully" : message);
+                    return (!isFail, isFail ? message : "Success");
                 }
 
                 var logError = new
