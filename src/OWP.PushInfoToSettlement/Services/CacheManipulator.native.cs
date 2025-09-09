@@ -26,7 +26,7 @@ public class CacheManipulatorImp(ICache cache) : CacheManipulator
     {
         var absoluteTimeSpan = TimeSpan.FromDays(AssignmentCacheExpiredInMinute);
         var cachePolicy = new CacheItemOptions().SetAbsoluteExpiration(absoluteTimeSpan);
-        var cacheKey = $"{KeyMatchSendToSettlement}-{eventDate:d}";
+        var cacheKey = $"{KeyMatchSendToSettlement}-{eventDate:MM/dd/yyyy}";
 
         var matchesJson = JsonConvert.SerializeObject(matches);
         await cache.SetAsync(cacheKey, matchesJson, cachePolicy);
@@ -34,7 +34,7 @@ public class CacheManipulatorImp(ICache cache) : CacheManipulator
 
     public async Task<List<EventData>> GetMatchesByDate(DateTime eventDate)
     {
-        var cacheKey = $"{KeyMatchSendToSettlement}-{eventDate:d}";
+        var cacheKey = $"{KeyMatchSendToSettlement}-{eventDate:MM/dd/yyyy}";
         var (_, value) = await cache.TryGetAsync<string>(cacheKey);
 
         return string.IsNullOrWhiteSpace(value) ? [] : JsonConvert.DeserializeObject<List<EventData>>(value) ?? [];

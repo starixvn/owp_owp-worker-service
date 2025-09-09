@@ -33,7 +33,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             // Arrange
             var events = CreateSampleEvents();
             var eventDate = DateTime.Today;
-            var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:d}";
+            var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:MM/dd/yyyy}";
             var expectedJson = JsonConvert.SerializeObject(events);
 
             _mockCache.Setup(x => x.SetAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CacheItemOptions>()))
@@ -55,7 +55,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             // Arrange
             var events = new List<EventData>();
             var eventDate = DateTime.Today;
-            var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:d}";
+            var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:MM/dd/yyyy}";
 
             _mockCache.Setup(x => x.SetAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CacheItemOptions>()))
                 .Returns(Task.CompletedTask);
@@ -75,7 +75,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
         {
             // Arrange
             var eventDate = DateTime.Today;
-            var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:d}";
+            var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:MM/dd/yyyy}";
 
             _mockCache.Setup(x => x.SetAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CacheItemOptions>()))
                 .Returns(Task.CompletedTask);
@@ -95,7 +95,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
         {
             // Arrange
             var eventDate = DateTime.Today;
-            var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:d}";
+            var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:MM/dd/yyyy}";
             var events = CreateSampleEvents();
             var eventsJson = JsonConvert.SerializeObject(events);
 
@@ -121,7 +121,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
         {
             // Arrange
             var eventDate = DateTime.Today;
-            var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:d}";
+            var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:MM/dd/yyyy}";
 
             _mockCache.Setup(x => x.TryGetAsync<string>(expectedCacheKey))
                 .ReturnsAsync((false, string.Empty));
@@ -139,7 +139,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
         {
             // Arrange
             var eventDate = DateTime.Today;
-            var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:d}";
+            var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:MM/dd/yyyy}";
 
             _mockCache.Setup(x => x.TryGetAsync<string>(expectedCacheKey))
                 .ReturnsAsync((true, null));
@@ -157,7 +157,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
         {
             // Arrange
             var eventDate = DateTime.Today;
-            var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:d}";
+            var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:MM/dd/yyyy}";
 
             _mockCache.Setup(x => x.TryGetAsync<string>(expectedCacheKey))
                 .ReturnsAsync((true, "invalid json"));
@@ -291,7 +291,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             // Arrange
             var events = CreateSampleEvents();
             var eventDate = new DateTime(2024, 3, 15);
-            var expectedCacheKey = "Match-OldSnapshot-SendToSettlement-3/15/2024";
+            var expectedCacheKey = "Match-OldSnapshot-SendToSettlement-03/15/2024";
 
             _mockCache.Setup(x => x.SetAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CacheItemOptions>()))
                 .Returns(Task.CompletedTask);
@@ -311,7 +311,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
         {
             // Arrange
             var eventDate = new DateTime(2024, 3, 15);
-            var expectedCacheKey = "Match-OldSnapshot-SendToSettlement-3/15/2024";
+            var expectedCacheKey = "Match-OldSnapshot-SendToSettlement-03/15/2024";
 
             _mockCache.Setup(x => x.TryGetAsync<string>(expectedCacheKey))
                 .ReturnsAsync((false, string.Empty));
