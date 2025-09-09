@@ -33,7 +33,7 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
 
         if (eventsToProcess.Any())
         {
-            var success = await ProcessApiCall(eventsToProcess, fromDate, toDate);
+            var (success, message) = await ProcessApiCall(eventsToProcess, fromDate, toDate);
 
             if (success)
             {
@@ -45,6 +45,7 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
                 processedDates,
                 numberOfEvents = eventsToProcess.Count,
                 status = success,
+                message = message,
                 eventsToProcess
             };
 
@@ -92,7 +93,7 @@ public class PushServiceImp(CacheManipulator cache, EventService eventService, I
         return changedEvents;
     }
 
-    private async Task<bool> ProcessApiCall(List<EventData> eventsToProcess, DateTime fromDate, DateTime toDate)
+    private async Task<(bool Success, string Message)> ProcessApiCall(List<EventData> eventsToProcess, DateTime fromDate, DateTime toDate)
     {
         var changeInstantSettingRequests = eventsToProcess.Select(e => new ChangeInstantSettingRequest
         {

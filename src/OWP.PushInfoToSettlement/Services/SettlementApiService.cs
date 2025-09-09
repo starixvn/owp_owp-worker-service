@@ -8,7 +8,7 @@ namespace OWP.PushInfoToSettlement.Services
 {
     public interface ISettlementApiService
     {
-        Task<bool> ChangeInstantSettingAsync(IEnumerable<ChangeInstantSettingRequest> matchItems, DateTime fromDate, DateTime toDate);
+        Task<(bool Success, string Message)> ChangeInstantSettingAsync(IEnumerable<ChangeInstantSettingRequest> matchItems, DateTime fromDate, DateTime toDate);
     }
 
     public class SettlementApiService(
@@ -16,7 +16,7 @@ namespace OWP.PushInfoToSettlement.Services
         SettlementApiSetting apiSetting,
         ILogger logger) : ISettlementApiService
     {
-        public async Task<bool> ChangeInstantSettingAsync(IEnumerable<ChangeInstantSettingRequest> matchItems, DateTime fromDate, DateTime toDate)
+        public async Task<(bool Success, string Message)> ChangeInstantSettingAsync(IEnumerable<ChangeInstantSettingRequest> matchItems, DateTime fromDate, DateTime toDate)
         {
             try
             {
@@ -29,18 +29,19 @@ namespace OWP.PushInfoToSettlement.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonData = await response.Content.ReadAsStringAsync();
-                    
+                    var message = string.Empty;
                     var isFail = true;
                     try
                     {
                         var responseObj = JsonConvert.DeserializeObject<dynamic>(jsonData);
                         isFail = responseObj?.isFail ?? true;
+                        message = responseObj?.errorMsg ?? string.Empty;
                     }
-                    catch (JsonException)
+                    catch (Exception ex)
                     {
                         isFail = true;
+                        message = ex.Message;
                     }
-                    
                     var logInfo = new
                     {
                         Job = "Push MatchInfo To Settlement fromDate: " + fromDate + " toDate: " + toDate,
@@ -50,7 +51,7 @@ namespace OWP.PushInfoToSettlement.Services
                     };
                     await logger.InfoAsync(JsonConvert.SerializeObject(logInfo));
 
-                    return !isFail; // Return true only if isFail is false
+                    return (!isFail, isFail ? "API returned successfully" : message);
                 }
 
                 var logError = new
@@ -63,7 +64,7 @@ namespace OWP.PushInfoToSettlement.Services
                 };
                 await logger.ErrorAsync(JsonConvert.SerializeObject(logError));
 
-                return false;
+                return (false, $"HTTP Error: {(int)response.StatusCode}");
             }
             catch (Exception ex)
             {
@@ -77,7 +78,7 @@ namespace OWP.PushInfoToSettlement.Services
                     InnerException = ex.InnerException?.Message
                 };
                 await logger.ErrorAsync(JsonConvert.SerializeObject(logError));
-                return false;
+                return (false, $"Exception: {ex.Message}");
             }
         }
     }

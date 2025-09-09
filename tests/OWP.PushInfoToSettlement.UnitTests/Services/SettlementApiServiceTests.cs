@@ -48,10 +48,11 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
                 .ReturnsAsync(mockResponse);
 
             // Act
-            var result = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
+            var (success, message) = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
 
             // Assert
-            Assert.True(result);
+            Assert.True(success);
+            Assert.Equal("Success", message);
             _mockHttpHandler.Verify(x => x.PostAsync(
                 "https://api.test.com/api/match/change-instant-setting", 
                 It.IsAny<HttpContent>()), Times.Once);
@@ -78,10 +79,11 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
                 .ReturnsAsync(mockResponse);
 
             // Act
-            var result = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
+            var (success, message) = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
 
             // Assert
-            Assert.False(result);
+            Assert.False(success);
+            Assert.Equal("API returned isFail: true", message);
             _mockHttpHandler.Verify(x => x.PostAsync(
                 "https://api.test.com/api/match/change-instant-setting", 
                 It.IsAny<HttpContent>()), Times.Once);
@@ -108,10 +110,11 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
                 .ReturnsAsync(mockResponse);
 
             // Act
-            var result = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
+            var (success, message) = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
 
             // Assert
-            Assert.False(result);
+            Assert.False(success);
+            Assert.Equal("API returned isFail: true", message);
             _mockHttpHandler.Verify(x => x.PostAsync(
                 "https://api.test.com/api/match/change-instant-setting", 
                 It.IsAny<HttpContent>()), Times.Once);
@@ -138,10 +141,11 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
                 .ReturnsAsync(mockResponse);
 
             // Act
-            var result = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
+            var (success, message) = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
 
             // Assert
-            Assert.False(result);
+            Assert.False(success);
+            Assert.Equal("HTTP Error: 400", message);
             _mockLogger.Verify(x => x.ErrorAsync(It.IsAny<string>()), Times.Once);
         }
 
@@ -160,10 +164,11 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
                 .ThrowsAsync(new HttpRequestException("Network error"));
 
             // Act
-            var result = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
+            var (success, message) = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
 
             // Assert
-            Assert.False(result);
+            Assert.False(success);
+            Assert.Equal("Exception: Network error", message);
             _mockLogger.Verify(x => x.ErrorAsync(It.IsAny<string>()), Times.Once);
         }
 
@@ -190,9 +195,11 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
                 .ReturnsAsync(mockResponse);
 
             // Act
-            await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
+            var (success, message) = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
 
             // Assert
+            Assert.True(success);
+            Assert.Equal("Success", message);
             _mockHttpHandler.Verify(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()), Times.Once);
             
             Assert.NotNull(capturedContent);
@@ -220,9 +227,11 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
                 .ReturnsAsync(mockResponse);
 
             // Act
-            await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
+            var (success, message) = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
 
             // Assert
+            Assert.True(success);
+            Assert.Equal("Success", message);
             _mockLogger.Verify(x => x.InfoAsync(It.Is<string>(log => 
                 log.Contains("Push MatchInfo To Settlement fromDate:") && 
                 log.Contains("toDate:"))), Times.Once);
