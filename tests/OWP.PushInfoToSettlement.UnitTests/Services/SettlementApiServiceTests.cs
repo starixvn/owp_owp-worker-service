@@ -54,7 +54,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             Assert.True(success);
             Assert.Equal("Success", message);
             _mockHttpHandler.Verify(x => x.PostAsync(
-                "https://api.test.com/api/match/change-instant-setting", 
+                "https://api.test.com/api/match/change-instant-setting123123", 
                 It.IsAny<HttpContent>()), Times.Once);
             _mockLogger.Verify(x => x.InfoAsync(It.IsAny<string>()), Times.Once);
         }
@@ -85,7 +85,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             Assert.False(success);
             Assert.Equal("Error", message);
             _mockHttpHandler.Verify(x => x.PostAsync(
-                "https://api.test.com/api/match/change-instant-setting", 
+                "https://api.test.com/api/match/change-instant-setting123123", 
                 It.IsAny<HttpContent>()), Times.Once);
             _mockLogger.Verify(x => x.InfoAsync(It.IsAny<string>()), Times.Once);
         }
@@ -116,7 +116,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             Assert.False(success);
             Assert.Contains("Unexpected character encountered while parsing value", message);
             _mockHttpHandler.Verify(x => x.PostAsync(
-                "https://api.test.com/api/match/change-instant-setting",
+                "https://api.test.com/api/match/change-instant-setting123123",
                 It.IsAny<HttpContent>()), Times.Once);
             _mockLogger.Verify(x => x.InfoAsync(It.IsAny<string>()), Times.Once);
         }

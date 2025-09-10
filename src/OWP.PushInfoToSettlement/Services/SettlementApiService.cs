@@ -20,7 +20,7 @@ namespace OWP.PushInfoToSettlement.Services
         {
             try
             {
-                var requestUri = $"{apiSetting.Url}/api/match/change-instant-setting";
+                var requestUri = $"{apiSetting.Url}/api/match/change-instant-setting123123";
                 var requestBody = new { matchItems };
                 var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
 
@@ -56,11 +56,11 @@ namespace OWP.PushInfoToSettlement.Services
 
                 var logError = new
                 {
-                    Job = "Push MatchInfo To Settlement fromDate: " + fromDate + " toDate: " + toDate,
+                    Job = "Error Push MatchInfo To Settlement fromDate: " + fromDate + " toDate: " + toDate,
                     RequestUri = requestUri,
                     matchItems,
                     StatusCode = (int)response.StatusCode,
-                    response.RequestMessage
+                    response
                 };
                 await logger.ErrorAsync(JsonConvert.SerializeObject(logError));
 
@@ -70,7 +70,7 @@ namespace OWP.PushInfoToSettlement.Services
             {
                 var logError = new
                 {
-                    Job = "Push MatchInfo To Settlement fromDate: " + fromDate + " toDate: " + toDate,
+                    Job = "Error Push MatchInfo To Settlement fromDate: " + fromDate + " toDate: " + toDate,
                     Error = "UnexpectedException",
                     Message = ex.Message,
                     matchItems,
