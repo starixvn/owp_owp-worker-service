@@ -20,7 +20,7 @@ namespace OWP.PushInfoToSettlement.Services
         {
             try
             {
-                var requestUri = $"{apiSetting.Url}/api/match/change-instant-setting123123";
+                var requestUri = $"{apiSetting.Url}/api/match/change-instant-setting";
                 var requestBody = new { matchItems };
                 var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
 
