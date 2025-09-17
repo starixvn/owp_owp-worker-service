@@ -1,6 +1,6 @@
 namespace OWP.RabbitMq.Consts;
 
-internal static class RoutingKeys
+public static class RoutingKeys
 {
     public const string LinkedLgaMatch = "linked-lga-match";
 
