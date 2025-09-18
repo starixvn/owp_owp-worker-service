@@ -1,5 +1,6 @@
 ﻿using OWP.AutoGenerateMaxbetSetting;
 using OWP.Chat;
+using OWP.PushInfoToSettlement;
 
 namespace OWP.WorkerService.Extensions;
 
@@ -71,6 +72,7 @@ public static class ServiceCollectionExtensions
         services.AddAdminSiteSyncServices(configuration);
         services.AddChatServices();
         services.AddAutoGenerateNewLeagueSettingServices();
+        services.AddPushInfoToSettlementServices(configuration);
 
         return services;
     }
@@ -103,6 +105,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<SyncProviderMatchIdJob>();
         services.AddTransient<ChatJob>();
         services.AddTransient<AutoGenerateMaxbetSettingJob>();
+        services.AddTransient<PushInfoToSettlementJob>();
 
         return services;
     }

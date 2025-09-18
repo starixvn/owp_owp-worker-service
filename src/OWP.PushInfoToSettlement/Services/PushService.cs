@@ -1,0 +1,156 @@
+﻿using Newtonsoft.Json;
+using Olympus.OWP.Log.Data.Repository.Criteria;
+using Olympus.OWP.Log.Data.Repository.Services;
+using OWP.PushInfoToSettlement.Model;
+
+namespace OWP.PushInfoToSettlement.Services;
+
+public interface PushService
+{
+    Task Execute();
+}
+
+public class PushServiceImp(
+    CacheManipulator cache, 
+    EventService eventService, 
+    ISettlementApiService settlementApiService, 
+    LogWriterService logger) : PushService
+{
+    public async Task Execute()
+    {
+        var nowGmt8 = DateTime.Now.AddHours(12);
+        var selectedDate = nowGmt8.Hour >= 12 ? nowGmt8.Date : nowGmt8.AddDays(-1).Date;
+        var fromDate = selectedDate.AddDays(-1);
+        var toDate = selectedDate.AddDays(1);
+        
+        var eventsToProcess = new List<EventData>();
+        var currentEvents = await eventService.GetEventsAsync();
+        
+        var processedDates = new List<DateTime>();
+        
+        for (var currentDate = fromDate; currentDate <= toDate; currentDate = currentDate.AddDays(1))
+        {
+            var changedEvents = await ProcessEventDate(currentDate, currentEvents);
+            eventsToProcess.AddRange(changedEvents);
+            processedDates.Add(currentDate);
+        }
+
+        if (eventsToProcess.Any())
+        {
+            var (success, message) = await ProcessApiCall(eventsToProcess, fromDate, toDate);
+
+            if (success)
+            {
+                await UpdateCacheAfterSuccess(processedDates, currentEvents, eventsToProcess);
+            }
+
+            var logInfo = new
+            {
+                processedDates,
+                numberOfEvents = eventsToProcess.Count,
+                status = success,
+                message,
+                eventsToProcess
+            };
+
+            await WriteLog(logInfo, "PushMatchInfoForSettlement").ConfigureAwait(false);
+        }
+        else
+        {
+            await UpdateCacheAfterSuccess(processedDates, currentEvents, eventsToProcess);
+        }
+
+    }
+
+    private async Task<List<EventData>> ProcessEventDate(DateTime eventDate, IList<EventData> currentEvents)
+    {
+        var (fromDate, toDate) = NormalizeTimeRange(eventDate, eventDate);
+        var eventsForDate = currentEvents.Where(e => e.EventDateTime >= fromDate && e.EventDateTime <= toDate).ToList();
+        var cachedEvents = await cache.GetMatchesByDate(eventDate);
+        var changedEvents = new List<EventData>();
+        
+        foreach (var currentEvent in eventsForDate)
+        {
+            var hasChanged = false;
+
+            var cachedEvent = cachedEvents.Find(e => e.OWPMatchId == currentEvent.OWPMatchId);
+            
+            if (cachedEvent != null)
+            {
+                if (cachedEvent.Remark != currentEvent.Remark)
+                {
+                    hasChanged = true;
+                }
+            }
+            else
+            {
+                hasChanged = true;
+            }
+
+            if (hasChanged)
+            {
+                changedEvents.Add(currentEvent);
+            }
+        }
+
+        // Don't save snapshot here - will be saved after successful API call
+        return changedEvents;
+    }
+
+    private async Task<(bool Success, string Message)> ProcessApiCall(List<EventData> eventsToProcess, DateTime fromDate, DateTime toDate)
+    {
+        var changeInstantSettingRequests = eventsToProcess.Select(e => new ChangeInstantSettingRequest
+        {
+            MatchId = e.AdminSiteId,
+            Remark = e.Remark
+        }).ToList();
+
+        return await settlementApiService.ChangeInstantSettingAsync(changeInstantSettingRequests, fromDate, toDate);
+    }
+
+    private async Task UpdateCacheAfterSuccess(List<DateTime> processedDates, IList<EventData> currentEvents, List<EventData> eventsToProcess)
+    {
+        var hasCountChanges = false;
+        
+        foreach (var date in processedDates)
+        {
+            var (fromDate, toDate) = NormalizeTimeRange(date, date);
+            var eventsForDate = currentEvents.Where(e => e.EventDateTime >= fromDate && e.EventDateTime <= toDate).ToList();
+            
+            var currentCachedEvents = await cache.GetMatchesByDate(date);
+            var currentCachedCount = currentCachedEvents?.Count ?? 0;
+            var newEventsCount = eventsForDate.Count;
+            if (currentCachedCount != newEventsCount)
+            {
+                hasCountChanges = true;
+            }
+            await cache.SaveMatchSnapshot(eventsForDate, date);
+        }
+        
+        if (eventsToProcess.Any() || hasCountChanges)
+        {
+            var cacheLogInfo = new
+            {
+                processedDates = processedDates.Select(d => d.ToString("yyyy-MM-dd")).ToList(),
+                hasEventsToProcess = eventsToProcess.Count != 0,
+                hasCountChanges,
+                eventsToProcess,
+            };
+            
+            await WriteLog(cacheLogInfo, "PushMatchInfoForSettlement Cache").ConfigureAwait(false);
+        }
+    }
+
+    private static (DateTime fromDate, DateTime toDate) NormalizeTimeRange(DateTime dayStart, DateTime dayEnd)
+        => (dayStart.Date.AddHours(12), dayEnd.Date.AddDays(1).AddHours(11).AddMinutes(59));
+
+    private async Task WriteLog(object request, string action)
+    {
+        await logger.Execute(new OwpLogCriteria
+        {
+            CreatedDate = DateTime.Now.AddHours(12),
+            Action = action,
+            Payload = JsonConvert.SerializeObject(request)
+        });
+    }
+}
