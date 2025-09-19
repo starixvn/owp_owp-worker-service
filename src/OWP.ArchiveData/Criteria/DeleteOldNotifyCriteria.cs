@@ -2,7 +2,7 @@
 
 using Fanex.Data.Repository;
 
-internal class DeleteOldNotifyCriteria : INonQueryCommand
+public class DeleteOldNotifyCriteria : INonQueryCommand
 {
     public DateTime Date { get; set; }
 
