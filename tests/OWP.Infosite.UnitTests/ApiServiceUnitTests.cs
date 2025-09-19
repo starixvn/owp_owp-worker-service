@@ -1,3 +1,5 @@
+using OWP.Infosite.Services;
+
 namespace OWP.Infosite.UnitTests;
 
 using Fanex.Caching;
@@ -221,7 +223,7 @@ public class ApiServiceUnitTests
         var actualResult = await apiService.QueryDeletedChildMatch(fromDate, toDate);
 
         // Assert
-        DeepAssert.Equal(SampleDataTests.ListDeleteChildMatch, actualResult);
+        DeepAssert.Equal<List<DeleteChildMatch>>(SampleDataTests.ListDeleteChildMatch, actualResult);
     }
 
     [Fact]
@@ -260,7 +262,7 @@ public class ApiServiceUnitTests
         var actualResult = await apiService.QueryRound(fromDate, toDate);
 
         // Assert
-        DeepAssert.Equal(SampleDataTests.RoundTwInfo, actualResult);
+        DeepAssert.Equal<RoundTwInfo>(SampleDataTests.RoundTwInfo, actualResult);
     }
 
     [Fact]
@@ -407,7 +409,7 @@ public class ApiServiceUnitTests
     public void ParseSubtype_WithNullString_ShouldReturnNull()
     {
         // Arrange
-        string? result = null;
+        string result = null;
 
         // Act
         var actualResult = ApiServiceImp.ParseSubtype(result);

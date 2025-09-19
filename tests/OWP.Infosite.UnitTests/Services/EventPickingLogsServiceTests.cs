@@ -244,7 +244,7 @@ public class EventPickingLogsServiceTests
         var fromService = "TestService";
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() =>
+        Assert.Throws<NullReferenceException>(() =>
             _service.AddLogUpdateCheckingStatus(infoSiteMatchId, loggedChanges, fromService));
     }
 

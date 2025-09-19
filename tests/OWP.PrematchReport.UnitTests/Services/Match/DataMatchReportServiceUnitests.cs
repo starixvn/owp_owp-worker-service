@@ -1,4 +1,5 @@
 ﻿using NSubstitute;
+using OWP.SumReport.PrematchReport.Constants;
 using OWP.SumReport.PrematchReport.Models;
 using OWP.SumReport.PrematchReport.Services;
 using OWP.SumReport.PrematchReport.Services.Match;
@@ -43,7 +44,7 @@ namespace OWP.SumReport.PrematchReport.UnitTests.Services.Match
                     EventDate = new DateTime(2020, 10, 2),
                     GroupId = 0,
                     IsDay = true,
-                    OWPLeagueId = 1,
+                    OwpLeagueId = 1,
                     PreMatchLeagueId = 1,
                     UserId = 8,
                 },
@@ -52,7 +53,7 @@ namespace OWP.SumReport.PrematchReport.UnitTests.Services.Match
                     EventDate = new DateTime(2020, 10, 2),
                     GroupId = 0,
                     IsDay = false,
-                    OWPLeagueId = 1,
+                    OwpLeagueId = 1,
                     PreMatchLeagueId = 1,
                     UserId = 8,
                 },
@@ -61,7 +62,7 @@ namespace OWP.SumReport.PrematchReport.UnitTests.Services.Match
                     EventDate = new DateTime(2020, 10, 2),
                     GroupId = 0,
                     IsDay = false,
-                    OWPLeagueId = 10,
+                    OwpLeagueId = 10,
                     PreMatchLeagueId = 1,
                     UserId = 8,
                 },
@@ -70,7 +71,7 @@ namespace OWP.SumReport.PrematchReport.UnitTests.Services.Match
                     EventDate = new DateTime(2020, 10, 2),
                     GroupId = 0,
                     IsDay = true,
-                    OWPLeagueId = 2,
+                    OwpLeagueId = 2,
                     PreMatchLeagueId = 1,
                     UserId = 8,
                 },
@@ -79,7 +80,7 @@ namespace OWP.SumReport.PrematchReport.UnitTests.Services.Match
                     EventDate = new DateTime(2020, 10, 2),
                     GroupId = 0,
                     IsDay = true,
-                    OWPLeagueId = 1,
+                    OwpLeagueId = 1,
                     PreMatchLeagueId = 1,
                     UserId = 12,
                 },
@@ -88,7 +89,7 @@ namespace OWP.SumReport.PrematchReport.UnitTests.Services.Match
                     EventDate = new DateTime(2020, 10, 2),
                     GroupId = 1,
                     IsDay = true,
-                    OWPLeagueId = 3,
+                    OwpLeagueId = 3,
                     PreMatchLeagueId = 1,
                     UserId = 8,
                 },
@@ -97,7 +98,7 @@ namespace OWP.SumReport.PrematchReport.UnitTests.Services.Match
                     EventDate = new DateTime(2020, 10, 2),
                     GroupId = 2,
                     IsDay = false,
-                    OWPLeagueId = 4,
+                    OwpLeagueId = 4,
                     PreMatchLeagueId = 3,
                     UserId = 8,
                 },
@@ -108,61 +109,61 @@ namespace OWP.SumReport.PrematchReport.UnitTests.Services.Match
              {
                  new()
                  {
-                     OWPLeagueId = 1,
+                     OwpLeagueId = 1,
                      IsMatchDay = true,
                      Total = 1
                  },
                  new()
                  {
-                     OWPLeagueId = 1,
+                     OwpLeagueId = 1,
                      IsMatchDay = false,
                      Total = 2
                  },
                  new()
                  {
-                     OWPLeagueId = 10,
+                     OwpLeagueId = 10,
                      Total = 8,
                      IsMatchDay = true,
                  },
                  new()
                  {
-                     OWPLeagueId = 10,
+                     OwpLeagueId = 10,
                      Total = 9,
                      IsMatchDay = false,
                  },
                  new()
                  {
-                     OWPLeagueId = 2,
+                     OwpLeagueId = 2,
                      Total = 1,
                      IsMatchDay = true,
                  },
                  new()
                  {
-                     OWPLeagueId = 2,
+                     OwpLeagueId = 2,
                      Total = 5,
                      IsMatchDay = false,
                  },
                  new()
                  {
-                     OWPLeagueId = 3,
+                     OwpLeagueId = 3,
                      IsMatchDay = true,
                      Total = 2,
                  },
                  new()
                  {
-                     OWPLeagueId = 3,
+                     OwpLeagueId = 3,
                      IsMatchDay = false,
                      Total = 6,
                  },
                  new()
                  {
-                     OWPLeagueId = 4,
+                     OwpLeagueId = 4,
                      IsMatchDay = true,
                      Total = 3,
                  },
                  new()
                  {
-                     OWPLeagueId = 4,
+                     OwpLeagueId = 4,
                      IsMatchDay = false,
                      Total = 30,
                  }

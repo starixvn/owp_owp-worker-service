@@ -1,216 +1,741 @@
-﻿namespace OWP.OtherSport.UnitTests.SyncAdminSiteId.Helpers;
-
-using OtherSport.SyncAdminSiteId.Helpers;
-using OtherSport.SyncAdminSiteId.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using OWP.OtherSport.SyncAdminSiteId.Helpers;
+using OWP.OtherSport.SyncAdminSiteId.Models;
+
+namespace OWP.OtherSport.UnitTests.SyncAdminSiteId.Helpers;
+
 using Xunit;
-using Xunit.Asserts.Compare;
 
 public class MatchHelperUnitTests
 {
     [Fact]
-    public void GetNewLinkedMatches_ReturnUnlinkedMatches()
+    public void GetRemovedMatches_WithRemovedMatches_ShouldReturnCorrectMatches()
     {
-        var expected = new List<LinkedMatch>
-            {
-                new()
-                {
-                    AdminSiteMatchId = 123,
-                    OsMatchId = 1,
-                    OwpLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
-                    OwpHome = "Dalian Pro FC (N)1",
-                    OwpAway = "Guangzhou R&F1",
-                    AdminSiteLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
-                    AdminSiteHome = "Dalian Pro FC (N)1",
-                    AdminSiteAway = "Guangzhou R&F1",
-                    OldAdminSiteMatchId = null,
-                    NewEventDate = new DateTime(2021, 03, 18, 20, 22, 33),
-                    OldEventDate = new DateTime(2021, 03, 18)
-                },
-                new()
-                {
-                    AdminSiteMatchId = 234,
-                    OsMatchId = 53,
-                    OwpLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
-                    OwpHome = "Dalian Pro FC (N)2",
-                    OwpAway = "Guangzhou R&F2",
-                    AdminSiteLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
-                    AdminSiteHome = "Dalian Pro FC (N)2",
-                    AdminSiteAway = "Guangzhou R&F2",
-                    OldAdminSiteMatchId = null,
-                    NewEventDate = new DateTime(2021, 03, 18),
-                    OldEventDate = new DateTime(2021, 03, 18)
-                },
-                new()
-                {
-                    AdminSiteMatchId = 345,
-                    OsMatchId = 54,
-                    OwpLeague = "CHINA SABA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
-                    OwpHome = "Dalian Pro FC (N)3",
-                    OwpAway = "Guangzhou R&F3",
-                    AdminSiteLeague = "CHINA SABA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
-                    AdminSiteHome = "Dalian Pro FC (N)3",
-                    AdminSiteAway = "Guangzhou R&F3",
-                    OldAdminSiteMatchId = null,
-                    NewEventDate = new DateTime(2021, 03, 18, 11, 22, 33),
-                    OldEventDate = new DateTime(2021, 03, 18, 11, 22, 33)
-                }
-            };
+        // Arrange
+        var owpMatches = new List<Match>
+        {
+            new Match { OsMatchId = 1, AdminSiteMatchId = 100, HomeName = "Team A", AwayName = "Team B", LeagueName = "League 1", EventDateTime = DateTime.Now },
+            new Match { OsMatchId = 2, AdminSiteMatchId = 200, HomeName = "Team C", AwayName = "Team D", LeagueName = "League 2", EventDateTime = DateTime.Now },
+            new Match { OsMatchId = 3, AdminSiteMatchId = 300, HomeName = "Team E", AwayName = "Team F", LeagueName = "League 3", EventDateTime = DateTime.Now }
+        };
 
-        var actual = MatchHelper.GetNewLinkedMatches(GetUnlinkedOwpMatches().ToList(), GetAdminSiteMatches().ToList());
+        var adminSiteMatches = new List<Match>
+        {
+            new Match { AdminSiteMatchId = 100, HomeName = "Team A", AwayName = "Team B", LeagueName = "League 1", EventDateTime = DateTime.Now },
+            new Match { AdminSiteMatchId = 200, HomeName = "Team C", AwayName = "Team D", LeagueName = "League 2", EventDateTime = DateTime.Now }
+        };
 
-        DeepAssert.Equal(expected, actual.ToList());
+        // Act
+        var result = MatchHelper.GetRemovedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Single(result);
+        var removedMatch = result.First();
+        Assert.Equal(3, removedMatch.OsMatchId);
+        Assert.Equal(300, removedMatch.OldAdminSiteMatchId);
+        Assert.Equal("Team E", removedMatch.OwpHome);
+        Assert.Equal("Team F", removedMatch.OwpAway);
+        Assert.Equal("League 3", removedMatch.OwpLeague);
     }
 
     [Fact]
-    public void GetUpdatedMatches_ReturnLinkedMatches()
+    public void GetRemovedMatches_WithNoRemovedMatches_ShouldReturnEmpty()
     {
-        var expected = new List<LinkedMatch>
-            {
-                new()
-                {
-                    OsMatchId = 444,
-                    OwpLeague = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
-                    OwpHome = "Dalian Pro FC (N)1",
-                    OwpAway = "Guangzhou R&F1",
-                    OldAdminSiteMatchId = 111,
-                    OldEventDate = new DateTime(2021, 03, 18, 20, 22, 33)
-                }
-            };
+        // Arrange
+        var owpMatches = new List<Match>
+        {
+            new Match { OsMatchId = 1, AdminSiteMatchId = 100, HomeName = "Team A", AwayName = "Team B", LeagueName = "League 1", EventDateTime = DateTime.Now }
+        };
 
-        var actual = MatchHelper.GetRemovedMatches(GetLinkedOwpMatches().ToList(), GetAdminSiteMatches().ToList());
-        DeepAssert.Equal(expected, actual.ToList());
+        var adminSiteMatches = new List<Match>
+        {
+            new Match { AdminSiteMatchId = 100, HomeName = "Team A", AwayName = "Team B", LeagueName = "League 1", EventDateTime = DateTime.Now }
+        };
+
+        // Act
+        var result = MatchHelper.GetRemovedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Empty(result);
     }
 
-    private static IEnumerable<Match> GetUnlinkedOwpMatches()
-        => new List<Match>
+    [Fact]
+    public void GetRemovedMatches_WithEmptyOwpMatches_ShouldReturnEmpty()
+    {
+        // Arrange
+        var owpMatches = new List<Match>();
+        var adminSiteMatches = new List<Match>
         {
-                new()
-                {
-                    OsMatchId = 1,
-                    Sport = "Basketball",
-                    LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
-                    HomeName = "Dalian Pro FC (N)1",
-                    AwayName = "Guangzhou R&F1",
-                    EventDateTime = new DateTime(2021, 03, 18),
-                    AdminSiteMatchId = null
-                },
-                new()
-                {
-                    OsMatchId = 53,
-                    Sport = "Basketball",
-                    LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
-                    HomeName = "Dalian Pro FC (N)2",
-                    AwayName = "Guangzhou R&F2",
-                    EventDateTime = new DateTime(2021, 03, 18),
-                    AdminSiteMatchId = null
-                },
-                new()
-                {
-                    OsMatchId = 54,
-                    Sport = "Basketball",
-                    LeagueName = "CHINA SABA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
-                    HomeName = "Dalian Pro FC (N)3",
-                    AwayName = "Guangzhou R&F3",
-                    EventDateTime = new DateTime(2021, 03, 18, 11, 22, 33),
-                    AdminSiteMatchId = null
-                },
-                new()
-                {
-                    OsMatchId = 114,
-                    Sport = "Netball",
-                    LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)15",
-                    HomeName = "Dalian Pro FC (N)12",
-                    AwayName = "Guangzhou R&F12",
-                    EventDateTime = new DateTime(2021, 03, 18),
-                    AdminSiteMatchId = null
-                }
+            new Match { AdminSiteMatchId = 100, HomeName = "Team A", AwayName = "Team B", LeagueName = "League 1", EventDateTime = DateTime.Now }
         };
 
-    private static IEnumerable<Match> GetLinkedOwpMatches()
-        => new List<Match>
+        // Act
+        var result = MatchHelper.GetRemovedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithValidMatches_ShouldReturnLinkedMatches()
+    {
+        // Arrange
+        var testDate = new DateTime(2024, 1, 15, 14, 30, 0);
+        var owpMatches = new List<Match>
         {
-                new()
-                {
-                    OsMatchId = 79,
-                    Sport = "Netball",
-                    LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)11",
-                    HomeName = "Dalian Pro FC (N)11",
-                    AwayName = "Guangzhou R&F11",
-                    EventDateTime = new DateTime(2021, 03, 18),
-                    AdminSiteMatchId = 1
-                },
-                new()
-                {
-                    OsMatchId = 113,
-                    Sport = "Netball",
-                    LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)11",
-                    HomeName = "Dalian Pro FC (N)12",
-                    AwayName = "Guangzhou R&F12",
-                    EventDateTime = new DateTime(2021, 03, 18),
-                    AdminSiteMatchId = 2
-                },
-                new()
-                {
-                    OsMatchId = 444,
-                    Sport = "Basketball",
-                    LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
-                    HomeName = "Dalian Pro FC (N)1",
-                    AwayName = "Guangzhou R&F1",
-                    EventDateTime = new DateTime(2021, 03, 18, 20, 22, 33),
-                    AdminSiteMatchId = 111
-                }
+            new Match
+            {
+                OsMatchId = 1,
+                HomeName = "Team A",
+                AwayName = "Team B",
+                LeagueName = "League 1",
+                EventDateTime = testDate,
+                EventDate = testDate,
+                IsLinked = false,
+                Sport = "Football"
+            }
         };
 
-    private static IEnumerable<Match> GetAdminSiteMatches()
-        => new List<Match>
+        var adminSiteMatches = new List<Match>
         {
-                new()
-                {
-                    Sport = "Basketball",
-                    LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
-                    HomeName = "Dalian Pro FC (N)1",
-                    AwayName = "Guangzhou R&F1",
-                    EventDateTime = new DateTime(2021, 03, 18, 20, 22, 33),
-                    AdminSiteMatchId = 123
-                },
-                new()
-                {
-                    Sport = "Basketball",
-                    LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)1",
-                    HomeName = "Dalian Pro FC (N)2",
-                    AwayName = "Guangzhou R&F2",
-                    EventDateTime = new DateTime(2021, 03, 18),
-                    AdminSiteMatchId = 234
-                },
-                new()
-                {
-                    Sport = "Basketball",
-                    LeagueName = "CHINA SABA FOOTBALL SUPER LEAGUE (PLAY OFF)3",
-                    HomeName = "Dalian Pro FC (N)3",
-                    AwayName = "Guangzhou R&F3",
-                    EventDateTime = new DateTime(2021, 03, 18, 11, 22, 33),
-                    AdminSiteMatchId = 345
-                },
-                new()
-                {
-                    Sport = "Netball",
-                    LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)113",
-                    HomeName = "Dalian Pro FC (N)11",
-                    AwayName = "Guangzhou R&F11",
-                    EventDateTime = new DateTime(2021, 03, 18),
-                    AdminSiteMatchId = 1
-                },
-                new()
-                {
-                    Sport = "Netball",
-                    LeagueName = "CHINA FOOTBALL SUPER LEAGUE (PLAY OFF)114",
-                    HomeName = "Dalian Pro FC (N)12",
-                    AwayName = "Guangzhou R&F12",
-                    EventDateTime = new DateTime(2021, 03, 18),
-                    AdminSiteMatchId = 2
-                }
+            new Match
+            {
+                AdminSiteMatchId = 100,
+                HomeName = "Team A",
+                AwayName = "Team B",
+                LeagueName = "League 1",
+                EventDateTime = testDate,
+                EventDate = testDate,
+                Sport = "Football"
+            }
         };
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Single(result);
+        var linkedMatch = result.First();
+        Assert.Equal(1, linkedMatch.OsMatchId);
+        Assert.Equal(100, linkedMatch.AdminSiteMatchId);
+        Assert.Equal("Team A", linkedMatch.OwpHome);
+        Assert.Equal("Team B", linkedMatch.OwpAway);
+        Assert.Equal("League 1", linkedMatch.OwpLeague);
+        Assert.True(owpMatches[0].IsLinked);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithAlreadyLinkedMatches_ShouldNotReturnThem()
+    {
+        // Arrange
+        var owpMatches = new List<Match>
+        {
+            new Match
+            {
+                OsMatchId = 1,
+                HomeName = "Team A",
+                AwayName = "Team B",
+                LeagueName = "League 1",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                IsLinked = true,
+                Sport = "Football"
+            }
+        };
+
+        var adminSiteMatches = new List<Match>
+        {
+            new Match
+            {
+                AdminSiteMatchId = 100,
+                HomeName = "Team A",
+                AwayName = "Team B",
+                LeagueName = "Regular League 1",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                Sport = "Football"
+            }
+        };
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithRule5HomeMatch_ShouldReturnLinkedMatch()
+    {
+        // Arrange
+        var testDate = new DateTime(2024, 1, 15, 14, 30, 0);
+        var owpMatches = new List<Match>
+        {
+            new Match
+            {
+                OsMatchId = 1,
+                HomeName = "Lakers (Los Angeles)",
+                AwayName = "Warriors",
+                LeagueName = "*NBA - Most Points Scored Home",
+                EventDateTime = testDate,
+                EventDate = testDate,
+                IsLinked = false,
+                Sport = "Basketball"
+            }
+        };
+
+        var adminSiteMatches = new List<Match>
+        {
+            new Match
+            {
+                AdminSiteMatchId = 100,
+                HomeName = "Lakers",
+                AwayName = "N/A",
+                LeagueName = "*NBA - Most Points Scored",
+                EventDateTime = testDate,
+                EventDate = testDate,
+                Sport = "Basketball"
+            }
+        };
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Single(result);
+        var linkedMatch = result.First();
+        Assert.Equal(1, linkedMatch.OsMatchId);
+        Assert.Equal(100, linkedMatch.AdminSiteMatchId);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithRule5AwayMatch_ShouldReturnLinkedMatch()
+    {
+        // Arrange
+        var testDate = new DateTime(2024, 1, 15, 14, 30, 0);
+        var owpMatches = new List<Match>
+        {
+            new Match
+            {
+                OsMatchId = 1,
+                HomeName = "Lakers",
+                AwayName = "Warriors (Golden State)",
+                LeagueName = "*NBA - Most Points Scored Away",
+                EventDateTime = testDate,
+                EventDate = testDate,
+                IsLinked = false,
+                Sport = "Basketball"
+            }
+        };
+
+        var adminSiteMatches = new List<Match>
+        {
+            new Match
+            {
+                AdminSiteMatchId = 100,
+                HomeName = "N/A",
+                AwayName = "Warriors",
+                LeagueName = "*NBA - Most Points Scored",
+                EventDateTime = testDate,
+                EventDate = testDate,
+                Sport = "Basketball"
+            }
+        };
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Single(result);
+        var linkedMatch = result.First();
+        Assert.Equal(1, linkedMatch.OsMatchId);
+        Assert.Equal(100, linkedMatch.AdminSiteMatchId);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithSabaMatch_ShouldReturnLinkedMatch()
+    {
+        // Arrange
+        var testDate = new DateTime(2024, 1, 15, 14, 30, 0);
+        var owpMatches = new List<Match>
+        {
+            new Match
+            {
+                OsMatchId = 1,
+                HomeName = "Team A",
+                AwayName = "Team B",
+                LeagueName = "SABA League 1",
+                EventDateTime = testDate,
+                EventDate = testDate,
+                IsLinked = false,
+                Sport = "Football"
+            }
+        };
+
+        var adminSiteMatches = new List<Match>
+        {
+            new Match
+            {
+                AdminSiteMatchId = 100,
+                HomeName = "Team A",
+                AwayName = "Team B",
+                LeagueName = "SABA League 1",
+                EventDateTime = testDate,
+                EventDate = testDate,
+                Sport = "Football"
+            }
+        };
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Single(result);
+        var linkedMatch = result.First();
+        Assert.Equal(1, linkedMatch.OsMatchId);
+        Assert.Equal(100, linkedMatch.AdminSiteMatchId);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithEmptyLists_ShouldReturnEmpty()
+    {
+        // Arrange
+        var owpMatches = new List<Match>();
+        var adminSiteMatches = new List<Match>();
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithNullLists_ShouldReturnEmpty()
+    {
+        // Arrange
+        List<Match> owpMatches = new List<Match>();
+        List<Match> adminSiteMatches = new List<Match>();
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithDifferentDates_ShouldNotMatch()
+    {
+        // Arrange
+        var owpMatches = new List<Match>
+        {
+            new Match
+            {
+                OsMatchId = 1,
+                HomeName = "Team A",
+                AwayName = "Team B",
+                LeagueName = "League 1",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                IsLinked = false,
+                Sport = "Football"
+            }
+        };
+
+        var adminSiteMatches = new List<Match>
+        {
+            new Match
+            {
+                AdminSiteMatchId = 100,
+                HomeName = "Team A",
+                AwayName = "Team B",
+                LeagueName = "Regular League 1",
+                EventDateTime = DateTime.Now.AddDays(1),
+                EventDate = DateTime.Now.AddDays(1),
+                Sport = "Football"
+            }
+        };
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithDifferentLeagues_ShouldNotMatch()
+    {
+        // Arrange
+        var owpMatches = new List<Match>
+        {
+            new Match
+            {
+                OsMatchId = 1,
+                HomeName = "Team A",
+                AwayName = "Team B",
+                LeagueName = "League 1",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                IsLinked = false,
+                Sport = "Football"
+            }
+        };
+
+        var adminSiteMatches = new List<Match>
+        {
+            new Match
+            {
+                AdminSiteMatchId = 100,
+                HomeName = "Team A",
+                AwayName = "Team B",
+                LeagueName = "League 2",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                Sport = "Football"
+            }
+        };
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithDifferentTeams_ShouldNotMatch()
+    {
+        // Arrange
+        var owpMatches = new List<Match>
+        {
+            new Match
+            {
+                OsMatchId = 1,
+                HomeName = "Team A",
+                AwayName = "Team B",
+                LeagueName = "League 1",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                IsLinked = false,
+                Sport = "Football"
+            }
+        };
+
+        var adminSiteMatches = new List<Match>
+        {
+            new Match
+            {
+                AdminSiteMatchId = 100,
+                HomeName = "Team C",
+                AwayName = "Team D",
+                LeagueName = "Regular League 1",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                Sport = "Football"
+            }
+        };
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithDifferentSports_ShouldNotMatch()
+    {
+        // Arrange
+        var owpMatches = new List<Match>
+        {
+            new Match
+            {
+                OsMatchId = 1,
+                HomeName = "Team A",
+                AwayName = "Team B",
+                LeagueName = "League 1",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                IsLinked = false,
+                Sport = "Football"
+            }
+        };
+
+        var adminSiteMatches = new List<Match>
+        {
+            new Match
+            {
+                AdminSiteMatchId = 100,
+                HomeName = "Team A",
+                AwayName = "Team B",
+                LeagueName = "Regular League 1",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                Sport = "Basketball"
+            }
+        };
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithRule5InvalidLeague_ShouldNotMatch()
+    {
+        // Arrange
+        var owpMatches = new List<Match>
+        {
+            new Match
+            {
+                OsMatchId = 1,
+                HomeName = "Lakers (Los Angeles)",
+                AwayName = "Warriors",
+                LeagueName = "Invalid League Home",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                IsLinked = false,
+                Sport = "Basketball"
+            }
+        };
+
+        var adminSiteMatches = new List<Match>
+        {
+            new Match
+            {
+                AdminSiteMatchId = 100,
+                HomeName = "Los Angeles",
+                AwayName = "N/A",
+                LeagueName = "*NBA - Most Points Scored",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                Sport = "Basketball"
+            }
+        };
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithRule5InvalidAdminSiteLeague_ShouldNotMatch()
+    {
+        // Arrange
+        var owpMatches = new List<Match>
+        {
+            new Match
+            {
+                OsMatchId = 1,
+                HomeName = "Lakers (Los Angeles)",
+                AwayName = "Warriors",
+                LeagueName = "*NBA - Most Points Scored Home",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                IsLinked = false,
+                Sport = "Basketball"
+            }
+        };
+
+        var adminSiteMatches = new List<Match>
+        {
+            new Match
+            {
+                AdminSiteMatchId = 100,
+                HomeName = "Los Angeles",
+                AwayName = "N/A",
+                LeagueName = "Invalid League",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                Sport = "Basketball"
+            }
+        };
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithRule5InvalidAwayName_ShouldNotMatch()
+    {
+        // Arrange
+        var owpMatches = new List<Match>
+        {
+            new Match
+            {
+                OsMatchId = 1,
+                HomeName = "Lakers (Los Angeles)",
+                AwayName = "Warriors",
+                LeagueName = "*NBA - Most Points Scored Home",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                IsLinked = false,
+                Sport = "Basketball"
+            }
+        };
+
+        var adminSiteMatches = new List<Match>
+        {
+            new Match
+            {
+                AdminSiteMatchId = 100,
+                HomeName = "Los Angeles",
+                AwayName = "Not N/A",
+                LeagueName = "*NBA - Most Points Scored",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                Sport = "Basketball"
+            }
+        };
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithRule5InvalidHomeName_ShouldNotMatch()
+    {
+        // Arrange
+        var owpMatches = new List<Match>
+        {
+            new Match
+            {
+                OsMatchId = 1,
+                HomeName = "Lakers",
+                AwayName = "Warriors (Golden State)",
+                LeagueName = "*NBA - Most Points Scored Away",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                IsLinked = false,
+                Sport = "Basketball"
+            }
+        };
+
+        var adminSiteMatches = new List<Match>
+        {
+            new Match
+            {
+                AdminSiteMatchId = 100,
+                HomeName = "Not N/A",
+                AwayName = "Golden State",
+                LeagueName = "*NBA - Most Points Scored",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                Sport = "Basketball"
+            }
+        };
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithRule5SabaMatch_ShouldNotMatch()
+    {
+        // Arrange
+        var owpMatches = new List<Match>
+        {
+            new Match
+            {
+                OsMatchId = 1,
+                HomeName = "Lakers (Los Angeles)",
+                AwayName = "Warriors",
+                LeagueName = "*NBA - Most Points Scored Home",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                IsLinked = false,
+                Sport = "Basketball"
+            }
+        };
+
+        var adminSiteMatches = new List<Match>
+        {
+            new Match
+            {
+                AdminSiteMatchId = 100,
+                HomeName = "Los Angeles",
+                AwayName = "N/A",
+                LeagueName = "*NBA - Most Points Scored",
+                EventDateTime = DateTime.Now,
+                EventDate = DateTime.Now,
+                Sport = "Basketball"
+            }
+        };
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void GetNewLinkedMatches_WithMultipleCandidates_ShouldSelectClosestByTime()
+    {
+        // Arrange
+        var baseTime = DateTime.Now;
+        var owpMatches = new List<Match>
+        {
+            new Match
+            {
+                OsMatchId = 1,
+                HomeName = "Team A",
+                AwayName = "Team B",
+                LeagueName = "League 1",
+                EventDateTime = baseTime,
+                EventDate = baseTime,
+                IsLinked = false,
+                Sport = "Football"
+            }
+        };
+
+        var adminSiteMatches = new List<Match>
+        {
+            new Match
+            {
+                AdminSiteMatchId = 100,
+                HomeName = "Team A",
+                AwayName = "Team B",
+                LeagueName = "League 1",
+                EventDateTime = baseTime.AddHours(2),
+                EventDate = baseTime.AddHours(2),
+                Sport = "Football"
+            },
+            new Match
+            {
+                AdminSiteMatchId = 200,
+                HomeName = "Team A",
+                AwayName = "Team B",
+                LeagueName = "League 1",
+                EventDateTime = baseTime.AddMinutes(30),
+                EventDate = baseTime.AddMinutes(30),
+                Sport = "Football"
+            }
+        };
+
+        // Act
+        var result = MatchHelper.GetNewLinkedMatches(owpMatches, adminSiteMatches);
+
+        // Assert
+        Assert.Single(result);
+        var linkedMatch = result.First();
+        Assert.Equal(200, linkedMatch.AdminSiteMatchId); // Should select the closer one
+    }
 }

@@ -47,4 +47,29 @@ public static class SampleDataTests
             parent_match_id = 222
         }
     ];
+
+    public static readonly List<DeleteChildMatch> ListDeleteChildMatch =
+    [
+        new()
+        {
+            match_id = 100,
+            sub_type = 1,
+            create_match_id = 200
+        }
+    ];
+
+    public static readonly RoundTwInfo RoundTwInfo = new()
+    {
+        finish = true,
+        status = true,
+        message = "Success",
+        content = new ContentTw[]
+        {
+            new()
+            {
+                match_id = 100,
+                round_home_away_total = "Round 1"
+            }
+        }
+    };
 }

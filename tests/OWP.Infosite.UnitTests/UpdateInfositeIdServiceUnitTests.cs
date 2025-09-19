@@ -1,4 +1,6 @@
-﻿namespace OWP.Infosite.UnitTests;
+﻿using OWP.Infosite.Services;
+
+namespace OWP.Infosite.UnitTests;
 
 using Criteria;
 using Fanex.Data.Repository;
