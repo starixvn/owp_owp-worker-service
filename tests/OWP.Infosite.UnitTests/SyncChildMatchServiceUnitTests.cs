@@ -1,3 +1,5 @@
+using OWP.Infosite.Services;
+
 namespace OWP.Infosite.UnitTests;
 
 using Criteria;

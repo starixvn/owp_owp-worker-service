@@ -2,7 +2,7 @@
 
 using Fanex.Data.Repository;
 using NSubstitute;
-using Services;
+using OWP.Infosite.Services;
 using Xunit;
 
 public class Sync180DayInfositeMatchServiceUnitTests

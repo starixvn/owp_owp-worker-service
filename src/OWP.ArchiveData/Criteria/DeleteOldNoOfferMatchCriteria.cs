@@ -2,7 +2,7 @@
 
 using Fanex.Data.Repository;
 
-internal class DeleteOldNoOfferMatchCriteria : INonQueryCommand
+public class DeleteOldNoOfferMatchCriteria : INonQueryCommand
 {
     public DateTime Date { get; set; }
 
