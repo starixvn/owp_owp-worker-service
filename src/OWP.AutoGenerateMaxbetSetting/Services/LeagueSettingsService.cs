@@ -12,7 +12,7 @@ public interface GeneratorService
     Task GenerateNewLeagueSetting(DateTime date);
 }
 
-public class GeneratorServiceImp(LeagueSettingsRepository repository, LogWriterService logger) : GeneratorService
+public class GeneratorServiceImp(LeagueSettingsRepository repository, LogWriterService logger, LeagueSettingChangeService logSettingService) : GeneratorService
 {
     public async Task GenerateNewLeagueSetting(DateTime date)
     {
@@ -25,6 +25,7 @@ public class GeneratorServiceImp(LeagueSettingsRepository repository, LogWriterS
         }
 
         var leagueSettings = CreateNewLeaguesSettings(date, matches);
+        BuildLogInsertNewLeagueSetting(leagueSettings);
 
         await repository.InsertNewLeaguesSettings(leagueSettings);
 
@@ -38,6 +39,30 @@ public class GeneratorServiceImp(LeagueSettingsRepository repository, LogWriterS
         };
         await WriteLogForMonitor(logInfo, "Generator");
 
+    }
+
+    private void BuildLogInsertNewLeagueSetting(List<LeagueSetting> leagueSettings)
+    {
+        var beforeModel = new LeagueSettingChangeModel { };
+        foreach (var setting in leagueSettings)
+        {
+            var afterModel = MapToChangeModel(setting);
+            var logData = logSettingService.LogProcessingChanges(beforeModel, afterModel);
+            setting.LogDataJson = System.Text.Json.JsonSerializer.Serialize(logData);
+        }
+    }
+
+    private LeagueSettingChangeModel MapToChangeModel(LeagueSetting setting)
+    {
+        return new LeagueSettingChangeModel
+        {
+            MaxbetWdHdp = setting.MaxbetWdHdp,
+            MaxbetWkHdp = setting.MaxbetWkHdp,
+            SpreadHdp = setting.SpreadHdp,
+            SpreadOu = setting.SpreadOu,
+            WDNoOfHDP = setting.WDNoOfHDP,
+            WKNoOfHDP= setting.WKNoOfHDP
+        };
     }
 
     private async Task WriteLogForMonitor(object request, string action)
@@ -65,8 +90,11 @@ public class GeneratorServiceImp(LeagueSettingsRepository repository, LogWriterS
 
         foreach (var leagueId in leagueIds)
         {
-            var latestWeekday = MatchHelpers.FindLatestDay(weekdayMatches);
-            var latestWeekend = MatchHelpers.FindLatestDay(weekendMatches);
+            var weekdayMatchesInLeague = weekdayMatches.Where(x => x.OwpLeagueId == leagueId).ToList();
+            var weekendMatchesInLeague = weekendMatches.Where(x => x.OwpLeagueId == leagueId).ToList();
+
+            var latestWeekday = MatchHelpers.FindLatestDay(weekdayMatchesInLeague);
+            var latestWeekend = MatchHelpers.FindLatestDay(weekendMatchesInLeague);
 
             var weekdayFromDate = latestWeekday.AddDays(-1).AddHours(12);
             var weekdayToDate = latestWeekday.AddHours(11).AddMinutes(59);
@@ -75,10 +103,10 @@ public class GeneratorServiceImp(LeagueSettingsRepository repository, LogWriterS
             var weekendToDate = latestWeekend.AddHours(11).AddMinutes(59);
 
             var largestMaxbetWeekday = MatchHelpers.GetMatchWithLargestMaxbet(
-                MatchHelpers.FindMatches(weekdayMatches, leagueId, weekdayFromDate, weekdayToDate));
+                MatchHelpers.FindMatches(weekdayMatchesInLeague, leagueId, weekdayFromDate, weekdayToDate));
 
             var largestMaxbetWeekend = MatchHelpers.GetMatchWithLargestMaxbet(
-                MatchHelpers.FindMatches(weekendMatches, leagueId, weekendFromDate, weekendToDate));
+                MatchHelpers.FindMatches(weekendMatchesInLeague, leagueId, weekendFromDate, weekendToDate));
 
             if (largestMaxbetWeekday is null && largestMaxbetWeekend is null)
             {

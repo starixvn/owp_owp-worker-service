@@ -1,9 +1,7 @@
-using Moq;
-using OWP.AutoGenerateMaxbetSetting;
-using OWP.AutoGenerateMaxbetSetting.Models;
-using OWP.AutoGenerateMaxbetSetting.Services;
 using Olympus.OWP.Log.Data.Repository.Criteria;
 using Olympus.OWP.Log.Data.Repository.Services;
+using OWP.AutoGenerateMaxbetSetting.Models;
+using OWP.AutoGenerateMaxbetSetting.Services;
 using Match = OWP.AutoGenerateMaxbetSetting.Models.Match;
 
 namespace OWP.AutoGenerateMaxbetSetting.UnitTests.Services;
@@ -13,12 +11,14 @@ public class GeneratorServiceTests
     private readonly Mock<LeagueSettingsRepository> _mockRepository;
     private readonly Mock<LogWriterService> _mockLogger;
     private readonly GeneratorServiceImp _service;
+    private readonly Mock<LeagueSettingChangeServiceImp> _mockLeagueSettingChangeService;
 
     public GeneratorServiceTests()
     {
         _mockRepository = new Mock<LeagueSettingsRepository>();
         _mockLogger = new Mock<LogWriterService>();
-        _service = new GeneratorServiceImp(_mockRepository.Object, _mockLogger.Object);
+        _mockLeagueSettingChangeService = new Mock<LeagueSettingChangeServiceImp>();
+        _service = new GeneratorServiceImp(_mockRepository.Object, _mockLogger.Object, _mockLeagueSettingChangeService.Object);
     }
 
     [Fact]

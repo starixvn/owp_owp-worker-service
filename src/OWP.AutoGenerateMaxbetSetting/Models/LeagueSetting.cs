@@ -30,4 +30,6 @@ public class LeagueSetting
     [XmlName("WD_NoOfHDP")] public string WDNoOfHDP { get; set; }
 
     [XmlName("WK_NoOfHDP")] public string WKNoOfHDP { get; set; }
+
+    [XmlName("LogDataJson")] public string LogDataJson { get; set; }
 }

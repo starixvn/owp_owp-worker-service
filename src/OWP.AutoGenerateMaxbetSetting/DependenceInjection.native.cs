@@ -9,6 +9,7 @@ public static class DependenceInjection
     {
         services.AddTransient<LeagueSettingsRepository, LeagueSettingsRepositoryImp>();
         services.AddTransient<GeneratorService, GeneratorServiceImp>();
+        services.AddTransient<LeagueSettingChangeService, LeagueSettingChangeServiceImp>();
 
         return services;
     }
