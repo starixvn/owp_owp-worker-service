@@ -42,7 +42,7 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
 
         if (match.MatchStatus is MatchStatus.Postponed or MatchStatus.Suspended)
         {
-            if (HasInhouseProvider(match.InhouseProvider))
+            if (!string.IsNullOrWhiteSpace(match.InhouseProvider))
             {
                 var matchingInhouseProviders = Agent.InhouseProviderList.Where(provider => match.InhouseProvider.IsContainsIgnoreCase(provider)).ToList();
 
@@ -64,10 +64,16 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
         if (!string.IsNullOrEmpty(match.Provider))
         {
             var isBetradar = IsBetradar(match);
+            var isBetradar2 = IsBetradar2(match);
             var matchingProviders = Agent.ProviderList.Where(provider => match.Provider.IsContainsIgnoreCase(provider)).ToList();
 
-            if (matchingProviders.Any() || isBetradar)
+            if (matchingProviders.Any() || isBetradar || isBetradar2)
             {
+                if (isBetradar2)
+                {
+                    yield return CreateAgentConfirm(Agent.Betradar2, match);
+                }
+
                 if (isBetradar)
                 {
                     yield return CreateAgentConfirm(Agent.Betradar, match);
@@ -93,11 +99,6 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
         }
     }
 
-    private static bool HasInhouseProvider(string inhouseProvider)
-    {
-        return !string.IsNullOrWhiteSpace(inhouseProvider);
-    }
-
     private static bool IsProviderCancelled(string provider)
     {
         return provider?.Contains("cancel", StringComparison.OrdinalIgnoreCase) == true;
@@ -107,6 +108,13 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
     {
         return !string.IsNullOrEmpty(match.Provider) &&
                match.Provider.IsContainsIgnoreCase("BET") &&
+               !match.Provider.IsContainsIgnoreCase("BET365");
+    }
+
+    private static bool IsBetradar2(AgentMatchInfo match)
+    {
+        return !string.IsNullOrEmpty(match.Provider) &&
+               match.Provider.IsContainsIgnoreCase("BET2") &&
                !match.Provider.IsContainsIgnoreCase("BET365");
     }
 

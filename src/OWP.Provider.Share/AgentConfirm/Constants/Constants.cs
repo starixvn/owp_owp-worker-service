@@ -7,6 +7,7 @@ public static class Agent
     public const string Streaming = "Streaming";
     public const string Cancel = "Cancel";
     public const string Betradar = "Betradar";
+    public const string Betradar2 = "Betradar2";
     public static readonly ImmutableList<string> ProviderList = new List<string> {
         "365GV",
         "BG",
@@ -20,5 +21,6 @@ public static class Agent
     }.ToImmutableList();
 
     public static readonly ImmutableList<string> InhouseProviderList = ProviderList
-        .Add(Betradar);
+        .Add(Betradar)
+        .Add(Betradar2);
 }
