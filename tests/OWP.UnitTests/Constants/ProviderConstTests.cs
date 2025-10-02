@@ -13,6 +13,7 @@ public class ProviderConstTests
     [InlineData(18, "RTS")]
     [InlineData(19, "BG")]
     [InlineData(20, "BET")]
+    [InlineData(202, "BET2")]
     public void Provider_ShouldContainCorrectMappings(int key, string expectedValue)
     {
         // Act
@@ -33,7 +34,8 @@ public class ProviderConstTests
             { 17, "RB2" },
             { 18, "RTS" },
             { 19, "BG" },
-            { 20, "BET" }
+            { 20, "BET" },
+            { 202, "BET2" }
         };
 
         // Act & Assert
@@ -48,7 +50,7 @@ public class ProviderConstTests
     public void Provider_ShouldHaveCorrectCount()
     {
         // Act & Assert
-        ProviderConst.Provider.Should().HaveCount(6);
+        ProviderConst.Provider.Should().HaveCount(7);
     }
 
     [Fact]

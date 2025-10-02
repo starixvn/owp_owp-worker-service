@@ -2,6 +2,7 @@
 using Fanex.Logging;
 using Newtonsoft.Json;
 using OWP.Adminsite.Criteria;
+using OWP.Adminsite.Models;
 using OWP.Constants;
 using OWP.Provider.Share.AgentConfirm;
 
@@ -16,7 +17,8 @@ namespace OWP.Adminsite.Services
     public class SyncMatchProviderIdImp(
         IApiService apiService,
         SyncAgentConfirmHandler syncAgentConfirmHandler,
-        IDynamicRepository dynamicRepository)
+        IDynamicRepository dynamicRepository,
+        ILogger logger)
         : SyncMatchProviderIdService
     {
       
@@ -28,14 +30,14 @@ namespace OWP.Adminsite.Services
             await CalculateAgentConfirm();
         }
 
-        private async Task CalculateAgentConfirm()
+        public async Task CalculateAgentConfirm()
         {
             await LogService.InfoAsync($"[SyncAgentConfirmJob]=> Job retry at: {DateTimeOffset.Now} GMT-4");
 
             var eventDate = DateTime.Now.Date.AddDays(-1); // gmt-4 => yesterday
             await syncAgentConfirmHandler.Handle(eventDate).ConfigureAwait(false);
         }
-        private async Task SyncProviderMatchId(DateTime date, CancellationToken token = default)
+        public async Task SyncProviderMatchId(DateTime date, CancellationToken token = default)
         {
             var providerMatchIdTw = await apiService.QueryProviderMatchId(date);
             var providerMatchIdInfo = providerMatchIdTw.content
@@ -52,6 +54,29 @@ namespace OWP.Adminsite.Services
             {
                 ProviderMatchIdJson = JsonConvert.SerializeObject(providerMatchIdInfo)
             }, cancellationToken: token);
+
+            await AlertIfHaveAnyAbnormal(providerMatchIdTw.content);
+        }
+
+        public async Task AlertIfHaveAnyAbnormal(IList<Content> providerMatchInfo)
+        {
+            await logger.ErrorAsync(JsonConvert.SerializeObject(new{
+                message=$"Duplicate ProviderMatchId at: {DateTimeOffset.Now.UtcDateTime.AddHours(8)}",
+                payload =DetectDuplicateProviderMatchId(providerMatchInfo)
+            }));
+        }
+
+        public static IList<Content> DetectDuplicateProviderMatchId(IList<Content> providerMatchInfo)
+        {
+            var duplicateGroups = providerMatchInfo
+                .GroupBy(p => p.ProviderMatchId)
+                .Where(g => g.Count() > 1);
+
+            var duplicates = duplicateGroups
+                .SelectMany(g => g)
+                .ToList();
+
+            return duplicates;
         }
     }
 }
