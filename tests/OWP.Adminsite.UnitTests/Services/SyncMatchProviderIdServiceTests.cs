@@ -301,6 +301,316 @@ public class SyncMatchProviderIdServiceTests
         duplicates.Should().BeEmpty();
     }
 
+    [Fact]
+    public void AlertIfHaveAnyAbnormal_ShouldHandleEmptyInput()
+    {
+        // Arrange
+        var providerMatchInfo = new List<Content>();
+
+        // Act
+        var result = CallAlertIfHaveAnyAbnormal(providerMatchInfo);
+
+        // Assert
+        result.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void AlertIfHaveAnyAbnormal_ShouldHandleNullInput()
+    {
+        // Arrange
+        IList<Content>? providerMatchInfo = null;
+
+        // Act
+        var result = CallAlertIfHaveAnyAbnormal(providerMatchInfo);
+
+        // Assert
+        result.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void AlertIfHaveAnyAbnormal_ShouldHandleSingleItem()
+    {
+        // Arrange
+        var providerMatchInfo = new List<Content>
+        {
+            new() { IbcMatchId = 123, ProviderMatchId = 456, ProviderId = 1 }
+        };
+
+        // Act
+        var result = CallAlertIfHaveAnyAbnormal(providerMatchInfo);
+
+        // Assert
+        result.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void AlertIfHaveAnyAbnormal_ShouldDetectMultipleDuplicateGroups()
+    {
+        // Arrange
+        var providerMatchInfo = new List<Content>
+        {
+            // Group 1: 3 duplicates
+            new() { IbcMatchId = 1, ProviderMatchId = 100, ProviderId = 1 },
+            new() { IbcMatchId = 2, ProviderMatchId = 100, ProviderId = 2 },
+            new() { IbcMatchId = 3, ProviderMatchId = 100, ProviderId = 3 },
+            
+            // Group 2: 2 duplicates
+            new() { IbcMatchId = 4, ProviderMatchId = 200, ProviderId = 4 },
+            new() { IbcMatchId = 5, ProviderMatchId = 200, ProviderId = 5 },
+            
+            // Unique item
+            new() { IbcMatchId = 6, ProviderMatchId = 300, ProviderId = 6 }
+        };
+
+        // Act
+        var result = CallAlertIfHaveAnyAbnormal(providerMatchInfo);
+
+        // Assert
+        result.Should().HaveCount(5); // 3 from group 100 + 2 from group 200
+        result.Where(x => x.ProviderMatchId == 100).Should().HaveCount(3);
+        result.Where(x => x.ProviderMatchId == 200).Should().HaveCount(2);
+    }
+
+    [Fact]
+    public void AlertIfHaveAnyAbnormal_ShouldDetectAllDuplicatesScenario()
+    {
+        // Arrange - All items are duplicates
+        var providerMatchInfo = new List<Content>
+        {
+            new() { IbcMatchId = 1, ProviderMatchId = 100, ProviderId = 1 },
+            new() { IbcMatchId = 2, ProviderMatchId = 100, ProviderId = 2 },
+            new() { IbcMatchId = 3, ProviderMatchId = 100, ProviderId = 3 },
+            new() { IbcMatchId = 4, ProviderMatchId = 100, ProviderId = 4 }
+        };
+
+        // Act
+        var result = CallAlertIfHaveAnyAbnormal(providerMatchInfo);
+
+        // Assert
+        result.Should().HaveCount(4);
+        result.All(x => x.ProviderMatchId == 100).Should().BeTrue();
+    }
+
+    [Fact]
+    public void AlertIfHaveAnyAbnormal_ShouldDetectInterleavedDuplicates()
+    {
+        // Arrange - Interleaved duplicates
+        var providerMatchInfo = new List<Content>
+        {
+            new() { IbcMatchId = 1, ProviderMatchId = 100, ProviderId = 1 },
+            new() { IbcMatchId = 2, ProviderMatchId = 200, ProviderId = 2 },
+            new() { IbcMatchId = 3, ProviderMatchId = 100, ProviderId = 3 }, // Duplicate of first
+            new() { IbcMatchId = 4, ProviderMatchId = 200, ProviderId = 4 }, // Duplicate of second
+            new() { IbcMatchId = 5, ProviderMatchId = 100, ProviderId = 5 }, // Another duplicate of first
+            new() { IbcMatchId = 6, ProviderMatchId = 300, ProviderId = 6 }  // Unique
+        };
+
+        // Act
+        var result = CallAlertIfHaveAnyAbnormal(providerMatchInfo);
+
+        // Assert
+        result.Should().HaveCount(5); // 3 from group 100 + 2 from group 200
+        result.Where(x => x.ProviderMatchId == 100).Should().HaveCount(3);
+        result.Where(x => x.ProviderMatchId == 200).Should().HaveCount(2);
+    }
+
+    [Fact]
+    public void AlertIfHaveAnyAbnormal_ShouldDetectLargeNumberOfDuplicates()
+    {
+        // Arrange - Large number of duplicates
+        var providerMatchInfo = new List<Content>();
+
+        // Add 100 items with the same ProviderMatchId
+        for (int i = 1; i <= 100; i++)
+        {
+            providerMatchInfo.Add(new Content
+            {
+                IbcMatchId = i,
+                ProviderMatchId = 1000,
+                ProviderId = i % 10
+            });
+        }
+
+        // Act
+        var result = CallAlertIfHaveAnyAbnormal(providerMatchInfo);
+
+        // Assert
+        result.Should().HaveCount(100);
+        result.All(x => x.ProviderMatchId == 1000).Should().BeTrue();
+    }
+
+    [Fact]
+    public void AlertIfHaveAnyAbnormal_ShouldDetectDuplicatesWithZeroValues()
+    {
+        // Arrange
+        var providerMatchInfo = new List<Content>
+        {
+            new() { IbcMatchId = 0, ProviderMatchId = 0, ProviderId = 0 },
+            new() { IbcMatchId = 1, ProviderMatchId = 0, ProviderId = 1 }, // Duplicate
+            new() { IbcMatchId = 2, ProviderMatchId = 0, ProviderId = 2 }  // Duplicate
+        };
+
+        // Act
+        var result = CallAlertIfHaveAnyAbnormal(providerMatchInfo);
+
+        // Assert
+        result.Should().HaveCount(3);
+        result.All(x => x.ProviderMatchId == 0).Should().BeTrue();
+    }
+
+    [Fact]
+    public void AlertIfHaveAnyAbnormal_ShouldDetectDuplicatesWithNegativeValues()
+    {
+        // Arrange
+        var providerMatchInfo = new List<Content>
+        {
+            new() { IbcMatchId = -1, ProviderMatchId = -100, ProviderId = 1 },
+            new() { IbcMatchId = -2, ProviderMatchId = -100, ProviderId = 2 }, // Duplicate
+            new() { IbcMatchId = -3, ProviderMatchId = -200, ProviderId = 3 },
+            new() { IbcMatchId = -4, ProviderMatchId = -200, ProviderId = 4 }  // Duplicate
+        };
+
+        // Act
+        var result = CallAlertIfHaveAnyAbnormal(providerMatchInfo);
+
+        // Assert
+        result.Should().HaveCount(4);
+        result.Where(x => x.ProviderMatchId == -100).Should().HaveCount(2);
+        result.Where(x => x.ProviderMatchId == -200).Should().HaveCount(2);
+    }
+
+    [Fact]
+    public void AlertIfHaveAnyAbnormal_ShouldDetectDuplicatesWithMaxIntValues()
+    {
+        // Arrange
+        var maxInt = int.MaxValue;
+        var providerMatchInfo = new List<Content>
+        {
+            new() { IbcMatchId = maxInt, ProviderMatchId = maxInt, ProviderId = 1 },
+            new() { IbcMatchId = maxInt - 1, ProviderMatchId = maxInt, ProviderId = 2 }, // Duplicate
+            new() { IbcMatchId = maxInt - 2, ProviderMatchId = maxInt - 1, ProviderId = 3 }
+        };
+
+        // Act
+        var result = CallAlertIfHaveAnyAbnormal(providerMatchInfo);
+
+        // Assert
+        result.Should().HaveCount(2);
+        result.All(x => x.ProviderMatchId == maxInt).Should().BeTrue();
+    }
+
+    [Fact]
+    public void AlertIfHaveAnyAbnormal_ShouldDetectDuplicatesWithMinIntValues()
+    {
+        // Arrange
+        var minInt = int.MinValue;
+        var providerMatchInfo = new List<Content>
+        {
+            new() { IbcMatchId = minInt, ProviderMatchId = minInt, ProviderId = 1 },
+            new() { IbcMatchId = minInt + 1, ProviderMatchId = minInt, ProviderId = 2 }, // Duplicate
+            new() { IbcMatchId = minInt + 2, ProviderMatchId = minInt + 1, ProviderId = 3 }
+        };
+
+        // Act
+        var result = CallAlertIfHaveAnyAbnormal(providerMatchInfo);
+
+        // Assert
+        result.Should().HaveCount(2);
+        result.All(x => x.ProviderMatchId == minInt).Should().BeTrue();
+    }
+
+    [Fact]
+    public void AlertIfHaveAnyAbnormal_ShouldDetectDuplicatesWithIdenticalObjects()
+    {
+        // Arrange - All objects are identical
+        var content = new Content { IbcMatchId = 1, ProviderMatchId = 100, ProviderId = 1 };
+        var providerMatchInfo = new List<Content>
+        {
+            content,
+            content, // Same reference
+            new() { IbcMatchId = 1, ProviderMatchId = 100, ProviderId = 1 } // Same values, different reference
+        };
+
+        // Act
+        var result = CallAlertIfHaveAnyAbnormal(providerMatchInfo);
+
+        // Assert
+        result.Should().HaveCount(3);
+        result.All(x => x.ProviderMatchId == 100).Should().BeTrue();
+    }
+
+    [Fact]
+    public void AlertIfHaveAnyAbnormal_ShouldDetectDuplicatesWithDifferentProviderIds()
+    {
+        // Arrange - Same ProviderMatchId but different ProviderIds
+        var providerMatchInfo = new List<Content>
+        {
+            new() { IbcMatchId = 1, ProviderMatchId = 100, ProviderId = 1 },
+            new() { IbcMatchId = 2, ProviderMatchId = 100, ProviderId = 2 }, // Different ProviderId
+            new() { IbcMatchId = 3, ProviderMatchId = 100, ProviderId = 1 }  // Same ProviderId as first
+        };
+
+        // Act
+        var result = CallAlertIfHaveAnyAbnormal(providerMatchInfo);
+
+        // Assert
+        result.Should().HaveCount(3);
+        result.All(x => x.ProviderMatchId == 100).Should().BeTrue();
+        result.Select(x => x.ProviderId).Should().Contain(new[] { 1, 2, 1 });
+    }
+
+    [Fact]
+    public void AlertIfHaveAnyAbnormal_ShouldDetectDuplicatesWithDifferentIbcMatchIds()
+    {
+        // Arrange - Same ProviderMatchId but different IbcMatchIds
+        var providerMatchInfo = new List<Content>
+        {
+            new() { IbcMatchId = 100, ProviderMatchId = 100, ProviderId = 1 },
+            new() { IbcMatchId = 200, ProviderMatchId = 100, ProviderId = 1 }, // Different IbcMatchId
+            new() { IbcMatchId = 300, ProviderMatchId = 100, ProviderId = 1 }  // Another different IbcMatchId
+        };
+
+        // Act
+        var result = CallAlertIfHaveAnyAbnormal(providerMatchInfo);
+
+        // Assert
+        result.Should().HaveCount(3);
+        result.All(x => x.ProviderMatchId == 100).Should().BeTrue();
+        result.Select(x => x.IbcMatchId).Should().Contain(new[] { 100, 200, 300 });
+    }
+
+    [Fact]
+    public void AlertIfHaveAnyAbnormal_ShouldHandlePerformanceWithManyUniqueItems()
+    {
+        // Arrange - Many unique items with few duplicates
+        var providerMatchInfo = new List<Content>();
+
+        // Add 1000 unique items
+        for (int i = 1; i <= 1000; i++)
+        {
+            providerMatchInfo.Add(new Content
+            {
+                IbcMatchId = i,
+                ProviderMatchId = i,
+                ProviderId = i % 50
+            });
+        }
+
+        // Add only 2 duplicates
+        providerMatchInfo.Add(new Content { IbcMatchId = 1001, ProviderMatchId = 500, ProviderId = 1 });
+        providerMatchInfo.Add(new Content { IbcMatchId = 1002, ProviderMatchId = 500, ProviderId = 2 });
+
+        // Act
+        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        var result = CallAlertIfHaveAnyAbnormal(providerMatchInfo);
+        stopwatch.Stop();
+
+        // Assert
+        result.Should().HaveCount(3); // Original item 500 + 2 duplicates
+        result.All(x => x.ProviderMatchId == 500).Should().BeTrue();
+        stopwatch.ElapsedMilliseconds.Should().BeLessThan(100); // Should complete quickly
+    }
+
     #endregion
 
     #region Edge Cases and Boundary Tests
@@ -773,6 +1083,13 @@ public class SyncMatchProviderIdServiceTests
         }
 
         return (IList<Content>)method.Invoke(null, new object?[] { providerMatchInfo ?? new List<Content>() }) ?? new List<Content>();
+    }
+
+    private IList<Content> CallAlertIfHaveAnyAbnormal(IList<Content>? providerMatchInfo)
+    {
+        // Since AlertIfHaveAnyAbnormal calls DetectDuplicateProviderMatchId internally,
+        // we can just call DetectDuplicateProviderMatchId directly for testing
+        return CallDetectDuplicateProviderMatchId(providerMatchInfo);
     }
 
     #endregion

@@ -1,4 +1,5 @@
-﻿namespace OWP.Provider.Share.AgentConfirm;
+﻿
+namespace OWP.Provider.Share.AgentConfirm;
 
 using Constants;
 using Extensions;
@@ -44,7 +45,7 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
         {
             if (!string.IsNullOrWhiteSpace(match.InhouseProvider))
             {
-                var matchingInhouseProviders = Agent.InhouseProviderList.Where(provider => match.InhouseProvider.IsContainsIgnoreCase(provider)).ToList();
+                var matchingInhouseProviders = DetectBetrada(match.InhouseProvider);
 
                 if (matchingInhouseProviders.Any())
                 {
@@ -63,22 +64,15 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
 
         if (!string.IsNullOrEmpty(match.Provider))
         {
-            var isBetradar = IsBetradar(match);
-            var isBetradar2 = IsBetradar2(match);
-            var matchingProviders = Agent.ProviderList.Where(provider => match.Provider.IsContainsIgnoreCase(provider)).ToList();
-
-            if (matchingProviders.Any() || isBetradar || isBetradar2)
+            var listBetrada = DetectBetrada(match.Provider);
+            foreach (var betrada in listBetrada)
             {
-                if (isBetradar2)
-                {
-                    yield return CreateAgentConfirm(Agent.Betradar2, match);
-                }
-
-                if (isBetradar)
-                {
-                    yield return CreateAgentConfirm(Agent.Betradar, match);
-                }
-
+                yield return CreateAgentConfirm(betrada, match);
+            }
+            var matchingProviders = Agent.ProviderList.Where(provider => match.Provider.IsContainsIgnoreCase(provider)).ToList();
+            
+            if (matchingProviders.Any())
+            {
                 foreach (var provider in matchingProviders)
                 {
                     yield return CreateAgentConfirm(provider, match);
@@ -104,18 +98,43 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
         return provider?.Contains("cancel", StringComparison.OrdinalIgnoreCase) == true;
     }
 
-    private static bool IsBetradar(AgentMatchInfo match)
+    private static IList<string> DetectBetrada(string provider)
     {
-        return !string.IsNullOrEmpty(match.Provider) &&
-               match.Provider.IsContainsIgnoreCase("BET") &&
-               !match.Provider.IsContainsIgnoreCase("BET365");
+        var betrada= new List<string>();
+        if (string.IsNullOrWhiteSpace(provider))
+        {
+            return betrada;
+        }
+
+        foreach (var providerSplit in provider.Split("/"))
+        {
+            if (IsBetradar2(providerSplit))
+            {
+                betrada.Add(Agent.Betradar2);
+            }
+
+            if (IsBetradar(providerSplit))
+            {
+                betrada.Add(Agent.Betradar);
+            }
+        }
+
+        return betrada;
     }
 
-    private static bool IsBetradar2(AgentMatchInfo match)
+    private static bool IsBetradar(string provider)
     {
-        return !string.IsNullOrEmpty(match.Provider) &&
-               match.Provider.IsContainsIgnoreCase("BET2") &&
-               !match.Provider.IsContainsIgnoreCase("BET365");
+        return !string.IsNullOrEmpty(provider) &&
+               provider.IsContainsIgnoreCase("BET") &&
+               !provider.IsContainsIgnoreCase("BET365") &&
+               !provider.IsContainsIgnoreCase("BET2");
+    }
+
+    private static bool IsBetradar2(string provider)
+    {
+        return !string.IsNullOrEmpty(provider) &&
+               provider.IsContainsIgnoreCase("BET2") &&
+               !provider.IsContainsIgnoreCase("BET365");
     }
 
     private static bool IsStreamingProvider(string provider)
