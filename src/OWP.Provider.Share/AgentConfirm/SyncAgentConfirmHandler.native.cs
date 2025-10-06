@@ -17,7 +17,9 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
     public async Task Handle(DateTime eventDate)
     {
         var agentMatches = await repository.GetOwpMainMatchesByDate(eventDate);
-        var agentConfirms = agentMatches.SelectMany(CalculateProvider).Distinct().ToList();
+
+        var agentConfirms = agentMatches
+            .SelectMany(CalculateProvider).Distinct().ToList();
         await repository.SaveAgentConfirm(agentConfirms);
     }
 
@@ -56,6 +58,19 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
 
                     yield break;
                 }
+
+                // Check if inhouse provider matches any regular provider names
+                var matchingProviders = Agent.ProviderList.Where(provider => match.InhouseProvider.IsContainsIgnoreCase(provider)).ToList();
+
+                if (matchingProviders.Any())
+                {
+                    foreach (var provider in matchingProviders)
+                    {
+                        yield return CreateAgentConfirm(provider, match);
+                    }
+
+                    yield break;
+                }
             }
 
             yield return CreateAgentConfirm(Agent.Cancel, match);
@@ -70,14 +85,17 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
                 yield return CreateAgentConfirm(betrada, match);
             }
             var matchingProviders = Agent.ProviderList.Where(provider => match.Provider.IsContainsIgnoreCase(provider)).ToList();
-            
+
             if (matchingProviders.Any())
             {
                 foreach (var provider in matchingProviders)
                 {
                     yield return CreateAgentConfirm(provider, match);
                 }
+            }
 
+            if (listBetrada.Any() || matchingProviders.Any())
+            {
                 yield break;
             }
 
@@ -100,7 +118,7 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
 
     private static IList<string> DetectBetrada(string provider)
     {
-        var betrada= new List<string>();
+        var betrada = new List<string>();
         if (string.IsNullOrWhiteSpace(provider))
         {
             return betrada;
