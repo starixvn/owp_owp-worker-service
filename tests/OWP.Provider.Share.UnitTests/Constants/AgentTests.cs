@@ -27,6 +27,13 @@ public class AgentTests
     }
 
     [Fact]
+    public void Betradar2_ShouldReturnCorrectValue()
+    {
+        // Act & Assert
+        Agent.Betradar2.Should().Be("Betradar2");
+    }
+
+    [Fact]
     public void ProviderList_ShouldContainExpectedProviders()
     {
         // Arrange
@@ -51,9 +58,10 @@ public class AgentTests
     public void InhouseProviderList_ShouldContainAllProviderListItems()
     {
         // Act & Assert
-        Agent.InhouseProviderList.Should().HaveCount(10);
+        Agent.InhouseProviderList.Should().HaveCount(11);
         Agent.InhouseProviderList.Should().Contain(Agent.ProviderList);
         Agent.InhouseProviderList.Should().Contain(Agent.Betradar);
+        Agent.InhouseProviderList.Should().Contain(Agent.Betradar2);
     }
 
     [Fact]
@@ -67,7 +75,7 @@ public class AgentTests
     public void InhouseProviderList_ShouldHaveCorrectOrder()
     {
         // Arrange
-        var expectedOrder = Agent.ProviderList.Add(Agent.Betradar);
+        var expectedOrder = Agent.ProviderList.Add(Agent.Betradar).Add(Agent.Betradar2);
 
         // Act & Assert
         Agent.InhouseProviderList.Should().Equal(expectedOrder);
@@ -80,13 +88,14 @@ public class AgentTests
         Agent.Streaming.Should().NotBeNullOrEmpty();
         Agent.Cancel.Should().NotBeNullOrEmpty();
         Agent.Betradar.Should().NotBeNullOrEmpty();
+        Agent.Betradar2.Should().NotBeNullOrEmpty();
     }
 
     [Fact]
     public void AllConstants_ShouldBeUnique()
     {
         // Arrange
-        var constants = new[] { Agent.Streaming, Agent.Cancel, Agent.Betradar };
+        var constants = new[] { Agent.Streaming, Agent.Cancel, Agent.Betradar, Agent.Betradar2 };
 
         // Act & Assert
         constants.Should().OnlyHaveUniqueItems();

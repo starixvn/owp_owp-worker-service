@@ -11,7 +11,8 @@ namespace OWP.Constants
             { 17, "RB2" },
             { 18, "RTS" },
             { 19, "BG" },
-            { 20, "BET" }
+            { 20, "BET" },
+            { 202, "BET2" }
         }.ToImmutableDictionary();
     }
 }
