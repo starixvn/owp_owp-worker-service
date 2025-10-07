@@ -41,6 +41,7 @@ namespace OWP.Adminsite.Services
         {
             var providerMatchIdTw = await apiService.QueryProviderMatchId(date);
             var providerMatchIdInfo = providerMatchIdTw.content
+                .Where(x=>x.ProviderId!=202)
                 .Select(x => new
                 {
                     CreatedDate = DateTime.Now.AddHours(12),
