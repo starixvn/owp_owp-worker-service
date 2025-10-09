@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Configuration;
-using Moq;
+using NSubstitute;
 using OWP.Adminsite.Models;
 using OWP.Adminsite.Services;
 using OWP.Extensions;
@@ -16,10 +16,10 @@ namespace OWP.Adminsite.UnitTests.Services;
 public class ApiServiceTests
 {
     private readonly AdminSiteSettings _apiSettings;
-    private readonly Mock<HttpHandler> _mockHttpHandler;
-    private readonly Mock<IConfiguration> _mockConfiguration;
-    private readonly Mock<LogWriterService> _mockLogWriterService;
-    private readonly Mock<ILogger> _mockLogger;
+    private readonly HttpHandler _mockHttpHandler;
+    private readonly IConfiguration _mockConfiguration;
+    private readonly LogWriterService _mockLogWriterService;
+    private readonly ILogger _mockLogger;
     private readonly ApiService _apiService;
 
     public ApiServiceTests()
@@ -29,36 +29,36 @@ public class ApiServiceTests
             PushMatchInfoAPI = "https://api.example.com/push",
             InfositeAPI = "https://api.example.com/"
         };
-        _mockHttpHandler = new Mock<HttpHandler>();
-        _mockConfiguration = new Mock<IConfiguration>();
-        _mockLogWriterService = new Mock<LogWriterService>();
-        _mockLogger = new Mock<ILogger>();
+        _mockHttpHandler = Substitute.For<HttpHandler>();
+        _mockConfiguration = Substitute.For<IConfiguration>();
+        _mockLogWriterService = Substitute.For<LogWriterService>();
+        _mockLogger = Substitute.For<ILogger>();
 
         _apiService = new ApiService(
             _apiSettings,
-            _mockHttpHandler.Object,
-            _mockConfiguration.Object,
-            _mockLogWriterService.Object,
-            _mockLogger.Object);
+            _mockHttpHandler,
+            _mockConfiguration,
+            _mockLogWriterService,
+            _mockLogger);
     }
 
     [Fact]
     public void Constructor_ShouldCreateInstance()
     {
         // Arrange
-        var mockApiSettings = new Mock<AdminSiteSettings>();
-        var mockHttpHandler = new Mock<HttpHandler>();
-        var mockConfiguration = new Mock<IConfiguration>();
-        var mockLogWriterService = new Mock<LogWriterService>();
-        var mockLogger = new Mock<ILogger>();
+        var mockApiSettings = Substitute.For<AdminSiteSettings>();
+        var mockHttpHandler = Substitute.For<HttpHandler>();
+        var mockConfiguration = Substitute.For<IConfiguration>();
+        var mockLogWriterService = Substitute.For<LogWriterService>();
+        var mockLogger = Substitute.For<ILogger>();
 
         // Act
         var apiService = new ApiService(
-            mockApiSettings.Object,
-            mockHttpHandler.Object,
-            mockConfiguration.Object,
-            mockLogWriterService.Object,
-            mockLogger.Object);
+            mockApiSettings,
+            mockHttpHandler,
+            mockConfiguration,
+            mockLogWriterService,
+            mockLogger);
 
         // Assert
         apiService.Should().NotBeNull();
@@ -86,15 +86,15 @@ public class ApiServiceTests
             new() { MatchId = 1, Provider = "Test Provider" }
         };
 
-        _mockConfiguration.Setup(x => x.GetSection("Environment").Value).Returns(environment);
+        _mockConfiguration.GetSection("Environment").Value.Returns(environment);
 
         // Act
         var result = await _apiService.PushMatchInfoAsync(fromDate, toDate, matchInfos);
 
         // Assert
         result.Should().BeEmpty();
-        _mockLogger.Verify(x => x.InfoAsync(It.IsAny<string>()), Times.Once);
-        _mockHttpHandler.Verify(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()), Times.Never);
+        _mockLogger.Received(1).InfoAsync(Arg.Any<string>());
+        _mockHttpHandler.DidNotReceive().PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>());
     }
 
     [Theory]
@@ -111,16 +111,16 @@ public class ApiServiceTests
             new() { MatchId = 1, Provider = "Test Provider" }
         };
 
-        _mockConfiguration.Setup(x => x.GetSection("Environment").Value).Returns(environment);
-        _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-            .ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent("[]") });
+        _mockConfiguration.GetSection("Environment").Value.Returns(environment);
+        _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+            .Returns(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent("[]") });
 
         // Act
         var result = await _apiService.PushMatchInfoAsync(fromDate, toDate, matchInfos);
 
         // Assert
         result.Should().BeEmpty();
-        _mockHttpHandler.Verify(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()), Times.Once);
+        _mockHttpHandler.Received(1).PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>());
     }
 
     [Fact]
@@ -134,16 +134,16 @@ public class ApiServiceTests
             new() { MatchId = 1, Provider = "Test Provider" }
         };
 
-        _mockConfiguration.Setup(x => x.GetSection("Environment").Value).Returns("PROD");
-        _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-            .ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent("[]") });
+        _mockConfiguration.GetSection("Environment").Value.Returns("PROD");
+        _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+            .Returns(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent("[]") });
 
         // Act
         var result = await _apiService.PushMatchInfoAsync(fromDate, toDate, matchInfos);
 
         // Assert
         result.Should().BeEmpty();
-        _mockLogger.Verify(x => x.InfoAsync(It.Is<string>(s => s.Contains("Sync match info to AdminSite"))), Times.Once);
+        _mockLogger.Received(1).InfoAsync(Arg.Is<string>(s => s.Contains("Sync match info to AdminSite")));
     }
 
     [Fact]
@@ -157,16 +157,16 @@ public class ApiServiceTests
             new() { MatchId = 1, Provider = "Test Provider" }
         };
 
-        _mockConfiguration.Setup(x => x.GetSection("Environment").Value).Returns("PROD");
-        _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-            .ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest });
+        _mockConfiguration.GetSection("Environment").Value.Returns("PROD");
+        _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+            .Returns(new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest });
 
         // Act
         var result = await _apiService.PushMatchInfoAsync(fromDate, toDate, matchInfos);
 
         // Assert
         result.Should().BeEquivalentTo(matchInfos);
-        _mockLogger.Verify(x => x.ErrorAsync(It.Is<string>(s => s.Contains("Sync match info to AdminSite"))), Times.Once);
+        _mockLogger.Received(1).ErrorAsync(Arg.Is<string>(s => s.Contains("Sync match info to AdminSite")));
     }
 
     [Fact]
@@ -180,17 +180,17 @@ public class ApiServiceTests
             new() { MatchId = 1, Provider = "Test Provider" }
         };
 
-        _mockConfiguration.Setup(x => x.GetSection("Environment").Value).Returns("PROD");
-        _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-            .ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent("[]") });
+        _mockConfiguration.GetSection("Environment").Value.Returns("PROD");
+        _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+            .Returns(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent("[]") });
 
         // Act
         await _apiService.PushMatchInfoAsync(fromDate, toDate, matchInfos);
 
         // Assert
-        _mockHttpHandler.Verify(x => x.PostAsync(
-            It.IsAny<string>(),
-            It.Is<HttpContent>(c => c is StringContent)), Times.Once);
+        _mockHttpHandler.Received(1).PostAsync(
+            Arg.Any<string>(),
+            Arg.Is<HttpContent>(c => c is StringContent));
     }
 
     #endregion
@@ -214,8 +214,8 @@ public class ApiServiceTests
         };
         var jsonData = JsonConvert.SerializeObject(expectedData);
 
-        _mockHttpHandler.Setup(x => x.GetAsync(It.IsAny<string>()))
-            .ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(jsonData) });
+        _mockHttpHandler.GetAsync(Arg.Any<string>())
+            .Returns(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(jsonData) });
 
         // Act
         var result = await _apiService.QueryProviderMatchId(date);
@@ -229,7 +229,7 @@ public class ApiServiceTests
         result.content[0].IbcMatchId.Should().Be(123);
         result.content[0].ProviderMatchId.Should().Be(456);
         result.content[0].ProviderId.Should().Be(789);
-        _mockLogWriterService.Verify(x => x.Execute(It.IsAny<AdminSiteLogCriteria>()), Times.Once);
+        _mockLogWriterService.Received(1).Execute(Arg.Any<AdminSiteLogCriteria>());
     }
 
     [Fact]
@@ -239,8 +239,8 @@ public class ApiServiceTests
         var date = new DateTime(2023, 1, 1);
         var requestLink = $"https://api.example.com/api/OWP/GetSportsTickerMapping?sportType=1&date={date.ToString(ApiService.DateTimeFormat)}";
 
-        _mockHttpHandler.Setup(x => x.GetAsync(It.IsAny<string>()))
-            .ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest });
+        _mockHttpHandler.GetAsync(Arg.Any<string>())
+            .Returns(new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest });
 
         // Act
         var task = _apiService.QueryProviderMatchId(date);
@@ -248,9 +248,9 @@ public class ApiServiceTests
         // Assert
         // Since this method has an infinite loop, we can't easily test the full behavior
         // But we can verify the initial call and logging
-        _mockHttpHandler.Verify(x => x.GetAsync(It.IsAny<string>()), Times.AtLeastOnce);
-        _mockLogger.Verify(x => x.ErrorAsync(It.IsAny<string>()), Times.AtLeastOnce);
-        _mockLogWriterService.Verify(x => x.Execute(It.IsAny<AdminSiteLogCriteria>()), Times.AtLeastOnce);
+        _mockHttpHandler.Received().GetAsync(Arg.Any<string>());
+        _mockLogger.Received().ErrorAsync(Arg.Any<string>());
+        _mockLogWriterService.Received().Execute(Arg.Any<AdminSiteLogCriteria>());
     }
 
     [Fact]
@@ -261,14 +261,14 @@ public class ApiServiceTests
         var expectedDateFormat = date.ToString(ApiService.DateTimeFormat);
         var expectedUrl = $"https://api.example.com/api/OWP/GetSportsTickerMapping?sportType=1&date={expectedDateFormat}";
 
-        _mockHttpHandler.Setup(x => x.GetAsync(It.IsAny<string>()))
-            .ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent("{}") });
+        _mockHttpHandler.GetAsync(Arg.Any<string>())
+            .Returns(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent("{}") });
 
         // Act
         var task = _apiService.QueryProviderMatchId(date);
 
         // Assert
-        _mockHttpHandler.Verify(x => x.GetAsync(expectedUrl), Times.AtLeastOnce);
+        _mockHttpHandler.Received().GetAsync(expectedUrl);
     }
 
     [Fact]
@@ -288,14 +288,14 @@ public class ApiServiceTests
         };
         var jsonData = JsonConvert.SerializeObject(expectedData);
 
-        _mockHttpHandler.Setup(x => x.GetAsync(It.IsAny<string>()))
-            .ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(jsonData) });
+        _mockHttpHandler.GetAsync(Arg.Any<string>())
+            .Returns(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(jsonData) });
 
         // Act
         var result = await _apiService.QueryProviderMatchId(date);
 
         // Assert
-        _mockLogWriterService.Verify(x => x.Execute(It.Is<AdminSiteLogCriteria>(c => c.Action == "SyncProviderMatchId")), Times.Once);
+        _mockLogWriterService.Received(1).Execute(Arg.Is<AdminSiteLogCriteria>(c => c.Action == "SyncProviderMatchId"));
     }
 
     #endregion
@@ -310,16 +310,16 @@ public class ApiServiceTests
         var toDate = new DateTime(2023, 1, 2);
         var matchInfos = new List<MatchInfoApiModel>();
 
-        _mockConfiguration.Setup(x => x.GetSection("Environment").Value).Returns("PROD");
-        _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-            .ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent("[]") });
+        _mockConfiguration.GetSection("Environment").Value.Returns("PROD");
+        _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+            .Returns(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent("[]") });
 
         // Act
         var result = await _apiService.PushMatchInfoAsync(fromDate, toDate, matchInfos);
 
         // Assert
         result.Should().BeEmpty();
-        _mockHttpHandler.Verify(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()), Times.Once);
+        _mockHttpHandler.Received(1).PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>());
     }
 
     [Fact]
@@ -330,16 +330,16 @@ public class ApiServiceTests
         var toDate = new DateTime(2023, 1, 2);
         List<MatchInfoApiModel>? matchInfos = null;
 
-        _mockConfiguration.Setup(x => x.GetSection("Environment").Value).Returns("PROD");
-        _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-            .ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent("[]") });
+        _mockConfiguration.GetSection("Environment").Value.Returns("PROD");
+        _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+            .Returns(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent("[]") });
 
         // Act
         var result = await _apiService.PushMatchInfoAsync(fromDate, toDate, matchInfos!);
 
         // Assert
         result.Should().BeEmpty();
-        _mockHttpHandler.Verify(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()), Times.Once);
+        _mockHttpHandler.Received(1).PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>());
     }
 
     [Theory]
@@ -354,16 +354,16 @@ public class ApiServiceTests
             new() { MatchId = 1, Provider = "Test Provider" }
         };
 
-        _mockConfiguration.Setup(x => x.GetSection("Environment").Value).Returns(environment);
-        _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-            .ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent("[]") });
+        _mockConfiguration.GetSection("Environment").Value.Returns(environment);
+        _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+            .Returns(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent("[]") });
 
         // Act
         var result = await _apiService.PushMatchInfoAsync(fromDate, toDate, matchInfos);
 
         // Assert
         result.Should().BeEmpty();
-        _mockHttpHandler.Verify(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()), Times.Once);
+        _mockHttpHandler.Received(1).PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>());
     }
 
     [Fact]
@@ -377,16 +377,16 @@ public class ApiServiceTests
             new() { MatchId = 1, Provider = "Test Provider" }
         };
 
-        _mockConfiguration.Setup(x => x.GetSection("Environment").Value).Returns((string?)null);
-        _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-            .ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent("[]") });
+        _mockConfiguration.GetSection("Environment").Value.Returns((string?)null);
+        _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+            .Returns(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent("[]") });
 
         // Act
         var result = await _apiService.PushMatchInfoAsync(fromDate, toDate, matchInfos);
 
         // Assert
         result.Should().BeEmpty();
-        _mockHttpHandler.Verify(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()), Times.Once);
+        _mockHttpHandler.Received(1).PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>());
     }
 
     #endregion

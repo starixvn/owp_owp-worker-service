@@ -1,7 +1,7 @@
 using Fanex.Data.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Moq;
+using NSubstitute;
 using OWP.Provider.Share;
 using OWP.Provider.Share.AgentConfirm;
 using OWP.Provider.Share.AgentConfirm.Services;
@@ -15,8 +15,8 @@ public class DependenceInjectionTests
     {
         // Arrange
         var services = new ServiceCollection();
-        var mockRepository = new Mock<IDynamicRepository>();
-        services.AddScoped<IDynamicRepository>(_ => mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        services.AddScoped<IDynamicRepository>(_ => mockRepository);
 
         // Act
         services.AddProviderServices();
@@ -34,8 +34,8 @@ public class DependenceInjectionTests
     {
         // Arrange
         var services = new ServiceCollection();
-        var mockRepository = new Mock<IDynamicRepository>();
-        services.AddScoped<IDynamicRepository>(_ => mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        services.AddScoped<IDynamicRepository>(_ => mockRepository);
 
         // Act
         services.AddProviderServices();
@@ -53,8 +53,8 @@ public class DependenceInjectionTests
     {
         // Arrange
         var services = new ServiceCollection();
-        var mockRepository = new Mock<IDynamicRepository>();
-        services.AddScoped<IDynamicRepository>(_ => mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        services.AddScoped<IDynamicRepository>(_ => mockRepository);
 
         // Act
         services.AddProviderServices();
@@ -101,8 +101,8 @@ public class DependenceInjectionTests
     {
         // Arrange
         var services = new ServiceCollection();
-        var mockRepository = new Mock<IDynamicRepository>();
-        services.AddScoped<IDynamicRepository>(_ => mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        services.AddScoped<IDynamicRepository>(_ => mockRepository);
 
         // Act
         services.AddProviderServices();
@@ -120,8 +120,8 @@ public class DependenceInjectionTests
     {
         // Arrange
         var services = new ServiceCollection();
-        var mockRepository = new Mock<IDynamicRepository>();
-        services.AddScoped<IDynamicRepository>(_ => mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        services.AddScoped<IDynamicRepository>(_ => mockRepository);
 
         // Act
         services.AddProviderServices();
@@ -141,8 +141,8 @@ public class DependenceInjectionTests
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging(); // Add some existing services
-        var mockRepository = new Mock<IDynamicRepository>();
-        services.AddScoped<IDynamicRepository>(_ => mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        services.AddScoped<IDynamicRepository>(_ => mockRepository);
 
         // Act
         services.AddProviderServices();

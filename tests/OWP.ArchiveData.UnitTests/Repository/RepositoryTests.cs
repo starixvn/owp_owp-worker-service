@@ -1,5 +1,5 @@
 using Fanex.Data.Repository;
-using Moq;
+using NSubstitute;
 using OWP.ArchiveData;
 
 namespace OWP.ArchiveData.UnitTests.Repository;
@@ -10,10 +10,10 @@ public class RepositoryTests
     public void Constructor_ShouldCreateInstance()
     {
         // Arrange
-        var mockRepository = new Mock<IDynamicRepository>();
+        var mockRepository = Substitute.For<IDynamicRepository>();
 
         // Act
-        var repository = new RepositoryImp(mockRepository.Object);
+        var repository = new RepositoryImp(mockRepository);
 
         // Assert
         repository.Should().NotBeNull();
@@ -23,8 +23,8 @@ public class RepositoryTests
     public void CopyDataToOldTable_ShouldBeCallable()
     {
         // Arrange
-        var mockRepository = new Mock<IDynamicRepository>();
-        var repository = new RepositoryImp(mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var repository = new RepositoryImp(mockRepository);
         var date = new DateTime(2023, 1, 1);
 
         // Act & Assert
@@ -38,8 +38,8 @@ public class RepositoryTests
     public void ArchiveOldMessage_ShouldBeCallable()
     {
         // Arrange
-        var mockRepository = new Mock<IDynamicRepository>();
-        var repository = new RepositoryImp(mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var repository = new RepositoryImp(mockRepository);
         var date = new DateTime(2023, 1, 1);
 
         // Act & Assert
@@ -53,8 +53,8 @@ public class RepositoryTests
     public void DeleteOldNoOfferMatch_ShouldBeCallable()
     {
         // Arrange
-        var mockRepository = new Mock<IDynamicRepository>();
-        var repository = new RepositoryImp(mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var repository = new RepositoryImp(mockRepository);
         var date = new DateTime(2023, 1, 1);
 
         // Act & Assert
@@ -68,8 +68,8 @@ public class RepositoryTests
     public void DeleteOldData_ShouldBeCallable()
     {
         // Arrange
-        var mockRepository = new Mock<IDynamicRepository>();
-        var repository = new RepositoryImp(mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var repository = new RepositoryImp(mockRepository);
         var date = new DateTime(2023, 1, 1);
 
         // Act & Assert
@@ -83,8 +83,8 @@ public class RepositoryTests
     public void DeleteOldNotify_ShouldBeCallable()
     {
         // Arrange
-        var mockRepository = new Mock<IDynamicRepository>();
-        var repository = new RepositoryImp(mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var repository = new RepositoryImp(mockRepository);
         var date = new DateTime(2023, 1, 1);
 
         // Act & Assert
@@ -98,8 +98,8 @@ public class RepositoryTests
     public async Task DeleteOldData_WithInvalidDate_ShouldThrowArgumentOutOfRangeException()
     {
         // Arrange
-        var mockRepository = new Mock<IDynamicRepository>();
-        var repository = new RepositoryImp(mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var repository = new RepositoryImp(mockRepository);
         var date = DateTime.Today.AddDays(-30); // Invalid date (not old enough)
 
         // Act & Assert
@@ -111,8 +111,8 @@ public class RepositoryTests
     public async Task DeleteOldNotify_WithInvalidDate_ShouldThrowArgumentOutOfRangeException()
     {
         // Arrange
-        var mockRepository = new Mock<IDynamicRepository>();
-        var repository = new RepositoryImp(mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var repository = new RepositoryImp(mockRepository);
         var date = DateTime.Today.AddDays(-30); // Invalid date (not old enough)
 
         // Act & Assert
@@ -128,8 +128,8 @@ public class RepositoryTests
     public async Task DeleteOldData_WithVariousInvalidDates_ShouldThrowArgumentOutOfRangeException(int daysOffset)
     {
         // Arrange
-        var mockRepository = new Mock<IDynamicRepository>();
-        var repository = new RepositoryImp(mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var repository = new RepositoryImp(mockRepository);
         var date = DateTime.Today.AddDays(daysOffset);
 
         // Act & Assert
@@ -145,8 +145,8 @@ public class RepositoryTests
     public async Task DeleteOldNotify_WithVariousInvalidDates_ShouldThrowArgumentOutOfRangeException(int daysOffset)
     {
         // Arrange
-        var mockRepository = new Mock<IDynamicRepository>();
-        var repository = new RepositoryImp(mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var repository = new RepositoryImp(mockRepository);
         var date = DateTime.Today.AddDays(daysOffset);
 
         // Act & Assert

@@ -1,5 +1,5 @@
 using Fanex.Data.Repository;
-using Moq;
+using NSubstitute;
 using OWP.AutoGenerateMaxbetSetting;
 using OWP.AutoGenerateMaxbetSetting.Models;
 using Match = OWP.AutoGenerateMaxbetSetting.Models.Match;
@@ -12,10 +12,10 @@ public class LeagueSettingsRepositoryTests
     public void Constructor_ShouldCreateInstance()
     {
         // Arrange
-        var mockRepository = new Mock<IDynamicRepository>();
+        var mockRepository = Substitute.For<IDynamicRepository>();
 
         // Act
-        var repository = new LeagueSettingsRepositoryImp(mockRepository.Object);
+        var repository = new LeagueSettingsRepositoryImp(mockRepository);
 
         // Assert
         repository.Should().NotBeNull();
@@ -25,8 +25,8 @@ public class LeagueSettingsRepositoryTests
     public void GetMatchesAndSettings_ShouldBeCallable()
     {
         // Arrange
-        var mockRepository = new Mock<IDynamicRepository>();
-        var repository = new LeagueSettingsRepositoryImp(mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var repository = new LeagueSettingsRepositoryImp(mockRepository);
         var eventDate = new DateTime(2024, 1, 15);
 
         // Act & Assert
@@ -40,8 +40,8 @@ public class LeagueSettingsRepositoryTests
     public void InsertNewLeaguesSettings_ShouldBeCallable()
     {
         // Arrange
-        var mockRepository = new Mock<IDynamicRepository>();
-        var repository = new LeagueSettingsRepositoryImp(mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var repository = new LeagueSettingsRepositoryImp(mockRepository);
         var leagueSettings = new List<LeagueSetting>();
 
         // Act & Assert
@@ -55,8 +55,8 @@ public class LeagueSettingsRepositoryTests
     public async Task InsertNewLeaguesSettings_ShouldHandleNullList()
     {
         // Arrange
-        var mockRepository = new Mock<IDynamicRepository>();
-        var repository = new LeagueSettingsRepositoryImp(mockRepository.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var repository = new LeagueSettingsRepositoryImp(mockRepository);
         List<LeagueSetting>? nullSettings = null;
 
         // Act & Assert

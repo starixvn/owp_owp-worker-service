@@ -2,7 +2,7 @@ using System;
 using Fanex.Data.Repository;
 using Fanex.Logging;
 using FluentAssertions;
-using Moq;
+using NSubstitute;
 using OWP.Adminsite.Criteria;
 using OWP.Adminsite.Models;
 using OWP.Adminsite.Services;
@@ -13,24 +13,24 @@ namespace OWP.Adminsite.UnitTests.Services;
 
 public class SyncMatchProviderIdServiceTests
 {
-    private readonly Mock<IApiService> _mockApiService;
-    private readonly Mock<SyncAgentConfirmHandler> _mockSyncAgentConfirmHandler;
-    private readonly Mock<IDynamicRepository> _mockDynamicRepository;
-    private readonly Mock<ILogger> _mockLogger;
+    private readonly IApiService _mockApiService;
+    private readonly SyncAgentConfirmHandler _mockSyncAgentConfirmHandler;
+    private readonly IDynamicRepository _mockDynamicRepository;
+    private readonly ILogger _mockLogger;
     private readonly SyncMatchProviderIdImp _service;
 
     public SyncMatchProviderIdServiceTests()
     {
-        _mockApiService = new Mock<IApiService>();
-        _mockSyncAgentConfirmHandler = new Mock<SyncAgentConfirmHandler>();
-        _mockDynamicRepository = new Mock<IDynamicRepository>();
-        _mockLogger = new Mock<ILogger>();
+        _mockApiService = Substitute.For<IApiService>();
+        _mockSyncAgentConfirmHandler = Substitute.For<SyncAgentConfirmHandler>();
+        _mockDynamicRepository = Substitute.For<IDynamicRepository>();
+        _mockLogger = Substitute.For<ILogger>();
 
         _service = new SyncMatchProviderIdImp(
-            _mockApiService.Object,
-            _mockSyncAgentConfirmHandler.Object,
-            _mockDynamicRepository.Object,
-            _mockLogger.Object);
+            _mockApiService,
+            _mockSyncAgentConfirmHandler,
+            _mockDynamicRepository,
+            _mockLogger);
     }
 
     [Fact]
@@ -45,9 +45,9 @@ public class SyncMatchProviderIdServiceTests
     {
         // Arrange
         var testDate = DateTime.Now;
-        _mockApiService.Setup(x => x.QueryProviderMatchId(It.IsAny<DateTime>()))
-            .ReturnsAsync(new ProviderMatchIdTw { content = new List<Content>() });
-        _mockSyncAgentConfirmHandler.Setup(x => x.Handle(It.IsAny<DateTime>()))
+        _mockApiService.QueryProviderMatchId(Arg.Any<DateTime>())
+            .Returns(new ProviderMatchIdTw { content = new List<Content>() });
+        _mockSyncAgentConfirmHandler.Handle(Arg.Any<DateTime>())
             .Returns(Task.CompletedTask);
 
         // Act & Assert
@@ -70,15 +70,15 @@ public class SyncMatchProviderIdServiceTests
         };
 
         var providerMatchIdTw = new ProviderMatchIdTw { content = testData };
-        _mockApiService.Setup(x => x.QueryProviderMatchId(It.IsAny<DateTime>()))
-            .ReturnsAsync(providerMatchIdTw);
+        _mockApiService.QueryProviderMatchId(Arg.Any<DateTime>())
+            .Returns(providerMatchIdTw);
 
         // Act
         await _service.SyncProviderMatchId(testDate);
 
         // Assert
         // Verify that the API service was called
-        _mockApiService.Verify(x => x.QueryProviderMatchId(testDate), Times.Once);
+        _mockApiService.Received(1).QueryProviderMatchId(testDate);
 
         // Note: We can't easily verify ExecuteAsync due to expression tree limitations with optional parameters
         // but we can verify the service completed without exceptions
@@ -90,8 +90,8 @@ public class SyncMatchProviderIdServiceTests
         // Arrange
         var testDate = DateTime.Now;
         var providerMatchIdTw = new ProviderMatchIdTw { content = new List<Content>() };
-        _mockApiService.Setup(x => x.QueryProviderMatchId(It.IsAny<DateTime>()))
-            .ReturnsAsync(providerMatchIdTw);
+        _mockApiService.QueryProviderMatchId(Arg.Any<DateTime>())
+            .Returns(providerMatchIdTw);
 
         // Act
         await _service.SyncProviderMatchId(testDate);
@@ -105,8 +105,8 @@ public class SyncMatchProviderIdServiceTests
     {
         // Arrange
         var testDate = DateTime.Now;
-        _mockApiService.Setup(x => x.QueryProviderMatchId(It.IsAny<DateTime>()))
-            .ThrowsAsync(new Exception("API Error"));
+        _mockApiService.QueryProviderMatchId(Arg.Any<DateTime>())
+            .Returns(Task.FromException<ProviderMatchIdTw>(new Exception("API Error")));
 
         // Act & Assert
         // The service will throw an exception, so we expect it to throw
@@ -119,7 +119,7 @@ public class SyncMatchProviderIdServiceTests
     public async Task CalculateAgentConfirm_ShouldCallSyncAgentConfirmHandler()
     {
         // Arrange
-        _mockSyncAgentConfirmHandler.Setup(x => x.Handle(It.IsAny<DateTime>()))
+        _mockSyncAgentConfirmHandler.Handle(Arg.Any<DateTime>())
             .Returns(Task.CompletedTask);
 
         // Act & Assert
@@ -134,8 +134,8 @@ public class SyncMatchProviderIdServiceTests
     public async Task CalculateAgentConfirm_WithException_ShouldLogError()
     {
         // Arrange
-        _mockSyncAgentConfirmHandler.Setup(x => x.Handle(It.IsAny<DateTime>()))
-            .ThrowsAsync(new Exception("Calculation Error"));
+        _mockSyncAgentConfirmHandler.Handle(Arg.Any<DateTime>())
+            .Returns(Task.FromException(new Exception("Calculation Error")));
 
         // Act & Assert
         // Note: This test will fail due to static LogService.InfoAsync call
@@ -159,7 +159,7 @@ public class SyncMatchProviderIdServiceTests
         await _service.AlertIfHaveAnyAbnormal(testData);
 
         // Assert
-        _mockLogger.Verify(x => x.ErrorAsync(It.IsAny<string>()), Times.Once);
+        _mockLogger.Received(1).ErrorAsync(Arg.Any<string>());
     }
 
     [Fact]
@@ -177,7 +177,7 @@ public class SyncMatchProviderIdServiceTests
 
         // Assert
         // The service only logs when there are duplicates, so with normal data it should not log
-        _mockLogger.Verify(x => x.ErrorAsync(It.IsAny<string>()), Times.Never);
+        _mockLogger.DidNotReceive().ErrorAsync(Arg.Any<string>());
     }
 
     [Fact]
@@ -252,15 +252,15 @@ public class SyncMatchProviderIdServiceTests
         };
 
         var providerMatchIdTw = new ProviderMatchIdTw { content = testData };
-        _mockApiService.Setup(x => x.QueryProviderMatchId(It.IsAny<DateTime>()))
-            .ReturnsAsync(providerMatchIdTw);
+        _mockApiService.QueryProviderMatchId(Arg.Any<DateTime>())
+            .Returns(providerMatchIdTw);
 
         // Act
         await _service.SyncProviderMatchId(testDate);
 
         // Assert
         // Verify that the API service was called
-        _mockApiService.Verify(x => x.QueryProviderMatchId(testDate), Times.Once);
+        _mockApiService.Received(1).QueryProviderMatchId(testDate);
 
         // Note: We can't easily verify ExecuteAsync due to expression tree limitations with optional parameters
         // but we can verify the service completed without exceptions

@@ -1,4 +1,4 @@
-using Moq;
+using NSubstitute;
 using OWP.Chat.Service;
 using OWP.Chat.Models;
 using OWP.Services;
@@ -15,17 +15,17 @@ namespace OWP.Chat.UnitTests.Services
 {
     public class ChatServiceTests
     {
-        private readonly Mock<OWP.Chat.Repository> _mockRepository;
-        private readonly Mock<HttpHandler> _mockHttpHandler;
+        private readonly OWP.Chat.Repository _mockRepository;
+        private readonly HttpHandler _mockHttpHandler;
         private readonly IConfiguration _configuration;
-        private readonly Mock<LogWriterService> _mockLogger;
+        private readonly LogWriterService _mockLogger;
         private readonly ChatServiceImp _service;
 
         public ChatServiceTests()
         {
-            _mockRepository = new Mock<OWP.Chat.Repository>();
-            _mockHttpHandler = new Mock<HttpHandler>();
-            _mockLogger = new Mock<LogWriterService>();
+            _mockRepository = Substitute.For<OWP.Chat.Repository>();
+            _mockHttpHandler = Substitute.For<HttpHandler>();
+            _mockLogger = Substitute.For<LogWriterService>();
 
             // Create real configuration
             var configData = new Dictionary<string, string?>
@@ -36,7 +36,7 @@ namespace OWP.Chat.UnitTests.Services
                 .AddInMemoryCollection(configData)
                 .Build();
 
-            _service = new ChatServiceImp(_mockRepository.Object, _mockHttpHandler.Object, _configuration, _mockLogger.Object);
+            _service = new ChatServiceImp(_mockRepository, _mockHttpHandler, _configuration, _mockLogger);
         }
 
         [Fact]
@@ -44,15 +44,15 @@ namespace OWP.Chat.UnitTests.Services
         {
             // Arrange
             var emptyUserList = new List<UserInfo>();
-            _mockRepository.Setup(x => x.GetNewUser()).ReturnsAsync(emptyUserList);
+            _mockRepository.GetNewUser().Returns(emptyUserList);
 
             // Act
             await _service.CreateAccount();
 
             // Assert
-            _mockHttpHandler.Verify(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()), Times.Never);
-            _mockRepository.Verify(x => x.UpdateChatUserId("[]"), Times.Once);
-            _mockLogger.Verify(x => x.Execute(It.IsAny<OwpLogCriteria>()), Times.Never);
+            _mockHttpHandler.DidNotReceive().PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>());
+            _mockRepository.Received(1).UpdateChatUserId("[]");
+            _mockLogger.DidNotReceive().Execute(Arg.Any<OwpLogCriteria>());
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace OWP.Chat.UnitTests.Services
                 new UserInfo { UserId = 1, UserName = "user1" },
                 new UserInfo { UserId = 2, UserName = "user2" }
             };
-            _mockRepository.Setup(x => x.GetNewUser()).ReturnsAsync(users);
+            _mockRepository.GetNewUser().Returns(users);
 
             var successResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -74,14 +74,14 @@ namespace OWP.Chat.UnitTests.Services
                     user = new User { _id = "chat123" }
                 }), Encoding.UTF8, "application/json")
             };
-            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .ReturnsAsync(successResponse);
+            _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+                .Returns(successResponse);
 
             // Act
             await _service.CreateAccount();
 
             // Assert
-            _mockHttpHandler.Verify(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()), Times.Exactly(2));
+            _mockHttpHandler.Received(2).PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>());
         }
 
         [Fact]
@@ -92,7 +92,7 @@ namespace OWP.Chat.UnitTests.Services
             {
                 new UserInfo { UserId = 1, UserName = "user1" }
             };
-            _mockRepository.Setup(x => x.GetNewUser()).ReturnsAsync(users);
+            _mockRepository.GetNewUser().Returns(users);
 
             var successResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -102,15 +102,15 @@ namespace OWP.Chat.UnitTests.Services
                     user = new User { _id = "chat123" }
                 }), Encoding.UTF8, "application/json")
             };
-            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .ReturnsAsync(successResponse);
+            _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+                .Returns(successResponse);
 
             // Act
             await _service.CreateAccount();
 
             // Assert
-            _mockRepository.Verify(x => x.UpdateChatUserId(It.Is<string>(json =>
-                json.Contains("UserId") && json.Contains("ChatUserId") && json.Contains("chat123"))), Times.Once);
+            _mockRepository.Received(1).UpdateChatUserId(Arg.Is<string>(json =>
+                json.Contains("UserId") && json.Contains("ChatUserId") && json.Contains("chat123")));
         }
 
         [Fact]
@@ -121,22 +121,22 @@ namespace OWP.Chat.UnitTests.Services
             {
                 new UserInfo { UserId = 1, UserName = "user1" }
             };
-            _mockRepository.Setup(x => x.GetNewUser()).ReturnsAsync(users);
+            _mockRepository.GetNewUser().Returns(users);
 
             var failureResponse = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
                 Content = new StringContent("Error message", Encoding.UTF8, "application/json")
             };
-            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .ReturnsAsync(failureResponse);
+            _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+                .Returns(failureResponse);
 
             // Act
             await _service.CreateAccount();
 
             // Assert
-            _mockLogger.Verify(x => x.Execute(It.Is<OwpLogCriteria>(criteria =>
+            _mockLogger.Received(1).Execute(Arg.Is<OwpLogCriteria>(criteria =>
                 criteria.Action == "InsertNewUser_Fail" &&
-                criteria.Payload.Contains("user1"))), Times.Once);
+                criteria.Payload.Contains("user1")));
         }
 
         [Fact]
@@ -147,7 +147,7 @@ namespace OWP.Chat.UnitTests.Services
             {
                 new UserInfo { UserId = 1, UserName = "user1" }
             };
-            _mockRepository.Setup(x => x.GetNewUser()).ReturnsAsync(users);
+            _mockRepository.GetNewUser().Returns(users);
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -157,15 +157,15 @@ namespace OWP.Chat.UnitTests.Services
                     user = new User { _id = "chat123" }
                 }), Encoding.UTF8, "application/json")
             };
-            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .ReturnsAsync(response);
+            _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+                .Returns(response);
 
             // Act
             await _service.CreateAccount();
 
             // Assert
-            _mockLogger.Verify(x => x.Execute(It.Is<OwpLogCriteria>(criteria =>
-                criteria.Action == "InsertNewUser_Fail")), Times.Once);
+            _mockLogger.Received(1).Execute(Arg.Is<OwpLogCriteria>(criteria =>
+                criteria.Action == "InsertNewUser_Fail"));
         }
 
         [Fact]
@@ -176,21 +176,21 @@ namespace OWP.Chat.UnitTests.Services
             {
                 new UserInfo { UserId = 1, UserName = "user1" }
             };
-            _mockRepository.Setup(x => x.GetNewUser()).ReturnsAsync(users);
+            _mockRepository.GetNewUser().Returns(users);
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent("null", Encoding.UTF8, "application/json")
             };
-            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .ReturnsAsync(response);
+            _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+                .Returns(response);
 
             // Act
             await _service.CreateAccount();
 
             // Assert
-            _mockLogger.Verify(x => x.Execute(It.Is<OwpLogCriteria>(criteria =>
-                criteria.Action == "InsertNewUser_Fail")), Times.Once);
+            _mockLogger.Received(1).Execute(Arg.Is<OwpLogCriteria>(criteria =>
+                criteria.Action == "InsertNewUser_Fail"));
         }
 
         [Fact]
@@ -202,7 +202,7 @@ namespace OWP.Chat.UnitTests.Services
                 new UserInfo { UserId = 1, UserName = "user1" },
                 new UserInfo { UserId = 2, UserName = "user2" }
             };
-            _mockRepository.Setup(x => x.GetNewUser()).ReturnsAsync(users);
+            _mockRepository.GetNewUser().Returns(users);
 
             var successResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -218,17 +218,16 @@ namespace OWP.Chat.UnitTests.Services
                 Content = new StringContent("Error", Encoding.UTF8, "application/json")
             };
 
-            _mockHttpHandler.SetupSequence(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .ReturnsAsync(successResponse)
-                .ReturnsAsync(failureResponse);
+            _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+                .Returns(successResponse, failureResponse);
 
             // Act
             await _service.CreateAccount();
 
             // Assert
-            _mockRepository.Verify(x => x.UpdateChatUserId(It.IsAny<string>()), Times.Once);
-            _mockLogger.Verify(x => x.Execute(It.Is<OwpLogCriteria>(criteria =>
-                criteria.Action == "InsertNewUser_Fail")), Times.Once);
+            _mockRepository.Received(1).UpdateChatUserId(Arg.Any<string>());
+            _mockLogger.Received(1).Execute(Arg.Is<OwpLogCriteria>(criteria =>
+                criteria.Action == "InsertNewUser_Fail"));
         }
 
         [Fact]
@@ -239,7 +238,7 @@ namespace OWP.Chat.UnitTests.Services
             {
                 new UserInfo { UserId = 1, UserName = "user1" }
             };
-            _mockRepository.Setup(x => x.GetNewUser()).ReturnsAsync(users);
+            _mockRepository.GetNewUser().Returns(users);
 
             var successResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -249,15 +248,15 @@ namespace OWP.Chat.UnitTests.Services
                     user = new User { _id = "chat123" }
                 }), Encoding.UTF8, "application/json")
             };
-            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .ReturnsAsync(successResponse);
+            _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+                .Returns(successResponse);
 
             // Act
             await _service.CreateAccount();
 
             // Assert
-            _mockLogger.Verify(x => x.Execute(It.Is<OwpLogCriteria>(criteria =>
-                criteria.Action == "InsertNewUser_Fail")), Times.Never);
+            _mockLogger.DidNotReceive().Execute(Arg.Is<OwpLogCriteria>(criteria =>
+                criteria.Action == "InsertNewUser_Fail"));
         }
 
         [Fact]
@@ -268,7 +267,7 @@ namespace OWP.Chat.UnitTests.Services
             {
                 new UserInfo { UserId = 1, UserName = "user1" }
             };
-            _mockRepository.Setup(x => x.GetNewUser()).ReturnsAsync(users);
+            _mockRepository.GetNewUser().Returns(users);
 
             // Create a configuration with null ChatServer
             var configData = new Dictionary<string, string?>
@@ -279,7 +278,7 @@ namespace OWP.Chat.UnitTests.Services
                 .AddInMemoryCollection(configData)
                 .Build();
 
-            var serviceWithNullConfig = new ChatServiceImp(_mockRepository.Object, _mockHttpHandler.Object, nullConfig, _mockLogger.Object);
+            var serviceWithNullConfig = new ChatServiceImp(_mockRepository, _mockHttpHandler, nullConfig, _mockLogger);
 
             // Act & Assert
             await Assert.ThrowsAsync<NullReferenceException>(() => serviceWithNullConfig.CreateAccount());
@@ -293,22 +292,22 @@ namespace OWP.Chat.UnitTests.Services
             {
                 new UserInfo { UserId = 1, UserName = "user1" }
             };
-            _mockRepository.Setup(x => x.GetNewUser()).ReturnsAsync(users);
-            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .ThrowsAsync(new HttpRequestException("Network error"));
+            _mockRepository.GetNewUser().Returns(users);
+            _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+                .Returns(Task.FromException<HttpResponseMessage>(new HttpRequestException("Network error")));
 
             // Act & Assert
             await Assert.ThrowsAsync<HttpRequestException>(() => _service.CreateAccount());
 
             // Verify the mock was called
-            _mockHttpHandler.Verify(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()), Times.Once);
+            _mockHttpHandler.Received(1).PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>());
         }
 
         [Fact]
         public async Task CreateAccount_WhenRepositoryThrows_PropagatesException()
         {
             // Arrange
-            _mockRepository.Setup(x => x.GetNewUser()).ThrowsAsync(new InvalidOperationException("Database error"));
+            _mockRepository.GetNewUser().Returns(Task.FromException<IList<UserInfo>>(new InvalidOperationException("Database error")));
 
             // Act & Assert
             await Assert.ThrowsAsync<InvalidOperationException>(() => _service.CreateAccount());
@@ -322,9 +321,9 @@ namespace OWP.Chat.UnitTests.Services
             {
                 new UserInfo { UserId = 1, UserName = "user1" }
             };
-            _mockRepository.Setup(x => x.GetNewUser()).ReturnsAsync(users);
-            _mockRepository.Setup(x => x.UpdateChatUserId(It.IsAny<string>()))
-                .ThrowsAsync(new InvalidOperationException("Update failed"));
+            _mockRepository.GetNewUser().Returns(users);
+            _mockRepository.UpdateChatUserId(Arg.Any<string>())
+                .Returns(Task.FromException(new InvalidOperationException("Update failed")));
 
             var successResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -334,8 +333,8 @@ namespace OWP.Chat.UnitTests.Services
                     user = new User { _id = "chat123" }
                 }), Encoding.UTF8, "application/json")
             };
-            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .ReturnsAsync(successResponse);
+            _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+                .Returns(successResponse);
 
             // Act & Assert
             await Assert.ThrowsAsync<InvalidOperationException>(() => _service.CreateAccount());

@@ -1,4 +1,4 @@
-using Moq;
+using NSubstitute;
 using OWP.PushInfoToSettlement.Model;
 using OWP.PushInfoToSettlement.Services;
 using Fanex.Data.Repository;
@@ -9,21 +9,21 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
     public class EventServiceTestsMinimal
     {
         [Fact]
-        public void EventServiceImp_Constructor_WithNullRepository_DoesNotThrow()
+        public async Task EventServiceImp_Constructor_WithNullRepository_DoesNotThrow()
         {
             // Act & Assert - The constructor doesn't validate null parameters
-            var exception = Record.Exception(() => new EventServiceImp(null));
+            var exception = await Record.ExceptionAsync(async () => new EventServiceImp(null));
             Assert.Null(exception);
         }
 
         [Fact]
-        public void EventServiceImp_Constructor_WithValidRepository_DoesNotThrow()
+        public async Task EventServiceImp_Constructor_WithValidRepository_DoesNotThrow()
         {
             // Arrange
-            var mockRepository = new Mock<IDynamicRepository>();
+            var mockRepository = Substitute.For<IDynamicRepository>();
 
             // Act & Assert
-            var exception = Record.Exception(() => new EventServiceImp(mockRepository.Object));
+            var exception = await Record.ExceptionAsync(async () => new EventServiceImp(mockRepository));
             Assert.Null(exception);
         }
 
@@ -31,10 +31,10 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
         public void EventServiceImp_ImplementsEventServiceInterface()
         {
             // Arrange
-            var mockRepository = new Mock<IDynamicRepository>();
+            var mockRepository = Substitute.For<IDynamicRepository>();
 
             // Act
-            var service = new EventServiceImp(mockRepository.Object);
+            var service = new EventServiceImp(mockRepository);
 
             // Assert
             Assert.IsAssignableFrom<EventService>(service);
@@ -44,10 +44,10 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
         public void EventServiceImp_CanBeInstantiated()
         {
             // Arrange
-            var mockRepository = new Mock<IDynamicRepository>();
+            var mockRepository = Substitute.For<IDynamicRepository>();
 
             // Act
-            var service = new EventServiceImp(mockRepository.Object);
+            var service = new EventServiceImp(mockRepository);
 
             // Assert
             Assert.NotNull(service);
