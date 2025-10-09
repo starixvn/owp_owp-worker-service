@@ -1,27 +1,27 @@
-using Moq;
+using NSubstitute;
 using OWP.ArchiveData.Services;
 
 namespace OWP.ArchiveData.UnitTests.Services;
 
 public class ArchiveDataServiceTests
 {
-    private readonly Mock<OWP.ArchiveData.Repository> _mockRepository;
+    private readonly OWP.ArchiveData.Repository _mockRepository;
     private readonly ArchiveDataServiceImp _archiveDataService;
 
     public ArchiveDataServiceTests()
     {
-        _mockRepository = new Mock<OWP.ArchiveData.Repository>();
-        _archiveDataService = new ArchiveDataServiceImp(_mockRepository.Object);
+        _mockRepository = Substitute.For<OWP.ArchiveData.Repository>();
+        _archiveDataService = new ArchiveDataServiceImp(_mockRepository);
     }
 
     [Fact]
     public void Constructor_ShouldCreateInstance()
     {
         // Arrange
-        var mockRepository = new Mock<OWP.ArchiveData.Repository>();
+        var mockRepository = Substitute.For<OWP.ArchiveData.Repository>();
 
         // Act
-        var service = new ArchiveDataServiceImp(mockRepository.Object);
+        var service = new ArchiveDataServiceImp(mockRepository);
 
         // Assert
         service.Should().NotBeNull();
@@ -33,14 +33,14 @@ public class ArchiveDataServiceTests
         // Arrange
         var inputDate = new DateTime(2023, 1, 1);
         var expectedDate = inputDate.AddDays(-35); // 35 days before input date
-        _mockRepository.Setup(x => x.CopyDataToOldTable(It.IsAny<DateTime>()))
+        _mockRepository.CopyDataToOldTable(Arg.Any<DateTime>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _archiveDataService.CopyDataToOldTable(inputDate);
 
         // Assert
-        _mockRepository.Verify(x => x.CopyDataToOldTable(expectedDate), Times.Once);
+        _mockRepository.Received(1).CopyDataToOldTable(expectedDate);
     }
 
     [Fact]
@@ -49,14 +49,14 @@ public class ArchiveDataServiceTests
         // Arrange
         var inputDate = new DateTime(2023, 1, 1);
         var expectedDate = inputDate.AddDays(-40); // 40 days before input date
-        _mockRepository.Setup(x => x.DeleteOldData(It.IsAny<DateTime>()))
+        _mockRepository.DeleteOldData(Arg.Any<DateTime>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _archiveDataService.DeleteOldData(inputDate);
 
         // Assert
-        _mockRepository.Verify(x => x.DeleteOldData(expectedDate), Times.Once);
+        _mockRepository.Received(1).DeleteOldData(expectedDate);
     }
 
     [Fact]
@@ -64,14 +64,14 @@ public class ArchiveDataServiceTests
     {
         // Arrange
         var inputDate = new DateTime(2023, 1, 1);
-        _mockRepository.Setup(x => x.ArchiveOldMessage(It.IsAny<DateTime>()))
+        _mockRepository.ArchiveOldMessage(Arg.Any<DateTime>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _archiveDataService.ArchiveOldMessage(inputDate);
 
         // Assert
-        _mockRepository.Verify(x => x.ArchiveOldMessage(inputDate), Times.Once);
+        _mockRepository.Received(1).ArchiveOldMessage(inputDate);
     }
 
     [Fact]
@@ -80,14 +80,14 @@ public class ArchiveDataServiceTests
         // Arrange
         var inputDate = new DateTime(2023, 1, 1);
         var expectedDate = inputDate.AddDays(-40); // 40 days before input date
-        _mockRepository.Setup(x => x.DeleteOldNoOfferMatch(It.IsAny<DateTime>()))
+        _mockRepository.DeleteOldNoOfferMatch(Arg.Any<DateTime>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _archiveDataService.DeleteOldNoOfferMatch(inputDate);
 
         // Assert
-        _mockRepository.Verify(x => x.DeleteOldNoOfferMatch(expectedDate), Times.Once);
+        _mockRepository.Received(1).DeleteOldNoOfferMatch(expectedDate);
     }
 
     [Fact]
@@ -96,14 +96,14 @@ public class ArchiveDataServiceTests
         // Arrange
         var inputDate = new DateTime(2023, 1, 1);
         var expectedDate = inputDate.AddDays(-40); // 40 days before input date
-        _mockRepository.Setup(x => x.DeleteOldNotify(It.IsAny<DateTime>()))
+        _mockRepository.DeleteOldNotify(Arg.Any<DateTime>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _archiveDataService.DeleteOldNotify(inputDate);
 
         // Assert
-        _mockRepository.Verify(x => x.DeleteOldNotify(expectedDate), Times.Once);
+        _mockRepository.Received(1).DeleteOldNotify(expectedDate);
     }
 
     [Theory]
@@ -115,14 +115,14 @@ public class ArchiveDataServiceTests
         // Arrange
         var inputDate = DateTime.Parse(inputDateStr);
         var expectedDate = DateTime.Parse(expectedDateStr);
-        _mockRepository.Setup(x => x.CopyDataToOldTable(It.IsAny<DateTime>()))
+        _mockRepository.CopyDataToOldTable(Arg.Any<DateTime>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _archiveDataService.CopyDataToOldTable(inputDate);
 
         // Assert
-        _mockRepository.Verify(x => x.CopyDataToOldTable(expectedDate), Times.Once);
+        _mockRepository.Received(1).CopyDataToOldTable(expectedDate);
     }
 
     [Theory]
@@ -134,14 +134,14 @@ public class ArchiveDataServiceTests
         // Arrange
         var inputDate = DateTime.Parse(inputDateStr);
         var expectedDate = DateTime.Parse(expectedDateStr);
-        _mockRepository.Setup(x => x.DeleteOldData(It.IsAny<DateTime>()))
+        _mockRepository.DeleteOldData(Arg.Any<DateTime>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _archiveDataService.DeleteOldData(inputDate);
 
         // Assert
-        _mockRepository.Verify(x => x.DeleteOldData(expectedDate), Times.Once);
+        _mockRepository.Received(1).DeleteOldData(expectedDate);
     }
 
     [Theory]
@@ -153,14 +153,14 @@ public class ArchiveDataServiceTests
         // Arrange
         var inputDate = DateTime.Parse(inputDateStr);
         var expectedDate = DateTime.Parse(expectedDateStr);
-        _mockRepository.Setup(x => x.DeleteOldNoOfferMatch(It.IsAny<DateTime>()))
+        _mockRepository.DeleteOldNoOfferMatch(Arg.Any<DateTime>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _archiveDataService.DeleteOldNoOfferMatch(inputDate);
 
         // Assert
-        _mockRepository.Verify(x => x.DeleteOldNoOfferMatch(expectedDate), Times.Once);
+        _mockRepository.Received(1).DeleteOldNoOfferMatch(expectedDate);
     }
 
     [Theory]
@@ -172,14 +172,14 @@ public class ArchiveDataServiceTests
         // Arrange
         var inputDate = DateTime.Parse(inputDateStr);
         var expectedDate = DateTime.Parse(expectedDateStr);
-        _mockRepository.Setup(x => x.DeleteOldNotify(It.IsAny<DateTime>()))
+        _mockRepository.DeleteOldNotify(Arg.Any<DateTime>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _archiveDataService.DeleteOldNotify(inputDate);
 
         // Assert
-        _mockRepository.Verify(x => x.DeleteOldNotify(expectedDate), Times.Once);
+        _mockRepository.Received(1).DeleteOldNotify(expectedDate);
     }
 
     [Fact]
@@ -193,7 +193,7 @@ public class ArchiveDataServiceTests
             new DateTime(2024, 2, 29, 23, 59, 59) // Leap year
         };
 
-        _mockRepository.Setup(x => x.ArchiveOldMessage(It.IsAny<DateTime>()))
+        _mockRepository.ArchiveOldMessage(Arg.Any<DateTime>())
             .Returns(Task.CompletedTask);
 
         foreach (var testDate in testDates)
@@ -202,7 +202,7 @@ public class ArchiveDataServiceTests
             await _archiveDataService.ArchiveOldMessage(testDate);
 
             // Assert
-            _mockRepository.Verify(x => x.ArchiveOldMessage(testDate), Times.Once);
+            _mockRepository.Received(1).ArchiveOldMessage(testDate);
         }
     }
 }

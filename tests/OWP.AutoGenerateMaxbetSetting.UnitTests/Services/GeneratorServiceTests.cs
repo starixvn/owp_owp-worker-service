@@ -1,3 +1,4 @@
+using NSubstitute;
 using Olympus.OWP.Log.Data.Repository.Criteria;
 using Olympus.OWP.Log.Data.Repository.Services;
 using OWP.AutoGenerateMaxbetSetting.Models;
@@ -8,17 +9,17 @@ namespace OWP.AutoGenerateMaxbetSetting.UnitTests.Services;
 
 public class GeneratorServiceTests
 {
-    private readonly Mock<LeagueSettingsRepository> _mockRepository;
-    private readonly Mock<LogWriterService> _mockLogger;
+    private readonly LeagueSettingsRepository _mockRepository;
+    private readonly LogWriterService _mockLogger;
     private readonly GeneratorServiceImp _service;
-    private readonly Mock<LeagueSettingChangeServiceImp> _mockLeagueSettingChangeService;
+    private readonly LeagueSettingChangeServiceImp _mockLeagueSettingChangeService;
 
     public GeneratorServiceTests()
     {
-        _mockRepository = new Mock<LeagueSettingsRepository>();
-        _mockLogger = new Mock<LogWriterService>();
-        _mockLeagueSettingChangeService = new Mock<LeagueSettingChangeServiceImp>();
-        _service = new GeneratorServiceImp(_mockRepository.Object, _mockLogger.Object, _mockLeagueSettingChangeService.Object);
+        _mockRepository = Substitute.For<LeagueSettingsRepository>();
+        _mockLogger = Substitute.For<LogWriterService>();
+        _mockLeagueSettingChangeService = Substitute.For<LeagueSettingChangeServiceImp>();
+        _service = new GeneratorServiceImp(_mockRepository, _mockLogger, _mockLeagueSettingChangeService);
     }
 
     [Fact]
@@ -38,24 +39,24 @@ public class GeneratorServiceTests
         };
 
         _mockRepository
-            .Setup(x => x.GetMatchesAndSettings(date))
-            .ReturnsAsync(new Tuple<IEnumerable<Match>, IEnumerable<MatchSetting>>(matches.AsEnumerable(), matchSettings.AsEnumerable()));
+            .GetMatchesAndSettings(date)
+            .Returns(new Tuple<IEnumerable<Match>, IEnumerable<MatchSetting>>(matches.AsEnumerable(), matchSettings.AsEnumerable()));
 
         _mockRepository
-            .Setup(x => x.InsertNewLeaguesSettings(It.IsAny<List<LeagueSetting>>()))
+            .InsertNewLeaguesSettings(Arg.Any<List<LeagueSetting>>())
             .Returns(Task.CompletedTask);
 
         _mockLogger
-            .Setup(x => x.Execute(It.IsAny<OwpLogCriteria>()))
+            .Execute(Arg.Any<OwpLogCriteria>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _service.GenerateNewLeagueSetting(date);
 
         // Assert
-        _mockRepository.Verify(x => x.GetMatchesAndSettings(date), Times.Once);
-        _mockRepository.Verify(x => x.InsertNewLeaguesSettings(It.IsAny<List<LeagueSetting>>()), Times.Once);
-        _mockLogger.Verify(x => x.Execute(It.IsAny<OwpLogCriteria>()), Times.Once);
+        _mockRepository.Received(1).GetMatchesAndSettings(date);
+        _mockRepository.Received(1).InsertNewLeaguesSettings(Arg.Any<List<LeagueSetting>>());
+        _mockLogger.Received(1).Execute(Arg.Any<OwpLogCriteria>());
     }
 
     [Fact]
@@ -67,24 +68,24 @@ public class GeneratorServiceTests
         var emptySettings = new List<MatchSetting>();
 
         _mockRepository
-            .Setup(x => x.GetMatchesAndSettings(date))
-            .ReturnsAsync(new Tuple<IEnumerable<Match>, IEnumerable<MatchSetting>>(emptyMatches.AsEnumerable(), emptySettings.AsEnumerable()));
+            .GetMatchesAndSettings(date)
+            .Returns(new Tuple<IEnumerable<Match>, IEnumerable<MatchSetting>>(emptyMatches.AsEnumerable(), emptySettings.AsEnumerable()));
 
         _mockRepository
-            .Setup(x => x.InsertNewLeaguesSettings(It.IsAny<List<LeagueSetting>>()))
+            .InsertNewLeaguesSettings(Arg.Any<List<LeagueSetting>>())
             .Returns(Task.CompletedTask);
 
         _mockLogger
-            .Setup(x => x.Execute(It.IsAny<OwpLogCriteria>()))
+            .Execute(Arg.Any<OwpLogCriteria>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _service.GenerateNewLeagueSetting(date);
 
         // Assert
-        _mockRepository.Verify(x => x.GetMatchesAndSettings(date), Times.Once);
-        _mockRepository.Verify(x => x.InsertNewLeaguesSettings(It.IsAny<List<LeagueSetting>>()), Times.Once);
-        _mockLogger.Verify(x => x.Execute(It.IsAny<OwpLogCriteria>()), Times.Once);
+        _mockRepository.Received(1).GetMatchesAndSettings(date);
+        _mockRepository.Received(1).InsertNewLeaguesSettings(Arg.Any<List<LeagueSetting>>());
+        _mockLogger.Received(1).Execute(Arg.Any<OwpLogCriteria>());
     }
 
     [Fact]
@@ -104,15 +105,15 @@ public class GeneratorServiceTests
         };
 
         _mockRepository
-            .Setup(x => x.GetMatchesAndSettings(date))
-            .ReturnsAsync(new Tuple<IEnumerable<Match>, IEnumerable<MatchSetting>>(matches.AsEnumerable(), matchSettings.AsEnumerable()));
+            .GetMatchesAndSettings(date)
+            .Returns(new Tuple<IEnumerable<Match>, IEnumerable<MatchSetting>>(matches.AsEnumerable(), matchSettings.AsEnumerable()));
 
         _mockRepository
-            .Setup(x => x.InsertNewLeaguesSettings(It.IsAny<List<LeagueSetting>>()))
+            .InsertNewLeaguesSettings(Arg.Any<List<LeagueSetting>>())
             .Returns(Task.CompletedTask);
 
         _mockLogger
-            .Setup(x => x.Execute(It.IsAny<OwpLogCriteria>()))
+            .Execute(Arg.Any<OwpLogCriteria>())
             .Returns(Task.CompletedTask);
 
         // Act
@@ -141,26 +142,26 @@ public class GeneratorServiceTests
         };
 
         _mockRepository
-            .Setup(x => x.GetMatchesAndSettings(date))
-            .ReturnsAsync(new Tuple<IEnumerable<Match>, IEnumerable<MatchSetting>>(matches.AsEnumerable(), matchSettings.AsEnumerable()));
+            .GetMatchesAndSettings(date)
+            .Returns(new Tuple<IEnumerable<Match>, IEnumerable<MatchSetting>>(matches.AsEnumerable(), matchSettings.AsEnumerable()));
 
         _mockRepository
-            .Setup(x => x.InsertNewLeaguesSettings(It.IsAny<List<LeagueSetting>>()))
+            .InsertNewLeaguesSettings(Arg.Any<List<LeagueSetting>>())
             .Returns(Task.CompletedTask);
 
         _mockLogger
-            .Setup(x => x.Execute(It.IsAny<OwpLogCriteria>()))
+            .Execute(Arg.Any<OwpLogCriteria>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _service.GenerateNewLeagueSetting(date);
 
         // Assert
-        _mockLogger.Verify(x => x.Execute(
-            It.Is<OwpLogCriteria>(c =>
+        _mockLogger.Received(1).Execute(
+            Arg.Is<OwpLogCriteria>(c =>
                 c.Action == "Generator" &&
                 !string.IsNullOrEmpty(c.Payload) &&
-                c.CreatedDate.Date == DateTime.Now.AddHours(12).Date)), Times.Once);
+                c.CreatedDate.Date == DateTime.Now.AddHours(12).Date));
     }
 
     [Fact]
@@ -170,8 +171,8 @@ public class GeneratorServiceTests
         var date = new DateTime(2024, 1, 15);
 
         _mockRepository
-            .Setup(x => x.GetMatchesAndSettings(date))
-            .ThrowsAsync(new Exception("Database error"));
+            .GetMatchesAndSettings(date)
+            .Returns(Task.FromException<Tuple<IEnumerable<Match>, IEnumerable<MatchSetting>>>(new Exception("Database error")));
 
         // Act & Assert
         await Assert.ThrowsAsync<Exception>(() => _service.GenerateNewLeagueSetting(date));
@@ -186,16 +187,16 @@ public class GeneratorServiceTests
         var matchSettings = new List<MatchSetting>();
 
         _mockRepository
-            .Setup(x => x.GetMatchesAndSettings(date))
-            .ReturnsAsync(new Tuple<IEnumerable<Match>, IEnumerable<MatchSetting>>(matches.AsEnumerable(), matchSettings.AsEnumerable()));
+            .GetMatchesAndSettings(date)
+            .Returns(new Tuple<IEnumerable<Match>, IEnumerable<MatchSetting>>(matches.AsEnumerable(), matchSettings.AsEnumerable()));
 
         _mockRepository
-            .Setup(x => x.InsertNewLeaguesSettings(It.IsAny<List<LeagueSetting>>()))
+            .InsertNewLeaguesSettings(Arg.Any<List<LeagueSetting>>())
             .Returns(Task.CompletedTask);
 
         _mockLogger
-            .Setup(x => x.Execute(It.IsAny<OwpLogCriteria>()))
-            .ThrowsAsync(new Exception("Logging error"));
+            .Execute(Arg.Any<OwpLogCriteria>())
+            .Returns(Task.FromException(new Exception("Logging error")));
 
         // Act & Assert
         await Assert.ThrowsAsync<Exception>(() => _service.GenerateNewLeagueSetting(date));
@@ -210,15 +211,15 @@ public class GeneratorServiceTests
         var matchSettings = new List<MatchSetting>();
 
         _mockRepository
-            .Setup(x => x.GetMatchesAndSettings(date))
-            .ReturnsAsync(new Tuple<IEnumerable<Match>, IEnumerable<MatchSetting>>(matches.AsEnumerable(), matchSettings.AsEnumerable()));
+            .GetMatchesAndSettings(date)
+            .Returns(new Tuple<IEnumerable<Match>, IEnumerable<MatchSetting>>(matches.AsEnumerable(), matchSettings.AsEnumerable()));
 
         _mockRepository
-            .Setup(x => x.InsertNewLeaguesSettings(It.IsAny<List<LeagueSetting>>()))
-            .ThrowsAsync(new Exception("Insert error"));
+            .InsertNewLeaguesSettings(Arg.Any<List<LeagueSetting>>())
+            .Returns(Task.FromException(new Exception("Insert error")));
 
         _mockLogger
-            .Setup(x => x.Execute(It.IsAny<OwpLogCriteria>()))
+            .Execute(Arg.Any<OwpLogCriteria>())
             .Returns(Task.CompletedTask);
 
         // Act & Assert

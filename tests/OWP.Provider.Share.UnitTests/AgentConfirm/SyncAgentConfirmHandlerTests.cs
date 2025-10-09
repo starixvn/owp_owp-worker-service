@@ -1,4 +1,4 @@
-using Moq;
+using NSubstitute;
 using OWP.Constants;
 using OWP.Provider.Share.AgentConfirm;
 using OWP.Provider.Share.AgentConfirm.Model;
@@ -8,13 +8,13 @@ namespace OWP.Provider.Share.UnitTests.AgentConfirm;
 
 public class SyncAgentConfirmHandlerTests
 {
-    private readonly Mock<Repository> _mockRepository;
+    private readonly Repository _mockRepository;
     private readonly SyncAgentConfirmHandlerImp _handler;
 
     public SyncAgentConfirmHandlerTests()
     {
-        _mockRepository = new Mock<Repository>();
-        _handler = new SyncAgentConfirmHandlerImp(_mockRepository.Object);
+        _mockRepository = Substitute.For<Repository>();
+        _handler = new SyncAgentConfirmHandlerImp(_mockRepository);
     }
 
     [Fact]
@@ -29,19 +29,19 @@ public class SyncAgentConfirmHandlerTests
         };
 
         _mockRepository
-            .Setup(x => x.GetOwpMainMatchesByDate(eventDate))
-            .ReturnsAsync(agentMatches);
+            .GetOwpMainMatchesByDate(eventDate)
+            .Returns(agentMatches);
 
         _mockRepository
-            .Setup(x => x.SaveAgentConfirm(It.IsAny<List<MatchAgentConfirm>>()))
+            .SaveAgentConfirm(Arg.Any<List<MatchAgentConfirm>>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _handler.Handle(eventDate);
 
         // Assert
-        _mockRepository.Verify(x => x.GetOwpMainMatchesByDate(eventDate), Times.Once);
-        _mockRepository.Verify(x => x.SaveAgentConfirm(It.IsAny<List<MatchAgentConfirm>>()), Times.Once);
+        _mockRepository.Received(1).GetOwpMainMatchesByDate(eventDate);
+        _mockRepository.Received(1).SaveAgentConfirm(Arg.Any<List<MatchAgentConfirm>>());
     }
 
     [Fact]
@@ -52,19 +52,19 @@ public class SyncAgentConfirmHandlerTests
         var emptyMatches = new List<AgentMatchInfo>();
 
         _mockRepository
-            .Setup(x => x.GetOwpMainMatchesByDate(eventDate))
-            .ReturnsAsync(emptyMatches);
+            .GetOwpMainMatchesByDate(eventDate)
+            .Returns(emptyMatches);
 
         _mockRepository
-            .Setup(x => x.SaveAgentConfirm(It.IsAny<List<MatchAgentConfirm>>()))
+            .SaveAgentConfirm(Arg.Any<List<MatchAgentConfirm>>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _handler.Handle(eventDate);
 
         // Assert
-        _mockRepository.Verify(x => x.GetOwpMainMatchesByDate(eventDate), Times.Once);
-        _mockRepository.Verify(x => x.SaveAgentConfirm(It.Is<List<MatchAgentConfirm>>(list => list.Count == 0)), Times.Once);
+        _mockRepository.Received(1).GetOwpMainMatchesByDate(eventDate);
+        _mockRepository.Received(1).SaveAgentConfirm(Arg.Is<List<MatchAgentConfirm>>(list => list.Count == 0));
     }
 
     [Theory]
@@ -81,21 +81,21 @@ public class SyncAgentConfirmHandlerTests
         };
 
         _mockRepository
-            .Setup(x => x.GetOwpMainMatchesByDate(eventDate))
-            .ReturnsAsync(agentMatches);
+            .GetOwpMainMatchesByDate(eventDate)
+            .Returns(agentMatches);
 
         _mockRepository
-            .Setup(x => x.SaveAgentConfirm(It.IsAny<List<MatchAgentConfirm>>()))
+            .SaveAgentConfirm(Arg.Any<List<MatchAgentConfirm>>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _handler.Handle(eventDate);
 
         // Assert
-        _mockRepository.Verify(x => x.SaveAgentConfirm(
-            It.Is<List<MatchAgentConfirm>>(list =>
+        _mockRepository.Received(1).SaveAgentConfirm(
+            Arg.Is<List<MatchAgentConfirm>>(list =>
                 list.Count == 1 &&
-                list[0].Agent == expectedAgent)), Times.Once);
+                list[0].Agent == expectedAgent));
     }
 
     [Fact]
@@ -109,21 +109,21 @@ public class SyncAgentConfirmHandlerTests
         };
 
         _mockRepository
-            .Setup(x => x.GetOwpMainMatchesByDate(eventDate))
-            .ReturnsAsync(agentMatches);
+            .GetOwpMainMatchesByDate(eventDate)
+            .Returns(agentMatches);
 
         _mockRepository
-            .Setup(x => x.SaveAgentConfirm(It.IsAny<List<MatchAgentConfirm>>()))
+            .SaveAgentConfirm(Arg.Any<List<MatchAgentConfirm>>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _handler.Handle(eventDate);
 
         // Assert
-        _mockRepository.Verify(x => x.SaveAgentConfirm(
-            It.Is<List<MatchAgentConfirm>>(list =>
+        _mockRepository.Received(1).SaveAgentConfirm(
+            Arg.Is<List<MatchAgentConfirm>>(list =>
                 list.Count == 1 &&
-                list[0].Agent == "Streaming")), Times.Once);
+                list[0].Agent == "Streaming"));
     }
 
     [Fact]
@@ -137,21 +137,21 @@ public class SyncAgentConfirmHandlerTests
         };
 
         _mockRepository
-            .Setup(x => x.GetOwpMainMatchesByDate(eventDate))
-            .ReturnsAsync(agentMatches);
+            .GetOwpMainMatchesByDate(eventDate)
+            .Returns(agentMatches);
 
         _mockRepository
-            .Setup(x => x.SaveAgentConfirm(It.IsAny<List<MatchAgentConfirm>>()))
+            .SaveAgentConfirm(Arg.Any<List<MatchAgentConfirm>>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _handler.Handle(eventDate);
 
         // Assert
-        _mockRepository.Verify(x => x.SaveAgentConfirm(
-            It.Is<List<MatchAgentConfirm>>(list =>
+        _mockRepository.Received(1).SaveAgentConfirm(
+            Arg.Is<List<MatchAgentConfirm>>(list =>
                 list.Count == 1 &&
-                list[0].Agent == "Cancel")), Times.Once);
+                list[0].Agent == "Cancel"));
     }
 
     [Theory]
@@ -168,21 +168,21 @@ public class SyncAgentConfirmHandlerTests
         };
 
         _mockRepository
-            .Setup(x => x.GetOwpMainMatchesByDate(eventDate))
-            .ReturnsAsync(agentMatches);
+            .GetOwpMainMatchesByDate(eventDate)
+            .Returns(agentMatches);
 
         _mockRepository
-            .Setup(x => x.SaveAgentConfirm(It.IsAny<List<MatchAgentConfirm>>()))
+            .SaveAgentConfirm(Arg.Any<List<MatchAgentConfirm>>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _handler.Handle(eventDate);
 
         // Assert
-        _mockRepository.Verify(x => x.SaveAgentConfirm(
-            It.Is<List<MatchAgentConfirm>>(list =>
+        _mockRepository.Received(1).SaveAgentConfirm(
+            Arg.Is<List<MatchAgentConfirm>>(list =>
                 list.Count == 1 &&
-                list[0].Agent == expectedAgent)), Times.Once);
+                list[0].Agent == expectedAgent));
     }
 
     [Theory]
@@ -199,21 +199,21 @@ public class SyncAgentConfirmHandlerTests
         };
 
         _mockRepository
-            .Setup(x => x.GetOwpMainMatchesByDate(eventDate))
-            .ReturnsAsync(agentMatches);
+            .GetOwpMainMatchesByDate(eventDate)
+            .Returns(agentMatches);
 
         _mockRepository
-            .Setup(x => x.SaveAgentConfirm(It.IsAny<List<MatchAgentConfirm>>()))
+            .SaveAgentConfirm(Arg.Any<List<MatchAgentConfirm>>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _handler.Handle(eventDate);
 
         // Assert
-        _mockRepository.Verify(x => x.SaveAgentConfirm(
-            It.Is<List<MatchAgentConfirm>>(list =>
+        _mockRepository.Received(1).SaveAgentConfirm(
+            Arg.Is<List<MatchAgentConfirm>>(list =>
                 list.Count == 1 &&
-                list[0].Agent == "Cancel")), Times.Once);
+                list[0].Agent == "Cancel"));
     }
 
     [Theory]
@@ -236,21 +236,21 @@ public class SyncAgentConfirmHandlerTests
         };
 
         _mockRepository
-            .Setup(x => x.GetOwpMainMatchesByDate(eventDate))
-            .ReturnsAsync(agentMatches);
+            .GetOwpMainMatchesByDate(eventDate)
+            .Returns(agentMatches);
 
         _mockRepository
-            .Setup(x => x.SaveAgentConfirm(It.IsAny<List<MatchAgentConfirm>>()))
+            .SaveAgentConfirm(Arg.Any<List<MatchAgentConfirm>>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _handler.Handle(eventDate);
 
         // Assert
-        _mockRepository.Verify(x => x.SaveAgentConfirm(
-            It.Is<List<MatchAgentConfirm>>(list =>
+        _mockRepository.Received(1).SaveAgentConfirm(
+            Arg.Is<List<MatchAgentConfirm>>(list =>
                 list.Count == 1 &&
-                list[0].Agent == expectedAgent)), Times.Once);
+                list[0].Agent == expectedAgent));
     }
 
     [Theory]
@@ -269,21 +269,21 @@ public class SyncAgentConfirmHandlerTests
         };
 
         _mockRepository
-            .Setup(x => x.GetOwpMainMatchesByDate(eventDate))
-            .ReturnsAsync(agentMatches);
+            .GetOwpMainMatchesByDate(eventDate)
+            .Returns(agentMatches);
 
         _mockRepository
-            .Setup(x => x.SaveAgentConfirm(It.IsAny<List<MatchAgentConfirm>>()))
+            .SaveAgentConfirm(Arg.Any<List<MatchAgentConfirm>>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _handler.Handle(eventDate);
 
         // Assert
-        _mockRepository.Verify(x => x.SaveAgentConfirm(
-            It.Is<List<MatchAgentConfirm>>(list =>
+        _mockRepository.Received(1).SaveAgentConfirm(
+            Arg.Is<List<MatchAgentConfirm>>(list =>
                 list.Count == 1 &&
-                list[0].Agent == expectedAgent)), Times.Once);
+                list[0].Agent == expectedAgent));
     }
 
     [Theory]
@@ -302,21 +302,21 @@ public class SyncAgentConfirmHandlerTests
         };
 
         _mockRepository
-            .Setup(x => x.GetOwpMainMatchesByDate(eventDate))
-            .ReturnsAsync(agentMatches);
+            .GetOwpMainMatchesByDate(eventDate)
+            .Returns(agentMatches);
 
         _mockRepository
-            .Setup(x => x.SaveAgentConfirm(It.IsAny<List<MatchAgentConfirm>>()))
+            .SaveAgentConfirm(Arg.Any<List<MatchAgentConfirm>>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _handler.Handle(eventDate);
 
         // Assert
-        _mockRepository.Verify(x => x.SaveAgentConfirm(
-            It.Is<List<MatchAgentConfirm>>(list =>
+        _mockRepository.Received(1).SaveAgentConfirm(
+            Arg.Is<List<MatchAgentConfirm>>(list =>
                 list.Count == 1 &&
-                list[0].Agent == expectedAgent)), Times.Once);
+                list[0].Agent == expectedAgent));
     }
 
     [Fact]
@@ -330,21 +330,21 @@ public class SyncAgentConfirmHandlerTests
         };
 
         _mockRepository
-            .Setup(x => x.GetOwpMainMatchesByDate(eventDate))
-            .ReturnsAsync(agentMatches);
+            .GetOwpMainMatchesByDate(eventDate)
+            .Returns(agentMatches);
 
         _mockRepository
-            .Setup(x => x.SaveAgentConfirm(It.IsAny<List<MatchAgentConfirm>>()))
+            .SaveAgentConfirm(Arg.Any<List<MatchAgentConfirm>>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _handler.Handle(eventDate);
 
         // Assert
-        _mockRepository.Verify(x => x.SaveAgentConfirm(
-            It.Is<List<MatchAgentConfirm>>(list =>
+        _mockRepository.Received(1).SaveAgentConfirm(
+            Arg.Is<List<MatchAgentConfirm>>(list =>
                 list.Count == 1 &&
-                list[0].Agent == null)), Times.Once);
+                list[0].Agent == null));
     }
 
     [Fact]
@@ -358,21 +358,21 @@ public class SyncAgentConfirmHandlerTests
         };
 
         _mockRepository
-            .Setup(x => x.GetOwpMainMatchesByDate(eventDate))
-            .ReturnsAsync(agentMatches);
+            .GetOwpMainMatchesByDate(eventDate)
+            .Returns(agentMatches);
 
         _mockRepository
-            .Setup(x => x.SaveAgentConfirm(It.IsAny<List<MatchAgentConfirm>>()))
+            .SaveAgentConfirm(Arg.Any<List<MatchAgentConfirm>>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _handler.Handle(eventDate);
 
         // Assert
-        _mockRepository.Verify(x => x.SaveAgentConfirm(
-            It.Is<List<MatchAgentConfirm>>(list =>
+        _mockRepository.Received(1).SaveAgentConfirm(
+            Arg.Is<List<MatchAgentConfirm>>(list =>
                 list.Count == 1 &&
-                list[0].Agent == null)), Times.Once);
+                list[0].Agent == null));
     }
 
     [Fact]
@@ -388,23 +388,22 @@ public class SyncAgentConfirmHandlerTests
         };
 
         _mockRepository
-            .Setup(x => x.GetOwpMainMatchesByDate(eventDate))
-            .ReturnsAsync(agentMatches);
+            .GetOwpMainMatchesByDate(eventDate)
+            .Returns(agentMatches);
 
         _mockRepository
-            .Setup(x => x.SaveAgentConfirm(It.IsAny<List<MatchAgentConfirm>>()))
+            .SaveAgentConfirm(Arg.Any<List<MatchAgentConfirm>>())
             .Returns(Task.CompletedTask);
 
         // Act
         await _handler.Handle(eventDate);
 
         // Assert
-        _mockRepository.Verify(x => x.SaveAgentConfirm(
-            It.Is<List<MatchAgentConfirm>>(list =>
+        _mockRepository.Received(1).SaveAgentConfirm(
+            Arg.Is<List<MatchAgentConfirm>>(list =>
                 list.Count == 3 &&
                 list.Any(c => c.Agent == "365GV") &&
                 list.Any(c => c.Agent == "Cancel") &&
-                list.Any(c => c.Agent == "Betradar"))), Times.Once);
+                list.Any(c => c.Agent == "Betradar")));
     }
 }
-

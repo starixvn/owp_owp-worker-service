@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Configuration;
-using Moq;
+using NSubstitute;
 using Newtonsoft.Json;
 using OWP.PushInfoToSettlement.Model;
 using OWP.PushInfoToSettlement.Services;
@@ -13,19 +13,19 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
 {
     public class SettlementApiServiceTests
     {
-        private readonly Mock<HttpHandler> _mockHttpHandler;
-        private readonly Mock<IConfiguration> _mockConfiguration;
-        private readonly Mock<ILogger> _mockLogger;
+        private readonly HttpHandler _mockHttpHandler;
+        private readonly IConfiguration _mockConfiguration;
+        private readonly ILogger _mockLogger;
         private readonly SettlementApiSetting _apiSetting;
         private readonly SettlementApiService _service;
 
         public SettlementApiServiceTests()
         {
-            _mockHttpHandler = new Mock<HttpHandler>();
-            _mockConfiguration = new Mock<IConfiguration>();
-            _mockLogger = new Mock<ILogger>();
+            _mockHttpHandler = Substitute.For<HttpHandler>();
+            _mockConfiguration = Substitute.For<IConfiguration>();
+            _mockLogger = Substitute.For<ILogger>();
             _apiSetting = new SettlementApiSetting { Url = "https://api.test.com" };
-            _service = new SettlementApiService(_mockHttpHandler.Object, _apiSetting, _mockLogger.Object);
+            _service = new SettlementApiService(_mockHttpHandler, _apiSetting, _mockLogger);
         }
 
         [Fact]
@@ -44,8 +44,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
                 Content = new StringContent("{\"errorCode\": 0, \"errorMsg\": \"Success\", \"isFail\": false}", Encoding.UTF8, "application/json")
             };
 
-            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .ReturnsAsync(mockResponse);
+            _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+                .Returns(mockResponse);
 
             // Act
             var (success, message) = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
@@ -53,10 +53,10 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             // Assert
             Assert.True(success);
             Assert.Equal("Success", message);
-            _mockHttpHandler.Verify(x => x.PostAsync(
-                "https://api.test.com/api/match/change-instant-setting", 
-                It.IsAny<HttpContent>()), Times.Once);
-            _mockLogger.Verify(x => x.InfoAsync(It.IsAny<string>()), Times.Once);
+            _mockHttpHandler.Received(1).PostAsync(
+                "https://api.test.com/api/match/change-instant-setting",
+                Arg.Any<HttpContent>());
+            _mockLogger.Received(1).InfoAsync(Arg.Any<string>());
         }
 
         [Fact]
@@ -75,8 +75,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
                 Content = new StringContent("{\"errorCode\": 1, \"errorMsg\": \"Error\", \"isFail\": true}", Encoding.UTF8, "application/json")
             };
 
-            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .ReturnsAsync(mockResponse);
+            _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+                .Returns(mockResponse);
 
             // Act
             var (success, message) = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
@@ -84,10 +84,10 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             // Assert
             Assert.False(success);
             Assert.Equal("Error", message);
-            _mockHttpHandler.Verify(x => x.PostAsync(
-                "https://api.test.com/api/match/change-instant-setting", 
-                It.IsAny<HttpContent>()), Times.Once);
-            _mockLogger.Verify(x => x.InfoAsync(It.IsAny<string>()), Times.Once);
+            _mockHttpHandler.Received(1).PostAsync(
+                "https://api.test.com/api/match/change-instant-setting",
+                Arg.Any<HttpContent>());
+            _mockLogger.Received(1).InfoAsync(Arg.Any<string>());
         }
 
         [Fact]
@@ -106,8 +106,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
                 Content = new StringContent("invalid json", Encoding.UTF8, "application/json")
             };
 
-            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .ReturnsAsync(mockResponse);
+            _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+                .Returns(mockResponse);
 
             // Act
             var (success, message) = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
@@ -115,10 +115,10 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             // Assert
             Assert.False(success);
             Assert.Contains("Unexpected character encountered while parsing value", message);
-            _mockHttpHandler.Verify(x => x.PostAsync(
+            _mockHttpHandler.Received(1).PostAsync(
                 "https://api.test.com/api/match/change-instant-setting",
-                It.IsAny<HttpContent>()), Times.Once);
-            _mockLogger.Verify(x => x.InfoAsync(It.IsAny<string>()), Times.Once);
+                Arg.Any<HttpContent>());
+            _mockLogger.Received(1).InfoAsync(Arg.Any<string>());
         }
 
         [Fact]
@@ -137,8 +137,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
                 Content = new StringContent("Bad Request", Encoding.UTF8, "application/json")
             };
 
-            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .ReturnsAsync(mockResponse);
+            _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+                .Returns(mockResponse);
 
             // Act
             var (success, message) = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
@@ -146,7 +146,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             // Assert
             Assert.False(success);
             Assert.Equal("HTTP Error: 400", message);
-            _mockLogger.Verify(x => x.ErrorAsync(It.IsAny<string>()), Times.Once);
+            _mockLogger.Received(1).ErrorAsync(Arg.Any<string>());
         }
 
         [Fact]
@@ -160,8 +160,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             var fromDate = DateTime.Today.AddDays(-1);
             var toDate = DateTime.Today.AddDays(1);
 
-            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .ThrowsAsync(new HttpRequestException("Network error"));
+            _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+                .Returns(Task.FromException<HttpResponseMessage>(new HttpRequestException("Network error")));
 
             // Act
             var (success, message) = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
@@ -169,7 +169,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             // Assert
             Assert.False(success);
             Assert.Equal("Exception: Network error", message);
-            _mockLogger.Verify(x => x.ErrorAsync(It.IsAny<string>()), Times.Once);
+            _mockLogger.Received(1).ErrorAsync(Arg.Any<string>());
         }
 
         [Fact]
@@ -190,9 +190,9 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             };
 
             HttpContent capturedContent = null;
-            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .Callback<string, HttpContent>((uri, content) => capturedContent = content)
-                .ReturnsAsync(mockResponse);
+            _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+                .Returns(mockResponse)
+                .AndDoes(callInfo => capturedContent = callInfo.Arg<HttpContent>());
 
             // Act
             var (success, message) = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
@@ -200,7 +200,7 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             // Assert
             Assert.True(success);
             Assert.Equal("Success", message);
-            _mockHttpHandler.Verify(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()), Times.Once);
+            _mockHttpHandler.Received(1).PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>());
 
             Assert.NotNull(capturedContent);
             var contentString = await capturedContent.ReadAsStringAsync();
@@ -223,8 +223,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
                 Content = new StringContent("{\"errorCode\": 0, \"errorMsg\": \"Success\", \"isFail\": false}", Encoding.UTF8, "application/json")
             };
 
-            _mockHttpHandler.Setup(x => x.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .ReturnsAsync(mockResponse);
+            _mockHttpHandler.PostAsync(Arg.Any<string>(), Arg.Any<HttpContent>())
+                .Returns(mockResponse);
 
             // Act
             var (success, message) = await _service.ChangeInstantSettingAsync(matchItems, fromDate, toDate);
@@ -232,9 +232,9 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             // Assert
             Assert.True(success);
             Assert.Equal("Success", message);
-            _mockLogger.Verify(x => x.InfoAsync(It.Is<string>(log =>
+            _mockLogger.Received(1).InfoAsync(Arg.Is<string>(log =>
                 log.Contains("Push MatchInfo To Settlement fromDate:") &&
-                log.Contains("toDate:"))), Times.Once);
+                log.Contains("toDate:")));
         }
     }
 }

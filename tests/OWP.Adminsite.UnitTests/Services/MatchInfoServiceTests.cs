@@ -1,5 +1,5 @@
 using FluentAssertions;
-using Moq;
+using NSubstitute;
 using OWP.Adminsite.Constants;
 using OWP.Adminsite.Models;
 using OWP.Adminsite.Repository;
@@ -10,23 +10,23 @@ namespace OWP.Adminsite.UnitTests.Services;
 
 public class MatchInfoServiceTests
 {
-    private readonly Mock<IMatchInfoRepository> _mockRepository;
+    private readonly IMatchInfoRepository _mockRepository;
     private readonly MatchInfoService _service;
 
     public MatchInfoServiceTests()
     {
-        _mockRepository = new Mock<IMatchInfoRepository>();
-        _service = new MatchInfoService(_mockRepository.Object);
+        _mockRepository = Substitute.For<IMatchInfoRepository>();
+        _service = new MatchInfoService(_mockRepository);
     }
 
     [Fact]
     public void Constructor_WithValidRepository_ShouldCreateInstance()
     {
         // Arrange
-        var repository = new Mock<IMatchInfoRepository>();
+        var repository = Substitute.For<IMatchInfoRepository>();
 
         // Act
-        var service = new MatchInfoService(repository.Object);
+        var service = new MatchInfoService(repository);
 
         // Assert
         service.Should().NotBeNull();
@@ -38,20 +38,20 @@ public class MatchInfoServiceTests
         // Arrange
         var fromDate = DateTime.Now.AddDays(-1);
         var toDate = DateTime.Now;
-        _mockRepository.Setup(r => r.GetMatchInfoAsync(fromDate, toDate))
-            .ReturnsAsync(new List<MatchInfo>());
+        _mockRepository.GetMatchInfoAsync(fromDate, toDate)
+            .Returns(new List<MatchInfo>());
 
         // Act
         var result = await _service.GetMatchInfoAsync(fromDate, toDate);
 
         // Assert
         result.Should().BeEmpty();
-        _mockRepository.Verify(r => r.GetAssignmentAsync(It.IsAny<string>()), Times.Never);
-        _mockRepository.Verify(r => r.GetMatchSettingAsync(It.IsAny<string>()), Times.Never);
-        _mockRepository.Verify(r => r.GetMatchOddAsync(It.IsAny<string>()), Times.Never);
-        _mockRepository.Verify(r => r.GetMatchOfferAsync(It.IsAny<string>()), Times.Never);
-        _mockRepository.Verify(r => r.GetDefaultSecondAcceptValueAsync(), Times.Never);
-        _mockRepository.Verify(r => r.GetDefaultMaxbetSettingAsync(), Times.Never);
+        _mockRepository.DidNotReceive().GetAssignmentAsync(Arg.Any<string>());
+        _mockRepository.DidNotReceive().GetMatchSettingAsync(Arg.Any<string>());
+        _mockRepository.DidNotReceive().GetMatchOddAsync(Arg.Any<string>());
+        _mockRepository.DidNotReceive().GetMatchOfferAsync(Arg.Any<string>());
+        _mockRepository.DidNotReceive().GetDefaultSecondAcceptValueAsync();
+        _mockRepository.DidNotReceive().GetDefaultMaxbetSettingAsync();
     }
 
     [Fact]
@@ -101,13 +101,13 @@ public class MatchInfoServiceTests
         catch (Exception)
         {
             // Expected due to builder dependencies - verify repository calls were made
-            _mockRepository.Verify(r => r.GetMatchInfoAsync(fromDate, toDate), Times.Once);
-            _mockRepository.Verify(r => r.GetAssignmentAsync("12345"), Times.Once);
-            _mockRepository.Verify(r => r.GetMatchSettingAsync("12345"), Times.Once);
-            _mockRepository.Verify(r => r.GetMatchOddAsync("12345"), Times.Once);
-            _mockRepository.Verify(r => r.GetMatchOfferAsync("12345"), Times.Once);
-            _mockRepository.Verify(r => r.GetDefaultSecondAcceptValueAsync(), Times.Once);
-            _mockRepository.Verify(r => r.GetDefaultMaxbetSettingAsync(), Times.Once);
+            _mockRepository.Received(1).GetMatchInfoAsync(fromDate, toDate);
+            _mockRepository.Received(1).GetAssignmentAsync("12345");
+            _mockRepository.Received(1).GetMatchSettingAsync("12345");
+            _mockRepository.Received(1).GetMatchOddAsync("12345");
+            _mockRepository.Received(1).GetMatchOfferAsync("12345");
+            _mockRepository.Received(1).GetDefaultSecondAcceptValueAsync();
+            _mockRepository.Received(1).GetDefaultMaxbetSettingAsync();
         }
     }
 
@@ -310,13 +310,13 @@ public class MatchInfoServiceTests
         catch (Exception)
         {
             // Expected due to builder dependencies - verify repository calls were made
-            _mockRepository.Verify(r => r.GetMatchInfoAsync(fromDate, toDate), Times.Once);
-            _mockRepository.Verify(r => r.GetAssignmentAsync("12345,12346"), Times.Once);
-            _mockRepository.Verify(r => r.GetMatchSettingAsync("12345,12346"), Times.Once);
-            _mockRepository.Verify(r => r.GetMatchOddAsync("12345,12346"), Times.Once);
-            _mockRepository.Verify(r => r.GetMatchOfferAsync("12345,12346"), Times.Once);
-            _mockRepository.Verify(r => r.GetDefaultSecondAcceptValueAsync(), Times.Once);
-            _mockRepository.Verify(r => r.GetDefaultMaxbetSettingAsync(), Times.Once);
+            _mockRepository.Received(1).GetMatchInfoAsync(fromDate, toDate);
+            _mockRepository.Received(1).GetAssignmentAsync("12345,12346");
+            _mockRepository.Received(1).GetMatchSettingAsync("12345,12346");
+            _mockRepository.Received(1).GetMatchOddAsync("12345,12346");
+            _mockRepository.Received(1).GetMatchOfferAsync("12345,12346");
+            _mockRepository.Received(1).GetDefaultSecondAcceptValueAsync();
+            _mockRepository.Received(1).GetDefaultMaxbetSettingAsync();
         }
     }
 
@@ -404,13 +404,13 @@ public class MatchInfoServiceTests
         }
 
         // Verify that all repository methods were called
-        _mockRepository.Verify(r => r.GetMatchInfoAsync(fromDate, toDate), Times.Once);
-        _mockRepository.Verify(r => r.GetAssignmentAsync("12345"), Times.Once);
-        _mockRepository.Verify(r => r.GetMatchSettingAsync("12345"), Times.Once);
-        _mockRepository.Verify(r => r.GetMatchOddAsync("12345"), Times.Once);
-        _mockRepository.Verify(r => r.GetMatchOfferAsync("12345"), Times.Once);
-        _mockRepository.Verify(r => r.GetDefaultSecondAcceptValueAsync(), Times.Once);
-        _mockRepository.Verify(r => r.GetDefaultMaxbetSettingAsync(), Times.Once);
+        _mockRepository.Received(1).GetMatchInfoAsync(fromDate, toDate);
+        _mockRepository.Received(1).GetAssignmentAsync("12345");
+        _mockRepository.Received(1).GetMatchSettingAsync("12345");
+        _mockRepository.Received(1).GetMatchOddAsync("12345");
+        _mockRepository.Received(1).GetMatchOfferAsync("12345");
+        _mockRepository.Received(1).GetDefaultSecondAcceptValueAsync();
+        _mockRepository.Received(1).GetDefaultMaxbetSettingAsync();
     }
 
     [Fact]
@@ -460,10 +460,10 @@ public class MatchInfoServiceTests
         }
 
         // Verify that all repository methods were called with comma-separated match IDs
-        _mockRepository.Verify(r => r.GetAssignmentAsync("12345,12346"), Times.Once);
-        _mockRepository.Verify(r => r.GetMatchSettingAsync("12345,12346"), Times.Once);
-        _mockRepository.Verify(r => r.GetMatchOddAsync("12345,12346"), Times.Once);
-        _mockRepository.Verify(r => r.GetMatchOfferAsync("12345,12346"), Times.Once);
+        _mockRepository.Received(1).GetAssignmentAsync("12345,12346");
+        _mockRepository.Received(1).GetMatchSettingAsync("12345,12346");
+        _mockRepository.Received(1).GetMatchOddAsync("12345,12346");
+        _mockRepository.Received(1).GetMatchOfferAsync("12345,12346");
     }
 
     [Fact]
@@ -511,13 +511,13 @@ public class MatchInfoServiceTests
         catch (Exception)
         {
             // Expected due to builder dependencies - verify repository calls were made
-            _mockRepository.Verify(r => r.GetMatchInfoAsync(fromDate, toDate), Times.Once);
-            _mockRepository.Verify(r => r.GetAssignmentAsync("12345"), Times.Once);
-            _mockRepository.Verify(r => r.GetMatchSettingAsync("12345"), Times.Once);
-            _mockRepository.Verify(r => r.GetMatchOddAsync("12345"), Times.Once);
-            _mockRepository.Verify(r => r.GetMatchOfferAsync("12345"), Times.Once);
-            _mockRepository.Verify(r => r.GetDefaultSecondAcceptValueAsync(), Times.Once);
-            _mockRepository.Verify(r => r.GetDefaultMaxbetSettingAsync(), Times.Once);
+            _mockRepository.Received(1).GetMatchInfoAsync(fromDate, toDate);
+            _mockRepository.Received(1).GetAssignmentAsync("12345");
+            _mockRepository.Received(1).GetMatchSettingAsync("12345");
+            _mockRepository.Received(1).GetMatchOddAsync("12345");
+            _mockRepository.Received(1).GetMatchOfferAsync("12345");
+            _mockRepository.Received(1).GetDefaultSecondAcceptValueAsync();
+            _mockRepository.Received(1).GetDefaultMaxbetSettingAsync();
         }
     }
 
@@ -527,20 +527,20 @@ public class MatchInfoServiceTests
         var actualToDate = toDate ?? DateTime.Now;
 
         // Setup GetMatchInfoAsync with exact date matching
-        _mockRepository.Setup(r => r.GetMatchInfoAsync(actualFromDate, actualToDate))
-            .ReturnsAsync(matchInfos);
+        _mockRepository.GetMatchInfoAsync(actualFromDate, actualToDate)
+            .Returns(matchInfos);
 
         // Setup all other repository methods to return empty collections
-        _mockRepository.Setup(r => r.GetAssignmentAsync(It.IsAny<string>()))
-            .ReturnsAsync(new List<Assignment>());
-        _mockRepository.Setup(r => r.GetMatchSettingAsync(It.IsAny<string>()))
-            .ReturnsAsync(new List<MatchSetting>());
-        _mockRepository.Setup(r => r.GetMatchOddAsync(It.IsAny<string>()))
-            .ReturnsAsync((new List<MatchRecommendOdd>(), new List<MatchRecommendOddDetail>()));
-        _mockRepository.Setup(r => r.GetMatchOfferAsync(It.IsAny<string>()))
-            .ReturnsAsync(new List<MatchOffer>());
-        _mockRepository.Setup(r => r.GetDefaultSecondAcceptValueAsync())
-            .ReturnsAsync(new List<DefaultSecondAcceptValue>
+        _mockRepository.GetAssignmentAsync(Arg.Any<string>())
+            .Returns(new List<Assignment>());
+        _mockRepository.GetMatchSettingAsync(Arg.Any<string>())
+            .Returns(new List<MatchSetting>());
+        _mockRepository.GetMatchOddAsync(Arg.Any<string>())
+            .Returns((new List<MatchRecommendOdd>(), new List<MatchRecommendOddDetail>()));
+        _mockRepository.GetMatchOfferAsync(Arg.Any<string>())
+            .Returns(new List<MatchOffer>());
+        _mockRepository.GetDefaultSecondAcceptValueAsync()
+            .Returns(new List<DefaultSecondAcceptValue>
             {
                 new DefaultSecondAcceptValue
                 {
@@ -551,7 +551,7 @@ public class MatchInfoServiceTests
                     Fantasy = "400"
                 }
             });
-        _mockRepository.Setup(r => r.GetDefaultMaxbetSettingAsync())
-            .ReturnsAsync(new List<MaxbetSetting>());
+        _mockRepository.GetDefaultMaxbetSettingAsync()
+            .Returns(new List<MaxbetSetting>());
     }
 }

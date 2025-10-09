@@ -10,7 +10,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageReference Include="xunit" Version="2.9.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
-    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="NSubstitute" Version="5.1.0" />
     <PackageReference Include="FluentAssertions" Version="6.12.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
     <PackageReference Include="Olympus.OWP.Log.Data.Repository" Version="9.0.0" />
@@ -18,7 +18,7 @@
   <ItemGroup>
     <Using Include="Xunit" />
     <Using Include="FluentAssertions" />
-    <Using Include="Moq" />
+    <Using Include="NSubstitute" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\OWP.Adminsite\OWP.Adminsite.csproj" />

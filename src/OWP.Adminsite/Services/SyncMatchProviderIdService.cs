@@ -61,10 +61,15 @@ namespace OWP.Adminsite.Services
 
         public async Task AlertIfHaveAnyAbnormal(IList<Content> providerMatchInfo)
         {
-            await logger.ErrorAsync(JsonConvert.SerializeObject(new{
-                message=$"Duplicate ProviderMatchId at: {DateTimeOffset.Now.UtcDateTime.AddHours(8)}",
-                payload =DetectDuplicateProviderMatchId(providerMatchInfo)
-            }));
+            var duplicateProviderMatchId = DetectDuplicateProviderMatchId(providerMatchInfo);
+            if (duplicateProviderMatchId.Any())
+            {
+                await logger.ErrorAsync(JsonConvert.SerializeObject(new
+                {
+                    message = $"Duplicate ProviderMatchId at: {DateTimeOffset.Now.UtcDateTime.AddHours(8)}",
+                    payload = duplicateProviderMatchId
+                }));
+            }
         }
 
         public static IList<Content> DetectDuplicateProviderMatchId(IList<Content> providerMatchInfo)

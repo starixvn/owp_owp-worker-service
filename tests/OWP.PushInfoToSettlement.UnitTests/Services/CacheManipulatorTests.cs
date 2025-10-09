@@ -1,4 +1,4 @@
-using Moq;
+using NSubstitute;
 using OWP.PushInfoToSettlement.Model;
 using OWP.PushInfoToSettlement.Services;
 using Fanex.Caching;
@@ -9,13 +9,13 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
 {
     public class CacheManipulatorTests
     {
-        private readonly Mock<ICache> _mockCache;
+        private readonly ICache _mockCache;
         private readonly CacheManipulatorImp _service;
 
         public CacheManipulatorTests()
         {
-            _mockCache = new Mock<ICache>();
-            _service = new CacheManipulatorImp(_mockCache.Object);
+            _mockCache = Substitute.For<ICache>();
+            _service = new CacheManipulatorImp(_mockCache);
         }
 
         private List<EventData> CreateSampleEvents()
@@ -36,17 +36,17 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:MM/dd/yyyy}";
             var expectedJson = JsonConvert.SerializeObject(events);
 
-            _mockCache.Setup(x => x.SetAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CacheItemOptions>()))
+            _mockCache.SetAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<CacheItemOptions>())
                 .Returns(Task.CompletedTask);
 
             // Act
             await _service.SaveMatchSnapshot(events, eventDate);
 
             // Assert
-            _mockCache.Verify(x => x.SetAsync(
+            _mockCache.Received(1).SetAsync(
                 expectedCacheKey,
                 expectedJson,
-                It.IsAny<CacheItemOptions>()), Times.Once);
+                Arg.Any<CacheItemOptions>());
         }
 
         [Fact]
@@ -57,17 +57,17 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             var eventDate = DateTime.Today;
             var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:MM/dd/yyyy}";
 
-            _mockCache.Setup(x => x.SetAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CacheItemOptions>()))
+            _mockCache.SetAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<CacheItemOptions>())
                 .Returns(Task.CompletedTask);
 
             // Act
             await _service.SaveMatchSnapshot(events, eventDate);
 
             // Assert
-            _mockCache.Verify(x => x.SetAsync(
+            _mockCache.Received(1).SetAsync(
                 expectedCacheKey,
                 "[]",
-                It.IsAny<CacheItemOptions>()), Times.Once);
+                Arg.Any<CacheItemOptions>());
         }
 
         [Fact]
@@ -77,17 +77,17 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             var eventDate = DateTime.Today;
             var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:MM/dd/yyyy}";
 
-            _mockCache.Setup(x => x.SetAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CacheItemOptions>()))
+            _mockCache.SetAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<CacheItemOptions>())
                 .Returns(Task.CompletedTask);
 
             // Act
             await _service.SaveMatchSnapshot(null, eventDate);
 
             // Assert
-            _mockCache.Verify(x => x.SetAsync(
+            _mockCache.Received(1).SetAsync(
                 expectedCacheKey,
                 "null",
-                It.IsAny<CacheItemOptions>()), Times.Once);
+                Arg.Any<CacheItemOptions>());
         }
 
         [Fact]
@@ -99,8 +99,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             var events = CreateSampleEvents();
             var eventsJson = JsonConvert.SerializeObject(events);
 
-            _mockCache.Setup(x => x.TryGetAsync<string>(expectedCacheKey))
-                .ReturnsAsync((true, eventsJson));
+            _mockCache.TryGetAsync<string>(expectedCacheKey)
+                .Returns((true, eventsJson));
 
             // Act
             var result = await _service.GetMatchesByDate(eventDate);
@@ -123,8 +123,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             var eventDate = DateTime.Today;
             var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:MM/dd/yyyy}";
 
-            _mockCache.Setup(x => x.TryGetAsync<string>(expectedCacheKey))
-                .ReturnsAsync((false, string.Empty));
+            _mockCache.TryGetAsync<string>(expectedCacheKey)
+                .Returns((false, string.Empty));
 
             // Act
             var result = await _service.GetMatchesByDate(eventDate);
@@ -141,8 +141,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             var eventDate = DateTime.Today;
             var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:MM/dd/yyyy}";
 
-            _mockCache.Setup(x => x.TryGetAsync<string>(expectedCacheKey))
-                .ReturnsAsync((true, null));
+            _mockCache.TryGetAsync<string>(expectedCacheKey)
+                .Returns((true, null));
 
             // Act
             var result = await _service.GetMatchesByDate(eventDate);
@@ -159,8 +159,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             var eventDate = DateTime.Today;
             var expectedCacheKey = $"Match-OldSnapshot-SendToSettlement-{eventDate:MM/dd/yyyy}";
 
-            _mockCache.Setup(x => x.TryGetAsync<string>(expectedCacheKey))
-                .ReturnsAsync((true, "invalid json"));
+            _mockCache.TryGetAsync<string>(expectedCacheKey)
+                .Returns((true, "invalid json"));
 
             // Act & Assert
             await Assert.ThrowsAsync<Newtonsoft.Json.JsonReaderException>(() =>
@@ -174,8 +174,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             var expectedDate = DateTime.Today;
             var dateString = expectedDate.ToString("yyyy-MM-dd");
 
-            _mockCache.Setup(x => x.TryGetAsync<string>("LastProcessedDate-SendToSettlement"))
-                .ReturnsAsync((true, dateString));
+            _mockCache.TryGetAsync<string>("LastProcessedDate-SendToSettlement")
+                .Returns((true, dateString));
 
             // Act
             var result = await _service.GetLastProcessedDate();
@@ -189,8 +189,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
         public async Task GetLastProcessedDate_WhenCacheIsEmpty_ReturnsNull()
         {
             // Arrange
-            _mockCache.Setup(x => x.TryGetAsync<string>("LastProcessedDate-SendToSettlement"))
-                .ReturnsAsync((false, string.Empty));
+            _mockCache.TryGetAsync<string>("LastProcessedDate-SendToSettlement")
+                .Returns((false, string.Empty));
 
             // Act
             var result = await _service.GetLastProcessedDate();
@@ -203,8 +203,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
         public async Task GetLastProcessedDate_WhenCacheHasNullValue_ReturnsNull()
         {
             // Arrange
-            _mockCache.Setup(x => x.TryGetAsync<string>("LastProcessedDate-SendToSettlement"))
-                .ReturnsAsync((true, null));
+            _mockCache.TryGetAsync<string>("LastProcessedDate-SendToSettlement")
+                .Returns((true, null));
 
             // Act
             var result = await _service.GetLastProcessedDate();
@@ -217,8 +217,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
         public async Task GetLastProcessedDate_WhenCacheHasInvalidDate_ThrowsException()
         {
             // Arrange
-            _mockCache.Setup(x => x.TryGetAsync<string>("LastProcessedDate-SendToSettlement"))
-                .ReturnsAsync((true, "invalid-date"));
+            _mockCache.TryGetAsync<string>("LastProcessedDate-SendToSettlement")
+                .Returns((true, "invalid-date"));
 
             // Act & Assert
             await Assert.ThrowsAsync<FormatException>(() =>
@@ -232,17 +232,17 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             var date = DateTime.Today;
             var expectedDateString = date.ToString("yyyy-MM-dd");
 
-            _mockCache.Setup(x => x.SetAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CacheItemOptions>()))
+            _mockCache.SetAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<CacheItemOptions>())
                 .Returns(Task.CompletedTask);
 
             // Act
             await _service.SaveLastProcessedDate(date);
 
             // Assert
-            _mockCache.Verify(x => x.SetAsync(
+            _mockCache.Received(1).SetAsync(
                 "LastProcessedDate-SendToSettlement",
                 expectedDateString,
-                It.IsAny<CacheItemOptions>()), Times.Once);
+                Arg.Any<CacheItemOptions>());
         }
 
         [Fact]
@@ -252,17 +252,17 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             var date = new DateTime(2024, 12, 25, 15, 30, 45); // Time should be ignored
             var expectedDateString = "2024-12-25";
 
-            _mockCache.Setup(x => x.SetAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CacheItemOptions>()))
+            _mockCache.SetAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<CacheItemOptions>())
                 .Returns(Task.CompletedTask);
 
             // Act
             await _service.SaveLastProcessedDate(date);
 
             // Assert
-            _mockCache.Verify(x => x.SetAsync(
+            _mockCache.Received(1).SetAsync(
                 "LastProcessedDate-SendToSettlement",
                 expectedDateString,
-                It.IsAny<CacheItemOptions>()), Times.Once);
+                Arg.Any<CacheItemOptions>());
         }
 
         [Theory]
@@ -274,8 +274,8 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             // Arrange
             var expectedDate = DateTime.Parse(dateString);
 
-            _mockCache.Setup(x => x.TryGetAsync<string>("LastProcessedDate-SendToSettlement"))
-                .ReturnsAsync((true, dateString));
+            _mockCache.TryGetAsync<string>("LastProcessedDate-SendToSettlement")
+                .Returns((true, dateString));
 
             // Act
             var result = await _service.GetLastProcessedDate();
@@ -293,17 +293,17 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             var eventDate = new DateTime(2024, 3, 15);
             var expectedCacheKey = "Match-OldSnapshot-SendToSettlement-03/15/2024";
 
-            _mockCache.Setup(x => x.SetAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CacheItemOptions>()))
+            _mockCache.SetAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<CacheItemOptions>())
                 .Returns(Task.CompletedTask);
 
             // Act
             await _service.SaveMatchSnapshot(events, eventDate);
 
             // Assert
-            _mockCache.Verify(x => x.SetAsync(
+            _mockCache.Received(1).SetAsync(
                 expectedCacheKey,
-                It.IsAny<string>(),
-                It.IsAny<CacheItemOptions>()), Times.Once);
+                Arg.Any<string>(),
+                Arg.Any<CacheItemOptions>());
         }
 
         [Fact]
@@ -313,14 +313,14 @@ namespace OWP.PushInfoToSettlement.UnitTests.Services
             var eventDate = new DateTime(2024, 3, 15);
             var expectedCacheKey = "Match-OldSnapshot-SendToSettlement-03/15/2024";
 
-            _mockCache.Setup(x => x.TryGetAsync<string>(expectedCacheKey))
-                .ReturnsAsync((false, string.Empty));
+            _mockCache.TryGetAsync<string>(expectedCacheKey)
+                .Returns((false, string.Empty));
 
             // Act
             await _service.GetMatchesByDate(eventDate);
 
             // Assert
-            _mockCache.Verify(x => x.TryGetAsync<string>(expectedCacheKey), Times.Once);
+            _mockCache.Received(1).TryGetAsync<string>(expectedCacheKey);
         }
     }
 }

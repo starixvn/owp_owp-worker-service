@@ -1,7 +1,7 @@
 using Fanex.Data.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Moq;
+using NSubstitute;
 using OWP.AutoGenerateMaxbetSetting;
 using OWP.AutoGenerateMaxbetSetting.Services;
 using Olympus.OWP.Log.Data.Repository.Services;
@@ -15,10 +15,10 @@ public class DependenceInjectionTests
     {
         // Arrange
         var services = new ServiceCollection();
-        var mockRepository = new Mock<IDynamicRepository>();
-        var mockLogger = new Mock<LogWriterService>();
-        services.AddScoped<IDynamicRepository>(_ => mockRepository.Object);
-        services.AddScoped<LogWriterService>(_ => mockLogger.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var mockLogger = Substitute.For<LogWriterService>();
+        services.AddScoped<IDynamicRepository>(_ => mockRepository);
+        services.AddScoped<LogWriterService>(_ => mockLogger);
 
         // Act
         services.AddAutoGenerateNewLeagueSettingServices();
@@ -36,10 +36,10 @@ public class DependenceInjectionTests
     {
         // Arrange
         var services = new ServiceCollection();
-        var mockRepository = new Mock<IDynamicRepository>();
-        var mockLogger = new Mock<LogWriterService>();
-        services.AddScoped<IDynamicRepository>(_ => mockRepository.Object);
-        services.AddScoped<LogWriterService>(_ => mockLogger.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var mockLogger = Substitute.For<LogWriterService>();
+        services.AddScoped<IDynamicRepository>(_ => mockRepository);
+        services.AddScoped<LogWriterService>(_ => mockLogger);
 
         // Act
         services.AddAutoGenerateNewLeagueSettingServices();
@@ -57,10 +57,10 @@ public class DependenceInjectionTests
     {
         // Arrange
         var services = new ServiceCollection();
-        var mockRepository = new Mock<IDynamicRepository>();
-        var mockLogger = new Mock<LogWriterService>();
-        services.AddScoped<IDynamicRepository>(_ => mockRepository.Object);
-        services.AddScoped<LogWriterService>(_ => mockLogger.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var mockLogger = Substitute.For<LogWriterService>();
+        services.AddScoped<IDynamicRepository>(_ => mockRepository);
+        services.AddScoped<LogWriterService>(_ => mockLogger);
 
         // Act
         services.AddAutoGenerateNewLeagueSettingServices();
@@ -107,10 +107,10 @@ public class DependenceInjectionTests
     {
         // Arrange
         var services = new ServiceCollection();
-        var mockRepository = new Mock<IDynamicRepository>();
-        var mockLogger = new Mock<LogWriterService>();
-        services.AddScoped<IDynamicRepository>(_ => mockRepository.Object);
-        services.AddScoped<LogWriterService>(_ => mockLogger.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var mockLogger = Substitute.For<LogWriterService>();
+        services.AddScoped<IDynamicRepository>(_ => mockRepository);
+        services.AddScoped<LogWriterService>(_ => mockLogger);
 
         // Act
         services.AddAutoGenerateNewLeagueSettingServices();
@@ -128,10 +128,10 @@ public class DependenceInjectionTests
     {
         // Arrange
         var services = new ServiceCollection();
-        var mockRepository = new Mock<IDynamicRepository>();
-        var mockLogger = new Mock<LogWriterService>();
-        services.AddScoped<IDynamicRepository>(_ => mockRepository.Object);
-        services.AddScoped<LogWriterService>(_ => mockLogger.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var mockLogger = Substitute.For<LogWriterService>();
+        services.AddScoped<IDynamicRepository>(_ => mockRepository);
+        services.AddScoped<LogWriterService>(_ => mockLogger);
 
         // Act
         services.AddAutoGenerateNewLeagueSettingServices();
@@ -151,10 +151,10 @@ public class DependenceInjectionTests
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging(); // Add some existing services
-        var mockRepository = new Mock<IDynamicRepository>();
-        var mockLogger = new Mock<LogWriterService>();
-        services.AddScoped<IDynamicRepository>(_ => mockRepository.Object);
-        services.AddScoped<LogWriterService>(_ => mockLogger.Object);
+        var mockRepository = Substitute.For<IDynamicRepository>();
+        var mockLogger = Substitute.For<LogWriterService>();
+        services.AddScoped<IDynamicRepository>(_ => mockRepository);
+        services.AddScoped<LogWriterService>(_ => mockLogger);
 
         // Act
         services.AddAutoGenerateNewLeagueSettingServices();
