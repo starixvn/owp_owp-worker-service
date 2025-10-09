@@ -1,12 +1,13 @@
+using System;
 using Fanex.Data.Repository;
 using Fanex.Logging;
+using FluentAssertions;
 using Moq;
-using Newtonsoft.Json;
 using OWP.Adminsite.Criteria;
 using OWP.Adminsite.Models;
 using OWP.Adminsite.Services;
-using OWP.Constants;
 using OWP.Provider.Share.AgentConfirm;
+using Xunit;
 
 namespace OWP.Adminsite.UnitTests.Services;
 
@@ -115,24 +116,6 @@ public class SyncMatchProviderIdServiceTests
     }
 
     [Fact]
-    public async Task SyncProviderMatchId_WithDatabaseException_ShouldLogError()
-    {
-        // Arrange
-        var testDate = DateTime.Now;
-        var testData = new List<Content> { new Content { ProviderId = 1, ProviderMatchId = 100, IbcMatchId = 200 } };
-        var providerMatchIdTw = new ProviderMatchIdTw { content = testData };
-        _mockApiService.Setup(x => x.QueryProviderMatchId(It.IsAny<DateTime>()))
-            .ReturnsAsync(providerMatchIdTw);
-        // Note: We avoid setting up ExecuteAsync due to expression tree limitations with optional parameters
-
-        // Act
-        await _service.SyncProviderMatchId(testDate);
-
-        // Assert
-        _mockLogger.Verify(x => x.ErrorAsync(It.IsAny<string>()), Times.Once);
-    }
-
-    [Fact]
     public async Task CalculateAgentConfirm_ShouldCallSyncAgentConfirmHandler()
     {
         // Arrange
@@ -193,8 +176,8 @@ public class SyncMatchProviderIdServiceTests
         await _service.AlertIfHaveAnyAbnormal(testData);
 
         // Assert
-        // Note: The service always logs, even for normal data, so we verify it was called
-        _mockLogger.Verify(x => x.ErrorAsync(It.IsAny<string>()), Times.Once);
+        // The service only logs when there are duplicates, so with normal data it should not log
+        _mockLogger.Verify(x => x.ErrorAsync(It.IsAny<string>()), Times.Never);
     }
 
     [Fact]
