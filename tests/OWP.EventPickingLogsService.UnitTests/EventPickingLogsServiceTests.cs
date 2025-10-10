@@ -131,7 +131,7 @@ public class EventPickingLogsServiceTests
         var logEntry = loggedChanges.First();
         Assert.Equal(infoSiteMatchId, logEntry.InfoSiteMatchId);
         Assert.Null(logEntry.UpdateTypeId);
-        Assert.Equal("Update the <b>checking status</b>", logEntry.Action);
+        Assert.Equal("Update the <b>Checking status</b>", logEntry.Action);
         Assert.Equal("Unchecked", logEntry.NewValue);
         Assert.Equal("Checked", logEntry.OldValue);
         Assert.Equal(fromService, logEntry.FromService);
