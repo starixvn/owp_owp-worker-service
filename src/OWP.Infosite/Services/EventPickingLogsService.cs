@@ -58,7 +58,7 @@ namespace OWP.Infosite.Services
             {
                 InfoSiteMatchId = infoSiteMatchId,
                 UpdateTypeId = null,
-                Action = "Update the <b>checking status</b>",
+                Action = "Update the <b>Checking status</b>",
                 NewValue = "Unchecked",
                 OldValue = "Checked",
                 UpDateTime = InfoSiteSyncHelper.DateTimeNowGmt8(),
