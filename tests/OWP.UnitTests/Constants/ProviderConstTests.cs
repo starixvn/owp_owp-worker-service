@@ -50,7 +50,7 @@ public class ProviderConstTests
     public void Provider_ShouldHaveCorrectCount()
     {
         // Act & Assert
-        ProviderConst.Provider.Should().HaveCount(7);
+        ProviderConst.Provider.Should().HaveCount(8);
     }
 
     [Fact]

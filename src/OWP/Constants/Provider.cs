@@ -9,6 +9,7 @@ namespace OWP.Constants
             { 3, "365GV"},
             { 15, "IMG"},
             { 17, "RB2" },
+            { 10, "RB2" },
             { 18, "RTS" },
             { 19, "BG" },
             { 20, "BET" },
