@@ -7,6 +7,8 @@ public interface Repository
 {
     Task ArchiveOldMessage(DateTime date);
 
+    Task ArchiveOldEventPickingLog(DateTime date);
+
     Task CopyDataToOldTable(DateTime date);
 
     Task DeleteOldData(DateTime date);
@@ -42,6 +44,12 @@ public class RepositoryImp(IDynamicRepository repository) : Repository
     public async Task ArchiveOldMessage(DateTime date)
     {
         var criteria = new ArchiveOldMessageCriteria { Date = date };
+        await repository.ExecuteAsync(criteria);
+    }
+
+    public async Task ArchiveOldEventPickingLog(DateTime date)
+    {
+        var criteria = new ArchiveOldEventPickingLogCriteria { Date = date };
         await repository.ExecuteAsync(criteria);
     }
 
