@@ -158,7 +158,7 @@ public class SyncAgentConfirmHandlerImp(Repository repository) : SyncAgentConfir
     private static bool IsStreamingProvider(string provider)
     {
         return !string.IsNullOrEmpty(provider) &&
-               (provider.IsContainsIgnoreCase("BET365") || provider.IsContainsIgnoreCase("TV"));
+               (provider.IsContainsIgnoreCase("BET365") || provider.IsContainsIgnoreCase("TV") || provider.IsContainsIgnoreCase("GLive"));
     }
 
     private static MatchAgentConfirm CreateAgentConfirm(string agent, AgentMatchInfo match)
