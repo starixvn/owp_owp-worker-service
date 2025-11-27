@@ -26,5 +26,6 @@ public class ArchiveDataJob(ArchiveDataService archiveDataService) : IJob
         await archiveDataService.DeleteOldData(DateTime.Today).ConfigureAwait(false);
         await archiveDataService.DeleteOldNotify(DateTime.Today).ConfigureAwait(false);
         await archiveDataService.DeleteOldNoOfferMatch(DateTime.Today).ConfigureAwait(false);
+        await archiveDataService.ArchiveOldEventPickingLog(DateTime.Today).ConfigureAwait(false);
     }
 }

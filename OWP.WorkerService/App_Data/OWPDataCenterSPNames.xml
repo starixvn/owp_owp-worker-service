@@ -46,6 +46,7 @@
     <Setting Key="OWP_DeleteOldData_Message" SpName="OWP_DeleteOldData_Message" DbName="DBOWP.bodb_OWP.wsv_owp" TimeOut="600"></Setting>
     <Setting Key="OWP_DeleteOldData_NoOfferMatch" SpName="OWP_DeleteOldData_NoOfferMatch" DbName="DBOWP.bodb_OWP.wsv_owp" TimeOut="600"></Setting>
     <Setting Key="OWP_ArchiveOldMessage" SpName="OWP_ArchiveOldMessage" DbName="DBOWP.bodb_OWP.wsv_owp" TimeOut="600"></Setting>
+    <Setting Key="OWP_EventPickingLog_Archive" SpName="OWP_EventPickingLog_Archive" DbName="DBOWP.bodb_OWP.wsv_owp" TimeOut="600"></Setting>
   </Function>
   <Function Name="InfositeIdSync">
     <Setting Key="OWP_API_QueryInfositeMatch"  SpName="OWP_API_QueryInfositeMatch" DbName="DBOWP.bodb_OWP.wsv_owp" />

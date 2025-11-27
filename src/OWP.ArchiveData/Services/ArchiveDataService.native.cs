@@ -10,6 +10,8 @@ public interface ArchiveDataService
 
     Task DeleteOldNotify(DateTime date);
 
+    Task ArchiveOldEventPickingLog(DateTime date);
+
     Task DeleteOldNoOfferMatch(DateTime today);
 }
 
@@ -30,6 +32,11 @@ public class ArchiveDataServiceImp(Repository repository) : ArchiveDataService
     public async Task ArchiveOldMessage(DateTime date)
     {
         await repository.ArchiveOldMessage(date);
+    }
+
+    public async Task ArchiveOldEventPickingLog(DateTime date)
+    {
+        await repository.ArchiveOldEventPickingLog(date);
     }
 
     public async Task DeleteOldNoOfferMatch(DateTime date)
